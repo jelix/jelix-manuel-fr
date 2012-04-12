@@ -1,0 +1,253 @@
+====== Principes d'une zone ====== 
+
+Les zones dans Jelix représentent des morceaux de la réponse finale. En d'autre termes, elles sont destinées à gérer et générer le contenu d'une portion de l'écran, de la page web. Une page web est donc composée essentiellement de zones.
+
+L'intérêt d'utiliser les zones est de :
+
+    * pouvoir réutiliser une zone dans des pages différentes : une zone est en théorie indépendante du contexte : elle fait elle même appel aux classes métiers et possède son propre template.
+    * avoir une génération de contenu paramétrable : les zones acceptent des paramètres.
+    * pouvoir générer plus rapidement les pages, en activant la mise en cache des zones : seules les zones dont les paramètres changent (la zone principale en général) sont régénérées (ou celles dont on aura effacé le cache).
+    * au passage, alléger le code des contrôleurs.
+
+====== Utilisation des zones ======
+
+===== Création =====
+
+Une zone est déclarée via une classe héritant de jZone. Le nom de cette classe est le nom de la zone suivit du mot "Zone"
+
+<code php>
+class testZone extends jZone {
+
+}
+</code>
+
+Elle doit être stockée dans un fichier //nom_de_la_zone//.zone.php, dans le répertoire zones du module. Ici donc, il s'agit du fichier zones/test.zone.php.
+
+Par défaut, un objet jZone instancie un moteur de template.
+
+==== Utilisation sans template ====
+
+Si vous ne voulez pas utiliser de template pour votre zone, vous devez surcharger la méthode //_createContent//, qui doit renvoyer le contenu de la zone sous forme de chaine. Vous ne devez pas faire d'echo ou de print !
+
+
+<code php>
+class testZone extends jZone {
+
+   protected function _createContent(){
+      return "<p>Ceci est le contenu d'une zone</p>";
+   }
+}
+</code>
+
+==== Utilisation avec template ====
+
+La plupart du temps, vous utiliserez toutefois un template. Vous devez indiquer  dans la propriété $_tplname le template que vous utilisez (c'est un sélecteur), et surcharger la méthode _prepareTpl(). Cette méthode est, comme son nom l'indique, chargée d'initialiser l'objet jTpl instancié automatiquement par jZone et stocké dans la propriété _tpl.
+
+
+<code php>
+class testZone extends jZone {
+
+   protected $_tplname='template_test';
+
+   protected function _prepareTpl(){
+       $this->_tpl->assign('foo','bar');
+   }
+}
+</code>
+
+Et le template (stocké dans templates/template_test.tpl):
+
+<code xml>
+
+<p>Ceci est un template. Et foo vaut {$foo}.</p>
+
+</code>
+
+
+
+
+===== Appel =====
+
+Il y a plusieurs façons de récupérer le contenu d'une zone en fonction de ce que l'on veut faire.
+
+Si on veut récupérer simplement son contenu (dans un contrôleur) on fait :
+
+<code php>
+   $contenu = jZone::get('test'); // ou 'leModule~test'...
+</code>
+
+Cependant, il arrive très souvent qu'il s'agisse d'affecter le contenu de la zone à une variable du template principal, lorsque la réponse possède un template principal (ce qui est le cas des réponses HTML qui possèdent un objet jTpl dans sa propriété body). Dans le contrôleur, on pourra donc utiliser la méthode assignZone de jTpl :
+
+<code php>
+    $rep = $this->getResponse('html');
+    $rep->title = 'page de test';
+    $rep->bodyTpl = 'testapp~main';
+    $rep->body->assignZone('MAIN', 'test');
+</code>
+
+//test// correspondant au nom du fichier //**test**.zone.php//\\
+//MAIN// correspondant à la variable de template //{$MAIN}//
+
+
+Autre solution, on peut avoir dans un template, un appel de zone direct :
+
+<code html>
+  <div id="menu"> {zone 'leModule~test'} </div>
+
+</code>
+
+
+==== Appel avec des paramètres ====
+
+Il est possible de faire passer des paramètres à une zone. Pour cela, on procède de la manière suivante :
+
+Appel depuis un contrôleur :
+<code php>
+    $rep = $this->getResponse('html');
+    $rep->title = 'page de test';
+    $rep->bodyTpl = 'testapp~main';
+    $rep->body->assignZone('MAIN', 'test', array('foo'=>'bar'));
+</code>
+
+Et pour récupérer la variable dans la zone, on utilise la méthode getParam() :
+
+<code php>
+class testZone extends jZone {
+
+   protected $_tplname='template_test';
+
+   protected function _prepareTpl(){
+       $foo = $this->getParam('foo');
+       $foo = strtoupper($foo);
+       $this->_tpl->assign('foo', $foo);
+   }
+}
+</code>
+Dans cet exemple on a fait passer la variable 'foo' avec pour valeur 'bar' en paramètre de la zone. On a récupéré la variable 'foo' dans la zone pour effectuer un traitement dessus (ici, mise en majuscule) et on a affecté 'foo' au template de la zone.
+
+À noter que Jelix affecte automatiquement les variables passées en paramètres de la zone au template de zone si il existe. Vous pouvez vous passer d'écrire :
+<code php>
+   protected function _prepareTpl(){
+       $this->_tpl->assign('foo', $this->getParam('foo'));
+   }
+</code>
+
+
+Si vous utilisez le plugin de template zone, le passage des paramètres à la zone s'effectue de cette manière :
+
+<code html>
+  <div id="menu"> {zone 'leModule~test', array('foo'=>'bar')} </div>
+</code>
+
+===== Utilisation du cache  =====
+
+Il est possible de mettre le contenu généré dans un cache. Et il peut y avoir un cache pour chaque valeur des paramètres de la zone.
+
+
+
+
+
+==== Activation du cache ====
+
+Par défaut, une zone ne gère pas de cache : il faut donc l'activer dans votre classe, via la propriété ''_useCache'' en la mettant à ''true'' :
+
+<code php>
+class testZone extends jZone {
+
+   protected $_useCache = true;
+
+
+}
+</code>
+
+Le contenu de la zone sera ainsi mis dans un fichier de cache. Si la zone a des paramètres, un cache sera crée pour à chaque valeur différente des paramètres. Ainsi, si vous avez un paramètre 'id_article', un cache sera crée à chaque fois que la zone sera appelée avec une valeur de id_article différente.
+
+**ATTENTION** : un cache se matérialise par un fichier dans le répertoire temporaire de l'application. Si vous avez des milliers d'articles, cela peut engendrer autant de fichiers dans votre répertoire temporaire. Il faut donc éviter dans un cas comme celui-là, d'activer le cache si votre hébergeur vous limite en nombre de fichiers par exemple.
+
+Utilisez donc le cache à bon escient. Par exemple, pour une application fréquentée moyennement (un même article lu seulement quelque fois par jour), il n'est pas forcément nécessaire d'activer le cache. À vous de juger...
+
+(note : il était documenté auparavant l'utilisation d'une propriété _cacheParams. Cette propriété n'a en fait jamais été utilisé dans jZone, donc n'a jamais servi à rien...)
+
+==== Rafraîchissement du cache ====
+
+Il est nécessaire de régénérer le cache quand les informations contenues sont obsolètes. Cette régénération peut se faire automatiquement régulièrement (toutes les //n// secondes), ou alors être forcée manuellement.
+
+Vous utiliserez l'une ou l'autre des méthodes selon les cas. La deuxième méthode est moins gourmande en ressource puisque le cache ne se régénère uniquement en temps voulu. L'inconvénient c'est qu'il faut explicitement effacer le cache dans vos classes métier. La première méthode évite ce travail, mais consomme plus de ressources, et le contenu de la zone n'est pas à jour pendant le délai indiqué. À réserver donc pour afficher des informations non vitales, dont la "fraîcheur" n'a pas vraiment d'importance.
+
+=== Automatique ===
+
+Pour un rafraîchissement automatique, il suffit d'indiquer dans la propriété ''_cacheTimeout'' le délai d'invalidité du cache, en secondes :
+
+<code php>
+class testZone extends jZone {
+ 
+   protected $_useCache = true;
+ 
+   protected $_cacheTimeout = 60; 
+}
+</code>
+
+Ici le cache sera régénéré toutes les 60 secondes. Si vous mettez 0, il n'y aura pas de rafraîchissement automatique.
+
+=== Forcé ===
+
+La suppression "manuelle" du cache se fait via les méthodes statiques ''clear'' et ''clearAll''.
+
+Par exemple, dans la classe métier de votre article, au moment de modifier l'article (en base de données par exemple) ou de le supprimer, vous allez appeler ''jZone'' pour qu'il supprime le cache correspondant, afin qu'il soit régénéré au prochain affichage. Bien sûr, il faut indiquer les valeurs des paramètres qui identifient le cache. Dans notre exemple donc, ''id_article''.
+
+<code php>
+   jZone::clear('mymodule~article', array('id_article'=>546));
+</code>
+
+Si vous voulez effacer tous les caches d'une même zone, vous pouvez appeler ''clearAll'' :
+
+<code php>
+   jZone::clearAll('mymodule~article');
+</code>
+
+Et si vous voulez effacer tous les caches de toutes les zones :
+
+
+<code php>
+   jZone::clearAll();
+</code>
+
+==== Empêcher ponctuellement la mise en cache ====
+
+Il faut noter que les méthodes _createContent et _prepareTpl (que vous pouvez surcharger), ne sont appelées que lorsque le cache doit être régénéré.
+
+Il se peut que pour une raison ou pour une autre (en fonction de la valeur d'un certain paramètre par exemple), vous ne vouliez pas que parfois le résultat de la zone soit mis en cache.
+
+Il suffit alors, dans _createContent ou _prepareTpl, de mettre la propriété _cancelCache à true
+
+<code php>
+
+   protected function _prepareTpl(
+      // ....
+      $this->_cancelCache=true;
+      //...
+   }
+
+</code>
+
+
+
+===== Paramètres automatiques =====
+
+L'affichage d'une zone peut dépendre de paramètres donnés explicitement, mais aussi de paramètres "externe" implicites. C'est le cas par exemple pour une zone qui affiche la version d'un article en fonction de la langue configurée dans l'appli. On peut bien sûr passer à chaque appel de zone le code langue, mais ce n'est pas forcément pratique. On pourrait ne pas avoir à l'indiquer dans les paramètres, et le récupérer soit même dans _prepareTpl/_createContent, mais alors il n'est pas possible que cela devienne un critère discriminant pour le système de cache si vous l'utilisez.
+
+La solution est de surcharger le constructeur, et d'initialiser ce paramètre :
+
+<code php>
+class articleZone extends jZone {
+
+   protected $_useCache = true;
+
+   public function __construct($params=array()){
+       $params['lang'] = $GLOBALS['gJConfig']->locale;
+       parent::__construct($params);
+   }
+
+}
+</code>
+

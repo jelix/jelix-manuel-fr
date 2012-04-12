@@ -1,0 +1,173 @@
+
+Il existe en standard plusieurs drivers pour l'authentification dans Jelix. 
+
+===== Db =====
+
+Le driver Db propose une authentification pour laquelle les informations sont stockées en base de donnée. Pour cela, ce driver Db se repose sur un dao, qu'il faut indiquer dans le fichier de configuration d'authentification :
+<code ini>
+
+driver= Db
+
+[Db]
+dao = "monmodule~mondao"
+password_crypt_function = "md5"
+</code>
+
+Ce que vous indiquez au niveau du paramètre **dao**, c'est un sélecteur vers le fichier dao que vous voulez utiliser. Vous pouvez utiliser celui fourni dans le module jauth :
+
+<code ini>
+dao = "jauth~jelixuser"
+</code>
+
+
+Le paramètre **password_crypt_function** indique la fonction à utiliser pour crypter les mots de passe.  Vous pouvez fournir votre propre fonction de cryptage (en la définissant dans le fichier application.init.php par exemple) et indiquer son nom ici.
+
+Pour le dao que vous indiquez, il doit avoir au moins les propriétés "login" et "password". Vous pouvez rajouter d'autres propriétés, autant que vous voulez. Il doit aussi y avoir au moins les méthodes qu'il y a dans le dao **jelixuser** du module **jauth** :
+
+   * **getByLoginPassword (login, password)** 
+   * **getByLogin(login)**
+   * **updatePassword(login,password)**
+   * **deleteByLogin(login)**
+   * **findByLogin(pattern)**
+
+Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le champs du login.
+
+==== Exemple ====
+
+Imaginons que l'on ait la table suivante (script mysql) :
+
+<code sql>
+CREATE TABLE `jlx_user` (
+  `usr_login` varchar(50) NOT NULL default '',
+  `usr_password` varchar(50) NOT NULL default '',
+  `usr_email` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`usr_login`)
+) AUTO_INCREMENT=2 ;
+</code> 
+On a bien le login comme étant la clé primaire, et au moins le champs password.
+
+On crée ensuite le dao suivant, comme indiqué plus haut :
+
+<code xml>
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+   <datasources>
+      <primarytable name="usr" realname="jlx_user" primarykey="usr_login" />
+   </datasources>
+   <record>
+      <property name="login" fieldname="usr_login"
+          required="yes" datatype="string"  maxlength="50" />
+
+      <property name="email" fieldname="usr_email"
+                datatype="string" required="yes" maxlength="255" />
+
+      <property name="password" fieldname="usr_password" datatype="string"
+                maxlength="50" selectmotif="%s" updatemotif="" insertmotif="%s" />
+   </record>
+   <factory>
+     <method name="getByLoginPassword" type="selectfirst">
+         <parameter name="login" />
+         <parameter name="password" />
+
+         <conditions>
+             <eq property="login" expr="$login" />
+             <eq property="password" expr="$password" />
+         </conditions>
+     </method>
+
+     <method name="getByLogin" type="selectfirst">
+         <parameter name="login" />
+
+         <conditions>
+             <eq property="login" expr="$login" />
+         </conditions>
+     </method>
+
+     <method name="updatePassword" type="update">
+         <parameter name="login" />
+         <parameter name="password" />
+
+         <values>
+             <value property="password" expr="$password"/>
+         </values>
+         <conditions>
+             <eq property="login" expr="$login" />
+         </conditions>
+     </method>
+
+     <method name="deleteByLogin" type="delete">
+         <parameter name="login" />
+         <conditions>
+             <eq property="login" expr="$login" />
+         </conditions>
+     </method>
+
+     <method name="findByLogin" type="select">
+         <parameter name="pattern" />
+         <conditions>
+             <like property="login" expr="$pattern" />
+         </conditions>
+         <order>
+             <orderitem property="login" way="asc" />
+          </order>
+     </method>
+     <method name="findAll" type="select">
+         <order>
+             <orderitem property="login" way="asc" />
+         </order>
+     </method>
+   </factory>
+</dao>
+</code>
+
+Et dans le fichier auth.plugin.ini.php, on indique ce dao que l'on aura stocké dans le module foo sous le nom user.dao.xml.
+
+<code ini>
+
+driver= Db
+
+[Db]
+dao = "foo~user"
+password_crypt_function = "md5"
+</code>
+
+===== Class =====
+
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/trunk/jelix/auth/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
+
+Dans la configuration du plugin jauth, vous devez mettre :
+
+<code ini>
+
+driver= Class
+
+[Class]
+class = "monmodule~maclass"
+password_crypt_function = "md5"
+</code>
+
+===== LDS =====
+
+C'est un driver qui repose sur un serveur LDS (http://lds.linbox.org/). Il appelle l'API xml-rpc d'un serveur LDS. La configuration que vous devez indiquer doit donc être celle-ci :
+
+
+<code ini>
+
+driver= LDS
+
+[LDS]
+host=foo.com
+port=80
+login= foo
+password= bar
+scheme= https
+</code>
+
+Le driver interrogera donc le serveur **foo.com** sur le port **80**, avec le login **foo** et le mot de passe **bar**, via une connexion sécurisée https.
+
+
+===== Créer un driver =====
+
+Vous avez peut-être votre propre système d'authentification, que vous voulez mieux intégrer dans le framework. Dans ce cas, il vous faut créer un driver. Au passage, nous acceptons toutes contributions de ce type !
+
+Pour les détails, voir [[//plugins/auth|la page sur la création des drivers d'authentification]].

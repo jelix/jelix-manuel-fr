@@ -1,0 +1,131 @@
+~~LANG:EN@//en/manual-1.0~~
+
+<bookinfo>
+title = Guide du développeur
+subtitle= Jelix 1.0.14
+title_short= Guide du développeur
+edition = Jelix 1.0.14
+author=Laurent|Jouanneau
+author=|Les contributeurs au wiki de jelix.org||
+copyright_years=2006-2010
+copyright_holder=Laurent Jouanneau
+copyright_holder=Les contributeurs au wiki de jelix.org
+</bookinfo>
+
+<bookcontents>
+
+- part: [[installation|Installation]]
+  - chapter: [[installation/prerequis|Pré-requis sur le serveur]]
+  - chapter: [[installation/sources|Installation de l'archive de jelix]]
+  - chapter: [[installation/application|Installation d'une application]] pour jelix
+  - chapter: [[installation/production|Installation sur un serveur de production]]
+
+- part: [[fondamentaux|Fondamentaux]]
+   - chapter:[[principes|Principes de fonctionnement]]
+     - section: [[selecteurs|Les sélecteurs]]
+     - section: [[requests|Les objets jRequest]]
+     - section: [[coordinateur|Le coordinateur]]
+     - section: [[jresponse|Les objets jResponse]]
+     - section: [[appel-action|Appeler une action]] et les sélecteurs d'action.
+   - chapter:[[modules|Développement d'un module]]
+     - section: [[creer-un-module|Créer un module]]
+     - section: [[controleurs|Développer un contrôleur]]
+     - section: [[controleurs/crud|Utiliser le contrôleur CRUD]]
+     - section: [[restfull|Un contrôleur pour REST]]
+   - chapter: [[responses|Les réponses classiques]]
+     - section: [[responsehtml|Générer une page HTML]]
+     - section: [[responseredirect|Faire une redirection]]
+     - section: [[responsetext|Générer du texte brut]]
+     - section: [[responsexml|Générer du XML quelconque]]
+     - section: [[responserss|Générer un flux de syndication RSS]]
+     - section: [[responseatom|Générer un flux de syndication Atom]]
+     - section: [[responselatex2pdf|Générer un PDF à partir d'un contenu LaTeX]]
+     - section: [[responsetcpdf|Générer un PDF avec TCPDF]]
+     - section: [[responsebinary|Renvoyer un fichier binaire]]
+     - section: [[responsezip|Générer un fichier zip]]
+     - section: [[responsexul|Générer une interface utilisateur en XUL]]
+     - section: [[responserdf|Générer du RDF]]
+   - chapter: [[services-web|Services web]]
+     - section: [[responseajax|AJAX]]
+     - section: [[responsejson|JSON]]
+     - section: [[responsejsonrpc|JSON-RPC]]
+     - section: [[responsexmlrpc|XML-RPC]]
+   - chapter: [[cmdline|Effectuer des traitements en ligne de commande]]
+   - chapter: [[traitements_communs|Définir des traitements communs à plusieurs actions]]
+
+- part: [[composants|Composants de jelix]]
+   - chapter: [[templates|jTpl : le moteur de templates]]
+   - chapter: [[zones|jZone : découper vos pages en zones]]
+   - chapter: [[daos|jDao : mapping objet relationnel]]
+      - section:[[daos/fichier_de_base|Fichier DAO de base]]
+      - section:[[daos/utilisation|Instanciation et utilisation d'une factory et d'un record DAO]]
+      - section:[[daos/methodes_xml|Ajouter des méthodes en XML]]
+      - section:[[daos/methodes_php|Développer des méthodes en php]]
+      - section:[[daos/evenements|Évènements automatiques]]
+   - chapter:[[formulaires-classique|Formulaires classiques]]
+   - chapter:[[jforms|jForms : des formulaires automatiques]]
+      - section: [[jforms/xml|Format des fichiers jForms]]
+          - section: [[jforms/xml-1.0|Format version 1.0]]
+      - section: [[jforms/utilisation|Utiliser un formulaire dans un contrôleur]]
+      - section: [[jforms/affichage|Affichage d'un formulaire]].
+      - section: [[jforms/affichage-donnees|Affichage simple des données]].
+   - chapter: [[bd|jDb : accéder à une base de données]]
+   - chapter: [[classes-metiers|jClasses: utiliser des classes métiers]]
+   - chapter: [[urls|jUrl : des URLs automatiques]]
+      - section: [[urls/simple|Moteur d'urls 'simple']]
+      - section:[[urls/significant|Moteur d'urls significatives]]
+   - chapter: [[authentification|jAuth : système d'authentification]]
+      - section:[[authentification/drivers|Les drivers pour jAuth]]
+   - chapter: [[droits|jAcl : système de droits]]
+      - section: [[droits/concepts|Les concepts généraux de jAcl]]
+      - section: [[droits/utilisation|Utiliser jAcl dans ses modules]]
+      - section: [[droits/concepts.db|Les concepts de jAcl.db]]
+      - section: [[droits/configuration|Configurer jAcl.db]]
+   - chapter: [[locales|jLocale: internationaliser votre application]]
+   - chapter: [[events|jEvents : communication inter-module]]
+
+- part: [[developpement-avance|Développement avancé]]
+   - chapter: [[creer_response|Générer un contenu dans un format personnalisé]]
+   - chapter: [[themes|Système de thèmes]]
+   - chapter: [[surcharge-de-fichiers|Surcharge de fichiers de modules]]
+   - chapter: [[plugins|Développer et utiliser des plugins]]
+      - section: [[plugins/coord|plugins de coordinateur]]
+      - section: [[plugins/auth|drivers pour jAuth]]
+      - section: [[plugins/db|drivers pour jDb]]
+      - section: [[plugins/tpl|plugins de templates]]
+      - section: [[plugins/urls_engine|moteurs de urls]]
+   - chapter: [[configuration|La configuration en détails]]
+
+- part: [[aide-developpement|Aide au développement]]
+   - chapter: [[errormanager|Configurer le gestionnaire d'erreur]]
+   - chapter: [[tests_unitaires|Développer des tests unitaires]]
+   - chapter: [[deboggage|Les aides pour debogguer]] (jLog..)
+
+- part: [[classes-utiles|Les classes utilitaires]]
+   - chapter: [[filtre|jFilter : vérification et filtrage de données]]
+   - chapter: [[datetime|jDateTime : manipulation de dates et heures]]
+   - chapter: [[mail|jMailer : envoi de mails]]
+   - chapter: [[wiki|jWiki : transformation de texte wiki]]
+   - chapter: [[session|jSession : stockage de sessions]]
+   - chapter: [[file|jFile : lire ou créer des fichiers]]
+
+- part: [[ref-plugins|Les plugins de Jelix]]	 
+   - chapter: [[ref-plugins/tplplugins|Plugins de template]]	 
+      - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]	 
+      - section: [[ref-plugins/tplplugins/fonctions|Fonctions diverses]]	 
+      - section: [[ref-plugins/tplplugins/medias|Médias]]	 
+         - section: [[ref-plugins/tplplugins/fct_image|html : image]]	 
+
+
+</bookcontents>
+
+<booklegalnotice>
+Ce manuel est distribué selon les termes de la [[http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes : 
+  * **Paternité**. Vous devez citer le nom de l'auteur original de la manière indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous confère cette autorisation (mais pas d'une manière qui suggérerait qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
+  * **Pas d'Utilisation Commerciale**. Vous n'avez pas le droit d'utiliser ce manuel à des fins commerciales.
+  * **Partage des Conditions Initiales à l'Identique**. Si vous modifiez, transformez ou adaptez ce manuel, vous n'avez le droit de distribuer la création qui en résulte que sous un contrat identique à celui-ci.
+</booklegalnotice>
+
+<bookpagelegalnotice>
+Ce manuel est distribué selon les termes de la [[http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes : **Paternité**, **Pas d'Utilisation Commerciale**, **Partage des Conditions Initiales à l'Identique**.
+</bookpagelegalnotice>

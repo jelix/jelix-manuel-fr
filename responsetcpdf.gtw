@@ -1,0 +1,43 @@
+Un objet jResponseTcpdf est fourni depuis la version 1.0, permettant de générer un PDF à partir de la [[http://tcpdf.sourceforge.net/|classe TCPDF]] (qui est une version améliorée de la célèbre FPDF).
+
+Pour l'utiliser, vous devez d'abord télécharger les fontes disponibles sur le site de Jelix (Elles ne sont pas fournies avec Jelix à cause de leur poids), et les installer dans lib/pdf-fonts/.
+
+Ensuite dans une action :
+
+<code php>
+  $rep = $this->getResponse('tcpdf');
+
+  $rep->outputFileName = 'article.pdf';
+  $rep->doDownload = true;
+
+  // initialise l'objet tcpdf
+  $rep->initPdf();
+  $rep->tcpdf->AddPage();
+  $rep->tcpdf->SetTitle('un titre');
+  $rep->tcpdf->Text(10,10,'un texte');
+  ...
+  return $rep;
+</code>
+
+L'objet dans la propriété tcpdf est tout simplement un objet TCPDF. Voir la documentation de TCPDF pour savoir l'utiliser et connaître son API.
+
+Pour utiliser son propre objet tcpdf (parce que l'on veut surcharger par exemple certaines méthodes de TCPDF :
+
+
+<code php>
+  $rep = $this->getResponse('tcpdf');
+
+  $rep->outputFileName = 'article.pdf';
+  $rep->doDownload = true;
+
+  // initialize l'objet tcpdf
+  $rep->tcpdf = new MyTcPdf();
+  $rep->tcpdf->AddPage();
+  $rep->tcpdf->SetTitle('un titre');
+  $rep->tcpdf->Text(10,10,'un texte');
+  ...
+  return $rep;
+</code>
+
+MyTcPdf étant l'objet qui hérite de TCPDF.
+

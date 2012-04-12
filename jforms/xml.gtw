@@ -1,0 +1,7 @@
+jForms se base sur des fichiers descriptifs en XML. Tout formulaire est décrit en XML, avec une grammaire assez simple, à mi-chemin entre HTML et XForms.
+
+Ces fichiers XML sont à placer dans un répertoire //forms// des modules et doivent avoir comme nom //foo.form.xml//, où //foo// est le nom identifiant du formulaire (que vous choisissez bien sûr). Cet identifiant est utilisé ensuite dans les sélecteurs.
+
+Par exemple "monModule~produit" fait référence au formulaire monModule/forms/produit.form.xml.
+
+  * [[xml-1.0|Format version 1.0]]

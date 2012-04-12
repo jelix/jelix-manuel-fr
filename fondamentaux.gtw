@@ -1,0 +1,4 @@
+
+Comme tout framework, Jelix a des principes de fonctionnement et une série d'objets à connaître, en particulier ceux qui sont utilisés dans la logique MVC : Modèle, Vue, Controlleur.
+
+Vous allez apprendre dans cette partie à créer un module et à utiliser les contrôleurs et les réponses. 

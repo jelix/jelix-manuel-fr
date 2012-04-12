@@ -1,0 +1,59 @@
+jSession permet de stocker les sessions de façon personnalisée, en fonction de paramètres déclarés dans app/var/config/defaultconfig.ini.php 
+
+
+===== Nom de la session =====
+
+Pour diverses raisons, on peut vouloir changer le nom de la session (par défaut, c'est PHPSESSID).
+
+Pour changer ce nom de variable/cookie, on peut utiliser la configuration suivante :
+
+<code ini>
+[sessions]
+name = "masession"
+</code>
+
+NB : seuls les caractères alpha-numériques sont autorisés.
+
+
+===== Stockage dans un répertoire =====
+
+Il n'est pas toujours prudent de stocker les sessions dans le répertoire par
+défaut prévu par l'hébergeur, car celui-ci peut être accessible de tout le monde, comme /tmp/ par exemple.
+
+Pour utiliser jSession avec un répertoire personnalisé :
+
+<code php>
+  [sessions]
+  storage = "files"
+  files_path = "app:var/sessions/"
+</code>
+NB : les mots clés app: et lib: sont reconnus. 
+
+
+
+===== Stockage dans la base de données =====
+
+On peut avoir besoin de stocker les données de session en base de données, par exemple pour permettre un partage aisé en cas de répartition de charge entre plusieurs serveurs web.
+
+Pour utiliser jSession avec un Dao : 
+
+<code ini>
+  [sessions]
+  storage = "dao"
+  dao_selector = "jelix~jsession"
+  dao_db_profile = ""
+</code>
+
+NB : un dao est fourni par défaut dans le module jelix, son sélecteur est : jelix~jsession.
+
+La structure de table pour ce DAO est :
+
+<code php>
+  CREATE TABLE `sessions` (
+  `id` varchar(64) NOT NULL,
+  `creation` datetime NOT NULL,
+  `access` datetime NOT NULL,
+  `data` text NOT NULL,
+  PRIMARY KEY  (`id`)
+  ) DEFAULT CHARSET=utf8;
+</code>

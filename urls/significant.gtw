@@ -1,0 +1,308 @@
+
+Le moteur d'url "significant" permet d'attribuer à chaque action une url spécifique de la forme que l'on veut.
+
+
+
+Le principe de configuration pour ce moteur est d'indiquer dans un fichier var/config/urls.xml toutes les formes d'URLs possibles de l'application et les actions qui leurs sont associées. Voici un exemple de fichier :
+
+<code xml>
+<urls xmlns="http://jelix.org/ns/urls/1.0">
+    <classicentrypoint name="index" default="true">
+
+        <url pathinfo="/news/:annee/:mois/:id-:title" module="news" action="view">
+           <param name="annee" type="year"/>
+           <param name="mois"  type="month" />
+           <param name="id"   type="number" />
+           <param name="title"   escape="true" />
+        </url>
+
+        <url pathinfo="/articles/:rubrique/:id_art" module="cms" action="show">
+           <param name="id_art" regexp="\d+"/>
+        </url>
+
+    </classicentrypoint>
+    <classicentrypoint name="shop">
+       <url pathinfo="/:category/:product" module="unittest" action="url2">
+          <param name="product"  regexp="\d{2}" />
+          <static name="mystatic" value="valeur statique" />
+        </url>
+    </classicentrypoint>
+    <classicentrypoint name="foo/bar">
+       <url handler="urlsig" module="unittest" action="url4" />
+    </classicentrypoint>
+
+    <classicentrypoint name="news">
+        <url module="news" />
+    </classicentrypoint>
+    <xmlrpcentrypoint name="xmlrpc" default="true" />
+    <jsonrpcentrypoint name="jsonrpc" default="true" />
+</urls>
+</code>
+
+===== Balises entrypoint =====
+
+La balise racine ''urls'' contient autant de balises //*entrypoint// que de points d'entrée disponibles dans votre application. Leur nom exact précise le type de requête auquel ils sont affectés : 
+
+  * //classicentrypoint// pour les requêtes classiques
+  * //xmlrpcentrypoint// pour du xmlrpc
+  * etc ...
+
+Chacune de ces balises a un attribut ''name'' indiquant le nom du point d'entrée (sans l'extension .php) et éventuellement un attribut ''default'' indiquant si ce point d'entrée est celui par défaut pour le type de requête en question.
+
+===== Balise url =====
+
+Chaque point d'entrée définit une ou plusieurs formes d'URLs possibles, sachant que celles qui ne sont pas définies seront acceptées lors d'une requête sur un point d'entrée spécifié "default". 
+
+==== Spécifier une forme d'URL complète ====
+
+=== Selon un pathinfo ===
+Vous voulez indiquer le module et l'action à exécuter pour une forme particulière d'URL. Vous indiquerez alors un attribut **pathinfo**, indiquant le "modèle" de la partie pathinfo auquel l'URL doit ressembler, ainsi que le module et l'action dans des attributs **module** et **action**.
+
+L'attribut pathinfo doit donc contenir la valeur d'un pathinfo. Dans cet exemple, toute URL qui aura pour pathinfo la valeur "/foo/bar" correspondra au module et action indiqués (module hello, action default:world dans notre cas).
+
+<code xml>
+   <url pathinfo="/foo/bar" module="hello" action="default:world" />
+</code>
+
+=== Selon un pathinfo contenant des parties indéfinies ===
+
+Il est possible d'indiquer des parties "dynamiques" dans le pathinfo. Elles sont à définir par un deux-points suivi d'un nom. La valeur trouvée sera alors stockée dans un paramètre du même nom. Dans l'exemple qui suit, le pathinfo contient deux parties dynamiques : ''rubrique'' et ''id_art''.
+
+<code xml>
+   <url pathinfo="/articles/:rubrique/:id_art" module="cms" action="default:show" />
+</code>
+
+Si on appelle l'URL "/articles/aviation/544", alors les paramètres ''rubrique'' et ''id_art'' seront crées et auront pour valeurs respectives "aviation" et "544".
+
+Attention : pour éviter les ressemblances avec d'autres URLs, il faut au moins une partie "statique" (ici "/articles/") dans l'URL pour la distinguer des autres.
+
+=== Des parties indéfinies typées ou formatées ===
+
+Un autre moyen d'éviter ces ressemblances est de spécifier le format ou le type de chaque paramètre. Par défaut le type est une chaîne classique. 
+
+Pour cela il faut indiquer des balises ''param'' pour chacun des paramètres dont on veut spécifier le type/format. Elles devront contenir un attribut ''name'' indiquant le paramètre et, soit un attribut ''type'', soit un attribut ''regexp'', contenant une expression régulière du format (sans délimiteur). Dans notre exemple, nous voulons spécifier que ''rubrique'' est une chaîne et une expression régulière pour ''id_art'' :
+
+<code xml>
+   <url pathinfo="/articles/:rubrique/:id_art" module="cms" action="show">
+      <param name="rubrique" type="string" />
+      <param name="id_art" regexp="\d+" />
+   </url>
+</code>
+
+Quand le paramètre est de type string il n'est pas obligatoire de mettre une balise param. Les types disponibles sont :
+
+| string | une chaîne |
+| letter | une seule lettre |
+| number | un nombre entier, équivalent aussi à 'int' et 'integer' |
+| digit  | un chiffre |
+| date   | une date au format AAAA-MM-JJ |
+| year   | une année sur 4 chiffres |
+| month | un mois sur deux chiffres |
+| day | un jour sur deux chiffres |
+
+
+Note : vous devrez bien entendu indiquer les valeurs de ces paramètres lors de l'appel à jUrl.
+
+=== Des paramètres statiques ===
+
+Il peut être nécessaire parfois de rajouter des paramètres "statiques", attendues par l'action (celle-ci pouvant être attribuées à plusieurs URLs différentes), mais non présent dans l'URL. Pour cela il faut ajouter une balise <static>, avec nom et valeur, comme dans cet exemple :
+
+<code xml>
+   <url pathinfo="/:category/:product" module="shop" action="product:view">
+      <param name="product"  regexp="\d{2}" />
+      <static name="details" value="0" />
+   </url>
+   <url pathinfo="/:category/:product/details" module="shop" action="product:view">
+      <param name="product"  regexp="\d{2}" />
+      <static name="details" value="1" />
+   </url>
+</code>
+
+Ici on utilise la même action pour deux URLs différentes. Son traitement différera en partie selon le paramètre ''details'', qu'il ne faut donc pas oublier de donner à //jUrl::get//. Dans un cas on afficherait le produit d'un catalogue avec ses caractéristiques générales, et dans l'autre avec ses caractéristiques générales **et** détaillées. Cela évite donc de créer deux actions différentes pour si peu de différence.
+
+On peut aussi utiliser ce mécanisme pour supporter plusieurs langues :
+
+<code xml>
+   <url pathinfo="/articles/en/:page" module="cms" action="page:view">
+      <param name="page"/>
+      <static name="lang" value="en_EN" />
+   </url>
+   <url pathinfo="/articles/fr/:page" module="cms" action="page:view">
+      <param name="page"/>
+      <static name="lang" value="fr_FR" />
+   </url>
+</code>
+
+Là encore, il ne faut pas oublier de donner le paramètre //lang// à jUrl pour que ce dernier puisse savoir quelle url il doit renvoyer.
+
+==== Utiliser un handler spécifique ====
+
+Nous avons vu précédemment comment utiliser, en fin de compte, un système par défaut d'analyse et de génération d'URL avec ses pathinfos et paramètres. Il se peut que ce système ne soit pas suffisant. Imaginons par exemple que vous vouliez transformer une partie de l'information contenu dans le pathinfo, comme par exemple chercher dans une base de données un id correspondant à un titre contenu dans le pathinfo, et fournir ainsi aux actions, non pas un titre, mais un id (qui n'est pas contenu dans cette URL).
+
+Ou encore que la partie pathinfo puisse être variable.
+
+Aussi c'est à vous de développer l'analyse de l'URL et d'indiquer l'action à exécuter. Vous le ferez dans une classe spécialisée :
+
+<code php>
+
+class myHandlerUrlsHandler implements jIUrlSignificantHandler {
+
+    function parse($url){
+        
+        if(preg_match("/^\/(.*)$/",$url->pathInfo,$match)){
+            $urlact = new jUrlAction($url->params);
+            $urlact->setParam('page',jUrl::unescape($match[1]));
+            return $urlact;
+        }else
+            return false;
+    }
+
+    function create($urlact, $url){
+
+        $p=jUrl::escape($url->getParam('page'));
+
+        $url->pathInfo = "/$p";
+        $url->delParam('page');
+    }
+}
+</code>
+
+Le nom de la classe doit commencer par un préfixe que vous voulez et se terminer par ''UrlsHandler''. La classe sera stockée dans le répertoire classes du module indiqué dans la balise url, sous le nom ''prefixe''.urlhandler.php. Pour notre exemple : 
+
+  myhandler.urlhandler.php.
+
+La méthode //parse// est chargée d'analyser une URL (objet jUrl que vous recevez en paramètre), en l'occurence, l'URL demandée dans l'application. Si votre handler reconnaît l'URL, //parse()// doit renvoyer un objet jUrlAction qui contient toutes les données pour l'action. Sinon il doit renvoyer false.
+
+La méthode create() est appelée à chaque fois que l'application demande la création d'une URL à partir de paramètres d'action. Elle reçoit donc un objet de type jUrlAction, et un objet de type jUrl. $urlaction contient donc les paramètres de l'action. Ces paramètres ont déjà été inclus dans l'objet $url. Vous devez donc modifier $url de façon à produire l'URL correspondante à l'action demandée. Dans l'exemple, on récupère le paramètre page, que l'on incorpore dans le pathinfo. Et comme il est dans le pathinfo, on le supprime alors des paramètres.
+
+Notez l'usage de jUrl::escape() et jUrl::unescape(), pour "nettoyer" les chaînes à inclure dans un pathinfo (accents enlevés par ex).
+
+Enfin dans le fichier urls.xml, vous devez indiquer l'utilisation de ce handler :
+<code xml>
+   <classicentrypoint name="wiki">
+       <url handler="myHandler" module="unittest" action="url4" />
+    </classicentrypoint>
+</code>
+
+Depuis jelix 1.0 beta1, vous pouvez indiquer un handler d'un autre module. Exemple :
+
+<code xml>
+   <classicentrypoint name="wiki">
+       <url handler="autremodule~myHandler" module="unittest" action="url4" />
+    </classicentrypoint>
+</code>
+
+==== Une même URL pour plusieurs actions possibles ====
+
+Imaginons que nous avons une URL de ce type : "/article/54-titre"  et par défaut, cela affiche l'article 54 avec une action nommée view par exemple :
+
+<code xml>
+   <url pathinfo="/article/:id_art-:title" module="cms" action="view" />
+</code>
+
+On veut pouvoir, sans changer l'url, indiquer d'autres actions dans certains cas, avec un paramètre action :
+
+   * "/article/54-titre?action=edit"
+   * "/article/54-titre?action=delete"
+
+Note : On pourrait faire aussi /article/54-titre/edit ou /article/54-titre/delete , avec donc plusieurs balises urls, ce qui nous éviterait ce qui suit. Mais ce n'est pas très pratique quand l'URL est appelée suite à un formulaire par exemple.
+
+Pour indiquer les actions alternatives autorisées, on ajoute un attribut actionoverride, contenant la liste des actions séparées par un espace ou une virgule :
+
+<code xml>
+   <url pathinfo="/article/:id_art-:title" module="cms" action="view" actionoverride="edit,delete" />
+</code>
+
+
+==== Indiquer qu'un point d'entrée est dédié à un module particulier ====
+
+Vous n'avez pas forcément envie d'indiquer une URL significative pour les actions d'un module particulier. Par contre vous avez créé un point d'entrée dédié à un module. Toutes ces actions passeront par ce point d'entrée. Vous avez juste alors à faire comme ceci :
+<code xml>
+    <classicentrypoint name="news">
+        <url module="news" />
+    </classicentrypoint>
+</code>
+
+==== Spécifier des URLs en https à certaines actions ====
+
+Pour certaines actions vous voulez que l'accès soit en mode sécurisé de http (SSL). Vous indiquez alors un attribut ''https'' sur les balises <url> en question avec la valeur true. Si cela concerne toutes les actions/URLs d'un point d'entrée, alors vous mettrez cet attribut sur la balise <*entrypoint> correspondante.
+
+Attention : pour le moment, Jelix ne vérifie pas lors de l'exécution d'une action que la requête a été faite en https ou non.
+
+
+==== Mod_rewrite et suppression du nom du point d'entrée dans l'URL ====
+
+Vous préférez peut être que l'analyse des URLs se fasse par le serveur web, grâce au module rewrite pour apache par exemple. Vous allez donc écrire les règles de réécriture.
+
+=== Réécriture complète par le serveur web ===
+
+On appelle ici réécriture complète, la réécriture qui consiste à fournir à Jelix des URLs simples (index.php?module=...&action=...), à partir d'URLs significatives.
+
+Pour cela, vous devez indiquer à Jelix, dans la configuration, de ne pas analyser les URLs :
+
+<code ini>
+ [urlengine]
+  ..
+  enableParser = off
+</code>
+
+Vous devez bien sûr remplir un fichier urls.xml de façon à ce que Jelix génère dans vos templates et ailleurs, les URLs attendues par vos règles de rewrite. 
+
+Et bien sûr, vous devez ensuite mettre dans un fichier .htaccess les règles de réécritures.
+
+Si vous voulez définir des URLs qui ne contiennent pas le nom du point d'entrée, vous devez alors indiquer sur les balises **<url>**  l'attribut **noentrypoint="true"** (ou sur la balise **<*entrypoint>** si toutes les URLs de ce point d'entrée sont concernées). Ainsi Jelix n'ajoutera pas le nom du point d'entrée (index.php) dans l'URL.
+
+
+=== Suppression du nom du point d'entrée dans l'URL ===
+
+Un exemple d'utilisation du mod_rewrite n'est pas forcément de transformer complètement les URLs, mais par exemple d'ajouter le fichier index.php dans les URLs dans lesquelles on l'aurait supprimé pour faire "joli".
+
+Par exemple nos URLs sont de la forme :
+<code>
+ http://monsite.com/index.php/news/2007-02-08-il-neige-a-lille.html
+</code>
+Et on souhaite qu'elles deviennent :
+<code>
+ http://monsite.com/news/2007-02-08-il-neige-a-lille.html
+</code>
+
+Voyons comment faire.
+
+Tout d'abord, il faut bien sûr utiliser le moteur d'URL "significant" et définir un fichier urls.xml. Comme pour la réécriture complète vous devez indiquer sur les balises **<url>** ou **<*entrypoint>**  l'attribut **noentrypoint="true"**. Ainsi Jelix n'ajoutera pas le nom du point d'entrée (index.php) dans les URLs concernées.
+
+Ensuite on va utiliser le rewriteEngine de Apache d'une façon toute simple : le chemin appelé sera rajouté après index.php. En clair il faut copiez ceci dans un fichier .htaccess dans le dossier www de votre application (ou dans la section virtualhost de la configuration apache):
+
+<code>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+</IfModule>
+</code>
+
+Observez bien :
+  * 3ème et 4ème ligne : Réécrire l'URL seulement si la requête ne correspond pas à un fichier déjà existant, ou un dossier déjà existant. Ainsi on préserve ses dossiers d'image, de feuille de style, etc. de la règle de réécriture.
+  * 5ème ligne : Tout prendre, et mettre après index.php/
+
+On retrouve ainsi notre point d'entrée index.php ainsi que notre pathinfo.
+
+Il se peut que sur certaines configurations, vous ayez une erreur apache du type "Error: No input file specified", en particulier quand PHP est exécuté en CGI avec cgi.fix_pathinfo=0 dans php.ini.
+
+Depuis Jelix 1.0.2, il y a une solution. Il faut changer la dernière rêgle en :
+
+<code>
+    RewriteRule ^(.*)$ index.php?jpathinfo=/$1 [L,QSA]
+</code>
+
+Ainsi le but est de mettre le pathinfo dans un paramétre de la requête. Pour que cela fonctionne pleinement, il faut ajouter dans la configuration de Jelix, dans la section urlengine, le paramètre pathInfoInQueryParameter qui doit contenir le nom du paramètre (ici dans l'exemple jpathinfo)
+
+<code ini>
+[urlengine]
+...
+pathInfoInQueryParameter = jpathinfo
+
+</code>
+
+

@@ -1,0 +1,44 @@
+
+jMailer est une classe permettant l'envoi d'email depuis un contrôleur.
+
+Quelques fonctionnalités:
+  * Pièces jointes
+  *Email HTML
+  *Destinataires multiples
+  *Plusieurs méthodes d'envoi
+  *Support de l'authentification SMTP
+
+jMailer étant basée sur la classe PHPMailer, de nombreux exemples d'utilisation sont disponibles sur internet.
+
+===== Paramétrage de base =====
+Le paramétrage de base utilisé par jMailer s'effectue dans le fichier //var/config/defaultconfig.ini.php// de votre application dans la section [mailer].
+
+==== Les différentes options de configuration ====
+
+  * mailerType : méthode utilisée pour envoyer les emails (par défaut smtp)
+    * mail : utilise la fonction mail de PHP
+    * sendmail:
+    * smtp : utilise une connexion directe à un/plusieurs hôte SMTP
+  * hostname
+  * sendmailPath
+  * smtpHost
+  * smtpPort
+  * smtpHelo
+  * smtpAtuh
+  * smtpUsername
+  * smtpPassword
+  * smtpTimeout
+
+===== Envoi d'un email basique =====
+Envoi d'un email texte avec le paramétrage par défaut.
+
+<code php>
+  $mail = new jMailer();
+
+  $mail->Subject = 'Sujet de l\'email';
+  $mail->Body = 'Contenu du message texte';
+
+  $mail->AddAddress('destinataire@exemple.com' , 'Nom du destinataire');
+
+  $mail->Send();
+</code>

@@ -1,0 +1,37 @@
+Pour renvoyer un fichier binaire (un exécutable, une image, une video, une archive ou autre), il faut utiliser jReponseBinary dont l'alias est "binary"
+
+<code php>
+$rep = $this->getResponse('binary');
+</code>
+
+En premier lieu, ill vous faut indiquer dans la propriété $outputFileName le nom de fichier sous lequel apparaitra le contenu, à l'utilisateur.
+
+<code php>
+ $rep->outputFileName = 'truc.gif';
+</code>
+
+Vous pouvez aussi définir le type mime du contenu :
+
+<code php>
+ $rep->mimeType = 'image/gif';
+</code>
+
+Et vous devez aussi spécifier si le fichier doit être proposé à l'utilisateur pour l'enregistrement ou non. Pour des fichiers couramment pris en charge par les navigateur (les images par exemple), on mettra false :
+
+<code php>
+ $rep->doDownload = false;
+</code>
+
+Ensuite pour le contenu, vous pouvez indiquer soit un fichier existant, soit du contenu que vous générez vous même.
+
+Pour renvoyer un fichier existant :
+
+<code php>
+ $rep->fileName = JELIX_APP_VAR_PATH.'fichier_a_renvoyer.gif';
+</code>
+
+Et sinon, si vous générez vous même, mettez le contenu dans une chaîne et mettez le dans $content :
+<code php>
+ $rep->content = '...';
+</code>
+

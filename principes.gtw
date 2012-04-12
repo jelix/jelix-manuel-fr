@@ -1,0 +1,28 @@
+
+Voici quelques explications sur le fonctionnement du framework et sur les principaux objets que vous allez avoir à utiliser.
+
+Le framework se base sur un principe : à chaque URL correspond une action.
+
+===== Étapes d'exécution =====
+
+{{schema_logic.png}}
+
+  - Le serveur web reçoit une requête HTTP.
+     * Le point d'entrée est exécuté par le serveur lorsqu'une URL l'indique. Par défaut il s'agit de index.php. 
+     * Ce script instancie un objet de type jRequest et un coordinateur de type jCoordinator. 
+     * L'objet jRequest analyse alors le contenu de la requête HTTP pour en extraire les données. Celles-ci peuvent être dans l'URL et/ou dans le corps de la requête (méthode POST par exemple).
+     * En particulier jRequest détermine le nom de l'action à exécuter et le nom du module concerné.
+  - Le paramètre action contient le nom du contrôleur et la méthode à exécuter. Ce contrôleur est donc instancié et la méthode exécutée. La méthode récupère les paramètres de requête pour déterminer les traitements à suivre.
+  - Le contrôleur exécute les traitements métiers et récupère éventuellement des résultats qui seront utilisés pour l'affichage.
+  - Le contrôleur instancie un objet de type jResponse auquel il assignera les données à afficher, initialisera les templates, etc...
+  - Jelix récupère cet objet jResponse, invoque la génération du document en sortie et envoi ce dernier au navigateur.
+
+===== Ce que vous avez à manipuler =====
+
+En général, vous n'aurez pas à utiliser un objet jRequest ou jCoordinator.
+
+Vous aurez par contre à créer un objet de type jController pour y inclure le code d'une action. Cet objet propose des méthodes pour récupérer les paramètres extraits par jRequest, mais aussi pour récupérer un objet jResponse. Vous aurez donc dans le code de l'action, en plus de manipuler vos objets "métier", à manipuler cet objet jResponse pour indiquer les données à renvoyer au navigateur.
+
+===== Objets en détails =====
+
+Voyons maintenant un descriptif de chaque objet présenté ici ainsi que d'autres, à commencer par les sélecteurs.

@@ -1,0 +1,174 @@
+
+Les [[methodes_xml|méthodes déclarées en XML]] permettent de créer facilement des méthodes, et peuvent répondre à beaucoup de situations. Néanmoins elles sont tout de même limitées dans la cadre de requêtes complexes. On ne peut pas créer des requêtes complexes.
+
+Une première solution serait de se créer une classe PHP classique, et utiliser jDb pour effectuer les requêtes. Cependant, lorsque les enregistrements sur lesquels on opère correspondent à ce qui a déjà été défini dans un DAO, il est plus logique de pouvoir intégrer une telle méthode dans la factory d'un DAO.
+
+
+
+
+===== Déclaration d'une méthode en PHP =====
+
+C'est relativement simple à faire : il suffit de déclarer en XML une méthode de type "php" :
+
+<code xml>
+  <method type="php" name="foo">
+    <parameter name="bar" />
+    <body><![CDATA[   
+        ici le code php de la méthode
+    ]]></body> 
+  </method>
+</code>
+
+Les autres balises autorisées dans les autres types de méthodes (''conditions'', ''order''...) ne peuvent être utilisées ici, puisque vous êtes censés écrire vous même la requête SQL !
+
+Vous devez indiquer bien sûr un nom à la méthode, et vous pouvez déclarer des paramètres comme d'habitude.
+
+
+
+===== API interne d'une factory =====
+
+Au niveau du code PHP, vous pouvez faire presque ce que vous voulez. Cependant :
+
+   * pour respecter le pattern DAO, et si vous renvoyez des résultats d'enregistrement, vous devez renvoyer des objets qui sont des records du même type que ceux définis dans la DAO. Le nom de la classe du record correspondant se trouve dans la propriété ''_DaoRecordClassName''
+   * Pour effectuer les requêtes, vous devez utiliser l'objet jDbConnection placé dans la propriété ''_conn''.
+   * Vous avez à votre disposition d'autres propriétés et méthodes qui vous facilitent le travail d'écriture.
+
+==== Manière de coder ====
+
+Vous avez deux manières de réaliser les méthodes PHP : 
+   - soit vous écrivez des requêtes quasiment "en dur", statiques
+   - soit vous créez les requêtes à partir des informations (comme les noms de tables, les noms des champs, les types de champs etc...) stockées dans la factory et le record.
+
+La première façon permet d'avoir un fonctionnement un peu plus performant, et peut être plus simple à écrire. Mais la deuxième évite d'avoir systématiquement à mettre à jour votre méthode quand vous modifiez certaines informations dans la section ''datasources'' ou ''properties''. Cependant notez qu'une fois en production, c'est la performance qui prime. À vous de choisir.
+
+Avec la deuxième façon de réaliser les méthodes PHP, vous aurez besoin de lire les informations sur les tables et les propriétés. Sachez que vous trouverez ces informations dans plusieurs propriétés :
+
+   * ''$this->_primaryTable'' : l'alias de la table primaire,
+   * ''$this->_tables'' : une liste d'informations (voir [[http://jelix.org/reference|la documentation de référence]] pour la description détaillée),
+   * ''$this->getProperties()'' pour avoir des informations détaillées sur chaque propriétés d'un record (voir [[http://jelix.org/reference|la documentation de référence]]),
+   * ''$this->getPrimaryKeyNames()'' pour avoir la liste des noms des propriétés servant de clés primaires.
+
+Et sur un record que vous aurez préalablement instancié, vous aurez aussi les même méthodes ''getProperties()'' et ''getPrimaryKeyNames()''.
+
+Notes :
+   * Pour les versions 1.0 beta 2.1 et inférieures, ''getPrimaryKeyNames()'' n'existait pas du tout (mais il y avait la propriété ''$_pkFields'' équivalente sur la factory),
+   * Pour les versions 1.0 beta 2.1 et inférieures, ''getProperties()'' n'existait que sur les records.
+
+
+
+==== Préparer les valeurs ====
+
+Toutes les valeurs qu'on vous passe en paramètre, vous devez les "filtrer", les préparer, avant de les intégrer dans une requête SQL, ceci pour éviter des problèmes de sécurité type SQL injection.
+
+Pour cela, vous avez une méthode, ''_prepareValue()'', qui accepte en paramètre une valeur, et un nom de type de donnée (celle que l'on indique à l'attribut ''datatype'' de la balise ''property'').
+
+<code xml>
+  <method type="php" name="updateLabel">
+    <parameter name="id" />
+    <parameter name="label" />
+    <body><![CDATA[
+        $sql = 'update products set label=' . $this->_prepareValue($label,'string');
+        $sql.= ' where product_id='.$this->_prepareValue($id,'integer');
+        $this->_conn->exec($sql);
+    ]]></body> 
+  </method>
+</code>
+
+Ou encore
+
+<code xml>
+  <method type="php" name="updateLabel">
+    <parameter name="id" />
+    <parameter name="label" />
+    <body><![CDATA[
+        $sql = 'update '.$this->_tables[$this->_primaryTable]['realname'];
+        $sql.= ' set label=' . $this->_prepareValue($label,'string');
+        $sql.= ' where product_id='.$this->_prepareValue($id,'integer');
+        $this->_conn->exec($sql);
+    ]]></body> 
+  </method>
+</code>
+
+
+==== Faire des SELECTs ====
+
+Normalement, quand vous faites des //SELECT// pour renvoyer un ensemble de résultats, vous devez retourner tous les champs déclarés dans les balises ''property'', donc faire aussi les jointures explicitement décrites. Et il faut aussi retourner les résultats sous la forme des objets correspondants aux records. Pour éviter d'avoir à réécrire entièrement les requêtes, il y a une série de propriétés indispensables :
+
+   * ''_selectClause'' : comporte la clause //SELECT// avec l'ensemble des champs déclarés
+   * ''_fromClause'' : comporte la clause //FROM// avec la déclaration des tables et des jointures externes
+   * ''_whereClause'' : comporte la clause //WHERE// avec les jointures internes
+
+Une méthode qui renverrait un ensemble de résultats pourrait ressembler à ceci (ce type de requête pourrait être très bien réalisé via les méthodes en XML, mais la complexité de la requête n'est pas l'objectif ici) :
+<code xml>
+  <method type="php" name="findByPrice">
+    <parameter name="price" />
+    <body><![CDATA[
+        $sql = $this->_selectClause.$this->_fromClause.$this->_whereClause;
+        $sql .= ($this->_whereClause == ''?' WHERE ':' AND ');
+        $sql .= ' price = '. $this->_prepareValue($price,'float');
+        $sql .= ' ORDER BY label ASC';
+
+        $rs = $this->_conn->query($sql);
+        $rs->setFetchMode(8,$this->_DaoRecordClassName);
+        return $rs;
+    ]]></body> 
+  </method>
+</code>
+
+   * ''_whereClause'' peut être vide ou pas, c'est pourquoi il faut toujours tester,
+   * On a préparé la valeur avec ''_prepareValue()'', ainsi on "protège" la requête,
+   * On a utilisé ''$this->_conn'' pour faire la requête, et on récupère donc un jDbRecordSet,
+   * Indispensable : on fait un ''setFetchMode()'', pour indiquer le nom de la classe des objets qui contiendront les enregistrements ! On y indique donc la classe des record du DAO,
+   * Enfin on retourne directement le recordSet : puisque jDbRecordSet implémente Iterator, on peut l'utiliser directement dans une boucle foreach, et on n'a donc pas besoin de créer une liste intermédiaire.
+
+
+=== Récupération d'un seul enregistrement ===
+
+C'est un peu le même principe que pour récupérer un ensemble :
+
+<code xml>
+  <method type="php" name="findByLabel">
+    <parameter name="label" />
+    <body><![CDATA[
+        $sql = $this->_selectClause.$this->_fromClause.$this->_whereClause;
+        $sql .= ($this->_whereClause == ''?' WHERE ':' AND ');
+        $sql .= ' price = '. $this->_prepareValue($label,'string');
+
+        $rs = $this->_conn->query($sql);
+        $rs->setFetchMode(8,$this->_DaoRecordClassName);
+
+        $record = $rs->fetch();
+        return $record;
+    ]]></body> 
+  </method>
+</code>
+
+Notez le ''fetch()''.
+
+
+
+==== Faire d'autres requêtes ====
+
+Pour faire des //UPDATE//, //DELETE//, //INSERT//, rien de spécial à dire. Vous ne pouvez bien entendu pas utiliser ''_selectClause'', ''_fromClause'' et ''_whereClause''.
+
+Vous avez par contre une méthode qui peut être utile pour les //UPDATE// et //DELETE// : ''_getPkWhereClauseForNonSelect()''. Elle génère une condition pour la clause //WHERE// sur les clés primaires.
+
+<code xml>
+  <method type="php" name="updateLabel">
+    <parameter name="id" />
+    <parameter name="label" />
+    <body><![CDATA[
+        $sql = 'update products set label=' . $this->_prepareValue($label,'string');
+        $keys = array_combine($this->getPrimaryKeyNames(), array($id));
+        $sql.= $this->_getPkWhereClauseForNonSelect($keys);
+
+        $this->_conn->exec($sql);
+    ]]></body> 
+  </method>
+</code>
+
+Même si l'intérêt est limité quand il y a une seule clé primaire, il augmente quand il y en a plusieurs.
+
+Note :
+  * Pour les versions de Jelix 1.0 beta 2.1 et inférieures, vous deviez utiliser ''$this->_pkFields'' au lieu de ''$this->getPrimaryKeyNames()''.
+

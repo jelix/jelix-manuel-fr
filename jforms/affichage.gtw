@@ -1,0 +1,297 @@
+Pour afficher les données d'un formulaire jforms, vous pouvez appeler la méthode //getDatas()// d'un objet formulaire, et vous obtiendrez un tableau contenant toutes les données. Vous pouvez passer ensuite ce tableau à un template pour afficher votre formulaire HTML avec les données. Vous pouvez aussi récupérer les erreurs avec //getErrors()// et ainsi afficher les éventuelles erreurs.
+
+Cependant des plugins de templates vous permettent d'éviter de faire ce travail répétitif, et surtout font bien plus qu'afficher les valeurs :
+
+  * affichage de chaque champ de saisie, en accord avec ce qui est décrit dans le fichier XML du formulaire,
+  * affichage des libellés de chaque champ dans des balises <label> pour une meilleure ergonomie/accessibilité,
+  * affichage automatique des messages d'erreurs,
+  * affichage des messages d'aide,
+  * intégration du code javascript qui vérifiera le bon contenu des données saisies avant validation du formulaire,
+  * code HTML généré valide, avec un effort sur l'accessibilité,
+  * des classes sur les balises générés pour pouvoir les styler facilement.
+
+
+===== Affichage sans personnalisation =====
+
+Pour les développeurs pressés, il existe un plugin de template qui affiche tout tout seul : **formfull**. Vous ne pouvez pas contrôler la façon dont sont affichés les champs de saisie, leur libellés et les boutons de validation. La seule chose que vous pouvez personnaliser c'est l'affichage des messages d'erreurs et d'aide (voir plus loin).
+
+Vous devez passer à ce plugin, les paramètres suivant :
+
+   * l'objet formulaire
+   * le selecteur de l'action où le contenu du formulaire sera envoyé
+   * facultatif : les paramètres de l'url de cette action (autre que les champs de saisie)
+
+Voici un exemple dans le contrôleur :
+
+<code php>
+    $form = jForms::get('monform');
+    $tpl = new jTpl();
+    $tpl->assign('formulaire', $form);
+</code>
+
+Attention, //jForms::get// retourne une instance du formulaire ayant déjà été créée. Si elle n'a jamais été créée, vous devez la générer :
+<code php>
+    if (! $form = jForms::get('monform')) {
+        $form = jForms::create('monform');
+    }
+</code>
+
+Et dans le template :
+
+<code html>
+   <h1>Le formulaire</h1>
+   <p>Remplissez le formulaire suivant :</p>
+
+   {formfull $formulaire, 'monmodule~default:sauver'}
+
+</code>
+
+Les libellés et les champs de saisies s'affichent dans un tableau, et les boutons de validation dans une div en dessous du tableau.
+
+===== Affichage contrôlé =====
+
+D'autres plugins que //formfull// existent permettant de mieux contrôler l'affichage des champs de saisie, en particulier, de pouvoir définir les endroits où les champs seront placés.
+
+Le premier plugin à connaître, est le plugin **form**. Il a les même paramètres que //formfull//. C'est un plugin de type bloc, c'est à dire qu'il y a une balise de fin, et qu'entre les deux balises //form//, on y placera les autres plugins.
+
+
+
+==== affichage contrôlé simple ====
+
+Le plugin **formcontrols** permet de faire une boucle sur la liste des champs de saisie. C'est aussi un bloc dans lequel on utilisera les plugins **ctrl_label** et **ctrl_control** pour afficher respectivement le libellé et le champs de saisie. Et on utilise le plugin //formsubmit// pour afficher le bouton de validation déclaré dans le fichier xml, ainsi que //formreset// pour afficher le bouton reset si il est déclaré lui aussi dans le fichier xml.
+
+Exemple :
+
+<code html>
+  {form $formulaire, 'monmodule~default:sauver'}
+
+   <fieldset><legend>Saisissez : </legend>
+
+      {formcontrols}
+         <p> {ctrl_label} : {ctrl_control} </p>
+      {/formcontrols}
+
+   </fieldset>
+
+   <div> {formreset}{formsubmit} </div>
+
+  {/form}
+</code>
+
+Notez que les champs seront affiché dans le même ordre que leur déclaration dans le fichier XML. Notez également qu'ici le template est **totalement indépendant** du contenu du formulaire. Il pourrait être réutilisé avec plusieurs formulaires.
+
+==== aller plus loin dans le contrôle de l'affichage ====
+
+Il arrive que l'on ne veuille pas présenter tout les champs de saisie de la même façon. On peut alors indiquer une liste des noms des champs à afficher au plugin //formcontrols//.
+
+<code html>
+  {form $formulaire, 'monmodule~default:sauver'}
+
+   <fieldset><legend>Votre identité : </legend>
+
+      {formcontrols array('nom','prenom','adresse')}
+         <p> {ctrl_label} : {ctrl_control} </p>
+      {/formcontrols}
+
+   </fieldset>
+   <fieldset><legend>Autres renseignements : </legend>
+
+      {formcontrols}
+         <p> {ctrl_label} : {ctrl_control} </p>
+      {/formcontrols}
+
+   </fieldset>
+
+   <div> {formsubmit} </div>
+  {/form}
+</code>
+
+Dans cet exemple, on affiche une première série de champs de saisie (les champs nom, prenom et adresse). Et une deuxième série dont on ne précise pas la liste de champs : //formcontrols// bouclera alors uniquement sur les champs qui n'ont pas encore été affiché.
+
+Vous pouvez aussi utiliser //ctrl_label// et //ctrl_control// en dehors d'une boucle //formcontrols//. Vous devez alors leur indiquer un nom de champs.
+
+<code html>
+  {form $formulaire, 'monmodule~default:sauver'}
+   <fieldset><legend>Votre identité : </legend>
+        <table>
+          <tr><td>{ctrl_label 'nom'}</td><td>{ctrl_control 'nom'}</td> </tr>
+          <tr><td>{ctrl_label 'prenom'}</td><td>{ctrl_control 'prenom'}</td></tr>
+        </table>
+   </fieldset>
+   <fieldset><legend>Autres renseignements : </legend>
+      {formcontrols}
+         <p> {ctrl_label} : {ctrl_control} </p>
+      {/formcontrols}
+   </fieldset>
+   <div> {formsubmit} </div>
+  {/form}
+</code>
+
+Ici on affiche les champs noms et prenoms à des endroits précis, et le reste sera affiché par le plugin formcontrols qui suit.
+
+==== contrôle de l'affichage des champs de type password ====
+
+Pour les champs de saisie de mot de passe pour lesquels il y a un champ de confirmation (balise confirm), si vous indiquez explicitement leur affichage, il faut aussi indiquer spécifiquement l'affichage du champs de confirmation, sachant que celui-ci a le nom du champs de saisie principale avec un suffixe **_confirm**.
+
+Par exemple, vous indiquez explicitement d'afficher le champs "motdepasse" qui est un mot de passe :
+
+<code html>
+  {form $formulaire, 'monmodule~default:sauver'}
+   <fieldset><legend>Créer votre compte : </legend>
+        <table>
+          <tr><td>{ctrl_label 'login'}</td><td>{ctrl_control 'login'}</td> </tr>
+          <tr><td>{ctrl_label 'motdepasse'}</td><td>{ctrl_control 'motdepasse'}</td></tr>
+        </table>
+   </fieldset>
+   <fieldset><legend>Autres renseignements : </legend>
+      {formcontrols}
+         <p> {ctrl_label} : {ctrl_control} </p>
+      {/formcontrols}
+   </fieldset>
+   <div> {formsubmit} </div>
+  {/form}
+</code>
+
+Ici, si le champs de confirmation ne s'affichera pas prés du champs de mot de passe. Il faut donc rajouter le champs "motdepasse_confirm" :
+
+<code html>
+   <table>
+      <tr><td>{ctrl_label 'login'}</td><td>{ctrl_control 'login'}</td> </tr>
+      <tr><td>{ctrl_label 'motdepasse'}</td><td>{ctrl_control 'motdepasse'}</td></tr>
+      <tr><td>{ctrl_label 'motdepasse_confirm'}</td><td>{ctrl_control 'motdepasse_confirm'}</td></tr>
+   </table>
+</code>
+
+Par contre, il n'est pas besoin de préciser le champs de confirmation quand on afficher le champs de saisie de mot de passe dans une boucle //formcontrols//.
+
+
+==== contrôle de l'affichage des boutons d'envoi ====
+
+On a vu que l'on pouvait utiliser le plugin //formsubmit// pour afficher le bouton d'envoi déclaré dans votre formulaire. Mais utilisé comme cela, si vous avez déclaré plusieurs balises submit, seule le premier bouton sera affiché. Dans ce cas là il faut utiliser le plugin **formsubmits** (avec un s), qui est une boucle sur les boutons d'envoi :
+
+<code html>
+    <ul>
+    {formsubmits}
+       <li>{formsubmit}</li>
+    {/formsubmits}
+    </ul>
+</code>
+
+Ou encore, vous pouvez utiliser plusieurs plugins //formsubmit//, sans //formsubmits//, en indiquant le nom du bouton :
+
+<code html>
+<div> {formsubmit 'preview'} {formsubmit 'save'} </div>
+</code>
+
+**Attention** : //{formsubmits}// boucle sur la liste des contrôles submit, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://dev.jelix.org/ticket/429|ticket #429]])
+
+
+
+===== Classes CSS à connaître =====
+
+Pour styler les balises générées par jForms, il y a quelques classes de style à connaître (certaines de ces classes ont été ajoutée dans la version 1.0.1).
+
+  * **jforms-table** : c'est la classe du tableau généré par le plugin //formfull//
+  * **jforms-submit-buttons** : c'est la classe de la div générée par le plugin //formfull//, contenant les boutons d'envois.
+  * **jforms-submit** : classe sur chaque bouton submit
+  * **jforms-reset** : classe sur chaque bouton reset
+  * **jforms-error-list** : classe de la liste (ul) des messages d'erreurs.
+  * **jforms-label** : classe placée sur toutes les balises <label>
+  * **jforms-required** : classe placée sur toutes les balises <label> dont les champs sont obligatoires
+  * **jforms-error** : classe placée sur toutes les balises <label> et sur les champs de saisies qui sont en erreur
+  * **jforms-value** : classe sur les élements span contenant les valeurs des champs de type output.
+  * **jforms-help** : classe placée sur les élements span contenant les liens d'aide.
+  * **jforms-chkbox** : classe placée sur le span qui entoure chaque checkbox d'un controle checkboxes.
+  * **jforms-ctl-xxx** : classe placée sur chaque checkbox d'un controle checkboxes, ou chaque boutons radio d'un contrôle radiobuttons (xxx étant remplacé par le ref du controle).
+  * **jforms-radio** : classe placée sur le span qui entoure boutons radio d'un contrôle radiobuttons.
+
+===== Utilisation de jforms dans des réponses Ajax =====
+
+Voir [[//responseajax|la note sur la page des réponses ajax]]
+
+===== Personnalisation de l'affichage des messages =====
+
+Les messages d'erreurs, qui peuvent survenir lors de la vérification du formulaire avant l'envoi des données, et les messages d'aides qui apparaissent quand on clique sur le point d'interrogation , sont affiché dans une boite de dialogue de type alert.
+
+Vous pouvez changer ça, en fournissant aux plugins //form// ou //formfull// des objets javascript qui s'occuperont d'afficher ces messages.
+
+==== Affichage des messages d'erreurs ====
+
+Pour les messages d'erreurs, il faut créer un objet javascript qui contient trois méthodes :
+
+  * **start**, qui est appelé quand le processus de vérification commence
+  * **addError**, qui est appelé quand une erreur est trouvée. Cette méthode reçoit un objet javascript //jFormsControl// qui contient des données relatifs au champs de saisie en faute, et un code erreur : 1 si le champs n'est pas renseigné alors qu'il est obligatoire, et 2 si le contenu saisi est invalide.
+  * **end**, qui est appelé quand le processus de vérification est terminé
+
+Dans ces méthodes vous faites ce que vous voulez. Par exemple, dans addError, vous pouvez insérer dans une liste html le message d'erreur, comme dans l'exemple (l'élément "errors" est une liste <ul> quelque part dans votre page html):
+
+<code javascript>
+function MyErrorDecorator(){
+}
+
+MyErrorDecorator.prototype = {
+    start : function(){
+    },
+    addError : function(control, messageType){
+        var message='';
+        if(messageType == 1){
+            message = control.errRequired;
+        }else if(messageType == 2){
+            message = control.errInvalid;
+        }else{
+            message = "Error on '"+control.label+"' field";
+        }
+        var item = document.createElement("li");
+        item.appendChild(document.createTextNode(message));
+        document.getElementById("errors").appendChild(item);
+    },
+    end : function(){
+    }
+}
+</code>
+
+
+Ensuite vous l'indiquez au plugin //form// ou //formfull//, en 4ième argument :
+
+<code html>
+  {form $formulaire, 'monmodule~default:sauver', array(), "MyErrorDecorator"}
+   ...
+  {/form}
+</code>
+
+En ce qui concerne l'objet jFormsControl que addError reçoit en paramètre (ici //control//), voici les propriétés utiles qu'il contient :
+
+   * **name** : le nom du contrôle, du champs de saisie
+   * **label** : son libellé
+   * **datatype** : type de donnée (attribut type pour les input dans le fichier xml)
+   * **required** : booléen indiquant si il est obligatoire
+   * **readonly** : booléen indiquant si il est en lecture seule
+   * **errInvalid** : message d'erreur prédéfini quand son contenu est invalide
+   * **errRequired** : message d'erreur prédéfini quand le champs n'est pas renseigné
+   * **help** : message d'aide
+
+
+==== Affichage des messages d'aides ====
+
+Pour les messages d'aide, c'est le même principe que pour les messages d'erreur, mais l'objet ne doit contenir qu'une méthode, //show// qui est appelé avec en paramètre le message affiché.
+
+<code javascript>
+function MyHelpDecorator(){ }
+
+MyHelpDecorator.prototype = {
+    show : function(message){
+        document.getElementById("help").firstChild = document.createTextNode(message);
+    }
+}
+</code>
+
+Ensuite il faut indiquer cet objet en 5ième argument de //form// ou //formfull// :
+
+
+<code html>
+  {form $formulaire, 'monmodule~default:sauver', array(), "", "MyHelpDecorator"}
+   ...
+  {/form}
+</code>
+
+Notez ici que l'on a indiqué "" pour l'affichage des erreurs : jforms utilisera alors l'afficheur par défaut. Mais vous pouvez aussi indiquer un autre, en même temps que l'afficheur d'aide.

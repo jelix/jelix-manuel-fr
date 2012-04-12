@@ -1,0 +1,45 @@
+
+
+===== jLog =====
+
+jLog est une classe qui permet de tracer, ou plus précisément d'écrire des messages ou le contenu de variable dans un fichier journal. Elle possède pour cela deux méthodes statiques :
+
+  * **jLog::log($message)** pour écrire un message dans le fichier journal
+  * **jLog::dump($variable, $message)** pour écrire le contenu de la variable dans le fichier journal (il s'agit en fait d'un var_export)
+
+Le fichier journal par défaut est //var/log/messages.log// dans votre application.
+
+Vous pouvez avoir plusieurs fichiers journaux. Pour cela, dans la configuration, vous indiquez ces fichiers dans la section **logfile** :
+
+<code ini>
+[logfiles]
+default = messages.log
+news = modulenews.log
+</code>
+
+Vous pouvez alors indiquer le code du fichier journal à utiliser, en paramètre supplémentaire aux méthodes log et dump :
+<code php>
+ jLog::log("hello !", "news");
+ jLog::dump($record, "enregistrement news", "news");
+</code>
+
+Enfin, il arrive que plusieurs développeurs travaillent sur un même serveur : il y aurait alors dans un même fichier toutes les traces que chacun aurait mis. Il est possible d'avoir autant de fichier journaux que de développeur, à condition qu'ils aient une adresse IP différente. Il suffit d'inclure "%ip%" dans le nom du fichier :
+
+<code ini>
+[logfiles]
+default = "messages_%ip%.log"
+news = "%ip%_modulenews.log"
+</code>
+
+Ainsi, si un développeur a son poste de travail en 192.168.1.2, alors il y aura des fichiers 192.168.1.2_modulenews.log et messages_192.168.1.2.log
+
+
+Vous pouvez aussi construire les noms des fichiers de log avec la date et l'heure : pour cela, incluez un ou plusieurs des "tags" suivant dans le nom : %Y% (année), %m% (mois), %d% (jour),  %H% (heure).
+
+Si vous voulez afficher les messages de log dans la réponse, ou dans Firebug (une extension pour Firefox), indiquez respectivement "!response" et "!firebug" comme nom de fichier :
+
+<code ini>
+[logfiles]
+default = "!response"
+news = "!firebug"
+</code>

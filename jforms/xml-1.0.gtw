@@ -1,0 +1,488 @@
+La version 1.0 du format décrit dans cette page est utilisable depuis Jelix 1.0. Dans les betas de Jelix 1.0, il est possible que certains des attributs ou balises n'étaient pas disponibles, mais ces différences ne sont plus documentées.
+
+
+===== Structure principale =====
+
+Le document XML que vous écrivez dans un fichier jForms est composé d'une balise <form> comme racine.
+
+<code xml>
+<?xml version="1.0" encoding="utf-8"?>
+<form xmlns="http://jelix.org/ns/forms/1.0">
+
+</form>
+</code>
+
+Dans cette balise, vous indiquerez les balises correspondantes à chacun des contrôles (champs de saisies) composant le formulaire. Le traitement et l'affichage de ces contrôles se feront dans le même ordre que celui de leur apparition dans le document.
+
+**Notez que le namespace pour cette version du format est http://jelix.org/ns/forms/1.0**
+
+===== Propriétés communes aux contrôles =====
+
+
+
+==== Identifiant ====
+
+Chaque contrôle doit avoir un identifiant (= un nom). Vous devez en indiquer un avec l'attribut **ref**. Cet identifiant correspond en fait à ce qu'on appelle une variable de formulaire et qui contiendra la valeur saisie.
+
+Exemple:
+<code xml>
+  <input ref="nom">
+  </input>
+</code>
+
+
+Note : quand vous voulez utiliser un formulaire avec un ou plusieurs DAO, il est judicieux d'utiliser les mêmes noms que les propriétés des DAO, afin de pouvoir utiliser les mécanismes de chargement et sauvegarde automatique de jForms avec les DAO.
+
+
+==== Libellé ====
+
+Tout champ de saisie doit contenir un libellé indiqué au moyen de la balise **<label>** :
+
+<code xml>
+  <input ref="nom">
+    <label>Votre nom</label>
+  </input>
+</code>
+
+On peut indiquer une [[//locales|locale]] plutôt qu'une chaîne "en dur" :
+
+<code xml>
+  <input ref="nom">
+    <label locale="mymodule~forms.input.name"/>
+  </input>
+</code>
+
+
+
+==== Messages informatifs ====
+
+Un message d'aide (optionnel) peut être affiché en même temps que le contrôle de saisie, grâce à la balise **<help>** : vous y inscrivez soit le message d'aide, soit la locale (via l'attribut locale).
+
+<code xml>
+  <input ref="datenaissance" type="date">
+    <label locale="mymodule~forms.input.naissance"/>
+    <help>Indiquez votre date de naissance, en respectant le format aaaa-mm-jj</help>
+  </input>
+
+ou
+
+  <input ref="datenaissance" type="date">
+    <label locale="mymodule~forms.input.naissance"/>
+    <help locale="mymodule~forms.input.naissance.help"/>
+  </input>
+</code>
+
+Dans les formulaires en HTML, un point d'interrogation s'affichera à côté du champ de saisie et le message d'aide s'affichera lors d'un clique sur ce point d'interrogation. 
+
+Un autre type de message informatif peut être affiché sous forme de tooltip. Il faut pour cela utiliser la balise **<hint>**, qui s'utilise comme la balise **<help>**.
+
+==== Messages d'erreurs ====
+
+Quand le contenu du champs de saisie est invalide, ou que la saisie est manquante alors qu'elle est requise, jForms affiche des messages d'erreurs prédéfinis. Cependant vous pouvez fournir vous même ces messages au moyen de la balise **<alert>**. Un attribut **type** permet de définir soit le message pour l'erreur d'invalidité, soit le message pour la saisie obligatoire. Et comme les balises précédentes, vous pouvez indiquer le message complet, ou indiquer une locale au moyen de l'attribut locale.
+
+<code xml>
+  <input ref="datenaissance" type="date">
+    <label locale="mymodule~forms.input.naissance"/>
+    <alert type="required" locale="mymodule~forms.input.naissance.error.required"/>
+    <alert type="invalid">Le format de la date à respecter pour la saisie est aaaa-mm-jj</alert>
+  </input>
+</code>
+
+
+
+==== Saisie obligatoire ====
+
+Pour rendre la saisie obligatoire sur un champ de saisie, il faut mettre l'attribut **required** avec la valeur **true**. Cet attribut n'est pas valable sur l'élement **<submit>**, **<checkbox>** et **<output>**.
+
+
+
+==== Lecture seule ====
+
+Il est possible d'empêcher la modification d'un champ de saisie (c'est toutefois rare d'avoir à le faire). Pour cela, il faut mettre l'attribut **readonly** avec la valeur **true**. Cet attribut n'est pas valable sur l'élément **<submit>** et **<output>**.
+
+===== Champs de saisie =====
+
+
+
+==== Saisie de texte simple ====
+
+Pour afficher un simple champs de saisie, il faut utiliser la balise **<input>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Vous pouvez indiquer aussi cinq attributs supplémentaires : **type**, **defaultvalue**, **size**, **minlength** et **maxlength**.
+
+**defaultvalue** permet d'indiquer une valeur par défaut qui sera affichée quand le formulaire est vide. Vous pouvez mettre la valeur "now" pour les champs de saisies de dates. La valeur par défaut sera alors la date de maintenant.
+
+**size** permet d'indiquer la largeur de la boite de saisie en nombre de caractères.
+
+**maxlength** et **minlength** permet d'ajouter une contrainte sur la valeur saisie : la longueur minimale et maximale de la chaine de caractère saisie. Ces deux attributs ne sont utilisables que pour le type="string".
+
+**type** permet d'indiquer le format de donnée que l'utilisateur doit respecter. Au moment de l'envoi  du formulaire, il y aura une vérification en javascript du contenu saisie, mais aussi une vérification coté serveur (au cas où le javascript est désactivé notamment) lors de l'appel à la méthode check() sur l'objet formulaire.
+
+Voici les valeurs possibles pour l'attribut **type** et ce que doit taper l'utilisateur :
+
+  * "string" : chaîne contenant n'importe quel caractère. (c'est le type par défaut)
+  * "boolean" : la valeur du champs doit être obligatoirement "true" ou "false"
+  * "decimal" : un nombre avec ou sans virgule
+  * "integer" : un nombre entier
+  * "hexadecimal" : un nombre hexadecimal (chiffres de 0 à 9 et lettres de a à f)
+  * "datetime", "date", "time" : une date et heure, une date ou une heure. Le format précis est respectivement "aaaa-mm-jj hh:mm:ss", "aaaa-mm-jj", "hh:mm:ss".
+  * "localedatetime", "localedate", "localetime" : une date et heure, une date ou une heure, mais dans le format de la langue de l'utilisateur. Par exemple, pour un site en français, le format de la date devra être "jj/mm/aaaa", et pour un site en anglais "mm/jj/aaaa".
+  * "url" : la chaîne doit être une URL valide
+  * "email" : un email
+  * "ipv4" : une adresse IP v4
+  * "ipv6" : une adresse IP v6
+
+Un exemple de champs de saisie simple :
+
+<code xml>
+  <input ref="email" type="email">
+     <label locale="monmodule~monform.email.label" />
+     <hint>L'email doit être valide</hint>
+  </input>
+</code>
+
+==== Saisie de texte multiligne ====
+
+Pour permettre la saisie d'un texte de plusieurs lignes, il faut utiliser la balise **<textarea>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Il y a plusieurs attributs spécifiques à cette balise : **defaultvalue**, **rows**, **cols**, **minlength** et **maxlength**.
+
+**defaultvalue** permet d'indiquer une valeur à afficher automatiquement pour un nouveau formulaire, tandis que **rows** et **cols** permettent de fixer la taille du champs de saisie en hauteur et largeur (comme le textarea en HTML).
+
+Un exemple :
+<code xml>
+  <textarea ref="message">
+     <label locale="monmodule~monform.message.label" />
+     <hint>Saisissez ici le message</hint>
+  </textarea>
+</code>
+
+**maxlength** et **minlength** permettent d'ajouter une contrainte sur la valeur saisie : la longueur minimale et maximale de la chaine de caractères saisie.
+
+==== Mot de passe ====
+
+Pour la saisie d'un mot de passe ou tout autre renseignement qui doit être caché lors de la saisie, vous utiliserez la balise **<secret>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//.
+
+<code xml>
+  <secret ref="password">
+     <label>Votre mot de passe</label>
+     <hint>Indiquez le mot de passe que l'on vous a donné à l'inscription</hint>
+  </secret>
+</code>
+
+Vous pouvez utiliser l'attribut //size// pour indiquer la largeur du champs de saisie.
+
+Il est souvent utile de demander à l'utilisateur de saisir une deuxième fois un nouveau mot de passe, lors d'une inscription par exemple. jForms gère cela automatiquement. Il suffit d'indiquer la balise **<confirm>** dans la balise <secret>, et le formulaire HTML généré contiendra deux champs de saisie. La balise <confirm> doit contenir soit l'intitulé du libellé pour la confirmation, soit un attribut **locale** contenant le selecteur de la locale pour le libellé de la confirmation.
+
+<code xml>
+  <secret ref="newpassword">
+     <label>Mot de passe</label>
+     <hint>Indiquez un nouveau mot de passe</hint>
+     <confirm>Retapez ce mot de passe</confirm>
+  </secret>
+</code>
+
+Cela génèrera en gros, pour un formulaire html :
+
+<code html>
+   <label for="newpassword">Mot de passe</label>
+        <input type="password" id="newpassword" name="newpassword" title="Indiquez un nouveau mot de passe"/>
+
+   <label for="newpassword_confirm">Retapez ce mot de passe</label>
+        <input type="password" id="newpassword_confirm" name="newpassword_confirm"/>
+</code>
+
+==== Case à cocher seule====
+
+Pour afficher une case à cocher, utiliser la balise **<checkbox>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que l'attribut //readonly// (mais pas //required//).
+
+<code xml>
+  <checkbox ref="souvenir">
+     <label>Se souvenir de moi</label>
+     <help>Cochez cette case si vous voulez être identifié automatiquement la prochaine fois</help>
+  </checkbox>
+</code>
+
+Par défaut, la valeur de la case à cocher, que vous récupèrerez une fois le contenu du formulaire reçu, vaudra **0** si la case n'a pas été cochée, ou **1** si elle l'a été.
+
+Vous pouvez décider d'autres valeurs pour chacun de ces deux états. Il suffit d'indiquer les attributs **valueoncheck** et **valueonuncheck** (qui valent donc par défaut, respectivement 1 et 0). Exemple :
+
+<code xml>
+  <checkbox ref="souvenir" valueoncheck="O" valueonuncheck="N">
+     <label>Se souvenir de moi</label>
+     <help>Cochez cette case si vous voulez être identifier automatiquement la prochaine fois</help>
+  </checkbox>
+</code>
+
+Notez que lorsque vous afficherez un formulaire prérempli, la case sera cochée ou non en fonction de la valeur initiale, selon que celle-ci corresponde à la valeur de valueoncheck ou de valueonuncheck.
+
+==== Liste de cases à cocher ====
+
+On peut avoir à afficher une série de case à cocher qui correspondent à des choix multiples, par exemple afficher une liste de choses à acheter, et l'utilisateur coche les articles qu'il veut acheter. Pour cela on utilisera la balise <checkboxes> (avec un **S** à la fin).
+
+Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//.
+
+Il vous faut aussi indiquer la liste des valeurs possibles et leurs libellés. Voir la section "sources de données" plus bas.
+
+Exemple :
+
+<code xml>
+   <checkboxes ref="articles">
+      <label>Sélectionnez les articles que vous voulez acheter :</label>
+      <item value="54">sucre</item>
+      <item value="27">steack</item>
+      <item value="32">jus d'orange</item>
+  </checkboxes>
+</code>
+
+Ceci affichera une série de trois cases à cocher, ayant pour intitulé "sucre", "steack" et "jus d'orange". Quand le formulaire sera envoyé au serveur, la valeur que vous recevrez pour la variable de formulaire "articles", sera un tableau PHP contenant les valeurs des case qui ont été cochée. Par exemple, si l'utilisateur a coché "steack", coté serveur vous recevrez //array(27)//. Si il a en plus coché "sucre", vous recevrez //array(54, 27)//.
+
+(voir la page sur la [[utilisation|gestion du contenu d'un formulaire coté serveur]])
+
+==== Boutons radios ====
+
+Les boutons radios vont toujours par groupe, d'au moins 2. Pour déclarer un groupe de boutons radio, vous utiliserez la balise **<radiobuttons>**.
+
+Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Comme pour les autres contrôles de type liste, vous devez indiquer la liste des valeurs possibles et leurs libellés. Voir la section "sources de données" plus bas.
+
+Exemple :
+
+<code xml>
+   <radiobuttons ref="couleur">
+      <label>Couleur de votre voiture:</label>
+      <item value="r">Rouge</item>
+      <item value="b">Bleue</item>
+      <item value="v">Verte</item>
+      <item value="j">Jaune</item>
+  </radiobuttons>
+</code>
+
+Ceci affichera une série de 4 boutons radio, et la valeur choisie sera stockée dans la variable de formulaire "couleur".
+
+
+==== Liste déroulante ====
+
+La balise **<menulist>** affiche une liste déroulante (//<select size="1">// en HTML), et de par sa nature, un seul choix est possible. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Comme pour les autres contrôles de type liste, vous devez indiquer la liste des valeurs possibles et leurs libellés. Voir la section "sources de données" plus bas.
+
+Exemple :
+
+<code xml>
+   <menulist ref="ville">
+      <label>votre ville :</label>
+      <item value="75000">Paris</item>
+      <item value="37000">Tours</item>
+      <item value="44000">Nantes</item>
+      <item value="69000">Lyon</item>
+  </menulist>
+</code>
+
+La variable de formulaire contiendra la valeur de l'item sélectionné.
+
+==== Liste non déroulante ====
+
+Les listes déroulantes, ou encore listbox (Équivalent de la balise //<select>// en HTML), sont déclarées au moyen de balise **<listbox>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Comme pour les autres contrôles de type liste, vous devez indiquer la liste des valeurs possibles et leurs libellés. Voir la section "sources de données" plus bas.
+
+<code xml>
+   <listbox ref="rubrique">
+      <label>Rubrique préférée :</label>
+      <item value="1">Tutoriels</item>
+      <item value="2">Manuels</item>
+      <item value="3">Forums</item>
+  </listbox>
+</code>
+
+Vous pouvez indiquer un attribut **size** qui permet d'indiquer le nombre d'items affichables en même temps (donc la hauteur de la liste). Par défaut, elle vaut 4.
+
+Par défaut, un seul choix est possible. Cependant en ajoutant l'attribut **multiple="true"**, l'utilisateur pourra sélectionner plusieurs éléments de la liste (dans une page HTML, il faut que l'utilisateur appuie sur la touche CTRL en même temps qu'il clique sur un item). Dans ce cas, dans la variable de formulaire "rubrique", au lieu d'avoir une simple valeur correspondant à l'item sélectionné, vous aurez un tableau PHP avec toutes les valeurs des items choisis. 
+
+==== Upload de fichier ====
+
+Pour permettre à l'utilisateur de télécharger un fichier vers le serveur, vous pouvez utiliser la balise **<upload>** (équivalent de //<input type="file">// en HTML). Comme pour les autres contrôles, vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//.
+
+Deux attributs supplémentaires sont à votre disposition, pour contrôler la nature et la taille des fichiers, qui sont respectivement **mimetype** (devant contenir un ou plusieurs type mime) et **maxsize** (taille en octets).
+
+Attention : sous IE, le type-mime des images .jpg et .jpeg sont considéré comme du Progressive JPEG, soit image/pjpeg. Assurez vous de rajouter ce type-mime en plus du image/jpeg si vous voulez autoriser le format JPEG.
+
+<code xml>
+  <upload ref="photo" mimetype="image/jpeg;image/pjpeg;image/png" maxsize="20000">
+    <label>Votre photo</label>
+  </upload>
+</code>
+
+À la réception du fichier, jForms vérifie si il correspond au type et à la taille indiqués, et l'on peut ensuite lui indiqué où stocker le fichier téléchargé. La variable de formulaire contiendra le nom du fichier.
+
+
+==== Boutons de validation ====
+
+Dans un formulaire, il faut bien sûr au moins un bouton qui permette à l'utilisateur de valider la saisie et envoyer les données au serveur. Vous déclarez un bouton de ce type avec la balise **<submit>**. Comme pour les autres contrôles, vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>//  (mais pas les attributs //readonly// ni //required//).
+
+<code xml>
+  <submit ref="submit">
+    <label>Ok</label>
+  </submit>
+</code>
+
+La variable de formulaire correspondante ne contiendra rien d'intéressant. À moins que vous ayez besoin de plusieurs boutons de soumission, représentant par exemple l'action à effectuer après l'envoi du formulaire comme un bouton "prévisualiser" et un autre "sauvegarder". Dans ce cas, vous utiliserez comme pour les autres contrôles de type liste, un dao ou les balises item :
+
+<code xml>
+  <submit ref="valider">
+    <label>Veuillez valider</label>
+    <item value="preview">Prévisualiser</item>
+    <item value="svg">Sauvegarder</item>
+  </submit>
+</code>
+
+Dans la variable de formulaire "valider", vous aurez alors la valeur "preview" ou "svg", et vous pourrez agir en fonction de ces valeurs dans le contrôleur. Au niveau du formulaire HTML, cela affichera deux boutons avec leurs libellés respectifs "Prévisualiser" et "Sauvegarder".
+
+==== Bouton reset ====
+
+Pour afficher un bouton reset avec jForms, il faut utiliser la balise <reset> :
+
+<code xml>
+  <reset ref="reinit">
+    <label>Réinitialiser</label>
+  </reset>
+</code>
+
+
+==== Affichage de valeurs ====
+
+La balise **<output>** ne sert qu'à afficher une valeur. Cette dernière ne sera donc pas éditable. Cela peut être utile pour afficher un formulaire de tout un enregistrement sans pour autant éditer tout les champs. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>//  (mais pas les attributs //readonly// ni //required//).
+
+<code xml>
+  <output ref="categorie">
+    <label>Catégorie</label>
+  </output>
+</code>
+
+
+===== Source de données =====
+
+Les contrôles tels que **menulist**, **listbox** et **radiobuttons**, **checkboxes** contiennent plusieurs choix de valeurs pour l'utilisateur. Il convient donc d'indiquer dans ces contrôles la manière dont jForms va récupérer les valeurs et libellés de ces choix.
+
+Il y a pour le moment trois façons de faire :
+  - indiquer ces choix en dur dans le fichier jForms (données statiques)
+  - indiquer un DAO qui permettra de les récupérer.
+  - indiquer une classe qui fournis ces données.  
+
+==== Données statiques ====
+
+Elles doivent être indiquées au moyen d'une ou plusieurs balises **<item>**. La valeur du choix doit être mis dans un attribut **value**. Le libellé du choix doit être mis en tant que contenu de la balise **<item>**, ou dans un fichier de locale et alors vous indiquez la locale au moyen de l'attribut **locale**. Si aucun label est indiqué, le label sera la valeur. Exemple :
+
+<code xml>
+   <checkboxes ref="objets">
+      <label>Vous avez </label>
+      <item value="maison">Une maison</item>
+      <item value="voiture" locale="mymodule~myform.item.car.label" />
+      <item value="bateau"/>
+  </checkboxes>
+</code>
+
+
+==== Données dynamiques avec un DAO ====
+
+Le contenu d'une liste peut être rempli grâce à un DAO. Vous devez alors indiquer au moins 3 attributs :
+
+   - **dao**, indiquant le sélecteur de la DAO à utiliser
+   - **daomethod**, indiquant la méthode de la DAO qui génère la liste des choix
+   - **daolabelproperty**, indiquant quelle est la propriété de la DAO qui contient le libellé du choix
+
+La valeur de chaque choix sera la valeur de la clé primaire de la DAO. Cependant, si vous voulez indiquer une autre propriété de la DAO, vous pouvez l'indiquer dans l'attribut **daovalueproperty**.
+
+Exemple :
+
+<code xml>
+  <menulist ref="conf" dao="testapp~config" 
+                       daomethod="findAll"
+                       daolabelproperty="cvalue"
+                       daovalueproperty="ckey">
+      <label>Sélectionnez l'élément de configuration à éditer</label>
+  </menulist>
+</code>
+
+==== Données dynamiques avec une classe ====
+
+Si vous voulez fournir les données dynamiquement d'une autre manière que par un dao, vous pouvez créer une classe, qui devra implémenter l'interface **jIFormDatasource**. Elle sera stockée dans un répertoire //classes/// d'un module, et vous l'indiquerez via l'attribut dsclass.
+
+Exemple de classe :
+<code php>
+class listDatas implements jIFormDatasource
+{
+  protected $formId = 0;
+
+  protected $datas = array();
+
+  function __construct($id)
+  {
+    $this->formId = $id;
+    $this->datas = array(0 => 'test',
+                         1 => 'test 2',
+                         2 => 'Id = '. $id);
+  }
+
+  public function getDatas()
+  {
+    return ($this->datas);
+  }
+
+  public function getLabel($key)
+  {
+    if(isset($this->datas[$key]))
+      return $this->datas[$key];
+    else
+      return null;
+  }
+
+}
+</code>
+
+Et dans le fichier jforms :
+<code xml><code xml>
+  <menulist ref="icone" dsclass="monmodule~listDatas">
+        <label locale="elements.crud.label.icone" />
+  </menulist>
+</code>
+
+==== Autre source de données ====
+
+Si l'utilisation d'un DAO, d'une classe ou de données statiques n'est pas suffisant pour vous, regardez la section "Définir les choix d'un champs à multiple choix" dans la page [[utilisation|Utilisation de jforms]].
+
+Dans ce cas là, vous ne devez pas indiquer de balises <item> ou d'attributs dao*/dsclass.
+
+==== Présélection de valeurs ====
+
+Dans une liste de choix, il est possible d'indiquer des valeurs par défaut qui seront sélectionnées. Vous avez trois façons de le faire :
+
+   - soit indiquer un attribut **selected="true"** sur chaque balise **item** voulue si vous utilisez celles-ci. Plusieurs items peuvent avoir un attribut **selected** seulement sur les listes de case à cocher (checkboxes), soit sur une listbox "multiple". Dans les autres cas, un seul item doit avoir l'attribut **selected**.
+   - soit indiquer un attribut **selectedvalue** sur la balise du contrôle, en y stockant la valeur séléctionnée. Cependant vous ne pouvez indiquer qu'une valeur, donc un seul choix ne sera sélectionné par défaut
+   - soit indiquer un element **<selectedvalues>** contenant des éléments **<value>**. Cette manière de faire est toute indiquée pour **checkboxes** et listbox en multiple, et quand la source de données est une dao.
+
+Exemples :
+
+<code xml>
+  <radiobuttons ref="home">
+      <label>Vous habitez</label>
+      <item value="pa" selected="true">Paris</item>
+      <item value="ma">Marseille</item>
+      <item value="ly">Lyon</item>
+      <item value="br">Brest</item>
+      <item value="li">Lille</item>
+      <item value="bo">Bordeaux</item>
+  </radiobuttons>
+
+  <menulist ref="conf" selectedvalue="foo.bar"
+                       dao="testapp~config" 
+                       daomethod="findAll"
+                       daolabelproperty="cvalue"
+                       daovalueproperty="ckey">
+      <label>Sélectionnez l'élément de configuration à éditer</label>
+  </menulist>
+
+  <listbox ref="objets" required="true" multiple="true">
+      <label>Vous avez </label>
+      <item value="maison">Une maison</item>
+      <item value="voiture">Une voiture</item>
+      <item value="bateau">Un bateau</item>
+      <item value="assiette">Une assiette</item>
+      <selectedvalues>
+           <value>maison</value>
+           <value>bateau</value>
+      </selectedvalues>
+  </listbox>
+</code>

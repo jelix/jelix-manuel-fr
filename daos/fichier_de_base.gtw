@@ -1,0 +1,171 @@
+
+Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping objet-relationnel, c'est à dire indiquer dans ce fichier la correspondance entre les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
+
+
+===== Création automatique =====
+
+
+Le fichier d'un DAO peut être généré par le script //jelix// en ligne de commande, à partir d'une table de base de donnée existante.
+
+<code bash>
+ php jelix.php createdao nom_module nom_dao nom_table
+</code>
+
+Par exemple, si je veux créer dans le module "myshop", un DAO "product" qui sera basé sur la table "shop_product", vous taperez donc :
+
+<code bash>
+ php jelix.php createdao myshop product shop_product
+</code>
+
+Dans le répertoire //daos// du module //myshop// vous allez donc avoir un fichier XML //product.dao.xml// qui va contenir la description du mapping.
+
+Bien que la génération automatique permet de gagner du temps, il faut souvent retoucher le fichier pour que le mapping corresponde mieux à ce que l'on veut faire, le générateur ne pouvant tout deviner. Voyez alors la suite pour le compléter, ou en créer un à la main.
+
+
+===== Détails sur le format XML =====
+
+La structure d'un fichier DAO ressemble à cela :
+
+<code xml>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+   <datasources>
+     section datasources
+   </datasources>
+   <record>
+     section properties
+   </record>
+   <factory>
+     section methodes
+   </factory>
+</dao>
+</code>
+
+Il y a trois sections, sachant que la section "factory" (ou "methodes") est facultative et est décrite [[methodes_xml|dans une autre page dédiée]].
+  * //datasources// : indique les tables sur lequel reposera l'objet.
+  * //record// : indique la correspondance entre les propriétés de l'objet et les champs des tables et définit donc les propriétés qu'il y aura sur l'objet record.
+
+
+===== Correspondance simple =====
+
+
+
+==== Déclaration de la table ====
+
+On appelle correspondance simple, une correspondance où un record = une table. Pour déclarer la table sur laquelle reposera le DAO, on utilise la balise //primarytable//, avec les attributs suivants :
+
+  * //name// : alias donné à la table et qui sera utilisé dans les requêtes
+  * //realname// (facultatif) : nom réel de la table dans la base de données. Si cet attribut n'est pas précisé, il prend la même valeur que l'attribut //name//. Dans ce cas //name// doit être le nom réel de la table.
+  * //primarykey// indique la clé primaire. Vous pouvez indiquer plusieurs clés en les séparant par un espace ou une virgule.
+
+
+<code xml>
+  <datasources>
+      <primarytable name="p" realname="products" primarykey="id_product" />
+  </datasources>
+</code>
+
+On déclare ici que le record sera basé sur la table "products", qui a pour alias "p", et dont la clé primaire est "id_product".
+
+Il n'y a toujours qu'une seule table "primaire" dans un DAO (donc une seule balise <primarytable>). Vous verrez que l'on peut indiquer des tables annexes (étrangères) plus loin.
+
+Ensuite, il faut déclarer la correspondance propriété - champs.
+
+
+==== Déclaration des propriétés ====
+
+La section //record// déclare les propriétés d'un objet //record// (enregistrement). Chaque propriété correspond à l'un des champs de la table primaire, ou l'un de ceux des tables étrangères comme vous le verrez plus loin. Bien sûr, vous n'êtes pas obligés de déclarer une propriété pour tous les champs existants. On peut ainsi faire plusieurs DAO qui travaillent sur une même table mais qui sont destinés à des usages différents. Par exemple faire un DAO spécifique pour récupérer des listes légères d'enregistrement (on ne déclarera que les propriétés essentielles), et un autre pour les gérer de manière complète (on y indiquera tous les champs).
+
+La section //record// doit donc contenir une ou plusieurs balises <property> :
+
+<code xml>
+  <property 
+      name="nom simplifié" 
+      fieldname="nom du champ" 
+      datatype="" required="true/false" minlength="" maxlength="" regexp="" 
+      sequence="nom de la sequence"
+      updatepattern="" insertpattern="" selectpattern=""
+      default="" 
+   />
+</code>
+
+L'attribut //name// est le nom de la propriété de l'objet.
+
+L'attribut //fieldname// est le nom du champ qui correspond.
+Si //name// et //fieldname// sont égaux, on peut omettre //fieldname//.
+
+Les attributs //datatype//, //required//, //minlength//, //maxlength//, et //regexp// sont des contraintes. Cela permet par la suite d'appeler la méthode //check()// sur un record pour vérifier les valeurs des propriétés (avant son stockage par exemple).
+
+L'attribut //default// permet d'indiquer une valeur par défaut.
+
+L'attribut //datatype// peut prendre les valeurs :
+  * string
+  * int/integer
+  * autoincrement
+  * double/float
+  * numeric/bigautoincrement
+  * date
+  * time
+  * datetime
+  * boolean
+
+Sur certaines bases, on peut associer une séquence à un champ. L'attribut //sequence// indique son nom.
+
+Les attributs //updatepattern//, //insertpattern// et //selectpattern// permettent d'indiquer un "motif" à appliquer lors de la mise à jour, l'insertion ou la lecture de la valeur du champ dans la table. Ce motif doit en fait être une expression SQL, contenant éventuellement la chaîne "%s" qui sera remplacée par la valeur ou le nom du champ. Par défaut leurs valeurs vaut "%s". Si on indique une valeur vide, cela correspond à une opération nulle (le champ n'est pas lu,  inséré ou mis à jour).
+
+=== Exemple 1 ===
+
+Pour un champ qui contient une date de mise à jour, on pourra indiquer :
+<code xml>
+  <property name="date_update" datatype="datetime" insertpattern="NOW()" updatepattern="NOW()" />
+</code>
+
+Ainsi chaque fois qu'un //INSERT// ou un //UPDATE// sera fait, la valeur insérée sera la date du jour (et non celle que l'on aurait indiquée dans la propriété //date_update// du record).
+
+
+=== Exemple 2 ===
+On peut aussi avoir une propriété qui ne correspond pas directement à un champ, mais qui soit le résultat d'une expression SQL. Dans ce cas, il faut désactiver l'insertion et la mise à jour.
+
+<code xml>
+  <property name="identite" datatype="string" selectpattern="CONCAT(nom, ' ',prenom)" insertpattern="" updatepattern="" />
+</code>
+
+Attention, en ce qui concerne l'expression de selectPattern : 
+  * l'expression doit utiliser des champs d'une même table. Si le dao est basé sur plusieurs tables (ex : A et B, voir section suivante), il n'est pas possible que l'expression utilise à la fois des champs de la table A et de la table B
+  * si l'expression utilise des champs d'une table B qui ne soit pas la table principale, la propriété doit être attribué à cette table B, et non à la table principale. Ce qui veut dire que la propriété doit avoir un attribut table ayant pour valeur le nom/alias de cette table B.
+
+
+===== Correspondance avec plusieurs tables =====
+
+On peut déclarer une table principale, mais aussi des tables annexes qui seraient liées à la table principale par des jointures. Il est utile, lorsque l'on veut récupérer un enregistrement, de récupérer en même temps des informations de tables annexes. Par exemple, si on veut récupérer un produit de la table products, et en même temps le libellé de sa catégorie qui se trouve dans une table "category", on déclarera aussi la table "category". À noter que vous ne pourrez modifier que les données issues de la table principale quand vous voudrez mettre à jour un enregistrement.
+
+Pour déclarer de telles tables étrangères, qui en toute logique sont liées à la table principale par des clés étrangères, il faut utiliser :
+  * //foreigntable// pour indiquer une table étrangère liée par une jointure normale.
+  * //optionalforeigntable// pour indiquer une table étrangère liée par une jointure externe.
+
+=== Exemple ===
+
+<code xml>
+   <primarytable name="p" realname="products" primarykey="id_product" />
+   <foreigntable name="cat" realname="categories" primarykey="id_cat" onforeignkey="id_cat" />
+   <optionalforeigntable name="man" realname="manufacturers" primarykey="id" onforeignkey="id_manufacturer" />
+</code>
+
+Comme pour la balise //primarytable//, il y a les attributs //name//, //realname// et //primarykey//. Il y a par contre un attribut supplémentaire, //onforeignkey//, qui indique le nom du champ dans la table primaire, qui est la clé étrangère sur la table en question. Ainsi, avec l'exemple ci-dessus, jDao générera pour les requêtes de type //SELECT// les clauses //FROM// et //WHERE// suivantes : 
+
+<code sql>
+ FROM products as p left join manufacturers as man on (p.id_manufacturer = man.id),  categories as cat
+ WHERE cat.id_cat = p.id_cat
+</code>
+
+Indiquer des tables annexes n'a de sens que si vous voulez avoir une ou plusieurs propriétés correspondantes à leurs champs. Vous ajouterez donc autant de balise <property> que vous voudrez. La seule différence est qu'il faut ajouter un attribut //table// qui indique l'alias de la table dans lequel se trouve le champ.
+
+<code xml>
+  <property 
+      name="libelle_categorie" 
+      fieldname="label" 
+      table="cat"
+   />
+</code>
+
+Dans la propriété //libelle_categorie// du record, se trouvera la valeur du champ //label// de la table //categories// ("cat" étant l'alias de cette table, comme il a été défini plus haut dans la balise //foreigntable// ).
+

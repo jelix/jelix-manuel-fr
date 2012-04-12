@@ -1,0 +1,50 @@
+====== Classe jFile ======
+
+jFile aide à lire ou créer des fichiers.
+Les fonctions de jFile sont statiques, il n'est pas nécessaire de l'instancier pour les utiliser.
+
+
+===== Fonction read =====
+
+retourne le contenu d'un fichier ou false si le fichier n'est pas lisible.
+
+<code php>
+$content = jFile::read('/le/chemin/du/fichier.ext');
+</code>
+
+
+===== Fonction write =====
+
+Écrit un fichier sur le disque.\\
+Cette fonction est largement inspirée de la gestion des fichier de smarty.\\
+Elle utilise un fichier temporaire puis renomme le fichier.\\
+Cette méthode vient de la classe CopixFile du framworks Copix.
+
+Retourne true si tout s'est bien passé.
+
+<code php>
+jFile::write('/le/chemin/du/fichier.ext', 'les données');
+</code>
+
+===== Fonction createDir =====
+
+Créer un dossier.\\
+Elle crée également tous les dossiers parents.
+
+<code php>
+jFile::createDir('/le/chemin/du/dossier');
+</code>
+
+===== Fonction removeDir =====
+
+Fonction de suppression récursive de dossier.
+
+Le deuxième paramètre permet de supprimer aussi tous les parents.
+
+<code php>
+jFile::removeDir('/le/chemin/du/dossier', false);
+// seul  le dossier "dossier" sera supprimé 
+
+jFile::removeDir('/le/chemin/du/dossier');
+// les dossiers "le", "chemin", "du" et "dossier" seront supprimés
+</code>

@@ -1,0 +1,51 @@
+
+Vous devez installer au minimum la version **5.2** de PHP. Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl** et **tokenizer** sont requises (elles sont actives en général dans une installation standard de PHP 5.2). Si une de ces extensions n'était pas livrée avec le paquet PHP5, veillez à installer le paquet correspondant.
+
+Note conçernant DOM et XML : vérifiez que c'est bien [[http://fr2.php.net/manual/fr/intro.dom.php|l'extension DOM]] et non pas [[http://fr2.php.net/manual/fr/intro.domxml.php|l'extension DOM-XML]] qui est activée dans php.ini. Certains paquets WAMP active l'extension DOM-XML en même temps que DOM, ce qui conduit à des erreurs PHP.
+
+Vous pouvez installer aussi un connecteur de base de données. Pour le moment Jelix prend en charge MySQL 4.1+, PostgreSQL 8.0+, SQLite et PDO.
+
+Si vous comptez utiliser les scripts en ligne de commande d'aide au développement (jelix-scripts), il vous faut aussi installer la version ligne de commande de PHP  : **PHP-CLI**.
+
+
+===== Configuration de PHP =====
+
+   * **magic_quotes_gpc** et **magic_quotes_runtime** doivent être à **Off**. Si ce n'est pas le cas, [[//plugins/coord|il faut activer le plugin magicquotes]] livré avec jelix.
+   * **session.auto_start** doit être à 0
+   * **safe_mode** doit être à **Off** (À cause des nombreux fichiers temporaires créés par jelix, il peut être difficile de configurer une installation avec Jelix avec le safe_mode activé)
+  
+Il est également recommandé de mettre ces valeurs :
+
+   * **register_globals = off**
+   * **asp_tags = off**
+   * **short_open_tag = off**
+
+Un [[http://fr2.php.net/manual/fr/function.phpinfo.php|phpinfo()]] peut vous permettre de vérifier votre configuration. Par défaut la configuration se trouve dans un fichier nommé //php.ini//.
+
+
+===== Configuration de PHP-Cli pour MAMP (MacIntosh) =====
+
+Le logiciel MAMP met à votre disposition un programme PHP-Cli. Ce dernier n'est pas le seul PHP-Cli, en effet, Mac OS vous en fournit aussi un en installation standard (à vérifier). Le problème vient du fait que si vous utilisez la base de donnée MySQL de MAMP, le PHP-Cli par défaut n'est pas configuré pour vous permettre de vous connecter à cette dernière.
+
+Voici comment faire pour mettre le PHP-Cli de MAMP par défaut dans le terminal :
+   * Ouvrez le fichier ///etc/profile//.
+   * Assurez-vous de changer les droits d'accès à ce dernier pour pouvoir le modifier.
+   * Ajouter à la fin du fichier les deux lignes suivantes (adaptez le chemin de MAMP si vous n'avez pas utilisé l'installation par défaut de celui-ci) : <code>
+export DYLD_LIBRARY_PATH=/Applications/MAMP/Library/lib:${DYLD_LIBRARY_PATH}
+export PATH=/Applications/MAMP/bin/php5/bin:${PATH}
+</code>
+   * Assurez-vous d'avoir laissé un saut de ligne après.
+   * Sauvegardez et remettez les droits d'accès à la normale.
+
+Si vous souhaitez mettre de nouveau le PHP-Cli de base par défaut, supprimez juste les deux lignes que vous avez ajoutées.
+
+===== Configuration de PHP-Cli sous windows =====
+
+   * cliquer droit sur l'icône Poste de travail puis Propriétés
+   * dans la fenêtre Propriétés système cliquez sur l'onglet Avancé puis sur le bouton Variables d'environnement
+   * ensuite cliquez sur la Variable Path dans le bloc "Variables utilisateur" si vous êtes le seul utilisateur sur la machine ou le bloc "Variables système" si il s'agit d'un serveur ou d'une machine avec plusieurs utilisateurs (afin que tous puisse bénéficier de cette configuration).
+   * Dans la valeur de la variable vous ajoutez le chemin vers le répertoire qui contient php.exe. Ex: D:\wamp\bin\php\php5.2.6 (n'oubliez pas d'ajouter le ; à la fin si vous avez plusieurs variables path)
+   * Validez en cliquant sur OK
+   * Fermez le tout et redémarrez.
+
+Avec cette manipulation, vous pourrez exécuter php.exe depuis n'importe quel répertoire notamment pour pouvoir créer des applications en ligne de commande avec Jelix.

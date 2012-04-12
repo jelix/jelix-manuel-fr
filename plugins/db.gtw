@@ -1,0 +1,85 @@
+jDb, la couche d'abstraction d'accés aux bases de données, a un système de plugin, ou "drivers". Un driver permet d'accéder à un type de base de donnée spécifique.
+
+===== Activation =====
+
+Pour savoir comment activer un driver pour jDb, voyez le [[//bd|chapitre sur jDb]]
+
+===== Création d'un driver =====
+
+Un driver pour jDb est constitué de trois classes :
+
+   * une classe pour la connexion à la base et l'exécution des requêtes, héritant de jDbConnection
+   * une classe pour récupérer les résultats, héritant de jDbResultSet
+   * une classe utilitaire héritant de jDbTools, permettant de récupérer la liste des tables, la liste des champs d'une table etc..
+
+==== Fichiers et nommages ====
+
+Un driver possède un nom identifiant. Prenons le nom "exemple" pour la suite.
+
+Les fichiers du driver doivent se trouver dans un répertoire //db/**exemple**// dans un [[|dépôt de plugins]].
+
+Les noms des fichiers doivent suivre ce nommage :
+
+   * //exemple.dbconnection.php// pour la classe de connexion
+   * //exemple.dbresultset.php// pour la classe de resultset
+   * //exemple.dbtools.php// pour la classe utilitaire
+
+Et dans chacun de ces fichiers, les classes doivent respectivement avoir le nommage suivant :
+
+   * //exempleDbConnection//
+   * //exempleDbResultSet//
+   * //exempleDbTools//
+
+==== Classe de connexion ====
+
+Elle doit hériter de jDbConnection qui contient quelques méthodes abstraites qu'il faut définir. Son rôle est de se connecter/déconnecter à la base de donnée. Elle est chargée aussi d'initier les transactions et de les confirmer ou annuler. Enfin, elle exécute ou prépare les requêtes, en renvoyant un objet résultat. 
+
+Pour se faire, elle doit redéfinir les méthodes suivantes :
+
+   * le constructeur si il y a besoin de faire des choses à l'instanciation du driver. Typiquement, vérifier que les fonctions PHP nécessaires sont bien là.
+   * _connect() et _disconnect(), pour la connexion et la déconnexion à la base de donnée
+   * _quote, pour échapper une chaîne de caractère avant que celle-ci soit utilisée dans une requête
+   * _doQuery et _doLimitQuery, pour lancer des requêtes qui ramènent des enregistrements (SELECT ou procédures stockées). Elles doivent renvoyer un objet exempleDbResultSet ou false si la requête a échoué
+   * _doExec, pour lancer des requêtes ne renvoyant pas d'enregistrements (UPDATE, DELETE, INSERT...). Doit renvoyer le nombre d'enregistrements affectés, ou false si la requête a échoué
+   *  la méthode prepare(), pour préparer les requêtes.
+   * beginTransaction(), commit(), rollback(), pour les transactions
+   * errorInfo() et errorCode() renvoyant l'intitulé et le code de la dernière erreur
+   * lastInsertId(), permettant de récupérer la dernière valeur du dernier id autoincrémenté généré.
+   * _autoCommitNotify()
+
+
+Si le driver ne prend pas en charge certaines fonctionnalités, il doit générer une exception.
+
+Voir [[http://jelix.org/reference/1.0.5/jelix/db/jDbConnection.html|la référence de jDbConnection]] pour plus de détails.
+
+==== Classe de résultat ====
+
+Elle doit hériter de jDbResultSet qui contient quelques méthodes abstraites qu'il faut définir. Un objet de cette classe est normalement renvoyé par les méthodes prepare, _doQuery et _doLimitQuery de la classe exempleDbConnection.
+
+Vous devez notament redéfinir les méthodes suivantes :
+
+   * _fetch(), qui doit récupérer l'enregistrement suivant dans la liste des résultats. Elle doit tenir compte de la propriété _fetchMode. Dans la propriété _idResult, vous trouverez l'identifiant de la ressource liée aux résultats.
+   * _free(), pour libérer la ressource liée aux résultats (_idResult)
+   * _rewind(), pour revenir au début des résultats
+   * rowCount, pour retourner le nombre de résultats
+   * bindColumn, bindParam, bindValue, columnCount et execute pour les requêtes préparées.
+
+
+Voir [[http://jelix.org/reference/1.0.5/jelix/db/jDbResultSet.html|la référence de jDbResultSet]] pour plus de détails.
+
+==== Classe utilitaire ====
+
+Elle doit hériter de jDbTools. Cette classe permet de récupérer des informations sur la base de donnée, sur une table etc. Utilisée notamment par les scripts jelix-scripts.
+
+Vous redéfinirez en particulier les méthodes suivantes :
+
+   * _getTableList(), retournant un tableau contenant les noms des tables présentes
+   * _getFieldList(), retournant la liste des champs de la table dont le nom est donné en argument. Cette liste doit être constitué d'objets jDbFieldProperties.
+   * execSQLScript() si vous voulez redéfinir la manière dont est parsé et executé un ensemble de requêtes SQL présentes dans un script.
+
+Voir [[http://jelix.org/reference/1.0.5/jelix/db/jDbTools.html|la référence de jDbTools]] pour plus de détails.
+
+
+==== Exemples ====
+
+Voir les drivers pour mysql, postgresql etc dans le répertoire lib/jelix/plugins/db/.

@@ -1,0 +1,131 @@
+
+Les contrôleurs sont les objets qui vont effectuer les actions correspondantes à chacune des urls de votre application.
+
+Un contrôleur possède une ou plusieurs méthodes correspondant à des actions, qui vont effectuer des traitements et préparer une réponse (html, redirection, ...) pour le navigateur.
+
+Un contrôleur est toujours dédié à un type de requête particulier.
+
+===== Convention de nommage =====
+
+
+==== Fichier ====
+
+
+Les contrôleurs doivent être stockés dans le répertoire //controllers// des modules. Ils ont chacun un nom qui va servir de suffixe ou préfixe. 
+
+Le fichier d'un contrôleur a un nom bien précis :
+
+   cccc.tttt.php
+
+où
+
+   * //cccc// est le nom du contrôleur
+   * //tttt// est le type de requête auquel il est dédié.
+
+
+Par exemple, si vous l'appelez "foo", et qu'il est dédié au type de requête "classic" (ce qui sera le plus souvent le cas), le nom du fichier sera //foo.classic.php//.
+
+
+==== Classe ====
+
+La classe d'un contrôleur doit toujours avoir le suffixe "Ctrl". Dans le cas d'un contrôleur nommé "foo", sa classe devra être nommée "fooCtrl".
+===== Création d'un contrôleur =====
+
+
+Chaque module a en principe un contrôleur principal, que l'on appelle généralement "default". On va prendre ce nom pour l'exemple de création de contrôleur.
+
+
+En suivant les conventions de nommage, on créé donc une classe de nom "defaultCtrl" dans un fichier //controllers/default.classic.php//.
+
+Voici le code source minimal :
+
+<code php>
+
+class defaultCtrl extends jController {
+
+}
+
+</code>
+
+Une classe de contrôleur doit toujours hériter de la classe jController.
+
+Ensuite, il faut ajouter au moins autant de méthodes que d'actions prises en charge par le contrôleur. Ces méthodes sont publiques, n'ont pas d'arguments, et doivent renvoyer un objet de type **jResponse**.
+
+Voici un exemple de méthode pour une action "index" :
+
+<code php>
+
+class defaultCtrl extends jController {
+
+    public function index(){
+       $rep = $this->getResponse('html');
+       $rep->addContent('<p>Test</p>');
+       return $rep;
+    }
+
+}
+</code>
+
+Note : quand le nom d'une action est absent, ou incomplet (il n'y a que le nom de la méthode ou que le nom du contrôleur), alors Jelix complètera le nom de l'action avec "default" pour le contrôleur et "index" pour le nom de la méthode. 
+Il est donc recommandé d'avoir toujours un contrôleur "default" dans un module et une méthode "index" dans chaque contrôleur.
+
+=== Utilisation d'un constructeur de classe ===
+Pour utiliser un constructeur de classe dans un contrôleur, il est nécessaire de mentionner le constructeur parent ainsi que d'y lier l'argument $request.
+Exemple: 
+
+<code php>
+
+class defaultCtrl extends jController {
+    function __construct($request) {
+        parent::__construct($request);
+        /* Reste du code du contrôleur ici */
+    }
+}
+
+</code>
+
+===== Services fournis par jController =====
+
+Dans une action, vous avez un certains nombre de méthodes à votre disposition.
+
+==== Récupérer un objet jResponse ====
+
+Vous devez toujours renvoyer un objet dérivant de jResponse, qui est en fait le "view" du modèle MVC. Il y a un certains nombres d'objet jResponse fournies par Jelix, permettant de générer du XHTML, du JSON, du text, du css, du xml, du zip ou même faire des redirections. Chaque type d'objet jResponse est déclaré dans jelix par un mot clé.
+
+Aussi, pour récupérer un objet "réponse" précis, vous appelez la méthode **getResponse** en indiquant le mot clé correspondant au type de réponse que vous voulez. 
+
+<code php>
+   $rep = $this->getResponse('html');
+</code>
+
+$rep contient ici une réponse qui va générer du html. l'objet $rep est du type jResponseHtml.
+
+Sachez que vous pouvez définir vos propres types de réponses, voir même plusieurs type de réponse issue d'un même type, afin d'avoir d'éviter de dupliquer du code, ou de prendre en charge un format que ne connait pas jelix. Voyez pour cela l'[[creer_response|article sur la création des réponses personnalisées]].
+
+
+
+
+==== Récupérer les paramètres de requête ====
+
+Comme vous le savez, les paramètres de la requête http sont stockés dans un objet jRequest, qui lui même est stocké dans l'objet jCoordinator. On peut ainsi  récupérer un paramètre de cette façon :
+
+<code php>
+  $id = $GLOBALS['gJCoord']->request->getParam('id');
+</code>
+
+Mais il y a plus pratique : la méthode **param()** disponible dans les contrôleurs, au résultat équivalent.
+
+<code php>
+  $id = $this->param('id');
+</code>
+
+Si il n'y a pas de paramètre de nom id, le résultat sera la valeur **null**. Vous pouvez aussi indiquer en deuxième argument une valeur qui sera prise si le paramètre indiqué n'existe pas.
+
+<code php>
+  $titre = $this->param('title','un titre');
+</code>
+
+
+Il y a d'autres méthodes similaires, comme **intParam()**, **floatParam()** et **boolParam()**, prenant les mêmes arguments, mais transformant le paramètre récupéré dans le type de donnée correspondant. Avec **intParam()**, vous obtiendrez un nombre entier; avec **floatParam()**, un décimal. Cela permet ainsi de "filtrer" les données. Et pour **boolParam()**, vous obtiendrez **true** si le paramètre vaut "true", "1", "on" ou "yes", et **false** dans le cas contraire.
+
+Si vous voulez un filtrage pour d'autres types de données, utilisez la classe jFilter.

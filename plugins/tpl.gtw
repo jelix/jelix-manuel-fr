@@ -1,0 +1,122 @@
+Vous pouvez ajouter vos propres fonctionnalités de templates dans le [[//templates|moteur de template jTpl]]. Elles doivent être implémentées dans un plugin de template. Il y a quatre types de plugin :
+
+   * les fonctions
+   * les modificateurs
+   * les blocs
+   * les meta
+
+Regardez dans lib/jelix/plugins/tpl/, vous avez plein d'exemples relativement simples à comprendre.
+
+===== Emplacement =====
+
+Les plugins sont stockés dans un répertoire ayant une arborescence précise : ils sont classés dans des sous-répertoires en fonction du type de réponse auxquels ils sont destinés. Cela évite ainsi d'utiliser des plugins pour le XUL quand on fait du HTML par exemple. 
+
+C'est ainsi que dans un dépôt de plugin de template, vous avez un sous répertoire "html", "xul", "text" et "common". Le sous-répertoire "common" est celui dans lequel sont mis les plugins qui ne sont pas destinés à des types de réponses précis.
+
+lib/jelix/plugins/tpl/ est le dépôt par défaut de jelix pour les plugins de template. Mais vous mettrez en général vos propres plugins de template dans le répertoire //plugins/// de votre application, ou dans un autre dépôt à votre convenance (dépôt à déclarer, comme indiqué sur la [[|page des plugins]]). Sachant que dans le dépôt en question, il vous faut mettre comme indiqué précédemment vos plugins dans tpl/common/, tpl/html/, ou tpl/text/ etc...
+
+===== plugin type "function" =====
+
+Ce sont des plugins que l'on pourra appeler comme ceci :
+<code>
+   {mafonction $param1,$param2}
+</code>
+
+En admettant que c'est un plugin uniquement pour html, vous créerez un fichier function.//mafonction//.php dans tpl/html/, dans lequel vous déclarez une fonction "jtpl_function_html_//mafonction//". Cette fonction prend au moins un paramètre : l'objet jTpl qui est utilisé pour le template, et que vous pouvez donc manipuler à loisir. Les autres paramètres sont ceux qui sont indiqués dans le template. La fonction ne doit rien renvoyer.
+
+Dans la fonction, vous faites ce que vous voulez. En général, une fonction affiche quelque chose, donc effectue des "echo".
+
+Exemple, le plugin zone :
+
+<code php>
+function jtpl_function_html_zone($tpl, $name, $params=array())
+{
+     echo jZone::get($name, $params);
+}
+</code>
+
+
+===== plugin type "cfunction" =====
+
+Ce sont des plugins qui s'utilisent comme un plugin de fonction (donc du point de vue de l'utilisateur, il n'y a pas de changement), mais qui ne sont pas programmés de la même manière. Contrairement à un plugin function qui est toujours appelé lors de //l'affichage// ou plutôt de l'//évaluation// du template, un plugin cfunction est appelé bien avant, lors de la compilation du template. Pour rappel, un template est d'abord transformé en contenu php (la compilation), ce contenu php est stocké dans un fichier de cache, et il est ensuite évalué lorsque l'on veut afficher le template.
+
+Un plugin cfunction ne génère donc pas un contenu, mais génère du code PHP qui sera inclus dans le contenu PHP mis en cache. Cela est nécessaire dans certains cas, et peut améliorer les performances dans d'autres.
+
+un plugin cfunction doit accepter en paramètre un objet jTplCompiler, et un tableau contenant les paramètres indiqués dans le template. Vous ne devez en général pas toucher à ces paramètres, juste les inclure directement dans le code PHP que va générer le plugin. Le plugin ne doit rien afficher, et doit retourner le contenu généré. 
+
+Voici l'exemple d'un plugin cfunction , qui fait au final la même chose que l'exemple de plugin function précédent:
+
+
+<code php>
+function jtpl_cfunction_html_zone($compiler $params=array())
+{
+    if (count($params) < 1 || count($params) > 2) {
+        $compiler->doError2('errors.tplplugin.cfunction.bad.argument.number','zone','1-2');
+    }
+
+    if (count($params) == 1) {
+         $php = ' echo jZone::get('.$params[0].');';
+    }
+    else {
+         $php = ' echo jZone::get('.$params[0].', '.$params[1].');';
+    }
+    return $php;
+}
+</code>
+
+
+
+===== plugin type "modifier" =====
+
+Un plugin modificateur est une fonction jtpl_modifier_//monmodificateur// prenant une chaine en paramètre (et eventuellement d'autres pour ceux qui ont besoin de paramètre de modificateur, voir plus haut), et renvoie une chaine transformée. La fonction doit être stockée dans un fichier de nom modifier.//monmodificateur//.php.
+
+Exemple avec le plugin count_characters :
+
+<code php>
+function jtpl_modifier_html_count_characters($string, $include_spaces = false)
+{
+    if ($include_spaces)
+       return(strlen($string));
+
+    return preg_match_all("/[^\s]/",$string, $match);
+}
+</code>
+
+
+===== plugin de bloc =====
+
+Comme les plugins de type cfunction, les plugins de blocs ne sont pas appelés lors de l'affichage du template, mais lors de sa compilation. Un plugin de bloc ne renvoie donc pas une valeur transformée, ne fait pas d'affichage, mais renvoie du code php, qui sera inclus dans la version compilée du template.
+
+Ils permettent de se faire ses propres structures if ou boucle, ou autre blocs spéciaux.
+
+Un plugin de bloc est une fonction jtpl_block_html_//monbloc//, qui accepte en paramètre un objet jTplCompiler, un booléen et d'éventuels autres paramètres. La fonction doit être stockée dans un fichier block.//monbloc//.php.
+
+La fonction est appelée par le compilateur, une première fois quand il rencontre le tag de début, et une deuxième fois quand il rencontre le tag de fin. Le booléen en paramètre permet de savoir à quel moment la fonction est appelée (true quand il s'agit de la première fois).
+
+Exemple du plugin ifuserconnected :
+
+<code php>
+function jtpl_block_ifuserconnected($compiler, $begin, $params=array())
+{
+    if($begin){
+        if(count($params)){
+            $content='';
+            $compiler->doError1('errors.tplplugin.block.too.many.arguments','ifuserconnected');
+        }else{
+            $content = ' if(jAuth::isConnected()){';
+        }
+    }else{
+        $content = ' } ';
+    }
+    return $content;
+}
+</code>
+
+
+===== plugin meta =====
+
+Un plugin meta est appelé lors de l'évaluation d'un template, mais juste avant l'affichage. En effet, lors de l'évaluation, il y a deux phases, l'une qui permet de faire des choses avant l'affichage, puis l'affichage proprement dit. Cette phase de pré-affichage est généralement utilisée pour modifier des propriétés de l'objet response courant. Par exemple, pour une réponse HTML, un template sert uniquement à générer la partie "body" d'une page html. Si on veut, dans le HTML, spécifier des choses du genre, liens css ou script JS à lier (donc concrétement à rajouter des choses au niveau de la balise head), il faut le faire pendant le pré-affichage. Et les plugins meta sont appelés pendant cette phase, grâce à l'instruction {meta ...}.
+
+à compléter.. (voir le plugin lib/jelix/plugins/tpl/html/meta.html.php pour un exemple).
+
+

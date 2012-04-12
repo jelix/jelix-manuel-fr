@@ -1,0 +1,73 @@
+===== Appeler une action =====
+
+Une fois que l'on a fait [[controleurs|un contrôleur]] on veut bien sûr pouvoir appeler l'une de ces méthodes, donc indiquer les informations nécessaires dans les URLs.
+
+Avec la configuration par défaut de Jelix (donc avec le moteur d'URL //simple//), il faut indiquer dans l'URL :
+
+  * le nom du module
+  * le nom de l'action constituée du nom du controleur et du nom de la méthode
+
+On le fait en indiquant les paramètres //module// et //action//.
+
+<code>
+   index.php?module=monmodule&action=moncontroleur:mamethode
+</code>
+
+Notez que le nom du contrôleur et de la méthode doivent être séparés par le caractère ":".
+
+  * Si le paramètre action n'est pas présent, Jelix essaiera d'exécuter la méthode //index// du contrôleur //default//.
+  * Si le paramètre module est absent, Jelix essaiera d'exécuter l'action indiquée du module indiqué dans le paramètre **startModule** dans la configuration de l'application.
+  * Si les deux paramètres sont absents, Jelix exécutera l'action indiquée dans le paramètre **startAction**, à partir du module indiqué dans le paramètre **startModule** dans la configuration de l'application.
+  * Dans le paramètre action, si on indique juste le nom de la méthode, Jelix exécutera la méthode indiquée dans le contrôleur //default//
+
+
+
+===== Sélecteurs d'action =====
+
+Dans vos templates et dans votre code en général, vous n'indiquerez jamais d'URL "en dur". Jelix comporte des mécanismes (la classe jUrl notament) pour générer les URLs correspondantes à des actions. Ceci permet de choisir son moteur d'URL préféré (simple ou significant) et de modifier le "mapping" entre des URLs significatives et des actions. Tout ceci sans toucher ni aux templates, ni aux contrôleurs.
+
+Aussi vous allez devoir la plupart du temps indiquer à divers objets ou méthodes de l'API de Jelix des //sélecteurs d'action// accompagnés d'éventuels paramètres. Voir la [[selecteurs|page sur les sélecteurs]] pour en savoir plus sur les sélecteurs en général.
+
+Les sélecteurs d'action ont cette syntaxe :
+
+<code>
+   module~controleur:methode
+</code>
+
+Vous pouvez omettre l'une de ces parties comme spécifié précédemment :
+
+<code>
+   controleur:methode
+   methode
+   module~
+   controleur:
+</code>
+
+Vous pouvez aussi indiquer le caractère "#" pour spécifier le module courant ou l'action courante. Dans ces exemples, imaginons que c'est l'action "bar:man" du module "foo" qui a été appelée dans Jelix :
+
+  * "#~controleur:methode" représente l'action "controleur:methode" du module qui a été appelé. Équivaut donc à "foo~controleur:methode"
+  * "module~#" représente l'action qui a été appelée mais du module indiqué. Équivaut donc à "module~bar:man"
+  * "#~#" représente le module/l'action qui ont été appelés. Équivaut donc à "foo~bar:man".
+
+
+
+===== Indiquer le point d'entrée =====
+
+Par défaut quand on indique un sélecteur d'action, il génère l'URL avec le point d'entrée courant : si on a appelé Jelix avec index.php, ce sera index.php, si c'est xmlrpc.php, ce sera xmlrpc.php. 
+
+Cependant on peut vouloir indiquer des URLs pour d'autres points d'entrées. Par exemple, on est dans une action qui affiche une page html et on veut indiquer dans la page l'URL du point d'entrée pour les services web jsonrpc.
+
+Dans ce cas on ajoute à la fin du sélecteur d'action, un "@" suivi du nom du type du point d'entrée :
+
+<code>
+  foo~bar:man@css
+</code>
+
+Ici on demande l'URL de l'action "bar:man" du module "foo", pour les requêtes de type "css".
+
+Pour la plupart des URLs on indiquera certainement "@classic".
+
+Si dans un sélecteur d'action on n'indique juste le type de requête, seront utilisés le module et l'action indiqués respectivement dans startModule et startAction de la configuration de l'application. Ainsi par exemple le sélecteur "@classic" correspondra à l'URL "index.php".
+
+Pour en savoir plus : [[urls|configuration et la manipulation des URLs dans Jelix]].
+

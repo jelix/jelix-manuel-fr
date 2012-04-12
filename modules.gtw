@@ -1,0 +1,19 @@
+Les contrôleurs et fonctionnalités de votre application doivent être regroupés en modules. 
+
+Un module contient un ensemble de fichiers, entre autre :
+
+  * Des contrôleurs
+  * Des classes métiers
+  * Des templates
+  * Des fichiers daos
+  * Des formulaires
+  * Des fichiers de langues
+  
+Les fichiers d'un module sont censés concerner un même domaine fonctionnel. Par exemple, un module "news" contiendra tous les fichiers qu'il faut pour afficher et/ou gérer les news.
+
+Dans une application, vous devez avoir au moins un module qu'il vous faut créer. Ce sera en général ce qu'on appelle le module principal, qui pourrait contenir par exemple ce qu'il faut pour afficher la page d'accueil de votre site.
+
+Notez qu'il y a implicitement un autre module déclaré automatiquement dans votre application : le module "jelix", situé dans lib/jelix/core-modules/jelix.
+
+
+Dans la suite, nous allons voir comment créer un module et un contrôleur.

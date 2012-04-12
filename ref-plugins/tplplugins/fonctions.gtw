@@ -1,0 +1,209 @@
+Divers plugins sont de simple fonctions qui affichent quelque chose selon les paramètres.
+
+====== zone ======
+
+Permet l'affichage d'une zone.
+
+<code html>
+  <div>
+    {zone 'module~une_zone'}
+  </div>
+</code>
+
+C'est en fait l'équivalent de 
+
+<code php>
+    $tpl->assignZone('ZONE','module~une_zone');
+</code>
+<code html>
+  <div>
+    {$ZONE}
+  </div>
+</code>
+
+====== jlocale ======
+
+====== jurl ======
+
+====== html : pagelinks ======
+
+Lorsque que l'on doit afficher une liste de résultats à l'écran et que cette liste est longue, il peut être judicieux de la répartir sur plusieurs pages. Le plugin Pagelinks facilite l'affichage d'un tel système de pagination, avec des liens pointant vers les différentes pages de résultats.
+
+Pour utiliser le plugin avec les comportements par défaut, il suffit d'utiliser la syntaxe suivante.
+
+<code>
+  {pagelinks module~action, paramètres de l'action,  nombre total de résultats, index résultat courant, nombre de résultats par page, nom du paramètre d'offset, propriétés d'affichage}
+</code>
+
+Exemple :
+
+<code html>
+  <p>{pagelinks 'myModule~default_index', array(),  283, 60, 15, "offset"}</p>
+</code>
+
+==== Paramètres ====
+
+== Module~Action ==
+
+Sélecteur de l'action qui doit être appelé par les liens de pages.
+
+== Paramètres de l'action ==
+
+Tableau contenant les paramètres métiers à placer dans l'url des liens de pages.
+
+  array("param1" => 1, "param2" => "deux")
+
+Si il n'y aucun paramètre à passer, on utilise un tableau vide :
+
+  array()
+
+== Nombre total de résultats ==
+
+Nombre entier représentant le nombre total des résultats répondant à votre requête. Vous devez donc l'avoir calculé au préalable.
+
+== Index résultat courant ==
+
+Nombre entier représentant l'offset, c'est à dire l'index du résultat courant. En clair : le numéro d'ordre du premier enregistrement afficher sur la page. Pour la première page, vous metterez 0. Pour les pages suivantes, il est calculé automatiquement et est passé dans le paramètre dont vous indiquez le nom dans "nom du paramètre d'offset"
+
+== Nombre de résultats par page ==
+
+Nombre entier représentant le nombre de résultats contenus dans une page de résultats.
+
+**Important** : le plugin ne s'affichera pas si il n'y a pas au moins 2 pages de résultats disponibles.
+
+== Nom du paramètre d'offset ==
+
+Chaîne de caractère contenant le nom que doit prendre le paramètre correspondant à l'offset dans l'url des liens de pages.
+
+== Propriétés d'affichage ==
+
+Tableau contenant les paramètres liés à l'affichage du plugin. Ce paramètre est optionnel. S'il est omis, le plugin utilise le comportement par défaut, à savoir qu'il affiche l'intégralité des liens avec leur intitulé par défaut.
+
+Il est donc possible de personnaliser l'affichage, en définissant le nombre de liens à afficher ainsi que les intitulés des liens spéciaux (page suivante, page précédente, etc.). Pour cela on ajoute simplement un tableau de paramètres supplémentaires comme ci-dessous dans l'appel.
+
+  <p>{pagelinks 'myModule~default_index', array(),  283, 60, 15, "offset", array('start-label' => 'début', 'end-label' => 'fin', 'prev-label'  => 'précédent', 'next-label'  => 'suivant', 'area-size'  => 5)}</p>
+
+Il est ainsi possible de renseigner une ou plusieurs des valeurs d'index suivantes qui viendront écraser le comportement défini par défaut.
+
+  * **start-label** : Libellé du lien de la première page de résultats disponible. Si la valeur est une chaine vide, le lien ne sera pas affiché.
+
+  * **prev-label** : Libellé du lien de la page de résultats précédente. Si la valeur est une chaine vide, le lien ne sera pas affiché.
+ 
+  * **next-label** : Libellé du lien de la page de résultats suivante. Si la valeur est une chaine vide, le lien ne sera pas affiché.
+
+  * **end-label** : Libellé du lien de la dernière page de résultats disponible. Si la valeur est une chaine vide, le lien ne sera pas affiché.
+
+  * **area-size** : Nombre de liens à afficher avant et après la page courante. Si la valeur est 0, tous les liens seront affiché.
+
+L'exemple suivant renomme les liens "précédent" et "suivant", et masque les liens de début et de fin. De plus un maximum de 5 pages sera affiché de part et d'autre de la page courante.
+
+<code html>
+  <p>{pagelinks 'myModule~default_index', array(),  283, 60, 15, "offset", array('start-label' => '', 'end-label' => '', 'prev-label'  => 'précédent', 'next-label'  => 'suivant', 'area-size'  => 5)}</p>
+</code>
+
+
+L'exemple suivant renomme les liens "précédent" et "suivant", et utilise le libellé par défaut pour les liens de début et de fin. De plus l'intégralité des liens sera affichée.
+
+<code html>
+  <p>{pagelinks 'myModule~default_index', array(),  283, 60, 15, "offset", array('prev-label'  => 'précédent', 'next-label'  => 'suivant')}</p>
+</code>
+ 
+Bien entendu, il est aussi possible de possible d'utiliser un tableau de paramètres déclaré dans le controleur.
+
+<code php>
+  $properties = array('start-label' => '',
+                      'prev-label'  => 'précédent',
+                      'next-label'  => 'suivant',
+                      'end-label'   => '',
+                      'area-size'   => 5);
+  
+  $rep->body->assign('properties',$properties);
+</code>
+
+L'appel du template aura donc la forme suivante.
+
+<code html>
+  <p>{pagelinks 'myModule~default_index', array(),  283, 80, 15, "offset", $properties}</p>
+</code>
+
+==== Localisation des intitulés ====
+
+Il est possible de localiser les intitulés des liens spéciaux en utilisant jLocale de la façon suivante.
+
+<code php>
+  $properties = array('start-label' => jLocale::get("bar~foo.pagelinks.start"),
+                      'prev-label'  => jLocale::get("bar~foo.pagelinks.prev"),
+                      'next-label'  => jLocale::get("bar~foo.pagelinks.next"),
+                      'end-label'   => jLocale::get("bar~foo.pagelinks.end"),
+                      'area-size'   => 0);
+</code>
+
+
+==== Mise en forme avec CSS ====
+
+Le plugin Pagelinks met à disposition les classes CSS suivantes pour permettre de styler les liens de pagination comme désiré.
+
+  * **ul.pagelinks** : sélecteur css de la liste des pages disponibles
+  * **li.pagelinks-start** : sélecteur css du lien vers la première page de résultats
+  * **li.pagelinks-prev** : sélecteur css du lien vers la page de résultats précédente
+  * **li.pagelinks-current** : sélecteur css de la page de résultats courante
+  * **li.pagelinks-disabled** : sélecteur css des pages de résultats désactivées
+  * **li.pagelinks-next** : sélecteur css du lien vers la page de résultats suivante
+  * **li.pagelinks-end** : sélecteur css du lien vers la dernière page de résultats
+
+Exemple de feuille de style minimaliste pour une utilisation de ''Pagelinks'' avec les propriétés d'affichage par défaut.
+<code css>
+  ul.pagelinks>li {
+      display: inline;
+  }
+  
+  ul.pagelinks>li:before {
+      content: ' | ';
+  }
+  
+  ul.pagelinks>li.pagelinks-start:before {
+      content: '';
+  }
+
+</code>
+
+====== html : urljsstring ======
+
+Le plugin de template urljsstring permet de générer une chaîne pour du javascript, qui contient une url généré par le moteur d'url de Jelix, et qui contient aussi des paramètres dynamiques en javascript. Par exemple, imaginons que l'on veuille ça en javascript :
+
+  "/index.php?module=foo&action=bar&t=1547&param1=" + uneValeur + "&param2=" + (val*5)
+
+On pourrait bien évidement écrire cela directement dans le script javascript. Mais si la forme d'url change ? On est alors obligé de modifier le template. 
+
+urljsstring permet d'éviter cela.
+
+Ce plugin accepte trois paramètres :
+
+     - le sélecteur d'action (ex: "foo~default:bar")
+     - un tableau contenant les paramètres de l'url qui ont une valeur déjà calculée. Clés = noms des paramètres. Valeurs = valeurs des paramètres
+     - un tableau contenant les paramètres qui seront créés dynamiquement par le script javascript. Clés = noms des paramètres. Valeurs = expressions javascript.
+
+
+Pour générer une url comme l'exemple ci-dessus, on affichera :
+
+<code html>
+    {urljsstring "foo~default:bar" , array('t'=>1547) , array('param1'=>'uneValeur', 'param2'=>'(val*5)')}
+</code>
+
+Astuce : pour plus de lisibilité, vous pouvez bien sûr utiliser des variables  de template
+
+<code>
+    {assign $paramjs=array('param1'=>'uneValeur', 'param2'=>'(val*5)')}
+    {urljsstring $selecteur , $paramstatic , $paramjs}
+</code>
+
+
+__Note__ : urljsstring génère les doubles quotes de la chaîne. Donc inutile de les rajouter dans votre script.
+
+<code javascript>
+   // ceci est incorrect
+   var foo = "{urljsstring $selecteur , $paramstatic , $paramjs}"
+   
+   // ceci est correct
+   var foo = {urljsstring $selecteur , $paramstatic , $paramjs}
+</code>

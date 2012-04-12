@@ -1,0 +1,127 @@
+jDateTime est une classe encapsulant une date, permettant de la convertir dans divers formats, mais aussi de faire des calculs de dates.
+
+Pour créer un objet jDateTime, on peut
+
+   * soit passer les valeurs de la date par le constructeur : l'année, le mois, le jour, l'heure, les minutes et les secondes. Toutes ces valeurs sont facultatives et doivent être des entiers.
+   * soit l'instancier sans paramètre et utiliser la méthode now() pour l'initialiser à la date/heure courante.
+   * soit l'instancier sans paramètre et utiliser la méthode setFromString pour l'initialiser à partir d'une chaîne contenant une date et/ou une heure.
+
+===== Initialisation à la date/heure courante =====
+
+La méthode now() initialise l'objet avec la date/heure actuelle.
+
+Exemple : 
+
+<code php>
+  $dt = new jDateTime();
+  $dt->now();
+
+  echo "la date est ", $dt->year, ",", $dt->month, ",", $dt->day, ",", $dt->hour, ",", $dt->minute, ",", $dt->second;
+</code>
+
+===== Conversion à partir d'une chaîne =====
+
+La méthode setFromString prend en argument la chaîne en question et un indicateur de format. Ces indicateurs sont des valeurs numériques qui sont récupérables via des constantes de classe.
+
+jDateTime reconnait les formats suivants :
+
+^ constantes de classe   ^ format ^
+| jDateTime::LANG_DFORMAT | date au format dans la langue actuelle de l'application (en fr, ce sera jj/mm/aaaa) |
+| jDateTime::LANG_DTFORMAT | date et heure au format dans la langue actuelle de l'application |
+| jDateTime::LANG_TFORMAT | heure au format dans la langue actuelle de l'application |
+| jDateTime::DB_DFORMAT | date au format base de données classique : "AAAA-MM-JJ" |
+| jDateTime::DB_DTFORMAT | date et heure au format base de données classique : "AAAA-MM-JJ HH:mm:SS" |
+| jDateTime::DB_TFORMAT | heure au format base de données classique : "HH:mm:SS" |
+| jDateTime::ISO8601_FORMAT | format ISO8601 |
+| jDateTime::TIMESTAMP_FORMAT | simple entier, indiquant le nombre de secondes depuis le 1/1/1970 |
+
+Pour les formats LANG_*, jDateTime se base sur ce qui est indiqué dans le fichier de locales "format" situé dans le module jelix, et correspondant à la langue courante configurée dans Jelix.
+
+Exemple :
+
+<code php>
+  $dt = new jDateTime();
+
+  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+
+  echo "la date est ", $dt->year, ",", $dt->month, ",", $dt->day, ",", $dt->hour, ",", $dt->minute, ",", $dt->second;
+
+</code>
+
+Vous aurez remarqué les propriétés qui permettent de connaître chaque élément de la date.
+
+On peut aussi, plutôt que spécifier à chaque fois le format, définir un format par défaut via la propriété defaultFormat.
+
+<code php>
+  $dt = new jDateTime();
+  $dt->defaultFormat = jDateTime::DB_DFORMAT;
+
+  $dt->setFromString("2006-04-10");
+</code>
+
+===== Conversion vers une chaîne =====
+
+Pour convertir une date en chaîne, il y a la méthode toString qui accepte en paramètre facultatif l'identifiant de format dans lequel on veut l'avoir.
+
+<code php>
+  $dt->toString(jDateTime::LANG_DFORMAT);
+</code>
+
+
+===== Calcul de dates =====
+
+Avec les méthodes sub() et  add(), il est possible d'ajouter ou d'enlever des durées à une date. Ces durées sont à indiquer via un objet jDateTime.
+
+<code php>
+  $dt = new jDateTime();
+  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+
+  // on veut retirer deux jours
+  $date2 = new jDateTime(0,0,2);
+  $dt->sub($date2);
+  echo $dt->toString(jDateTime::DB_DFORMAT); // affiche 2006-04-08
+
+  // on veut ajouter 27h15 heures
+  $date2 = new jDateTime(0,0,0,27,15);
+  $dt->add($date2);
+  echo $dt->toString(jDateTime::DB_DTFORMAT); // affiche 2006-04-09 03:15:00
+
+</code>
+
+Si on veut savoir la durée entre deux dates, on utilise alors la méthode durationTo(), qui renvoi cette durée dans un objet jDateTime :
+
+<code php>
+  $dt = new jDateTime();
+  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+
+  $dt2 = new jDateTime();
+  $dt2->setFromString("2006-04-12",jDateTime::DB_DFORMAT);
+
+  // calcul la durée entre $dt jusqu'à $dt2
+  $dt3 = $dt->durationTo($dt2);
+  echo $dt3->toString(jDateTime::DB_DTFORMAT); //affiche 0000-00-02 00:00:00
+</code>
+
+Attention, les dates doivent être supérieur au 01/01/1970.
+
+
+
+===== Comparaison de dates =====
+
+Pour comparer deux dates, il y a la méthode compareTo()
+
+<code php>
+  $dt = new jDateTime();
+  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+
+  $dt2 = new jDateTime();
+  $dt2->setFromString("2006-04-12",jDateTime::DB_DFORMAT);
+
+  $result = $dt->compareTo($dt2);
+</code>
+
+compareTo renvoit :
+
+   * -1 si $dt < $dt2
+   * 0 si les deux dates sont égales
+   * 1 si $dt > $dt2

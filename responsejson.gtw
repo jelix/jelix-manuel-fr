@@ -1,0 +1,32 @@
+
+[[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui réutilise des éléments syntaxique de Javascript. Cela facilite alors grandement l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus utilisé pour la technique AJAX.
+
+Pour envoyer un contenu en JSON au navigateur, vous pouvez employer la réponse jResponseJson dont l'alias est "json". Vous n'avez ensuite qu'à mettre n'importe quelles données dans la propriété ''$datas''.
+
+<code php>
+  $rep = $this->getResponse('json');
+  $rep->datas = array( 'nom'=>'dupont', 'prenom'=>'jean');
+</code>
+
+Vous recevrez alors coté client, ceci :
+
+<code javascript>
+  { nom: 'dupont', prenom:'jean'}
+</code>
+
+**Exemple d'utilisation avec une DAO**
+
+<code php>
+$countryDao = jDao::get('common~country');
+$countries = $countryDao->findAll();
+$response = $this->getResponse('json');
+$response->datas = array();
+foreach($countries as $country) {
+	$response->datas[] = array('id' => $country->id , 'name' => $country->name);
+}
+</code>
+
+On récupére coté client des objets en notation JSON comme celui-ci :
+<code javascript>
+  { id: '1', name:'Europe'}
+</code>

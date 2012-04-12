@@ -1,0 +1,86 @@
+Jelix permet de générer un fil RSS assez facilement grâce à jResponseRss20. Cet objet prend en charge totalement la [[http://cyber.law.harvard.edu/rss/rss.html|spécification RSS 2.0]]. Comme tout type de réponse, la première chose à faire est de récupérer l'objet jResponseRss20 (alias "rss2.0"). 
+
+<code php>
+  $rep = $this->getResponse('rss2.0');
+</code>
+
+===== Informations sur le fil rss =====
+
+jReponseRss20 possède tout d'abord une propriété infos, qui est un objet permettant de spécifier les propriétés du fil RSS : son titre, l'url du site, le copyright, la description etc. Exemple :
+
+<code php>
+   $rep->infos->title = 'Actualité de Jelix';
+   $rep->infos->webSiteUrl= 'http://jelix.org/fr/';
+   $rep->infos->copyright = 'Copyright 2006-2008 jelix.org';
+   $rep->infos->description = 'Actualité sur le framework PHP5 Jelix';
+   $rep->infos->updated = '2007-06-08 12:00:00';
+   $rep->infos->published = '2007-06-08 12:00:00';
+   $rep->infos->ttl=60;
+</code>
+
+Les champs //updated// et //published// sont des dates qui indiquent respectivement la date de dernière mise à jour du fil RSS, et la date de publication du channel RSS. On peut mettre la même date. Ces dates sont en générale déterminées par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil RSS d'un blog, ce sera la date du dernier billet.
+
+La propriété //ttl// indique à l'aggrégateur de l'utilisateur, la durée (en minute) pendant laquelle il peut mettre le contenu en cache avant de redemander le fil RSS.
+
+Par défaut, la description doit être du texte normal. Cependant vous pouvez indiquer du HTML ou XHTML. Dans ce cas vous devez l'indiquer dans la propriété //descriptionType//, qui peut prendre la valeur "html", "xhtml" ou "text".
+
+
+
+
+
+===== Informations sur les items =====
+
+Il faut ensuite remplir le channel avec les items que vous voulez publier. Pour un blog par exemple, les items seront les descriptifs des derniers billets publiés.
+
+Pour chaque item, vous devez appeler la méthode //createItem()// de jResponseRss20 pour récupérer un objet qui contiendra les informations de l'item. Vous remplissez alors cet objet et vous le stockez dans l'objet jResponseRss20 avec la méthode //addItem()//
+
+Voici un exemple avec une dao de news :
+
+<code php>
+  $newsdao = jDao::get('news');
+  $first = true;
+
+  // ici on récupère la liste des 10 dernières news
+  // on suppose que la liste est classé de la plus récente à la moins récente
+  // (méthode définie dans la dao)
+  $list = $newsdao->findTenFirstNews();
+
+  foreach($list as $news){
+
+    if($first){
+        // le premier enregistrement permet de connaitre
+        // la date du channel
+        $rep->infos->updated = $news->date_create;
+        $rep->infos->published = $news->date_create;
+        $first=false;
+    }
+
+    // on récupère l'url de l'article de news
+    $url = jUrl::get('news~default:article', array('newsid'=>$news->id));
+
+    // on crée un item RSS, en donnant un titre, une url, une date au format [yyyy-mm-jj hh-mm-ss]
+    $item = $rep->createItem($news->title, $url, $news->date_create);
+
+    // auteur de la news
+    $item->authorName = $news->author;
+
+    // contenu HTML de la news
+    $item->content = $news->content;
+    $item->contentType='html';
+
+    //dans notre exemple, on dit que l'url de la news est considéré
+    // comme étant l'id de la news
+    // dans le cas contraire, on aurait pu mettre $item->id =$news->id
+    $item->idIsPermalink = true;
+
+    // on ajoute l'item dans le fil RSS
+    $rep->addItem($item);
+  }
+</code>
+
+
+
+===== Autres informations =====
+
+Il est possible d'indiquer plus d'informations sur le fil rss ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de reference]] sur les objets jRSS20Info et jRSSItem.
+

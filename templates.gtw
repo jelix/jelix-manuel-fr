@@ -1,0 +1,323 @@
+Jelix inclu son propre moteur de template jTpl. Les templates sont des fichiers portant l'extension ".tpl" et se trouvant dans le répertoire "templates" des modules.
+
+===== L'objet jTpl =====
+
+L'objet jTpl sert à générer le contenu indiqué dans un fichier template, à partir des données que vous lui fournissez, et en suivant les instructions contenues dans le template.
+
+Les objets jResponse ou jZone instancie pour vous un objet jTpl. Par exemple, la propriété body de l'objet jResponseHtml est un objet jTpl, de même que la propriété _tpl de jZone.
+
+Dans d'autres circonstances, vous aurez à faire :
+
+<code php>
+   $tpl = new jTpl();
+</code>
+
+Voici les méthodes les plus importantes à connaître.
+
+=== assign ===
+
+<code php>
+  $tpl->assign($nom, $valeur);
+</code>
+
+Cette méthode vous permet de créer une variable de template. Une variable de template n'est accessible qu'au niveau du template. C'est avec cette méthode que vous pouvez donc passer des données (valeurs statiques, objets, itérateurs, etc..) au template pour vous en servir à générer du contenu.
+
+Vous pouvez également créer ou modifier une variable directement dans le fichier tpl en utilisant.
+
+<code html>
+  {assign $nom = $valeur}
+</code>
+
+**important** : le nom d'une variable de template doit respecter les conventions de nommage des noms de variables PHP. Par exemple, le nom ne doit pas contenir de tiret ou d'autres signes de ponctuations. Il ne doit contenir que des lettres avec éventuellement des chiffres et le caractère souligné (_).
+
+=== assignIfNone ===
+
+Idem que assign, mais la valeur est assignée à la variable uniquement si celle-ci n'existe pas.
+
+=== assignZone ===
+
+<code php>
+    $tpl->assignZone($name, $zoneSelector, $params);
+</code>
+
+Le paramètre params est facultatif. Cette méthode est un raccourci de :
+
+<code php>
+   $tpl->assign($name, jZone::get($zoneSelector, $params));
+</code>
+
+=== assignZoneIfNone ===
+
+Idem que assignZone, mais la valeur est assignée à la variable uniquement si celle-ci n'existe pas.
+
+
+=== get ===
+Si vous voulez récupérer la valeur d'une variable de template déjà initialisée, vous pouvez utiliser cette méthode.
+
+<code php>
+  $value = $tpl->get('foo');
+</code>
+
+=== Récupération du contenu ===
+
+Une fois que les variables sont initialisées, vous pouvez appeler la méthode fetch pour générer le contenu du template et le récupérer. Vous donnerez à cette méthode le selecteur du fichier de template.
+
+<code php>
+  $contenu = $tpl->fetch('mymodule~mytemplate');
+</code>
+
+L'appel de cette méthode n'est indispensable que dans le cas où vous avez instancier vous même l'objet jTpl.
+
+Il existe une autre méthode, mais que vous n'appelerez jamais puisque les objets jResponse le font à votre place : display.
+
+<code php>
+  $tpl->display('mymodule~mytemplate');
+</code>
+
+Le contenu du template est évalué et affiché directement.
+
+
+===== Les fichiers templates =====
+
+Un fichier de template contient du HTML, du XUL ou ce que vous voulez qui soit en rapport avec le type de la réponse. Il contient aussi des instructions pour incorporer des valeurs que vous aurez fournies, des instructions pour générer répétitivement des portions de HTML, XUL etc.
+
+La syntaxe utilisée dans jTpl est à mi chemin entre celle utilisée dans le moteur de template Smarty, et la syntaxe PHP. Le but étant d'avoir des templates suffisamment lisibles, facile à modifier en n'imposant pas une syntaxe trop éloignée de PHP, tout en proposant des facilités que ne possède pas PHP et propres à Jelix.
+
+Il faut avoir en tête que la plupart des templates que vous ferez ne doivent pas contenir de fichiers entiers. En particulier, pour les réponses HTML, vos templates ne doivent contenir que ce qui se trouve entre les balises <body> et </body> de votre page, le reste étant généré automatiquement par jResponseHtml.
+
+
+==== Syntaxe des instructions ====
+
+Les instructions jTpl sont spécifiées entre accolade : {instruction....}. 
+
+Si vous voulez inclure des accolades dans le source, sans que ce soit interprété par jTpl, vous pouvez utiliser {ldelim} pour {, et {rdelim} pour }. Si vous avez un bloc contenant plusieurs accolades (comme du code javascript), vous pouvez aussi utiliser l'alternative avec {literal} :
+
+<code html>
+  <script type="text/javascript">
+   {literal}
+      for(i=0;i<max;i++) {
+         if(foo){ ...}
+      }
+   {/literal}
+  </script>
+</code>
+
+Si vous voulez mettre des commentaires qui ne seront pas inclus dans le contenu généré, utilisez {*...*}
+
+<code html>
+   <p>bla bla</p>
+   {* ceci est un commentaire *}
+
+</code>
+
+
+==== Expressions ====
+
+Une expression jTpl est identique à une expression PHP et renvoie, comme dans PHP, une valeur. Vous pouvez utiliser les opérateurs PHP classiques, les objets, etc...
+
+On peut utiliser les variables de templates qu'on a passées à jTpl, comme des variables classiques en PHP :
+
+<code php>
+   $nom_variable_de_template
+</code>
+
+Une expression peut contenir aussi des sélecteurs de locale, en utilisant une syntaxe spécifique à jTpl. Ce type de sélecteur doit être placé entre @. jTpl ira chercher la chaîne correspondante dans la langue courante :
+
+<code php>
+   @mon_module~cle.chaine.localisee@."fooo bar"
+</code>
+
+La chaîne correspondant à ''mon_module~cle.chaine.localisee'' sera récupérée et concaténée à ''"fooo bar"''.
+
+À l'intérieur du nom de la clé, on peut indiquer un nom de variable de template. Cela permet ainsi de construire un nom de clé dynamiquement.
+
+
+<code php>
+   @mon_module~cle.chaine.$nom_variable_template.autre@
+</code>
+
+si $nom_variable_template vaut "foo", alors la clé sera "mon_module~cle.chaine.foo.autre".
+
+
+==== Affichage d'une expression, d'une variable ====
+
+Il faut mettre l'expression entre accolade. Elle doit commencer par un nom de variable ou par un sélecteur de locale :
+
+<code>
+  {$mavariable}
+  {$mavariable * 3}
+  {$mavariable." - ".@mod~message.ok@}
+  {@modul~une.cle.de.locale@."-".$uneAutreVariable}
+  {@modul~une.cle.$dynamique@."-".$uneAutreVariable}
+</code>
+
+Ceci est équivalent en php à 
+
+<code php>
+  <?php echo $mavariable; ?>
+  <?php echo $mavariable * 3; ?>
+  <?php echo $mavariable." - ".jLocale::get("mod~message.ok"); ?>
+  <?php echo jLocale::get("modul~une.cle.de.locale")."-".$uneAutreVariable; ?>
+  <?php echo jLocale::get("modul~une.cle.".$dynamique)."-".$uneAutreVariable; ?>
+</code>
+
+==== Constantes prédéfinies  ====
+
+Pour apporter une certaine facilité, des variables de templates prédéfinies ont été ajoutées :
+
+   * **$j_basepath** : contient le chemin url du répertoire de l'application (paramètre de configuration basePath)
+   * **$j_jelixwww** : contient le chemin url vers le contenu du répertoire jelix-www (paramètre de configuration jelixWWWPath)
+   * **$j_themepath** : contient le chemin url vers le répertoire du thème courant
+   * **$j_datenow** : date courante (aaaa-mm-jj)
+   * **$j_timenow** : heure courante (hh:mm:ss)
+
+
+==== Modificateurs ====
+
+Un modificateur est en fait une fonction qui va modifier le contenu qui va être affiché. Cela fonctionne comme dans smarty. On peut mettre plusieurs modificateurs à la suite :
+
+<code>
+  {$unevariable|upper}
+  {$unevariable|upper|escxml}
+  {$uneUrl|escurl}
+</code>
+
+Ceci est en fait équivalent à :
+
+<code>
+  <?php echo strtoupper($unevariable);?>
+  <?php echo htmlspecialchars(strtoupper($unevariable));?>
+  <?php echo rawurlencode($uneUrl);?>
+</code>
+
+Les modificateurs indiqués en exemple sont de simples alias à des fonctions existantes, mais vous pouvez créer vos propres modificateurs, pouvant accepter plusieurs arguments.
+
+Les modificateurs existants et leur équivalent php :
+    * upper  (strtoupper)
+    * lower  (strtolower)
+    * escxml (htmlspecialchars)
+    * strip_tags (strip_tags)
+    * escurl (rawurlencode)
+    * capitalize (ucwords)
+
+D'autres sont fournis. Voir la liste sur [[http://jelix.org/reference/|la référence API]].
+
+=== modificateur avec paramètres ===
+
+Il peut y avoir des modificateurs qui acceptent des paramètres. Vous devez mettre ceux-ci, séparés par des virgules (,) , après le nom du modificateur et deux-points (:).
+
+Exemple : ici le modificateur jdatetime, prenant deux paramètres de type chaîne : 
+<code smarty>
+  <p>la date est {$myDate|jdatetime:'db_date','timestamp'}.</p>
+</code>
+
+
+
+==== Les structures de contrôle ====
+
+Elles sont équivalentes à celle en PHP. Voici celles qui sont pour le moment implémentées :
+
+=== if, else, elseif ===
+
+
+
+  {if condition_1}
+     // code ici
+  {elseif condition_2}
+     // code ici
+  {else}
+     // code ici
+  {/if}
+
+Note : les parenthèses encadrant la condition ne sont pas obligatoires.
+
+=== while ===
+
+  {while condition}
+    // code ici
+  {/while}
+
+Note : les parenthèses encadrant la condition ne sont pas obligatoires.
+
+=== foreach ===
+
+  {foreach expression}
+    // code ici
+  {/foreach}
+
+Note : il ne faut pas entourer l'expression par des parenthèses.
+
+=== for ===
+  {for expression}
+    // code ici
+  {/for}
+
+L'expression est bien sûr semblable à celle du "for" en PHP. Cependant, il ne faut pas entourer l'expression par des parenthèses.
+
+
+==== Fonctions jTpl ====
+
+Ce sont des fonctions classiques mais appelables uniquement dans un template. Certaines sont disponibles en standard et vous pouvez en réaliser en créant un plugin de template. Leur syntaxe est :
+
+  {nom_fonction paramètres}
+
+Les paramètres sont des expressions jTpl, donc similaires aux expressions PHP. Cependant, contrairement en PHP, il ne faut pas entourer les paramètres par des parenthèses.
+
+Sachez que les fonctions, et en général la plupart des plugins de templates, sont attribués à un type de réponse particulier. Donc il existe des fonctions utilisables dans des templates pour les réponses HTML, mais pas dans les templates pour les réponses Text par exemple.
+
+==== informations meta ====
+
+Il existe une balise assez spéciale : {meta}. Elle n'influence pas l'interprétation du template, ne génère aucun contenu, mais permet de fournir des informations sur le template qui pourraient être réutilisées par un programme utilisant le template.
+
+ {meta nom expression}
+
+Exemple : 
+
+  {meta auteur 'laurent'}
+
+On peut en mettre plusieurs bien sûr. Ces informations sont récupérables via la méthode meta() de l'objet jTpl :
+
+<code php>
+  $tpl = new jTpl();
+
+  $metas = $tpl->meta('le_fichier_template');
+
+  echo $metas['auteur']; // affiche 'laurent'
+
+</code>
+
+
+
+Note : si vous utilisez une variable dans l'expression dans un tag @@meta@@, cette variable doit être créée via la méthode @@M@assign()@@ de l'objt jtpl, et non pas avec un tag jtpl comme @@{assign ...}@@.
+
+==== Informations meta avançées ====
+
+Des informations meta peuvent être traitées automatiquement via un plugin de template. Par exemple, il existe un plugin de meta permettant d'indiquer des informations pour une réponse HTML (feuille de style CSS, script JS, etc...). Leur syntaxe est :
+
+  {meta_//nom_plugin// nom expression}
+
+Exemple :
+
+  {meta_html css '/styles/my.css'}
+  {meta_html js 'fooscript.js'}
+  {meta_html bodyattr array('onload'=>'alert("charge")')}
+
+Un plugin similaire existe pour XUL, et bien sûr vous pouvez réaliser le votre.
+
+===== Surcharge de template =====
+
+Chaque module défini des templates qui lui sont propres, mais pour éviter d'avoir à retravailler sur les templates originaux du module lorsque ce dernier est réutilisé dans une autre application, il est possible d'appliquer d'autres templates afin de produire un nouvel affichage, sans toucher au contrôleur.
+
+Pour cela Jelix utilise un système de thème, le thème par défaut étant stocké dans ///var/themes/default//, il est possible d'ajouter d'autres thèmes en ajoutant simplement des répertoires dans /var/themes, par exemple /var/themes///mon_theme//.
+
+Ainsi /var/themes/mon_theme/mon_module/mon_template.tpl redéfini le template //mon_template// du module //mon_module// pour le thème //mon_theme//. 
+
+
+Pour plus de détails, voir la page sur les [[themes|thèmes]].
+
+
+===== En coulisse =====
+
+Les templates jTpl sont "compilés" sous forme de fichiers purs PHP, et stockés dans un cache pour améliorer les performances. Vous pouvez donc voir l'équivalence d'un de vos fichiers templates dans temp/votre_application/compiled/templates/modules/nom_module~nom_template.php ou pour les templates redefinis dans les themes : temp/votre_application/compiled/templates/themes/nom_theme/nom_module~nom_template.php 
+
+Vous pouvez créer aussi des plugins de templates, pour ajouter vos propres "tags" dans la syntaxe jtpl. Voir [[plugins/tpl]].

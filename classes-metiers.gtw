@@ -1,0 +1,106 @@
+
+Pour respecter le modèle en couche, il est recommandé de réaliser tout ses traitements métiers et services dans des classes dédiées.
+
+Dans de telles classes, vous manipulerez par exemple des daos, des données issues de daos ou autre, effectuerez donc des traitements autres que de l'affichage. Aussi les méthodes de vos controllers s'en trouveront allégées et les traitements réutilisables dans d'autres actions.
+
+===== Création d'une classe =====
+
+Les classes métiers et services dans Jelix sont des classes PHP classiques qui n'ont rien de spécifique. La seule chose à respecter est de la stocker dans un fichier nom_de_la_classe.class.php dans le répertoire classes du module :
+
+<code php>  
+   class StockService {
+      public function getListeProduits(){
+          $stock = jDAO::get("products");
+          
+          $liste = $stock->findAll();
+          
+          // ici traitement sur la liste... par exemple
+          
+          
+          return $liste;      
+      }
+   }
+</code>
+
+Cette classe devra être stockée dans classes/StockService.class.php.
+
+
+La différence entre une classe service avec les autres classes est qu'une classe service fourni comme son nom l'indique, un service. Elle n'a pas besoin d'être instanciée à chaque utilisation car elle ne possède pas de propriétés "discriminantes". Une seule instance suffit pour toute l'application.
+
+Par exemple une classe de type "factory", qui permet de récupérer des ensembles de données, est une classe service. Par contre une classe représentant un produit, qui possède donc des champs identifiants, est une classe non service.
+
+
+===== Instanciation =====
+
+Jelix propose la classe jClasses, qui vous évite d'avoir à faire un include et une instanciation par vous même.
+
+jClasses fournit deux méthodes statiques, auxquelles vous indiquez un sélecteur :
+
+    * createInstance($selecteurDeClasse); (ou create($selecteurDeClasse) )
+    * getService($selecteurDeClasse);
+
+
+La première créera à chaque appel une nouvelle instance. Par contre la deuxième renverra toujours une même instance de la classe. getService sera donc utilisé sur les classes services, et createInstance sur les autres.
+
+Si notre classe StockService se trouve dans le module "shop", voici un exemple d'appel dans un contrôleur:
+
+<code php>
+    $stocksrv = jClasses::getService("shop~stockservice");
+    $rep->body->assign('liste_produits', $stocksrv->getListeProduits());
+</code>
+
+Cependant dans certains cas, comme celui où le constructeur de la classe métier demande un paramètre, il faut inclure la classe métier puis l'instancier "manuellement".
+
+Dans ce cas la classe jClasses propose la méthode statique inc($selecteurDeClasse). Comme son nom l'indique elle inclue (en fait effectue un require_once) la classe spécifiée par le sélecteur.
+
+Exemple :
+<code php>
+    jClasses::inc('shop~shoesProduct');
+    $shoe = new shoesProduct('43', 'black');
+</code>
+
+
+Notez que vous pouvez mettre des classes dans des sous-repertoires de "classes/", ce qui donne, si on place StockService dans un répertoire classes/stocks/ :
+
+<code php>
+   $stocksrv = jClasses::getService("shop~stocks/stockservice");
+</code>
+
+
+===== Installer et Utiliser des classes tierces =====
+
+Il se peut que vous vouliez réutiliser des classes développées en dehors du projet. Il est bien entendu tout à fait possible de le faire dans Jelix.
+
+Bien que vous puissiez mettre ces classes où bon vous semble et faire un include classique, il y a toutefois deux emplacements préconisés :
+
+  * le répertoire lib
+  * le répertoire classes d'un module
+
+Faire un répertoire spécifique dans lib/ et y placer les fichiers de classes, est interessant  quand il s'agit de partager ces classes entre plusieurs modules, voire entre plusieurs projets. Pour faire les includes, vous pouvez utiliser la constante LIB_PATH. Par exemple si vous voulez inclure une classe que vous avez dans lib/foo/bar.php, vous ferez alors ceci :
+
+<code php>
+   require(LIB_PATH.'foo/bar.php');
+   $maclasse = new bar();
+</code>
+
+Placer les classes tierces dans le répertoire classes, est utile si les classes en question ne sont utilisées que par ce module. Cela permet aussi une réutilisation plus facile : tout est dans le module.
+
+Pour utiliser ces classes, en admettant que vous voulez inclure le fichier bar.php que vous avez placé dans le répertoire classes du module main, vous pouvez faire :
+
+<code php>
+   require(JELIX_APP_PATH.'modules/main/classes/bar.php');
+   $maclasse = new bar();
+</code>
+
+Si le nom du fichier de la classe respecte la norme des fichiers de classes pour jelix (bar.class.php), et que la classe s'appelle effectivement "bar", vous pouvez bien entendu utiliser jClasses :
+
+<code php>
+   $maclasse = jClasses::create('bar');
+
+   // ou si le constructeur attend des arguments
+   jClasses::inc('bar');
+   $maclasse = new bar('bla');
+
+</code>
+
+

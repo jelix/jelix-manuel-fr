@@ -1,0 +1,71 @@
+Jelix propose un système de thèmes, permettant donc de personnaliser les templates et les feuilles de style, sans toucher aux fichiers originaux.
+
+
+===== Les templates d'un thème =====
+
+Un thème est un répertoire dans var/themes/. Ce répertoire contient des fichiers templates dans des sous-repertoires qui correspondent à chaque module.
+
+Par exemple, vous voulez adapter le template //main.tpl// du module //exemple//, pour le thème //web20//, vous stockerez un fichier main.tpl dans var/themes/web20/exemple/. Notez donc que le template original et le nouveau template possède le même nom.
+
+Le thème par défaut ayant pour nom "default", si vous voulez redéfinir un template d'un module, même si vous n'utilisez pas explicitement les thèmes, vous placerez ce template dans var/themes/default/le_module/le_template.tpl.
+
+
+
+
+===== Les fichiers web d'un thème =====
+
+Par fichier web, on entend les fichiers CSS, les images etc... Ces fichiers ne doivent pas être placé dans //var/themes/// car var n'est pas censé être accessible publiquement depuis le web.
+
+Vous les placerez donc dans un répertoire themes/le_nom_du_theme/ dans le répertoire de base de votre application (basePath), en général donc dans www/
+
+Pour avoir le chemin web du theme, vous pouvez utiliser ceci :
+
+<code php>
+   $chemin = $gJConfig->urlengine['basePath'].'themes/'.$gJConfig->theme.'/'
+   $rep->addCssLink($chemin.'design.css');
+</code>
+
+Dans un template, vous avez une facilité en utilisant la balise meta :
+
+<code html>
+{meta_html csstheme 'design.css'}
+</code>
+
+D'autres sont disponibles pour les feuilles de styles spéciales pour IE
+
+<code html>
+{meta_html cssthemeie 'design.css'} pour ie
+{meta_html cssthemeie7 'design.css'} pour ie7
+{meta_html cssthemeltie7 'design.css'} pour ie < 7
+</code>
+
+Mais vous avez aussi une variable déclarée automatiquement, //j_themepath//, dans un template contenant le chemin des thèmes
+
+<code html>
+  <img src="{$j_themepath}logo.png" alt="logo"/>
+</code>
+
+===== Déclarer un thème par défaut =====
+
+L'activation d'un thème se fait dans le fichier de configuration, au niveau du paramètre theme :
+
+<code ini>
+theme = web20
+</code>
+
+
+
+===== Déclarer un thème dynamiquement =====
+
+Pour offrir la possibilité à l'internaute de choisir son thème, vous pouvez lui proposer un formulaire avec la liste des themes (liste que vous construisez vous même).
+
+Ensuite vous stockez le nom du thème choisi quelque part (en session, ou dans un cookie par exemple).
+
+Enfin, pour que le thème soit activé automatiquement, il suffit de récupérer le nom du theme correspondant à l'utilisateur, et de le spécifier dans la configuration, au niveau du paramètre theme:
+
+<code php>
+  $GLOBALS['gJConfig']->theme = $themeChoisi;
+</code>
+
+Bien sûr, le meilleur endroit pour faire ça est dans un [[plugins/coord|plugin de coordinateur]] qu'il vous faut développer.
+

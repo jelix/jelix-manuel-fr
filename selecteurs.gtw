@@ -1,0 +1,59 @@
+
+===== L'utilité des sélecteurs =====
+
+Les sélecteurs sont très utilisés dans Jelix. Ils permettent d'indiquer une ressource, un fichier, sans avoir à connaître son chemin. En effet, l'arborescence d'une application Jelix n'est pas figée et peut être modifiée selon les normes en vigueurs sur le serveur (le répertoire var de l'application myapp allant dans le répertoire /var/myapp/var par exemple, sur un serveur unix).
+
+De plus les bibliothèques de Jelix peuvent être installées dans une arborescence différente de celle de l'application.
+
+Aussi les sélecteurs permettent de ne pas avoir à modifier son application quand elle est installée différemment.
+
+Et ils permettent aussi d'éviter à devoir taper de long chemins de fichiers...
+
+===== Comment est défini un sélecteur =====
+
+Un sélecteur est une chaîne ayant ce format : "unModule~uneRessource" . On peut omettre le module si on se trouve actuellement dans le module en question. Dans ce cas on écrit "uneRessource".
+
+Un sélecteur désigne une ressource d'un type précis. Voici donc les différents types de sélecteurs :
+
+^ Ressource ^ Préfixe ^ Classe ^
+| une action | act | jSelectorAct |
+| une classe | class | jSelectorClass |
+| une locale | loc | jSelectorLoc |
+| un dao | dao | jSelectorDao |
+| un template | tpl | jSelectorTpl |
+| une zone | zone | jSelectorZone |
+| un plugin | plug | jSelectorPlugin |
+| fichier dans var/ | var | jSelectorVar |
+| fichier de configuration | cfg | jSelectorCfg |
+| fichier dans temp/ | tmp | jSelectorTmp |
+| fichier de log | log | jSelectorLog|
+| fichier dans lib/ | lib | jSelectorLib |
+
+
+
+En règle générale, vous aurez à donner un sélecteur en paramètre de certaines méthodes sans avoir à indiquer son type. Très souvent en effet ces méthodes savent qu'il s'agira d'un sélecteur sur une ressource d'un type précis.
+
+  jDao::create("myModule~myDao");
+
+Ici jDao cherchera un fichier DAO de nom myDAO.dao.xml dans le module myModule.
+
+
+
+
+
+===== Définir un sélecteur d'un type précis =====
+
+Il peut arriver (mais c'est en fait très rare dans l'API de Jelix) que la méthode attende n'importe quel type de sélecteur. Dans ce cas là il faut ajouter un préfixe au sélecteur de manière à indiquer son type. Ce préfixe est indiqué dans le tableau du dessus. La notation d'un sélecteur est alors : 
+
+    "type:unModule~uneRessource"
+
+On appelle cela un "sélecteur complet".
+
+On utilisera alors l'objet jSelectorFactory pour récupérer l'objet sélecteur correspondant (voir la colonne classe dans le tableau) et donc le chemin physique de la ressource indiquée.
+ 
+<code php>
+    $unSelecteur = "tpl:foo~bar";
+    ...
+    $selector = jSelectorFactory::create($unSelecteur); // $selector sera un objet de type jSelectorTpl
+    $chemin_du_template = $selector->getPath();
+</code>

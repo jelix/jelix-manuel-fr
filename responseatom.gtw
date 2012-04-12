@@ -1,0 +1,83 @@
+
+Jelix permet, [[responserss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet jResponseAtom10, qui prend en charge  quasiement la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
+
+<code php>
+  $rep = $this->getResponse('atom1.0');
+</code>
+
+La manipulation de jResponseAtom10 est identique à jResponseRss20. La difference se situe sur quelques propriétés dans les informations du fil ou des items.
+
+===== Informations sur le fil atom =====
+
+jResponseAtom10, comme jresponseRss20, possède une propriété infos, qui est un objet permettant de spécifier les propriétés du fil Atom. Exemple :
+
+<code php>
+   $rep->infos->title = 'Actualité de Jelix';
+   $rep->infos->webSiteUrl= 'http://jelix.org/fr/';
+   $rep->infos->copyright = 'Copyright 2006-2007 jelix.org';
+   $rep->infos->description = 'Actualité sur le framework PHP5 Jelix';
+   $rep->infos->updated = '2007-06-08 12:00:00';
+   $rep->infos->selfLink=jUrl::get();
+</code>
+
+Le champs //updated// est la date de dernière mise à jour du fil Atom. Elle est en générale déterminée par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil Atom d'un blog, ce sera la date du dernier billet.
+
+La propriété //selfLink// est l'url de ce fils Atom.
+
+Par défaut, la description doit être du texte normal. Cependant vous pouvez indiquer du HTML ou XHTML. Dans ce cas vous devez l'indiquer dans la propriété //descriptionType//, qui peut prendre la valeur "html", "xhtml" ou "text".
+
+
+===== Informations sur les items =====
+
+Il faut ensuite remplir le channel avec les items que vous voulez publier. Pour un blog par exemple, les items seront les descriptifs des derniers billets publiés.
+
+Pour chaque item, vous devez appeler la méthode //createItem()// de jResponseAtom10 pour récupérer un objet qui contiendra les informations de l'item. Vous remplissez alors cet objet et vous le stockez dans l'objet jResponseAtom10 avec la méthode //addItem()//
+
+Voici un exemple avec une dao de news :
+
+<code php>
+  $newsdao = jDao::get('news');
+  $first = true;
+
+  // ici on récupère la liste des 10 dernières news
+  // on suppose que la liste est classé de la plus récente à la moins récente
+  // (méthode définie dans la dao)
+  $list = $newsdao->findTenFirstNews();
+
+  foreach($list as $news){
+
+    if($first){
+        // le premier enregistrement permet de connaitre
+        // la date du channel
+        $rep->infos->updated = $news->date_create;
+        $first=false;
+    }
+
+    // on récupère l'url de l'article de news
+    $url = jUrl::get('news~default:article', array('newsid'=>$news->id));
+
+    // on crée un item ATOM, en donnant un titre, une url, une date 
+    $item = $rep->createItem($news->title, $url, $news->date_create);
+
+    // auteur de la news
+    $item->authorName = $news->author;
+
+    // résumé de la news en HTML
+    $item->summary = $news->summary;
+    $item->summaryType='html';
+
+    // contenu HTML de la news
+    $item->content = $news->content;
+    $item->contentType='html';
+
+    // on ajoute l'item dans le fil ATOM
+    $rep->addItem($item);
+  }
+</code>
+
+
+
+
+===== Autres informations =====
+
+Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de reference]] sur les objets jAtom10Info et jAtom10Item.

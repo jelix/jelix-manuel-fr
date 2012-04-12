@@ -1,0 +1,31 @@
+
+Bien que le terme AJAX précise qu'une réponse doit être en XML (d'où le X dans AJAX), AJAX est souvent utilisé avec d'autres types de format.
+
+Selon ce que vous attendez côté client, soit dans la propriété responseText, soit dans la propriété responseXml de l'objet xmlHttpRequest, vous utiliserez un objet jResponse différent.
+
+  * Pour tout ce qui est contenu XML quelconque, vous utiliserez [[responsexml|jResponseXml]]
+  * Pour des réponses en JSON, vous utiliserez [[responsejson|jResponseJson]]
+  * Pour renvoyer des fragments de code HTML, il ne faut **pas** utiliser jResponseHtml, mais [[responsetext|jResponseText]] (voir exemple ci-dessous).
+  * En règle générale, vous utiliserez jResponseText.
+
+
+==== Renvoyer des fragments de code HTML ====
+
+Il ne faut pas utiliser jResponseHtml, car cet objet génère tout ce qu'il faut pour une page HTML : le ''<head>'', le ''<body>'' etc... Bien souvent, dans une requête AJAX, on ne veut récupérer qu'un fragment de code HTML.
+
+[[responsetext|jResponseText]] est plus adapté pour cela (dans la version 1.1, il y aura jResponseHtmlFragment):
+
+
+<code php>
+   $rep = $this->getResponse('text');
+   $rep->content = '<p>nouvelle donnée</p>';
+   return $rep;
+</code>
+
+== Note à propos de l'utilisation de jforms dans des réponses Ajax ==
+
+Il y a un souci connu quand on utilise [[jforms|un formulaire jforms]] dans un template pour une réponse autre que html pour faire une réponse ajax : il peut y avoir une erreur PHP qui dit que l'objet response n'a pas la méthode addJsLink.
+
+En effet, pour fonctionner correctement, un formulaire jforms a besoin de la présence du fichier lib/jelix-www/js/jforms.js dans la page qui appelle la requête ajax. Ce fichier est inclus automatiquement par le plugin form, en appelant la methode addJsLink de la réponse. Malheureusement, il manque un test d'existance de cette méthode. Ce bug sera corrigé dans la version 1.0.4.
+
+Autre chose, même si ce bug n'existait pas, il reste un problème: comme les fragments HTML renvoyé par les reponses ajax n'ont pas d'entête HTML <head>, le script n'est pas inclus dans la page html final, ce qui causera des erreurs javascript. Pour le moment, il n'y a pas d'autres solutions que d'inclure ce script jforms.js "à la main" lors de la génération de la page hôte (celle qui fait donc la requête ajax).

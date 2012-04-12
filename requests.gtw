@@ -1,0 +1,68 @@
+===== Un objet jRequest pour chaque type de requête =====
+
+Un objet jRequest prend en charge le traitement des données en entrée afin de les rendre disponibles facilement au framework et plus spécifiquement aux actions. Il permet entre autre de déterminer le module et l'action à exécuter. 
+
+Il y a plusieurs types d'objets jRequest qui permettent de traiter différentes données en entrée. En effet, on ne récupère pas les données en entrée pour une page HTML (situées dans l'URL pour une requête GET ou URL-encodées dans son corps pour une requête POST) de la même manière que celles d'un appel XML-RPC (les données étant situées dans le corps de la requête HTTP sous forme XML).
+
+À chaque type d'objet jRequest correspond un ou plusieurs formats de sortie autorisés, donc un ou plusieurs objets jResponse permis.
+
+
+Les objets jRequest disponibles sont :
+  * classic : pour les requêtes classiques dont le type de réponse est indifférent (HTML, texte, redirection...),
+  * xmlrpc : pour les requêtes XML-RPC. La réponse sera nécessairement en XML-RPC,
+  * jsonrpc : pour les requêtes JSON-RPC. La réponse sera nécessairement en JSON-RPC.
+
+D'autres sont possibles (SOAP par exemple).
+
+
+===== Point d'entrée =====
+
+Il faut un fichier d'entrée PHP pour chaque type de requête que l'on veut utiliser.
+Pour le classique (a priori, index.php), ça ressemble à ça :
+
+<code php>
+// inclusion du fichier principal de jelix
+require_once ('../../lib/jelix/init.php');
+
+// inclusion du fichier principal de l'application
+require_once ('../../myapp/application.init.php');
+
+// inclusion d'un objet jRequest de son choix
+require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
+
+// on indique le fichier de configuration correspondant au point d'entrée
+// ici le fichier de config est dans var/config/index/
+$config_file = 'index/config.ini.php';
+
+// instanciation du coordinateur et lancement du processus
+$jelix = new jCoordinator($config_file);
+$jelix->process(new jClassicRequest());
+
+</code>
+
+
+
+
+
+===== API =====
+
+Durant l'exécution de l'action, l'objet jRequest correspondant à la requête est accessible via la propriété ''request'' du coordinateur. Ce dernier est accessible via une variable globale $gJCoord. 
+
+<code php>
+  // pour récupérer un paramètre en dehors d'un contrôleur
+  $myfooValue = $GLOBALS['gJCoord']->request->getParam('foo');
+</code>
+
+Mais dans un contrôleur, vous avez à votre disposition des méthodes "raccourcis" :
+
+<code php>
+    $myfooValue = $this->param('foo');
+</code>
+
+Les autres propriétés de ''request'' qui peuvent être utiles :
+
+| type | Pour connaître le type de la requête |
+| url_script_path | Le chemin dans l'URL jusqu'au script |
+| url_script_name | Le nom du script (le nom du fichier point d'entrée) |
+| url_path_info | La partie pathinfo de l'URL |
+| params        | Les paramètres de la requête |

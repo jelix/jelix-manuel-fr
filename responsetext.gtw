@@ -1,0 +1,20 @@
+
+
+
+Il faut utiliser jResponseText qui est récupérable via l'alias "text". Cet objet possède une propriété "content" dans laquelle vous mettez le texte voulu.
+
+<code php>
+   function myaction(){
+       $rep = $this->getResponse('text');
+       $rep->content = 'my text';
+       return $rep;
+   }
+</code>
+
+
+Par défaut, jResponseText renvoi le type mime text/plain et avec le charset indiqué dans la config de jelix. 
+
+Toutefois, comme jResponseText dérive de jResponse, vous pouvez modifier les en-tête http, donc le type mime et le charset.
+
+D'ailleurs, jResponseText peut-être utilisé comme base pour d'autres formats à contenu textuels (json ou autre réponse pour ajax par ex).
+

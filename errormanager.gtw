@@ -1,0 +1,50 @@
+Les classes du framework peuvent générer des erreurs de deux façons différentes par : 
+  * un trigger_error (erreur PHP)
+  * une exception
+
+Une erreur PHP est générée dans le cas d'une erreur technique due à un défaut dans la programmation. C'est alors au développeur de corriger l'erreur.
+
+Une exception est générée dans le cas d'une erreur qui peut survenir de façon imprévisible durant l'exécution d'une action. Par exemple une erreur suite à l'impossibilité de se connecter sur une base de données ou alors une erreur "fonctionnelle", "métier".
+
+
+===== Paramétrage des gestionnaires d'erreurs =====
+
+Quelle que soit l'origine de l'erreur, celle-ci passe par un gestionnaire d'erreur (sauf les exceptions interceptées par un try/catch). Il y a un gestionnaire d'erreur attribué aux erreurs PHP et un autre attribué aux exceptions.
+
+Les gestionnaires d'erreurs sont chargés d'effectuer les actions indiquées dans la configuration, selon le type d'erreur. Il s'agit des paramètres **default**, **error**, **warning**, **notice**, **strict**, **exception** dans la section **error_handling**. Chacun de ses paramètres doit contenir un ou plusieurs de ces mots qui indique une action a effectuer :
+
+| ECHO | le message sera passé dans la réponse |
+| LOGFILE | le message est stocké dans le fichier de log indiqué dans l'option **logFile** de la config |
+| SYSLOG | le message est envoyé dans le log système |
+| MAIL | le message est envoyé par mail à l'adresse indiquée dans l'option **email** |
+| EXIT | l'exécution s'arrête ici (EXIT est implicite pour les exceptions) |
+| TRACE | inclus la pile d'execution dans le message (mais uniquement dans les messages des fichiers de log)|
+| ECHOQUIET | n'affiche pas le detail du message, affiche juste le contenu de l'option **quietMessage** |
+
+L'option **messageLogFormat** indique le formatage du message d'erreur pour son stockage dans le fichier de log, syslog ou le mail.
+
+Si, pour l'action ECHO avec les réponses HTML et XUL, vous voulez afficher les erreurs dans Firebug (une extension pour Firefox), mettez l'option **showInFirebug** à //on// (jelix 1.0).
+
+
+===== Code erreur =====
+
+Chaque message d'erreur est localisé dans les fichiers properties et chaque erreur devrait posséder un numéro. Ce numéro est indiqué dans les fichiers properties des messages localisés, de cette façon :
+
+ cle.chaine = (code_erreur)message d'erreur
+
+Le message d'erreur au final ne contiendra pas le code erreur. Et ce dernier sera extrait.
+
+Voici les plages de code erreurs
+
+| 0-99 | erreurs générales |
+| 100-199 | erreurs du core |
+| 200-299 | erreurs de locale |
+| 300-399 | erreurs de templates |
+| 400-499 | erreurs de bases de données |
+| 500-599 | erreurs de daos |
+| 600-699 | erreurs d'authentification |
+| 700-799 | erreurs de droits |
+| 800-899 | erreurs jforms |
+| > 5000  | erreurs utilisateurs |
+
+Si vous générez des erreurs pour vos propres besoins, leurs codes doivent être supérieur à 5000.
