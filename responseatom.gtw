@@ -1,5 +1,7 @@
+~~LANG:EN@//en/manual-1.1/responseatom~~
 
-Jelix permet, [[responserss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet jResponseAtom10, qui prend en charge  quasiement la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
+
+Jelix permet, [[responserss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet jResponseAtom10, qui prend en charge  quasiment la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
 
 <code php>
   $rep = $this->getResponse('atom1.0');
@@ -20,7 +22,7 @@ jResponseAtom10, comme jresponseRss20, possède une propriété infos, qui est u
    $rep->infos->selfLink=jUrl::get();
 </code>
 
-Le champs //updated// est la date de dernière mise à jour du fil Atom. Elle est en générale déterminée par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil Atom d'un blog, ce sera la date du dernier billet.
+Le champs //updated// est la date de dernière mise à jour du fil Atom. Elle est en général déterminée par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil Atom d'un blog, ce sera la date du dernier billet.
 
 La propriété //selfLink// est l'url de ce fils Atom.
 
@@ -80,4 +82,4 @@ Voici un exemple avec une dao de news :
 
 ===== Autres informations =====
 
-Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de reference]] sur les objets jAtom10Info et jAtom10Item.
+Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de référence]] sur les objets jAtom10Info et jAtom10Item.

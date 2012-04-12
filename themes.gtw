@@ -1,11 +1,13 @@
+~~LANG:EN@//en/manual-1.1/themes~~
+
 Jelix propose un système de thèmes, permettant donc de personnaliser les templates et les feuilles de style, sans toucher aux fichiers originaux.
 
 
 ===== Les templates d'un thème =====
 
-Un thème est un répertoire dans var/themes/. Ce répertoire contient des fichiers templates dans des sous-repertoires qui correspondent à chaque module.
+Un thème est un répertoire dans var/themes/. Ce répertoire contient des fichiers templates dans des sous-répertoires qui correspondent à chaque module.
 
-Par exemple, vous voulez adapter le template //main.tpl// du module //exemple//, pour le thème //web20//, vous stockerez un fichier main.tpl dans var/themes/web20/exemple/. Notez donc que le template original et le nouveau template possède le même nom.
+Par exemple, vous voulez adapter le template //main.tpl// du module //exemple//, pour le thème //web20//, vous stockerez un fichier main.tpl dans var/themes/web20/exemple/. Notez donc que le template original et le nouveau template possèdent le même nom.
 
 Le thème par défaut ayant pour nom "default", si vous voulez redéfinir un template d'un module, même si vous n'utilisez pas explicitement les thèmes, vous placerez ce template dans var/themes/default/le_module/le_template.tpl.
 
@@ -14,7 +16,7 @@ Le thème par défaut ayant pour nom "default", si vous voulez redéfinir un tem
 
 ===== Les fichiers web d'un thème =====
 
-Par fichier web, on entend les fichiers CSS, les images etc... Ces fichiers ne doivent pas être placé dans //var/themes/// car var n'est pas censé être accessible publiquement depuis le web.
+Par fichier web, on entend les fichiers CSS, les images etc... Ces fichiers ne doivent pas être placés dans //var/themes/// car var n'est pas censé être accessible publiquement depuis le web.
 
 Vous les placerez donc dans un répertoire themes/le_nom_du_theme/ dans le répertoire de base de votre application (basePath), en général donc dans www/
 
@@ -57,11 +59,11 @@ theme = web20
 
 ===== Déclarer un thème dynamiquement =====
 
-Pour offrir la possibilité à l'internaute de choisir son thème, vous pouvez lui proposer un formulaire avec la liste des themes (liste que vous construisez vous même).
+Pour offrir la possibilité à l'internaute de choisir son thème, vous pouvez lui proposer un formulaire avec la liste des thèmes (liste que vous construisez vous même).
 
 Ensuite vous stockez le nom du thème choisi quelque part (en session, ou dans un cookie par exemple).
 
-Enfin, pour que le thème soit activé automatiquement, il suffit de récupérer le nom du theme correspondant à l'utilisateur, et de le spécifier dans la configuration, au niveau du paramètre theme:
+Enfin, pour que le thème soit activé automatiquement, il suffit de récupérer le nom du thème correspondant à l'utilisateur, et de le spécifier dans la configuration, au niveau du paramètre thème:
 
 <code php>
   $GLOBALS['gJConfig']->theme = $themeChoisi;

@@ -1,12 +1,11 @@
-====== Classe jFile ======
+~~LANG:EN@//en/manual-1.1/file~~
 
 jFile aide à lire ou créer des fichiers.
 Les fonctions de jFile sont statiques, il n'est pas nécessaire de l'instancier pour les utiliser.
 
-
 ===== Fonction read =====
 
-retourne le contenu d'un fichier ou false si le fichier n'est pas lisible.
+Retourne le contenu d'un fichier ou @@false@@ si le fichier n'est pas lisible.
 
 <code php>
 $content = jFile::read('/le/chemin/du/fichier.ext');
@@ -15,12 +14,9 @@ $content = jFile::read('/le/chemin/du/fichier.ext');
 
 ===== Fonction write =====
 
-Écrit un fichier sur le disque.\\
-Cette fonction est largement inspirée de la gestion des fichier de smarty.\\
-Elle utilise un fichier temporaire puis renomme le fichier.\\
-Cette méthode vient de la classe CopixFile du framworks Copix.
+Écrit un fichier sur le disque. Elle utilise un fichier temporaire puis renomme le fichier à la fin de l'écriture, limitant les conflits d'accés.
 
-Retourne true si tout s'est bien passé.
+Retourne @@true@@ si tout s'est bien passé.
 
 <code php>
 jFile::write('/le/chemin/du/fichier.ext', 'les données');
@@ -28,8 +24,7 @@ jFile::write('/le/chemin/du/fichier.ext', 'les données');
 
 ===== Fonction createDir =====
 
-Créer un dossier.\\
-Elle crée également tous les dossiers parents.
+Créer un dossier. Elle crée également tous les dossiers parents si ils n'existent pas.
 
 <code php>
 jFile::createDir('/le/chemin/du/dossier');
@@ -37,14 +32,14 @@ jFile::createDir('/le/chemin/du/dossier');
 
 ===== Fonction removeDir =====
 
-Fonction de suppression récursive de dossier.
+Fonction de suppression récursive du contenu d'un dossier.
 
-Le deuxième paramètre permet de supprimer aussi tous les parents.
+Le deuxième paramètre permet de supprimer (@@true@@) ou non (@@false@@) le dossier lui même.
 
 <code php>
 jFile::removeDir('/le/chemin/du/dossier', false);
-// seul  le dossier "dossier" sera supprimé 
+// seul le contenu du dossier "dossier" sera supprimé 
 
 jFile::removeDir('/le/chemin/du/dossier');
-// les dossiers "le", "chemin", "du" et "dossier" seront supprimés
+// le contenu du dossier, et le dossier lui même sera supprimé.
 </code>

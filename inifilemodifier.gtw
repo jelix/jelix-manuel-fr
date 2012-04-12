@@ -1,0 +1,44 @@
+jIniFileModifier aide à lire ou modifier des fichiers de configuration. Le constructeur de la classe prend un paramètre : le chemin du fichier ce qui vous oblige à instancier la classe avec le chemin du fichier à lire ou modifier.
+
+===== Constructeur =====
+
+Le constructeur permet de lire le fichier de configuration
+
+<code>
+$ini = new jIniFileModifier ($MonFichier);
+</code>
+
+===== Fonction getValue =====
+
+La fonction getValue permet de lire la valeur d'un mot clé avec une section ou pas. La fonction prend les paramètres suivant: le mot clé, la section (optionnel).
+Dans le cas le mot clé ne se trouve pas dans une section, ne mettez pas le paramètre section 
+
+<code>
+$valeur = $ini->getValue($MotCle, $Section);
+</code>
+
+===== Fonction setValue =====
+
+La fonction setValue permet de modifier la valeur d'un mot clé dans une section ou pas. La fonction prend les paramètres suivant : le mot clé, la nouvelle valeur, la section (optionnel)
+
+Dans le cas le mot clé ne se trouve pas dans une section, ne mettez pas le paramètre section 
+
+<code>
+$ini->setValue($MotCle, $NewValeur, $Section);
+</code>
+
+
+===== Fonction save =====
+La fonction save permet d'enregistrer le fichier après modification
+
+<code>
+$ini->save();
+</code>
+
+===== Fonction saveAs =====
+La fonction save permet d'enregistrer la configuration dans un nouveau fichier (Enregistrer sous)
+<code>
+$ini->saveAs();
+</code>
+
+

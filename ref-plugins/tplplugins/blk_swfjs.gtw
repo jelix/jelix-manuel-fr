@@ -1,0 +1,79 @@
+~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/blk_swfjs~~
+
+
+le plugin @@blk_swfjs@@ permet d'intégrer une application flash en générant du javascript dans la page.
+
+Exemple :
+  {swfjs  'promobidon.swf',
+          array('id'=>'promo3', 'width'=>150, 'height'=>90, 'version'=>'8'),
+          array('quality'=>'hight', 'wmode'=>'transparent'),
+          array('longeur'=>150)}
+      {image 'toupie.png'}
+  {/swfjs}
+
+Rendu :
+<code html>
+  <div id="promo3">
+      <embed width="150" height="90" wmode="transparent" quality="hight"
+             type="application/x-shockwave-flash" src="/promobidon.swf"
+             pluginspage="http://www.adobe.com/go/getflashplayer" flashvars="longeur=150"/>
+  </div>
+</code>
+
+
+
+
+===== Le script js =====
+
+Assurez-vous d'avoir le script javascript dans le dossier :
+'url_to_jelix_www/jquery/flash/jquery.flash.js'
+
+
+
+===== Premier paramètre - L'url =====
+
+  {swf 'promobidon.swf', ..., ..., ...}
+
+Le premier paramètre est le chemin relatif du fichier swf à afficher. Il s'agit d'un chemin relatif à "myapp/www/".
+
+===== Deuxième paramètre - Les attributs =====
+
+  {swf ..., array('id'=>'promo1', 'width'=>150, 'height'=>90), ..., ...}
+
+Le second paramètre est un tableau pouvant contenir différents attributs :
+
+  * id : l'identifiant qui sera donné à la balise <object .../>
+  * class : les différentes classes qui seront associées à la balise <object .../>
+  * width : la largeur affichée de l'animation flash
+  * height : la hauteur affichée de l'animation flash
+  * version : (ex: '6.0.65') Vérifie la compatibilité avec le flash player installé
+  * expressinstall : (true:Bool) Utilise expressinstall pour proposer la mise à jour du flash player si besoin.
+  *    OR  update : (false:Bool) Passe l'animation sous silence si le flash player n'est pas installé avec la bonne version.
+
+
+
+
+===== Troisième paramètre - Les paramètres du player Flash =====
+
+  {swf ..., ..., array('quality'=>'hight', 'wmode'=>'transparent'), ...}
+
+Les paramètres du player Flash.
+
+Exemple :
+  * quality : détermine la qualité de l'animation
+
+===== Quatrième paramètre - Les FlashVars =====
+
+  {swf ..., ..., ..., array('longeur'=>150)}
+
+Les FlashVars sont des variables transmises à l'animation flash.\\
+Elles sont passées au SWF via un GET.
+
+
+===== Contenu =====
+
+  {image 'toupie.png'}
+
+Le contenu entre les balises {swf ...}ici du contenu html alternatif{/swf} sera ajouté comme contenu alternatif dans la balise <object .../>.
+
+

@@ -1,4 +1,4 @@
-
+~~LANG:EN@//en/manual-1.1/responsexml~~
 
 jResponseXML permet de renvoyer au navigateur du XML. Son alias est "xml"
 
@@ -19,11 +19,12 @@ Par défaut, la propriété $content contient un objet jTpl. Vous devez indiquer
   $rep->content->assign('foo','bla bla bla');
 </code>
 
-jResponseXml s'occupe de générer la balise "<?xml ?>"  donc vous n'avez pas à vous en occuper dans le template. Cependant, si le template comporte déjà cette balise, il faudra alors faire un 
+jResponseXml s'occupe de générer la balise "<?xml ?>"  donc vous n'avez pas à vous en occuper dans le template. Cependant, si le template comporte déjà cette balise, il faudra alors faire un.
 
 <code php>
   $rep->sendXMLHeader = false;
 </code>
+
 
 ===== Génération sans template  =====
 
@@ -33,7 +34,7 @@ Si vous ne voulez pas utiliser un template, vous mettez le contenu xml, sous for
   $rep->content = '<mondoc> <title>jelix</title> </mondoc>';
 </code>
 
-jResponseXml s'occupe de générer la balise "<?xml ?>"  donc vous n'avez pas à vous en occuper. Cependant, si le template comporte déjà cette balise, il faudra alors faire un 
+jResponseXml s'occupe de générer la balise "<?xml ?>"  donc vous n'avez pas à vous en occuper. Cependant, si votre contenu comporte déjà cette balise, il faudra alors faire un.
 
 <code php>
   $rep->sendXMLHeader = false;
@@ -42,7 +43,7 @@ jResponseXml s'occupe de générer la balise "<?xml ?>"  donc vous n'avez pas à
 
 ===== Indiquer des feuilles de styles. =====
 
-Vous pouvez attachez des feuilles de styles CSS ou XSLT au document XML produit. Pour cela, vous devez utilisez les méthodes //addCSSStyleSheet()// ou //addXSLStyleSheet()//. Elles prennent toutes deux en premier argument l'url du fichier, et en deuxième argument optionnel un tableau associatif définissant les pseudo attributs à mettre sur la processing instruction générée.
+Vous pouvez attacher des feuilles de styles CSS ou XSLT au document XML produit. Pour cela, vous devez utilisez les méthodes //addCSSStyleSheet()// ou //addXSLStyleSheet()//. Elles prennent toutes deux en premier argument l'url du fichier, et en deuxième argument optionnel un tableau associatif définissant les pseudo attributs à mettre sur la processing instruction générée.
 
 <code php>
  $rep->addCSSStyleSheet('my.css', array('title'=>'super jolie'));

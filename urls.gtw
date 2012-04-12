@@ -1,8 +1,13 @@
+~~LANG:EN@//en/manual-1.1/urls~~
+
+
+
 Jelix comporte un mécanisme qui permet de ne pas avoir à mettre les URLs concernant les actions en dur dans les templates (ou ailleurs). Pour faire simple, il suffit de fournir le module, l'action, le type de requête et éventuellement d'autres paramètres et jUrl se charge de générer l'URL correspondante. À l'inverse, lors d'une requête, jUrl analyse l'URL pour en déduire le module, l'action et les paramètres, et ceci, indépendamment du type de requête. Il n'est pas utile alors d'utiliser le mod_rewrite d'apache.
 
-Pour cette tâche jUrl se repose sur un moteur d'URL. Il y en a deux fournis dans Jelix :
-   * un moteur d'URL simple (utilisé par défaut)
-   * un moteur d'URL significatifs
+Pour cette tâche jUrl se repose sur un moteur d'URL. Il y en a trois fournis dans Jelix :
+   * un moteur d'URL simples
+   * un moteur d'URL significatives basique (utilisé par défaut)
+   * un moteur d'URL significatives
 
 Sachez que vous pouvez [[plugins/urls_engine|créer votre propre moteur d'URLs]] pour des besoins plus spécifiques.
 
@@ -30,7 +35,7 @@ La configuration de jUrl se fait dans la section ''urlengine'' du fichier de con
 
 === ''engine'' ===
 
-Indique le type de moteur à utiliser. Les deux valeurs disponibles sont ''simple'' et ''significant''.
+Indique le type de moteur à utiliser. Les deux valeurs disponibles sont ''simple'', ''basic_significant'' et ''significant''.
 
 === ''enableParser'' ===
 
@@ -62,25 +67,27 @@ Point d'entrée par défaut de l'application. ''index'' par défaut. Vous ne dev
 
 === ''entrypointExtension'' ===
 
-Extensions des points d'entrées. Par défaut, c'est .php, mais peut-être que sur votre serveur, pour utiliser PHP5 il vous faille utiliser l'extension .php5 par exemple. Auquel cas vous indiquerez .php5.
+Extensions des points d'entrées. Par défaut, c'est .php, mais il est possible que sur votre serveur, pour utiliser PHP5 il vous faille utiliser l'extension .php5 par exemple. Auquel cas vous indiquerez .php5.
 
 === ''notfoundAct'' ===
 
-L'action à effectuer quand une URL ne correspond à rien. Indiquez là sous forme de [[appel-action|sélecteur d'action]]: "module~action". L'action indiquée devra correspondre à l'affichage d'une page d'erreur par exemple et renvoyer le code http 404.
+L'action à effectuer quand une URL ne correspond à rien. Indiquez-la sous forme de [[appel-action|sélecteur d'action]]: "module~action". L'action indiquée devra correspondre à l'affichage d'une page d'erreur par exemple et renvoyer le code http 404.
 
-Attention ! Quand vous êtes en développement, il est recommandé de ne rien mettre dans ce paramètre. Ainsi ce sera plus facile à debogger car en cas d'appel d'une module/action inconnue vous aurez un message d'erreur de la part de Jelix qui sera plus explicite qu'une simple page 404.
+Attention ! Quand vous êtes en développement, il est recommandé de ne rien mettre dans ce paramètre. Ainsi ce sera plus facile à déboguer car en cas d'appel d'une module/action inconnue vous aurez un message d'erreur de la part de Jelix qui sera plus explicite qu'une simple page 404.
 
 
-===== Configuration des moteur d'URLs =====
+===== Configuration des moteur d'URL =====
 
-En standard Jelix fournis deux moteurs d'URLs :
+En standard Jelix fournis trois moteurs d'URL :
 
-  * Le moteur "simple", qui est performant mais qui ne permet pas d'avoir des URLs "cools"
-  * Le moteur "significant", qui permet d'avoir les URLs que vous voulez, bien qu'il soit un peu moins performant.
+  * Le moteur "simple", qui est performant mais qui ne permet pas d'avoir des URL "cools"
+  * Le moteur "basic_significant", qui permet d'avoir des urls un peu plus propre, et qui reprennent automatiquement le module et l'action : "index.php/module/controleur/method?param=1..."
+  * Le moteur "significant", qui permet d'associer **n'importe quelle URL** à chacune de vos actions, bien qu'il soit un peu moins performant et qu'il soit un peu plus compliqué à configurer.
 
 Aller donc lire les pages qui leurs sont dédiées pour les configurer correctement : 
 
   * [[urls/simple|Moteur "simple"]]
+  * [[urls/basic_significant|Moteur "basic_significant"]]
   * [[urls/significant|Moteur "significant"]]
 
 ===== Utilisation =====

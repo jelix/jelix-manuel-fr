@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/installation/production-server~~
+
 On appelle serveur de production, le serveur sur lequel sera installé votre application une fois terminée, donc accessible aux utilisateurs finaux. Par opposition, il y a le serveur de développement, celui sur lequel vous développez votre application.
 
 Il y a certaines choses différentes à prendre compte dans le cas du serveur de production, afin d'optimiser l'exécution de votre application basée sur Jelix.
@@ -10,36 +12,32 @@ Il y a certaines choses différentes à prendre compte dans le cas du serveur de
 
 Pour développer, vous utilisez bien sûr **l'édition "developer"** de Jelix. Cette édition comprend les outils de scripts en ligne de commande et d'autres choses pour le développement.
 
-Cependant, pour l'installation sur un serveur de production, il est préférable d'installer **l'édition "optimized"** de Jelix. Comme son nom l'indique, elle est optimisée, et débarrassée des choses inutiles en production. Notez toutefois que votre application fonctionnera à l'identique avec l'une ou l'autre des éditions de Jelix, à un détails près : on pourra observer de légères améliorations de performance avec l'édition "Optimized" ;-).
+Cependant, pour l'installation sur un serveur de production, il est préférable d'installer **l'édition "optimized"** de Jelix. Comme son nom l'indique, elle est optimisée, et débarrassée des choses inutiles en production. Notez toutefois que votre application fonctionnera à l'identique avec l'une ou l'autre des éditions de Jelix, à un détail près : on pourra observer de légères améliorations de performance avec l'édition "Optimized" ;-).
 
-Si vous choisissez de rester avec l'édition "developer" sur le serveur de production, il n'y a pas de problème à cela. Il est toutefois recommandé de supprimer les scripts en ligne de commande de Jelix.
+Si vous choisissez de rester avec l'édition "developer" sur le serveur de production, cela ne posera aucun problème. Il est toutefois recommandé de supprimer les scripts en ligne de commande de Jelix.
 
-Note : une **édition "Gold"** expérimentale est disponible en téléchargement, pour les développeurs qui peuvent modifier la configuration de php, en particulier, installer des extensions PHP. En effet, cette édition repose sur certaines extensions PHP qui ne sont pas disponibles chez tous les hébergeurs, mais aussi sur une extension PHP spécialement dédiée à Jelix, qui prend en charge certains traitements du framework. L'utilisation de l'édition GOLD améliore ainsi sensiblement les performances de votre application.
+Une **édition "Gold"** est disponible en téléchargement, pour les développeurs qui peuvent modifier la configuration de php, en particulier, installer des extensions PHP. En effet, cette édition repose sur certaines extensions PHP qui ne sont pas disponibles chez tous les hébergeurs, mais aussi sur une extension PHP spécialement dédiée à Jelix, qui prend en charge certains traitements du framework. L'utilisation de l'édition GOLD améliore ainsi sensiblement les performances de votre application.
 
 ===== Configuration =====
 
-L'installation se passe à l'identique que sur le serveur de développement, y compris pour l'application.
+L'installation se passe à l'identique que sur le serveur de développement, y compris pour l'application. Quand vous migrez les fichiers de votre application du serveur de développement vers le serveur de production, il ne faut pas copier les fichiers du répertoire temp.
 
-Pour avoir de meilleur performance et plus de sécurité, voici toutefois quelques conseils supplémentaires.
+Pour avoir de meilleures performances et plus de sécurité, voici toutefois quelques conseils supplémentaires.
 
 
 
 ==== Au niveau du serveur ====
 
-  - Tous les répertoires autre que le //www// de votre application devraient être en dehors du "document root" du site web.
-  - Bien spécifier les droits sur le répertoire //temp//, en particulier, que le propriétaire soit l'utilisateur qui exécute apache (ou celui de votre compte, chez certains hébergeurs) et qu'il ait les droits en écriture. Par exemple, sur linux, il n'est pas recommandé de mettre les droits 0777 sur le répertoire //temp// ;-)
-
-
-
-
+  - Tous les répertoires autre que le @@F@www@@ de votre application devraient être en dehors du "document root" du site web. Voir [[//configurer-application#configuration-du-serveur|le chapitre sur la configuration d'un serveur]] pour des exemples.
+  - Bien spécifier les droits sur le répertoire @@F@temp/@@, en particulier, que le propriétaire soit l'utilisateur qui exécute apache (ou celui de votre compte, chez certains hébergeurs) et qu'il ait les droits en écriture. Par exemple, sur linux, il n'est pas recommandé de mettre les droits 0777 sur le répertoire @@F@temp/@@ ;-)
 
 ==== Au niveau de l'application ====
 
-Voici quelques conseils au niveau de la configuration de l'application, donc les modifications à faire au niveau du fichier //var/config/defaultconfig.ini.php// .
+Voici quelques conseils au niveau de la configuration de l'application, donc les modifications à faire au niveau du fichier @@F@var/config/defaultconfig.ini.php@@ .
 
 === section error_handling ===
 
-Dans la section **error_handling**, la configuration suivante est vivement conseillée :
+Dans la section @@error_handling@@, la configuration suivante est vivement conseillée :
 
 <code ini>
 [error_handling]
@@ -48,6 +46,8 @@ logFile = error.log
 email = root@localhost
 emailHeaders = "From: webmaster@yoursite.com\nX-Mailer: Jelix\nX-Priority: 1 (Highest)\n"
 quietMessage="A technical error has occured. Sorry for this trouble."
+
+showInFirebug = off
 
 ; mots clés que vous pouvez utiliser : ECHO, ECHOQUIET, EXIT, LOGFILE, SYSLOG, MAIL, TRACE
 default      = ECHOQUIET EXIT LOGFILE
@@ -60,23 +60,23 @@ exception    = ECHOQUIET LOGFILE
 
 </code>
 
-En clair, il est déconseillé d'utiliser le mot clé **ECHO**, qui affiche tous les détails des erreurs dans les pages web (informations qui pourraient être utiles pour des pirates), mais plutôt **ECHOQUIET**, qui affiche simplement le message indiqué dans le paramètre **quietMessage**.
+En clair, il est déconseillé d'utiliser le mot clé @@L@ECHO@@, qui affiche tous les détails des erreurs dans les pages web (informations qui pourraient être utiles pour des pirates), mais plutôt @@L@ECHOQUIET@@, qui affiche simplement le message indiqué dans le paramètre @@V@quietMessage@@.
 
-Toutefois, il est utile d'être informé des erreurs et de leurs détails. Aussi, parallèlement à **ECHOQUIET**, il est recommandé d'ajouter l'un de ces mots clés 
-    * **LOGFILE** : les erreurs sont insérées dans le fichier indiqué dans logFile
-    * **SYSLOG** : les erreurs sont enregistrées au niveau du système
-    * **MAIL** : les erreurs sont envoyées par Mail.
+Toutefois, il est utile d'être informé des erreurs et de leurs détails. Aussi, parallèlement à @@L@ECHOQUIET@@, il est recommandé d'ajouter l'un de ces mots clés 
+    * @@L@LOGFILE@@ : les erreurs sont insérées dans le fichier indiqué dans logFile
+    * @@L@SYSLOG@@ : les erreurs sont enregistrées au niveau du système
+    * @@L@MAIL@@ : les erreurs sont envoyées par Mail.
 
-Attention à l'usage de **MAIL** : ne l'utiliser qu'une fois que vous savez que votre application fonctionne bien sur le serveur de production. Sinon vous risquez d'être inondé de mails (voire même que votre hébergeur n'appréciasse pas l'usage intensif du mail, pouvant vous prendre pour un spammeur).
+Attention à l'usage de @@L@EMAIL@@ : ne l'utiliser qu'une fois que vous savez que votre application fonctionne bien sur le serveur de production. Sinon vous risquez d'être inondé de mails (voire même que votre hébergeur n'apprécie pas l'usage intensif du mail, pouvant vous prendre pour un spammeur).
 
-Attention aussi à l'usage de **SYSLOG** : ne mettre cette option que si il s'agit de **votre** serveur (c'est à dire que vous êtes administrateur de la machine). Sinon le propriétaire de la machine risque de ne pas apprécier.
+Attention aussi à l'usage de @@L@SYSLOG@@ : ne mettre cette option que s'il s'agit de **votre** serveur (c'est à dire que vous êtes administrateur de la machine). Sinon le propriétaire de la machine risque de ne pas apprécier.
 
-En conclusion : **LOGFILE** est plutôt conseillé par rapport à **MAIL** et à **SYSLOG** ;-)
+En conclusion : @@L@LOGFILE@@ est plutôt conseillé par rapport à @@L@EMAIL@@ et à @@L@SYSLOG@@ ;-)
 
 
 === Section compilation ===
 
-Dans la section **compilation**, vous pouvez désactiver l'option **checkCacheFiletime**, et encore plus recommandé, l'option **force** si vous l'avez activé pour le développement.
+Dans la section @@V@[compilation]@@, vous pouvez désactiver l'option @@V@checkCacheFiletime@@, et encore plus recommandé, l'option @@V@forces@@ si vous l'avez activé pour le développement.
 
 <code ini>
 [compilation]
@@ -84,9 +84,9 @@ checkCacheFiletime  = off
 force = off
 </code>
 
-L'option **checkCacheFiletime** évite à Jelix de vérifier tout le temps que le cache (les fichiers générés par Jelix pour les fichiers de configurations, les DAO, templates etc) est bien à jour par rapport aux fichiers de l'application. À priori, cette vérification est inutile en production, puisque l'application est rarement modifiée. Bien sûr, si vous la désactivez, il faudra **impérativement** vider le répertoire de cache (//temp/votre_appli///) **à chaque mise à jour de votre application** , pour que vos modifications soient bien prises en compte ! (surtout quand il s'agit de modification dans la configuration, des daos, locales, templates..)
+L'option @@V@checkCacheFiletime@@ évite à Jelix de vérifier tout le temps que le cache (les fichiers générés par Jelix pour les fichiers de configurations, les DAO, templates etc) est bien à jour par rapport aux fichiers de l'application. À priori, cette vérification est inutile en production, puisque l'application est rarement modifiée. Bien sûr, si vous la désactivez, il faudra **impérativement** vider le répertoire de cache (@@F@temp/votre_appli/@@) **à chaque mise à jour de votre application** , pour que vos modifications soient bien prises en compte ! (surtout quand il s'agit de modifications dans la configuration, des daos, locales, templates..)
 
 === Section mailer ===
 
-N'oubliez pas de mettre à jour les paramètres de la section **mailer**. En effet, les paramètres pour envoyer des mails ne sont pas toujours identiques entre le serveur de développement et le serveur de production.
+N'oubliez pas de mettre à jour les paramètres de la section @@V@[mailer]@@. En effet, les paramètres pour envoyer des mails ne sont pas toujours identiques entre le serveur de développement et le serveur de production.
 

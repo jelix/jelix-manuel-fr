@@ -1,0 +1,12 @@
+~~LANG:EN@//en/manual-1.1/urls/basic_significant~~
+
+
+Ce moteur d'url est à mi-chemin entre le moteur "simple" et le moteur "significant". Cela permet d'utiliser des URLS un peu plus propres, mais vous ne pouvez pas choisir exactement l'url que vous voulez. Toutes les URLs ressembleront à **pointentree.php/module/controller/method?param=1&...** . 
+
+Les urls reprennent donc le nom des modules, contrôleurs et méthodes, pour en faire un chemin, et ont les paramètres supplémentaires dans la partie query.
+
+Si vous utilisez les points d'entrée fournis en standard vous n'avez rien à configurer. Par contre si vous en rajoutez, il faut les indiquer dans la section **simple_urlengine_entrypoints** pour les déclarer et dire quels modules et quels types de requêtes ils concernent. Pour les configurer, voir la documentation pour [[simple|le moteur d'urls simple]]. Idem pour configurer les urls avec https.
+
+Vous devez aussi déclarer chaque point d'entrée dans la section //basic_significant_urlengine_entrypoints// de la configuration générale. Pour chacun d'eux, il faut indiquer si vous voulez que le point d'entrée apparaisse (on) ou pas (off) dans les urls générées concernant ces points d'entrée. Si vous ne référencez pas un point d'entrée, par défaut, sa valeur sera "off".
+
+Bien sûr, pour les points d'entrée qui n'apparaissent pas dans les urls les concernant, il faut configurer des règles de réécriture au niveau d'apache, [[significant#suppression-du-nom-du-point-d-entree-dans-l-url|comme il est indiqué dans la section correspondante de la documentation sur les urls significant]]

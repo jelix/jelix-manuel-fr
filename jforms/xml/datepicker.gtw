@@ -1,0 +1,68 @@
+~~LANG:EN@//en/manual-1.1/jforms/xml-1.1/datepicker~~
+
+
+Pour avoir une saisie simplifié de date dans vos formulaires, il faut utiliser la balise @@E@date@@ (ou @@E@datetime@@ pour saisie une date et une heure). Cela affiche alors un "datepicker".
+
+<code xml>
+  <date ref="naissance">
+     <label>Date de naissance</label>
+  </date>
+</code>
+
+Vous pouvez changer la configuration du datepicker, et même changer le datepicker pour un autre via l'attribute @@A@datepicker@@.
+
+
+===== Configuration générale des datepickers =====
+
+Dans la section @@forms@@ fichier de configuration de Jelix, vous pouvez paramétrer la façon dont est affiché le date picker :
+
+<code ini>
+[forms] 
+controls.datetime.input = "menulists" 
+controls.datetime.months.labels = "names" 
+</code>  
+
+@@controls.datetime.input@@ indique si la saisie se fait avec un champs de saisie classique (valeur "textboxes") ou avec une liste déroulante (valeur "menulists"). Dans les deux cas, un bouton vous permettra de choisir la date dans un calendrier.
+ 
+@@controls.datetime.months.labels@@ indique si la liste des mois affiche les chiffres ("numbers"), les noms ("names"), ou les noms courts ("shortnames") des mois.
+
+===== Utiliser un autre type de datepicker =====
+
+Par défaut, jForms utilise le datepicker de jQuery. Mais vous pouvez en utiliser d'autres si vous le souhaitez, ou le même mais configuré différement. Chaque type de datepicker doit être déclaré dans la section @@datepickers@@.
+
+<code ini>
+
+[datepickers] 
+type1 = fichier1.js
+type2 = fichier2.js
+type3 = fichier3.js
+...
+</code>
+
+@@type1@@, @@type2@@, @@type3@@ sont les noms des types de datepicker (vous pouvez choisir les noms que vous voulez), et les valeurs correspondantes doivent être le chemin d'un fichier javascript à partir du basePath (voir plus loin). 
+
+Le type par defaut doit être indiqué dans l'option @@datepicker@@ dans la section @@forms@@. Voici la configuration par défaut :
+
+<code ini>
+[forms]
+...
+datepicker = default 
+
+[datepickers] 
+default = jelix/js/jforms/datepickers/default/init.js 
+</code>
+
+Dans un formulaire, pour indiquer que vous voulez utiliser un type de datepicker particulier, indiquer son nom dans l'attribut @@A@datepicker@@ sur la balise @@E@<date>@@.
+
+===== Créer un type de datepicker =====
+
+Pour déclarer un nouveau type de datepicker, vous devez créer un fichier javascript qui contiendra une fonction qui sera chargée d'initialiser le datepicker.
+
+Cette fonction doit avoir pour nom @@f@jelix_datepicker_xxx@@ où xxx est le nom du type. Cette fonction doit accepter en paramètre :
+
+   * un objet javascript (jFormsJQControlDate ou jFormsJQControlDatetime avec le builder jforms basé sur jQuery) qui contient des propriétés comme le nom des champs de saisie (@@P@name@@), la date maximum (@@P@maxDate@@) ou la date minimum (@@P@minDate@@).
+   * une chaine contenant le code de la langue
+   * la valeur du basePath (qui dans bien des cas, est donc égale au chemin web jusqu'au fichier index.php de votre application)
+
+Pour chaque datepicker du même type utilisé dans un formulaire, la fonction sera appelée, et devra initialiser le datepicker sur les champs de saisie de la date. jForms génère en effet au moins 3 champs, dont les noms ont pour base le nom du formulaire et le nom du control. Exemple, pour un formulaire "sample.form.xml" dans le module "testapp" de votre application, et qui contient un controle @@E@<date>@@ de nom "datenaissance", vous aurez alors des champs html de nom "jforms_testapp_sample_datenaissance_month", "jforms_testapp_sample_datenaissance_day", et "jforms_testapp_sample_datenaissance_year".
+

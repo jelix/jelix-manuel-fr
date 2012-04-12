@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/responseredirect~~
+
 
 Il existe deux types d'objets de redirection possible :
   * jResponseRedirect : redirige vers une action de l'application avec la possibilité de passer des paramètres

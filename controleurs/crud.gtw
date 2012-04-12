@@ -1,11 +1,15 @@
-====== Introduction ======
+~~LANG:EN@//en/manual-1.1/controllers/crud~~
+
+===== Introduction =====
 
 
 Un contrôleur (jControllerDaoCrud) est fourni avec jelix pour faire du CRUD. CRUD veut dire Create, Read, Update, Delete. En substance, c'est un contrôleur qui contient toutes les actions pour créer, lire, mettre à jour et effacer un enregistrement d'une table, et lister les enregistrements de cette table. Il lui faut en gros pour fonctionner, le nom d'un fichier DAO et d'un fichier jForms. Il s'occupe du reste.
 
-C'est donc un contrôleur permettant de mettre en place rapidement une gestion d'un enregistrement de table. 
+C'est donc un contrôleur permettant de mettre en place rapidement une gestion d'un enregistrement de table.
 
-====== Création d'un CRUD ======
+Note : ce contrôleur ne fonctionne que pour les tables avec une clé primaire simple. Si votre table possède une clé primaire composée de deux champs il faut utiliser jControllerDaoCrudDfk. Pour le reste vous devrez faire votre propre contrôleur.
+
+===== Création d'un CRUD =====
 
 Pour l'utiliser, il faut créer un contrôleur dans votre module, qui hérite non pas de jController, mais de jControllerDaoCrud. Exemple, dans un fichier samplecrud.classic.php
 
@@ -30,17 +34,17 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 
 Et c'est tout ! En imaginant que ce contrôleur se trouve dans le module main, affichez alors la page
 
-  index.php?module=main&action=samplecrud:index
+  index.php/main/samplecrud/index
 
 Vous avez alors toutes les pages qu'il faut pour gérer les enregistrements de la table.
 
-Important : par défaut, le controleur récupère la réponse HTML définit dans jelix, c'est à dire qu'il vous faut faire [[//traitements_communs#personnalisation-de-reponse-commune|une réponse HTML personnalisée]]. Si vous n'en avez pas, rien ne s'affichera. Si vous ne voulez pas faire de réponse personnalisée (ce qui est dommage), il faudra configurer le contrôleur.
+Important : par défaut, le controleur récupère la réponse HTML définie dans jelix, c'est à dire qu'il vous faut faire [[//traitements_communs#personnalisation-de-reponse-commune|une réponse HTML personnalisée]]. Si vous n'en avez pas, rien ne s'affichera. Si vous ne voulez pas faire de réponse personnalisée (ce qui est dommage), il faudra configurer le contrôleur.
 
-====== Personnalisation ======
+===== Personnalisation du contrôleur =====
 
-Il se peut que le comportement par défaut du controleur et des affichages des pages ne correspondent pas à ce que vous voulez, et qu'il faille faire des choses au niveau du formulaire (préremplir à la main des listbox par exemple). Voici donc ce qui est possible de faire.
+Il se peut que le comportement par défaut du contrôleur et des affichages des pages ne correspondent pas à ce que vous voulez, et qu'il faille faire des choses au niveau du formulaire (pré remplir à la main des listbox par exemple). Voici donc ce qui est possible de faire.
 
-===== Indiquer le profil jDb =====
+==== Indiquer le profil jDb ====
 
 Si il faut utiliser un profil de connexion spécifique, indiquez le dans la propriété //$dbProfil// :
 
@@ -48,9 +52,9 @@ Si il faut utiliser un profil de connexion spécifique, indiquez le dans la prop
   protected $dbProfil = 'admin';
 </code>
 
-===== Configurer la réponse =====
+==== Configurer la réponse ====
 
-Par défaut, comme il a été dit plus haut, le controleur récupère la réponse HTML par défaut. Cela se fait dans la méthode //_getResponse()// du contrôleur :
+Par défaut, comme il a été dit plus haut, le contrôleur récupère la réponse HTML par défaut. Cela se fait dans la méthode //_getResponse()// du contrôleur :
 
 <code php>
     protected function _getResponse(){
@@ -60,9 +64,9 @@ Par défaut, comme il a été dit plus haut, le controleur récupère la répons
 
 L'objet réponse renvoyé par cette méthode est alors utilisé par toutes les actions du contrôleur CRUD.
 
-Comme vous le voyez, rien n'est fait au niveau de la réponse : pas de déclaration de template principal (bodyTpl), pas de feuille de style ou autre. Le contrôleur s'attend en effet à ce que l'objet renvoyé par //getResponse// soit un objet réponse crée par vos soins et communs à tous vos contrôleurs. 
+Comme vous le voyez, rien n'est fait au niveau de la réponse (à part dans chaque action l'assignation d'un contenu principal dans la variable de template "MAIN"). Ainsi, pas de déclaration de template principal (bodyTpl), pas de feuille de style ou autre. Le contrôleur s'attend en effet à ce que l'objet renvoyé par //getResponse// soit un objet réponse crée par vos soins et communs à tous vos contrôleurs. 
 
-Si vous voulez donc changer ça, surchargez donc ces méthodes en y ajoutant ce que vous voulez. Exemple:
+Si vous voulez donc changer ça, redéfinissez donc cette méthode en y ajoutant ce que vous voulez. Exemple:
 
 <code php>
     protected function _getResponse(){
@@ -73,9 +77,69 @@ Si vous voulez donc changer ça, surchargez donc ces méthodes en y ajoutant ce 
     }
 </code>
 
-Ainsi la page de liste des enregistrement, de vue et d'édition d'un enregistrement etc auront une feuille de style admin.css et un menu qui est généré par la zone adminmenu.
+Ainsi la page de liste des enregistrements, de vue et d'édition d'un enregistrement etc auront une feuille de style admin.css et un menu qui est généré par la zone adminmenu.
 
-==== Intégration des templates dans la réponse ====
+
+Si vous voulez modifier la réponse pour des pages spécifiques du contrôleur, vous pouvez redéfinir ces méthodes :
+
+   * **_index($resp, $tpl)**: pour la page de la liste des enregistrements
+   * **_view($form, $resp, $tpl)**: pour la page des détails d'un enregistrement
+   * **_create($form, $resp, $tpl) **: pour la page d'édition d'un nouvel enregistrement
+   * **_editUpdate($form, $resp, $tpl)**: pour la page d'édition d'un enregistrement existant.
+
+Dans chacune de ses méthodes, vous recevez la réponse à modifier dans le paramètre //$resp//.
+
+==== Configurer le formulaire ====
+
+Si vous voulez modifier dynamiquement le formulaire, pour par exemple ajouter ou désactiver des champs de saisie, vous pouvez redéfinir les deux méthodes //_createForm// and //_getForm//, qui doivent appeler respectivement //jForms::create()// et //jForms::get()//  (Vous ne devez pas appeler //jForms::fill()//).
+
+Par défaut, ces méthodes sont :
+
+<code php>
+    protected function _createForm($formId = null) {
+        return jForms::create($this->form, $formId);
+    }
+
+    protected function _getForm($formId = null) {
+        return jForms::get($this->form, $formId);
+    }
+</code>
+
+Si vous voulez modifier le formulaire durant des actions spécifiques, redéfinissez les méthodes **_view**, **_create** et **_editUpdate** décrites précédement.
+
+==== Définir les templates ====
+
+Les templates par défaut utilisés par le contrôleur sont indiqués dans les propriétés :
+
+<code php>
+    protected $listTemplate = 'jelix~crud_list';
+    protected $editTemplate = 'jelix~crud_edit';
+    protected $viewTemplate = 'jelix~crud_view';
+</code>
+
+
+Vous pouvez bien sûr les [[//themes|surcharger dans un thème]], soit en indiquer d'autres que vous aurez crées dans vos propres modules.
+
+=== Variables de template ===
+
+Voir les sources des templates par défaut (dans lib/jelix/core-modules/jelix/templates) pour connaitre la liste des variables de template. 
+
+Le template de la liste des enregistrements aura les variables spécifiques suivantes :
+
+   * **list** : liste des résultats (renvoyé par le dao)
+   * **primarykey** : le nom de la clé primaire
+   * **properties** : la liste des propriétés à afficher
+   * **controls** : la liste des contrôles du formulaire jforms, permettant donc d'obtenir le libellé de chaque en-tête de colonne de chaque propriété.
+   * **listPageSize** : la valeur de //$listPageSize// 
+   * **page** : la valeur du paramètre url "offset", indiquant le numéro d'ordre du premier enregistrement à afficher dans la liste.
+   * **recordCount** :  le nombre d'enregistrements au total
+   * **offsetParameterName** : le nom du paramètre url pour l'offset (valeur de la propriété $offsetParameterName)
+
+=== Ajouter d'autres variables ===
+
+Si vous voulez déclarer des variables de template supplémentaires, vous pouvez redéfinir les méthodes **_index**,  **_view**, **_create** et **_editUpdate** décrites plus haut. Dans ces méthodes, vous pouvez utiliser les méthodes et propriétés de l'objet jTpl qui vous est donné en paramètres.
+
+=== Intégration des templates dans la réponse ===
 
 Chaque action d'affichage du contrôleur CRUD utilise un template, dont le contenu sera assigné au template principal de la réponse dans la variable de template MAIN. En d'autres termes, chaque action fait l'équivalent de :
 
@@ -93,14 +157,12 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 }
 </code>
 
-===== Liste des enregistrements =====
-
-Elle est affichée par l'action //index//.
 
 
-==== Configuration simple ====
 
-Des propriétés du contrôleur CRUD permettent de configurer l'affichage de la liste.
+==== Page liste des enregistrements ====
+
+Elle est affichée par l'action //index//. Des propriétés du contrôleur CRUD permettent de configurer l'affichage de la liste.
 
 === Nombre d'enregistrements par page ===
 
@@ -118,52 +180,45 @@ Par défaut, toutes les propriétés du DAO sont affichées. Si vous voulez rest
     protected $propertiesForList = array('titre','date_creation','auteur');
 </code>
 
-=== Ordre d'affichage ===
+=== Ordre et critères d'affichage ===
 
-Il n'y a pas d'ordre spécifique pour afficher les enregistrements. Pour forcer un ordre précis, indiquée la liste des propriétés du dao qui serviront d'ordre, et le sens :
+Il n'y a pas d'ordre spécifique pour afficher les enregistrements. Pour forcer un ordre précis, indiquez la liste des propriétés du dao qui serviront d'ordre, et le sens :
 
 <code php>
     protected $propertiesForRecordsOrder = array('date'=>'desc', 'title'=>'asc');
 </code>
 
-=== Template ===
+Si ce n'est pas suffisant, vous pouvez redéfinir la méthode **_indexSetConditions()**, qui accepte en paramètre un objet jDaoConditions que vous pouvez compléter pour spécifier des critères de sélections des enregistrements à afficher, l'ordre d'affichage..
 
-Le template par défaut utilisé pour lister les enregistrement est 'jelix~crud_list'.
+=== Configuration avancée de la liste ===
 
-<code php>
-    protected $listTemplate = 'jelix~crud_list';
-</code>
+La méthode //index// appelle une méthode protégée //_index// que vous pouvez redéfinir pour personnaliser l'affichage. Cette méthode reçoit l'objet réponse instancié et l'objet template utilisé pour afficher la liste. Vous pouvez donc en profiter pour finir de configurer la réponse et ajouter éventuellement des variables de templates.
 
-Vous pouvez bien sûr soit le surcharger dans un thème, soit en indiquer un autre.
+==== Page création d'un enregistrement ====
+Elle est affichée par les actions //precreate//, //create//, //savecreate//.
 
-Le template recevra les variables de templates suivantes :
+//precreate// créer et prépare le formulaire et redirige vers l'action //create//. L'action //create// affiche le formulaire pour éditer le nouvel enregistrement, et envoi les données vers l'action //savecreate//. Cette dernière action vérifie le contenu du formulaire, et enregistre les données si c'est ok.
 
-   * **list** : liste des résultats (renvoyé par le dao)
-   * **primarykey** : le nom de la clé primaire
-   * **properties** : la liste des propriétés à afficher
-   * **controls** : la liste des contrôles du formulaire jforms, permettant donc d'obtenir le libellé de chaque entête de colonne de chaque propriété.
-   * **editAction** : le nom de l'action pour le lien d'édition d'un enregistrement
-   * **editAction** : le nom de l'action pour le lien d'édition d'un enregistrement
-   * **createAction** : le nom de l'action pour le lien de création d'un enregistrement
-   * **deleteAction** : le nom de l'action pour le lien de suppression d'un enregistrement
-   * **viewAction** : le nom de l'action pour le lien de visualisation d'un enregistrement
-   * **listAction** : le nom de l'action pour le lien de la liste des enregistrements (donc l'action présente)
-   * **listPageSize** : la valeur de //$listPageSize// 
-   * **page** : la valeur du paramètre url "offset", indiquant le numéro d'ordre du premier enregistrement à afficher dans la liste.
-   * **recordCount**
-   * **offsetParameterName**
+En plus de la méthode //_create// indiquée plus haut pour personnaliser l'affichage, vous pouvez aussi redéfinir les autres méthodes:
 
+   * **_preCreate($form)**: pour préparer le formulaire juste après sa création.
+   * **_checkData($form, $calltype)**: pour vérifier des données supplémentaires. Cette méthode est aussi appelée par la méthode //saveupdate// (voir plus bas).
+   * **_beforeSaveCreate($form, $form_daorec)**: pour faire des choses juste avant la sauvegarde du nouvel enregistrement.
+   * **_afterCreate($form, $id, $resp)**: pour faire des traitements après la sauvegarde.
 
+==== Page mise à jour d'un enregistrement ====
+Elle est affichée et gérée par les actions  //preupdate//, //editupdate// et //saveupdate//.
 
-==== Configuration avancée de la liste ====
+Le processus suit le même schéma que pour la création d'un enregistrement. //preupdate// crée et prépare le formulaire et redirige vers l'action //editupdate//. L'action //editupdate// affiche le formulaire pour éditer l'enregistrement, et envoi les données vers l'action //saveupdate//. Cette dernière action vérifie le contenu du formulaire, et enregistre les données si c'est ok.
 
+En plus de la méthode //_update// indiquée plus haut pour personnaliser l'affichage, vous pouvez aussi redéfinir les autres méthodes:
 
+   * **_preUpdate($form)**: pour préparer le formulaire juste après sa création.
+   * **_checkData($form, $calltype)**: pour vérifier des données supplémentaires.
+   * **_beforeSaveUpdate($form, $form_daorec, $id)**: pour faire des choses juste avant la sauvegarde de l'enregistrement.
+   * **_afterUpdate($form, $id, $resp)**: pour faire des traitements après la sauvegarde.
 
+==== Page destruction d'un enregistrement ====
 
-===== Détails d'un enregistrement =====
+Elle est affichée par l'action //delete//. Vous pouvez redéfinir la méthode //_delete// pour faire des traitements additionnels.
 
-===== Création d'un enregistrement =====
-
-===== Mise à jour d'un enregistrement =====
-
-===== Destruction d'un enregistrement =====

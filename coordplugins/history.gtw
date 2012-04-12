@@ -1,0 +1,162 @@
+~~LANG:EN@//en/manual-1.1/coordplugins/history~~
+
+Le plugin History est un plugin pour le coordinateur, il offre quelques fonctionnalités liées à l'historique de navigation de l'internaute.
+
+===== Déclaration du plugin =====
+
+Pour activer le plugin history, indiquez-le, ainsi que son fichier de configuration dans la section [coordplugins].
+
+<code ini>
+[coordplugins]
+history = history.coord.ini.php
+</code>
+
+Si vous utilisez plusieurs plugins de coordinateur, l'ordre de déclaration des plugins dans le fichier de configuration a une importance. Ainsi le premier plugin déclaré à la priorité sur les autres. C'est à dire que si ce premier plugin renvoie une action, les autres plugins ne seront pas exécutés. Il convient donc de choisir l'ordre de déclaration des plugins en fonction de la priorité que l'on veut pour chaque plugin. Par exemple si vous considerez que le plugin //bar// ne peut être exécuté que si le plugin //foo// n'a pas renvoyé d'action, alors il faudrait les déclarer comme ceci:
+
+<code ini>
+[coordplugins]
+foo = foo.plugin.ini.php
+bar = 1
+</code>
+
+Pensez-y en déclarant le plugin history.
+
+
+===== Le principe =====
+
+Le plugin history enregistre des couples [actions/paramètres]
+
+Pour que 'myapp~default:index' soit pris en compte et enregistré par le plugin history, il faut lui demander spécifiquement a l'aide de $pluginParams.
+
+Par défaut aucun enregistrement n'est effectué si vous ne le demandez pas de cette manière.
+
+<code php>
+public $pluginParams = array(
+        '*'     => array('history.add'=>false),
+        'index' => array('history.add'=>true, 'history.label'=>'Accueil', 'history.title'=>'Aller vers la page d\'accueil')
+);
+</code>
+
+  history.add (:Bool)
+Si true permet l'ajout du couple à l'historique
+  history.label (:String)
+Un nom pour ce couple
+  history.title (:String)
+Une description pour ce couple
+
+===== Paramètrage =====
+
+==== Taille de l'historique ====
+
+La taille de l'historique est limitée à un certain nombre de couples (10 par défaut) ceci est modifiable dans les paramètres du plugin.
+<code ini>
+; max size of the history
+maxsize = 20
+</code>
+
+==== Avec ou sans doublons ====
+
+Par défaut l'historique enregistre les couples les un à la suite des autres en gardant les doublons.\\
+Si l'on désire que les doublons soient effacés de l'historique, il faut le préciser dans les paramètres.
+<code ini>
+; if single = true if each page will be registered only once in history
+; the latter will be retained.
+single = true
+</code>
+
+
+==== Garder en mémoire les rechargements ====
+
+Lorsque l'on exécute deux fois de suite le même couple celui-ci n'est ajouté qu'une seule fois.
+S'il l'on veut que les rechargements soient visibles dans l'historique il faut modifier le paramètre 'double'.
+<code ini>
+; If double = false pages will not appear twice a follow time in history.
+double = false
+</code>
+
+
+
+===== Changement des attributs d'un couple en cours d'action =====
+
+Si l'on n'utilise que $pluginParams pour déclarer les couples, on est vite limité pour par exemple modifier le label en fonction des paramètres.
+
+Exemple : 
+
+On veut que ce couple porte le label '**Page Foo**'
+  myapp.com/index.php?var=foo&module=myapp&action=default:index
+
+et que ce couple porte le label '**Page Bar**'
+  myapp.com/index.php?var=bar&module=myapp&action=default:index
+
+Si l'on utilise la déclaration de base
+<code php>
+public $pluginParams = array(
+        '*'     => array('history.add'=>false),
+        'index' => array('history.add'=>true, 'history.label'=>'Page Foo')
+);
+</code>
+les deux couples porteront le même label '**Page Foo**'.
+
+Pour obtenir le résultat désiré, il faut écrire :
+<code php>
+public $pluginParams = array(
+        '*'     => array('history.add'=>false),
+        'index' => array('history.add'=>true)
+);
+
+function index() {
+    $rep = $this->getResponse('html');
+    
+    if( $this->param('var') !== null ) {
+        $GLOBALS['gJCoord']->getPlugin('history')->change('label', 'Page '.ucfirst($this->param('var')));
+    }
+    
+    $rep->body->assign('MAIN', $rep->body->fetch('myapp~page'));
+    return $rep;
+}
+</code>
+
+===== Utiliser l'historique pour recharger la page =====
+
+Un cas qui ce retrouve couramment, est de vouloir exécuter une action (suite à un appui sur un bouton par exemple) et de revenir sur la même page.
+
+Pour cela le plugin history offre une commande simple.
+<code php>
+$history = $GLOBALS['gJCoord']->getPlugin('history');
+return $history->reload( $this->getResponse('redirect') );
+</code>
+
+S'il vous prend l'envie de recharger la page en modifiant un ou deux paramètres, il suffit de faire comme ceci :
+
+<code php>
+$history = $GLOBALS['gJCoord']->getPlugin('history');
+$ret = $history->reload( $this->getResponse('redirect') );
+
+$ret->params['foo'] = 'bar';
+
+return $ret;
+</code>
+
+===== Utiliser l'historique pour revenir à la page précédente =====
+
+Autre cas très courant, le lien pour revenir à la page précédente.
+<code php>
+$history = $GLOBALS['gJCoord']->getPlugin('history');
+return $history->back( $this->getResponse('redirect') );
+</code>
+
+===== Utiliser l'historique pour savoir depuis combien de temps l'internaute visite le site =====
+
+Pour cela il faut paramétrer les variables time et session_time_name, pour que l'heure d'arrivée sur le site soit enregistrée.
+<code ini>
+; if time = true a variable record time spent on site
+time = true
+; the name of this variable
+session_time_name = "HISTORYTIME"
+</code>
+
+Ensuite pour récupérer le temps passé sur le site il suffit de faire
+<code php>
+$history = $GLOBALS['gJCoord']->getPlugin('history');
+$delais = $history->time();
+</code>

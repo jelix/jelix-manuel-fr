@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/daos/events~~
+
 Une factory de DAO peut générer automatiquement [[//events|des évènements]] pour certains types de méthodes.
 
 ===== Évènements des méthodes natives =====
@@ -6,22 +8,23 @@ Les méthodes update, insert, delete et deleteby peuvent générer des évèneme
 
 Voici les noms des évènements générés avec les noms de leurs paramètres, sachant qu'ils ont tous un paramètre **dao** qui contient le sélecteur du dao.
 
-  * daoDeleteBefore : key (valeurs des clés du record à supprimer)
-  * daoDeleteAfter : key, result (1 si l'enregistrement est supprimé)
-  * daoDeleteByBefore : key, criterias (objet jDaoConditions)
-  * daoDeleteByAfter : key, criterias, result (nombre d'enregistrements supprimés)
+  * daoDeleteBefore : keys (valeurs des clés du record à supprimer)
+  * daoDeleteAfter : keys, result (1 si l'enregistrement est supprimé)
+  * daoDeleteByBefore : keys, criterias (objet jDaoConditions)
+  * daoDeleteByAfter : keys, criterias, result (nombre d'enregistrements supprimés)
   * daoUpdateBefore : record (objet record à mettre à jour)
   * daoUpdateAfter : record
   * daoInsertBefore : record
   * daoInsertAfter : record
 
-Exemple :
+Voici un exemple :
 
+dans le fichier Dao :
 <code xml>
   <factory events="deleteAfter, insertAfter"> ...
 </code>
 
-Et un listener possible :
+Dans le répertoire de la classe, créer un fichier my.listener.php afin de mettre les évenements à exécuter
 
 <code php>
 class myListener extends jEventListener{
@@ -29,19 +32,25 @@ class myListener extends jEventListener{
    function onDaoDeleteAfter ($event) {
         $dao = ;
         if ($event->getParam('dao') == 'mymodule~thedao') {
-            $key = $event->getParam('key');
+            $keys = $event->getParam('keys');
             //...
         }
    }
+}
 </code>
 
 
+Si vous désirez modifier la propriété maPropriete de votre dao, il vous suffit 
+<code>
+$event->getParam("record")->maPropriete = $Variable;
+</code>
 
-===== Évènements des methodes personnalisées =====
+
+===== Évènements des méthodes personnalisées =====
 
 Pour les méthodes personnalisées (celles que vous décrivez en XML), et uniquement les méthodes de type update ou delete, vous pouvez indiquer l'attribut eventbefore, et/ou eventafter qui doivent contenir //true// ou //false//.
 
 Les évènements générés sont alors daoSpecificUpdateBefore, daoSpecificUpdateAfter, daoSpecificDeleteBefore et daoSpecificDeleteAfter. Ils ont pour paramètre
-  * dao, contenant le selecteur du dao conçerné
+  * dao, contenant le sélecteur du dao concerné
   * method, le nom de la méthode
   * params, contenant la liste des paramètres.

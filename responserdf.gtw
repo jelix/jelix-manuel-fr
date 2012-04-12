@@ -1,13 +1,15 @@
-jResponseRdf permet de générer un document au format RDF. Cela est utile entre autres lors de la réalisation d'application en XUL, pour les templates XUL. Son alias est "rdf".
+~~LANG:EN@//en/manual-1.1/responserdf~~
+
+jResponseRdf permet de générer un document au format RDF. Cela est utile entre autre lors de la réalisation d'application en XUL, pour les templates XUL. Son alias est "rdf".
 
 Vous avez deux moyens d'utiliser jResponseRdf :
    * soit vous fournissez une liste de données et la classe s'occupe de générer du RDF
-   * soit vous écrivez vous même le code RDF dans un template, ce qui est nécessaire pour les graphes RDF complexes.
+   * soit vous écrivez vous-même le code RDF dans un template, ce qui est nécessaire pour les graphes RDF complexes.
 
 
 ===== Génération automatique de RDF =====
 
-Cela ne fonctionne que pour les RDF qui représentent qu'une liste simple de données (pas de sous-arbres par exemple).
+Cela ne fonctionne que pour les RDF qui representent qu'une liste simple de données (pas de sous arbres par exemple).
 
 Vous indiquez la liste des données au niveau de la propriété //$datas// : cela peut être une liste de tableaux associatifs, un objet jResultSet (iterateur) que retourne jDb::query ou les méthodes de type "select" des daos.
 
@@ -65,7 +67,7 @@ Vous pouvez aussi changer l'identifiant de la liste qui est par défaut "urn:dat
   $rep->resUriRoot = 'urn:monsite:users';
 </code>
 
-Enfin, pour diverses raisons, vous voudriez peut-être mettre certaines informations en tant qu'attributs, et d'autres en tant qu'éléments. Il faut alors l'indiquer via les propriétés //$asElement// et //$asAttribute//.
+Enfin, pour diverses raisons, vous voudriez peut être mettre certaines informations en tant qu'attributs, et d'autres en tant qu'elements. Il faut alors l'indiquer via les propriétés //$asElement// et //$asAttribute//.
 
 <code php>
   $rep->asAttribute = array('prenom');
@@ -122,8 +124,8 @@ Et dans datasrdf.tpl :
    <Bag RDF:about="urn:monsite:users">
 
    {foreach $datas as $dt}
-      <li><Description user:prenom="{$dt['prenom']|escxml}">
-              <user:nom>{$dt['nom']|escxml}</user:nom>
+      <li><Description user:prenom="{$data['prenom']|escxml}">
+              <user:nom>{$data['nom']|escxml}</user:nom>
            </Description></li>
    {/foreach}
 

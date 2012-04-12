@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/responselatex2pdf~~
+
 
 Jelix propose un objet jResponseLatexToPdf qui permet de générer un document PDF à partir d'un document écrit en [[http://fr.wikipedia.org/wiki/LaTeX|LaTeX]]. Son alias est "ltx2pdf".
 
@@ -14,7 +16,7 @@ Si ce programme n'est pas situé dans les chemins reconnus par le système (déf
  $rep->pdflatexPath = '/usr/bin/pdflatex';
 </code>
 
-jResponseLatexToPdf s'occupe de générer un entête LaTeX comprenant le titre du documents et les auteurs, le reste est à définir (en LaTeX) dans un template que vous indiquerez dans la propriété //$bodyTpl//. Et vous accédez au moteur de template via la propriété //$body//.
+jResponseLatexToPdf s'occupe de générer un en-tête LaTeX comprenant le titre du document et les auteurs, le reste est à définir (en LaTeX) dans un template que vous indiquerez dans la propriété //$bodyTpl//. Et vous accédez au moteur de template via la propriété //$body//.
 
 Il y a aussi la méthode //addCommand// qui permet d'ajouter des commandes LaTeX au début du document.
 

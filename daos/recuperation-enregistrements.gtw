@@ -1,0 +1,199 @@
+~~LANG:EN@//en/manual-1.1/daos/use-result~~
+
+Créer, modifier et supprimer des enregistrements dans une base de données est très utile. Mais c'est encore mieux si on peut les lire.  Voici comment récupérer un ou plusieurs enregistrements.
+
+===== Récupérer un seul enregistrement =====
+
+La méthode à utiliser avec la fabrique (factory), est @@M@get()@@ en lui donnant la valeur de la clé primaire de l'enregistrement.
+
+La méthode retourne directement l'objet correspondant à l'enregistrement. Chaque propriété de l'objet correspond à un champs de l'enregistrement, tel que c'est déclaré dans le fichier dao.
+
+<code php>
+  
+   // instanciation de la factory
+   $maFactory = jDao::get("foo");
+    
+   // récupération d'un record dont le contenu correspond 
+   // à l'enregistrement ayant pour identifiant  3
+   $baz = $maFactory->get(3);
+
+   // récupération d'un des champs de l'enregistrement, ici par
+   // exemple si un champs id existe.
+   $id = $baz->id
+
+</code>
+
+Dans le cas où votre table comporte une clé multiple déclarée dans le fichier XML du DAO au moyen de @@A@primarykey="cle1,cle2"@@, vous devez donner toutes les valeurs de la clé en même temps, comme ceci :
+
+<code php>
+  $maFactory = jDao::get("foo");
+
+  // 3 et 4 sont ici les valeurs respectives de cle1 et cle2
+  $baz = $maFactory->get(3, 4);
+</code>
+ou
+<code php>
+  $maFactory = jDao::get("foo");
+
+  // 3 et 4 sont ici les valeurs respectives de cle1 et cle2
+  $baz = $maFactory->get(array(3, 4));
+</code>
+
+**Attention** : Il est impératif que l'ordre dans lequel sont passées les valeurs soit le même que celui déclaré dans le DAO. En bref, @@$maFactory->get(4, 3)@@ est bien différent de @@$maFactory->get(3, 4)@@.
+
+La méthode @@M@delete()@@ fonctionne de la même façon.
+
+===== Récupérer une liste d'enregistrements =====
+
+Quand vous voulez récupérer tout les enregistrements, il faut utiliser @@M@findAll()@@. Cette méthode retourne un objet @@C@jDbResultSet@@ qui permettra alors de récupérer un à un les enregistrements. Rappelez vous que cette classe implémente l"interface Iterator, et est donc utilisable directement dans un @@foreach@@.
+
+<code php>
+  
+   // instanciation de la factory
+   $maFactory = jDao::get("foo");
+   
+   // récupération d'une liste complète de records de type foo
+   $liste = $maFactory->findAll();
+
+   foreach ($liste as $row) {
+      // $row contient un enregistrement
+      echo $row->id;
+   }
+</code>
+
+
+Vous pouvez aussi utiliser deux autres méthodes de @@C@jDbResultSet@@. La première est @@M@fetch()@@, qui permet de récupérer un enregistrement, et avance ensuite un "curseur" vers l'enregistrement suivant. Vous pouvez l'appeler alors plusieurs fois de suite pour parcourir la liste des enregistrements.
+
+<code php>
+    // parcours de toute la liste
+    while ($row = $liste->fetch()) {
+        // $row contient un enregistrement
+        echo $row->id;
+    }
+</code>
+
+Vous avez aussi @@M@fetchAll()@@ qui permet de récupérer tout d'un seul coup dans un tableau php.
+
+<code php>
+    $rows = $list->fetchAll();
+
+    foreach ($rows as $rowID => $row) {
+        echo $row->id;
+    }
+</code>
+
+Vous pouvez réaliser des méthodes de récupération personnalisées, en les spécifiant dans le fichier XML (voir [[methodes_xml|DAO avancés]]).
+
+
+===== Récupérer des records selon critères =====
+
+Les factory DAO mettent à disposition trois méthodes @@M@findBy()@@, @@M@countBy()@@ et @@M@deleteBy()@@ qui s'utilisent en leur passant un objet @@C@jDaoConditions@@, objets que vous récupérez avec @@C@jDao@@. Voici un exemple :
+
+<code php>   
+   $conditions = jDao::createConditions();
+   $conditions->addCondition('libelle','=',$un_nom);
+   $conditions->addCondition('status','=',5);
+   
+   $liste = $maFactory->findBy($conditions);
+   $count = $maFactory->countBy($conditions);
+</code>
+
+Tout comme @@M@findAll()@@, @@M@findBy()@@ renvoie un objet @@C@jDbResultSet@@ qui permet de parcourir la liste des enregistrements qui correspondent aux critères indiqués.
+
+La méthode @@M@addCondition()@@ prend en paramètre un nom de propriété, un opérateur (SQL), et une valeur.
+
+Vous pouvez aussi indiquer un ordre de sélection avec la méthode @@M@addItemOrder()@@, et regrouper divers critères ensemble avec @@M@startGroup()@@ et @@M@endGroup()@@ :
+
+<code php>   
+   $conditions = jDao::createConditions();
+   
+   // condition : libelle = $un_nom AND (status=5 OR status=4) ORDER BY libelle desc
+
+   $conditions->addCondition('libelle','=',$un_nom);   
+   $conditions->startGroup('OR');
+        $conditions->addCondition('status','=',5);
+        $conditions->addCondition('status','=',4);
+   $conditions->endGroup(); 
+   $conditions->addItemOrder('libelle','desc');
+   
+   $liste = $maFactory->findBy($conditions);
+</code>
+
+Pour ajouter une clause LIMIT, La méthode @@M@findBy()@@ prend en plus 2 paramètres optionnels: le numéro du premier enregistrement à récupérer (offset), et le nombre d'enregistrement à renvoyer.
+
+Par exemple pour récupérer les 15 premiers enregistrements:
+<code php>
+$liste = $maFactory->findBy($conditions, 0, 15);
+</code>
+
+La méthode @@M@countBy()@@ quant à elle, prend un paramètre optionnel qui est le nom de propriété du champ sur lequel on veut appliquer une clause DISTINCT, ce qui donne par exemple:
+<code php>
+// SELECT COUNT(DISTINCT table.libelle)...
+$count = $maFactory->countBy($conditions, 'libelle');
+</code>
+
+Enfin, la méthode @@M@deleteBy()@@ permet d'effacer des enregistrements selon critères et retourne le nombre de lignes effacées:
+<code php>
+$nb_deleted = $maFactory->deleteBy($conditions);
+</code>
+
+Vous verrez que vous pouvez obtenir le même résultat via des méthodes dans le fichier XML. Cependant, l'utilisation de l'une ou l'autre des possibilités dépend du contexte.
+
+Vous utiliserez @@C@jDaoConditions@@ lorsque que vous ne savez pas à l'avance le nombre de critères et leur type. Cela peut être le cas suite à un formulaire de recherche complexe, où l'utilisateur peut choisir ses critères. Vous utiliserez aussi @@C@jDaoConditions@@ lorsque la recherche que vous faites n'est utilisée qu'à un seul moment et rarement. En effet, les méthodes XML sont compilées en PHP, et donc incluses à chaque fois que vous faites appel à la factory. Il n'est peut-être pas utile d'inclure à chaque fois du code qui ne sert presque jamais.
+
+Dans les autres cas, il est recommandé de passer par les méthodes XML, en particulier donc quand vous connaissez les critères à l'avance (sans forcément connaître leur valeur bien sûr), et que c'est une recherche souvent utilisée. En effet, jDao crée les requêtes SQL à l'avance dans la classe générée, ce qui évite construire les requêtes SQL à chaque fois qu'on les utilise, permettant alors de meilleurs performances globales. 
+
+Il arrive souvent par exemple de redéfinir la méthode @@M@findAll@@ en XML, pour indiquer un ordre de récupération.
+
+=== Les différents opérateurs SQL pris en compte ===
+
+Comme expliqué précédemment, la méthode @@M@addCondition()@@ prend en second paramètre un opérateur SQL. Ce dernier prend en compte les opérateurs de comparaison ainsi que les prédicats suivants :
+  * LIKE, NOT LIKE, ILIKE,
+  * IN, NOT IN,
+  * IS, IS NOT,
+  * IS NULL, IS NOT NULL,
+  * MATCH, REGEXP, NOT REGEXP, RLIKE, SOUNDS LIKE
+
+== Cas spéciaux avec des valeurs NULL ==
+
+Jusqu'à la version 1.1.3, pour tester une valeur NULL ou non NULL il faut utiliser l'operateur "=" ou "!=".
+Dans les versions suivantes, vous pouvez utiliser tout ce que SQL vous propose (IS NULL, IS NOT, ...). N'oubliez pas de passer une valeur @@null@@ php et non pas la chaine "NULL".
+
+<code php>
+    # version 1.1.3
+    $conditions->addCondition('status','=', null);
+    $conditions->addCondition('status','!=', null);
+
+    # versions 1.1.4 et supérieures 
+    $conditions->addCondition('status','IS', null);
+    $conditions->addCondition('status','IS NOT', null);
+    $conditions->addCondition('status','IS NULL', null);
+    $conditions->addCondition('status','IS NOT NULL', null);
+    $conditions->addCondition('status','LIKE', null);
+    $conditions->addCondition('status','NOT LIKE', null);
+    ...
+</code>
+
+== Autres opérateurs ==
+
+Pour les bases qui le supporte (postgresql par exemple), on peut indiquer une expression régulière, avec le mot clé  @@REGEXP@@ ou @@NOT REGEXP@@ :
+
+<code php>
+    $conditions->addCondition('status','REGEXP', '^test');
+    ...
+</code>
+
+=== Faire un groupby ===
+
+Avec @@C@jDaoConditions@@, vous pouvez indiquer les propriétés sur lesquelles il faut faire un @@groupby@@ en SQL. Pour ce faire, il faut appeler la méthode @@M@addItemGroup($field)@@ :
+
+<code php>   
+   $conditions = jDao::createConditions();
+   $conditions->addCondition('libelle','=',$un_nom);
+   $conditions->addItemGroup('status');
+   
+   $liste = $maFactory->findBy($conditions);
+</code>
+
+Ici un groupby sera effectué sur le champs status.
+

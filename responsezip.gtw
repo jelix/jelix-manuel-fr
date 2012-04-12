@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/responsezip~~
+
 Jelix propose jResponseZip qui permet de générer un fichier zip à la volée, et le proposer en téléchargement à l'utilisateur. L'alias est "zip" :
 
 <code php>

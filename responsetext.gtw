@@ -1,5 +1,4 @@
-
-
+~~LANG:EN@//en/manual-1.1/responsetext~~
 
 Il faut utiliser jResponseText qui est récupérable via l'alias "text". Cet objet possède une propriété "content" dans laquelle vous mettez le texte voulu.
 
@@ -14,7 +13,58 @@ Il faut utiliser jResponseText qui est récupérable via l'alias "text". Cet obj
 
 Par défaut, jResponseText renvoi le type mime text/plain et avec le charset indiqué dans la config de jelix. 
 
-Toutefois, comme jResponseText dérive de jResponse, vous pouvez modifier les en-tête http, donc le type mime et le charset.
+Toutefois, comme jResponseText dérive de jResponse, vous pouvez modifier les en-têtes http, donc le type mime et le charset.
 
 D'ailleurs, jResponseText peut-être utilisé comme base pour d'autres formats à contenu textuels (json ou autre réponse pour ajax par ex).
 
+Voici un exemple concret:
+Partie client (javascript)
+<code java>
+var http;
+function AppelText()
+{
+   var maVar = "Bonjour";
+   var url ={/literal}{urljsstring 'MonModule~MonControleur:MaFonction', array('param1'=>'4'), array('param2'=>'maVar')}{literal};
+   
+   if(window.XMLHttpRequest)
+   { // Mozilla, Safari, ...
+       http = new XMLHttpRequest();
+   }
+   else if(window.ActiveXObject)
+   { // Internet Explorer
+       http = new ActiveXObject("Microsoft.XMLHTTP");
+   }
+
+   http.open('get', url, true);
+   http.onreadystatechange = handler;
+   http.send(null);
+
+}
+function handler()
+{
+    if(http.readyState == 4)
+    {
+        if(http.status == 200)
+        {
+	    alert(http.responseText);
+        }
+    }
+}
+</code>
+
+Partie Serveur (php)
+<code php>
+function MaFonction()
+{
+    $rep = $this->getResponse("text");
+    $param1 = $this->param("param1");
+    $param2 = $this->param("param2");
+
+    $rep->content = "bonjour";
+    return $rep;
+}
+</code>
+
+Bien évidemment cet exemple reste un exemple simple, on peut y mettre ce que l'on veut et faire passer les parametres soit en get soit en post.
+
+Petit rappel, les deux array que l'on trouve dans la chaine url (coté javascript) permet tout simplement pour le premier de faire passer un parametre en statique (codé en dur) et le deuxième provenant d'une variable javascript. [[http://jelix.org/articles/fr/manuel-1.1/ref-plugins/tplplugins/fonctions|Les fonctions de templates]].

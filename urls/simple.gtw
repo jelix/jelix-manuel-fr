@@ -1,6 +1,7 @@
-Ce moteur est celui activé par défaut. Toutes les URLs ressembleront à **pointentree.php?module=..&action=...&...** . C'est un moteur qui est donc très simple et performant. Son principal inconvénient si on peut dire, c'est qu'avec lui, les URLs ne sont pas très "jolies".
+~~LANG:EN@//en/manual-1.1/urls/simple~~
 
-===== Configuration =====
+
+Ce moteur est celui activé par défaut. Toutes les URLs ressembleront à **pointentree.php?module=..&action=...&...** . C'est un moteur qui est donc très simple et performant. Son principal inconvénient si on peut dire, c'est qu'avec lui, les URLs ne sont pas très "jolies".
 
 Si vous utilisez les points d'entrées fournis en standard vous n'avez rien à configurer. Par contre si vous en rajoutez, il faut les indiquer dans la section **simple_urlengine_entrypoints** pour les déclarer et dire quels modules et quels types de requêtes ils concernent. Les paramètres de cette section ont la forme :
 

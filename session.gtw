@@ -1,5 +1,8 @@
-jSession permet de stocker les sessions de façon personnalisée, en fonction de paramètres déclarés dans app/var/config/defaultconfig.ini.php 
+~~LANG:EN@//en/manual-1.1/session~~
 
+
+
+jSession permet de stocker les sessions de façon personnalisée, en fonction de paramètres déclarés dans app/var/config/defaultconfig.ini.php 
 
 ===== Nom de la session =====
 
@@ -49,7 +52,7 @@ NB : un dao est fourni par défaut dans le module jelix, son sélecteur est : je
 La structure de table pour ce DAO est :
 
 <code php>
-  CREATE TABLE `sessions` (
+  CREATE TABLE `jsessions` (
   `id` varchar(64) NOT NULL,
   `creation` datetime NOT NULL,
   `access` datetime NOT NULL,

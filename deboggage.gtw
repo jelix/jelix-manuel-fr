@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/debugging~~
+
 
 
 ===== jLog =====
@@ -23,7 +25,7 @@ Vous pouvez alors indiquer le code du fichier journal à utiliser, en paramètre
  jLog::dump($record, "enregistrement news", "news");
 </code>
 
-Enfin, il arrive que plusieurs développeurs travaillent sur un même serveur : il y aurait alors dans un même fichier toutes les traces que chacun aurait mis. Il est possible d'avoir autant de fichier journaux que de développeur, à condition qu'ils aient une adresse IP différente. Il suffit d'inclure "%ip%" dans le nom du fichier :
+Enfin, il arrive que plusieurs développeurs travaillent sur un même serveur : il y aurait alors dans un même fichier toutes les traces que chacun aurait mises. Il est possible d'avoir autant de fichiers journaux que de développeurs, à condition qu'ils aient une adresse IP différente. Il suffit d'inclure "%ip%" dans le nom du fichier :
 
 <code ini>
 [logfiles]
@@ -32,7 +34,6 @@ news = "%ip%_modulenews.log"
 </code>
 
 Ainsi, si un développeur a son poste de travail en 192.168.1.2, alors il y aura des fichiers 192.168.1.2_modulenews.log et messages_192.168.1.2.log
-
 
 Vous pouvez aussi construire les noms des fichiers de log avec la date et l'heure : pour cela, incluez un ou plusieurs des "tags" suivant dans le nom : %Y% (année), %m% (mois), %d% (jour),  %H% (heure).
 

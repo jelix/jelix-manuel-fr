@@ -1,13 +1,17 @@
+~~LANG:EN@//en/manual-1.1/bd~~
+
+
 Jelix possède un système d'accès abstrait aux bases de données : jDb. jDb propose donc une API commune à toutes les bases de données. Pour le moment, les drivers fournis sont ceux pour :
   * mysql
   * postgresql
   * sqlite
+  * oracle (oci)
 
 Il y a aussi un autre driver, pdo, permettant d'indiquer à jDb d'utiliser pdo plutôt que les classes d'abstractions internes de jDb.
 
-Si dans la liste ci-dessus, il n'y a pas le driver correspondant à votre base de donnée et que vous n'avez pas PDO, vous pouvez [[plugins/db|créer votre propre driver pour jDb]].
+Si dans la liste ci-dessus, il n'y a pas le driver correspondant à votre base de données et que vous n'avez pas PDO, vous pouvez [[plugins/db|créer votre propre driver pour jDb]].
 
-À noter que bien que jDb soit une API commune à toutes les bases de données, ce n'est en aucun cas pas une classe qui adaptera les requêtes en fonction des bases de données. Aussi, faites attention à ne pas trop utiliser des spécificités SQL d'une base de donnée précises dans vos modules, si vous souhaitez qu'il puisse être réutilisé dans d'autres projets qui n'utiliseront pas la même base.
+À noter que bien que jDb soit une API commune à toutes les bases de données, ce n'est en aucun cas une classe qui adaptera les requêtes en fonction des bases de données. Aussi, faites attention à ne pas trop utiliser des spécificités SQL d'une base de données précise dans vos modules, si vous souhaitez qu'ils puissent être réutilisés dans d'autres projets qui n'utiliseront pas la même base.
 
 
 
@@ -35,20 +39,20 @@ force_encoding=true
 
 Il y a une section "foo". Chaque section correspond à un profil de connexion. Un paramètre, "default", indique le profil à utiliser par défaut.
 
-Dans une section, vous voyez un certain nombre de paramètres, dont quelques-un sont utilisables pour tout les drivers :
+Dans une section, vous voyez un certain nombre de paramètres, dont quelques-un sont utilisables pour tous les drivers :
 
-  * **driver** indique le driver a utilisé. Le nombre et le nom des autres paramètres diffèrent en fonction du driver utilisé. 
+  * **driver** indique le driver à utiliser. Le nombre et le nom des autres paramètres diffèrent en fonction du driver utilisé. 
   * **table_prefix** : permet d'indiquer un préfixe de table.\\ Lors de l'utilisation d'un [[daos|DAO]] avec un profil spécifiant ce paramètre, les tables indiquées dans le DAO sont préfixées **dynamiquement** par cette valeur.\\ Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez préfixer vos tables en fonction du profil utilisé grâce à la méthode //prefixTable()// de jDbConnection. Cette méthode prend en paramètre le nom de la table à préfixer.
 
 ==== profil mysql ====
 
 Paramètres possibles :
    * **driver** : doit valoir "mysql"
-   * **database** : le nom de la base de donnée à utiliser
+   * **database** : le nom de la base de données à utiliser
    * **host** : le nom du serveur mysql sur lequel se connecter
    * **user** et **password** : le login/mot de passe pour la connexion
    * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
-   * **force_encoding** : indique si il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. En effet, certains serveur sont configurés par exemple par défaut avec une connexion en iso-8859-1, même si les données stockées sont en utf-8. Mettez à true si vous voyez que vous n'arrivez pas à afficher les données correctement.
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. En effet, certains serveurs sont configurés par exemple par défaut avec une connexion en iso-8859-1, même si les données stockées sont en utf-8. Mettez à true si vous voyez que vous n'arrivez pas à afficher les données correctement.
 
 
 
@@ -57,33 +61,34 @@ Paramètres possibles :
 Paramètres possibles :
 
    * **driver** : doit valoir "pgsql"
-   * **database** : le nom de la base de donnée à utiliser
+   * **database** : le nom de la base de données à utiliser
    * **host** : le nom du serveur postgresql sur lequel se connecter. Si vous le mettez à vide, la connexion se fera via une socket unix.
    * **port** : indique le port de connexion. N'indiquez pas ce paramètre si vous voulez utiliser le port par défaut.
    * **user** et **password** : le login/mot de passe pour la connexion. Ne mettez pas ces paramètres si vous voulez utiliser le login/mot de passe par défaut (indiqués par exemple dans les variables d'environnement du système).
    * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
-   * **force_encoding** : indique si il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql.
-   * **timeout** : Nombre de seconde autorisées pour l'établissement de la connexion au serveur avant de générer un timeout
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql.
+   * **timeout** : Nombre de secondes autorisées pour l'établissement de la connexion au serveur avant de générer un timeout
    * **single_transaction** : Toutes les requêtes d'une même page seront envoyées au serveur au sein d'un même transaction (entre un BEGIN; et un COMMIT;) (**on**) ou non (**off**). Défaut: **off**
+   * **search_path** : indiquer la liste des schémas dans lequel il faut chercher les tables, si le schéma par défaut pour la connexion ne correspond pas à celui dans lequel l'application va chercher.
 
 ==== profil sqlite ====
 
 Paramètres possibles :
 
    * **driver** : doit valoir "sqlite"
-   * **database** : le nom du fichier de base de donnée à utiliser
+   * **database** : le nom du fichier de base de données à utiliser
    * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
 
 A noter que les fichiers de base de données sqlite doivent être déposés dans le répertoire : var/db/sqlite/ de votre application et qu'à la fois ce répertoire et le fichier de base de données sqlite doivent avoir les droits de lecture/écriture adéquats (ceux du serveur web).
 
-==== profil pdo ====
+==== Profil pdo ====
 
 Paramètres possibles :
 
    * **driver** : doit valoir "pdo"
-   * **dsn** : contient des informations de connexion (type de base de donnée, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[http://fr.php.net/pdo|doc de pdo sur php.net]]).
+   * **dsn** : contient des informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[http://fr.php.net/pdo|doc de pdo sur php.net]]).
    * **user** et **password** : le login/mot de passe pour la connexion. Ne mettre ces paramètres que si nécessaire.
-   * **force_encoding** : indique si il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
 
 <code ini>
 [bar]
@@ -92,6 +97,31 @@ dsn= "mysql:host=localhost;dbname=test"
 user=
 password=
 </code>
+
+==== Profil virtuel ====
+
+jDb offre la possibilité d'utiliser un profil qui n'existe pas dans le fichier dbprofils. Cela permet de se connecter à une base de données dont on ne connaît pas les caractéristiques à l'avance.
+
+Pour cela, avant d'appeler les différentes méthodes de jDb, il vous faut déclarer ce profil "virtuel". Vous appellerez donc la méthode createVirtualProfile, à laquelle vous donnerez un nom de profil, ainsi qu'un tableau de paramètres, ces paramètres étant les mêmes que décrits précédemment.
+
+
+<code php>
+   $params = array(
+       'driver'=>'mysql',
+       'host'=>'localhost',
+       'database'=>'jelix',
+       'user'=>'toto',
+       'password'=>'blabla',
+       'persistent'=>'false',
+       'force_encoding'=>true
+   );
+   jDb::createVirtualProfile('mon_profil', $params);
+
+   $cnx = jDb::getConnection('mon_profil');
+   // etc., voir la suite
+</code>
+
+
 
 ===== Faire des requêtes =====
 
@@ -103,7 +133,7 @@ La première chose à faire est de récupérer un objet jDbConnection :
   $cnx = jDb::getConnection();
 </code>
 
-La méthode getConnection() permet de récupérer un objet de type jDbConnection (ou jDbPDOConnection héritant de PDO, si vous  utilisez PDO, ils ont toutefois la même API). Cette méthode accepte un paramètre facultatif : le nom du profil à utiliser. Si il n'est pas indiqué, celui déclaré par défaut sera utilisé.
+La méthode getConnection() permet de récupérer un objet de type jDbConnection (ou jDbPDOConnection héritant de PDO, si vous  utilisez PDO, ils ont toutefois la même API). Cette méthode accepte un paramètre facultatif : le nom du profil à utiliser. s'il n'est pas indiqué, celui déclaré par défaut sera utilisé.
 
 
 Pour construire les requêtes, vous avez une méthode importante à connaître : //quote()//, qui permet d'échapper certains caractères dans les valeurs que vous voulez insérer dans vos requêtes. Elle évite dans une certaine mesure les problèmes comme l'injection SQL.
@@ -120,7 +150,7 @@ Pour exécuter des requêtes, il y a principalement deux méthodes, //exec// et 
 
 ==== exec ====
 
-//exec// doit être utilisé pour les requêtes qui ne renvoient pas de résultat (UPDATE, INSERT, DELETE...). cette méthode renvoi juste le nombre de lignes concernées par la requête. Exemple :
+//exec// doit être utilisé pour les requêtes qui ne renvoient pas de résultat (UPDATE, INSERT, DELETE...). cette méthode renvoie juste le nombre de lignes concernées par la requête. Exemple :
 
 <code php>
   $cnx = jDb::getConnection();
@@ -130,7 +160,7 @@ Pour exécuter des requêtes, il y a principalement deux méthodes, //exec// et 
 
 ==== query ====
 
-//query// est fait pour les requêtes qui renvoient des résultats, vides ou pas (SELECT ou procédures stockées). La méthode renvoi alors un objet jDbResultSet.
+//query// est fait pour les requêtes qui renvoient des résultats, vides ou pas (SELECT ou procédures stockées). La méthode renvoie alors un objet jDbResultSet.
 
 Voici un exemple rapide :
 
@@ -147,7 +177,7 @@ Voici un exemple rapide :
 
 ==== limitQuery ====
 
-Vous pouvez faire des requêtes qui récupèrent un nombre limité d'enregistrement. Vous utiliserez alors la méthode //limitQuery// :
+Vous pouvez faire des requêtes qui récupèrent un nombre limité d'enregistrements. Vous utiliserez alors la méthode //limitQuery// :
 
 <code php>
   $cnx = jDb::getConnection();
@@ -183,7 +213,7 @@ jDbResultSet implémente l'interface Iterator. De ce fait, vous pouvez utiliser 
   } 
 </code>
 
-Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont pas de classe précise). Si vous voulez que ce soit des objets d'une certaine classe, vous devez l'indiquer via setFetchMode :
+Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont pas de classe précise). Si vous voulez que ce soient des objets d'une certaine classe, vous devez l'indiquer via setFetchMode :
 
 
 <code php>
@@ -225,8 +255,8 @@ Dans le template :
     <tr> <th>nom</th> <th>prenom</th></tr>
   {foreach $resultats as $user}
     <tr> 
-       <td>{$user->nom|eschtml}</td>
-       <td>{$user->prenom|eschtml}</td>
+       <td>{$user->nom|escxml}</td>
+       <td>{$user->prenom|escxml}</td>
     </tr>
   {/foreach}
    </table>
@@ -237,7 +267,7 @@ Dans le template :
 
 jDb permet de faire des transactions. Bien sûr, il faut que le driver utilisé supporte les transactions.
 
-Pour marquer le début d'une transaction, vous appelerez la méthode //beginTransaction ()//. Ensuite vous lancerez les requêtes, Puis aprés avoir fait vos requêtes, vous pourrez valider la transaction en appelant la méthode //commit()//. Pour annuler une transaction, il suffit d'appeler //rollback()//.
+Pour marquer le début d'une transaction, vous appellerez la méthode //beginTransaction ()//. Ensuite vous lancerez les requêtes, Puis après avoir fait vos requêtes, vous pourrez valider la transaction en appelant la méthode //commit()//. Pour annuler une transaction, il suffit d'appeler //rollback()//.
 
 <code php>
    $cnx = jDb::getConnection();

@@ -1,7 +1,9 @@
+~~LANG:EN@//en/manual-1.1/selectors~~
+
 
 ===== L'utilité des sélecteurs =====
 
-Les sélecteurs sont très utilisés dans Jelix. Ils permettent d'indiquer une ressource, un fichier, sans avoir à connaître son chemin. En effet, l'arborescence d'une application Jelix n'est pas figée et peut être modifiée selon les normes en vigueurs sur le serveur (le répertoire var de l'application myapp allant dans le répertoire /var/myapp/var par exemple, sur un serveur unix).
+Les sélecteurs sont très utilisés dans Jelix. Ils permettent d'indiquer une ressource, un fichier, sans avoir à connaître son chemin. En effet, l'arborescence d'une application Jelix n'est pas figée et peut être modifiée selon les normes en vigueur sur le serveur (le répertoire var de l'application myapp allant dans le répertoire /var/myapp/var par exemple, sur un serveur unix).
 
 De plus les bibliothèques de Jelix peuvent être installées dans une arborescence différente de celle de l'application.
 

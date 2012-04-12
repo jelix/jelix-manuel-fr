@@ -1,32 +1,47 @@
+~~LANG:EN@//en/manual-1.1/installation/jelix~~
 
-Jelix est fourni sous forme d'une archive tar.gz ou zip. Cette archive contient un répertoire //jelix/lib// qui contient tous les fichiers du framework et les bibliothèques dépendantes, ainsi qu'un répertoire //jelix/temp//. 
+
+Jelix est fourni sous forme d'une archive tar.gz ou zip. Cette archive contient un répertoire @@F@jelix/lib/@@ qui comprend tous les fichiers du framework et les bibliothèques dépendantes, ainsi qu'un répertoire @@F@jelix/temp/@@. 
 
 Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
 
-  tar xvzf jelix-1.0-dev.tar.gz
+  tar xvzf jelix-1.1-dev.tar.gz
 
 Vous obtenez les répertoires suivants : 
 
   jelix/
-    lib/              sources de Jelix et bibliothèques tierces
+    lib/              
       jelix/          sources de Jelix
       jelix-modules/  modules livrés en standard avec Jelix
       jelix-plugins/  plugins livrés en standard avec Jelix
       jelix-scripts/  scripts en ligne de commande d'aide pour le développeur
-      jelix-www/      ressources javascript, css, xul... (1.0alpha3)
+      jelix-www/      ressources javascript, css, xul... 
     temp/             fichiers temporaires des applications jelix. 
 
 
-Il y a aussi d'autres répertoires dans //jelix/lib/// (non listés ici), qui sont des bibliothèques additionnelles externes au projet Jelix, et utilisées par Jelix. Il y a par exemple wikirenderer, JSON, difflib etc.
+Il y a aussi d'autres répertoires dans @@F@jelix/lib/@@ (non listés ici), qui sont des bibliothèques additionnelles externes au projet Jelix, et utilisées par Jelix. Il y a par exemple wikirenderer, JSON, difflib, phpMailer etc.
 
-Il est recommandé d'installer ces répertoires en dehors du répertoire de votre site web, pour deux raisons : 
+Il est recommandé d'installer ces répertoires en-dehors du répertoire de votre site web, pour deux raisons : 
 
    - plus de sécurité
    - permettre de partager une même distribution de Jelix avec plusieurs applications.
 
-Mais ce n'est pas une obligation. Nous admettrons par la suite que vous avez copié ces répertoires dans un répertoire //monsite///.
+Mais ce n'est pas une obligation. Nous admettrons par la suite que vous avez copié ces répertoires dans un répertoire @@F@monsite/@@.
 
 Vous devez mettre les droits en écriture à l'utilisateur apache (ou tout autre nom d'utilisateur, celui en général qui sert à lancer le serveur web) sur le répertoire temp.
 
 Vous pouvez maintenant créer ou installer une application.
 
+=== Notes pour les utilisateurs d'un hébergement OVH mutualisé ===
+Ce paragraphe concerne les utilisateurs hébergeant leur site web sur un 90plan par exemple.
+
+Deux particularités sont à prendre en compte :
+  - en ligne de commande, la version de PHP par défaut semble être la plus ancienne, il faut donc appeler la plus récente (i.e.  @@F@php.ORIG.5.2.9@@) soit manuellement, soit par un alias du BASH, soit par un script
+  - la variable superglobale $_SERVER['SCRIPT_NAME'] ne semble pas être diffusée ce qui gêne à l'exécution du script pour la création des modules
+
+Une solution simple répondant aux deux problématiques est la suivante. Il faut juste créer un script BASH @@F@jelix.sh@@ auquel on donne les droits d'exécution et avec le contenu suivant :
+  #!/bin/bash
+  export SCRIPT_NAME=jelix.php
+  php.ORIG.5.2.9 jelix.php $*
+
+Ensuite on appelle ce script à la place de la commande habituelle @@F@php jelix.php ...@@.

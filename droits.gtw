@@ -1,8 +1,0 @@
-
-Jelix propose un système de gestion de droits, jAcl, comportant des possibilités similaires à ce qui peut exister ailleurs.
-
-jAcl est basé sur un système de driver. Le driver fourni par défaut est un driver "db" (noté dans la documentation "jAcl.db"), dont la gestion des droits repose sur une base de données et qui tente de répondre à des problématiques courantes de gestion de droits.
-
-Notez que l'utilisation de jAcl n'est pas obligatoire pour faire fonctionner une application Jelix. À moins que les modules utilisés fassent appel à jAcl bien entendu.
-
-**Note** : la version 1.1 de Jelix contiendra jAcl2, qui est plus simple d'utilisation que jAcl. Cependant jAcl restera disponible dans Jelix 1.1.

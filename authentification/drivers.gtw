@@ -1,9 +1,11 @@
+~~LANG:EN@//en/manual-1.1/authentification/drivers~~
+
 
 Il existe en standard plusieurs drivers pour l'authentification dans Jelix. 
 
 ===== Db =====
 
-Le driver Db propose une authentification pour laquelle les informations sont stockées en base de donnée. Pour cela, ce driver Db se repose sur un dao, qu'il faut indiquer dans le fichier de configuration d'authentification :
+Le driver Db propose une authentification pour laquelle les informations sont stockées en base de données. Pour cela, ce driver Db se repose sur un dao, qu'il faut indiquer dans le fichier de configuration d'authentification :
 <code ini>
 
 driver= Db
@@ -30,7 +32,7 @@ Pour le dao que vous indiquez, il doit avoir au moins les propriétés "login" e
    * **deleteByLogin(login)**
    * **findByLogin(pattern)**
 
-Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le champs du login.
+Note : la table sur laquelle repose le dao doit avoir comme clé primaire le champ du login.
 
 ==== Exemple ====
 
@@ -42,9 +44,9 @@ CREATE TABLE `jlx_user` (
   `usr_password` varchar(50) NOT NULL default '',
   `usr_email` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`usr_login`)
-) AUTO_INCREMENT=2 ;
+) ;
 </code> 
-On a bien le login comme étant la clé primaire, et au moins le champs password.
+On a bien le login comme étant la clé primaire, et au moins le champ password.
 
 On crée ensuite le dao suivant, comme indiqué plus haut :
 
@@ -62,13 +64,12 @@ On crée ensuite le dao suivant, comme indiqué plus haut :
                 datatype="string" required="yes" maxlength="255" />
 
       <property name="password" fieldname="usr_password" datatype="string"
-                maxlength="50" selectmotif="%s" updatemotif="" insertmotif="%s" />
+                maxlength="50" selectpattern="%s" updatepattern="" insertpattern="%s" />
    </record>
    <factory>
      <method name="getByLoginPassword" type="selectfirst">
          <parameter name="login" />
          <parameter name="password" />
-
          <conditions>
              <eq property="login" expr="$login" />
              <eq property="password" expr="$password" />
@@ -77,7 +78,6 @@ On crée ensuite le dao suivant, comme indiqué plus haut :
 
      <method name="getByLogin" type="selectfirst">
          <parameter name="login" />
-
          <conditions>
              <eq property="login" expr="$login" />
          </conditions>
@@ -86,7 +86,6 @@ On crée ensuite le dao suivant, comme indiqué plus haut :
      <method name="updatePassword" type="update">
          <parameter name="login" />
          <parameter name="password" />
-
          <values>
              <value property="password" expr="$password"/>
          </values>
@@ -111,6 +110,7 @@ On crée ensuite le dao suivant, comme indiqué plus haut :
              <orderitem property="login" way="asc" />
           </order>
      </method>
+
      <method name="findAll" type="select">
          <order>
              <orderitem property="login" way="asc" />
@@ -133,7 +133,7 @@ password_crypt_function = "md5"
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/trunk/jelix/auth/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/trunk/jelix/auth/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 

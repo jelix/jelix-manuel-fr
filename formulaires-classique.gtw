@@ -1,4 +1,7 @@
-Créer et gérer des formulaires "à la main" (par opposition aux automatismes offert par le système de formulaire [[jforms|jForms]]), n'est pas trés différent par rapport à ce que l'on fait dans une application PHP classique. Quelques petites choses sont cependant à savoir pour profiter au mieux de ce qu'offre Jelix dans ce cas.
+~~LANG:EN@//en/manual-1.1/classic-forms~~
+
+
+Créer et gérer des formulaires "à la main" (par opposition aux automatismes offerts par le système de formulaire [[jforms|jForms]]), n'est pas très différent par rapport à ce que l'on fait dans une application PHP classique. Quelques petites choses sont cependant à savoir pour profiter au mieux de ce qu'offre Jelix dans ce cas.
 
 
 
@@ -15,8 +18,6 @@ Mais dans la plupart des cas, pour répondre correctement aux erreurs, pour évi
    * une action "show" qui affiche le formulaire avec les données en sessions, et affiche les éventuelles erreurs de saisie.
    * une action "save" qui vérifie les données saisies. Si il y a des erreurs, les sauve en session et redirige vers "show", ou alors sauve les données et redirige vers "end"
    * une action "end", qui nettoie les données en session, et affiche une page de confirmation, ou redirige vers une autre action quelconque...
-
-
 ===== Création d'un formulaire =====
 
 Vous utiliserez en général un template, dans lequel vous y mettrez vos balises html de formulaires. Par exemple :
@@ -72,6 +73,7 @@ Le formulaire résultant sera le même que le premier exemple si le moteur d'url
   </form>
 </code>
 
+Attention, si vous utilisez le moteur significant, il faut bien prendre garde à spécifier les paramètres dans les appels aux deux plugins de templates **formurl** et **formurlparam**. En effet **formurlparam** devient sans effet avec ce moteur et c'est l'URL générée pour la soumission du formulaire qui recevra les paramètres.
 
 ===== Traitement des données en retour =====
 
@@ -93,4 +95,3 @@ Vous pouvez utiliser en plus jFilter, qui est une classe permettant de vérifier
 </code>
 
 Voir la [[http://jelix.org/reference/trunk/jelix/utils/jFilter.html|documentation de référence de jFilter]]
-

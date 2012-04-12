@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/responsexul~~
+
 
 ===== Qu'est ce que XUL ? =====
 
@@ -57,7 +59,7 @@ Dans la propriété //$body// vous avez un objet jTpl, et vous devez indiquer da
  $window->body->assign("liste", $liste);
 </code>
 
-Comme pour jResponseHtml, vous pouvez inclure du contenu avant ou après celui du template. Pour cela vous utiliserez la méthode addContent(). Elle prend en paramètre une chaine pour le contenu, et un booléen (facultatif) pour indiquer si on veut que le contenu soit ajouté avant (true) ou après (false, valeur par défaut) le contenu du template.
+Comme pour jResponseHtml, vous pouvez inclure du contenu avant ou après celui du template. Pour cela vous utiliserez la méthode addContent(). Elle prend en paramètre une chaîne pour le contenu, et un booléen (facultatif) pour indiquer si on veut que le contenu soit ajouté avant (true) ou après (false, valeur par défaut) le contenu du template.
 
 <code php>
 $rep->addContent('Mon contenu XUL après le template');
@@ -73,7 +75,7 @@ Un overlay est un fichier XUL qui permet d'ajouter des modifications à une autr
 
 ==== principe ====
 
-La façon dont ça fonctionne est assez simple et repose sur [[events|le système d'évènement de Jelix]]. En fait un objet jResponseXul, avant de générer le contenu final, envoi un évènement pour se signaler. En réponse, les modules peuvent lui renvoyer l'url d'un overlay. Une balise //<?xul-overlay?>// sera ajoutée alors dans la page.
+La façon dont ça fonctionne est assez simple et repose sur [[events|le système d'évènement de Jelix]]. En fait un objet jResponseXul, avant de générer le contenu final, envoie un évènement pour se signaler. En réponse, les modules peuvent lui renvoyer l'url d'un overlay. Une balise //<?xul-overlay?>// sera ajoutée alors dans la page.
 
 Une condition pour que ça fonctionne vraiment : il faut que l'action qui génère la page xul mette la propriété //$fetchOverlays// à true :
 
@@ -122,5 +124,3 @@ N'oublions pas de déclarer ce listener dans le fichier events.xml du module tes
 </code>
 
 Voilà, vous pouvez de cette manière modifier l'écran XUL du module testb sans toucher à son template xul.
-
-

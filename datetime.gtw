@@ -1,23 +1,26 @@
+~~LANG:EN@//en/manual-1.1/datetime~~
+
 jDateTime est une classe encapsulant une date, permettant de la convertir dans divers formats, mais aussi de faire des calculs de dates.
 
-Pour créer un objet jDateTime, on peut
+Pour créer un objet jDateTime, on peut :
 
    * soit passer les valeurs de la date par le constructeur : l'année, le mois, le jour, l'heure, les minutes et les secondes. Toutes ces valeurs sont facultatives et doivent être des entiers.
-   * soit l'instancier sans paramètre et utiliser la méthode now() pour l'initialiser à la date/heure courante.
    * soit l'instancier sans paramètre et utiliser la méthode setFromString pour l'initialiser à partir d'une chaîne contenant une date et/ou une heure.
 
-===== Initialisation à la date/heure courante =====
+===== Récupérer la date courante =====
+La méthode ''now'' permet à l'objet jDateTime de récupérer la date courante.
 
-La méthode now() initialise l'objet avec la date/heure actuelle.
-
-Exemple : 
+Exemple :
 
 <code php>
   $dt = new jDateTime();
+
   $dt->now();
 
-  echo "la date est ", $dt->year, ",", $dt->month, ",", $dt->day, ",", $dt->hour, ",", $dt->minute, ",", $dt->second;
+  $date = $dt->toString(jDateTime::LANG_DFORMAT);
 </code>
+
+''$date'' vaut la date courante formatée dans la langue de l'application.
 
 ===== Conversion à partir d'une chaîne =====
 
@@ -70,25 +73,25 @@ Pour convertir une date en chaîne, il y a la méthode toString qui accepte en p
 
 ===== Calcul de dates =====
 
-Avec les méthodes sub() et  add(), il est possible d'ajouter ou d'enlever des durées à une date. Ces durées sont à indiquer via un objet jDateTime.
+Avec les méthodes sub() et  add(), il est possible d'ajouter ou d'enlever des durées à une date. Ces durées sont à indiquer via un objet jDuration.
 
 <code php>
   $dt = new jDateTime();
   $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
 
   // on veut retirer deux jours
-  $date2 = new jDateTime(0,0,2);
-  $dt->sub($date2);
+  $duration = new jDuration(array('day'=>2));
+  $dt->sub($duration);
   echo $dt->toString(jDateTime::DB_DFORMAT); // affiche 2006-04-08
 
   // on veut ajouter 27h15 heures
-  $date2 = new jDateTime(0,0,0,27,15);
-  $dt->add($date2);
+  $duration = new jDuration(array('hour'=>27,'minute'=>15));
+  $dt->add($duration);
   echo $dt->toString(jDateTime::DB_DTFORMAT); // affiche 2006-04-09 03:15:00
 
 </code>
 
-Si on veut savoir la durée entre deux dates, on utilise alors la méthode durationTo(), qui renvoi cette durée dans un objet jDateTime :
+Si on veut savoir la durée entre deux dates, on utilise alors la méthode durationTo(), qui renvoie cette durée dans un objet jDuration :
 
 <code php>
   $dt = new jDateTime();
@@ -98,13 +101,19 @@ Si on veut savoir la durée entre deux dates, on utilise alors la méthode durat
   $dt2->setFromString("2006-04-12",jDateTime::DB_DFORMAT);
 
   // calcul la durée entre $dt jusqu'à $dt2
-  $dt3 = $dt->durationTo($dt2);
-  echo $dt3->toString(jDateTime::DB_DTFORMAT); //affiche 0000-00-02 00:00:00
+  $duration = $dt->durationTo($dt2);
+  echo $duration->months, ' ', $duration->days, ' ', $duration->seconds;
 </code>
 
-Attention, les dates doivent être supérieur au 01/01/1970.
+Attention, les dates doivent être supérieures au 01/01/1970.
 
-
+Les paramètres disponibles pour l'objet jDuration sont (dans un tableau)
+  * year
+  * month
+  * day
+  * hour
+  * minute
+  * second
 
 ===== Comparaison de dates =====
 
@@ -120,7 +129,8 @@ Pour comparer deux dates, il y a la méthode compareTo()
   $result = $dt->compareTo($dt2);
 </code>
 
-compareTo renvoit :
+compareTo renvoie :
+
 
    * -1 si $dt < $dt2
    * 0 si les deux dates sont égales

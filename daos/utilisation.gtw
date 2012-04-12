@@ -1,24 +1,26 @@
-Vous avez vu comment décrire dans un fichier XML un DAO (voir [[fichier_de_base]]). Ce fichier, vous devez le stocker dans un répertoire "daos/" d'un module et le nommer comme ceci : //nom//.dao.xml. //nom// est le nom de votre DAO.
+~~LANG:EN@//en/manual-1.1/daos/use~~
 
-Souvenez vous qu'en fait vous définissez deux objets : 
+Vous avez vu comment décrire dans un fichier XML un DAO (voir [[fichier_de_base]]). Ce fichier, vous devez le stocker dans un répertoire @@F@daos/@@ d'un module et le nommer comme ceci : @@F@nom.dao.xml@@. //nom// est le nom de votre DAO.
 
-   * un objet DAO qui est une factory : elle permet de récupérer, insérer, modifier, effacer un ou plusieurs enregistrements. Elle propose des méthodes de base, mais contient aussi les méthodes dont vous avez décris les propriétés dans le fichier XML
-   * un objet record DAO qui représente un enregistrement et dont vous avez décris les propriétés dans le fichier XML
+Souvenez-vous qu'en fait, à partir d'un fichier DAO, vous définissez deux objets PHP : 
+
+   * un objet DAO qui est une factory, basé sur la classe @@C@jDaoFactoryBase@@ : elle permet de récupérer, insérer, modifier, effacer un ou plusieurs enregistrements. Elle propose des méthodes de base, mais contient aussi les méthodes que vous avez définis dans le fichier XML dans la section @@E@<factory>@@.
+   * un objet record DAO, basé sur la classe @@C@jDaoRecordBase@@, qui représente un enregistrement et dont vous avez décrit les propriétés dans la section @@E@<record>@@.
 
 ===== Récupérer la factory =====
 
-Pour récupérer ces objets il faut passer par l'objet jDao qui propose diverses méthodes statiques :
+Pour récupérer ces objets il faut passer par l'objet @@C@jDao@@ qui propose diverses méthodes statiques :
 
-   * **get** : permet d'obtenir une factory. renvoi toujours la même instance (utilise un singleton)
-   * **create** : permet d'obtenir une nouvelle instance d'une factory. rarement utile.
-   * **createRecord** : permet d'obtenir un objet DAO record vide.
-   * **createConditions** : permet d'obtenir un objet jDAOConditions qui permet d'indiquer des conditions de sélection pour récupérer un ensemble d'objet record.
+   * @@M@get()@@ : permet d'obtenir une factory. Renvoie toujours la même instance (utilise un singleton)
+   * @@M@create()@@ : permet d'obtenir une nouvelle instance d'une factory. Rarement utile.
+   * @@M@createRecord()@@ : permet d'obtenir un objet DAO record vide.
+   * @@M@createConditions()@@ : permet d'obtenir un objet @@C@jDAOConditions@@ qui permet d'indiquer des conditions de sélection pour récupérer un ensemble d'objets record.
    
-get, create et createRecord prennent tous en argument un sélecteur de fichier DAO et un deuxième paramètre facultatif qui est le nom du [[//bd|profil jDb]] à utiliser (si paramètre absent, il prendra celui par défaut).
+@@M@get()@@, @@M@create()@@ et @@M@createRecord()@@ prennent tous en argument un sélecteur de fichier DAO et un deuxième paramètre facultatif qui est le nom du [[//bd|profil jDb]] à utiliser (si paramètre absent, il prendra celui par défaut).
 
 Si le profil jDb utilisé spécifie un préfixe de table, alors toutes les tables indiquées dans le DAO verront leur nom préfixé par la valeur de ce paramètre.
 
-En admettant qu'il y ait un fichier DAO foo.dao.xml dans le module bar :
+En admettant qu'il y ait un fichier DAO @@F@foo.dao.xml@@ dans le module bar :
 
 <code php>
    $maDao = jDao::get("bar~foo");
@@ -28,83 +30,16 @@ En admettant qu'il y ait un fichier DAO foo.dao.xml dans le module bar :
    $monRecord = jDao::createRecord("foo");
 </code>
 
-$maDao contient une factory de foo, et $monRecord un enregistrement vide de type foo.
-
-===== Récupérer des records =====
-
-Une factory DAO propose par défaut deux méthodes :
-
-   * findAll : pour récupérer tous les enregistrements
-   * get : pour récuperer un enregistrement en indiquant sa clé
-
-<code php>
-  
-   // instanciation de la factory
-   $maFactory = jDao::get("foo");
-   
-   // récupération d'une liste complète de records de type foo
-   $liste = $maFactory->findAll();
-   
-   // récupération d'un record dont le contenu correspond 
-   // à l'enregistrement ayant pour identifiant  3
-   $baz = $maFactory->get(3);
-
-</code>
-
-Vous pouvez réaliser d'autres méthodes de récupération, en les spécifiant dans le fichier XML (voir [[methodes_xml|DAO avancés]]).
-
-
-===== Récupérer des records selon critères =====
-
-Les factory DAO mettent à disposition la méthode findBy, qui s'utilise en lui passant un objet jDaoConditions :
-
-<code php>   
-   $conditions = jDao::createConditions();
-   $conditions->addCondition('libelle','=',$un_nom);
-   $conditions->addCondition('status','=',5);
-   
-   $liste = $maFactory->findBy($conditions);
-</code>
-
-La méthode addCondition prend en paramètre un nom de propriété, un opérateur (SQL), et une valeur. findBy renvoi la liste des records qui correspondent aux critères indiqués. Vous pouvez aussi indiquer un ordre de sélection, et regrouper divers critères ensemble :
-
-<code php>   
-   $conditions = jDao::createConditions();
-   
-   // condition : libelle = $un_nom AND (status=5 OR status=4) ORDER BY libelle desc
-   $conditions->addCondition('libelle','=',$un_nom);   
-   $conditions->startGroup('OR');
-        $conditions->addCondition('status','=',5);
-        $conditions->addCondition('status','=',4);
-   $conditions->endGroup(); 
-   $conditions->addItemOrder('libelle','desc');
-   
-   $liste = $maFactory->findBy($conditions);
-</code>
-
-Pour ajouter une clause LIMIT, La méthode findBy prend en plus 2 paramètres optionnels: (int $limitOffset, int $limitCount)
-Par exemple pour récupérer les 15 premiers enregistrements :
-
-<code php>
-$liste = $maFactory->findBy($conditions, 0, 15);
-</code>
-
-Vous verrez que vous pouvez obtenir le même résultat via des méthodes dans le fichier XML. Cependant, l'utilisation de l'une ou l'autre des possibilités dépend du contexte.
-
-Vous utiliserez jDaoConditions lorsque que vous ne savez pas à l'avance le nombre de critères et leur type. Cela peut être le cas suite à un formulaire de recherche complexe, où l'utilisateur peut choisir ses critères. Vous utiliserez aussi jDaoConditions lorsque la recherche que vous faîtes n'est utilisée qu'à un seul moment et rarement. En effet, les méthodes XML sont compilées en PHP, et donc incluses à chaque fois que vous faites appel à la factory. Il n'est peut-être pas utile d'inclure à chaque fois du code qui ne sert presque jamais. Cela améliore les performances globales.
-
-Dans les autres cas, il est recommandé de passer par les méthodes XML, en particulier donc quand vous connaissez les critères à l'avance (sans forcément connaître leur valeur bien sûr), et que c'est une recherche souvent utilisée.
-
-Il arrive souvent par exemple de redéfinir la méthode findAll en XML, pour indiquer un ordre de récupération...
+@@V@$maDao@@ contient une factory de foo, et @@V@$monRecord@@ un enregistrement vide de type //foo//.
 
 
 ===== Créer, modifier, effacer un enregistrement =====
 
-Les méthodes insert, update, et delete de la factory sont faites pour ça. Aux deux premières, vous indiquez un record. Pour delete, vous indiquez les clés de l'enregistrement.
+Les méthodes @@M@insert()@@, @@M@update()@@, et @@M@delete()@@ de la factory sont faites pour ça. Aux deux premières, vous indiquez un record. Pour @@M@delete()@@, vous indiquez les clés de l'enregistrement.
 
 ==== Création ====
 
-Il faut récupérer un nouvel objet record, le remplir, et ensuite appeler la méthode insert
+Il faut récupérer un nouvel objet record, le remplir, et ensuite appeler la méthode @@M@insert()@@
 
 <code php>
    // instanciation de la factory
@@ -113,7 +48,7 @@ Il faut récupérer un nouvel objet record, le remplir, et ensuite appeler la m�
    // creation d'un record correspondant au dao foo
    $record = jDao::createRecord("foo");
 
-   // on remplie le record
+   // on remplit le record
    $record->champ1 = "hello";
    $record->champ2 = "...";
 
@@ -122,11 +57,11 @@ Il faut récupérer un nouvel objet record, le remplir, et ensuite appeler la m�
 
 </code>
 
-Si il y a des champs de type autoincrement, les propriétés correspondantes dans  $record seront mises à jour avec la nouvelle valeur.
+S'il y a des champs de type autoincrement, les propriétés correspondantes dans @@V@$record@@ seront mises à jour avec la nouvelle valeur.
 
 ==== Modification ====
 
-Le processus est le suivant : on récupère un objet record, on modifie ses propriétés, et on appelle la méthode update :
+Le processus est le suivant : on récupère un objet record, on modifie ses propriétés, et on appelle la méthode @@M@update()@@.
 
 
 <code php>
@@ -149,7 +84,7 @@ Le processus est le suivant : on récupère un objet record, on modifie ses prop
 
 ==== Destruction ====
 
-Il suffit d'appeler la méthode delete en donnant l'id du record à détruire
+Il suffit d'appeler la méthode @@M@delete()@@ en donnant l'id du record à détruire
 
 
 <code php>

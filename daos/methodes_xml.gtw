@@ -1,11 +1,13 @@
+~~LANG:EN@//en/manual-1.1/daos/xml_methods~~
+
 Une factory générée par jDao contient par défaut un certain nombre de méthodes  (find, findAll, get, insert, etc...) comme décrit sur la page sur [[utilisation|l'utilisation des daos]]. Cependant, elles ne sont pas forcément suffisantes, et l'on a souvent besoin de faire des sélections, des mises à jour ou des suppressions particulières. 
 
-La section <factory> permet de définir des méthodes supplémentaires à générer, chacune des méthodes exécutant une requête SQL. L'avantage de déclarer de telles méthodes ici, par rapport à la création de requête SQL dans une classe normale, est que vous n'avez plus à vous préoccuper de problème de sqlinjection, de l'écriture fastidieuse des requêtes SQL, etc...
+La section @@E@<factory>@@ permet de définir des méthodes supplémentaires à générer, chacune des méthodes exécutant une requête SQL. L'avantage de déclarer de telles méthodes ici, par rapport à la création de requête SQL dans une classe normale, est que vous n'avez plus à vous préoccuper de problème de sqlinjection, de l'écriture fastidieuse des requêtes SQL, etc...
 
 
 ===== Balise <method> =====
 
-Les méthodes sont déclarées via la balise //<method>//. Celle-ci doit avoir au moins un attribut, //name//, indiquant le nom de la méthode. Il y a différent type de méthode. On indique le type via l'attribut //type//.
+Les méthodes sont déclarées via la balise //<method>//. Celle-ci doit avoir au moins un attribut, //name//, indiquant le nom de la méthode. Il y a différents types de méthode. On indique le type via l'attribut //type//.
 
 Une balise //<method>// peut contenir une ou plusieurs balises //<parameter>//, qui définissent des paramètres. Une balise //<parameter>// doit avoir un attribut //name// indiquant son nom.
 
@@ -105,8 +107,8 @@ Ainsi, pour chaque méthode XML ajoutée dans le DAO, une méthode est généré
 
 <code xml>
   <method type="count">
-     <parameter />
-     <conditions />
+     <parameter .../>
+     <conditions ../>
   </method>
 </code>
 
@@ -116,8 +118,8 @@ ce type de méthode est équivalent à un SELECT COUNT(*), avec les conditions i
 
 <code xml>
   <method type="delete">
-     <parameter />
-     <conditions />
+     <parameter .../>
+     <conditions .../>
   </method>
 </code>
 
@@ -127,9 +129,9 @@ Génère une méthode qui execute une requête DELETE.
 
 <code xml>
   <method type="update">
-     <parameter />
-     <conditions />
-     <values />
+     <parameter .../>
+     <conditions .../>
+     <values .../>
   </method>
 </code>
 
@@ -137,14 +139,13 @@ Ce type de méthode exécute une requête de type UPDATE. En plus des paramètre
 
 <code xml>
     <values>
-        <value property="foo" value="" expr=""/>
+        <value property="foo" value="123"/>
+        <value property="foo" expr="$myparam"/>
     </values>
 </code>
 
 L'attribut //property// indique la propriété que l'on va mettre à jour. 
 Comme dans les conditions, l'attribut //value// doit contenir une valeur. Mais si on veut indiquer une expression SQL ou un paramètre de la méthode, il faut utiliser l'attribut //expr//.
-
-
 
 
 ===== Clause conditions =====
@@ -153,23 +154,23 @@ Voici la description de la balise //<conditions>// qui peut être utilisée dans
 
 <code xml>
    <conditions logic="AND">
-      <eq         property="foo" value="" expr=""/>
-      <neq        property="foo" value="" expr=""/>
-      <lt         property="foo" value="" expr=""/>
-      <gt         property="foo" value="" expr=""/>
-      <lteq       property="foo" value="" expr=""/>
-      <gteq       property="foo" value="" expr=""/>
-      <like       property="foo" value="" expr=""/>
+      <eq         property="foo" value="" />
+      <neq        property="foo" value="" />
+      <lt         property="foo" value="" />
+      <gt         property="foo" value="" />
+      <lteq       property="foo" value="" />
+      <gteq       property="foo" value="" />
+      <like       property="foo" value="" />
       <isnull     property="foo"/>
       <isnotnull  property="foo"/>
-      <in         property="foo" value="" expr=""/>
-      <notin      property="foo" value="" expr=""/>
+      <in         property="foo" value="" />
+      <notin      property="foo" value="" />
    </conditions>
 </code>
 
 On peut mettre plusieurs balises <conditions> imbriquées pour faire des groupes or/and. Si l'attribut //logic// n'est pas spécifié, il vaut //AND// par défaut. Sinon il doit valoir "OR" ou "AND".
 
-L'attribut value doit contenir une valeur. Le type de cette valeur est celui de la propriété. Si on préfère utiliser une expression SQL ou indiquer un paramètre de méthode, il faut utiliser l'attribut expr.
+L'attribut value doit contenir une valeur. Le type de cette valeur est celui de la propriété. Si on préfère utiliser une expression SQL ou indiquer un paramètre de méthode, il faut utiliser l'attribut @@A@expr@@.
 
 
 

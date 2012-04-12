@@ -1,0 +1,72 @@
+~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/cfct_swfbiscuit~~
+
+Ce plugin permet d'ajouter une appli flash avec la méthode biscuit.
+
+Exemple :
+  {swfbiscuit  'promobidon.swf',
+               array('id'=>'promo2', 'width'=>150, 'height'=>90),
+               array('quality'=>'high', 'wmode'=>'transparent'),
+               array('longueur'=>150)}
+
+Rendu :
+<coed html>
+  <object id="promo2" width="150" height="90"
+          codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0"
+          classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+      <param value="/promobidon.swf?&longeur=150" name="movie"/>
+      <param value="high" name="quality"/>
+      <param value="transparent" name="wmode"/>
+      <embed width="150" height="90" type="application/x-shockwave-flash"
+             pluginspage="http://www.macromedia.com/go/getflashplayer"
+             src="/promobidon.swf?&longeur=150"
+             wmode="transparent" quality="hight"/>
+  </object>
+</code>
+
+===== Paramètres =====
+
+
+==== Premier paramètre - L'url ====
+
+  {swf 'promobidon.swf', ..., ..., ...}
+
+Le premier paramètre est le chemin relatif du fichier swf à afficher. Il s'agit d'un chemin relatif à "myapp/www/".
+
+
+
+
+
+==== Deuxième paramètre - Les attributs ====
+
+  {swf ..., array('id'=>'promo1', 'width'=>150, 'height'=>90), ..., ...}
+
+Le second paramètre est un tableau pouvant contenir différents attributs :
+
+  * id : l'identifiant qui sera donné à la balise <object .../>
+  * class : les différentes classes qui seront associées à la balise <object .../>
+  * width : la largeur affichée de l'animation flash
+  * height : la hauteur affichée de l'animation flash
+
+
+
+
+==== Troisième paramètre - Les paramètres du player Flash ====
+
+  {swf ..., ..., array('quality'=>'hight', 'wmode'=>'transparent'), ...}
+
+Les paramètres du player Flash.
+
+Exemple :
+  * quality : détermine la qualité de l'animation
+
+
+
+
+==== Quatrième paramètre - Les FlashVars ====
+
+  {swf ..., ..., ..., array('longeur'=>150)}
+
+Les FlashVars sont des variables transmises à l'animation flash.\\
+Elles sont passées au SWF via un GET.
+
+

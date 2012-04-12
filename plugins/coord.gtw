@@ -1,4 +1,6 @@
-Il est possible d'ajouter des plugins au [[//coordinateur|coordinateur]] (le coeur de Jelix, jCoordinator) qui permettent de faire des traitements supplémentaires à différentes étapes de l'exécution d'une action, quelle que soit cette action.
+~~LANG:EN@//en/manual-1.1/plugins/coord~~
+
+Il est possible d'ajouter des plugins au [[//coordinateur|coordinateur]] (le cœur de Jelix, jCoordinator) qui permettent de faire des traitements supplémentaires à différentes étapes de l'exécution d'une action, quelle que soit cette action.
 
 Il est ainsi possible d'effectuer un traitement au démarrage du processus, juste avant l'exécution de l'action, juste après (avant affichage), et en fin de processus.
 
@@ -11,14 +13,14 @@ Les plugins pour le coordinateur sont aussi appelés //plugins coord// dans le j
 Pour activer un plugin coord, vous avez deux choses à faire dans le fichier de configuration d'un point d'entrée :
 
   * bien sûr, [[|déclarer le dépôt]] contenant le répertoire de votre plugin, dans l'option //pluginsPath// de la configuration
-  * indiquer le plugin dans la section [plugins], ainsi que son éventuel fichier de configuration
+  * indiquer le plugin dans la section [coordplugins] , ainsi que son éventuel fichier de configuration
 
 Si vous placez votre plugin //foo// dans votreApplication/plugins/coord/ alors vous devez déclarer comme ceci :
 
 <code ini>
 pluginsPath = app:plugins/
 
-[plugins]
+[coordplugins]
 foo = foo.coord.ini.php
 </code>
 
@@ -28,10 +30,10 @@ Ici on indique un fichier de configuration //foo.coord.ini.php// pour le plugin 
 foo = 1
 </code>
 
-Si vous utilisez plusieurs plugins de coordinateur, l'ordre de déclaration des plugins dans le fichier de configuration a une importance. Ainsi le premier plugin déclaré à la priorité sur les autres. C'est à dire que si ce premier plugin renvoi une action, les autres plugins ne seront pas exécutés. Il convient donc de choisir l'ordre de déclaration des plugins en fonction de la priorité que l'on veut pour chaque plugin. Par exemple si vous considérez que le plugin //bar// ne peut être exécuté que si le plugin //foo// n'a pas renvoyé d'action, alors il faudrait les déclarer comme ceci:
+Si vous utilisez plusieurs plugins de coordinateur, l'ordre de déclaration des plugins dans le fichier de configuration a une importance. Ainsi le premier plugin déclaré à la priorité sur les autres. C'est à dire que si ce premier plugin renvoie une action, les autres plugins ne seront pas exécutés. Il convient donc de choisir l'ordre de déclaration des plugins en fonction de la priorité que l'on veut pour chaque plugin. Par exemple si vous considérez que le plugin //bar// ne peut être exécuté que si le plugin //foo// n'a pas renvoyé d'action, alors il faudrait les déclarer comme ceci :
 
 <code ini>
-[plugins]
+[coordplugins]
 foo = foo.plugin.ini.php
 bar = 1
 </code>
@@ -60,6 +62,18 @@ public $pluginParams = array(
 
 Indique que toutes les actions du contrôleur ont un paramètre nommé "auth.required" et valant false.
 
+==== Exemples de plugins ====
+
+== magiquotes ==
+
+Il sert à traiter les magicquotes sur les serveurs où ces magic quotes sont activés. Pas de configuration pour ce plugin.
+
+<code ini>
+[coordplugins]
+magicquotes = 1
+</code>
+
+
 
 ===== Développement d'un plugin coord =====
 
@@ -79,7 +93,7 @@ La méthode //beforeOutput// sera appelée après exécution de l'action.
 
 Le méthode //afterProcess// sera appelée en fin de traitement (après affichage donc).
 
-Cette classe est à placer dans un [[|dépôt de plugins]]. Par exemple, le répertoire //plugins/// de votre application. Ou alors dans un répertoire //plugins/// d'un module. Le sous répertoire dans lequel est placé le plugin doit porter le nom du plugin, et la classe doit suivre un nommage particulier. Si le plugin s'appelle //exemple//, alors :
+Cette classe est à placer dans un [[|dépôt de plugins]]. Par exemple, le répertoire //plugins/// de votre application. Ou alors dans un répertoire //plugins/// d'un module. Le sous-répertoire dans lequel est placé le plugin doit porter le nom du plugin, et la classe doit suivre un nommage particulier. Si le plugin s'appelle //exemple//, alors :
 
    * le répertoire du plugin sera **plugins/coord/exemple/**
    * le fichier contenant la classe du plugin devra être **plugins/coord/exemple/exemple.coord.php**

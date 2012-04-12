@@ -1,13 +1,13 @@
-~~LANG:EN@//en/manual-1.0~~
+~~LANG:EN@//en/manual-1.1~~
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.0.14
+subtitle= Jelix 1.1.12
 title_short= Guide du développeur
-edition = Jelix 1.0.14
+edition = Jelix 1.1.12
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
-copyright_years=2006-2010
+copyright_years=2006-2012
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
@@ -19,6 +19,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
   - chapter: [[installation/sources|Installation de l'archive de jelix]]
   - chapter: [[installation/application|Installation d'une application]] pour jelix
   - chapter: [[installation/production|Installation sur un serveur de production]]
+  - chapter: [[installation/migration|Migration d'une application jelix 1.0 vers jelix 1.1]]
 
 - part: [[fondamentaux|Fondamentaux]]
    - chapter:[[principes|Principes de fonctionnement]]
@@ -27,14 +28,17 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[coordinateur|Le coordinateur]]
      - section: [[jresponse|Les objets jResponse]]
      - section: [[appel-action|Appeler une action]] et les sélecteurs d'action.
+   - chapter:[[jelix-scripts|Utiliser jelix-scripts]]
+   - chapter:[[creer-application|Créer une application]]
+     - section: [[configurer-application|Configurer une application]]
+     - section: [[creer-application/creer-administration|Créer une interface d'administration]]
    - chapter:[[modules|Développement d'un module]]
      - section: [[creer-un-module|Créer un module]]
      - section: [[controleurs|Développer un contrôleur]]
      - section: [[controleurs/crud|Utiliser le contrôleur CRUD]]
      - section: [[restfull|Un contrôleur pour REST]]
-   - chapter: [[responses|Les réponses classiques]]
+   - chapter: [[responses|Les réponses: générer du contenu]]
      - section: [[responsehtml|Générer une page HTML]]
-     - section: [[responseredirect|Faire une redirection]]
      - section: [[responsetext|Générer du texte brut]]
      - section: [[responsexml|Générer du XML quelconque]]
      - section: [[responserss|Générer un flux de syndication RSS]]
@@ -45,11 +49,14 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[responsezip|Générer un fichier zip]]
      - section: [[responsexul|Générer une interface utilisateur en XUL]]
      - section: [[responserdf|Générer du RDF]]
+   - chapter: [[reponse-generale-personnalisee|Définir une réponse générale personnalisée]]
+   - chapter: [[responseredirect|Faire une redirection]]
    - chapter: [[services-web|Services web]]
      - section: [[responseajax|AJAX]]
      - section: [[responsejson|JSON]]
      - section: [[responsejsonrpc|JSON-RPC]]
      - section: [[responsexmlrpc|XML-RPC]]
+     - section: [[services-web/soap|SOAP]]
    - chapter: [[cmdline|Effectuer des traitements en ligne de commande]]
    - chapter: [[traitements_communs|Définir des traitements communs à plusieurs actions]]
 
@@ -58,7 +65,8 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter: [[zones|jZone : découper vos pages en zones]]
    - chapter: [[daos|jDao : mapping objet relationnel]]
       - section:[[daos/fichier_de_base|Fichier DAO de base]]
-      - section:[[daos/utilisation|Instanciation et utilisation d'une factory et d'un record DAO]]
+      - section:[[daos/utilisation|Utilisation d'une factory et d'un record DAO]]
+      - section:[[daos/recuperation-enregistrements|Récupération de liste d'enregistrements DAO]]
       - section:[[daos/methodes_xml|Ajouter des méthodes en XML]]
       - section:[[daos/methodes_php|Développer des méthodes en php]]
       - section:[[daos/evenements|Évènements automatiques]]
@@ -66,26 +74,40 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter:[[jforms|jForms : des formulaires automatiques]]
       - section: [[jforms/xml|Format des fichiers jForms]]
           - section: [[jforms/xml-1.0|Format version 1.0]]
-      - section: [[jforms/utilisation|Utiliser un formulaire dans un contrôleur]]
+          - section: [[jforms/xml-1.1|Format version 1.1]]
+             -section: [[jforms/xml/htmleditor|Editeur HTML]]
+             -section: [[jforms/xml/datepicker|Datepicker]]
+      - section: [[jforms/utilisation|Initialiser un formulaire]]
       - section: [[jforms/affichage|Affichage d'un formulaire]].
+          -section: [[jforms/affichage/generateur-html|Générateur "html"]]
+          -section: [[jforms/affichage/generateur-htmllight|Générateur "htmllight"]]
+      - section: [[jforms/apres-submit|Gérer un formulaire après soumission]]
       - section: [[jforms/affichage-donnees|Affichage simple des données]].
+      - section: [[jforms/security|Sécurité dans les formulaires]].
    - chapter: [[bd|jDb : accéder à une base de données]]
    - chapter: [[classes-metiers|jClasses: utiliser des classes métiers]]
    - chapter: [[urls|jUrl : des URLs automatiques]]
       - section: [[urls/simple|Moteur d'urls 'simple']]
+      - section: [[urls/basic_significant|Moteur d'urls 'basic_significant']]
       - section:[[urls/significant|Moteur d'urls significatives]]
    - chapter: [[authentification|jAuth : système d'authentification]]
       - section:[[authentification/drivers|Les drivers pour jAuth]]
-   - chapter: [[droits|jAcl : système de droits]]
-      - section: [[droits/concepts|Les concepts généraux de jAcl]]
-      - section: [[droits/utilisation|Utiliser jAcl dans ses modules]]
-      - section: [[droits/concepts.db|Les concepts de jAcl.db]]
-      - section: [[droits/configuration|Configurer jAcl.db]]
+   - chapter: [[droits2|jAcl2 : système de droits]]
+      - section: [[droits2/concepts|Les concepts généraux de jAcl2]]
+      - section: [[droits2/utilisation|Utiliser jAcl2 dans ses modules]]
+      - section: [[droits2/concepts.db|Les concepts de jAcl2.db]]
+      - section: [[droits2/configuration|Configurer jAcl2.db]]
+      - section: [[droits2/jauth|Utiliser jAcl2 avec jAuth]]
+      - section: [[droits/jacl|jAcl, ancien système de droits]]
+         - section: [[droits/concepts|Les concepts généraux de jAcl]]
+         - section: [[droits/utilisation|Utiliser jAcl dans ses modules]]
+         - section: [[droits/concepts.db|Les concepts de jAcl.db]]
+         - section: [[droits/configuration|Configurer jAcl.db]]
    - chapter: [[locales|jLocale: internationaliser votre application]]
    - chapter: [[events|jEvents : communication inter-module]]
 
 - part: [[developpement-avance|Développement avancé]]
-   - chapter: [[creer_response|Générer un contenu dans un format personnalisé]]
+   - chapter: [[creer_response|Créer une réponse pour un format spécifique]]
    - chapter: [[themes|Système de thèmes]]
    - chapter: [[surcharge-de-fichiers|Surcharge de fichiers de modules]]
    - chapter: [[plugins|Développer et utiliser des plugins]]
@@ -93,30 +115,43 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[plugins/auth|drivers pour jAuth]]
       - section: [[plugins/db|drivers pour jDb]]
       - section: [[plugins/tpl|plugins de templates]]
-      - section: [[plugins/urls_engine|moteurs de urls]]
+      - section: [[plugins/urls_engine|moteurs d'urls]]
+      - section: [[plugins/jforms|générateurs jforms]]
    - chapter: [[configuration|La configuration en détails]]
+   - chapter: [[objets_globaux|les objets globaux utiles]]
 
 - part: [[aide-developpement|Aide au développement]]
    - chapter: [[errormanager|Configurer le gestionnaire d'erreur]]
    - chapter: [[tests_unitaires|Développer des tests unitaires]]
-   - chapter: [[deboggage|Les aides pour debogguer]] (jLog..)
+   - chapter: [[deboggage|Les aides pour déboguer]] (jLog..)
 
 - part: [[classes-utiles|Les classes utilitaires]]
    - chapter: [[filtre|jFilter : vérification et filtrage de données]]
    - chapter: [[datetime|jDateTime : manipulation de dates et heures]]
+   - chapter: [[classes-utiles/jhttp|jHttp : faire des requête HTTP]]
    - chapter: [[mail|jMailer : envoi de mails]]
    - chapter: [[wiki|jWiki : transformation de texte wiki]]
    - chapter: [[session|jSession : stockage de sessions]]
+   - chapter: [[message|jMessage : informations entre actions]]
    - chapter: [[file|jFile : lire ou créer des fichiers]]
+   - chapter: [[inifilemodifier|jIniFileModifier: lire ou modifier des fichiers de configuration (ini)]]
 
-- part: [[ref-plugins|Les plugins de Jelix]]	 
-   - chapter: [[ref-plugins/tplplugins|Plugins de template]]	 
-      - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]	 
-      - section: [[ref-plugins/tplplugins/fonctions|Fonctions diverses]]	 
-      - section: [[ref-plugins/tplplugins/medias|Médias]]	 
-         - section: [[ref-plugins/tplplugins/fct_image|html : image]]	 
-
-
+- part: [[ref-plugins|Les plugins de Jelix]]
+   - chapter: [[ref-plugins/tplplugins|Plugins de template]]
+        - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]
+        - section: [[ref-plugins/tplplugins/fonctions|Fonctions diverses]]
+        - section: [[ref-plugins/tplplugins/medias|Médias]]
+            - section: [[ref-plugins/tplplugins/fct_image|html : image]]
+            - section: [[ref-plugins/tplplugins/global_swf|intégrer un swf avec jelix]]
+            - section: [[ref-plugins/tplplugins/cfct_swfbiscuit|swfbiscuit]]
+            - section: [[ref-plugins/tplplugins/blk_swf|swf]]
+            - section: [[ref-plugins/tplplugins/blk_swfjs|swfjs]]
+        - section: [[ref-plugins/tplplugins/metas|Meta]]
+   - chapter: [[ref-plugins/coordplugins|Plugins pour le coordinateur]]
+      - section: [[coordplugins/history|history]]
+      - section: [[coordplugins/zendframework|zendframework]]
+- part: [[ref-modules|Les modules de Jelix]]
+   - chapter: [[ref-modules/master_admin|master_admin]]
 </bookcontents>
 
 <booklegalnotice>

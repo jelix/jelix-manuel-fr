@@ -1,6 +1,8 @@
+~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/functions~~
+
 Divers plugins sont de simple fonctions qui affichent quelque chose selon les paramètres.
 
-====== zone ======
+===== zone =====
 
 Permet l'affichage d'une zone.
 
@@ -21,11 +23,27 @@ C'est en fait l'équivalent de
   </div>
 </code>
 
-====== jlocale ======
+===== fetchzone =====
 
-====== jurl ======
+Pour récupérer le contenu d'une zone, afin de pouvoir par exemple l'afficher plusieurs fois sans appeler la zone plusieurs fois, ou pour tester son contenu avant affichage
 
-====== html : pagelinks ======
+<code html>
+{fetchzonecontent 'submenu', 'navigation', array('parent'=>3)}
+{if $submenu !== ''}
+<div id="submenu">
+    <h2>Submenu</h2>
+    {$submenu}
+    <hr />
+</div>
+{/if}
+</code>
+
+
+===== jlocale =====
+
+===== jurl =====
+
+===== html : pagelinks =====
 
 Lorsque que l'on doit afficher une liste de résultats à l'écran et que cette liste est longue, il peut être judicieux de la répartir sur plusieurs pages. Le plugin Pagelinks facilite l'affichage d'un tel système de pagination, avec des liens pointant vers les différentes pages de résultats.
 
@@ -43,39 +61,39 @@ Exemple :
 
 ==== Paramètres ====
 
-== Module~Action ==
+=== Module~Action ===
 
-Sélecteur de l'action qui doit être appelé par les liens de pages.
+Sélecteur de l'action qui doit être appelée par les liens de pages.
 
-== Paramètres de l'action ==
+=== Paramètres de l'action ===
 
 Tableau contenant les paramètres métiers à placer dans l'url des liens de pages.
 
   array("param1" => 1, "param2" => "deux")
 
-Si il n'y aucun paramètre à passer, on utilise un tableau vide :
+S'il n'y aucun paramètre à passer, on utilise un tableau vide :
 
   array()
 
-== Nombre total de résultats ==
+=== Nombre total de résultats ===
 
 Nombre entier représentant le nombre total des résultats répondant à votre requête. Vous devez donc l'avoir calculé au préalable.
 
-== Index résultat courant ==
+=== Index résultat courant ===
 
-Nombre entier représentant l'offset, c'est à dire l'index du résultat courant. En clair : le numéro d'ordre du premier enregistrement afficher sur la page. Pour la première page, vous metterez 0. Pour les pages suivantes, il est calculé automatiquement et est passé dans le paramètre dont vous indiquez le nom dans "nom du paramètre d'offset"
+Nombre entier représentant l'offset, c'est-à-dire l'index du résultat courant. En clair : le numéro d'ordre du premier enregistrement afficher sur la page. Pour la première page, vous mettrez 0. Pour les pages suivantes, il est calculé automatiquement et passé dans le paramètre dont vous indiquez le nom dans "nom du paramètre d'offset"
 
-== Nombre de résultats par page ==
+=== Nombre de résultats par page ===
 
 Nombre entier représentant le nombre de résultats contenus dans une page de résultats.
 
-**Important** : le plugin ne s'affichera pas si il n'y a pas au moins 2 pages de résultats disponibles.
+**Important** : le plugin ne s'affichera pas s'il n'y a pas au moins 2 pages de résultats disponibles.
 
-== Nom du paramètre d'offset ==
+=== Nom du paramètre d'offset ===
 
-Chaîne de caractère contenant le nom que doit prendre le paramètre correspondant à l'offset dans l'url des liens de pages.
+Chaîne de caractères contenant le nom que doit prendre le paramètre correspondant à l'offset dans l'url des liens de pages.
 
-== Propriétés d'affichage ==
+=== Propriétés d'affichage ===
 
 Tableau contenant les paramètres liés à l'affichage du plugin. Ce paramètre est optionnel. S'il est omis, le plugin utilise le comportement par défaut, à savoir qu'il affiche l'intégralité des liens avec leur intitulé par défaut.
 
@@ -85,15 +103,15 @@ Il est donc possible de personnaliser l'affichage, en définissant le nombre de 
 
 Il est ainsi possible de renseigner une ou plusieurs des valeurs d'index suivantes qui viendront écraser le comportement défini par défaut.
 
-  * **start-label** : Libellé du lien de la première page de résultats disponible. Si la valeur est une chaine vide, le lien ne sera pas affiché.
+  * **start-label** : Libellé du lien de la première page de résultats disponible. Si la valeur est une chaîne vide, le lien ne sera pas affiché.
 
   * **prev-label** : Libellé du lien de la page de résultats précédente. Si la valeur est une chaine vide, le lien ne sera pas affiché.
  
-  * **next-label** : Libellé du lien de la page de résultats suivante. Si la valeur est une chaine vide, le lien ne sera pas affiché.
+  * **next-label** : Libellé du lien de la page de résultats suivante. Si la valeur est une chaîne vide, le lien ne sera pas affiché.
 
-  * **end-label** : Libellé du lien de la dernière page de résultats disponible. Si la valeur est une chaine vide, le lien ne sera pas affiché.
+  * **end-label** : Libellé du lien de la dernière page de résultats disponible. Si la valeur est une chaîne vide, le lien ne sera pas affiché.
 
-  * **area-size** : Nombre de liens à afficher avant et après la page courante. Si la valeur est 0, tous les liens seront affiché.
+  * **area-size** : Nombre de liens à afficher avant et après la page courante. Si la valeur est 0, tous les liens seront affichés.
 
 L'exemple suivant renomme les liens "précédent" et "suivant", et masque les liens de début et de fin. De plus un maximum de 5 pages sera affiché de part et d'autre de la page courante.
 
@@ -108,7 +126,7 @@ L'exemple suivant renomme les liens "précédent" et "suivant", et utilise le li
   <p>{pagelinks 'myModule~default_index', array(),  283, 60, 15, "offset", array('prev-label'  => 'précédent', 'next-label'  => 'suivant')}</p>
 </code>
  
-Bien entendu, il est aussi possible de possible d'utiliser un tableau de paramètres déclaré dans le controleur.
+Bien entendu, il est aussi possible de possible d'utiliser un tableau de paramètres déclaré dans le contrôleur.
 
 <code php>
   $properties = array('start-label' => '',
@@ -167,7 +185,7 @@ Exemple de feuille de style minimaliste pour une utilisation de ''Pagelinks'' av
 
 </code>
 
-====== html : urljsstring ======
+===== html : urljsstring =====
 
 Le plugin de template urljsstring permet de générer une chaîne pour du javascript, qui contient une url généré par le moteur d'url de Jelix, et qui contient aussi des paramètres dynamiques en javascript. Par exemple, imaginons que l'on veuille ça en javascript :
 
@@ -207,3 +225,78 @@ __Note__ : urljsstring génère les doubles quotes de la chaîne. Donc inutile d
    // ceci est correct
    var foo = {urljsstring $selecteur , $paramstatic , $paramjs}
 </code>
+
+===== common : cycle =====
+
+Le plugin @@cycle@@ et d'autres qui lui sont associés, permettent d'afficher une serie de valeur de manière cyclique. Très utile dans une boucle, quand tour à tour vous voulez afficher une valeur différente. Exemple typique:
+
+<code html>
+  {foreach $liste as $item}
+   <tr class="{cycle array('impair','pair')}">
+      <td>...<td>
+   </tr>
+  {/foreach}
+</code>
+
+À chaque tour de boucle, cycle va afficher "impair", puis "pair", puis "impair" (retour au debut de la liste de cycle) etc.
+
+
+==== Contrôler un cycle ====
+
+Il y a deux autres plugins à votre disposition pour mieux contrôler un cycle. @@cycle_init@@ pour (ré)initialiser un cycle, et @@cycle_reset@@ pour le repositionner au debut de la liste des valeurs.
+
+
+<code html>
+  {cycle_init 'style1,style2,style3'}
+  {foreach $liste as $item}
+   <tr class="{cycle}">
+      <td>...<td>
+   </tr>
+   {if $item == 'truc'}
+      {cycle_reset}
+   {/if}
+  {/foreach}
+</code>
+
+Notez que cycle_init attend une chaine avec les valeurs séparées par des virgules au lieu d'un tableau php (dans la version 1.2, il acceptera un tableau).
+
+==== Cycles nommés ====
+
+Il se peut que dans une page web, vous voulez reutiliser le même cycle à plusieurs endroits, ou utiliser plusieurs cycles dans une même boucle. Il vous faut alors donner des noms à vos cycles. Le nom doit être indiqué en tant que premier argument.
+
+<code html>
+  {foreach $liste as $item}
+   <tr class="{cycle 'premier', array('impair','pair')}">
+      <td class="{cycle 'styletd',array('style1,style2,style3')}">...<td>
+   </tr>
+  {/foreach}
+
+
+  {cycle_init 'styles', 'style1,style2,style3'}
+  {foreach $liste as $item}
+   <tr>
+      <td class="{cycle 'styles'}">...<td>
+      <td class="{cycle 'styles'}">...<td>
+   </tr>
+  {/foreach}
+
+</code>
+
+Le résultat de la deuxième boucle sera
+
+<code html>
+   <tr>
+      <td class="style1">...<td>
+      <td class="style2">...<td>
+   </tr>
+   <tr>
+      <td class="style3">...<td>
+      <td class="style1">...<td>
+   </tr>
+   <tr>
+      <td class="style2">...<td>
+      <td class="style3">...<td>
+   </tr>
+...
+</code>
+

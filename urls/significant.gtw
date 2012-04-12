@@ -1,9 +1,8 @@
+~~LANG:EN@//en/manual-1.1/urls/significant~~
 
-Le moteur d'url "significant" permet d'attribuer à chaque action une url spécifique de la forme que l'on veut.
+Le moteur d'url “significant” permet d'attribuer à chaque action une url spécifique de la forme que l'on veut. 
 
-
-
-Le principe de configuration pour ce moteur est d'indiquer dans un fichier var/config/urls.xml toutes les formes d'URLs possibles de l'application et les actions qui leurs sont associées. Voici un exemple de fichier :
+Le principe de configuration pour ce moteur est d'indiquer dans un fichier var/config/urls.xml toutes les formes d'URLs possibles de l'application et les actions qui leur sont associées. Voici un exemple de fichier :
 
 <code xml>
 <urls xmlns="http://jelix.org/ns/urls/1.0">
@@ -41,13 +40,14 @@ Le principe de configuration pour ce moteur est d'indiquer dans un fichier var/c
 
 ===== Balises entrypoint =====
 
-La balise racine ''urls'' contient autant de balises //*entrypoint// que de points d'entrée disponibles dans votre application. Leur nom exact précise le type de requête auquel ils sont affectés : 
+La balise racine ''urls'' contient autant de balises @@E@*entrypoint@@ que de points d'entrée disponibles dans votre application. Leur nom exact précise le type de requête auquel ils sont affectés : 
 
-  * //classicentrypoint// pour les requêtes classiques
-  * //xmlrpcentrypoint// pour du xmlrpc
+  * @@E@classicentrypoint@@ pour les requêtes classiques
+  * @@E@xmlrpcentrypoint@@ pour du xmlrpc
   * etc ...
 
-Chacune de ces balises a un attribut ''name'' indiquant le nom du point d'entrée (sans l'extension .php) et éventuellement un attribut ''default'' indiquant si ce point d'entrée est celui par défaut pour le type de requête en question.
+Chacune de ces balises a un attribut @@A@name@@ indiquant le nom du point d'entrée (sans l'extension .php), ou plus exactement, son chemin, relatif à la valeur du @@basePath@@ dans la configuration générale. Et vous ajouterez éventuellement un attribut @@A@default@@ indiquant si ce point d'entrée est celui par défaut pour le type de requête en question.
+
 
 ===== Balise url =====
 
@@ -88,6 +88,11 @@ Pour cela il faut indiquer des balises ''param'' pour chacun des paramètres don
       <param name="id_art" regexp="\d+" />
    </url>
 </code>
+
+Si l'expression régulière de l'attribut regexp contient des parenthèses, il est nécessaire d'indiquer que celles-ci ne doivent pas être capturées. 
+
+Exemple : 
+<code xml><param name="type" regexp="(?:0|1|2){1}" /></code>
 
 Quand le paramètre est de type string il n'est pas obligatoire de mettre une balise param. Les types disponibles sont :
 
@@ -133,11 +138,11 @@ On peut aussi utiliser ce mécanisme pour supporter plusieurs langues :
    </url>
 </code>
 
-Là encore, il ne faut pas oublier de donner le paramètre //lang// à jUrl pour que ce dernier puisse savoir quelle url il doit renvoyer.
+Là encore, il ne faut pas oublier de donner le paramètre //lang// à jUrl pour que ce dernier puisse savoir quelle url il doit renvoyer. 
 
 ==== Utiliser un handler spécifique ====
 
-Nous avons vu précédemment comment utiliser, en fin de compte, un système par défaut d'analyse et de génération d'URL avec ses pathinfos et paramètres. Il se peut que ce système ne soit pas suffisant. Imaginons par exemple que vous vouliez transformer une partie de l'information contenu dans le pathinfo, comme par exemple chercher dans une base de données un id correspondant à un titre contenu dans le pathinfo, et fournir ainsi aux actions, non pas un titre, mais un id (qui n'est pas contenu dans cette URL).
+Nous avons vu précédemment comment utiliser, en fin de compte, un système par défaut d'analyse et de génération d'URL avec ses pathinfos et paramètres. Il se peut que ce système ne soit pas suffisant. Imaginons par exemple que vous vouliez transformer une partie de l'information contenue dans le pathinfo, comme par exemple chercher dans une base de données un id correspondant à un titre contenu dans le pathinfo, et fournir ainsi aux actions, non pas un titre, mais un id (qui n'est pas contenu dans cette URL).
 
 Ou encore que la partie pathinfo puisse être variable.
 
@@ -184,7 +189,7 @@ Enfin dans le fichier urls.xml, vous devez indiquer l'utilisation de ce handler 
     </classicentrypoint>
 </code>
 
-Depuis jelix 1.0 beta1, vous pouvez indiquer un handler d'un autre module. Exemple :
+Vous pouvez bien sûr indiquer un handler d'un autre module. Exemple :
 
 <code xml>
    <classicentrypoint name="wiki">
@@ -250,7 +255,7 @@ Vous devez bien sûr remplir un fichier urls.xml de façon à ce que Jelix gén�
 
 Et bien sûr, vous devez ensuite mettre dans un fichier .htaccess les règles de réécritures.
 
-Si vous voulez définir des URLs qui ne contiennent pas le nom du point d'entrée, vous devez alors indiquer sur les balises **<url>**  l'attribut **noentrypoint="true"** (ou sur la balise **<*entrypoint>** si toutes les URLs de ce point d'entrée sont concernées). Ainsi Jelix n'ajoutera pas le nom du point d'entrée (index.php) dans l'URL.
+Si vous voulez définir des URLs qui ne contiennent pas le nom du point d'entrée, vous devez alors indiquer sur les balises **<url>**  l'attribut **noentrypoint="true"** (ou sur la balise **<*entrypoint>** si toutes les URLs de ce point d'entrée sont conçernées). Ainsi Jelix n'ajoutera pas le nom du point d'entrée (index.php) dans l'URL.
 
 
 === Suppression du nom du point d'entrée dans l'URL ===
@@ -270,7 +275,7 @@ Voyons comment faire.
 
 Tout d'abord, il faut bien sûr utiliser le moteur d'URL "significant" et définir un fichier urls.xml. Comme pour la réécriture complète vous devez indiquer sur les balises **<url>** ou **<*entrypoint>**  l'attribut **noentrypoint="true"**. Ainsi Jelix n'ajoutera pas le nom du point d'entrée (index.php) dans les URLs concernées.
 
-Ensuite on va utiliser le rewriteEngine de Apache d'une façon toute simple : le chemin appelé sera rajouté après index.php. En clair il faut copiez ceci dans un fichier .htaccess dans le dossier www de votre application (ou dans la section virtualhost de la configuration apache):
+Ensuite on va utiliser le rewriteEngine de Apache d'une façon toute simple : le chemin appelé sera rajouté après index.php. En clair il faut copier ceci dans un fichier .htaccess dans le dossier www de votre application (ou dans la section virtualhost de la configuration apache):
 
 <code>
 <IfModule mod_rewrite.c>
@@ -283,14 +288,13 @@ Ensuite on va utiliser le rewriteEngine de Apache d'une façon toute simple : le
 </code>
 
 Observez bien :
-  * 3ème et 4ème ligne : Réécrire l'URL seulement si la requête ne correspond pas à un fichier déjà existant, ou un dossier déjà existant. Ainsi on préserve ses dossiers d'image, de feuille de style, etc. de la règle de réécriture.
-  * 5ème ligne : Tout prendre, et mettre après index.php/
+  * 2e ligne : vous n'en avez pas besoin si vous écrivez ces instructions dans un @@F@.htaccess@@ dans le répertoire www de l'appli. Par contre, dans un autre @@F@.htaccess@@ ou dans un virtual host, vous devez la mettre, et adapter le chemin : @@F@/@@ si le www correspond au documentRoot, ou le chemin pour accéder au répertoire www à partir d'une url (basePath). ex @@RewriteBase /monapp/www/@@ si vous accédez à l'application par @@http://localhost.local/monapp/www/index.php@@
+  * 3e et 4e ligne : Réécrire l'URL seulement si la requête ne correspond pas à un fichier déjà existant, ou un dossier déjà existant. Ainsi on préserve ses dossiers d'image, de feuille de style, etc. de la règle de réécriture.
+  * 5e ligne : Tout prendre, et mettre après index.php/
 
 On retrouve ainsi notre point d'entrée index.php ainsi que notre pathinfo.
 
-Il se peut que sur certaines configurations, vous ayez une erreur apache du type "Error: No input file specified", en particulier quand PHP est exécuté en CGI avec cgi.fix_pathinfo=0 dans php.ini.
-
-Depuis Jelix 1.0.2, il y a une solution. Il faut changer la dernière rêgle en :
+Il se peut que sur certaines configurations, vous ayez une erreur apache du type "Error: No input file specified", en particulier quand PHP est exécuté en CGI avec cgi.fix_pathinfo=0 dans php.ini. Mais il y a une solution. Il faut changer la dernière rêgle en :
 
 <code>
     RewriteRule ^(.*)$ index.php?jpathinfo=/$1 [L,QSA]

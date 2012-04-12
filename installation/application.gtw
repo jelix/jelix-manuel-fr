@@ -1,11 +1,10 @@
+~~LANG:EN@//en/manual-1.1/installation/applications~~
 
-Nous allons prendre l'installation de testapp en exemple mais les explications sont valables pour n'importe quelle application.
+Nous allons prendre l'installation de **testapp** en exemple mais les explications sont valables pour n'importe quelle application.
 
 Testapp est disponible en téléchargement. C'est une application testant divers composants de Jelix. Elle sert principalement aux développeurs de Jelix, mais vous pouvez l'installer pour voir des exemples d'utilisation.
 
-===== Installation des fichiers de l'application =====
-
-==== Décompression de l'archive ====
+===== Décompression de l'archive =====
 
 Quand vous décompressez l'archive de testapp, vous obtenez les répertoires suivants :
 
@@ -18,14 +17,14 @@ Quand vous décompressez l'archive de testapp, vous obtenez les répertoires sui
          log/       fichiers journaux de l'application et de Jelix
       www/          racine du site de l'application (document root)
 
-Copiez ce répertoire dans le repertoire //monsite///. Vous avez donc :
+Copiez ce répertoire dans le repertoire @@F@monsite/@@. Vous avez donc :
 
   monsite/
       lib/
       temp/
       testapp/
 
-Par défaut, l'arborescence des sources est organisée de façon à installer l'application sur un serveur sur lequel vous pouvez spécifier le répertoire racine public du site (document root). Ce répertoire est //monsite/testapp/www// .
+Par défaut, l'arborescence des sources est organisée de façon à installer l'application sur un serveur sur lequel vous pouvez spécifier le répertoire racine public du site (document root). Ce répertoire est @@F@monsite/testapp/www/@@ .
 
 Vous pourrez bien entendu modifier l'emplacement de ces répertoires si par exemple vous ne pouvez pas modifier le document root. Nous allons voir comment faire plus loin.
 
@@ -33,153 +32,14 @@ Vous remarquerez que les fichiers propres à l'application et ceux du framework 
 
 
 
-==== Renommer les fichiers de configuration ====
+===== Renommer les fichiers de configuration =====
 
-Dans //testapp/var/config// vous avez des fichiers //*.dist//. Renommez-les en enlevant cette particule '.dist'.
+Dans @@F@testapp/var/config/@@ vous avez des fichiers @@F@*.dist@@. Renommez-les en enlevant cette particule '.dist'. Il y a certainement des choses à modifier dans ces nouveaux fichiers, comme les paramètres d'accès à la base de donnée (@@F@dbprofils.ini.php@@) etc..
 
+===== Créer le répertoire temporaire =====
 
-==== Créer le répertoire temporaire ====
+Dans @@F@monsite/temp/@@ vous devez créer le dossier @@F@testapp@@. Peut-être votre application contient-elle plusieurs fichiers @@F@*.init.php@@, similaires au fichier @@F@application.init.php@@. Il se peut que chacun de ces fichiers déclare un répertoire temporaire différent. Créez donc ces répertoires temporaires.
 
-Dans //monsite/temp// vous devez créer le dossier //testapp//
+===== Configurer l'application =====
 
-
-==== Droits sur les répertoires ====
-
-Vous devez donner le droit en écriture à l'utilisateur exécutant votre serveur web (apache ou autre) sur les répertoires suivants :
-
-   temp/testapp/
-   testapp/var/config/
-   testapp/var/log/
-
-
-===== Configuration du serveur =====
-
-Voici ce qu'il faut configurer au niveau du serveur.
-
-
-
-==== Si vous pouvez spécifier le document root ====
-
-Si vous pouvez spécifier la racine du site en modifiant les fichiers de configuration du serveur web ou via une interface d'administration comme le proposent certains hébergeurs, indiquez alors le répertoire //monsite/testapp/www// comme étant la racine du site. Par exemple, avec apache, vous indiquerez dans le fichier //httpd.conf//, quelque chose comme :
-
-<code htaccess>
-   <VirtualHost *>
-      ServerName www.monsite.com
-      DocumentRoot /var/monsite/testapp/www/ 
-   </VirtualHost>
-</code>
-
-Vous devez indiquer aussi un alias vers le répertoire //lib/jelix-www//, en le nommant jelix :
-
-<code htaccess>
-   <VirtualHost *>
-      ServerName www.monsite.com
-      DocumentRoot /var/monsite/testapp/www/ 
-      Alias /jelix/ "/var/monsite/lib/jelix-www/"
-   </VirtualHost>
-   
-   <Directory "/var/monsite/lib/jelix-www/">
-     AllowOverride None
-     Order allow,deny
-     Allow from all
-   </Directory>
-</code>
-
-Note : vous pouvez indiquer un autre nom que "jelix" pour l'alias. Vous devez alors l'indiquer dans l'option "jelixWWWPath" dans le fichier de configuration de l'application, //monsite/testapp/var/config/defaultconfig.ini.php// section urlengine.
-
-Et enfin dans ce même fichier vous ajusterez l'option **basePath**, en indiquant le chemin jusqu'au index.php (ici donc, /) :
-<code ini>
-basePath="/"
-</code>
-
-Ainsi, en tapant http://www.monsite.com vous accédez à votre site, et http://www.monsite.com/jelix/, à jelix-www, qui contient un certain nombre de scripts javascript utiles, des ressources XUL etc..
-
-
-==== Si vous ne pouvez pas spécifier le document root ====
-
-Dans ce cas, il est préférable de déplacer le contenu du répertoire //monsite/testapp/www// à la racine de votre site, //monsite///.
-Vous déplacerez donc les fichiers index.php, jsonrpc.php etc, pour obtenir par exemple l'arborescence suivante :
-
-  monsite/  
-    testapp/
-    lib/
-    temp/
-    index.php
-    jsonrpc.php
-    xmlrpc.php
-
-Il faut aussi modifier ces trois fichiers PHP pour changer les chemins relatifs qu'ils contiennent, et faire de même pour le fichier //testapp/application.init.php//. Par exemple le fichier index.php ressemblera à ceci dans notre exemple :
-
-<code php>
-require_once ('lib/jelix/init.php');
-require_once ('testapp/application.init.php');
-
-require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
-$config_file = 'config.classic.ini.php';
-$jelix = new jCoordinator($config_file);
-$jelix->process(new jClassicRequest());
-</code>
-
-Il faut ensuite déplacer le répertoire //lib/jelix-www/// à la racine et le renommer en "jelix". Vous obtiendrez :
-
-  monsite/  
-    testapp/
-    jelix/
-    lib/
-    temp/
-    index.php
-    jsonrpc.php
-    xmlrpc.php
-
-
-Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous devez alors l'indiquer dans l'option "jelixWWWPath" dans le fichier de configuration de l'application, //monsite/testapp/var/config/defaultconfig.ini.php// section urlengine.
-
-
-Dans le fichier //testapp/application.ini.php//, vous devez modifier la constante **JELIX_APP_WWW_PATH** :
-
-<code php>
-define ('JELIX_APP_WWW_PATH', realpath(JELIX_APP_PATH.'../').'/');
-</code>
-
-Et enfin, dans le fichier //monsite/testapp/var/config/defaultconfig.ini.php//, vous ajusterez l'option **basePath**, en indiquant le chemin jusqu'au index.php (ici donc, /) :
-<code ini>
-basePath="/"
-</code>
-
-Vous pouvez alors taper l'adresse de votre site (http://www.monsite.com par exemple, ou http://localhost/)
-
-
-==== Spécifier une extension de fichier autre que .php ====
-
-Sur certains serveurs, il vous est proposé PHP4 et PHP5 à la fois. En général, les fichiers **.php** doivent être des fichiers PHP4, et **.php5**, des fichiers PHP5. Il vous faut donc faire des modifications pour que votre application jelix fonctionne avec PHP5. Deux façons, selon les possibilités.
-
-
-=== Par le .htaccess ===
-
-Dans le répertoire //www// de votre application rajoutez un fichier //.htaccess// et mettez y :
-
-  AddHandler php5-script .php
-
-Et vous n'avez rien d'autre à faire. Si ça ne fonctionne pas, faites comme suit.
-
-=== En renommant l'extension ===
-
-Il faut renommer le fichier //index.php// en //index.php5// (idem pour les autres fichiers php se trouvant dans www : //jsonrpc.php, xmlrpc.php//, etc...). Par contre, **vous n'avez pas besoin** de renommer les fichiers php des autres répertoires !
-
-Dans le fichier de configuration //var/config/defaultconfig.ini.php//, indiquez l'extension dans la partie urlengine :
-
-  entrypointExtension = .php5
-
-
-==== Configuration pour les urls "cools" ====
-
-Pour pouvoir utiliser des urls significatives avec le [[//urls|système d'url automatique de jelix]], il faut activer dans apache (au niveau de la configuration serveur ou dans le .htaccess si cela est permis) :
-
-   Options +Multiviews
-
-Et pour Apache 2, rajouter :
-
-   AcceptPathInfo on
-
-Pour vérifier que cela fonctionne, créez sur votre site web un fichier test.php qui affiche **phpinfo()** et essayez l'url : //monsite.com/test/foo/bar// . Le phpinfo devrait s'afficher, et vous devriez avoir dans **$_SERVER['PATH_INFO']** la chaine "**/foo/bar**" (voir tout en bas de l'affichage de phpinfo).
-
+Voir le [[//configurer-application|chapitre dédié sur la configuration]].

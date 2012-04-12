@@ -1,11 +1,10 @@
-====== Les modificateurs ======
+~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/modifiers~~
 
-
-Les modificateurs sont des fonctions qui permettent de modifier l'affichage d'une variable de template. Ils ne sont donc utilisé que lors des instructions d'affichage.
+Les modificateurs sont des fonctions qui permettent de modifier l'affichage d'une variable de template. Ils ne sont donc utilisés que lors des instructions d'affichage.
 
 ===== cat =====
 
-Ce modificateur permet de concaténer une chaîne de caractère à une variable. Exemple :
+Ce modificateur permet de concaténer une chaîne de caractères à une variable. Exemple :
 
 Soit la variable de template $foo ayant pour valeur 'bar' :
 <code php>
@@ -164,7 +163,7 @@ Indent accepte 2 paramètres :
 
 ===== jdatetime =====
 
-Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[http://jelix.org/articles/manuel/datetime|classe jDateTime]].\\ 
+Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[//datetime|classe jDateTime]].\\ 
 Par défaut, le modificateur attend une chaine au format base de données (jDateTime::BD_DTFORMAT) et renvoi la date au format correspondant à la langue sélectionnée (jDateTime::LANG_DTFORMAT).
 
 <code smarty>
@@ -211,18 +210,41 @@ si $myDate='2006-04-15' alors cela affiche
 ===== strip =====
 
 ===== truncate =====
+===== wiki =====
+
+Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki, vers le format de votre choix. Ce modificateur utilise la [[http://jelix.org/articles/manuel/wiki|classe jWiki]].\\ 
+
+Par défaut, le modificateur attend une chaine au format wiki (wr3) et la renvoi au format XHTML, exemple :
+
+<code smarty>
+  <p>{$message|wiki}</p>
+</code>
+
+Si $message vaut par exemple : 
+<code>
+__mon texte gras__ 
+</code>
+le rendu sera 
+''mon texte gras''
+
+Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en paramètre au modificateur :
+
+^ paramètre ^ Rendu  ^ 
+| 'classicwr_to_text' | affichera du text au format wiki (v2 du WikiRender) en texte  |
+| 'classicwr_to_wr3' | affichera du text au format wiki (v2 du WikiRender) en wiki (v3 du WikiRender) | 
+| 'classicwr_to_xhtml' | affichera du text au format wiki (v2 du WikiRender) en XHTML |
+| 'dokuwiki_to_docbook' | affichera du text au format dokuwiki en docbook |
+| 'dokuwiki_to_xhtml' | affichera du text au format dokuwiki en XHTML |
+| 'trac_to_xhtml' | affichera du text au format wiki de Trac en XHTML |
+| 'wr3_to_docbook' | affichera du text au format wiki (v3 du WikiRender) en docbook|
+| 'wr3_to_text' | affichera du text au format wiki (v3 du WikiRender) en texte|
+| 'wr3_to_xhtml' | affichera du text au format wiki (v3 du WikiRender) en XHTML |
+
+Le paramètre indique le format d'origine ''et'' de transformation (voulu)  que le modificateur reçoit
+<code smarty>
+  <p>{$message|wiki:'wr3_to_xhtml'}</p>
+</code>
 
 ===== wordwrap =====
 
 ===== html:nl2br =====
-
-
-
-
-
-
-
-
-
-
-

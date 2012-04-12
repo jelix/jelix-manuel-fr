@@ -1,0 +1,79 @@
+~~LANG:EN@//en/manual-1.1/global-objects~~
+
+Il existe des variables globales, auxquelles vous pouvez accéder depuis n'importe où. Les voici.
+
+
+===== $gJConfig =====
+
+L'objet $gJConfig permet d'accéder à la configuration de l'application Jelix. Chacune de ses propriétés correspond à un paramètre de configuration des fichiers ini ( fusion du fichier @@F@defaultconfig.ini.php@@ et celui indiqué pour le point d'entrée).
+
+==== Appel de gJConfig ====
+
+Voici un exemple dans une fonction ou méthode :
+
+<code php>
+function test()
+{
+   global $gJConfig;
+   $gJConfig->urlengine['basePath'];
+
+// ou, sans utiliser le mot clé global :
+   $GLOBALS['gJConfig']->urlengine['basePath'];
+}
+</code>
+
+==== Accès à la configuration ====
+
+Si le fichier config.ini.php de votre point d'entrée contient ceci :
+<code ini>
+startModule = "testapp"
+startAction = "main:index"
+ 
+[coordplugins]
+autolocale = index/autolocale.ini.php
+ 
+[responses]
+html=myHtmlResponse
+</code>
+
+on peut accéder à ces valeurs comme cela :
+
+<code php>
+function test()
+{
+   global $gJConfig;
+
+   $a = $gJConfig->startModule; // "testapp"
+   $b = $gJConfig->coordplugins['autolocale']; // "index/autolocale.ini.php"
+}
+</code>
+
+
+===== $gJCoord =====
+
+L'objet $gJCoord permet d'accéder aux paramètres de la requête entre autres. Il s'agit en fait d'une instance de la classe @@C@jCoordinator@@. Vous avez alors accés à un certain nombre de chose : liste de ses plugins, l'objet réponse courant, l'objet @@C@jRequest@@ courant (contenant les paramètres de la requête http entre autre), le nom du module et le nom de l'action appelée etc..
+
+==== Appel de gJCoord ====
+
+<code php>
+function test()
+{
+   global $gJCoord;
+   $gJCoord->request->type;
+
+   $GLOBALS['gJCoord']->request->type; // équivalent aux 2 premières lignes
+}
+</code>
+
+==== Accès aux paramètres de la requête ====
+
+Si votre script a été appelé par l'URL /index.php?test=1 alors
+<code php>
+function test()
+{
+   global $gJCoord;
+
+   $a = $gJCoord->request->urlScriptName; // "index.php"
+   $b = $gJCoord->request->params['test']; // 1
+}
+</code>

@@ -1,4 +1,6 @@
-Le développement de test unitaires est de plus en plus présents dans les projets, et Jelix propose de quoi en réaliser facilement. La réalisation des tests unitaires fait d'ailleurs partie des méthodes de développement comme XP (eXtreme programming). Le processus de développement veut, en théorie (et en gros), qu'à chaque fois que l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on modifie ou ajoute un bout de code, on lance tout les tests unitaires pour vérifier qu'il n'y a pas de regressions. Cela permet ainsi de garantir un minimum, un fonctionnement robuste de l'application.
+~~LANG:EN@//en/manual-1.1/unit-tests~~
+
+Le développement de test unitaires est de plus en plus présents dans les projets, et jelix propose de quoi en réaliser facilement. La réalisation des tests unitaires fait d'ailleurs partie des méthodes de développement comme XP (eXtreme programming). Le processus de développement veut, en théorie (et en gros), qu'à chaque fois que l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on modifie ou ajoute un bout de code, on lance tout les tests unitaires pour vérifier qu'il n'y a pas de regressions. Cela permet ainsi de garantir un minimum, un fonctionnement robuste de l'application.
 
 ===== Préparation =====
 
@@ -35,11 +37,13 @@ Le nom qui précède le suffixe importe peu. Sachez toutefois qu'il sert de libe
    * les caractères soulignés "_" sont transformés en espaces.
 
 Par exemple si on nomme le fichier ainsi, "jdao.main_api_with_pdo.html.php", le libellé des tests contenus dans ce fichier sera "jdao: main api with pdo". Et comme il a le suffixe ".html.php", il ne pourra être lancé que via l'interface web de junittests.
+
+
 ==== Création d'un test ====
 
 Pour créer un test, il faut créer une classe héritant de UnitTestCase ou des autres classes héritières de UnitTestCase proposées par simpletest, et y écrire des méthodes dont le nom doit commencer par "test". Ces méthodes feront alors les tests que vous désirez, en utilisant l'API de simpletest. Pour plus de détails sur cette API, lisez la [[http://simpletest.org/fr/|documentation sur le site de simpletest]], en particulier [[http://simpletest.org/fr/unit_test_documentation.html|la page sur unittestcase]]. Notez que dans cette documentation, vous devez ignorer tout ce qui concerne les "reporters" et les "group tests" : le module junittests s'occupant déjà de tout ça. Vous pouvez aussi regarder les tests qui sont présents dans le module unittest de l'application testapp disponible en téléchargement.
 
-Voici un exemple de test. Admettons que l'on veuille faire des tests sur une classe "panier" d'un module "shop". On crée alors un fichier "shop/tests/panier.html.php" et on y place la classe suivante :
+Voici un exemple de test. Admettons que l'on veuille faire des tests sur une classe "panier" d'un module "shop". On créer alors un fichier "shop/tests/panier.html.php" et on y place la classe suivante :
 
 <code php>
 class testShopPanier extends UnitTestCase {
@@ -54,9 +58,9 @@ class testShopPanier extends UnitTestCase {
 
 Le nom de la classe "testShopPanier" est totalement libre. Mais il faut faire attention que ce ne soit pas un nom déjà pris par une autre classe de tests dans d'autres modules. Aussi il est recommandé que le nom contienne le nom du module ou autre signe distinctif.
 
-On a ici créé une fonction qui teste si, lors de la création d'un panier, celui-ci est bien vide. On instancie donc la classe //panier//, on appelle sa méthode //getProductList// qui devrait nous renvoyer une liste de produits. Et ensuite on teste si le contenu renvoyé est bien un tableau vide. 
+On a ici créé une fonction qui teste si, lors de la création d'un panier, celui-ci est bien vide. On instancie donc la classe //panier//, on appelle sa méthode //getProductList// qui devrait nous renvoyer une liste de produit. Et ensuite on test si le contenu renvoyé est bien un tableau vide. 
 
-Vous pouvez ajouter autant de méthodes de tests que vous voulez dans une même classe de tests, mais aussi de classes dans un seul fichier. Voici un deuxième exemple :
+Vous pouvez ajouter autant de méthodes de tests que vous voulez dans une même classe de test, mais aussi de classes dans un seul fichier. Voici un deuxième exemple :
 
 <code php>
    function testAjoutProduit () {
@@ -99,40 +103,45 @@ Vous pouvez ajouter autant de méthodes de tests que vous voulez dans une même 
 ===== Lancement des tests =====
 
 Une fois vos tests réalisés, il faut les lancer avec le module junittests.
+
+
+
 ==== Via l'interface web ====
 
-Le lancement des tests se fait en appelant la page principale du module junittests. Un exemple d'url : http://testapp.jelix.org/index.php?module=junittests . Vous pouvez d'ailleurs vous rendre à cette url précise : vous y verrez tous les tests unitaires sur Jelix ;-)
+Le lancement des tests se fait en appelant la page principale du module junittests. Un exemple d'url : http://testapp.jelix.org/index.php?module=junittests . Vous pouvez d'ailleurs vous rendre à cette url précise : vous y verrez tous les tests unitaires sur jelix ;-)
 
 N'oubliez pas de mettre dans la configuration le paramètre enableTests = on, sinon vous aurez droit à une erreur 404.
 
-Cette première page présente sur la gauche la liste de tous les tests présents dans votre application, classés par module. Il suffit de cliquer sur un des tests pour le lancer et voir le résultat. Vous avez des liens aussi pour lancer tous les tests d'un module, ou tous les tests de votre application (attention cependant, les lancer tous peut être long pour les grosses applications, et provoquer un "timeout" au niveau du navigateur).
+Cette première page présente sur la gauche toute la liste des tests présents dans votre application, classés par module. Il suffit de cliquer sur un des tests pour le lancer et voir le résultat. Vous avez des liens aussi pour lancer tous les tests d'un module, ou tous les tests de votre application (attention cependant, les lancer tous peut être long pour les grosses applications, et provoquer un "timeout" au niveau du navigateur).
 
-À la fin du lancement des tests, il est affiché le nombre de tests unitaires qui sont passés avec succès, et celui des tests échoués.
+À la fin du lancement de tests, il est affiché le nombre de tests unitaires qui sont passés avec succés, et celui des tests échoués.
 
 Notez que le module junittests utilise sa propre réponse HTML, et fait appel à une feuille de style tests/design.css qui doit être placée dans le répertoire www de votre application. Vous en trouverez une dans le répertoire //install// du module junittests.
+
+
 ==== Via la ligne de commande ====
 
-Le lancement des tests se fait en exécutant un script ''tests.php'' se trouvant dans le répertoire scripts de l'application Jelix. Vous pouvez utiliser l'application [[http://jelix.org/articles/telechargement/stable|testapp]] (voir dans "Application de test") pour en voir un exemple.
+Le lancement des tests se fait en exécutant un script ''tests.php'' se trouvant dans le répertoire scripts de l'application jelix. Vous pouvez utiliser l'application [[http://jelix.org/articles/telechargement/stable|testapp]] (voir dans "Application de test") pour en voir un exemple.
 
-Voici une liste des différentes commandes disponibles :
+Voici une listes des différentes commandes disponibles :
 
 === Lister tous les tests ===
 
-Voir la liste de tous les tests de votre application rangés par modules. Vous devez préciser seulement ici le nom du controleur car le mot-clé "help" renvoie vers l'aide générale de la ligne de commande de Jelix. Exemple :
+Voir la liste de tous les tests de votre application rangés par modules. Vous devez préciser seulement ici le nom du controller car le mot-clé "help" renvoie vers l'aide générale de la ligne de commande de Jelix. Exemple :
 
 <code>
 php tests.php default:help
 </code>
 
-=== Lancer tous les tests de l'application ===
+=== Lancer tout les tests de l'application ===
 
-Exécuter l'ensemble des tests de votre application. Pas besoin ici de paramètre particulier, car exécuter tous les tests de l'application est l'action par défaut. Exemple :
+Exécuter l'ensemble des tests de votre application. Pas besoin ici de paramètre particulier, car exécuter tous les tests de l'application est l'action par defaut. Exemple :
 
 <code>
 php tests.php
 </code>
 
-=== Lancer tous les tests d'un module ===
+=== Lancer tout les tests d'un module ===
 
 Exécuter l'ensemble des tests d'un module spécifié. Vous devez ici donner le nom de votre module en paramètre. Exemple pour testapp :
 
@@ -149,6 +158,8 @@ php tests.php single jelix_tests core.jlocale
 </code>
 
 
-À la fin du lancement des tests, il est affiché le nombre de tests unitaires qui sont passés avec succès, et celui des tests échoués.
+À la fin du lancement des tests, il est affiché le nombre de tests unitaires qui sont passés avec succés, et celui des tests échoués.
 
 Notez que si vous n'avez pas le fichier ''tests.php'' dans le répertoire scripts, vous pouvez récupérer tous les fichiers nécessaires (le script et le fichier de configuration) dans le répertoire install du module junittests.
+
+

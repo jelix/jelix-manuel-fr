@@ -1,0 +1,86 @@
+~~LANG:EN@//en/manual-1.1/jelix-scripts~~
+
+===== Lancer jelix.php =====
+
+Jelix est fourni avec un script, @@F@lib/jelix-scripts/jelix.php@@, qui permet de créer et modifier facilement des éléments d'un projet jelix, ou de réaliser des actions sur le projet.
+
+Il faut appeler ce script à partir d'une console, en ligne de commande, avec la version CLI de PHP.
+
+Ouvrez donc une console, allez dans le répertoire @@F@lib/jelix-scripts/@@ :
+
+<code bash>
+   cd lib/jelix-scripts/      # sous linux
+   cd lib\jelix-scripts\      # sous windows
+</code>
+
+Ensuite, vous pouvez exécuter une commande jelix selon cette syntaxe :
+
+<code bash>
+# sous windows
+> php.exe jelix.php [--application_name] command_name [options] [parameters]
+
+# sous linux
+$ php jelix.php [--application_name] command_name [options] [parameters]
+</code>
+
+
+Vous devez toujours appeler @@F@jelix.php@@ avec un nom de "commande jelix", accompagné éventuellement de paramètres et options.
+
+Par exemple, pour avoir de l'aide sur toutes les commandes (et avoir la liste des commandes possibles), utilisez la commande @@help@@ :
+
+<code bash>
+   php jelix.php help
+</code>
+
+Il y a un autre paramètre à indiquer pour la plupart des commandes jelix : le nom de l'application. C'est toujours le premier paramètre, et doit commencer par @@--@@. Exemple :
+
+<code bash>
+  php jelix.php --myapp createapp
+</code>
+
+Il est possible d'éviter de taper ce nom d'application à chaque fois. Pour cela, vous devez créer une variable d'environnement  @@V@JELIX_APP_NAME@@ contenant le nom de l'application.
+
+Par exemple, tapez ceci dans la console :
+
+<code bash>
+  export JELIX_APP_NAME="myapp"        # sous linux
+  set JELIX_APP_NAME=myapp             # sous windows
+</code>
+
+Et ainsi vous pouvez taper une commande jelix sans le nom de l'application, par exemple :
+
+<code bash>
+  php jelix.php createapp
+</code>
+
+
+Notez aussi que vous pouvez executez le script @@F@jelix.php@@ à partir de n'importe quel répertoire. Exemple :
+
+<code bash>
+  php jelix/path/lib/jelix-scripts/jelix.php --myapp createapp
+</code>
+
+===== Changer la configuration par défaut =====
+
+Les commandes de création d'application, de module etc respectent une arborescence précise. Mais ce n'est pas forcément celle que vous voulez utiliser. Il y a aussi des informations qui sont insérées dans les fichiers crées, notamment dans les commentaires d'en-tête, comme par exemple le nom de l'auteur, le site web etc. Vous pouvez changer cela.
+
+Pour ce faire, dans @@F@lib/jelix-scripts/@@, il y a un fichier @@F@scripts.conf.php.dist@@. Renommez le en @@F@scripts.conf.php@@, et modifiez son contenu en décommentant les lignes que vous souhaitez et en modifiant les valeurs.
+
+Vous pouvez aussi indiquer un autre fichier de configuration en indiquant son chemin dans la variable d'environnement @@V@JELIX_CONFIG@@.
+
+
+===== Liste des commandes disponibles =====
+
+Voici une liste non exhaustive des commandes pour jelix-scripts
+   * Création d'une application
+<code>
+php jelix.php --[Monapplication] createapp
+</code>
+   * Création d'un module
+<code>
+php jelix.php --[Monapplication] createmodule [MonModule]
+</code>
+   * Création d'un dao
+<code>
+php jelix.php --[Monapplication] createdao [MonModule] [MonDao] [MaTable]
+</code>

@@ -1,32 +1,71 @@
+~~LANG:EN@//en/manual-1.1/responsejson~~
 
-[[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui réutilise des éléments syntaxique de Javascript. Cela facilite alors grandement l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus utilisé pour la technique AJAX.
+[[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui réutilise des éléments syntaxiques de Javascript. Cela facilite alors grandement l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus utilisé pour la technique AJAX.
 
-Pour envoyer un contenu en JSON au navigateur, vous pouvez employer la réponse jResponseJson dont l'alias est "json". Vous n'avez ensuite qu'à mettre n'importe quelles données dans la propriété ''$datas''.
+Pour envoyer un contenu en JSON au navigateur, vous pouvez employer la réponse @@C@jResponseJson@@ dont l'alias est "json". Vous n'avez ensuite qu'à mettre n'importe quelles données dans la propriété @@P@$data@@.
 
 <code php>
   $rep = $this->getResponse('json');
-  $rep->datas = array( 'nom'=>'dupont', 'prenom'=>'jean');
+  $rep->data = array( 'nom'=>'dupont', 'prenom'=>'jean');
+  return $rep;
 </code>
 
-Vous recevrez alors coté client, ceci :
+L'appel du côté client, se fait de la même façon que la technique AJAX
+<code javascript>
+   http = new XMLHttpRequest();
+
+   // url est une variable qui contient l'url correspondante à l'action ajax
+   http.open("post", url, true);
+
+   // handleJSONReturn est une fonction qui traite la réponse 
+   http.onreadystatechange = handleJSONReturn;
+
+   // la requête est envoyée
+   http.send(null);
+</code>
+
+Avec jQuery :
+<code javascript>
+   $.getJSON( url, function (json) {
+      // ici traitement de la réponse
+   }
+</code>
+
+Vous recevrez alors côté client, ceci :
 
 <code javascript>
-  { nom: 'dupont', prenom:'jean'}
+  "{ nom:'dupont', 'prenom':'jean'}"
 </code>
 
-**Exemple d'utilisation avec une DAO**
+Lors du traitement du côté client vous pouvez utiliser la méthode suivante :
+<code javascript>
+   var doc = eval('(' + http.responseText + ')');
+   alert(doc.nom + ' ' + doc.prenom);
+</code>
+
+ou, avec jQuery :
+
+<code javascript>
+   $.getJSON( url, function (json) {
+      alert(json.lastname + ' ' + json.firstname);
+   }
+</code>
+
+
+
+=== Exemple d'utilisation avec une DAO ===
 
 <code php>
 $countryDao = jDao::get('common~country');
 $countries = $countryDao->findAll();
 $response = $this->getResponse('json');
-$response->datas = array();
+$response->data = array();
 foreach($countries as $country) {
-	$response->datas[] = array('id' => $country->id , 'name' => $country->name);
+	$response->data[] = array('id' => $country->id , 'name' => $country->name);
 }
 </code>
 
-On récupére coté client des objets en notation JSON comme celui-ci :
+On récupère côté client des objets en notation JSON comme celui-ci :
 <code javascript>
-  { id: '1', name:'Europe'}
+   { "id":20, "name":"Europe"}
 </code>

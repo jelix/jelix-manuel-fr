@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/plugins/tpl~~
+
 Vous pouvez ajouter vos propres fonctionnalités de templates dans le [[//templates|moteur de template jTpl]]. Elles doivent être implémentées dans un plugin de template. Il y a quatre types de plugin :
 
    * les fonctions
@@ -5,15 +7,15 @@ Vous pouvez ajouter vos propres fonctionnalités de templates dans le [[//templa
    * les blocs
    * les meta
 
-Regardez dans lib/jelix/plugins/tpl/, vous avez plein d'exemples relativement simples à comprendre.
+Regardez dans lib/jelix/plugins/tpl/ (lib/jelix/tpl/plugins dans jelix 1.0beta2 et inférieur), vous avez un grand nombre d'exemples relativement simples à comprendre.
 
 ===== Emplacement =====
 
 Les plugins sont stockés dans un répertoire ayant une arborescence précise : ils sont classés dans des sous-répertoires en fonction du type de réponse auxquels ils sont destinés. Cela évite ainsi d'utiliser des plugins pour le XUL quand on fait du HTML par exemple. 
 
-C'est ainsi que dans un dépôt de plugin de template, vous avez un sous répertoire "html", "xul", "text" et "common". Le sous-répertoire "common" est celui dans lequel sont mis les plugins qui ne sont pas destinés à des types de réponses précis.
+C'est ainsi que dans un dépôt de plugin de template, vous avez un sous-répertoire "html", "xul", "text" et "common". Le sous-répertoire "common" est celui dans lequel sont mis les plugins qui ne sont pas destinés à des types de réponses précis. @@F@lib/jelix/plugins/tpl/@@ est le dépôt par défaut de jelix pour les plugins de template. Mais vous mettrez en général vos propres plugins de template dans le répertoire @@F@plugins/tpl/@@ de votre application, ou dans un autre dépôt à votre convenance (dépôt à déclarer, comme indiqué sur la [[|page des plugins]]). Sachant que dans le dépôt en question, il vous faut mettre comme indiqué précédemment vos plugins dans tpl/common/, tpl/html/, ou tpl/text/ etc...
 
-lib/jelix/plugins/tpl/ est le dépôt par défaut de jelix pour les plugins de template. Mais vous mettrez en général vos propres plugins de template dans le répertoire //plugins/// de votre application, ou dans un autre dépôt à votre convenance (dépôt à déclarer, comme indiqué sur la [[|page des plugins]]). Sachant que dans le dépôt en question, il vous faut mettre comme indiqué précédemment vos plugins dans tpl/common/, tpl/html/, ou tpl/text/ etc...
+Chacun de ces répertoires organisant les plugins selon le type de réponse, comme il est dit plus haut.
 
 ===== plugin type "function" =====
 
@@ -44,11 +46,18 @@ Un plugin cfunction ne génère donc pas un contenu, mais génère du code PHP q
 
 un plugin cfunction doit accepter en paramètre un objet jTplCompiler, et un tableau contenant les paramètres indiqués dans le template. Vous ne devez en général pas toucher à ces paramètres, juste les inclure directement dans le code PHP que va générer le plugin. Le plugin ne doit rien afficher, et doit retourner le contenu généré. 
 
-Voici l'exemple d'un plugin cfunction , qui fait au final la même chose que l'exemple de plugin function précédent:
+Vous devez nommer votre fichier sous le nom : cfunction.mafonction.php
+
+Si vous désirez utiliser votre fonction, vous devez l'appeler dans le template 
+  {mafonction 'param1'}
+
+Vous récupérez vos paramètres via le 2ième paramètre de votre fonction nommée ci-dessous $params (et sous forme de tableau)
+
+Voici l'exemple d'un plugin cfunction (zone), qui fait au final la même chose que l'exemple de plugin function précédent:
 
 
 <code php>
-function jtpl_cfunction_html_zone($compiler $params=array())
+function jtpl_cfunction_html_zone($compiler, $params=array())
 {
     if (count($params) < 1 || count($params) > 2) {
         $compiler->doError2('errors.tplplugin.cfunction.bad.argument.number','zone','1-2');
@@ -68,7 +77,7 @@ function jtpl_cfunction_html_zone($compiler $params=array())
 
 ===== plugin type "modifier" =====
 
-Un plugin modificateur est une fonction jtpl_modifier_//monmodificateur// prenant une chaine en paramètre (et eventuellement d'autres pour ceux qui ont besoin de paramètre de modificateur, voir plus haut), et renvoie une chaine transformée. La fonction doit être stockée dans un fichier de nom modifier.//monmodificateur//.php.
+Un plugin modificateur est une fonction jtpl_modifier_//monmodificateur// prenant une chaîne en paramètre (et eventuellement d'autres pour ceux qui ont besoin de paramètre de modificateur, voir plus haut), et renvoie une chaîne transformée. La fonction doit être stockée dans un fichier de nom modifier.//monmodificateur//.php.
 
 Exemple avec le plugin count_characters :
 
@@ -115,7 +124,7 @@ function jtpl_block_ifuserconnected($compiler, $begin, $params=array())
 
 ===== plugin meta =====
 
-Un plugin meta est appelé lors de l'évaluation d'un template, mais juste avant l'affichage. En effet, lors de l'évaluation, il y a deux phases, l'une qui permet de faire des choses avant l'affichage, puis l'affichage proprement dit. Cette phase de pré-affichage est généralement utilisée pour modifier des propriétés de l'objet response courant. Par exemple, pour une réponse HTML, un template sert uniquement à générer la partie "body" d'une page html. Si on veut, dans le HTML, spécifier des choses du genre, liens css ou script JS à lier (donc concrétement à rajouter des choses au niveau de la balise head), il faut le faire pendant le pré-affichage. Et les plugins meta sont appelés pendant cette phase, grâce à l'instruction {meta ...}.
+Un plugin meta est appelé lors de l'évaluation d'un template, mais juste avant l'affichage. En effet, lors de l'évaluation, il y a deux phases, l'une qui permet de faire des choses avant l'affichage, puis l'affichage proprement dit. Cette phase de pré-affichage est généralement utilisée pour modifier des propriétés de l'objet response courant. Par exemple, pour une réponse HTML, un template sert uniquement à générer la partie "body" d'une page html. Si on veut, dans le HTML, spécifier des choses du genre, liens css ou script JS à lier (donc concrètement à rajouter des choses au niveau de la balise head), il faut le faire pendant le pré-affichage. Et les plugins meta sont appelés pendant cette phase, grâce à l'instruction {meta ...}.
 
 à compléter.. (voir le plugin lib/jelix/plugins/tpl/html/meta.html.php pour un exemple).
 

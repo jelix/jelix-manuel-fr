@@ -1,19 +1,21 @@
-===== Déclarer les répertoires de modules =====
+~~LANG:EN@//en/manual-1.1/creating-a-module~~
+
+===== Déclarer les modules =====
 
 Un module est un répertoire dans lequel il y a une arborescence précise. Les modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe de modules, ou aussi dépôt de modules.
 
 ==== Configuration générale ====
 
-Pour avoir accès aux modules, il faut déclarer ces dépôts de modules dans la configuration, par la propriété **modulesPath**. On peut y indiquer plusieurs chemins en les séparant par des virgules. On peut indiquer soit des chemins complets, soit des chemins relatifs à un répertoire spécifique de l'arborescence Jelix. Ces chemins relatifs ont une notation spéciale :
+Pour avoir accès aux modules, il faut déclarer ces dépôts de modules dans la configuration, par la propriété @@V@modulesPath@@. On peut y indiquer plusieurs chemins en les séparant par des virgules. On peut indiquer soit des chemins complets, soit des chemins relatifs à un répertoire spécifique de l'arborescence Jelix. Ces chemins relatifs ont une notation spéciale :
 
    coderepertoire:chemin/relatif/
 
-//coderepertoire// est un de ces codes :
+@@coderepertoire@@ est un de ces codes :
 
 | **lib** | répertoire lib/ de jelix |
 | **app** | répertoire de l'application |
 
-Cela évite d'avoir à indiquer un véritable chemin relatif. Et donc d'avoir à changer à la fois le fichier application.init.php et le fichier de configuration quand on fait une modification dans l'arborescence, quand on migre l'application d'un serveur à un autre (entre le développement et la production par exemple). 
+Cela évite d'avoir à indiquer un véritable chemin relatif. Et donc d'avoir à changer à la fois le fichier @@F@application.init.php@@ et le fichier de configuration quand on fait une modification dans l'arborescence, quand on migre l'application d'un serveur à un autre (entre le développement et la production par exemple). 
 
 Exemple :
 
@@ -21,33 +23,51 @@ Exemple :
    modulesPath = lib:jelix-modules/,app:modules/
 </code>
 
-On déclare ici qu'il y a deux dépôts de modules : le premier, //jelix-modules//, se trouvant dans le répertoire //lib// de jelix; le deuxième, le répertoire //modules// de l'application.
+On déclare ici qu'il y a deux dépôts de modules : le premier, //jelix-modules//, se trouvant dans le répertoire @@F@lib/@@ de jelix; le deuxième, le répertoire @@F@modules/@@ de l'application.
 
 Tous les modules se trouvant dans ces deux répertoires seront utilisables et les actions qu'ils déclarent pourront être appelées depuis un navigateur.
 
-==== Restrictions ====
+==== Désactivation totale ====
 
-Il se peut que parmi les modules présents dans un dépôt, on veuille en désactiver certains : cela peut arriver si ce groupe de module est partagé par plusieurs applications et que pour l'application courante, on ne veuille pas utiliser certains de ces modules. Ou encore que pour plus de sécurité, on interdisent l'accès à certains modules pour certains points d'entrée.
+Dans un dépôt de module, il se peut qu'il y ait des modules que vous n'utilisez pas, et qui donc ne sont pas installés et configurés.
+
+Il est donc nécessaire d'indiquer ces modules pour éviter d'y accéder depuis le web, ou que d'autres modules utilisent leurs ressources (classes, daos etc).
+
+Il faut l'indiquer au niveau de l'option @@V@unusedModules@@ dans la configuration. On peut indiquer plusieurs modules en les séparant par des espaces :
+
+<code ini>
+unusedModules = "foo,bar"
+</code>
+
+Cela indique que les modules foo et bar ne sont pas utilisables.
+
+==== Restrictions à un point d'entrée précis ====
+
+Il peut y avoir des modules que l'on veuille y accéder seulement depuis des points d'entrées spécifiques, ou que l'on veuille empêcher leur accès depuis le web, mais que l'on a installé et que l'on veuille utiliser leur ressources.
 
 On dispose alors de deux paramètres de configuration :
 
 <code ini>
    checkTrustedModules = on
-   trustedModules = foo,bar,baz
+   trustedModules = "foo,bar,baz"
 </code>
 
-On active la restriction d'accès via le paramètre **checkTrustedModules**, et on indique les modules autorisés dans **trustedModules**. Les autres modules ne seront pas accessibles de l'extérieur. Par contre, les modules autorisés peuvent accéder aux ressources des modules non autorisés (classes, zones, dao...).
+On active la restriction d'accès via le paramètre @@V@checkTrustedModules@@, et on indique les modules autorisés dans @@V@trustedModules@@. Les autres modules ne seront pas accessibles à l'application. Par contre, les modules autorisés peuvent accéder aux ressources des modules non autorisés (classes, zones, dao...).
 
+Si on veut indiquer cette restriction pour tous les points d'entrée, on indiquera ces paramètres dans @@F@defaultconfig.ini.php@@, ou alors dans les fichiers @@F@config.ini.php@@  de chaque point d'entrée, pour indiquer les modules permis pour chaque point d'entrée.
+
+Il ne faudra pas oublier aussi de [[urls|configurer correctement le moteur d'url]], afin que les urls générées par Jelix utilisent bien le point d'entrée associé à chacun des modules.
 
 ===== Créer un module =====
 
 Le principe : il suffit de créer un répertoire dans un dépôt, avec un nom précis, et d'y mettre les contrôleurs, les daos et tout ce qu'il faut dans leurs sous-répertoires respectifs.
 
-Le plus simple est encore d'utiliser le script jelix et la commande **createmodule** :
+Le plus simple est encore d'utiliser le script jelix et la commande @@createmodule@@ :
+
 <code bash>
    php jelix.php createmodule monmodule
 </code>
 
-Cela vous créé un module de nom "monmodule" dans le répertoire //modules/// de l'application, des sous répertoires ainsi qu'un contrôleur par défaut. 
+Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de l'application, des sous répertoires ainsi qu'un contrôleur par défaut.
 
 **Important** : Le nom des modules est repris dans certaines classes générées automatiquement par Jelix, aussi ne peut-il comporter que des caractères autorisés par PHP pour les noms de classes : lettres minuscules, majuscules, non accentuées, les chiffres et le caractère _.

@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/responsexmlrpc~~
+
 Jelix propose la prise en charge de [[http://www.xmlrpc.com/spec/|xml-rpc]]. C'est un protocole d'échange de données en XML :  un client envoie un contenu XML indiquant une fonction à exécuter et des paramètres. Le serveur renvoie un résultat, toujours sous forme de XML (RPC = Remote Procedure Call). 
 
 
@@ -8,8 +10,7 @@ Une requête XML-RPC est spécifique, et pour y répondre, on ne peut pas utilis
 Le point d'entrée devra contenir ceci :
 
 <code php>
-require_once ('../../lib/jelix/init.php');
-require_once ('../../VOTRE APPLI/application.init.php');
+require_once ('../../myapp/application.init.php');
 
 $config_file = 'xmlrpc/config.ini.php';
 
@@ -65,7 +66,7 @@ class defaultCtrl extends jController {
 
 ===== Appel depuis le client =====
 
-Qui dit XmlRpc, dit une partie cliente qui envoi une requête xmlrpc. Comme vous pouvez le lire dans [[http://www.xmlrpc.com/spec|la spécification de xml-rpc]], il faut envoyer du contenu XML de ce type :
+Qui dit XmlRpc, dit une partie cliente qui envoie une requête xmlrpc. Comme vous pouvez le lire dans [[http://www.xmlrpc.com/spec|la spécification de xml-rpc]], il faut envoyer du contenu XML de ce type :
 
 <code xml>
 <?xml version="1.0" ?>
@@ -88,6 +89,4 @@ Les données que vous mettrez dans params seront mises dans le paramètre "param
 </code>
 
 Bien entendu, ce que vous avez dans $parametres sera des données "php" (chaine, array ou autre), la transformation du contenu de la balise <params> étant réalisée par jXmlRpcRequest..
-
-Exemple d'appel XMLRPC à partir d'un page HTML : à faire...
 

@@ -1,3 +1,5 @@
+~~LANG:EN@//en/manual-1.1/errormanager~~
+
 Les classes du framework peuvent générer des erreurs de deux façons différentes par : 
   * un trigger_error (erreur PHP)
   * une exception
@@ -21,9 +23,9 @@ Les gestionnaires d'erreurs sont chargés d'effectuer les actions indiquées dan
 | TRACE | inclus la pile d'execution dans le message (mais uniquement dans les messages des fichiers de log)|
 | ECHOQUIET | n'affiche pas le detail du message, affiche juste le contenu de l'option **quietMessage** |
 
-L'option **messageLogFormat** indique le formatage du message d'erreur pour son stockage dans le fichier de log, syslog ou le mail.
+L'option **messageLogFormat** indique le formatage du message d'erreur pour son stockage dans le fichier de log, syslog ou le mail. Le formatage supporte //%date%//, //%ip%//, //%typeerror%//, //%code%//, //%msg%//, //%url%//, //%file%//, //%line%//, //\t// et //\n//.
 
-Si, pour l'action ECHO avec les réponses HTML et XUL, vous voulez afficher les erreurs dans Firebug (une extension pour Firefox), mettez l'option **showInFirebug** à //on// (jelix 1.0).
+Si, pour l'action ECHO avec les réponses HTML et XUL, vous voulez afficher les erreurs dans Firebug (une extension pour Firefox), mettez l'option **showInFirebug** à //on//
 
 
 ===== Code erreur =====

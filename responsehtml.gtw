@@ -1,4 +1,6 @@
-Pour récupérer une réponse xhtml/html, vous indiquez l'alias "html" à la méthode //getResponse()//. Vous récupérez ainsi la réponse comme ceci :
+~~LANG:EN@//en/manual-1.1/responsehtml~~
+
+Pour récupérer une réponse xhtml/html, vous indiquez l'alias "html" à la méthode @@M@getResponse()@@. Vous récupérez ainsi la réponse comme ceci :
 
 <code php>
    $rep = $this->getResponse('html');
@@ -18,6 +20,8 @@ $rep->setXhtmlOutput(false); // Réponse au format html
 Par la suite, vous pouvez savoir si la réponse renverra du html ou du xhtml en appelant la méthode //isXhtml()//.
 
 
+Vous pouvez aussi changer le doctype si vous le souhaitez, en surchargeant la méthode outputDoctype(), qui doit faire un echo du doctype souhaité.
+
 ===== Génération du contenu =====
 
 L'objet jResponseHtml implémente des méthodes et propriétés pour manipuler le contenu (X)HTML.
@@ -27,6 +31,8 @@ Le source HTML d'une page est découpé en deux parties : la partie <head>, et l
 {{jresponsehtml_step1.png|}}
 
 jResponseHTML s'occupe de générer le contenu de la balise <head>, à partir des informations données au travers de ses méthodes. Par contre la génération du contenu de la partie <body> est de votre ressort, avec l'aide éventuellement d'un template. Voyons tout ça en détails.
+
+
 
 ===== Modification de l'entête HTML =====
 
@@ -59,16 +65,19 @@ $rep->addMetaKeywords('motclé motclé motclé');
 Notez que pour la méthode //addCSSLink// et //addJSLink//, vous pouvez indiquer un paramètre supplémentaire qui doit être un tableau associatif, décrivant les attributs supplémentaires à mettre.
 
 <code php>
-$rep->addCSSLink('maFeuille.css', array('title'=>'design bleu', rel=>'alternate stylesheet'));
+$rep->addCSSLink('maFeuille.css', 
+                  array('title'=>'design bleu',
+                        'rel'=>'alternate stylesheet',
+                        'media'=>'all'));
 </code>
 
-Si vous voulez injecter du contenu spécifique dans la balise <head>, vous pouvez le faire via la méthode //addHeadContent()//
+Si vous voulez injecter du contenu spécifique dans la balise <head>, vous pouvez le faire via la méthode //addHeadContent();//
 
 <code php>
-$rep->addHeadContent('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="/feed.php" />')
+$rep->addHeadContent('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="/feed.php" />');
 </code>
 
-Si à un moment ou à un autre, vous voulez annuler les modification faites dans le head (par exemple, vous êtes dans une zone qui est appelée par un module tierce que vous ne voulez pas/pouvez pas modifier), vous pouvez appeler la méthode //clearHtmlHeader()//. Cette fonction vous permet d'effacer une partie du header de votre document html, en indiquant quoi effacer : 'CSSLink', 'Styles', 'JSLink', 'JSCode' et/ou 'Others'.
+Si à un moment ou à un autre, vous voulez annuler les modifications faites dans le head (par exemple, vous êtes dans une zone qui est appelée par un module tiers que vous ne voulez pas/pouvez pas modifier), vous pouvez appeler la méthode //clearHtmlHeader()//. Cette fonction vous permet d'effacer une partie du header de votre document html, en indiquant quoi effacer : 'CSSLink', 'Styles', 'JSLink', 'JSCode' et/ou 'Others'.
 
 <code php>
 $rep->clearHtmlHeader(array('CSSLink', 'Styles'));
@@ -79,18 +88,18 @@ Cela effacera les liens CSS (addCSSLink) et les balises <style> (//addStyle//).
 
 ===== Générer le contenu de la page HTML =====
 
-jResponseHtml génère la balise <body>, mais c'est vous qui en contrôlez ses attributs et son contenu.
+jResponseHtml génère la balise @@E@<body>@@, mais c'est vous qui en contrôlez ses attributs et son contenu.
 
-Pour définir les attributs de la balise <body>, vous pouvez utiliser la propriété bodyTagAttributes.
+Pour définir les attributs de la balise @@E@<body>@@, vous pouvez utiliser la propriété @@P@bodyTagAttributes@@.
 
 <code php>
-$rep->bodyTagAttributes = array('onload'=>'bodyonload()', 'class'=>'maincontent');
+$rep->bodyTagAttributes = array('onload'=>'bodyonload()', 
+                                'class'=>'maincontent');
 </code>
 
-Pour générer le contenu même de la balise body, vous avez deux choix : soit utiliser un template, soit utiliser la méthode addContent().
+Pour générer le contenu même de la balise body, vous avez deux choix : soit utiliser un template, soit utiliser la méthode @@M@addContent()@@.
 
-==== Générer avec un template ====
-
+==== générer avec un template ====
 
 Pour utiliser un template, jResponseHtml propose deux propriétés :
 
@@ -109,7 +118,7 @@ Le contenu généré par le moteur de template sera intégré entre les balises 
 
 Pour en savoir plus sur l'utilisation des templates, consultez le [[templates|chapitre sur les templates]].
 
-Il se peut que vous ayez besoin d'ajouter du contenu en plus de celui produit par le template. Pour cela vous utiliserez la méthode addContent(). Elle prend en paramètre une chaine pour lecontenu, et un booléen (facultatif) pour indiquer si on veut que le contenu soit ajouté avant (true) ou après (false, valeur par défaut) le contenu du template.
+Il se peut que vous ayez besoin d'ajouter du contenu en plus de celui produit par le template. Pour cela vous utiliserez la méthode addContent(). Elle prend en paramètre une chaîne pour le contenu, et un booléen (facultatif) pour indiquer si on veut que le contenu soit ajouté avant (true) ou après (false, valeur par défaut) le contenu du template.
 
 <code php>
 $rep->addContent('Mon contenu HTML après le template');
@@ -122,17 +131,17 @@ Notez que le contenu à ajouter peut être aussi le contenu de [[zones|zones]]
 $rep->addContent(jZone::get('monmodule~uneZone'));
 </code>
 
+
 ==== Générer avec un template principal et des "sous-templates" ====
 
-Bien souvent, les pages d'un site ont un gabarit commun, et seules certaines zones changent (notament le contenu principal) en fonction de l'action. Il y aura donc un template principal , définit comme on l'a vu précédemment, qui ne contiendra que le contenu commun à toutes les pages, et dans chaque action on utilisera un autre template (un "sous-template") pour générer le contenu spécifique, dont on injectera le résultat dans le template principal. Ce travail peut être fait avec un template directement, ou au moyen d'une zone.
+Bien souvent, les pages d'un site ont un gabarit commun, et seules certaines zones changent (notamment le contenu principal) en fonction de l'action. Il y aura donc un template principal , défini comme on l'a vu précédemment, qui ne contiendra que le contenu commun à toutes les pages, et dans chaque action on utilisera un autre template (un "sous-template") pour générer le contenu spécifique, dont on injectera le résultat dans le template principal. Ce travail peut être fait avec un template directement, ou au moyen d'une zone.
 
 Et pour éviter que dans chaque action on définisse à chaque fois le template principal, les élements communs (feuilles de style etc), on créera un objet réponse HTML qui héritera de jResponseHtml.
 
 Pour savoir comment faire, lire [[traitements_communs#personnalisation-de-reponse-commune|la section sur la personnalisation de réponse commune]].
 
 
-
-==== générer sans template ====
+==== Générer sans template ====
 
 Si vous ne voulez pas utiliser de template pour le body, alors il faut laisser la propriété bodyTpl à vide, et utiliser seulement la méthode //addContent()// :
 
@@ -152,7 +161,7 @@ Comme jResponseHtml est dérivé de jReponse, vous pouvez aussi influer sur les 
 </code> 
 
 
-Il y a aussi une autre propriété, propre à jResponseHtml : //xhtmlContentType//. Cette propriété défini si le contenu xHTML doit être envoyé avec une entête HTTP Content-Type spécifique : //application/xhtml+xml//. Bien sûr, une vérification des capacités du navigateur à recevoir du xhtml est faites, et si le navigateur ne peut pas recevoir du xHTML, la réponse sera envoyée avec le Content-Type //text/html// comme pour le HTML classique.
+Il y a aussi une autre propriété, propre à jResponseHtml : //xhtmlContentType//. Cette propriété définit si le contenu xHTML doit être envoyé avec un en-tête HTTP Content-Type spécifique : //application/xhtml+xml//. Bien sûr, une vérification des capacités du navigateur à recevoir du xhtml est faite, et si le navigateur ne peut pas recevoir du xHTML, la réponse sera envoyée avec le Content-Type //text/html// comme pour le HTML classique.
 
 <code php>
 $rep->xhtmlContentType = true ;

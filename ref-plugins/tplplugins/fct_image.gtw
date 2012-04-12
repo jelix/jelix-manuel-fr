@@ -1,18 +1,15 @@
+~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/fct_image~~
 
- Si vous avez besoin d’afficher une image, une balise image suffit amplement.
+
+Si vous avez besoin d’afficher une image, une balise image suffit amplement.
 
 Mais si vous devez afficher la même image à plusieurs reprises, dans des formats différents, avec des effets spéciaux hollywoodiens ou presque, le plugin image et là pour vous. 
 
 
 
+===== Utilisation du plugin dans un template =====
 
-
-
-
-
-====== Utilisation du plugin dans un template =====
-
-Il faut noter que pour les versions 1.0.x le plugin image cherche les images dans le dossier "myapp/www/data/fichiers/".
+Il faut noter que pour la version 1.1+ le plugin image cherche les images dans le dossier "myapp/www/".
 
 Le plugin image est un plugin function.\\
 L'utilisation la plus simple se présente ainsi :
@@ -21,10 +18,13 @@ L'utilisation la plus simple se présente ainsi :
 {{toupie.png|}}
 
 Ceci crée le code html ci-dessous
-  <img src="./data/fichiers/toupie.png" />
+  <img src="./toupie.png" />
 
 
-====== Des attributs ======
+
+
+
+===== Des attributs =====
 
 On peut ajouter une classe :
   {image 'toupie.png', array('class'=>'right cadre')}
@@ -36,7 +36,7 @@ Ainsi qu'un texte alternatif :
   {image 'toupie.png', array('alt'=>'ici l\'image d\'une toupie')}
 
 
-====== les modifications disponibles ======
+===== Les modifications disponibles =====
 
 On peut si l'on veut ajouter des arguments pour modifier l'image d'origine.
   {image 'toupie.png', array('width'=>100)}
@@ -53,15 +53,14 @@ Si gd n'est pas présent sur le serveur, le plugin ajoute la largeur/hauteur a l
   <img src="toupie.png" style="width:100px;height:100px;"/>
 
 
-
-
-===== Changer la taille =====
+==== Changer la taille ====
 
 On peut spécifier la largeur, la hauteur s'adaptera automatiquement, même chose pour la hauteur.
   {image 'toupie.png', array('height'=>50)}
   {image 'toupie.png', array('width'=>100)}
 
 {{toupie_height50.png|}}
+
 
 On peut bien sur utiliser les deux ce qui va déformer l'image.
   {image 'toupie.png', array('width'=>150, 'height'=>50)}
@@ -73,9 +72,18 @@ Pour changer la taille de l'image sans la déformer il suffit de demander.
 
 {{toupie_width150_height50_omo.png|}}
 
+On peut également limiter la taille d'une image en conservant son aspect/ratio, il suffit d'utiliser conjointement les paramètres maxheight et maxwidth.
+  {image 'toupie.png', array('maxwidth'=>100, 'maxheight'=>90,'background'=>'#0000ff')}
+  {image 'logo_1.png', array('maxwidth'=>100, 'maxheight'=>90)}
+  {image 'logo_2.png', array('maxwidth'=>100, 'maxheight'=>90,'background'=>'#ff0000')}
+
+{{toupie_maxwidth100_maxheight90_bg.png|}}
+{{logo1_maxwidth100_maxheight90.png|}}\\
+{{logo2_maxwidth100_maxheight90_bg.png|}}
 
 
-===== Faire un zoom  =====
+
+==== Faire un zoom  ====
 
 Changer la taille de l'image de manière homothétique permet de recadrer l'image.\\
 Une autre façon de recadrer est de faire un zoom.
@@ -88,8 +96,7 @@ Une autre façon de recadrer est de faire un zoom.
 
 
 
-
-===== Alignement et déplacement =====
+==== Aligner et déplacer ====
 
 Une fois que l'on a recadré notre image, on peut la déplacer, pour visualiser la zone de l'image que l'on veut.
 
@@ -106,12 +113,13 @@ en haut,
 
 {{toupie_width100_zoom50_alignh-top.png|}}
 
+
 ou en bas.
   {image 'toupie.png', array('width'=>100, 'zoom'=>60, 'alignh'=>'bottom')}
 
 
 
-===== Changer l'extension et la qualité =====
+==== Changer l'extension et la qualité ====
 
 On peut également changer l'extension pour par exemple transformer un png en jpeg et ainsi alléger l'image.
 
@@ -119,8 +127,7 @@ On peut également changer l'extension pour par exemple transformer un png en jp
 
 {{toupie_width100_jpg.jpg|}}
 
-Le jpeg ne prend pas en charge la transparence, ce qui explique le fond noir.
-/!\ sur un navigateur qui ne prend pas en charge la transparence des png (<=ie6), le fond ne sera pas noir mais blanc.
+Le jpeg ne prend pas en charge la transparence.
 
   {image 'toupie.png', array('width'=>100, 'ext'=>'jpg', 'quality'=>5)}
 
@@ -129,11 +136,7 @@ Le jpeg ne prend pas en charge la transparence, ce qui explique le fond noir.
 C'est léger !
 
 
-
-
-===== Changer la couleur du fond =====
-
-** seulement à partir de la version 1.0.4 **
+==== Changer la couleur du fond ====
 
 On peut donner une couleur de fond aux images en png transparent.
   {image 'toupie.png', array('width'=>100, 'background'=>'#ff5533')}
@@ -147,39 +150,34 @@ Ex: sur cette image convertie en jpeg.
 
 
 
-
-
-
-===== Ajouter une ombre portée =====
-
-** seulement à partir de la version 1.0.4 **
+==== Ajouter une ombre portée ====
 
 On peut très simplement ajouter une ombre portée.
-  {image 'toupie.png', array('width'=>100, 'shadow'=>true))}
+  {image 'toupie.png', array('width'=>100, 'shadow'=>true)}
 
 {{toupie_width100_shadow.png|}}
 
 Une fois l'ombre affichée on peut la déplacer, en modifiant la distance et l'angle.
-  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'soffset'=>20))}
+  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'soffset'=>20)}
 
 {{toupie_width100_shadow_soffset.png|}}
 
-  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sangle'=>0))}
+  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sangle'=>0)}
 
 {{toupie_width100_shadow_sangle.png|}}
 
 On peut modifier la netteté de l'ombre (maximum 11),
-  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sblur'=>0))}
+  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sblur'=>0)}
 
 {{toupie_width100_shadow_sblur.png|}}
 
 l'opacité de l'ombre en %
-  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sopacity'=>100))}
+  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sopacity'=>100)}
 
 {{toupie_width100_shadow_sopacity.png|}}
 
 et même la couleur.
-  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'scolor'=>'#ffff00'))}
+  {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'scolor'=>'#ffff00')}
 
 {{toupie_width100_shadow_scolor.png|}}
 

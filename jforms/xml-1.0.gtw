@@ -1,3 +1,7 @@
+~~LANG:EN@//en/manual-1.1/jforms/xml-1.0~~
+
+
+
 La version 1.0 du format décrit dans cette page est utilisable depuis Jelix 1.0. Dans les betas de Jelix 1.0, il est possible que certains des attributs ou balises n'étaient pas disponibles, mais ces différences ne sont plus documentées.
 
 
@@ -72,13 +76,13 @@ ou
   </input>
 </code>
 
-Dans les formulaires en HTML, un point d'interrogation s'affichera à côté du champ de saisie et le message d'aide s'affichera lors d'un clique sur ce point d'interrogation. 
+Dans les formulaires en HTML, un point d'interrogation s'affichera à côté du champ de saisie et le message d'aide s'affichera lors d'un clic sur ce point d'interrogation. 
 
 Un autre type de message informatif peut être affiché sous forme de tooltip. Il faut pour cela utiliser la balise **<hint>**, qui s'utilise comme la balise **<help>**.
 
 ==== Messages d'erreurs ====
 
-Quand le contenu du champs de saisie est invalide, ou que la saisie est manquante alors qu'elle est requise, jForms affiche des messages d'erreurs prédéfinis. Cependant vous pouvez fournir vous même ces messages au moyen de la balise **<alert>**. Un attribut **type** permet de définir soit le message pour l'erreur d'invalidité, soit le message pour la saisie obligatoire. Et comme les balises précédentes, vous pouvez indiquer le message complet, ou indiquer une locale au moyen de l'attribut locale.
+Quand le contenu du champ de saisie est invalide, ou que la saisie est manquante alors qu'elle est requise, jForms affiche des messages d'erreurs prédéfinis. Cependant vous pouvez fournir vous-mêmes ces messages au moyen de la balise **<alert>**. Un attribut **type** permet de définir soit le message pour l'erreur d'invalidité, soit le message pour la saisie obligatoire. Et comme les balises précédentes, vous pouvez indiquer le message complet, ou indiquer une locale au moyen de l'attribut locale.
 
 <code xml>
   <input ref="datenaissance" type="date">
@@ -106,20 +110,20 @@ Il est possible d'empêcher la modification d'un champ de saisie (c'est toutefoi
 
 ==== Saisie de texte simple ====
 
-Pour afficher un simple champs de saisie, il faut utiliser la balise **<input>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Vous pouvez indiquer aussi cinq attributs supplémentaires : **type**, **defaultvalue**, **size**, **minlength** et **maxlength**.
+Pour afficher un simple champ de saisie, il faut utiliser la balise **<input>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Vous pouvez indiquer aussi cinq attributs supplémentaires : **type**, **defaultvalue**, **size**, **minlength** et **maxlength**.
 
 **defaultvalue** permet d'indiquer une valeur par défaut qui sera affichée quand le formulaire est vide. Vous pouvez mettre la valeur "now" pour les champs de saisies de dates. La valeur par défaut sera alors la date de maintenant.
 
-**size** permet d'indiquer la largeur de la boite de saisie en nombre de caractères.
+**size** permet d'indiquer la largeur de la boîte de saisie en nombre de caractères.
 
-**maxlength** et **minlength** permet d'ajouter une contrainte sur la valeur saisie : la longueur minimale et maximale de la chaine de caractère saisie. Ces deux attributs ne sont utilisables que pour le type="string".
+**maxlength** et **minlength** permet d'ajouter une contrainte sur la valeur saisie : la longueur minimale et maximale de la chaîne de caractères saisie. Ces deux attributs ne sont utilisables que pour le type="string".
 
-**type** permet d'indiquer le format de donnée que l'utilisateur doit respecter. Au moment de l'envoi  du formulaire, il y aura une vérification en javascript du contenu saisie, mais aussi une vérification coté serveur (au cas où le javascript est désactivé notamment) lors de l'appel à la méthode check() sur l'objet formulaire.
+**type** permet d'indiquer le format de données que l'utilisateur doit respecter. Au moment de l'envoi  du formulaire, il y aura une vérification en javascript du contenu saisi, mais aussi une vérification côté serveur (au cas où le javascript est désactivé notamment) lors de l'appel à la méthode check() sur l'objet formulaire.
 
 Voici les valeurs possibles pour l'attribut **type** et ce que doit taper l'utilisateur :
 
   * "string" : chaîne contenant n'importe quel caractère. (c'est le type par défaut)
-  * "boolean" : la valeur du champs doit être obligatoirement "true" ou "false"
+  * "boolean" : la valeur du champ doit être obligatoirement "true" ou "false"
   * "decimal" : un nombre avec ou sans virgule
   * "integer" : un nombre entier
   * "hexadecimal" : un nombre hexadecimal (chiffres de 0 à 9 et lettres de a à f)
@@ -130,7 +134,7 @@ Voici les valeurs possibles pour l'attribut **type** et ce que doit taper l'util
   * "ipv4" : une adresse IP v4
   * "ipv6" : une adresse IP v6
 
-Un exemple de champs de saisie simple :
+Un exemple de champ de saisie simple :
 
 <code xml>
   <input ref="email" type="email">
@@ -143,7 +147,7 @@ Un exemple de champs de saisie simple :
 
 Pour permettre la saisie d'un texte de plusieurs lignes, il faut utiliser la balise **<textarea>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//. Il y a plusieurs attributs spécifiques à cette balise : **defaultvalue**, **rows**, **cols**, **minlength** et **maxlength**.
 
-**defaultvalue** permet d'indiquer une valeur à afficher automatiquement pour un nouveau formulaire, tandis que **rows** et **cols** permettent de fixer la taille du champs de saisie en hauteur et largeur (comme le textarea en HTML).
+**defaultvalue** permet d'indiquer une valeur à afficher automatiquement pour un nouveau formulaire, tandis que **rows** et **cols** permettent de fixer la taille du champ de saisie en hauteur et largeur (comme le textarea en HTML).
 
 Un exemple :
 <code xml>
@@ -190,7 +194,7 @@ Cela génèrera en gros, pour un formulaire html :
 
 ==== Case à cocher seule====
 
-Pour afficher une case à cocher, utiliser la balise **<checkbox>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que l'attribut //readonly// (mais pas //required//).
+Pour afficher une case à cocher, utiliser la balise **<checkbox>**. Vous devez y mettre l'attribut //ref//, et vous pouvez utiliser les balises //<label>//, //<hint>//, //<alert>//, //<help>// ainsi que les attributs //readonly// et //required//.
 
 <code xml>
   <checkbox ref="souvenir">
@@ -231,7 +235,7 @@ Exemple :
   </checkboxes>
 </code>
 
-Ceci affichera une série de trois cases à cocher, ayant pour intitulé "sucre", "steack" et "jus d'orange". Quand le formulaire sera envoyé au serveur, la valeur que vous recevrez pour la variable de formulaire "articles", sera un tableau PHP contenant les valeurs des case qui ont été cochée. Par exemple, si l'utilisateur a coché "steack", coté serveur vous recevrez //array(27)//. Si il a en plus coché "sucre", vous recevrez //array(54, 27)//.
+Ceci affichera une série de trois cases à cocher, ayant pour intitulé "sucre", "steack" et "jus d'orange". Quand le formulaire sera envoyé au serveur, la valeur que vous recevrez pour la variable de formulaire "articles", sera un tableau PHP contenant les valeurs des case qui ont été cochées. Par exemple, si l'utilisateur a coché "steack", coté serveur vous recevrez //array(27)//. S'il a en plus coché "sucre", vous recevrez //array(54, 27)//.
 
 (voir la page sur la [[utilisation|gestion du contenu d'un formulaire coté serveur]])
 
@@ -297,15 +301,13 @@ Pour permettre à l'utilisateur de télécharger un fichier vers le serveur, vou
 
 Deux attributs supplémentaires sont à votre disposition, pour contrôler la nature et la taille des fichiers, qui sont respectivement **mimetype** (devant contenir un ou plusieurs type mime) et **maxsize** (taille en octets).
 
-Attention : sous IE, le type-mime des images .jpg et .jpeg sont considéré comme du Progressive JPEG, soit image/pjpeg. Assurez vous de rajouter ce type-mime en plus du image/jpeg si vous voulez autoriser le format JPEG.
-
 <code xml>
-  <upload ref="photo" mimetype="image/jpeg;image/pjpeg;image/png" maxsize="20000">
+  <upload ref="photo" mimetype="image/jpeg;image/png" maxsize="20000">
     <label>Votre photo</label>
   </upload>
 </code>
 
-À la réception du fichier, jForms vérifie si il correspond au type et à la taille indiqués, et l'on peut ensuite lui indiqué où stocker le fichier téléchargé. La variable de formulaire contiendra le nom du fichier.
+À la réception du fichier, jForms vérifie s'il correspond au type et à la taille indiqués, et l'on peut ensuite lui indiquer où stocker le fichier téléchargé. La variable de formulaire contiendra le nom du fichier.
 
 
 ==== Boutons de validation ====
@@ -329,6 +331,8 @@ La variable de formulaire correspondante ne contiendra rien d'intéressant. À m
 </code>
 
 Dans la variable de formulaire "valider", vous aurez alors la valeur "preview" ou "svg", et vous pourrez agir en fonction de ces valeurs dans le contrôleur. Au niveau du formulaire HTML, cela affichera deux boutons avec leurs libellés respectifs "Prévisualiser" et "Sauvegarder".
+
+A noter : le code généré n'est pas compatible avec IE (voir [[http://jelix.org/forums/read.php?5,1844]]).
 
 ==== Bouton reset ====
 
@@ -359,11 +363,11 @@ Les contrôles tels que **menulist**, **listbox** et **radiobuttons**, **checkbo
 Il y a pour le moment trois façons de faire :
   - indiquer ces choix en dur dans le fichier jForms (données statiques)
   - indiquer un DAO qui permettra de les récupérer.
-  - indiquer une classe qui fournis ces données.  
+  - indiquer une classe qui fournit ces données.  
 
 ==== Données statiques ====
 
-Elles doivent être indiquées au moyen d'une ou plusieurs balises **<item>**. La valeur du choix doit être mis dans un attribut **value**. Le libellé du choix doit être mis en tant que contenu de la balise **<item>**, ou dans un fichier de locale et alors vous indiquez la locale au moyen de l'attribut **locale**. Si aucun label est indiqué, le label sera la valeur. Exemple :
+Elles doivent être indiquées au moyen d'une ou plusieurs balises **<item>**. La valeur du choix doit être mise dans un attribut **value**. Le libellé du choix doit être mis en tant que contenu de la balise **<item>**, ou dans un fichier de locale et alors vous indiquez la locale au moyen de l'attribut **locale**. Si aucun label est indiqué, le label sera la valeur. Exemple :
 
 <code xml>
    <checkboxes ref="objets">
@@ -433,17 +437,18 @@ class listDatas implements jIFormDatasource
 </code>
 
 Et dans le fichier jforms :
-<code xml><code xml>
+<code xml>
   <menulist ref="icone" dsclass="monmodule~listDatas">
         <label locale="elements.crud.label.icone" />
   </menulist>
 </code>
 
+
 ==== Autre source de données ====
 
-Si l'utilisation d'un DAO, d'une classe ou de données statiques n'est pas suffisant pour vous, regardez la section "Définir les choix d'un champs à multiple choix" dans la page [[utilisation|Utilisation de jforms]].
+Si l'utilisation d'un DAO, d'une classe ou de données statiques n'est pas suffisant pour vous, regardez la section "Définir les choix d'un champ à multiple choix" dans la page [[utilisation|Utilisation de jforms]].
 
-Dans ce cas là, vous ne devez pas indiquer de balises <item> ou d'attributs dao*/dsclass.
+Dans ce cas-là, vous ne devez pas indiquer de balises <item> ou d'attributs dao*/dsclass.
 
 ==== Présélection de valeurs ====
 

@@ -1,10 +1,9 @@
+~~LANG:EN@//en/manual-1.1/daos/php_methods~~
+
 
 Les [[methodes_xml|méthodes déclarées en XML]] permettent de créer facilement des méthodes, et peuvent répondre à beaucoup de situations. Néanmoins elles sont tout de même limitées dans la cadre de requêtes complexes. On ne peut pas créer des requêtes complexes.
 
 Une première solution serait de se créer une classe PHP classique, et utiliser jDb pour effectuer les requêtes. Cependant, lorsque les enregistrements sur lesquels on opère correspondent à ce qui a déjà été défini dans un DAO, il est plus logique de pouvoir intégrer une telle méthode dans la factory d'un DAO.
-
-
-
 
 ===== Déclaration d'une méthode en PHP =====
 
@@ -44,15 +43,11 @@ La première façon permet d'avoir un fonctionnement un peu plus performant, et 
 Avec la deuxième façon de réaliser les méthodes PHP, vous aurez besoin de lire les informations sur les tables et les propriétés. Sachez que vous trouverez ces informations dans plusieurs propriétés :
 
    * ''$this->_primaryTable'' : l'alias de la table primaire,
-   * ''$this->_tables'' : une liste d'informations (voir [[http://jelix.org/reference|la documentation de référence]] pour la description détaillée),
-   * ''$this->getProperties()'' pour avoir des informations détaillées sur chaque propriétés d'un record (voir [[http://jelix.org/reference|la documentation de référence]]),
+   * ''$this->_tables'' : une liste d'informations (voir la documentation de référence sur la description détaillée),
+   * ''$this->getProperties()'' pour avoir des informations détaillées sur chaque propriétés d'un record (voir la documentation de référence),
    * ''$this->getPrimaryKeyNames()'' pour avoir la liste des noms des propriétés servant de clés primaires.
 
 Et sur un record que vous aurez préalablement instancié, vous aurez aussi les même méthodes ''getProperties()'' et ''getPrimaryKeyNames()''.
-
-Notes :
-   * Pour les versions 1.0 beta 2.1 et inférieures, ''getPrimaryKeyNames()'' n'existait pas du tout (mais il y avait la propriété ''$_pkFields'' équivalente sur la factory),
-   * Pour les versions 1.0 beta 2.1 et inférieures, ''getProperties()'' n'existait que sur les records.
 
 
 
@@ -132,7 +127,7 @@ C'est un peu le même principe que pour récupérer un ensemble :
     <body><![CDATA[
         $sql = $this->_selectClause.$this->_fromClause.$this->_whereClause;
         $sql .= ($this->_whereClause == ''?' WHERE ':' AND ');
-        $sql .= ' price = '. $this->_prepareValue($label,'string');
+        $sql .= ' label = '. $this->_prepareValue($label,'string');
 
         $rs = $this->_conn->query($sql);
         $rs->setFetchMode(8,$this->_DaoRecordClassName);
@@ -168,7 +163,4 @@ Vous avez par contre une méthode qui peut être utile pour les //UPDATE// et //
 </code>
 
 Même si l'intérêt est limité quand il y a une seule clé primaire, il augmente quand il y en a plusieurs.
-
-Note :
-  * Pour les versions de Jelix 1.0 beta 2.1 et inférieures, vous deviez utiliser ''$this->_pkFields'' au lieu de ''$this->getPrimaryKeyNames()''.
 

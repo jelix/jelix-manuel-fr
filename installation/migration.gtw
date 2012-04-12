@@ -1,0 +1,87 @@
+~~LANG:EN@//en/manual-1.1/installation/migrate~~
+
+Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins ces étapes à faire :
+
+  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet jelix 1.1.
+  * Ne pas oublier de remettre dans le nouveau répertoire @@F@lib/@@ vos éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
+  * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@ 
+  * adapter votre code en suivant les instructions indiquées pour chaque ancienne version de Jelix. Voir ci-dessous.
+
+
+===== Mettre à jour depuis jelix 1.1beta1 =====
+
+  * @@C@jForms@@ : ce que retourne @@M@getModifiedControls()@@ dépend maintenant du moment où vous appelez la nouvelle méthode @@M@initModifiedControlsList()@@. Il faut donc appeler celle-ci après une initialisation du formulaire pour connaître plus tard après un submit les valeurs modifiées.
+  * Amélioration de la méthode @@M@setFetchMode()@@ sur la classe @@C@jDbResultSet@@. Les constantes de classes que l'on donne en paramètres ne sont plus celles de @@C@jDbResultSet@@ mais celles de @@C@jDbConnection@@. Donc il faut utiliser @@jDbConnection::FETCH_CLASS@@ au lieu de @@jDbResultSet::FETCH_CLASS@@
+
+Pour cause de noms mal orthographiés, les propriétés et méthodes suivantes ont été renommées depuis Jelix 1.1beta1 :
+
+  * plugin auth/auth : option @@V@profil@@ -> @@V@profile@@
+  * @@M@jDb::getProfil()@@ -> @@M@jDb::getProfile()@@
+  * @@M@jDb::testProfil()@@ -> @@M@jDb::testProfile()@@
+  * @@M@jAclDb::getProfil()@@ -> @@M@jAclDb::getProfile()@@
+  * @@M@jAcl2Db::getProfil()@@ -> @@M@jAcl2Db::getProfile()@@
+  * @@P@jDbConnection::$profil@@ -> @@P@jDbConnection::$profile@@
+  * @@P@jControllerDaoCrud::$dbProfil@@ -> @@P@jControllerDaoCrud::$dbProfile@@
+
+
+Vous devez donc changer les noms de ces propriétés et méthodes dans le code de vos contrôleurs ou autres classes.
+
+===== Mettre à jour depuis jelix 1.0.x =====
+
+=== Généralités ===
+
+  * La plupart des constantes @@T@JELIX_LIB_*@@ ont été supprimées (inutiles), sauf @@T@JELIX_LIB_PATH@@, @@T@JELIX_LIB_CORE_PATH@@ et @@T@JELIX_LIB_UTILS_PATH@@. Aussi remplacez l'utilisation de ces constantes disparues par l'utilisation de @@T@JELIX_LIB_PATH@@ ou @@T@JELIX_LIB_UTILS_PATH@@.
+  * De même, les constantes @@T@JELIX_PLUGINS_PATH@@ et @@T@JELIX_MODULE_PATH@@ ont été supprimées. Ne les utilisez plus.
+
+=== Réponses personnalisées ===
+
+Dans vos objets réponses personnalisées comme @@F@responses/myHtmlResponse.class.php@@ :
+
+  * renommez la méthode @@M@_commonProcess()@@ en @@M@doAfterActions()@@.
+  * remplacez <php>require_once (JELIX_LIB_RESPONSE_PATH.'jResponseHtml.class.php');</php> par <php>require_once (JELIX_LIB_CORE_PATH.'response/jResponseHtml.class.php');</php>
+
+=== Configuration ===
+
+Dans les fichiers de configurations @@F@defaultconfig.ini.php@@ et autres @@F@config.ini.php@@, renommez la section @@V@[plugins]@@ en @@V@[coordplugins]@@.
+
+=== Formulaires jForms ===
+
+  * Dans les templates, les plugins @@f@{form}@@ et @@f@{formfull}@@ pour afficher un formulaire jForms ont leur liste de paramètres modifiée. Changez les donc en suivant leur documentation.
+  * Dans les fichiers xml : le nom de la balise racine des fichiers est maintenant uniformisé et s'appelle @@E@<form>@@. Renommez donc les balises @@E@<forms>@@ en @@E@<form>@@.
+  * L'api javascript de jforms a été légèrement modifiée : si vous l'utilisez (mais c'est rarement le cas), vous devez adapter vos scripts.
+  * L'api de l'objet @@C@jFormBase@@ a été légèrement modifiée au niveau des méthodes : @@M@setReadOnly()@@
+  * l'id de la balise form HTML générée a changé (#423) ainsi que les noms des ids des contrôles, pour éviter les collisions et les "deviner" plus facilement. Modifiez donc vos CSS ou votre code javascript qui font appel à ces balises.
+
+=== Autres API ===
+
+  * La méthode @@M@jDateTime::durationTo()@@ n'accepte plus un objet @@C@jDateTime@@ en paramètre, mais un objet @@C@jDuration@@.
+  * Amélioration de la méthode @@M@setFetchMode()@@ sur la classe @@C@jDbResultSet@@. Les constantes de classes que l'on donne en paramètres ne sont plus celles de @@C@jDbResultSet@@ mais celles de @@C@jDbConnection@@. Donc il faut utiliser @@jDbConnection::FETCH_CLASS@@ au lieu de @@jDbResultSet::FETCH_CLASS@@
+
+
+Pour cause de noms mal orthographiés, les propriétés et méthodes suivantes ont été renommées :
+  * template plugin formdatasfull renommé en formdatafull
+  * template plugin formdatas renommé en formdata
+  * @@M@jFormsBase::getDatas()@@ -> @@M@getAllData()@@
+  * @@M@jFormsDatasource::getDatas()@@ -> @@M@getData()@@
+  * @@P@jFormsDatasource::$datas@@ -> @@P@$data@@
+  * @@P@jFormsDataContainer::$datas@@ -> @@P@$data@@
+  * @@P@jResponseJson::$datas@@ -> @@P@$data@@
+  * @@P@jResponseRdf::$datas@@ -> @@P@$data@@
+  * @@M@jControllerDaoCrud::_checkDatas()@@ -> @@M@_checkData()@@
+  * plugin auth/auth : @@V@profil@@ -> @@V@profile@@
+  * @@M@jDb::getProfil()@@ -> @@M@jDb::getProfile()@@
+  * @@M@jDb::testProfil()@@ -> @@M@jDb::testProfile()@@
+  * @@M@jAclDb::getProfil()@@ -> @@M@jAclDb::getProfile()@@
+  * @@M@jAcl2Db::getProfil()@@ -> @@M@jAcl2Db::getProfile()@@
+  * @@P@jDbConnection::$profil@@ -> @@P@jDbConnection::$profile@@
+  * @@P@jControllerDaoCrud::$dbProfil@@ -> @@P@jControllerDaoCrud::$dbProfile@@
+
+
+Vous devez donc changer les noms de ces propriétés et méthodes dans le code de vos contrôleurs ou autres classes.
+
+
+===== Mettre à jour depuis jelix 1.0 alpha ou 1.0 beta =====
+
+  * L'ancienne syntaxe des sélecteurs d'actions, avec un "_" au lieu d'un ":" pour séparer le nom du contrôleur du nom de la méthode n'est plus prise en charge : il faut changer vos "vieux" sélecteurs.
+  * Suivez les instructions de migration de [[http://jelix.org/articles/changelog#autres-versions|chaque version 1.0 beta]] et [[http://jelix.org/articles/fr/changelog/1.0|1.0]], et suivez ensuite les instructions ci-dessus.
+

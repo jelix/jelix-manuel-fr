@@ -1,0 +1,45 @@
+~~LANG:EN@//en/manual-1.1/class-utilities/jhttp~~
+
+
+jHttp est une classe permettant de faire des requêtes HTTP vers un site web, et d'en récupérer la réponse. Elle est basée sur la classe netHttp de la bibliothèque clearbriks livrée avec Jelix.
+
+La classe gère les redirections, les cookies, SSL, le user agent string...
+
+Exemple simple d'utilisation
+
+<code php>
+
+   // récupérer simplement une ressource web
+   $pageweb = jHttp::quickGet('http://exemple.local/index.html');
+
+   $data = array('foo'=>'bar');
+   $pageweb = jHttp::quickPost('http://exemple.local/submit.php', $data);
+
+
+   // utilisation plus sophistiquée
+   $http = new jHttp('http://exemple.local');
+   $http->setCookies(array('hello'=>'world'));
+
+   if($http->get('index.html')) {
+      $pageweb = $http->getContent();
+   }
+   else {
+      $status= $http->getStatus();
+      if($status == 404) {
+         // Traitements si la ressource demandée n'existe pas
+      }
+
+   }
+
+   // faire une requête POST
+   $data = array('foo'=>'bar');
+   if($http->post('submit.php', $data)) {
+      $pageweb = $http->getContent();
+   }
+   else {
+      $status= $http->getStatus();
+      if($status == 404) ....
+   }
+</code>
+
+
