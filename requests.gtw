@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/requests~~
+~~LANG:EN@//en/manual-1.2/requests~~
 
 ===== Un objet jRequest pour chaque type de requête =====
 
@@ -59,7 +59,7 @@ Mais dans un contrôleur, vous avez à votre disposition des méthodes "raccourc
 Les autres propriétés de ''request'' qui peuvent être utiles :
 
 | type | Pour connaître le type de la requête |
-| urlScriptPath | Le chemin dans l'URL jusqu'au script |
-| urlScriptName | Le nom du script (le nom du fichier point d'entrée) |
-| urlPathInfo | La partie pathinfo de l'URL |
+| url_script_path | Le chemin dans l'URL jusqu'au script |
+| url_script_name | Le nom du script (le nom du fichier point d'entrée) |
+| url_path_info | La partie pathinfo de l'URL |
 | params        | Les paramètres de la requête |

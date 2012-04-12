@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/cmdline~~
+~~LANG:EN@//en/manual-1.2/cmdline~~
 
 Jelix vous permet de lancer des actions spécialement en ligne de commande. Ceci est très pratique pour effectuer des traitements sur un serveur et les planifier.
 
@@ -16,25 +16,25 @@ Les jelix-scripts vont vous permettre de créer ces éléments facilement.
 
 === À l'aide des jelix-scripts ===
 
-Il se crée au moment de la création de l'application :
+Le point d'entrée se crée lors de la création de l'application avec la commande @@c@createapp@@ ou n'importe quand avec la commande @@c@createentrypoint@@.
 
 <code bash>
 $ php jelix.php createapp -withcmdline
 </code>
 
-Avec cette commande, vous allez créer la structure d'une nouvelle application qui contiendra en plus un répertoire //scripts// contenant alors le point d'entrée cmdline : //cmdline.php//
+Avec cette commande, vous allez créer la structure d'une nouvelle application qui contiendra en plus un répertoire @@F@scripts@@ contenant alors le point d'entrée cmdline : @@F@cmdline.php@@.
 
-Si vous avez déjà créé votre application, vous pouvez aussi utiliser la commande createentrypoint :
+Si vous avez déjà créé votre application, vous pouvez utiliser la commande @@F@createentrypoint@@ :
 
 <code bash>
 $ php jelix.php createentrypoint -type cmdline myscript
 </code>
 
-Cela créera un point d'entrée pour un script en ligne de commande sous le nom myscript.php dans le répertoire //scripts// de l'application.
+Cela créera un point d'entrée pour un script en ligne de commande sous le nom @@F@myscript.php@@ dans le répertoire @@F@scripts/@@ de l'application.
 
 === Manuellement ===
 
-Vous pouvez créer le point d'entrée votre application/scripts/cmdline.php à la main. Voici son contenu :
+Vous pouvez créer le point d'entrée à la main. Il faut créer un fichier @@F@myapp/scripts/cmdline.php@@ (ou un autre nom). Voici son contenu :
 
 <code php>
 <?php
@@ -46,15 +46,23 @@ $config_file = 'cmdline/config.ini.php';
 
 $jelix = new jCmdlineCoordinator($config_file);
 $jelix->process(new jCmdLineRequest());
-
-?>
 </code>
 
 Notez les différences par rapport à un point d'entrée classique :
 
-   * un fichier @@F@application-cli.init.php@@, similaire à @@F@application.init.php@ mais définissant entre autres un répertoire temporaire différent (il peut sinon y avoir des problèmes de droits puisqu'à priori, on lance le script avec un utilisateur système différent de celui utilisé pour le serveur Web)
-   * l'utilisation d'un objet jCmdlineCoordinator au lieu de jCoordinator
-   * l'utilisation d'un objet jCmdLineRequest au lieu de jClassicRequest
+   * un fichier @@F@application-cli.init.php@@, similaire à @@F@application.init.php@@ mais définissant entre autres un répertoire temporaire différent (il peut sinon y avoir des problèmes de droits puisqu'à priori, on lance le script avec un utilisateur système différent de celui utilisé pour le serveur Web)
+   * l'utilisation d'un objet @@C@jCmdlineCoordinator@@ au lieu de @@C@jCoordinator@@
+   * l'utilisation d'un objet @@C@jCmdLineRequest@@ au lieu de @@C@jClassicRequest@@
+   * un fichier de configuration spécifique @@F@myapp/var/config/cmdline/config.ini.php@@
+
+Il faut également déclarer le script dans le fichier @@F@myapp/project.xml@@, au niveau de la balise @@E@entrypoints@@ :
+
+<code xml>
+    <entrypoints>
+        <entry file="index.php" config="index/config.ini.php" />
+        <entry file="cmdline.php" config="cmdline/config.ini.php" type="cmdline"/>
+    </entrypoints>
+</code>
 
 ==== Création d'un contrôleur cmdline ====
 
@@ -65,20 +73,20 @@ Pour pouvoir travailler en mode cmdline, vous allez devoir créer un contrôleur
 Vous pouvez créer votre contrôleur en utilisant les jelix-scripts :
 
 <code bash>
-$ php jelix.php createmodule -cmdline foo  // création du module foo avec un controller cmdline
+# création du module foo avec un controller cmdline
+$ php jelix.php createmodule -cmdline foo  
 </code>
 
 ou
 
 <code bash>
-$ php jelix.php -cmdline foo bar // création du controller bar dans le module foo
+# création du controller bar dans le module foo
+$ php jelix.php createctrl -cmdline foo bar 
 </code>
 
 === Manuellement ===
 
-Pour créer le contrôleur manuellement, celui-ci ne devra pas hériter de //jController// comme habituellement, mais il devra hériter de //jControllerCmdline//.
-
-voici l'exemple du contrôleur //default.cmdline.php// :
+Pour créer le contrôleur manuellement, celui-ci ne devra pas hériter de @@C@jController@@ comme habituellement, mais il devra hériter de @@C@jControllerCmdline@@. Voici l'exemple du contrôleur @@F@default.cmdline.php@@ :
 
 <code php>
 <?php
@@ -98,11 +106,11 @@ class defaultCtrl extends jControllerCmdLine {
 
 ==== Création du fichier de configuration ====
 
-Si vous avez créé l'application avec l'option //-withcmdline// le fichier de configuration aura été généré pour vous.
+Si vous avez créé l'application avec l'option @@-withcmdline@@ le fichier de configuration aura été généré pour vous.
 
-Voici son emplacement : //app/var/config/cmdline/config.ini.php//
+Voici son emplacement : @@F@app/var/config/cmdline/config.ini.php@@
 
-Si le fichier n'existe pas, vous pouvez très simplement le créer à la main en prenant modèle sur le fichier de configuration classic (//app/var/config/index/config.ini.php//)
+Si le fichier n'existe pas, vous pouvez très simplement le créer à la main en prenant modèle sur le fichier de configuration classic (@@F@app/var/config/index/config.ini.php@@)
 
 
 ===== Développement d'actions =====
@@ -113,7 +121,7 @@ Pour lancer vos actions, vous allez certainement vouloir lui passer des paramèt
 
 === Déclaration ===
 
-Pour déclarer les options que l'on pourra passer à l'action en ligne de commande, il faut utiliser la variable de classe $allowed_options qui est un tableau.
+Pour déclarer les options que l'on pourra passer à l'action en ligne de commande, il faut utiliser la variable de classe @@P@$allowed_options@@ qui est un tableau.
 
 <code php>
 protected $allowed_options = array(
@@ -125,7 +133,7 @@ Si le nom de l'option vaut //true// cela signifie qu'une valeur est attendue apr
 
 === Récupération ===
 
-Dans les actions de votre controller cmdline vous allez vouloir récupérer les options passées au script. Pour cela il faut utiliser la méthode //option('-nom_option')//
+Dans les actions de votre controller cmdline vous allez vouloir récupérer les options passées au script. Pour cela il faut utiliser la méthode @@M@option('-nom_option')@@
 
 Exemple :
 <code php>
@@ -151,7 +159,7 @@ Ici si le nom du paramètre vaut //true// c'est qu'il est obligatoire, //false//
 
 === Récupération ===
 
-Dans les actions de votre controller cmdline vous allez vouloir récupérer les paramètres passés au script. Pour cela il faut utiliser la méthode //param('nom_parametre')//
+Dans les actions de votre controller cmdline vous allez vouloir récupérer les paramètres passés au script. Pour cela il faut utiliser la méthode @@M@param('nom_parametre')@@
 
 Exemple :
 <code php>
@@ -177,9 +185,9 @@ Nous allons voir dans la partie suivante comment se servir de ce message d'aide
 
 ===== Utilisation =====
 
-Pour utiliser vos scripts, c'est à dire vos actions de vos contrôleurs cmdline, rendez vous en ligne de commande dans le répertoire //app/scripts//
+Pour utiliser vos scripts, c'est à dire vos actions de vos contrôleurs cmdline, rendez vous en ligne de commande dans le répertoire @@F@myapp/scripts/@@.
 
-Il suffit alors de lancer le script //cmdline.php// suivi de l'action à lancer (en utilisant le sélecteur d'action) et suivi du/des options et du/des paramètres voulu
+Il suffit alors de lancer le script @@F@cmdline.php@@ suivi de l'action à lancer (en utilisant le sélecteur d'action) et suivi du/des options et du/des paramètres voulu
 
 Exemple :
 
@@ -215,3 +223,4 @@ Et pour obtenir l'aide, il y a juste à faire
 <code bash>
 $ php cmdline.php help
 </code>
+

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsetcpdf~~
+~~LANG:EN@//en/manual-1.2/responsetcpdf~~
 
 Un objet @@C@jResponseTcpdf@@ permet de générer un PDF à partir de la [[http://tcpdf.sourceforge.net/|classe TCPDF]] (qui est une version améliorée de la célèbre FPDF).
 

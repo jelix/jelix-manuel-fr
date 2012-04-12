@@ -1,0 +1,42 @@
+~~LANG:EN@//en/manual-1.2/db/tools~~
+
+===== Manipuler les schémas =====
+
+La classe @@C@jDbSchema@@ permet de manipuler la structure d'une base de donnée. Elle possède ainsi des méthodes pour créer une table, récupérer la structure d'une table, etc. Elle s'accompagne des classes @@C@jDbtable@@ et @@C@jDbColumn@@.
+
+Ces classes sont pour le moment assez expérimentales, et tous les drivers ne sont pas supportés.
+
+Vous pouvez récupérer un objet @@C@jDbSchema@@ en appelant la méthode @@M@schema ()@@ d'un objet @@C@jDbConnection@@.
+
+Voir la documentation de réference.
+
+
+===== Exécuter un script SQL =====
+
+Il est possible d'exécuter un script SQL contenant plusieurs requêtes SQL. Il suffit de passer le chemin du fichier du script à la méthode @@M@execSQLScript()@@ d'un objet @@C@jDbTools@@, objet que l'on récupère via la méthode @@M@tools()@@ d'un objet de connection.
+
+<code php>
+  $conn = jDb::getConnection();
+  $conn->tools()->execSQLScript('/chemin/vers/un/script.sql');
+</code>
+
+Pour tenir compte de la possibilité de préfixer les tables via la configuration d'un profil, il est fortement recommander de précéder tout les noms de tables par @@%%PREFIX%%@@, cela sera remplacé par le préfixe de table (si il y en a un), avant l'exécution du script.
+<code sql>
+UPDATE %%PREFIX%%product.....;
+INSERT .....;
+</code>
+
+===== jDbWidget =====
+
+jDbWidget est une classe fournissant des méthodes utiles. 
+
+<code php>
+  $dbw = jDb::getDbWidget(); // au lieu de getConnection()
+
+  $record = $dbw->fetchFirst("SELECT nom, prenom FROM user");
+  
+  $liste = $dbw->fetchAll("SELECT nom, prenom FROM user");
+
+</code>
+
+Pour le reste des méthodes, voyez [[http://jelix.org/reference/|la documentation de référence]].

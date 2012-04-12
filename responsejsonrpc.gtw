@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsejsonrpc~~
+~~LANG:EN@//en/manual-1.2/responsejsonrpc~~
 
 Jelix propose la prise en charge du protocole [[http://json-rpc.org/|json-rpc]]. Ce protocole d'échange est similaire à XML-RPC dans le fonctionnement, mais utilise JSON comme format de donnée au lieu de XML (RPC = Remote Procedure Call).
 
@@ -30,7 +30,7 @@ jsonrpc = "@jsonrpc"
 
 Si vous utilisez [[urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
 <code xml>
-<jsonrpcentrypoint name="jsonrpc" default="true" />
+<entrypoint type="jsonrpc" name="jsonrpc" default="true" />
 </code>
 
 Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action pour jsonrpc comme ceci :

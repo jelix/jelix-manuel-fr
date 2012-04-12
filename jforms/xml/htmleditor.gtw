@@ -1,5 +1,6 @@
+~~LANG:en@//en/manual-1.2/jforms/xml/htmleditor~~
 
-Pour utiliser un éditeur HTML wysywg dans vos formulaires, il faut utiliser la balise @@E@<htmleditor>@@.
+Pour utiliser un éditeur HTML wysywg dans vos formulaire, il faut utiliser la balise @@E@<htmleditor>@@.
 
 <code xml>
   <htmleditor ref="description">
@@ -23,8 +24,9 @@ Les configurations sont déclarées dans la section @@V@[htmleditors]@@ de la co
 default.engine.name = wymeditor
 default.engine.file[] = jelix/jquery/jquery.js
 default.engine.file[] = jelix/wymeditor/jquery.wymeditor.js
-default.config = jelix/wymeditor/config/default.js
+default.config = jelix/js/jforms/htmleditors/wymeditor_default.js
 default.skin.default  = jelix/wymeditor/skins/default/screen.css
+
 </code>
 
 Pour mieux comprendre la structure :
@@ -36,8 +38,8 @@ ccc.config =
 ccc.skin.sss =
 </code>
 
-  * @@V@ccc@@ représente le nom de la configuration
-  * @@V@nnn@@ représente le nom du moteur utilisé
+  * @@V@ccc@@ represente le nom de la configuration
+  * @@V@nnn@@ represente le nom du moteur utilisé
   * @@V@sss@@ représente l'identifiant d'une 'skin'
   * @@V@ccc.engine.file@@ contient  le lien du fichier du moteur 
   * @@V@ccc.config@@ contient le lien de fichier de configuration (voir plus bas)
@@ -55,14 +57,14 @@ Bien sûr, vous pouvez avoir plusieurs configurations :
 default.engine.name = wymeditor
 default.engine.file[] = jelix/jquery/jquery.js
 default.engine.file[] = jelix/wymeditor/jquery.wymeditor.js
-default.config = jelix/wymeditor/config/default.js
+default.config = jelix/js/jforms/htmleditors/wymeditor_default.js
 default.skin.default = jelix/wymeditor/skins/default/screen.css
 default.skin.blue = jelix/wymeditor/skins/default/blue.css
 
 simple.engine.name = wymeditor
 simple.engine.file[] = jelix/jquery/jquery.js
 simple.engine.file[] = jelix/wymeditor/jquery.wymeditor.js
-simple.config = jelix/wymeditor/config/simple.js
+simple.config = js/wymeditor_simple.js
 simple.skin.default = jelix/wymeditor/skins/default/screen.css
 simple.skin.blue = jelix/wymeditor/skins/default/blue.css
 
@@ -95,22 +97,28 @@ Par exemple, on veut créer une nouvelle configuration "full" pour wymeditor. On
 [htmleditors]
 full.engine.name = wymeditor
 full.engine.file[] = jelix/jquery/jquery.js
-
 full.engine.file[] = jelix/wymeditor/jquery.wymeditor.js
 full.config = js/wymeditor_full.js 
 full.skin.default = jelix/wymeditor/skins/default/screen.css
 </code>
 
-La fonction dans ce fichier doit se nommer d'une manière précise : @@f@jelix_eee_ccc()@@, où @@L@eee@@ est l'identifiant de l'éditeur, qui est inscrit dans @@V@*.engine.name@@, et @@L@ccc@@ l'identifiant de la configuration. Donc pour notre exemple, le nom doit être @@f@jelix_wymeditor_full()@@. Cette fonction reçoit en paramètre l'id du textarea qui contient le contenu HTML, et l'id du formulaire.
+La fonction dans ce fichier doit se nommer d'une manière précise : @@f@jelix_eee_ccc()@@, où @@L@eee@@ est l'identifiant de l'éditeur, qui est inscrit dans @@V@*.engine.name@@, et @@L@ccc@@ l'identifiant de la configuration. Donc pour notre exemple, le nom doit être @@f@jelix_wymeditor_full()@@. Cette fonction reçoit en paramètre l'id du textarea qui contient le contenu HTML, l'id du formulaire, le nom de la skin et un objet de configuration (dans la version 1.1 de jelix, cet objet n'existait pas, et seul le code langue était passé directement).
+
+Cet objet de configuration contient les propriétés suivantes
+
+  * @@P@locale@@ : le code de langue (valeur de $gJConfig->locale)
+  * @@P@basePath@@ : le basePath de l'application 
+  * @@P@jqueryPath@@ : le chemin URL vers le répertoire de jquery
+  * @@P@jelixWWWPath@@ : le chemin URL vers le répertoire de jelix-www
 
 Exemple de cette fonction, qui ajoute ici une feuille de style spécifique pour le contenu à éditer (à ne pas confondre avec la skin) :
 
 <code xml>
-function jelix_wymeditor_full(textarea_id, form_id){
+function jelix_wymeditor_full(textarea_id, form_id, skin, config){
    jQuery(function(){
         jQuery("#"+textarea_id).wymeditor({
             updateSelector:    "#"+form_id,
-            updateEvent:       "submit",
+            updateEvent:       "jFormsUpdateFields"
             stylesheet: '/css/stylesEditor.css'
            })
         }
@@ -119,13 +127,41 @@ function jelix_wymeditor_full(textarea_id, form_id){
 
 Notez bien que pour les fonctions de configuration de wymeditor, dans le cadre de Jelix, il faut absolument redéfinir les options @@V@updateSelector@@ et @@V@updateEvent@@, comme indiqué ci-dessus.
 
-Pour plus de renseignements sur la configuration de wymeditor, voir la page relative au projet : [[http://trac.wymeditor.org/trac/wiki/0.4/Customization]]
+Pour plus de renseignements sur la configuration de wymeditor, voir la page relative au projet : [[http://trac.wymeditor.org/trac/wiki/0.5/Customization]]
 
 
 
 ===== Utiliser un autre moteur que wymeditor =====
 
 Déclarer les fichiers javascript à charger dans la configuration de Jelix et un fichier de configuration. Voici des exemples pour des éditeurs connus. Attention aux noms de fichiers des éditeurs en question, ils peuvent être différents.
+
+==== CKEditor 3.x====
+
+Pour utiliser CKEditor, vous avez déjà à disposition des scripts pour un éditeur "full", "default" et "basic", et ils sont déjà déclarés dans la configuration de jelix. Téléchargez CKEditor, décompressez-le dans lib/jelix-www/, et indiquez "ckfull", "ckdefault" ou "ckbasic" dans l'attribut @@A@config@@ de la balise @@E@<htmleditor>@@. Et c'est tout !
+
+Bien sûr, si vous voulez avoir un éditeur personnalisé, voici ce que vous devez faire.
+ 
+Dans le fichier @@F@defaultconfig.ini.php@@ :
+<code ini>
+[htmleditors]
+ckmyconf.engine.name = ckeditor
+ckmyconf.engine.file[] = jelix/ckeditor/ckeditor.js
+ckmyconf.config = js/ckeditor_myconf.js
+</code>
+
+Dans @@F@js/ckeditor_myconf.js@@
+<code js>
+function jelix_ckeditor_ckmyconf(textarea_id, form_id, skin, config) {
+    var conf = {toolbar:[ /* ici votre configuration de toolbar */],
+       /*autrepropriete:valeur,*/
+     };
+    if (skin !='default')
+        conf['skin'] = skin;
+    conf["language"] = config.locale.substr(0,2).toLowerCase();
+    CKEDITOR.replace(textarea_id, conf);
+}
+</code>
+
 
 ==== TinyMCE ====
 
@@ -139,41 +175,3 @@ default.skin.default =  tinymce/skins/default/full.css
 
 
 Dans @@F@js/tinymce_default.js@@, créer une fonction @@f@jelix_tinymce_default()@@ comme indiqué dans la section précédente. Tout les formulaires avec des éléments @@E@<htmleditor>@@ qui ont @@A@config="default"@@ utiliseront cet éditeur.
-
-==== FCKeditor ====
-Pour utiliser FCKeditor, c'est à peu près la même chose.
-Dans le fichier defaultconfig.ini.php :
-<code ini>
-[htmleditors]
-default.engine.name = fckeditor
-default.engine.file = fckeditor/fckeditor.js
-default.config      = js/fckeditor_default.js
-</code>
-
-Dans @@F@js/fckeditor_default.js@@
-<code js>
-function jelix_fckeditor_default(textarea_id, form_id) {
-    var textarea_name = document.getElementById(textarea_id).getAttribute('name');
-    var oFCKeditor = new FCKeditor(textarea_name);
-    oFCKeditor.BasePath = "/fckeditor/";
-    oFCKeditor.ReplaceTextarea();
-}
-</code>
-
-==== CKEditor 3.x====
-Pour utiliser CKEditor : 
-Dans le fichier defaultconfig.ini.php :
-<code ini>
-[htmleditors]
-default.engine.name = ckeditor
-default.engine.file = ckeditor/ckeditor.js
-default.config      = js/ckeditor_default.js
-</code>
-
-Dans @@F@js/ckeditor_default.js@@
-<code js>
-function jelix_ckeditor_default(textarea_id, form_id) {
-    var textarea_name = document.getElementById(textarea_id).getAttribute('name');
-    CKEDITOR.replace(textarea_name);
-}
-</code>

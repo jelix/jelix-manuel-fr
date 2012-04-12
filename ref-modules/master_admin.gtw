@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/ref-modules/master_admin~~
+~~LANG:EN@//en/manual-1.2/ref-modules/master_admin~~
 
 @@master_admin@@ est un module fournissant une interface web dediée à l'administration (backend).
 
@@ -119,9 +119,9 @@ C'est souvent la page de démarrage pour ce genre d'application, qui affiche des
 Chaque module peut afficher des informations sur le tableau de bord.
 Ils doivent écouter l'évènement @@masterAdminGetDashboardWidget@@, et ajouter un ou plusieurs objets @@C@masterAdminDashboardWidget@@ à l'évènement, 
 lesquels déclarent un contenu "widget". 
-Cet objet est très simple, il a deux propriétés: @@P@title@@ and @@P@content@@.
+Cet objet est très simple, il a trois propriétés: @@P@title@@, @@P@content@@ et @@P@order@@
 
-Donc, vous devez fournir un titre et un contenu html pour chaque "information box" que vous souhaitez ajouter au tableau de bord.
+Donc, vous devez fournir un titre et un contenu html pour chaque "information box" que vous souhaitez ajouter au tableau de bord, et l'ordre de tri d'affichage de ce contenu.
 
 <code php>
 class newsdashboardListener extends jEventListener {
@@ -131,6 +131,7 @@ class newsdashboardListener extends jEventListener {
         $box = new masterAdminDashboardWidget();
         $box->title = "Latest news";
         $box->content = jZone::get("adminactu~latest");
+        $box->order = 1;
 
         $event->add($box);
    }

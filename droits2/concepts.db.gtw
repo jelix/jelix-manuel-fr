@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/rights2/concepts.db~~
+~~LANG:EN@//en/manual-1.2/rights2/concepts.db~~
 
 jAcl2.db est le driver "db" pour jAcl2 et se sert d'une base de données pour stocker les droits. Il implémente les concepts généraux de jAcl2, avec en plus une gestion de groupes d'utilisateurs. Aussi les éléments qui entrent en jeu dans le système de droits de jAcl2.db sont :
 

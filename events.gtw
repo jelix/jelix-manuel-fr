@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/events~~
+~~LANG:EN@//en/manual-1.2/events~~
 
 Jelix propose un système de communication inter-module, basé sur le principe d'événements/écouteurs.
 
@@ -71,6 +71,7 @@ class authListener extends jEventListener{
 
 Ce listener répond à l'évènement "AuthCanLogin". La méthode récupère le paramètre 'user' de l'évènement. Et ajoute une donnée dans la réponse avec la méthode @@M@add@@. Ce paramètre et cette donnée de réponse dépendent uniquement de l'évènement AuthCanLogin. Pour d'autres évènements, il peut y avoir plusieurs paramètres ou aucun, d'autres types de données de réponses ou aucune réponse.
 
+Note : vous pouvez changer la façon dont votre listener traite les évènements (nom des méthodes correspondantes aux évènements etc), en redéfinissant la méthode @@M@performEvent()@@.
 
 ==== Déclarer le listener ====
 

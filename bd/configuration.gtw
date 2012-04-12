@@ -1,0 +1,137 @@
+~~LANG:EN@//en/manual-1.2/db/configuration~~
+
+Pour pouvoir accéder à une base de données, il faut d'abord indiquer les paramètres de connexion dans un fichier de configuration. Ce fichier est par défaut @@F@dbprofils.ini.php@@ situé dans @@F@var/config/@@. Vous pouvez en avoir un avec un nom différent, il faut alors indiquer ce nom dans le fichier de configuration principal de votre application.
+
+Vous pouvez définir plusieurs connexions, que l'on nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application.
+
+Voici un exemple de fichier @@F@dbprofils.ini.php@@ :
+
+<code ini>
+
+[default]
+driver="mysql"
+database="jelix"
+host= "localhost"
+user= "jelix"
+password= "jelix"
+persistent= on
+force_encoding=true
+</code>
+
+
+Il y a une section "default". Chaque section correspond à un profil de connexion. Il doit y avoir au moins une section nommé "default", ou un alias nommé "default" (voir plus bas). La section "default" indique le profil à utiliser par défaut. En utilisant un alias, il est possible d'écrire :
+
+
+<code ini>
+default = foo
+
+[foo]
+driver="mysql"
+database="jelix"
+..
+</code>
+
+
+Dans la section, vous voyez un certain nombre de paramètres, dont quelques-un sont utilisables pour tous les drivers :
+
+  * **driver** indique le driver à utiliser. Le nombre et le nom des autres paramètres diffèrent en fonction du driver utilisé. 
+  * **table_prefix** : permet d'indiquer un préfixe de table.\\ Lors de l'utilisation d'un [[//daos|DAO]] avec un profil spécifiant ce paramètre, les tables indiquées dans le DAO sont préfixées **dynamiquement** par cette valeur.\\ Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez préfixer vos tables en fonction du profil utilisé grâce à la méthode @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre le nom de la table à préfixer.
+
+===== Profil mysql =====
+
+Paramètres possibles :
+   * **driver** : doit valoir "mysql"
+   * **database** : le nom de la base de données à utiliser
+   * **host** : le nom du serveur mysql sur lequel se connecter
+   * **user** et **password** : le login/mot de passe pour la connexion
+   * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. En effet, certains serveurs sont configurés par exemple par défaut avec une connexion en iso-8859-1, même si les données stockées sont en utf-8. Mettez à true si vous voyez que vous n'arrivez pas à afficher les données correctement.
+
+
+
+===== Profil postgresql =====
+
+Paramètres possibles :
+
+   * **driver** : doit valoir "pgsql"
+   * **database** : le nom de la base de données à utiliser
+   * **host** : le nom du serveur postgresql sur lequel se connecter. Si vous le mettez à vide, la connexion se fera via une socket unix.
+   * **port** : indique le port de connexion. N'indiquez pas ce paramètre si vous voulez utiliser le port par défaut.
+   * **user** et **password** : le login/mot de passe pour la connexion. Ne mettez pas ces paramètres si vous voulez utiliser le login/mot de passe par défaut (indiqués par exemple dans les variables d'environnement du système).
+   * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql.
+   * **timeout** : Nombre de secondes autorisées pour l'établissement de la connexion au serveur avant de générer un timeout
+   * **single_transaction** : Toutes les requêtes d'une même page seront envoyées au serveur au sein d'un même transaction (entre un BEGIN; et un COMMIT;) (**on**) ou non (**off**). Défaut: **off**
+   * **search_path** : indiquer la liste des schémas dans lequel il faut chercher les tables, si le schéma par défaut pour la connexion ne correspond pas à celui dans lequel l'application va chercher.
+
+===== Profil sqlite =====
+
+Paramètres possibles :
+
+   * **driver** : doit valoir "sqlite"
+   * **database** : le nom du fichier de base de données à utiliser. Vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de lib/ ou du répertoire var de l'application
+   * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
+
+A noter que les fichiers de base de données sqlite doivent être déposés dans le répertoire : var/db/sqlite/ de votre application et qu'à la fois ce répertoire et le fichier de base de données sqlite doivent avoir les droits de lecture/écriture adéquats (ceux du serveur web).
+
+===== Profil pdo =====
+
+Depuis jelix 1.2, il est possible de spécifier d'utiliser PDO pour se connecter sur une base de donnée dans un profil mysql, postgresql, etc. Il faut alors ajouter le paramètre @@usepdo=on@@.
+
+Sinon, on peut toujours configurer le profil comme dans les versions précédentes, avec les paramètres suivants (mais c'est dorénavant une façon de faire **obsolète**):
+
+   * **driver** : doit valoir "pdo"
+   * **dsn** : contient des informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[http://fr.php.net/pdo|doc de pdo sur php.net]]). Pour sqlite, vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de lib/ ou du répertoire var de l'application
+   * **user** et **password** : le login/mot de passe pour la connexion. Ne mettre ces paramètres que si nécessaire.
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
+
+<code ini>
+[bar]
+driver=pdo
+dsn= "mysql:host=localhost;dbname=test"
+user=
+password=
+</code>
+
+===== Alias de profil =====
+
+En dehors des sections, au début du fichier ini, vous pouvez définir des alias de profils. Si un module utilise un nom de profil particulier, il est alors possible d'indiquer que ce nom de profile sera rattaché à un profil existant. C'est le cas par exemple de jAcl2Db. voici un alias 'jacl2_profile':
+
+<code ini>
+jacl2_profile = default
+
+[default]
+driver="mysql"
+database="jelix"
+host= "localhost"
+user= "jelix"
+password= "jelix"
+persistent= on
+force_encoding=true
+</code>
+
+Un alias ne doit pas indiquer le nom d'un autre alias.
+
+===== Profil virtuel =====
+
+jDb offre la possibilité d'utiliser un profil qui n'existe pas dans le fichier @@F@dbprofils.ini.php@@. Cela permet de se connecter à une base de données dont on ne connaît pas les caractéristiques à l'avance.
+
+Pour cela, avant d'appeler les différentes méthodes de jDb, il vous faut déclarer ce profil "virtuel". Vous appellerez donc la méthode @@M@createVirtualProfile@@, à laquelle vous donnerez un nom de profil, ainsi qu'un tableau de paramètres, ces paramètres étant les mêmes que décrits précédemment.
+
+
+<code php>
+   $params = array(
+       'driver'=>'mysql',
+       'host'=>'localhost',
+       'database'=>'jelix',
+       'user'=>'toto',
+       'password'=>'blabla',
+       'persistent'=>false,
+       'force_encoding'=>true
+   );
+   jDb::createVirtualProfile('mon_profil', $params);
+
+   $cnx = jDb::getConnection('mon_profil');
+   // etc., voir la suite
+</code>
+

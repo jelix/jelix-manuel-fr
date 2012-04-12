@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/wiki~~
+~~LANG:EN@//en/manual-1.2/wiki~~
 
 jWiki est une classe permettant de transformer un texte wiki dans un autre format, XHTML par exemple. Cette classe repose sur la classe [[http://wikirenderer.berlios.de|Wikirenderer]] version 3.1.
 

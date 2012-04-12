@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsejson~~
+~~LANG:EN@//en/manual-1.2/responsejson~~
 
 [[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui réutilise des éléments syntaxiques de Javascript. Cela facilite alors grandement l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus utilisé pour la technique AJAX.
 
@@ -17,33 +17,40 @@ L'appel du côté client, se fait de la même façon que la technique AJAX
    // url est une variable qui contient l'url correspondante à l'action ajax
    http.open("post", url, true);
 
-   // handleJSONReturn est une fonction qui traite la réponse 
-   http.onreadystatechange = handleJSONReturn;
+   http.onreadystatechange = function(){
+	if(http.readyState == 4){
+	    // récupération du contenu renvoyé par votre action
+            var json = http.responseText;
+            var value;
+ 
+            // solution la moins propre pour transformer le json en objet JS
+            //value = eval('(' + json + ')');
+ 
+            // solution la plus propre, dans les navigateurs modernes comme Firefox 3.5
+            value = JSON.parse(json);
+ 
+            // ici traitement des données.
+	}
+   };
 
-   // la requête est envoyée
+   // la requête http est envoyée
    http.send(null);
 </code>
 
-Avec jQuery :
+Avec jQuery, c'est plus simple :
 <code javascript>
    $.getJSON( url, function (json) {
       // ici traitement de la réponse
    }
 </code>
 
-Vous recevrez alors côté client, ceci :
+Avec notre exemple, vous recevrez côté client, ceci :
 
 <code javascript>
   "{ nom:'dupont', 'prenom':'jean'}"
 </code>
 
-Lors du traitement du côté client vous pouvez utiliser la méthode suivante :
-<code javascript>
-   var doc = eval('(' + http.responseText + ')');
-   alert(doc.nom + ' ' + doc.prenom);
-</code>
-
-ou, avec jQuery :
+Ce qui peut donner, avec jQuery :
 
 <code javascript>
    $.getJSON( url, function (json) {

@@ -1,12 +1,12 @@
-~~LANG:EN@//en/manual-1.1/jforms/display~~
+~~LANG:EN@//en/manual-1.2/jforms/display~~
 
 
-Pour afficher les données d'un formulaire jforms, vous pouvez appeler la méthode //getAllData()// d'un objet formulaire, et vous obtiendrez un tableau contenant toutes les données. Vous pouvez passer ensuite ce tableau à un template pour afficher votre formulaire HTML avec les données. Vous pouvez aussi récupérer les erreurs avec //getErrors()// et ainsi afficher les éventuelles erreurs.
+Pour afficher les données d'un formulaire jforms, vous pouvez appeler la méthode @@M@getAllData()@@ d'un objet formulaire, et vous obtiendrez un tableau contenant toutes les données. Vous pouvez passer ensuite ce tableau à un template pour afficher votre formulaire HTML avec les données. Vous pouvez aussi récupérer les erreurs avec @@M@getErrors()@@ et ainsi afficher les éventuelles erreurs.
 
 Cependant des plugins de templates vous permettent d'éviter de faire ce travail répétitif, et surtout font bien plus qu'afficher les valeurs :
 
   * affichage de chaque champ de saisie, en accord avec ce qui est décrit dans le fichier XML du formulaire,
-  * affichage des libellés de chaque champ dans des balises <label> pour une meilleure ergonomie/accessibilité,
+  * affichage des libellés de chaque champ dans des balises @@E@<label>@@ pour une meilleure ergonomie/accessibilité,
   * affichage automatique des messages d'erreurs,
   * affichage des messages d'aide,
   * intégration du code javascript qui vérifiera le bon contenu des données saisies avant validation du formulaire,
@@ -16,13 +16,16 @@ Cependant des plugins de templates vous permettent d'éviter de faire ce travail
 
 ===== Affichage sans personnalisation =====
 
-Pour les développeurs pressés, il existe un plugin de template qui affiche tout tout seul : **formfull**. Vous ne pouvez pas contrôler la façon dont sont affichés les champs de saisie, leur libellés et les boutons de validation. La seule chose que vous pouvez personnaliser c'est l'affichage des messages d'erreurs et d'aide (voir plus loin).
+Pour les développeurs pressés, il existe un plugin de template qui affiche tout tout seul : @@formfull@@. Vous ne pouvez pas contrôler la façon dont sont affichés les champs de saisie, leur libellés et les boutons de validation. La seule chose que vous pouvez personnaliser c'est l'affichage des messages d'erreurs et d'aide (voir plus loin).
 
-Vous devez passer à ce plugin, les paramètres suivant :
+Vous devez passer à ce plugin, les paramètres suivant, dans l'ordre :
 
    * l'objet formulaire
    * le sélecteur de l'action où le contenu du formulaire sera envoyé
-   * facultatif : les paramètres de l'url de cette action (autre que les champs de saisie)
+   * facultatif :
+      * un tableau des paramètres de l'url de cette action (autre que les champs de saisie)
+      * le nom du générateur à utiliser (entre autre 'html' ou 'htmllight')
+      * un tableau contenant des options pour le générateur
 
 Voici un exemple dans le contrôleur :
 
@@ -44,17 +47,30 @@ Et dans le template :
 
 Les libellés et les champs de saisies s'affichent dans un tableau, et les boutons de validation dans une div en dessous du tableau.
 
+Note : n'utilisez pas ce plugin dans une boucle avec une variable générée par cette boucle (typiquement dans un foreach). À cause d'une limitation du moteur de template et du plugin, les fichiers JS et CSS pour le formulaire ne seront pas chargés dans ce cas. Ou alors il faut les indiquer vous même avec le plugin meta_html.
+
 ===== Affichage contrôlé =====
 
-D'autres plugins que //formfull// existent permettant de mieux contrôler l'affichage des champs de saisie, en particulier, de pouvoir définir les endroits où les champs seront placés.
+D'autres plugins que @@formfull@@ existent permettant de mieux contrôler l'affichage des champs de saisie, en particulier, de pouvoir définir les endroits où les champs seront placés.
 
-Le premier plugin à connaitre, est le plugin **form**. Il a les même paramètres que //formfull//. C'est un plugin de type bloc, c'est à dire qu'il y a une balise de fin, et qu'entre les deux balises //form//, on placera les autres plugins.
+Le premier plugin à connaitre, est le plugin @@form@@. Il a les même paramètres que @@formfull@@. C'est un plugin de type bloc, c'est à dire qu'il y a une balise de fin, et qu'entre les deux balises @@form@@, on placera les autres plugins.
 
 
+Le plugin @@form@@ a les même paramètres que @@formfull@@, à savoir, dans l'ordre :
+
+   * l'objet formulaire
+   * le sélecteur de l'action où le contenu du formulaire sera envoyé
+   * facultatif :
+      * un tableau des paramètres de l'url de cette action (autre que les champs de saisie)
+      * le nom du générateur à utiliser (entre autre 'html' ou 'htmllight')
+      * un tableau contenant des options pour le générateur
+
+
+Note : n'utilisez pas ce plugin dans une boucle avec une variable générée par cette boucle (typiquement dans un foreach). À cause d'une limitation du moteur de template et du plugin, les fichiers JS et CSS pour le formulaire ne seront pas chargés dans ce cas. Ou alors il faut les indiquer vous même avec le plugin meta_html.
 
 ==== Affichage contrôlé simple ====
 
-Le plugin **formcontrols** permet de faire une boucle sur la liste des champs de saisie. C'est aussi un bloc dans lequel on utilisera les plugins **ctrl_label** et **ctrl_control** pour afficher respectivement le libellé et le champ de saisie. Et on utilise le plugin //formsubmit// pour afficher le bouton de validation déclaré dans le fichier xml, ainsi que //formreset// pour afficher le bouton reset si il est déclaré lui aussi dans le fichier xml.
+Le plugin @@formcontrols@@ permet de faire une boucle sur la liste des champs de saisie. C'est aussi un bloc dans lequel on utilisera les plugins @@ctrl_label@@ et @@ctrl_control@@ pour afficher respectivement le libellé et le champ de saisie. Et on utilise le plugin @@formsubmit@@ pour afficher le bouton de validation déclaré dans le fichier xml, ainsi que @@formreset@@ pour afficher le bouton reset si il est déclaré lui aussi dans le fichier xml.
 
 Exemple :
 
@@ -80,7 +96,7 @@ Notez que les champs seront affichés dans le même ordre que leur déclaration 
 
 Il arrive que l'on ne veuille pas présenter tous les champs de saisie de la même façon. 
 
-Vous pouvez utiliser le plugin //ifctrl// à l'intérieur du bloc //formcontrols//.
+Vous pouvez utiliser le plugin @@ifctrl@@ à l'intérieur du bloc @@formcontrols@@.
 Il suffit de lui indiquer une liste de noms de champs à tester. 
 
 Par exemple, le code ci-dessous ajoute la classe //help-needed// pour les champs 'nom' et 'prenom' et la classe //address// pour le champ adresse. 
@@ -97,7 +113,7 @@ Par exemple, le code ci-dessous ajoute la classe //help-needed// pour les champs
    </fieldset>
 </code>
 
-Vous pouvez aussi indiquer une liste des noms des champs à afficher au plugin //formcontrols//. Par exemple si on souhaite encadrer par un fieldset différents groupes de champs. 
+Vous pouvez aussi indiquer une liste des noms des champs à afficher au plugin @@formcontrols@@. Par exemple si on souhaite encadrer par un @@E@<fieldset>@@ différents groupes de champs. 
 
 <code html>
   {form $formulaire, 'monmodule~default:sauver'}
@@ -121,9 +137,9 @@ Vous pouvez aussi indiquer une liste des noms des champs à afficher au plugin /
   {/form}
 </code>
 
-Dans cet exemple, on affiche une première série de champs de saisie (les champs nom, prenom et adresse). Et une deuxième série dont on ne précise pas la liste de champs : //formcontrols// bouclera alors uniquement sur les champs qui n'ont pas encore été affiché.
+Dans cet exemple, on affiche une première série de champs de saisie (les champs nom, prenom et adresse). Et une deuxième série dont on ne précise pas la liste de champs : @@formcontrols@@ bouclera alors uniquement sur les champs qui n'ont pas encore été affiché.
 
-Vous pouvez aussi utiliser //ctrl_label// et //ctrl_control// en dehors d'une boucle //formcontrols//. Vous devez alors leur indiquer un nom de champs.
+Vous pouvez aussi utiliser @@ctrl_label@@ et @@ctrl_control@@ en dehors d'une boucle @@formcontrols@@. Vous devez alors leur indiquer un nom de champs.
 
 <code html>
   {form $formulaire, 'monmodule~default:sauver'}
@@ -145,10 +161,17 @@ Vous pouvez aussi utiliser //ctrl_label// et //ctrl_control// en dehors d'une bo
 Ici on affiche les champs noms et prenoms à des endroits précis, et le reste sera affiché par le plugin formcontrols qui suit.
 
 
+=== Ajout d'attributs personnalisés ===
+
+Vous pouvez ajouter des attributs HTML sur les elements HTML générés par @@ctrl_control@@. Pour ce faire, ajouter un deuxième paramètre à @@ctrl_control@@. Cela doit être un tableau @@('nom attribut'=>'valeur attribute')@@. Donnez @@L@""@@ comme premier paramètre quand @@ctrl_control@@ est utilisé à l'intérieur d'une boucle  @@formcontrols@@
+
+Note : pour les générateurs autre que HTML, ce tableau  d'attribut peut être d'autres options.
+
+
 
 ==== Contrôle de l'affichage des champs de type password ====
 
-Pour les champs de saisie de mot de passe pour lesquels il y a un champ de confirmation (balise confirm), si vous indiquez explicitement leur affichage, il faut aussi indiquer spécifiquement l'affichage du champ de confirmation, sachant que celui-ci a le nom du champ de saisie principale avec un suffixe **_confirm**.
+Pour les champs de saisie de mot de passe pour lesquels il y a un champ de confirmation (balise @@E@<confirm>@@), si vous indiquez explicitement leur affichage, il faut aussi indiquer spécifiquement l'affichage du champ de confirmation, sachant que celui-ci a le nom du champ de saisie principale avec un suffixe **_confirm**.
 
 Par exemple, vous indiquez explicitement d'afficher le champ "motdepasse" qui est un mot de passe :
 
@@ -179,12 +202,12 @@ Ici, si le champ de confirmation ne s'affiche pas près du champ de mot de passe
    </table>
 </code>
 
-Par contre, il n'est pas besoin de préciser le champ de confirmation quand on afficher le champ de saisie de mot de passe dans une boucle //formcontrols//.
+Par contre, il n'est pas besoin de préciser le champ de confirmation quand on afficher le champ de saisie de mot de passe dans une boucle @@formcontrols@@.
 
 
 ==== Contrôle de l'affichage des boutons d'envoi ====
 
-On a vu que l'on pouvait utiliser le plugin //formsubmit// pour afficher le bouton d'envoi déclaré dans votre formulaire. Mais utilisé comme cela, si vous avez déclaré plusieurs balises submit, seul le premier bouton sera affiché. Dans ce cas là il faut utiliser le plugin **formsubmits** (avec un s), qui est une boucle sur les boutons d'envoi :
+On a vu que l'on pouvait utiliser le plugin @@formsubmit@@ pour afficher le bouton d'envoi déclaré dans votre formulaire. Mais utilisé comme cela, si vous avez déclaré plusieurs balises @@E@<submit>@@, seul le premier bouton sera affiché. Dans ce cas là il faut utiliser le plugin @@formsubmits@@ (avec un s), qui est une boucle sur les boutons d'envoi :
 
 <code html>
     <ul>
@@ -194,17 +217,17 @@ On a vu que l'on pouvait utiliser le plugin //formsubmit// pour afficher le bout
     </ul>
 </code>
 
-Ou encore, vous pouvez utiliser plusieurs plugins //formsubmit//, sans //formsubmits//, en indiquant le nom du bouton :
+Ou encore, vous pouvez utiliser plusieurs plugins @@formsubmit@@, sans @@formsubmits@@, en indiquant le nom du bouton :
 
 <code html>
 <div> {formsubmit 'preview'} {formsubmit 'save'} </div>
 </code>
 
-**Attention** : //{formsubmits}// boucle sur la liste des contrôles submit, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://dev.jelix.org/ticket/429|ticket #429]])
+**Attention** : @@{formsubmits}@@ boucle sur la liste des contrôles @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://dev.jelix.org/ticket/429|ticket #429]])
 
 ===== Choisir un générateur =====
 
-Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis avec Jelix 1.1 : "html" et "htmllight". [[//plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas, par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
+Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis avec Jelix 1.2 : "html" et "htmllight". [[//plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas. Par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
 
 Le générateur par défaut de Jelix est 'html'. Il est spécifié par la variable //defaultJformsBuilder// du fichier de configuration. 
 
@@ -215,15 +238,15 @@ defaultJformsBuilder = myformbuilder
 </code>
 
 
-Ponctuellement, vous pouvez aussi indiquer le générateur de votre choix en passant son nom aux plugins de template {form} ou {formfull} (4ième paramètre) :
+Ponctuellement, vous pouvez aussi indiquer le générateur de votre choix en passant son nom aux plugins de template @@{form}@@ ou @@{formfull}@@ (4ième paramètre) :
 
 <code html>
   {formfull $formulaire, 'monmodule~default:sauver', array(), 'htmllight'}
 </code>
 
-Note 1: Ces plugins acceptent un cinquième paramètre, un tableau, contenant des options pour le générateur. Ces options dépendent du générateur utilisé (//errorDecorator// et //helpDecorator// par exemple pour 'html' et htmllight').  
+Comme indiqué plus haut, ces plugins acceptent un cinquième paramètre, un tableau, contenant des options pour le générateur. Ces options dépendent du générateur utilisé (//errorDecorator// et //method// par exemple pour 'html' et htmllight').  
 
-Note 2: Si vous souhaitez passer la même option dans tous vos formulaires, créez le générateur de votre choix en dérivant un générateur existant et affectez-lui directement ces options dans son code...
+Remarque : si vous souhaitez passer la même option dans tous vos formulaires, créez le générateur de votre choix en dérivant un générateur existant et affectez-lui directement ces options dans son code...
 
 
 Pour en savoir plus sur chaque générateur :

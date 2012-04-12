@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsehtml~~
+~~LANG:EN@//en/manual-1.2/responsehtml~~
 
 Pour récupérer une réponse xhtml/html, vous indiquez l'alias "html" à la méthode @@M@getResponse()@@. Vous récupérez ainsi la réponse comme ceci :
 
@@ -24,19 +24,19 @@ Vous pouvez aussi changer le doctype si vous le souhaitez, en surchargeant la m�
 
 ===== Génération du contenu =====
 
-L'objet jResponseHtml implémente des méthodes et propriétés pour manipuler le contenu (X)HTML.
+L'objet @@C@jResponseHtml@@ implémente des méthodes et propriétés pour manipuler le contenu (X)HTML.
 
-Le source HTML d'une page est découpé en deux parties : la partie <head>, et la partie <body> :
+Le source HTML d'une page est découpé en deux parties : la partie @@E@<head>@@, et la partie @@E@<body>@@ :
 
 {{jresponsehtml_step1.png|}}
 
-jResponseHTML s'occupe de générer le contenu de la balise <head>, à partir des informations données au travers de ses méthodes. Par contre la génération du contenu de la partie <body> est de votre ressort, avec l'aide éventuellement d'un template. Voyons tout ça en détails.
+jResponseHTML s'occupe de générer le contenu de la balise @@E@<head>@@, à partir des informations données au travers de ses méthodes. Par contre la génération du contenu de la partie @@E@<body>@@ est de votre ressort, avec l'aide éventuellement d'un template. Voyons tout ça en détails.
 
 
 
 ===== Modification de l'entête HTML =====
 
-Pour modifier le contenu de la balise <head>, vous avez plusieurs méthodes et propriétés. Vous pouvez ainsi modifier le titre du document, le "favicon", les urls des feuilles de styles et des scripts javascripts à lier au document, du CSS ou du javascript à inclure directement dans le <head>, ou encore les mots clés associés, la description de la page, et autres metas. Voyons un exemple qui montre l'ensemble de ces possibilités :
+Pour modifier le contenu de la balise @@E@<head>@@, vous avez plusieurs méthodes et propriétés. Vous pouvez ainsi modifier le titre du document, le "favicon", les urls des feuilles de styles et des scripts javascripts à lier au document, du CSS ou du javascript à inclure directement dans le @@E@<head>@@, ou encore les mots clés associés, la description de la page, et autres metas. Voyons un exemple qui montre l'ensemble de ces possibilités :
 
 
 <code php>
@@ -60,9 +60,15 @@ $rep->addMetaDescription('description');
 // ajoute une balise meta pour les mots clés
 $rep->addMetaKeywords('motclé motclé motclé');
 
+// Ajoute un auteur
+$resp->addMetaAuthor('Laurent');
+
+// modifie le nom du generateur
+$resp->addMetaGenerator('My Super App 1.0');
+
 </code>
 
-Notez que pour la méthode //addCSSLink// et //addJSLink//, vous pouvez indiquer un paramètre supplémentaire qui doit être un tableau associatif, décrivant les attributs supplémentaires à mettre.
+Notez que pour les méthodes @@M@addCSSLink@@ et @@M@addJSLink@@, vous pouvez indiquer un paramètre supplémentaire qui doit être un tableau associatif, décrivant les attributs supplémentaires à mettre.
 
 <code php>
 $rep->addCSSLink('maFeuille.css', 
@@ -71,20 +77,53 @@ $rep->addCSSLink('maFeuille.css',
                         'media'=>'all'));
 </code>
 
-Si vous voulez injecter du contenu spécifique dans la balise <head>, vous pouvez le faire via la méthode //addHeadContent();//
+Si vous voulez injecter du contenu spécifique dans la balise @@E@<head>@@, vous pouvez le faire via la méthode @@M@addHeadContent()@@/
 
 <code php>
-$rep->addHeadContent('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="/feed.php" />');
+$rep->addHeadContent('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="/feed.php" />')
 </code>
 
-Si à un moment ou à un autre, vous voulez annuler les modifications faites dans le head (par exemple, vous êtes dans une zone qui est appelée par un module tiers que vous ne voulez pas/pouvez pas modifier), vous pouvez appeler la méthode //clearHtmlHeader()//. Cette fonction vous permet d'effacer une partie du header de votre document html, en indiquant quoi effacer : 'CSSLink', 'Styles', 'JSLink', 'JSCode' et/ou 'Others'.
+Si à un moment ou à un autre, vous voulez annuler les modifications faites dans le head (par exemple, vous êtes dans une zone qui est appelée par un module tiers que vous ne voulez pas/pouvez pas modifier), vous pouvez appeler la méthode @@M@clearHtmlHeader()@@. Cette fonction vous permet d'effacer une partie du header de votre document html, en indiquant quoi effacer : 'CSSLink', 'Styles', 'JSLink', 'JSCode' et/ou 'Others'.
 
 <code php>
 $rep->clearHtmlHeader(array('CSSLink', 'Styles'));
 </code>
 
-Cela effacera les liens CSS (addCSSLink) et les balises <style> (//addStyle//).
+Cela effacera les liens CSS (@@M@addCSSLink@@) et les balises @@E@<style>@@ (@@M@addStyle@@).
 
+
+==== Compression des fichiers css et javascript ====
+
+Vous pouvez indiquer de compresser et concaténer automatiquement les fichiers CSS et javascript, en modifiant des paramètres dans la configuration. jResponseHtml utilise [[http://code.google.com/p/minify/|Minify]].
+
+<code ini>
+[jResponseHtml]
+
+;concatene et compress les fichier CSS
+minifyCSS = off
+
+;concatene et compress les fichier JS
+minifyJS = off
+
+; check all filemtime() of original js files to check if minify's cache should be generated again.
+; Should be set to "off" on production servers (i.e. manual empty cache needed when a file is changed) :
+minifyCheckCacheFiletime = on
+
+; liste des fichiers CSS qui ne doivent pas être compressé
+minifyExcludeCSS = "file1.css,file2.css"
+; liste des fichiers JS qui ne doivent pas être compressé
+minifyExcludeJS = "jquery.wymeditor.js"
+
+; add a unique ID to CSS and/or JS files URLs ( this gives for exemple /file.js?1267704635 ). This ID is actually the filemtime of each served file :
+jsUniqueUrlId = off
+cssUniqueUrlId = off
+</code>
+
+Tout d'abord, vous devez activer la compression en mettant @@minifyCSS@@ et/ou @@minifyJS@@ à "on". Vous pouvez indiquer de ne pas compresser certains fichiers en les listant dans @@minifyExcludeCSS@@ et/ou @@minifyExcludeJS@@.
+
+Gardez "jquery.wymeditor.js" dans @@minifyExcludeJS@@, car Wymeditor n'aime pas être concaténé avec d'autres fichiers js.
+
+Il faudra de plus créer le dossier @@F@www/cache/minify@@ et donner à Jelix les droits dessus.
 
 ===== Générer le contenu de la page HTML =====
 
@@ -103,8 +142,8 @@ Pour générer le contenu même de la balise body, vous avez deux choix : soit u
 
 Pour utiliser un template, jResponseHtml propose deux propriétés :
 
-   * //bodyTpl//, qui doit contenir le  sélecteur du template à utiliser
-   * //body// qui contient un objet jTpl permettant de "paramétrer" le template.
+   * @@P@bodyTpl@@, qui doit contenir le  sélecteur du template à utiliser
+   * @@P@body@@ qui contient un objet jTpl permettant de "paramétrer" le template.
 
 Exemple :
 
@@ -114,11 +153,11 @@ $rep->bodyTpl = 'myapp~main';
 $rep->body->assign('person','Laurent');
 </code>
 
-Le contenu généré par le moteur de template sera intégré entre les balises <body> et </body>.
+Le contenu généré par le moteur de template sera intégré entre les balises @@E@<body>@@ et @@E@</body>@@.
 
 Pour en savoir plus sur l'utilisation des templates, consultez le [[templates|chapitre sur les templates]].
 
-Il se peut que vous ayez besoin d'ajouter du contenu en plus de celui produit par le template. Pour cela vous utiliserez la méthode addContent(). Elle prend en paramètre une chaîne pour le contenu, et un booléen (facultatif) pour indiquer si on veut que le contenu soit ajouté avant (true) ou après (false, valeur par défaut) le contenu du template.
+Il se peut que vous ayez besoin d'ajouter du contenu en plus de celui produit par le template. Pour cela vous utiliserez la méthode @@M@addContent()@@. Elle prend en paramètre une chaîne pour le contenu, et un booléen (facultatif) pour indiquer si on veut que le contenu soit ajouté avant (true) ou après (false, valeur par défaut) le contenu du template.
 
 <code php>
 $rep->addContent('Mon contenu HTML après le template');
@@ -143,7 +182,7 @@ Pour savoir comment faire, lire [[traitements_communs#personnalisation-de-repons
 
 ==== Générer sans template ====
 
-Si vous ne voulez pas utiliser de template pour le body, alors il faut laisser la propriété bodyTpl à vide, et utiliser seulement la méthode //addContent()// :
+Si vous ne voulez pas utiliser de template pour le body, alors il faut laisser la propriété @@P@$bodyTpl@@ à vide, et utiliser seulement la méthode @@M@addContent()@@ :
 
 <code php>
 $rep->addContent('contenu pour mon body');
@@ -151,9 +190,9 @@ $rep->addContent('contenu pour mon body');
 
 
 
-===== Autres paramètres de la réponses =====
+===== Autres paramètres de la réponse =====
 
-Comme jResponseHtml est dérivé de jReponse, vous pouvez aussi influer sur les entêtes HTTP : le code "status" et ajouter d'autres en-têtes.
+Comme @@C@jResponseHtml@@ est dérivé de @@C@jResponse@@, vous pouvez aussi influer sur les entêtes HTTP : le code "status" et ajouter d'autres en-têtes.
 
 <code php>
  $rep->setHttpStatus  ("404", "Not Found");
@@ -161,7 +200,7 @@ Comme jResponseHtml est dérivé de jReponse, vous pouvez aussi influer sur les 
 </code> 
 
 
-Il y a aussi une autre propriété, propre à jResponseHtml : //xhtmlContentType//. Cette propriété définit si le contenu xHTML doit être envoyé avec un en-tête HTTP Content-Type spécifique : //application/xhtml+xml//. Bien sûr, une vérification des capacités du navigateur à recevoir du xhtml est faite, et si le navigateur ne peut pas recevoir du xHTML, la réponse sera envoyée avec le Content-Type //text/html// comme pour le HTML classique.
+Il y a aussi une autre propriété, propre à @@C@jResponseHtml@@ : @@P@$xhtmlContentType@@. Cette propriété définit si le contenu xHTML doit être envoyé avec un en-tête HTTP Content-Type spécifique : @@application/xhtml+xml@@. Bien sûr, une vérification des capacités du navigateur à recevoir du xhtml est faite, et si le navigateur ne peut pas recevoir du xHTML, la réponse sera envoyée avec le Content-Type @@text/html@@ comme pour le HTML classique.
 
 <code php>
 $rep->xhtmlContentType = true ;

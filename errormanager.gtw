@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/errormanager~~
+~~LANG:EN@//en/manual-1.2/errormanager~~
 
 Les classes du framework peuvent générer des erreurs de deux façons différentes par : 
   * un trigger_error (erreur PHP)
@@ -20,7 +20,7 @@ Les gestionnaires d'erreurs sont chargés d'effectuer les actions indiquées dan
 | SYSLOG | le message est envoyé dans le log système |
 | MAIL | le message est envoyé par mail à l'adresse indiquée dans l'option **email** |
 | EXIT | l'exécution s'arrête ici (EXIT est implicite pour les exceptions) |
-| TRACE | inclus la pile d'execution dans le message (mais uniquement dans les messages des fichiers de log)|
+| TRACE | inclus la pile d'execution dans le message |
 | ECHOQUIET | n'affiche pas le detail du message, affiche juste le contenu de l'option **quietMessage** |
 
 L'option **messageLogFormat** indique le formatage du message d'erreur pour son stockage dans le fichier de log, syslog ou le mail. Le formatage supporte //%date%//, //%ip%//, //%typeerror%//, //%code%//, //%msg%//, //%url%//, //%file%//, //%line%//, //\t// et //\n//.

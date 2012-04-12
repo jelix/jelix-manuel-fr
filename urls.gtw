@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/urls~~
+~~LANG:EN@//en/manual-1.2/urls~~
 
 
 
@@ -8,6 +8,7 @@ Pour cette tâche jUrl se repose sur un moteur d'URL. Il y en a trois fournis da
    * un moteur d'URL simples
    * un moteur d'URL significatives basique (utilisé par défaut)
    * un moteur d'URL significatives
+
 
 Sachez que vous pouvez [[plugins/urls_engine|créer votre propre moteur d'URLs]] pour des besoins plus spécifiques.
 
@@ -26,7 +27,7 @@ Une URL est composée de différentes parties :
 Les moteurs d'URLs analysent le pathinfo et les paramètres pour déterminer le module/action
 
 
-Note : il peut y avoir certaines options à activer dans apache. Voir la page [[installation]]
+Note : il peut y avoir certaines options à activer dans apache. Voir la page [[http://jelix.org/articles/fr/manuel-1.2/installation]]
 
 
 ===== Configuration générale =====
@@ -76,11 +77,11 @@ L'action à effectuer quand une URL ne correspond à rien. Indiquez-la sous form
 Attention ! Quand vous êtes en développement, il est recommandé de ne rien mettre dans ce paramètre. Ainsi ce sera plus facile à déboguer car en cas d'appel d'une module/action inconnue vous aurez un message d'erreur de la part de Jelix qui sera plus explicite qu'une simple page 404.
 
 
-===== Configuration des moteur d'URL =====
+===== Configuration des moteur d'URLs =====
 
-En standard Jelix fournis trois moteurs d'URL :
+En standard Jelix fournis trois moteurs d'URLs :
 
-  * Le moteur "simple", qui est performant mais qui ne permet pas d'avoir des URL "cools"
+  * Le moteur "simple", qui est performant mais qui ne permet pas d'avoir des URLs "cools"
   * Le moteur "basic_significant", qui permet d'avoir des urls un peu plus propre, et qui reprennent automatiquement le module et l'action : "index.php/module/controleur/method?param=1..."
   * Le moteur "significant", qui permet d'associer **n'importe quelle URL** à chacune de vos actions, bien qu'il soit un peu moins performant et qu'il soit un peu plus compliqué à configurer.
 
@@ -124,3 +125,5 @@ Le résultat avec le moteur d'URL simple sera alors :
 <code html>
   <p><a href="index.php?module=news&amp;action=view&amp;id_news=54">Détails de la news</a></p>
 </code>
+
+Vous pouvez utiliser @@{jfullurl}@@ au lieu de @@{jurl}@@ pour avoir une url complète avec le nom de domaine (utile par exemple dans les templates de mail).

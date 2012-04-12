@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/locales~~
+~~LANG:EN@//en/manual-1.2/locales~~
 
 Jelix possède son propre mécanisme de localisation/internationalisation. Les fonctions setlocale et gettext de php ne sont pas utilisées car trop contraignantes à mettre en place, et leur configuration est aléatoire sur les serveurs.
 
@@ -82,9 +82,18 @@ foo= \w
 
 == Entités HTML ==
 
-Les chaînes localisées ne devraient pas contenir du code HTML. D'une part parce qu'une chaîne localisée n'est pas forcément destinée à être incluse dans du HTML, mais aussi parce que les réponses HTML échappent (htmlspecialchars) à plusieurs endroits le contenu que vous lui donnez. De ce fait, les entités et autres signes HTML seront échappés si vous donnez par exemple une chaîne pour en faire le titre d'une page. Les entités ne seront donc pas interprétées comme telles par le navigateur.
+Les chaînes localisées ne devraient pas contenir du code HTML. D'une part parce qu'une chaîne localisée n'est pas forcément destinée à être incluse dans du HTML, mais aussi parce que les réponses HTML échappent (htmlspecialchars) à plusieurs endroits le contenu que vous lui donnez. 
+De ce fait, les entités et autres signes HTML seront échappés si vous donnez par exemple une chaîne pour en faire le titre d'une page. Les entités ne seront donc pas interprétées comme telles par le navigateur.
 
 Si vous avez besoin d'utiliser des caractères spécifiques, choisissez l'encodage adéquat plutôt que de recourir aux entités HTML. C'est pour cette raison qu'il est fortement encouragé d'utiliser l'encodage UTF-8, qui est d'ailleurs en passe d'être l'encodage "universel" dans les applications web (en plus d'Unicode/UTF-16).
+
+Malgré tout si vous souhaitez absolument mettre du html dans une chaîne localisée qui doit être utilisée dans un template, la possibilité est de mettre ".html" au bout de la chaîne comme suit :
+
+<code ini>
+mon.beau.titre.de.paragraphe.html = <strong>Mon Titre de paragraphe</strong>
+</code>
+
+Dans le template, il faut récupérer cette chaine localisée uniquement avec @@{jlocale}@@, qui n'échappera donc pas le contenu si le nom de la locale se termine par ".html". 
 
 ===== Récupération d'une chaîne localisée =====
 

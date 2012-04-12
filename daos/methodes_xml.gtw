@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/daos/xml_methods~~
+~~LANG:EN@//en/manual-1.2/daos/xml_methods~~
 
 Une factory générée par jDao contient par défaut un certain nombre de méthodes  (find, findAll, get, insert, etc...) comme décrit sur la page sur [[utilisation|l'utilisation des daos]]. Cependant, elles ne sont pas forcément suffisantes, et l'on a souvent besoin de faire des sélections, des mises à jour ou des suppressions particulières. 
 
@@ -52,7 +52,7 @@ On peut ajouter un attribut distinct pour récupérer seulement les éléments d
    ..
 </code>
 
-On peut aussi ajouter un attribut groupby pour ajouter une clause GROUP BY.
+On peut aussi ajouter un attribut groupby pour ajouter une clause GROUP BY. (à n'utiliser qu'avec mysql, le code généré par jDao n'est pas vraiment compatible avec d'autres bases de données).
 <code xml>
   <method type="select" name="findThem" groupby="foo"> 
    ..
@@ -112,7 +112,9 @@ Ainsi, pour chaque méthode XML ajoutée dans le DAO, une méthode est généré
   </method>
 </code>
 
-ce type de méthode est équivalent à un SELECT COUNT(*), avec les conditions indiquées. Si on indique une propriété sur laquelle il faut faire un distinct, via l'attribut distinct comme pour type="select", alors il sera fait un SELECT COUNT(DISTINCT le_champ_correspondant).
+ce type de méthode est équivalent à un @@SELECT COUNT(*)@@, avec les conditions indiquées. 
+
+Si on veut plutôt faire un @@SELECT COUNT(DISTINCT un_champs)@@, il faut indiquer le nom de la propriété dans l'attribut @@A@distinct@@.
 
 ===== Méthode de type delete =====
 

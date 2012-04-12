@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/templates~~
+~~LANG:EN@//en/manual-1.2/templates~~
 
 Jelix inclut son propre moteur de template jTpl. Les templates sont des fichiers portant l'extension ".tpl" et se trouvant dans le répertoire @@F@templates@@ des modules.
 
@@ -195,6 +195,7 @@ Pour apporter une certaine facilité, des variables de templates prédéfinies o
    * @@V@$j_themepath@@ : contient le chemin url vers le répertoire du thème courant
    * @@V@$j_datenow@@ : date courante (aaaa-mm-jj)
    * @@V@$j_timenow@@ : heure courante (hh:mm:ss)
+   * @@V@$j_locale@@ : code de la langue courante (valeur de @@$gJConfig->locale@@)
 
 
 ==== Modificateurs ====
@@ -278,6 +279,18 @@ Boucle sur un iterateur ou un tableau:
 
 L'expression est bien sûr semblable à celle du "for" en PHP.
 
+=== break ===
+
+Vous pouvez avoir l'équivalent d'un @@break@@ dans une boucle, en utilisant @@{break}@@ :
+
+<code>
+  {while condition}
+    ...
+     {if ...}  {break} {/if}
+    ....
+  {/while}
+</code>
+
 ==== Fonctions jTpl ====
 
 Ce sont des fonctions classiques mais appelables uniquement dans un template. Certaines sont disponibles en standard et vous pouvez en réaliser en créant un plugin de template. Leur syntaxe est :
@@ -341,6 +354,22 @@ Dans un template, nous avons vu que nous pouvons utiliser {@truc.foo@} pour incl
 Une solution existe : créer des templates pour chaque langue. Bien sûr, cela fait de la duplication de code, aussi, à vous de peser le pour et le contre : maintenance versus performance.
 
 Pour faire un template pour chaque langue, créer des sous-repertoires dans le repertoire de templates, et qui ont pour nom le code de la langue. Exemple, dans un module: @@F@templates/fr_FR@@,  @@F@templates/en_EN@@ etc.. Et placez y dans chacun d'eux un exemplaire de votre template traduit.
+
+
+===== Inclusion de templates dans un template =====
+
+Il y a des cas où vous voudriez partager du contenu de template entre plusieurs templates. Pour ce faire, vous créerez un template contenant ce code commun, et utiliserez la balise @@{include}@@. Vous devez lui donner le selecteur du template à inclure en paramètre.
+
+<code>
+ <div>
+   ...
+   {include 'mymodule~sharedcontent'}
+ </div>
+</code>
+
+Toutes les variables déclarées dans l'objet @@C@jTpl@@ seront accessibles dans le template inclus.
+
+Avant d'utiliser la balise @@{include}@@, vérifiez que l'utilisation d'une [[zones|zone]] n'est pas mieux, car ça l'est dans beaucoup de cas.
 
 
 ===== Redéfinition de template =====

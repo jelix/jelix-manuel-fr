@@ -1,28 +1,93 @@
-~~LANG:EN@//en/manual-1.1/jelix-scripts~~
-
-===== Lancer jelix.php =====
+~~LANG:EN@//en/manual-1.2/jelix-scripts~~
 
 Jelix est fourni avec un script, @@F@lib/jelix-scripts/jelix.php@@, qui permet de créer et modifier facilement des éléments d'un projet jelix, ou de réaliser des actions sur le projet.
 
-Il faut appeler ce script à partir d'une console, en ligne de commande, avec la version CLI de PHP.
+Il faut appeler ce script à partir d'une console, en ligne de commande, avec la version CLI de PHP. Il faut donc installer cet exécutable avant de pouvoir profiter pleinement de Jelix.
 
-Ouvrez donc une console, allez dans le répertoire @@F@lib/jelix-scripts/@@ :
+===== Configuration de PHP-CLI =====
 
+==== Pour Ubuntu/Debian/autre linux ====
+
+Vous devez installer le paquet **php5-cli** afin d'avoir la version ligne de commande de PHP.
+
+Attention, dans bien des distributions linux, en particulier debian/ubuntu, le fichier de configuration de PHP @@F@php.ini@@ n'est pas le même pour le PHP d'apache que pour la version CLI de PHP. Veillez donc à activer les extensions nécessaires à l'execution de Jelix, à la fois dans le fichier @@F@/etc/php5/apache2/php.ini@@ et dans le fichier @@F@/etc/php5/cli/php.ini@@ (les chemins sont valables pour debian/ubuntu). Notez que sous Debian et Ubuntu, la configuration de la plupart des extensions sont dans des fichiers ini séparés, et stockés dans un repertoire conf.d commun à apache et cli. 
+
+
+==== Pour MAMP (MacOS X) ====
+
+Le logiciel MAMP met à votre disposition un programme PHP-Cli. Ce dernier n'est pas le seul PHP-Cli, en effet, Mac OS vous en fournit aussi un en installation standard. Le problème vient du fait que si vous utilisez la base de donnée MySQL de MAMP, le PHP-Cli par défaut n'est pas configuré pour vous permettre de vous connecter à cette dernière.
+
+Voici comment faire pour mettre le PHP-Cli de MAMP par défaut dans le terminal :
+   * Ouvrez le fichier @@F@.profile@@ qui se trouve à la racine de votre répertoire personnel (@@F@/Users/votre_login/@@)
+   * Modifiez la ligne où est défini la variable PATH, ou ajoutez la, le but étant d'ajouter les chemins @@/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.3/bin@@ dans cette variable PATH. Cela doit ressembler à quelque chose comme ceci (d'autres chemins peuvent être déjà défini, et il faut dans tout les cas mettre le $PATH à la fin)
+<code>
+export PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.3/bin:$PATH
+</code>
+
+Si vous souhaitez mettre de nouveau le PHP-Cli de base par défaut, remettez la ligne comme avant ou supprimez la.
+
+
+==== Sous windows ====
+
+Suivant les distributions (WAMP par ex), il est probable que le programme php.exe n'utilise pas la même configuration php.ini que le php avec apache. Il vous faudra certainement créer un fichier ini dans un répertoire attendu par php.exe et/ou activer les même extensions que la version apache de PHP. Vous risquez sinon d'avoir des erreurs du genre "fonction mysql_connect inconnu" ou "impossible de se connecter".
+
+Il faut de plus configurer votre système de manière à ce que php.exe soit accessible de n'importe quel répertoire :
+
+   * cliquer droit sur l'icône //Poste de travail// puis //Propriétés//
+   * dans la fenêtre Propriétés système cliquez sur l'onglet //Avancé// puis sur le bouton //Variables d'environnement//
+   * ensuite cliquez sur la "Variable Path" dans le bloc "Variables utilisateur" si vous êtes le seul utilisateur sur la machine ou le bloc "Variables système" s'il s'agit d'un serveur ou d'une machine avec plusieurs utilisateurs (afin que tous puissent bénéficier de cette configuration).
+   * Dans la valeur de la variable vous ajoutez le chemin vers le répertoire qui contient @@F@php.exe@@. Ex: @@F@D:\wamp\bin\php\php5.2.6@@ (n'oubliez pas d'ajouter le ; à la fin si vous avez plusieurs variables path)
+   * Validez en cliquant sur OK
+   * Fermez le tout et redémarrez.
+
+Avec cette manipulation, vous pourrez exécuter @@F@php.exe@@ depuis n'importe quel répertoire notamment pour pouvoir créer des applications en ligne de commande avec Jelix.
+
+
+==== Notes pour les utilisateurs d'un hébergement OVH mutualisé ====
+
+Ce paragraphe concerne les utilisateurs hébergeant leur site web sur un 90plan par exemple.
+
+Deux particularités sont à prendre en compte :
+  - en ligne de commande, la version de PHP par défaut semble être la plus ancienne, il faut donc appeler la plus récente (i.e.  @@F@php.ORIG.5.2.9@@) soit manuellement, soit par un alias du BASH, soit par un script
+  - la variable superglobale $_SERVER['SCRIPT_NAME'] ne semble pas être diffusée ce qui gêne à l'exécution du script pour la création des modules
+
+Une solution simple répondant aux deux problématiques est la suivante. Il faut juste créer un script BASH @@F@jelix.sh@@ auquel on donne les droits d'exécution et avec le contenu suivant :
+  #!/bin/bash
+  export SCRIPT_NAME=jelix.php
+  php.ORIG.5.2.9 jelix.php $*
+
+Ensuite on appelle ce script à la place de la commande habituelle @@F@php jelix.php ...@@.
+
+
+
+===== Lancer jelix.php =====
+
+Ouvrez donc une console (cmd.exe sous windows), allez dans le répertoire @@F@lib/jelix-scripts/@@ :
+
+Sous linux/mac :
 <code bash>
-   cd lib/jelix-scripts/      # sous linux
-   cd lib\jelix-scripts\      # sous windows
+   cd lib/jelix-scripts/
+</code>
+Sous windows :
+<code bash>
+   cd lib\jelix-scripts\
 </code>
 
 Ensuite, vous pouvez exécuter une commande jelix selon cette syntaxe :
 
+Sous windows :
 <code bash>
-# sous windows
-> php.exe jelix.php [--application_name] command_name [options] [parameters]
-
-# sous linux
-$ php jelix.php [--application_name] command_name [options] [parameters]
+> php.exe jelix.php [--application_name[:entrypoint]] command_name [options] [parameters]
 </code>
 
+Sous linux :
+<code bash>
+$ php jelix.php [--application_name[:entrypoint]] command_name [options] [parameters]
+</code>
+
+Dans la suite du manuel, la syntaxe pour linux sera utilisée dans les exemples.
+
+==== command_name ====
 
 Vous devez toujours appeler @@F@jelix.php@@ avec un nom de "commande jelix", accompagné éventuellement de paramètres et options.
 
@@ -32,20 +97,31 @@ Par exemple, pour avoir de l'aide sur toutes les commandes (et avoir la liste de
    php jelix.php help
 </code>
 
+==== --application_name ====
+
+
 Il y a un autre paramètre à indiquer pour la plupart des commandes jelix : le nom de l'application. C'est toujours le premier paramètre, et doit commencer par @@--@@. Exemple :
 
 <code bash>
   php jelix.php --myapp createapp
 </code>
 
+Il s'agit en fait du nom du répertoire de l'application, que jelix.php s'attend à trouver au même niveau que le répertoire lib.
+
 Il est possible d'éviter de taper ce nom d'application à chaque fois. Pour cela, vous devez créer une variable d'environnement  @@V@JELIX_APP_NAME@@ contenant le nom de l'application.
 
 Par exemple, tapez ceci dans la console :
 
+Sous Linux :
 <code bash>
-  export JELIX_APP_NAME="myapp"        # sous linux
-  set JELIX_APP_NAME=myapp             # sous windows
+  export JELIX_APP_NAME="myapp"
 </code>
+
+Sous windows :
+<code bash>
+  set JELIX_APP_NAME=myapp
+</code>
+
 
 Et ainsi vous pouvez taper une commande jelix sans le nom de l'application, par exemple :
 
@@ -53,25 +129,43 @@ Et ainsi vous pouvez taper une commande jelix sans le nom de l'application, par 
   php jelix.php createapp
 </code>
 
-
-Notez aussi que vous pouvez executez le script @@F@jelix.php@@ à partir de n'importe quel répertoire. Exemple :
+Notez aussi que vous pouvez exécuter le script @@F@jelix.php@@ à partir de n'importe quel répertoire. Exemple :
 
 <code bash>
   php jelix/path/lib/jelix-scripts/jelix.php --myapp createapp
 </code>
 
+
+==== --application_name:entrypoint ====
+
+Quand une application a plusieurs points d'entrées (index.php, admin.php etc..), il est utile pour certaines commandes d'indiquer pour quel point d'entrée elle doit s'appliquer. Il faut alors indiquer le nom de ce point d'entrée après le nom de l'application, précédé d'un ":" :
+
+<code bash>
+  php jelix.php --myapp:admin installmodule foo
+</code>
+
+Cela installera le module foo, uniquement pour le point d'entrée admin de l'application myapp.
+
+Le point d'entrée doit être déclaré dans le fichier project.xml de l'application pour que cela fonctionne.
+
+
 ===== Changer la configuration par défaut =====
 
 Les commandes de création d'application, de module etc respectent une arborescence précise. Mais ce n'est pas forcément celle que vous voulez utiliser. Il y a aussi des informations qui sont insérées dans les fichiers crées, notamment dans les commentaires d'en-tête, comme par exemple le nom de l'auteur, le site web etc. Vous pouvez changer cela.
 
-Pour ce faire, dans @@F@lib/jelix-scripts/@@, il y a un fichier @@F@scripts.conf.php.dist@@. Renommez le en @@F@scripts.conf.php@@, et modifiez son contenu en décommentant les lignes que vous souhaitez et en modifiant les valeurs.
+Pour ce faire, dans @@F@lib/jelix-scripts/@@, il y a un fichier @@F@my.default.conf.php.dist@@. Renommez le en @@F@my.default.conf.php@@, et modifiez son contenu en décommentant les lignes que vous souhaitez et en modifiant les valeurs. Vous pouvez aussi avoir un fichier pour chaque application. Pour cela remplacez le nom "default" par le nom de l'application (celui que vous donnez en argument à la commande). Ex: @@F@my.testapp.conf.php@@.
 
 Vous pouvez aussi indiquer un autre fichier de configuration en indiquant son chemin dans la variable d'environnement @@V@JELIX_CONFIG@@.
 
 
 ===== Liste des commandes disponibles =====
 
-Voici une liste non exhaustive des commandes pour jelix-scripts
+Voici une liste non exhaustive des commandes pour jelix-scripts 
+
+   * Utilisation Générale :
+<code>
+php jelix.php [--NOMAPP[:ENTRYPOINT]] COMMANDE [OPTIONS] [PARAMETRES]
+</code>
    * Création d'une application
 <code>
 php jelix.php --[Monapplication] createapp
@@ -84,3 +178,12 @@ php jelix.php --[Monapplication] createmodule [MonModule]
 <code>
 php jelix.php --[Monapplication] createdao [MonModule] [MonDao] [MaTable]
 </code>
+   * Création d'une classe basé sur un dao
+<code>
+php jelix.php --[Monapplication] createclassfromdao [MonModule] [MaClasse] [MonDao]
+</code>
+   * Création d'un form (vide ou depuis un dao avec ou sans les locales)
+<code>
+php jelix.php --[Monapplication] createform [MonModule] [MonForm] [MonDao] 
+</code>
+

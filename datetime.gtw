@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/datetime~~
+~~LANG:EN@//en/manual-1.2/datetime~~
 
 jDateTime est une classe encapsulant une date, permettant de la convertir dans divers formats, mais aussi de faire des calculs de dates.
 
@@ -6,6 +6,9 @@ Pour créer un objet jDateTime, on peut :
 
    * soit passer les valeurs de la date par le constructeur : l'année, le mois, le jour, l'heure, les minutes et les secondes. Toutes ces valeurs sont facultatives et doivent être des entiers.
    * soit l'instancier sans paramètre et utiliser la méthode setFromString pour l'initialiser à partir d'une chaîne contenant une date et/ou une heure.
+
+Note : pour vos calculs de dates, **préférez l'utilisation de l'objet DateTime de PHP**, apparu dans PHP 5.2. jDatetime ayant des limitations (ne travaille pas avec des dates inférieures au 01/01/1970).
+
 
 ===== Récupérer la date courante =====
 La méthode ''now'' permet à l'objet jDateTime de récupérer la date courante.
@@ -37,6 +40,7 @@ jDateTime reconnait les formats suivants :
 | jDateTime::DB_TFORMAT | heure au format base de données classique : "HH:mm:SS" |
 | jDateTime::ISO8601_FORMAT | format ISO8601 |
 | jDateTime::TIMESTAMP_FORMAT | simple entier, indiquant le nombre de secondes depuis le 1/1/1970 |
+| jDateTime::FULL_LANG_DATE | date au format complet (jour de la semaine et mois en toute lettre) en tenant compte de la langue |
 
 Pour les formats LANG_*, jDateTime se base sur ce qui est indiqué dans le fichier de locales "format" situé dans le module jelix, et correspondant à la langue courante configurée dans Jelix.
 
@@ -107,13 +111,7 @@ Si on veut savoir la durée entre deux dates, on utilise alors la méthode durat
 
 Attention, les dates doivent être supérieures au 01/01/1970.
 
-Les paramètres disponibles pour l'objet jDuration sont (dans un tableau)
-  * year
-  * month
-  * day
-  * hour
-  * minute
-  * second
+Il est à présent possible de faire des soustractions de dates via la methode substract() qui prend et retourne une jDateTime.
 
 ===== Comparaison de dates =====
 

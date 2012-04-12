@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/common-processes~~
+~~LANG:EN@//en/manual-1.2/common-processes~~
 
 
 Il y a plusieurs types de traitements : les traitements métiers, et ceux dédiés à la génération de la page web. Pour les traitements métiers, vous utiliserez des classes métiers, des classes services, des daos. Celles-ci pouvant être utilisables par tous les modules, c'est un premier moyen de réaliser des traitements métiers qui puissent être réutilisables. Voir [[http://jelix.org/articles/manuel/classes-metiers]].
@@ -94,7 +94,7 @@ class defaultCtrl extends myBaseController {
 
 Notez l'include et le  //extends myBaseController//;
 
-Bien sûr, le contrôleur de base peut contenir des propriétés, d'autres méthodes, voir même des méthodes d'actions. C'est à dire que vous pouvez ainsi avoir plusieurs contrôleurs qui possèdent au final des actions communes (qui peuvent elle-même tenir compte de propriétés ou d'autres méthodes pour gérer des différences).
+Bien sûr, le contrôleur de base peut contenir des propriétés, d'autres méthodes, voire des méthodes d'actions. C'est à dire que vous pouvez ainsi avoir plusieurs contrôleurs qui possèdent au final des actions communes (qui peuvent elle-même tenir compte de propriétés ou d'autres méthodes pour gérer des différences).
 
 Vous pouvez faire par exemple un contrôleur de base, qui définit une série d'actions : //liste//, //creation//, //modification//, //suppression//. Ces actions se basant sur des propriétés pour savoir les daos et les templates à utiliser. Ainsi, il est aisé de réaliser plusieurs contrôleurs, héritant de ce contrôleur de base, et n'ayant plus qu'à indiquer dans des propriétés les daos et les templates. De quoi ainsi se faire une administration basique assez rapidement (c'est d'ailleurs ce que fait le contrôleur générique [[controleurs/crud|jDaoCrudController]])
 

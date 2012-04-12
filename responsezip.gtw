@@ -1,6 +1,6 @@
-~~LANG:EN@//en/manual-1.1/responsezip~~
+~~LANG:EN@//en/manual-1.2/responsezip~~
 
-Jelix propose jResponseZip qui permet de générer un fichier zip à la volée, et le proposer en téléchargement à l'utilisateur. L'alias est "zip" :
+Jelix propose @@C@jResponseZip@@ qui permet de générer un fichier zip à la volée, et le proposer en téléchargement à l'utilisateur. L'alias est "zip" :
 
 <code php>
 $rep = $this->getResponse('zip');
@@ -12,7 +12,7 @@ Vous devez ensuite indiquer un nom de fichier. C'est sous ce nom que le contenu 
 $rep->zipFilename='myCrazyPackage.zip';
 </code>
 
-Ensuite, il faut créer le zip. La propriété //$content// est un objet jZipCreator, dont vous utiliserez les méthodes pour ajouter du contenu dans le zip. (Voyez la [[http://jelix.org/reference/|documentation de référence]] sur jZipCreator).
+Ensuite, il faut créer le zip. La propriété @@P@$content@@ est un objet @@C@jZipCreator@@, dont vous utiliserez les méthodes pour ajouter du contenu dans le zip. (Voyez la [[http://jelix.org/reference/|documentation de référence sur jZipCreator]]).
 
 <code php>
 // ajoute le contenu du fichier datas/truc.txt stocké sur le serveur, 
@@ -28,5 +28,5 @@ $rep->content->addContentFile('dynamic.txt', 'contenu généré comme on veut');
 </code>
 
 Et c'est tout :-)
-L'utilisateur se verra proposer d'enregistrer sur son disque un fichier myCrazyPackage.zip, qui contiendra un fichier machin.txt, un répertoire exemples, et un fichier dynamic.txt.
+L'utilisateur se verra proposer d'enregistrer sur son disque un fichier @@F@myCrazyPackage.zip@@, qui contiendra un fichier @@F@machin.txt@@, un répertoire @@F@exemples/@@, et un fichier @@F@dynamic.txt@@.
 

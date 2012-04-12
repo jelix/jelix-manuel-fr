@@ -1,10 +1,15 @@
-~~LANG:EN@//en/manual-1.1/jforms/display/html-generator~~
-
+~~LANG:EN@//en/manual-1.2/jforms/display/html-generator~~
 
 Le générateur "html" de jforms génère un formulaire HTML, utilisant principalement jQuery pour le comportement de certains champs de saisie. Par conséquent, ce genre de formulaire peuvent être assez lourd.
 
 Le générateur "html" est celui utilisé par défaut par jForms, et son nom à indiquer aux plugins {form} ou {formfull} est "html".
 
+===== Options =====
+
+Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et @@E@{formfull}@@ :
+
+  * @@L@errorDecorator@@: le nom de la fonction javascript qui s'occupera de l'affichage des erreurs
+  * @@L@method@@: la méthode HTTP à employer ('get' ou 'post'). Par défault : 'post'. 
 
 ===== Classes CSS à connaître =====
 
@@ -54,9 +59,14 @@ Pour styler les balises générées par le générateur "html", il y a quelques 
 
 ===== Personnalisation de l'affichage des messages =====
 
-Les messages d'erreurs, qui peuvent survenir lors de la vérification du formulaire avant l'envoi des données, et les messages d'aides qui apparaissent quand on clique sur le point d'interrogation, sont affichés dans une boîte de dialogue de type //alert//.
+jForms affiche deux types de messages :
 
-Vous pouvez changer ça, en indiquant, dans les options du générateurs données aux plugins //form// ou //formfull//, les noms des objets javascript qui s'occuperont d'afficher ces messages.
+  * les messages d'erreurs affichés lors de la vérification des champs de saisies
+  * Les messages d'aides
+
+Vous pouvez changer l'apparence avec CSS, mais aussi, pour les messages d'erreurs, en indiquant, dans les options du générateur données aux plugins //form// ou //formfull//, le noms de l'objet javascript qui s'occupera d'afficher ces messages.
+
+Par défaut, les messages d'erreurs sont affichés en haut du formulaire.
 
 ==== Affichage des messages d'erreurs ====
 
@@ -94,10 +104,10 @@ MyErrorDecorator.prototype = {
 </code>
 
 
-Ensuite vous l'indiquez au plugin //form// ou //formfull//, dans la liste des options pour le builder htmllight :
+Ensuite vous l'indiquez au plugin //form// ou //formfull//, dans la liste des options pour le builder html :
 
 <code html>
-  {form $formulaire, 'monmodule~default:sauver', array(), 'htmllight', array("errorDecorator"=>"MyErrorDecorator")}
+  {form $formulaire, 'monmodule~default:sauver', array(), 'html', array("errorDecorator"=>"MyErrorDecorator")}
    ...
   {/form}
 </code>
@@ -116,35 +126,13 @@ En ce qui concerne l'objet jFormsControl que addError reçoit en paramètre (ici
 
 ==== Affichage des messages d'aides ====
 
-Pour les messages d'aide, c'est le même principe que pour les messages d'erreur, mais l'objet ne doit contenir qu'une méthode, //show// qui est appelée avec en paramètre le message affiché.
-
-<code javascript>
-function MyHelpDecorator(){ }
-
-MyHelpDecorator.prototype = {
-    show : function(message){
-        document.getElementById("help").firstChild = document.createTextNode(message);
-    }
-}
-</code>
-
-Ensuite il faut indiquer cet objet dans les options du builder 'htmllight' de //form// ou //formfull// :
-
-<code html>
-  {form $formulaire, 'monmodule~default:sauver', array(), "htmllight", array("helpDecorator"=>"MyHelpDecorator")}
-   ...
-  {/form}
-</code>
-
-Notez ici que l'on a indiqué "" pour l'affichage des erreurs : jforms utilisera alors l'afficheur par défaut. Mais vous pouvez aussi indiquer un autre, en même temps que l'afficheur d'aide.
-
+Dans les versions précédentes, les messages d'aides étaient affichés par un mécanisme similaire à celui des messages d'erreurs. Ce n'est plus le cas depuis la version 1.2, où ils sont directement en dur en HTML, et par défaut affichés dans des info bulles au survol du picto du point interrogation. Vous pouvez bien sûr changer cela en modifiant les CSS, en ajoutant du javascript etc.
 
 ==== jQuery et votre application ====
 
-Le générateur HTML inclut le script jQuery dans toute réponse HTML contenant un formulaire jForms. Si vous utilisez jQuery pour toute votre application, vous l'incluerez sûrement dans votre réponse commune. Dans ce cas, faites attention d'inclure le même fichier que celui référencé par le générateur HTML, sinon, jQuery sera téléchargé **2 fois** par vos utilisateurs. 
+Le générateur HTML inclut le script jQuery dans toute réponse HTML contenant un formulaire jForms. Si vous utilisez jQuery pour toute votre application, vous l'inclurez sûrement dans votre réponse commune. Dans ce cas, faites attention d'inclure le même fichier que celui référencé par le générateur HTML, sinon, jQuery sera téléchargé **2 fois** par vos utilisateurs. 
 
 Exemple d'inclusion dans votre réponse commune : 
-
 
 <code>
   $this->addJSLink($GLOBALS['gJConfig']->urlengine['jelixWWWPath'].'jquery/jquery.js');

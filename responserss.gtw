@@ -1,6 +1,6 @@
-~~LANG:EN@//en/manual-1.1/responserss~~
+~~LANG:EN@//en/manual-1.2/responserss~~
 
-Jelix permet de générer un fil RSS assez facilement grâce à jResponseRss20. Cet objet prend en charge totalement la [[http://cyber.law.harvard.edu/rss/rss.html|spécification RSS 2.0]]. Comme tout type de réponse, la première chose à faire est de récupérer l'objet jResponseRss20 (alias "rss2.0"). 
+Jelix permet de générer un fil RSS assez facilement grâce à @@C@jResponseRss20@@. Cet objet prend en charge totalement la [[http://cyber.law.harvard.edu/rss/rss.html|spécification RSS 2.0]]. Comme tout type de réponse, la première chose à faire est de récupérer l'objet jResponseRss20 (alias "rss2.0"). 
 
 <code php>
   $rep = $this->getResponse('rss2.0');
@@ -8,7 +8,7 @@ Jelix permet de générer un fil RSS assez facilement grâce à jResponseRss20. 
 
 ===== Informations sur le fil rss =====
 
-jReponseRss20 possède tout d'abord une propriété infos, qui est un objet permettant de spécifier les propriétés du fil RSS : son titre, l'url du site, le copyright, la description etc. Exemple :
+jReponseRss20 possède tout d'abord une propriété @@P@infos@@, qui est un objet permettant de spécifier les propriétés du fil RSS : son titre, l'url du site, le copyright, la description etc. Exemple :
 
 <code php>
    $rep->infos->title = 'Actualité de Jelix';
@@ -20,11 +20,11 @@ jReponseRss20 possède tout d'abord une propriété infos, qui est un objet perm
    $rep->infos->ttl=60;
 </code>
 
-Les champs //updated// et //published// sont des dates qui indiquent respectivement la date de dernière mise à jour du fil RSS, et la date de publication du channel RSS. On peut mettre la même date. Ces dates sont en général déterminées par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil RSS d'un blog, ce sera la date du dernier billet.
+Les champs @@P@updated@@ et @@P@published@@ sont des dates qui indiquent respectivement la date de dernière mise à jour du fil RSS, et la date de publication du channel RSS. On peut mettre la même date. Ces dates sont en général déterminées par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil RSS d'un blog, ce sera la date du dernier billet.
 
-La propriété //ttl// indique à l'aggrégateur de l'utilisateur, la durée (en minute) pendant laquelle il peut mettre le contenu en cache avant de redemander le fil RSS.
+La propriété @@P@ttl@@ indique à l'agrégateur de l'utilisateur, la durée (en minute) pendant laquelle il peut mettre le contenu en cache avant de redemander le fil RSS.
 
-Par défaut, la description doit être du texte normal. Cependant vous pouvez indiquer du HTML ou XHTML. Dans ce cas vous devez l'indiquer dans la propriété //descriptionType//, qui peut prendre la valeur "html", "xhtml" ou "text".
+Par défaut, la description doit être du texte normal. Cependant vous pouvez indiquer du HTML ou XHTML. Dans ce cas vous devez l'indiquer dans la propriété @@P@descriptionType@@, qui peut prendre la valeur "html", "xhtml" ou "text".
 
 
 
@@ -34,7 +34,7 @@ Par défaut, la description doit être du texte normal. Cependant vous pouvez in
 
 Il faut ensuite remplir le channel avec les items que vous voulez publier. Pour un blog par exemple, les items seront les descriptifs des derniers billets publiés.
 
-Pour chaque item, vous devez appeler la méthode //createItem()// de jResponseRss20 pour récupérer un objet qui contiendra les informations de l'item. Vous remplissez alors cet objet et vous le stockez dans l'objet jResponseRss20 avec la méthode //addItem()//
+Pour chaque item, vous devez appeler la méthode @@M@createItem()@@ de @@C@jResponseRss20@@ pour récupérer un objet qui contiendra les informations de l'item. Vous remplissez alors cet objet et vous le stockez dans l'objet @@C@jResponseRss20@@ avec la méthode @@M@addItem()@@.
 
 Voici un exemple avec une dao de news :
 

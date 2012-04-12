@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/coordplugins/zendframework~~
+~~LANG:EN@//en/manual-1.2/coordplugins/zendframework~~
 
 Le plugin zendframework est un plugin pour le coordinateur. Il permet d'inclure la classe Zend_Loader du Zend Framework afin de pouvoir l'utiliser dans votre code Jelix pour appeler les librairies du Zend Framework.
 

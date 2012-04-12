@@ -1,6 +1,6 @@
-~~LANG:EN@//en/manual-1.1/personnalized-common-response~~
+~~LANG:EN@//en/manual-1.2/personnalized-common-response~~
 
-Il est fort probable que vous ayez dans la plupart de vos actions, à initialiser la même feuille de style, les mêmes zones de menus, et autres traitements de personnalisation de la réponse. Plutôt que de répéter toute ces opérations dans chaque contrôleur, vous allez créer un objet response qui fait le travail commun à toutes les actions. 
+Il est fort probable que vous ayez dans la plupart de vos actions, à initialiser la même feuille de style, les mêmes zones de menus, et autres traitements de personnalisation de la réponse. Plutôt que de répéter toutes ces opérations dans chaque contrôleur, vous allez créer un objet response qui fait le travail commun à toutes les actions. 
 
 Si vous voulez réaliser des modules réutilisables, cette façon de faire est d'autant plus intéressante puisqu'alors tout ce qui ne concerne pas le module est réalisé à l'extérieur de ce module. Il est donc plus indépendant de l'application, contrairement au cas où il gère lui même dans ses actions les parties communes des pages du site (bandeau etc...).
 
@@ -13,7 +13,7 @@ Vos propres classes de réponses peuvent hériter de @@C@jResponseHtml@@ par exe
 Dans cette classe, vous pouvez alors :
 
   * surcharger le constructeur pour réaliser des choses qui seront faites lorsque vous ferez le @@M@getResponse()@@ dans votre contrôleur
-  * surcharger la méthode @@M@doAfterActions()@@ (ou @@M@_commonProcess()@@ dans les anciennes versions de Jelix). Notez que cette méthode n'existe que pour @@C@jResponseHtml@@. Elle sera appelée **après** votre action, et juste avant l'affichage définitif.
+  * surcharger la méthode @@M@doAfterActions()@@. Notez que cette méthode n'existe que pour @@C@jResponseHtml@@. Elle sera appelée **après** votre action, et juste avant l'affichage définitif.
 
 Voyons plus précisément comment ça se gère globalement. Vous avez donc vos pages HTML, qui contiennent la partie @@E@<head>@@ et la partie @@E@<body>@@ :
 
@@ -142,7 +142,7 @@ class myHtmlResponse extends jResponseHtml {
 </code>
 
 
-**Note** : vous ne devez pas assigner des zones dans le constructeur de la réponse, surtout si la zone en question veut ajouter des feuilles de style ou faire d'autres modifications sur l'objet reponse. En effet, l'objet réponse n'est pas encore déclaré dans l'environnement jelix, et donc la zone ne pourra y accéder.
+**Note** : vous ne devez pas assigner des zones dans le constructeur de la réponse, surtout si la zone en question veut ajouter des feuilles de style ou faire d'autres modifications sur l'objet réponse. En effet, l'objet réponse n'est pas encore déclaré dans l'environnement jelix, et donc la zone ne pourra y accéder.
 
 ===== Déclaration de l'objet réponse =====
 

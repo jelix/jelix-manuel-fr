@@ -1,139 +1,52 @@
-~~LANG:EN@//en/manual-1.1/authentification/drivers~~
+~~LANG:EN@//en/manual-1.2/authentification/drivers~~
 
 
 Il existe en standard plusieurs drivers pour l'authentification dans Jelix. 
 
 ===== Db =====
 
-Le driver Db propose une authentification pour laquelle les informations sont stockées en base de données. Pour cela, ce driver Db se repose sur un dao, qu'il faut indiquer dans le fichier de configuration d'authentification :
+Le driver Db propose une authentification pour laquelle les informations sont stockées en base de données, et de ce fait utilise un DAO pour y accéder.
+
+Jelix fournis un module, jauthdb, qui contient un dao par défaut, et installe une table en base de donnée. Pour l'utiliser, installez le :
+
+<code bash>
+cd lib/jelix-scripts/
+php jelix.php --myapp installmodule jauthdb
+
+# ou si vous voulez aussi créer un utilisateur par défaut, "admin" (mot de passe : admin)
+php jelix.php --myapp installmodule -p defaultuser jauthdb
+</code>
+
+Une table jlx_users sera créé dans votre base de donnée. Vous pouvez ajouter des champs dans cette table, et surcharger alors le dao par défaut, ou fournir un autre dao (voir plus loin).
+
+
+Dans le fichier de configuration d'authentification, vous devriez avoir quelque chose comme ceci :
 <code ini>
 
 driver= Db
 
 [Db]
-dao = "monmodule~mondao"
-password_crypt_function = "md5"
+dao = "jauthdb~jelixuser"
+password_crypt_function = "sha1"
 </code>
 
-Ce que vous indiquez au niveau du paramètre **dao**, c'est un sélecteur vers le fichier dao que vous voulez utiliser. Vous pouvez utiliser celui fourni dans le module jauth :
+Ce que vous indiquez au niveau du paramètre @@dao@@, c'est un sélecteur vers le fichier dao que vous voulez utiliser.
 
-<code ini>
-dao = "jauth~jelixuser"
-</code>
+Pour le dao que vous indiquez, **il doit avoir au moins les mêmes propriétés et méthodes que le dao jelixusers**. Vous pouvez rajouter d'autres propriétés, autant que vous voulez.
 
+   * @@P@login@@ and @@P@password@@
+   * @@M@getByLoginPassword (login, password)@@
+   * @@M@getByLogin(login)@@
+   * @@M@updatePassword(login,password)@@
+   * @@M@deleteByLogin(login)@@
+   * @@M@findByLogin(pattern)@@
 
-Le paramètre **password_crypt_function** indique la fonction à utiliser pour crypter les mots de passe.  Vous pouvez fournir votre propre fonction de cryptage (en la définissant dans le fichier application.init.php par exemple) et indiquer son nom ici.
+Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le champ du login, ou alors qu'il y ait une clé autoincrementée, et un champ @@P@login@@ déclaré avec un index de type "UNIQUE".
 
-Pour le dao que vous indiquez, il doit avoir au moins les propriétés "login" et "password". Vous pouvez rajouter d'autres propriétés, autant que vous voulez. Il doit aussi y avoir au moins les méthodes qu'il y a dans le dao **jelixuser** du module **jauth** :
-
-   * **getByLoginPassword (login, password)** 
-   * **getByLogin(login)**
-   * **updatePassword(login,password)**
-   * **deleteByLogin(login)**
-   * **findByLogin(pattern)**
-
-Note : la table sur laquelle repose le dao doit avoir comme clé primaire le champ du login.
-
-==== Exemple ====
-
-Imaginons que l'on ait la table suivante (script mysql) :
-
-<code sql>
-CREATE TABLE `jlx_user` (
-  `usr_login` varchar(50) NOT NULL default '',
-  `usr_password` varchar(50) NOT NULL default '',
-  `usr_email` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`usr_login`)
-) ;
-</code> 
-On a bien le login comme étant la clé primaire, et au moins le champ password.
-
-On crée ensuite le dao suivant, comme indiqué plus haut :
-
-<code xml>
-<?xml version="1.0" encoding="UTF-8"?>
-<dao xmlns="http://jelix.org/ns/dao/1.0">
-   <datasources>
-      <primarytable name="usr" realname="jlx_user" primarykey="usr_login" />
-   </datasources>
-   <record>
-      <property name="login" fieldname="usr_login"
-          required="yes" datatype="string"  maxlength="50" />
-
-      <property name="email" fieldname="usr_email"
-                datatype="string" required="yes" maxlength="255" />
-
-      <property name="password" fieldname="usr_password" datatype="string"
-                maxlength="50" selectpattern="%s" updatepattern="" insertpattern="%s" />
-   </record>
-   <factory>
-     <method name="getByLoginPassword" type="selectfirst">
-         <parameter name="login" />
-         <parameter name="password" />
-         <conditions>
-             <eq property="login" expr="$login" />
-             <eq property="password" expr="$password" />
-         </conditions>
-     </method>
-
-     <method name="getByLogin" type="selectfirst">
-         <parameter name="login" />
-         <conditions>
-             <eq property="login" expr="$login" />
-         </conditions>
-     </method>
-
-     <method name="updatePassword" type="update">
-         <parameter name="login" />
-         <parameter name="password" />
-         <values>
-             <value property="password" expr="$password"/>
-         </values>
-         <conditions>
-             <eq property="login" expr="$login" />
-         </conditions>
-     </method>
-
-     <method name="deleteByLogin" type="delete">
-         <parameter name="login" />
-         <conditions>
-             <eq property="login" expr="$login" />
-         </conditions>
-     </method>
-
-     <method name="findByLogin" type="select">
-         <parameter name="pattern" />
-         <conditions>
-             <like property="login" expr="$pattern" />
-         </conditions>
-         <order>
-             <orderitem property="login" way="asc" />
-          </order>
-     </method>
-
-     <method name="findAll" type="select">
-         <order>
-             <orderitem property="login" way="asc" />
-         </order>
-     </method>
-   </factory>
-</dao>
-</code>
-
-Et dans le fichier auth.plugin.ini.php, on indique ce dao que l'on aura stocké dans le module foo sous le nom user.dao.xml.
-
-<code ini>
-
-driver= Db
-
-[Db]
-dao = "foo~user"
-password_crypt_function = "md5"
-</code>
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/trunk/jelix/auth/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/1.2.7/jelix/auth_driver/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules, comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 
@@ -143,12 +56,12 @@ driver= Class
 
 [Class]
 class = "monmodule~maclass"
-password_crypt_function = "md5"
+password_crypt_function = "sha1"
 </code>
 
-===== LDS =====
+===== LDS/MDS =====
 
-C'est un driver qui repose sur un serveur LDS (http://lds.linbox.org/). Il appelle l'API xml-rpc d'un serveur LDS. La configuration que vous devez indiquer doit donc être celle-ci :
+C'est un driver qui repose sur un serveur MDS (http://mds.mandriva.org/), anciennement appelé LDS. Il appelle l'API xml-rpc d'un serveur MDS. La configuration que vous devez indiquer doit donc être celle-ci :
 
 
 <code ini>
@@ -163,7 +76,43 @@ password= bar
 scheme= https
 </code>
 
-Le driver interrogera donc le serveur **foo.com** sur le port **80**, avec le login **foo** et le mot de passe **bar**, via une connexion sécurisée https.
+Le driver interrogera donc le serveur **foo.com** sur le port **80**, avec le login @@L@foo@@ et le mot de passe @@L@bar@@, via une connexion sécurisée https.
+
+===== ldap =====
+
+C'est un driver permettant d'authentifier un utilisateur d'un annuaire supportant le protocole LDAP. La configuration préconisée :
+
+
+<code ini>
+
+driver= ldap
+
+[ldap]
+; par défaut "localhost"
+hostname=
+; par défaut 389
+port=
+
+; DOMAINE\utilisateur ou utilisateur@DOMAINE pour la connexion avec LDAP (utilisateur ayant au moins un accès en lecture)
+ldapUser=
+; mot de passe de l'utilisateur
+ldapPassword=
+
+; paramètres de recherche LDAP
+; base d'entrée de la recherche, exemple pour Active Directory de windows : "ou=ADAM users,o=Microsoft,c=US"
+searchBaseDN=
+; filtre de recherche, exemple pour Active Directory de windows : "(objectClass=user)"
+searchFilter=
+; les attributs à renvoyer , exemple pour Active Directory de windows : "cn,distinguishedName,name"
+searchAttributes=
+
+; fonction utilisée pour crypter le mot de passe dans la base de données
+password_crypt_function = sha1
+; exemple  : salt avec sha1
+;password_crypt_function = "1:sha1WithSalt"
+;password_salt = "here_your_salt"
+</code>
+
 
 
 ===== Créer un driver =====

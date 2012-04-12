@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/daos/events~~
+~~LANG:EN@//en/manual-1.2/daos/events~~
 
 Une factory de DAO peut générer automatiquement [[//events|des évènements]] pour certains types de méthodes.
 
@@ -19,12 +19,16 @@ Voici les noms des évènements générés avec les noms de leurs paramètres, s
 
 Voici un exemple :
 
-dans le fichier Dao :
+==== Fichier Dao =====
+Il faut ajouter la propriété @@events@@ à la balise @@E@<factory>@@. Il ne faut pas mettre de majuscules dans le nom des événements.
+
 <code xml>
-  <factory events="deleteAfter, insertAfter"> ...
+  <factory events="deleteafter, insertafter"> ...
 </code>
 
-Dans le répertoire de la classe, créer un fichier my.listener.php afin de mettre les évenements à exécuter
+==== Listener ====
+
+Dans le répertoire classes du module, créer un fichier my.listener.php afin de mettre les évenements à exécuter
 
 <code php>
 class myListener extends jEventListener{
@@ -45,6 +49,18 @@ Si vous désirez modifier la propriété maPropriete de votre dao, il vous suffi
 $event->getParam("record")->maPropriete = $Variable;
 </code>
 
+==== Fichier events.xml ====
+
+Il faut un fichier events.xml dans le répertoire racine du module. Dans ce fichier seront déclarées toutes les méthodes du listener. Exemple :
+
+<code xml>
+<events xmlns="http://jelix.org/ns/events/1.0">
+   <listener name="my">
+       <event name="daoInsertAfter" />
+       <event name="daoDeleteAfter" />
+   </listener>
+</events>
+</code>
 
 ===== Évènements des méthodes personnalisées =====
 

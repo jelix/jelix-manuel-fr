@@ -1,10 +1,10 @@
-~~LANG:EN@//en/manual-1.1~~
+~~LANG:EN@//en/manual-1.2~~
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.1.12
+subtitle= Jelix 1.2.7
 title_short= Guide du développeur
-edition = Jelix 1.1.12
+edition = Jelix 1.2.7
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
 copyright_years=2006-2012
@@ -12,14 +12,20 @@ copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
 
+Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel|le manuel au format PDF]] !
+
 <bookcontents>
 
-- part: [[installation|Installation]]
+- part: [[introduction|Introduction]]
+  - chapter: [[nouveautes|Nouveautés]]
+  - chapter: [[installation/migration|Migration d'une application jelix 1.1 vers jelix 1.2]]
+
+- part:  [[mise-en-route|Mise en route]]
   - chapter: [[installation/prerequis|Pré-requis sur le serveur]]
   - chapter: [[installation/sources|Installation de l'archive de jelix]]
-  - chapter: [[installation/application|Installation d'une application]] pour jelix
-  - chapter: [[installation/production|Installation sur un serveur de production]]
-  - chapter: [[installation/migration|Migration d'une application jelix 1.0 vers jelix 1.1]]
+  - chapter: [[jelix-scripts|Utiliser jelix-scripts]]
+  - chapter: [[creer-application|Créer une application]]
+  - chapter: [[configurer-server|Configurer le serveur]]
 
 - part: [[fondamentaux|Fondamentaux]]
    - chapter:[[principes|Principes de fonctionnement]]
@@ -28,13 +34,11 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[coordinateur|Le coordinateur]]
      - section: [[jresponse|Les objets jResponse]]
      - section: [[appel-action|Appeler une action]] et les sélecteurs d'action.
-   - chapter:[[jelix-scripts|Utiliser jelix-scripts]]
-   - chapter:[[creer-application|Créer une application]]
-     - section: [[configurer-application|Configurer une application]]
-     - section: [[creer-application/creer-administration|Créer une interface d'administration]]
    - chapter:[[modules|Développement d'un module]]
      - section: [[creer-un-module|Créer un module]]
+     - section: [[installer-un-module|Installer un module]]
      - section: [[controleurs|Développer un contrôleur]]
+     - section: [[controleurs/recuperation-parametres-http|Récupération des paramètres HTTP]]
      - section: [[controleurs/crud|Utiliser le contrôleur CRUD]]
      - section: [[restfull|Un contrôleur pour REST]]
    - chapter: [[responses|Les réponses: générer du contenu]]
@@ -49,6 +53,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[responsezip|Générer un fichier zip]]
      - section: [[responsexul|Générer une interface utilisateur en XUL]]
      - section: [[responserdf|Générer du RDF]]
+     - section: [[responsesitemap|Générer un sitemap]]
    - chapter: [[reponse-generale-personnalisee|Définir une réponse générale personnalisée]]
    - chapter: [[responseredirect|Faire une redirection]]
    - chapter: [[services-web|Services web]]
@@ -59,6 +64,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[services-web/soap|SOAP]]
    - chapter: [[cmdline|Effectuer des traitements en ligne de commande]]
    - chapter: [[traitements_communs|Définir des traitements communs à plusieurs actions]]
+   - chapter: [[creer-application/creer-administration|Créer une interface d'administration]]
 
 - part: [[composants|Composants de jelix]]
    - chapter: [[templates|jTpl : le moteur de templates]]
@@ -75,8 +81,9 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[jforms/xml|Format des fichiers jForms]]
           - section: [[jforms/xml-1.0|Format version 1.0]]
           - section: [[jforms/xml-1.1|Format version 1.1]]
-             -section: [[jforms/xml/htmleditor|Editeur HTML]]
+             -section: [[jforms/xml/htmleditor|Éditeur HTML]]
              -section: [[jforms/xml/datepicker|Datepicker]]
+             -section: [[jforms/xml/wikieditor|Éditeur wiki]]
       - section: [[jforms/utilisation|Initialiser un formulaire]]
       - section: [[jforms/affichage|Affichage d'un formulaire]].
           -section: [[jforms/affichage/generateur-html|Générateur "html"]]
@@ -84,7 +91,11 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[jforms/apres-submit|Gérer un formulaire après soumission]]
       - section: [[jforms/affichage-donnees|Affichage simple des données]].
       - section: [[jforms/security|Sécurité dans les formulaires]].
-   - chapter: [[bd|jDb : accéder à une base de données]]
+   - chapter: [[bd|jDb : accéder à une base de données SQL]]
+      - section: [[bd/configuration|Profils et configuration]].
+      - section: [[bd/requetes|Exécuter des requêtes]].
+      - section: [[bd/outils|Schémas et autres outils]].
+   - chapter: [[kvdb|jKvDb : accéder à une base de type key/value]]
    - chapter: [[classes-metiers|jClasses: utiliser des classes métiers]]
    - chapter: [[urls|jUrl : des URLs automatiques]]
       - section: [[urls/simple|Moteur d'urls 'simple']]
@@ -98,11 +109,6 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[droits2/concepts.db|Les concepts de jAcl2.db]]
       - section: [[droits2/configuration|Configurer jAcl2.db]]
       - section: [[droits2/jauth|Utiliser jAcl2 avec jAuth]]
-      - section: [[droits/jacl|jAcl, ancien système de droits]]
-         - section: [[droits/concepts|Les concepts généraux de jAcl]]
-         - section: [[droits/utilisation|Utiliser jAcl dans ses modules]]
-         - section: [[droits/concepts.db|Les concepts de jAcl.db]]
-         - section: [[droits/configuration|Configurer jAcl.db]]
    - chapter: [[locales|jLocale: internationaliser votre application]]
    - chapter: [[events|jEvents : communication inter-module]]
 
@@ -119,24 +125,36 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[plugins/jforms|générateurs jforms]]
    - chapter: [[configuration|La configuration en détails]]
    - chapter: [[objets_globaux|les objets globaux utiles]]
+   - chapter: [[cache|Utiliser le cache]]
+   - chapter: [[creer-script-installation|Créer des scripts d'installation automatiques]]
+   - chapter: [[creer-wizard|Créer un wizard d'installation]]
 
 - part: [[aide-developpement|Aide au développement]]
    - chapter: [[errormanager|Configurer le gestionnaire d'erreur]]
    - chapter: [[tests_unitaires|Développer des tests unitaires]]
    - chapter: [[deboggage|Les aides pour déboguer]] (jLog..)
 
-- part: [[classes-utiles|Les classes utilitaires]]
-   - chapter: [[filtre|jFilter : vérification et filtrage de données]]
-   - chapter: [[datetime|jDateTime : manipulation de dates et heures]]
-   - chapter: [[classes-utiles/jhttp|jHttp : faire des requête HTTP]]
-   - chapter: [[mail|jMailer : envoi de mails]]
-   - chapter: [[wiki|jWiki : transformation de texte wiki]]
-   - chapter: [[session|jSession : stockage de sessions]]
-   - chapter: [[message|jMessage : informations entre actions]]
-   - chapter: [[file|jFile : lire ou créer des fichiers]]
-   - chapter: [[inifilemodifier|jIniFileModifier: lire ou modifier des fichiers de configuration (ini)]]
 
-- part: [[ref-plugins|Les plugins de Jelix]]
+- part: [[installation/deploiement|Déployer une application jelix]]
+  - chapter: [[installation/production|Configurer un serveur de production]]
+  - chapter: [[installation/application|Installation d'une application]] pour jelix
+  - chapter: [[installation/mise-a-jour|Mettre à jour une application]] pour jelix
+
+
+- part: [[references|Références]]
+   - chapter: [[classes-utiles|Les classes utilitaires]]
+      - section: [[datetime|jDateTime : manipulation de dates et heures]]
+      - section: [[file|jFile : lire ou créer des fichiers]]
+      - section: [[filtre|jFilter : vérification et filtrage de données]]
+      - section: [[classes-utiles/jhttp|jHttp : faire des requête HTTP]]
+      - section: [[imagemodifier|jImageModifier: Modifier une image]]
+      - section: [[inifilemodifier|jIniFileModifier: lire ou modifier des fichiers de configuration (ini)]]
+      - section: [[mail|jMailer : envoi de mails]]
+      - section: [[message|jMessage : informations entre actions]]
+      - section: [[session|jSession : stockage de sessions]]
+      - section: [[wiki|jWiki : transformation de texte wiki]]
+
+
    - chapter: [[ref-plugins/tplplugins|Plugins de template]]
         - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]
         - section: [[ref-plugins/tplplugins/fonctions|Fonctions diverses]]
@@ -150,8 +168,9 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter: [[ref-plugins/coordplugins|Plugins pour le coordinateur]]
       - section: [[coordplugins/history|history]]
       - section: [[coordplugins/zendframework|zendframework]]
-- part: [[ref-modules|Les modules de Jelix]]
-   - chapter: [[ref-modules/master_admin|master_admin]]
+   - chapter: [[ref-modules|Les modules de Jelix]]
+      - section: [[ref-modules/master_admin|master_admin]]
+   - chapter: [[ref-javascript-library|Bibliothèques Javascript]]
 </bookcontents>
 
 <booklegalnotice>

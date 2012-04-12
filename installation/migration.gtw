@@ -1,87 +1,52 @@
-~~LANG:EN@//en/manual-1.1/installation/migrate~~
+~~LANG:EN@//en/manual-1.2/installation/migrate~~
 
 Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins ces étapes à faire :
 
-  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet jelix 1.1.
+  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet jelix 1.2.
   * Ne pas oublier de remettre dans le nouveau répertoire @@F@lib/@@ vos éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
   * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@ 
   * adapter votre code en suivant les instructions indiquées pour chaque ancienne version de Jelix. Voir ci-dessous.
 
+===== Mettre à jour depuis Jelix 1.1.x =====
 
-===== Mettre à jour depuis jelix 1.1beta1 =====
+==== Ce qu'il faut savoir avant de mettre à jour ====
 
-  * @@C@jForms@@ : ce que retourne @@M@getModifiedControls()@@ dépend maintenant du moment où vous appelez la nouvelle méthode @@M@initModifiedControlsList()@@. Il faut donc appeler celle-ci après une initialisation du formulaire pour connaître plus tard après un submit les valeurs modifiées.
-  * Amélioration de la méthode @@M@setFetchMode()@@ sur la classe @@C@jDbResultSet@@. Les constantes de classes que l'on donne en paramètres ne sont plus celles de @@C@jDbResultSet@@ mais celles de @@C@jDbConnection@@. Donc il faut utiliser @@jDbConnection::FETCH_CLASS@@ au lieu de @@jDbResultSet::FETCH_CLASS@@
+La gestion des modules a changé. Dans le fichier de configuration, @@unusedModules@@, @@trustedModules@@ et @@checkTrustedModules@@ ne sont plus utilisés. Il y a maintenant une section "modules", dans laquelle un niveau d'accès de chaque module est déclaré.
 
-Pour cause de noms mal orthographiés, les propriétés et méthodes suivantes ont été renommées depuis Jelix 1.1beta1 :
+Pour être utilisé, un module devrait être "installé". En fait un nouveau fichier @@F@installer.ini.php@@ est crée par le système d'installation de Jelix dans le répertoire de configuration, et contient, pour chaque point d'entrée, la liste des modules installés, et pour chaque d'eux, la version installée. Des nouvelles commandes "installapp" et "installmodule" sont fournies pour installer et mettre à jour les modules.
 
-  * plugin auth/auth : option @@V@profil@@ -> @@V@profile@@
-  * @@M@jDb::getProfil()@@ -> @@M@jDb::getProfile()@@
-  * @@M@jDb::testProfil()@@ -> @@M@jDb::testProfile()@@
-  * @@M@jAclDb::getProfil()@@ -> @@M@jAclDb::getProfile()@@
-  * @@M@jAcl2Db::getProfil()@@ -> @@M@jAcl2Db::getProfile()@@
-  * @@P@jDbConnection::$profil@@ -> @@P@jDbConnection::$profile@@
-  * @@P@jControllerDaoCrud::$dbProfil@@ -> @@P@jControllerDaoCrud::$dbProfile@@
+==== Migration ====
 
+Une commande "migrate" est fournie dans le but d'effectuer les modifications nécessaires dans le fichier de configuration de votre application et pour créer le fichier @@F@installer.ini.php@@.
 
-Vous devez donc changer les noms de ces propriétés et méthodes dans le code de vos contrôleurs ou autres classes.
+  * sauver les fichiers de votre application, en particulier la configuration et la base de donnée. Si la commande migrate échoue durant l'installation virtuelle des modules, il vous faudra restaurer les fichiers originaux et supprimer les nouveaux fichiers avant de relancer la commande migrate. Il est d'ailleurs fortement conseillé de travailler avec un gestionnaire de code source tel que Mercurial, Git ou Subversion, cela facilite la restauration des fichiers modifiés.
+  * remplacer le répertoire @@F@lib/@@ par le @@F@lib/@@ de Jelix 1.2
+  * vérifier que le @@F@project.xml@@ est bon, qu'il contient une balise @@E@<jelix>@@ avec la version max à "1.1.*" et la liste des points d'entrées. Voir [[//configuration#project.xml|le chapitre sur ce point]].
+  * dans vos fichiers de configuration (@@F@defaultconfig.ini.php@@ et autres fichiers ini):
+     * mettre @@checkTrustedModules@@ à "on"
+     * supprimer de @@modulesPath@@, les répertoires où vous n'utilisez pas de modules
+     * lister tous les modules qui peuvent être appelés depuis le web dans @@trustedModules@@
+     * lister tous les modules non utilisés du tout dans @@unusedModules@@, en particulier, si dans @@modulesPath@@ vous indiquez @@lib/jelix-admin-modules@@ et/ou @@lib/jelix-modules/@@, voyez la liste des modules dans ces répertoires (elle a changé depuis jelix 1.1) et indiquez les modules que vous n'utilisez pas.
+  * aller dans @@F@lib/jelix-scripts/@@ et lancer @@php jelix.php --yourapp migrate@@
+  * si la commande migrate échoue (une erreur est affichée)
+     * si l'erreur est "Installation of modules failed", écraser les fichiers de votre application avec votre sauvegarde, écraser votre base avec votre sauvegarde, corrigez l'erreur, et relancez la commande migrate
+     * si il s'agit d'une autre erreur, corrigez l'erreur et relancez la commande migrate
+  * supprimer tous les fichiers de @@F@temp/yourapp/@@
+  * lire la rubrique suivante pour effectuer des modifications dans votre code.
+  * tester votre application. Cela devrait être ok.
 
-===== Mettre à jour depuis jelix 1.0.x =====
-
-=== Généralités ===
-
-  * La plupart des constantes @@T@JELIX_LIB_*@@ ont été supprimées (inutiles), sauf @@T@JELIX_LIB_PATH@@, @@T@JELIX_LIB_CORE_PATH@@ et @@T@JELIX_LIB_UTILS_PATH@@. Aussi remplacez l'utilisation de ces constantes disparues par l'utilisation de @@T@JELIX_LIB_PATH@@ ou @@T@JELIX_LIB_UTILS_PATH@@.
-  * De même, les constantes @@T@JELIX_PLUGINS_PATH@@ et @@T@JELIX_MODULE_PATH@@ ont été supprimées. Ne les utilisez plus.
-
-=== Réponses personnalisées ===
-
-Dans vos objets réponses personnalisées comme @@F@responses/myHtmlResponse.class.php@@ :
-
-  * renommez la méthode @@M@_commonProcess()@@ en @@M@doAfterActions()@@.
-  * remplacez <php>require_once (JELIX_LIB_RESPONSE_PATH.'jResponseHtml.class.php');</php> par <php>require_once (JELIX_LIB_CORE_PATH.'response/jResponseHtml.class.php');</php>
-
-=== Configuration ===
-
-Dans les fichiers de configurations @@F@defaultconfig.ini.php@@ et autres @@F@config.ini.php@@, renommez la section @@V@[plugins]@@ en @@V@[coordplugins]@@.
-
-=== Formulaires jForms ===
-
-  * Dans les templates, les plugins @@f@{form}@@ et @@f@{formfull}@@ pour afficher un formulaire jForms ont leur liste de paramètres modifiée. Changez les donc en suivant leur documentation.
-  * Dans les fichiers xml : le nom de la balise racine des fichiers est maintenant uniformisé et s'appelle @@E@<form>@@. Renommez donc les balises @@E@<forms>@@ en @@E@<form>@@.
-  * L'api javascript de jforms a été légèrement modifiée : si vous l'utilisez (mais c'est rarement le cas), vous devez adapter vos scripts.
-  * L'api de l'objet @@C@jFormBase@@ a été légèrement modifiée au niveau des méthodes : @@M@setReadOnly()@@
-  * l'id de la balise form HTML générée a changé (#423) ainsi que les noms des ids des contrôles, pour éviter les collisions et les "deviner" plus facilement. Modifiez donc vos CSS ou votre code javascript qui font appel à ces balises.
-
-=== Autres API ===
-
-  * La méthode @@M@jDateTime::durationTo()@@ n'accepte plus un objet @@C@jDateTime@@ en paramètre, mais un objet @@C@jDuration@@.
-  * Amélioration de la méthode @@M@setFetchMode()@@ sur la classe @@C@jDbResultSet@@. Les constantes de classes que l'on donne en paramètres ne sont plus celles de @@C@jDbResultSet@@ mais celles de @@C@jDbConnection@@. Donc il faut utiliser @@jDbConnection::FETCH_CLASS@@ au lieu de @@jDbResultSet::FETCH_CLASS@@
+Un nouveau script d'installation @@F@yourapp/install/installer.php@@ a été créé, que vous pourrez utiliser plus tard (en ligne de commande) pour installer ou mettre à jour facilement votre application. Vous pouvez créer des scripts dans le répertoire @@F@install/@@ de vos modules, qui seront appeler pour installer ou mettre à jours les modules. Voir le chapitre correspondant dans le manuel.
 
 
-Pour cause de noms mal orthographiés, les propriétés et méthodes suivantes ont été renommées :
-  * template plugin formdatasfull renommé en formdatafull
-  * template plugin formdatas renommé en formdata
-  * @@M@jFormsBase::getDatas()@@ -> @@M@getAllData()@@
-  * @@M@jFormsDatasource::getDatas()@@ -> @@M@getData()@@
-  * @@P@jFormsDatasource::$datas@@ -> @@P@$data@@
-  * @@P@jFormsDataContainer::$datas@@ -> @@P@$data@@
-  * @@P@jResponseJson::$datas@@ -> @@P@$data@@
-  * @@P@jResponseRdf::$datas@@ -> @@P@$data@@
-  * @@M@jControllerDaoCrud::_checkDatas()@@ -> @@M@_checkData()@@
-  * plugin auth/auth : @@V@profil@@ -> @@V@profile@@
-  * @@M@jDb::getProfil()@@ -> @@M@jDb::getProfile()@@
-  * @@M@jDb::testProfil()@@ -> @@M@jDb::testProfile()@@
-  * @@M@jAclDb::getProfil()@@ -> @@M@jAclDb::getProfile()@@
-  * @@M@jAcl2Db::getProfil()@@ -> @@M@jAcl2Db::getProfile()@@
-  * @@P@jDbConnection::$profil@@ -> @@P@jDbConnection::$profile@@
-  * @@P@jControllerDaoCrud::$dbProfil@@ -> @@P@jControllerDaoCrud::$dbProfile@@
+== Autres étapes de migration ==
+
+  * Le support des anciens sélecteurs d'action et ancien nommage des classes tels qu'utilisés dans Jelix 1.0 beta ont été supprimés. Vous devrez modifier vos sélecteur et nom de classe si vous migrez depuis une très vieille version de jelix < 1.0
+  * Si vous utilisez directement @@F@jelixuser.dao.xml@@, vous devrez changer votre sélecteur : il a été supprimé du module jauth pour se retrouver dans le module jauthdb
+  * Si vous aviez fait votre propre driver jDb avec un plugin pour jDaoGenerator, vous devrez modifier certains appels de méthodes car certaines d'entre elles ont été renommées. Une réécriture a été faite et vous pouvez redéfinir plus de méthodes.
+  * Pour les sources de données personnalisées pour jForms, remplacez le nom de l'interface @@C@jIFormDatasource@@ par @@C@jIFormsDatasource@@.
+  * la méthode obsolète @@M@jResponseHtml::_commonProcess()@@ a été supprimé (vous devez la renommer en @@M@doAfterActions@@)
 
 
-Vous devez donc changer les noms de ces propriétés et méthodes dans le code de vos contrôleurs ou autres classes.
+===== Mettre à jour depuis jelix 1.0 =====
 
-
-===== Mettre à jour depuis jelix 1.0 alpha ou 1.0 beta =====
-
-  * L'ancienne syntaxe des sélecteurs d'actions, avec un "_" au lieu d'un ":" pour séparer le nom du contrôleur du nom de la méthode n'est plus prise en charge : il faut changer vos "vieux" sélecteurs.
-  * Suivez les instructions de migration de [[http://jelix.org/articles/changelog#autres-versions|chaque version 1.0 beta]] et [[http://jelix.org/articles/fr/changelog/1.0|1.0]], et suivez ensuite les instructions ci-dessus.
-
+Suivez les indications de migration de Jelix 1.0 à Jelix 1.1 dans le manuel de Jelix 1.1. Vous pourrez ensuite migrer vers Jelix 1.2.

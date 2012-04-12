@@ -1,0 +1,63 @@
+~~LANG:EN@//en/manual-1.2/installation/application-update~~
+
+Votre application tourne déjà sur votre serveur en production. Et maintenant, vous voulez mettre à jour votre application. Les principales étapes sont:
+
+    - Fermer l'application
+    - Mettre à jour les fichiers
+    - Lancer la mise à jour système de Jelix
+    - Supprimer tous les fichiers de /temp
+    - Ouvrir l'application
+
+===== Fermer et ouvrir l'application =====
+
+Il est souvent mieux d'avoir une simple page web qui dit que l'application n'est pas disponible, pendant le processus de mise à jour. Les utilisateurs ne pourront donc plus exécuter l'application, et c'est une bonne chose, pour que les modules ne modifient pas une base de données qui ne soient pas encore mises à jour ( en effet, un processus de mise à jour n'est jamais instantané).
+
+Il y a deux possibilités pour fermer une application.
+
+Votre administrateur pourrait reconfigurer le serveur web pour rediriger toutes les requêtes http vers la page montrant le message ou alors pour changer le document root.
+
+Une autre solution est d'utiliser un mécanisme Jelix qui permet de fermer l'application. Cela fonctionne seulement si vous appelez @@checkAppOpened()@@ dans le point d'entrée, juste avant l'appel à @@C@jCoordinator@@.
+Pour effectivement fermer l'application, vous devez créer un fichier, @@F@var/config/CLOSED@@, vide  ou avec un message à l'intérieur.
+Ensuite,Jelix afficher la page @@F@lib/jelix/installer/closed.html@@. Vous pouvez bien sûr proposer votre propre page html, en la plaçant dans votre application en tant que @@F@install/closed.html@@.
+Pour ré-ouvrir l'application, supprimez simplement le fichier @@F@var/config/CLOSED@@.
+Vous pouvez manipuler ce fichier manuellement (si vous avez seulement un accès FTP à votre site web, c'est la solution), ou, si vous avez un accès en ligne de commande, vous pouvez appeler les commandes jelix: @@openapp@@ and @@closeapp@@
+
+<code bash>
+$ php jelix.php closeapp
+$ php jelix.php openapp
+</code>
+
+Vous pouvez donner un message à la commande @@closeapp@@. Cela va remplacer le tag @@%message%@@ dans le fichier closed.html.
+
+<code bash>
+$ php jelix.php closeapp "Sorry, we are closed for the moment, a new version is comming."
+</code>
+
+===== Mettre à jour les fichiers =====
+
+La deuxième étape est de mettre à jour les fichiers de votre application. Vous pourriez uploader les fichiers dans le répertoire, par FTP, SCP ou d'autres outils. Vous pourriez aussi faire la mise à jour avec votre gestionnaire de source favoris (@@svn update@@, @@hg pull -u@@, @@git pull -u@@...).
+
+Si vous faite la mise à jour manuellement, n'oubliez pas de supprimer les fichiers obsolètes.
+
+===== Lancer la mise à jour =====
+
+Maintenant que les fichiers sources sont OK, vous devez mettre à jour l'application elle-même (base de données, configuration...)
+
+La seule chose que vous avez à faire est de lancer l'installateur, comme vous l'avez fait lorsque vous avez installé votre application pour la première fois. L'installateur Jelix (utiliser par un assistant ou un script d'installation d'application), peut installer **et** mettre à jour les modules.
+
+==== Avec un assistant ====
+
+Si vous avez installé l'application avec un assistant, cela ne va probablement pas fonctionner pour une mise à jour, sauf si la documentation de l'application dit que vous pouvez l'utiliser. Dans ce cas, lancez le script correspondant avec votre navigateur, et supprimez le fichier après la mise à jour.
+
+
+==== Avec l'installateur d'application ====
+
+Si il y a un script @@F@install/installer.php@@, lancez le simplement: ouvrez une console, allez dans le répertoire @@F@install/@@, et ensuite tapez @@php.exe installer.php@@.
+
+==== À la main ====
+
+C'est le cas quand le système d'installation est désactivé dans des projets spécifiques (voir la rubrique précédente sur l'installation). Dans ce cas, vous devez mettre à jour "à la main" ou avec des scripts "maison", tout ce qu'il faut pour que l'application fonctionne. 
+
+===== Nettoyer le répertoire temp =====
+
+**Vous devez toujours supprimer tous les fichier stockés dans le répertoire temp/yourapp/.**, après une installation ou une mise à jour, et avant de lancer l'application application.

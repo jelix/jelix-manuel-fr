@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/daos~~
+~~LANG:EN@//en/manual-1.2/daos~~
 
 jDao est l'ORM (Object Relational Mapping) de Jelix. Il permet de générer des objets PHP qui opèrent sur des tables précises de base de données. La génération de ces objets inclut la génération des requêtes SQL qui correspondent à ces opérations. 
 

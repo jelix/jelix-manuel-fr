@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/create-application~~
+~~LANG:EN@//en/manual-1.2/create-application~~
 
 La première chose à faire pour utiliser Jelix, c'est de créer une application. Vous pouvez en créer une "à la main", mais il y a une manière plus simple : utiliser la commande @@createapp@@ de [[jelix-scripts|jelix.php]].
 
@@ -16,6 +16,7 @@ php jelix.php --myapp createapp
   myapp/
      modules/      modules de l'application
      plugins/      plugins de l'application
+     responses/    classes pour les objets réponses HTML
      var/config/   fichiers de configuration
      var/log/      fichier de log
      var/themes/   les themes disponibles pour votre application
@@ -24,7 +25,4 @@ php jelix.php --myapp createapp
 
 Vous avez aussi un nouveau répertoire @@F@temp/myapp@@, où seront stockés tout les fichiers de caches créés par Jelix.
 
-Maintenant vous devez configurer votre application avant de la lancer une première fois. Voir [[configurer-application|la documentation sur la configuration]].
-
-Si vous voulez créer une interface d'administration, allez à la section
-[[creer-application/creer-administration|Créer une interface d'administration]].
+Maintenant vous devez configurer votre server avant de lancer votre application une première fois.

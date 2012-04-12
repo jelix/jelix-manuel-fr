@@ -1,0 +1,102 @@
+~~LANG:EN@//en/manual-1.2/cache~~
+
+jCache est une classe permettant de stocker des données dans un système de cache.
+Le système repose sur des pilotes pour les accès aux données. Il est donc possible d’utiliser pour le stockage des données, soit une base de données, soit un système de fichiers ou soit memcache .
+
+===== Configuration =====
+
+Pour utiliser jCache, il faut d'abord spécifier les paramètres de configuration du système dans un fichier de configuration. Ce fichier est par défaut @@F@cache.ini.php@@ situé dans @@F@var/config/@@. 
+Vous pouvez définir plusieurs configurations du système, que l'on nomme “profils”. Ainsi vous pouvez définir des configurations  pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application. 
+
+Chaque profil doit indiquer au moins ces trois paramètres :
+
+   * @@driver@@ : indique le pilote à utiliser. 
+   * @@enabled@@ : permet d'indiquer si le cache pour ce profil est actif (1) ou non (0). Utile en développement ou débuggage.
+   * @@ttl@@ : indique le temps d’expiration des données (0 signifie n’expire jamais).
+   * @@automatic_cleaning_factor@@ : indice de nettoyage automatique du système de cache. 
+
+Un profil peut contenir d'autres paramètres, en fonction du pilote utilisé.
+
+Voici un exemple de fichier @@F@cache.ini.php@@ : 
+
+<code ini>
+default = foo
+
+[foo]
+enabled = 1
+driver = file
+ttl = 0
+automatic_cleaning_factor = 0
+; répertoire où stocker les données (par défaut 'JELIX_APP_TEMP_PATH/cache/')
+;cache_dir =
+file_locking = 1
+directory_level = 0
+directory_umask = 0700
+file_name_prefix = "jelix_cache"
+cache_file_umask = 0600
+</code>
+
+Il y a une section “foo”. Chaque section correspond à un profil de configuration. Un paramètre, “default”, indique le profil à utiliser par défaut. 
+
+==== Pilote memcache ====
+
+Il utilise l'API memcache de PHP (et non pas memcached).
+
+Paramètres possibles : 
+   * @@driver=memcache@@
+   * @@servers@@ : liste de serveurs memcached.
+
+<code>
+[mymemcache]
+driver=memcache
+ttl=360
+enabled=1
+servers = memcache_host1:11211,memcache_host2:11211,memcache_host3:11211
+</code>
+
+
+
+==== Pilote file ====
+
+Le cache est stocké dans des fichiers.
+
+Paramètres possibles :
+
+   * @@driver=file@@
+   * @@cache_dir@@ : le répertoire où les données sont stockées.
+   * @@file_locking@@ : indique s’il y a verrouillage des fichiers (1) ou non (0).
+   * @@directory_level@@ : niveau d’arborescence des répertoires du système de cache.
+   * @@directory_umask@@ : attributs utilisés pour les  répertoires.
+   * @@file_name_prefix@@ : préfixe des noms de fichiers du système de cache.
+   * @@cache_file_umask@@ : attributs utilisés pour les fichiers.
+
+==== Pilote db ====
+
+Ce pilote utilise une table SQL pour stocker les valeurs de cache. L'installateur de jelix crée la table nécessaire quand l'application l'utilise. Cependant, pendant le developpement, vous devez vous même créer la table. Utilisez l'un des scripts SQL dans  @@F@lib/jelix/core-modules/jelix/install/sql/install_jcache.schema.*@@ pour créer la table.
+
+Paramètres possibles :
+
+   * @@driver=db@@ : la valeur est "db".
+   * @@dao@@ : un sélecteur vers le fichier dao que vous voulez utiliser. Par défaut, "jelix~jcache".
+   * @@dbprofile@@ : profil de connexion jDb à utiliser .
+
+
+
+===== Utilisation =====
+
+@@C@jCache@@ est la classe principale du système de cache. Toutes ses méthodes sont statiques. Elle effectue un bon nombre d’opérations comme stockage, suppression, récupération de données. Vous appellerez ces méthodes quand bon vous semble.
+
+   * @@M@jCache::get($key)@@: Pour récupérer une valeur.
+   * @@M@jCache::set($key, $value, $ttl)@@: pour stocker ou modifier une valeur. $ttl est optionnel
+   * @@M@jCache::delete($key)@@: pour effacer une valeur
+   * @@M@jCache::increment($key)@@: incremente une valeur
+   * @@M@jCache::decrement($key)@@: decremente une valeur
+   * @@M@jCache::add($key, $value)@@: pour stocker une nouvelle valeur. Retourne false si la clé existe déjà
+   * @@M@jCache::replace($key,$value, $ttl)@@: pour changer une valeur d'une clé existante. Retourne false si la clé n'existe pas. $ttl est optionnel.
+   * @@M@jCache::garbage()@@: efface toutes les valeurs expirées
+   * @@M@jCache::flush()@@: efface tout le cache.
+   * @@M@jCache::call($fn, $fnargs, $ttl)@@: utilise le nom et les arguments de la fonction donnée comme clé de la valeur que retourne la fonction. Si la clé existe déjà, renvoi la valeur du cache, sinon appelle la fonction et stocke la valeur retournée dans le cache.
+
+Toutes ces méthodes statiques acceptent un nom de profile jcache en dernier argument.
+
+

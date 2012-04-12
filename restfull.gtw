@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/restfull~~
+~~LANG:EN@//en/manual-1.2/restfull~~
 
 
 La technique REST consiste à utiliser les fonctionnalités du protocole HTTP pour manipuler une ressource. En effet, il existe les méthodes POST et GET que vous connaissez, mais il existe aussi les méthodes PUT et DELETE. Ainsi, pour effectuer  une création, un affichage, un effacement d'une ressource, plutôt que d'avoir plusieurs URLs spécifiques pour faire cela, il y a une seule URL, et on utilise le champ "method" de HTTP pour indiquer l'action à effectuer.
@@ -52,12 +52,27 @@ Avec l'url obtenu par jUrl::get("leModule~exemple:"), vous pouvez alors appeler 
 
 ==== Note ====
 
-Vous pouvez bien sûr faire du REST avec un contrôleur classique, en testant dans votre action, la valeur de $_SERVER['REQUEST_METHOD'] qui indique le type de la méthode HTTP. Mais c'est peut être moins "sexy" que d'utiliser le procédé indiqué dans cette page pour implémenter du REST ;-)
+Vous pouvez bien sûr faire du REST avec un contrôleur classique, en testant dans votre action, la valeur de $_SERVER['REQUEST_METHOD'] qui indique le type de la méthode HTTP. Mais c'est peut-être moins "sexy" que d'utiliser le procédé indiqué dans cette page pour implémenter du REST ;-)
+
 
 ===== Récupérer les paramètres de requêtes =====
 
 Comme dans n'importe quel contrôleur, vous récupérez les paramètres avec la méthode @@M@param()@@ en indiquant le nom du paramètre, en particulier pour les méthodes POST et GET, comme à l'habitude.
 
-Pour PUT et DELETE par contre, il faut récupérer les paramètres à la main. En effet, PHP ne supporte pas correctement la méthode HTTP PUT. Il ne récupère pas les paramètres qui pourraient être éventuellement dans le corps de la requête http, comme il le fait avec la méthode POST (il n'y a pas de @@$_PUT@@).
+Bien sûr, pour POST ou PUT, @@M@param()@@ ne fonctionne que si les paramètres sont envoyés sous les types de format "multipart/form-data" ou "application/x-www-url-encoded" (ce qui est le cas dans la majorité des cas avec POST).
 
-Il vous faut alors récupérer le flux @@php://input@@ et parser vous même le contenu (Dans la version suivante, Jelix le fera automatiquement).
+==== Cas du PUT ====
+
+PHP ne supporte pas correctement la méthode HTTP PUT. En effet, il ne récupère pas les paramètres qui pourraient être éventuellement dans le corps de la requête http, comme il le fait avec la méthode POST (il n'y a pas de @@$_PUT@@).
+
+Jelix pallie ce défaut, en extrayant lui-même ces paramètres (via @@php://input@@), à condition que le type de contenu soit @@application/x-www-url-encoded@@ ou @@multipart/form-data@@, comme pour POST. Vous appellerez donc la méthode @@M@param()@@ comme dans n'importe quel contrôleur, en indiquant le paramètre voulu.
+
+Par contre, les fichiers éventuellement transmis dans un contenu  @@multipart/form-data@@, ne sont pas mis dans $_FILE, il vous faudra donc les traiter vous-même, en les récupérant comme les autres paramètres (@@$this->param('foo')@@).
+
+Si les données ne sont pas de type "multipart/form-data" ou "application/x-www-url-encoded", vous pourrez quand même récupérer le contenu de la requête en indiquant le nom de paramètre @@__httpbody@@. 
+
+<code php>
+  $data = $this->param('__httpbody');
+</code>
+
+À vous ensuite d'analyser le contenu en fonction du type des données (que vous trouverez dans @@$_SERVER["CONTENT_TYPE"]@@).

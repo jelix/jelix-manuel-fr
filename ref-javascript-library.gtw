@@ -1,0 +1,20 @@
+Ce chapitre décrit les bibliothèques javascript utilisées au sein de Jelix.
+
+====== jQuery ======
+
+Jelix utilise [[http://jquery.com/|jQuery]] au sein du framework, notamment avec [[jforms|jForms]].
+
+Les versions utilisées sont les suivantes
+
+  * [[http://jquery.com/|jQuery 1.4.2]]
+  * [[http://jqueryui.com/|jQueryUi 1.8.1]]
+
+
+====== Markitup ======
+
+
+Jelix utilise [[http://markitup.jaysalvat.com/home/|MarkitUp]] au sein du framework, notamment pour [[jforms/xml/wikieditor|wikieditor]].
+
+La version utilisée est la suivante :
+
+  * [[http://markitup.jaysalvat.com/home/|MarkitUp 1.1.7]]

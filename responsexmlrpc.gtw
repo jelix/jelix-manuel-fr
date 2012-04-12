@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsexmlrpc~~
+~~LANG:EN@//en/manual-1.2/responsexmlrpc~~
 
 Jelix propose la prise en charge de [[http://www.xmlrpc.com/spec/|xml-rpc]]. C'est un protocole d'échange de données en XML :  un client envoie un contenu XML indiquant une fonction à exécuter et des paramètres. Le serveur renvoie un résultat, toujours sous forme de XML (RPC = Remote Procedure Call). 
 
@@ -30,7 +30,7 @@ xmlrpc = "@xmlrpc"
 
 Si vous utilisez [[urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
 <code xml>
-<xmlrpcentrypoint name="xmlrpc" default="true" />
+<entrypoint type="xmlrpc" name="xmlrpc" default="true" />
 </code>
 
 Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action pour xmlrpc comme ceci :

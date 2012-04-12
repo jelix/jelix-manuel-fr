@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/mailer~~
+~~LANG:EN@//en/manual-1.2/mailer~~
 
 jMailer est une classe permettant l'envoi d'email depuis un contrôleur ou une classe métier. Elle est basée sur la classe [[http://phpmailer.codeworxtech.com|PHPMailer]]. 
 
@@ -55,8 +55,6 @@ Envoi d'un email texte avec le paramétrage par défaut.
 <code php>
   $mail = new jMailer();
 
-  $mail->FromName = 'Expediteur';
-  $mail->From = 'expediteur@exemple.com';
   $mail->Subject = 'Sujet de l\'email';
   $mail->Body = 'Contenu du message texte';
 
@@ -79,7 +77,10 @@ modules/monmodule/templates/supermail.tpl
     {meta From 'votre nom<votre@mail.com>'}
     {meta Sender 'votre@mail.com'}
     {meta ReplyTo array('votre nom<votre@mail.com>')}
-    
+    {meta to array($name.'<'.$email.'>')}
+    {meta cc array('titi <titi@example.com>')}
+    {meta bcc array('tutu <tutu@example.com>')}
+
     Salut {$name},
 
     Voici un super mail généré par jMailer et Jelix.
@@ -91,8 +92,29 @@ Et dans votre code PHP:
     $mail = new jMailer();
     $tpl = $mail->Tpl('monmodule~supermail');
     $tpl->assign('name', 'Monsieur Toto');
-    $mail->AddAddress('toto@example.com' , 'Toto');
+    $tpl->assign('email', 'toto@example.com');
     $mail->Send();
+</code>
+
+
+
+Il est à noter que @@C@jMailer@@ créé des variables de templates correspondantes à des propriétés (protégées) de PHPMailer. Vous pouvez ainsi y accéder dans votre template.
+
+<code html>
+    {meta Subject 'Super mail.'}
+    {meta Priority 1}
+    {meta From 'votre nom<votre@mail.com>'}
+    {meta Sender 'votre@mail.com'}
+    {meta ReplyTo array('votre nom<votre@mail.com>')}
+    {meta to array($name.'<'.$email.'>')}
+    {meta cc array('titi <titi@example.com>', 'tutu <tutu@example.com>')}
+
+    Salut {$name},
+
+    Voici un super mail généré par jMailer et Jelix. Il est en copie à :
+    {foreach $cc as $person}
+      - {$person[0]}
+    {/foreach}
 </code>
 
 ===== Envoi d'un email en HTML =====
@@ -105,6 +127,12 @@ $mail->isHTML(true);
 $mail->Body = "<p>Envoi d'un mail en <strong>HTML</strong> !</p>";
 $mail->AddAddress('toto@example.com' , 'Toto');
 $mail->Send();
+</code>
+
+Si vous utilisez un template, indiquer @@true@@ à la méthode @@M@Tpl@@.
+
+<code php>
+$tpl = $mail->Tpl('monmodule~supermail', true);
 </code>
 
 ===== Envoi d'un email avec pièce jointe =====

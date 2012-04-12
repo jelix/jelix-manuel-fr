@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/jforms/xml-1.1~~
+~~LANG:EN@//en/manual-1.2/jforms/xml-1.1~~
 
 La version 1.1 du format décrit dans cette page est utilisable depuis Jelix 1.1.
 
@@ -9,6 +9,12 @@ La version 1.1 du format décrit dans cette page est utilisable depuis Jelix 1.1
   * Type "html" sur les balises @@E@<input>@@ et @@E@<textarea>@@
   * Nouvel élement @@E@<emptyitem>@@ pour la balise @@E@<menulist>@@
   * La façon dont on déclare les sources de données.
+
+Bien que le numéro de version de jforms n'ait pas changé dans jelix 1.2, des nouvaux éléments et attributs ont fait leur apparition dans jelix 1.2 :
+
+    * @@E@<wikieditor>@@.
+    * @@E@<itemsgroup>@@ et @@A@groupby@@ pour les sources de données
+    * @@A@pattern@@ sur la balise @@E@<input>@@.
 
 ===== Structure principale =====
 
@@ -113,13 +119,15 @@ Il est possible d'empêcher la modification d'un champ de saisie. Pour cela, il 
 
 ==== Saisie de texte simple ====
 
-Pour afficher un simple champ de saisie, il faut utiliser la balise @@E@<input>@@. Vous devez y mettre l'attribut @@A@ref@@, et vous pouvez utiliser les balises @@E@<label>@@, @@E@<hint>@@, @@E@<alert>@@, @@E@<help>@@ ainsi que les attributs @@A@readonly@@ et @@A@required@@. Vous pouvez indiquer aussi ces attributs supplémentaires : @@A@type@@, @@A@defaultvalue@@, @@A@size@@, @@A@minlength@@ et @@A@maxlength@@.
+Pour afficher un simple champ de saisie, il faut utiliser la balise @@E@<input>@@. Vous devez y mettre l'attribut @@A@ref@@, et vous pouvez utiliser les balises @@E@<label>@@, @@E@<hint>@@, @@E@<alert>@@, @@E@<help>@@ ainsi que les attributs @@A@readonly@@ et @@A@required@@. Vous pouvez indiquer aussi ces attributs supplémentaires : @@A@type@@, @@A@defaultvalue@@, @@A@size@@, @@A@minlength@@, @@A@maxlength@@ et @@A@pattern@@.
 
 @@A@defaultvalue@@ permet d'indiquer une valeur par défaut qui sera affichée quand le formulaire est vide. Vous pouvez mettre la valeur @@L@"now"@@ pour les champs de saisie de dates. La valeur par défaut sera alors la date de maintenant.
 
 @@A@size@@ permet d'indiquer la largeur de la boîte de saisie en nombre de caractères.
 
 @@A@maxlength@@ et @@A@minlength@@ permet d'ajouter une contrainte sur la valeur saisie : la longueur minimale et maximale de la chaine de caractère saisie. Ces deux attributs ne sont utilisables que pour le @@A@type="string"@@.
+
+@@A@pattern@@: Il doit contenir une expression rationnelle compatible avec PHP et JS. Il n'est utilisatble que pour @@A@type="string"@@.
 
 @@A@type@@ permet d'indiquer le format de données que l'utilisateur doit respecter. Au moment de l'envoi  du formulaire, il y aura une vérification en javascript du contenu saisi, mais aussi une vérification côté serveur (au cas où le javascript est désactivé notamment) lors de l'appel à la méthode @@M@check()@@ sur l'objet formulaire.
 
@@ -144,6 +152,14 @@ Un exemple de champ de saisie simple :
   <input ref="email" type="email">
      <label locale="monmodule~monform.email.label" />
      <hint>L'email doit être valide</hint>
+  </input>
+</code>
+
+Un exemple de champ de saisie ave un pattern :
+
+<code xml>
+  <input ref="url" type="string" pattern="/^[a-z0-9\-]+$/">
+      <label>Url</label>
   </input>
 </code>
 
@@ -181,6 +197,19 @@ Par défaut, l'éditeur utilisé est wymeditor (pour le générateur "html" et "
 Vous pouvez changer d'éditeur (fckeditor, tinymce...), en l'indiquant dans la configuration de l'editeur.
 
 Pour savoir utiliser ces attributs et configurer un éditeur comme vous le souhaitez, voir [[xml/htmleditor|la page sur htmleditor]].
+
+==== Éditeur de contenu wiki ====
+
+Vous pouvez utiliser un textarea pour éditer du contenu wiki. Cependant il y a l'element @@E@<wikieditor>@@ qui permet de specifier que c'est du contenu wiki, et les générateurs peuvent afficher une barre d'outils pour faciliter l'édition. Il utiliseront automatiquement WikiRenderer (jWiki) pour transformer le contenu en HTML et l'afficher.
+
+<code xml>
+  <wikieditor ref="description">
+	<label>Description du produit</label>
+  </wikieditor>
+</code>
+
+Vous pouvez indiquer une configuration pour la barre d'outil, avec l'attribut @@A@config@@. Pour en savoir plus, voir [[xml/wikieditor|la page sur wikieditor]].
+
 
 ==== Saisie de date (datepicker) ====
 
@@ -422,7 +451,7 @@ Il arrive que l'on veuille proposer à l'utilisateur de faire un choix entre plu
 
 Quand l'utilisateur choisit un des items, les champs des autres items sont désactivés.
 
-La balise @@E@<choice>@@ accepte les balises @@E@<help>@@, @@E@<hint>@@, @@E@<alert>@@ ainsi que les attributs @@A@readonly@@, et @@A@selectedvalue@@. Cet attribut peut comporter la valeur de l'item sélectionné par défaut. Une autre façon de sélectionner par défaut un item est de mettre un attribut @@A@selected="true"@@ sur la balise @@E@<item>@@ correspondant.
+La balise @@E@<choice>@@ accepte les balises @@E@<help>@@, @@E@<hint>@@, @@E@<alert>@@ ainsi que les attributs @@A@readonly@@, @@A@required@@ et @@A@selectedvalue@@. Cet attribut peut comporter la valeur de l'item sélectionné par défaut. Une autre façon de sélectionner par défaut un item est de mettre un attribut @@A@selected="true"@@ sur la balise @@E@<item>@@ correspondant.
 
 ==== Captcha ====
 
@@ -463,7 +492,7 @@ La variable de formulaire correspondante ne contiendra rien d'intéressant. À m
 
 Dans la variable de formulaire "valider", vous aurez alors la valeur "preview" ou "svg", et vous pourrez agir en fonction de ces valeurs dans le contrôleur. Au niveau du formulaire HTML, cela affichera deux boutons avec leurs libellés respectifs "Prévisualiser" et "Sauvegarder".
 
-A noter : le code généré n'est pas compatible avec IE (voir [[http://jelix.org/forums/read.php?5,1844]]).
+A noter : le code généré n'est pas compatible avec IE (voir [[http://jelix.org/forums/forum/5-jelix-utilisation-et-developpement/posts/1844-1844-resolu-tag-formsubmit]]).
 
 ==== Bouton reset ====
 
@@ -552,8 +581,12 @@ Si ce paramètre est une valeur statique, ajoutez l'attribut @@A@criteria@@ :
 
 La méthode @@M@findByCat()@@ sera appelée avec la valeur @@L@"admin"@@ en paramètre.
 
-Si la valeur du paramètre est la valeur d'un des champs de saisie du formulaire, indiquez l'identifiant (attribut @@A@ref@@) de ce champ de saisie dans l'attribut @@A@criteriafrom@@. Exemple :
 
+== Dépendance avec un autre champs de saisie ==
+
+Bien souvent, on veut pouvoir indiquer cette valeur de manière dynamique, et souvent, provenant d'un autre champs de saisie. Un exemple : une liste de ville qui dépend du choix dans une liste de département.
+
+Plutôt que d'utiliser @@A@criteria@@, vous utiliserez l'attribut @@A@criteriafrom@@, où vous indiquerez l'identifiant (attribut @@A@ref@@) de ce champ de saisie pour lequel il faut récupérer la valeur :
 
 <code xml>
   <menulist ref="catlist">
@@ -566,8 +599,16 @@ Si la valeur du paramètre est la valeur d'un des champs de saisie du formulaire
   </menulist>
 </code>
 
-Note: dans cet exemple, on a une liste dont les valeurs sont en fonction d'une autre liste. Le remplissage ne se fait pour le moment que lors de l'affichage du formulaire, et non pas dynamiquement lorsque l'utilisateur choisit un item dans la liste catlist (mais à l'avenir, cela pourrait être le cas).
-Aussi, pour le moment, un usage plus courant sera l'utilisation d'un champ hidden comme valeur de critère.
+Dans cet exemple, on a une liste dont les valeurs sont en fonction d'une autre liste.
+
+Note : depuis Jelix 1.2, la liste est mise à jour quand l'utilisateur change la valeur du contrôle dont dépend la liste. Ce n'était pas le cas dans Jelix 1.1.
+
+
+=== Pour l'affichage des valeurs ===
+
+Lorsque le formulaire est affiché via les plugins @@{formdata}@@ et  @@{formdatafull}@@, où seules donc sont affichés les valeurs sélectionnées (ou plutôt les libellés correspondants), jForms ne fait pas appel à la méthode indiquée dans @@A@method@@ puisqu'elle est censée renvoyer une liste. Par défaut, c'est la méthode @@M@get@@ de la factory dao qui est appelée, avec la valeur sélectionnée. Si il y a des critères (statique ou dynamique), ces valeurs seront aussi passées. Ce qui signifie que //la valeur sélectionnée et les éventuels critères doivent correspondre à la clé primaire// de l'enregistrement correspondant à ce qui a été sélectionné.
+
+Or ce n'est pas toujours le cas. La valeur sélectionnée ou les critères peuvent correspondre à d'autres champs que la clé primaire. Il faut donc indiquer une autre méthode du dao, qui permettra de récupérer l'enregistrement correspondant, et qui devra prendre en paramètre à la fois la clé et tous les critères indiqués. Pour ce faire, indiquez dans l'attribut @@A@labelmethod@@ la méthode du dao à utiliser (de type @@selectfirst@@).
 
 === attributs et valeurs multiples ===
 
@@ -577,7 +618,7 @@ Les attributs suivants supportent la présence de valeurs multiples séparées p
    - @@A@criteria@@
    - @@A@criteriaFrom@@
 
-@@A@labelproperty@@ définissant les propriétés daos utilisées pour l'affichage, il est nécessaire de pouvoir utiliser un séparateur dans le cas de valeurs multiples. Pour cela, il suffit d'ajouter l'attribut @@A@labelSeparator@@ à l'élément datasource. 
+@@A@labelproperty@@ définissant les propriétés daos utilisées pour l'affichage, il est nécessaire de pouvoir utiliser un séparateur dans le cas de valeurs multiples. Pour cela, il suffit d'ajouter l'attribut @@A@labelseparator@@ à l'élément datasource. 
 
 Pour reprendre l'exemple précédent, si vous voulez afficher une liste d'éléments de configuration selon une catégorie et une date, et l'afficher sous la forme de couples @@L@"nom = valeur"@@: 
 <code xml>
@@ -644,6 +685,31 @@ Et dans le fichier jforms
 Si l'utilisation d'un DAO, d'une classe ou de données statiques n'est pas suffisante pour vous, regardez la section "Définir les choix d'un champ à multiple choix" dans la page [[utilisation|Utilisation de jforms]].
 
 Dans ce cas là, vous ne devez pas indiquer de balises @@E@<item>@@ ou de balises @@E@<datasource>@@.
+
+
+
+==== Données groupées ====
+
+Pour les éléments @@E@<menulist>@@ ou @@E@listbox@@, vous pouvez grouper les valeurs. Cela générera des  éléments @@E@optgroup@@ en HTML.
+
+Pour les sources de données statiques, utiliser l'élément @@E@<itemsgroup>@@ avec un attribut @@A@label@@ ou @@A@locale@@.
+
+<code xml>
+   <menulist ref="country">
+      <label>Countries </label>
+      <itemsgroup label="Europe">
+        <item value="fr">France</item>
+        <item value="gb">Great Britain</item>
+      </itemsgroup>
+      <itemsgroup label="Asia">
+        <item value="zh">China</item>
+        <item value="in">India</item>
+      </itemsgroup> 
+  </menulist>
+</code>
+
+Pour les sources de données de type dao ou class, vous devez utiliser l'attribut @@A@groupby@@ sur la balise @@E@<datasource>@@. Pour une source de donnée dao, @@A@groupby@@ indique la propriété du dao qui contient le libellé du groupe auquel appartient l'enregistrement. Pour une source de donnée de type class, la signification de @@A@groupby@@ dépend de l'implémentation de la source de donnée.
+
 
 ==== Présélection de valeurs ====
 

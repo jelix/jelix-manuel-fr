@@ -1,25 +1,25 @@
-~~LANG:EN@//en/manual-1.1/overloads~~
+~~LANG:EN@//en/manual-1.2/overloads~~
 
 
 Il peut arriver que vous utilisiez un module fourni par un tiers, et que certains fichiers ne vous conviennent pas tout à fait. Plutôt que de les modifier directement, Jelix propose un moyen de redéfinir ces fichiers sans les toucher. Cela permet plus tard de mettre à jour ce module tiers sans écraser vos modifications.
 
 Les fichiers d'un module que vous pouvez redefinir sont :
 
-   * les templates, par le biais de thèmes
-   * les fichiers de locales
-   * les fichiers daos
-   * les fichiers forms
+   * les templates, [[themes|par le biais de thèmes]]
+   * les fichiers de [[locales]]
+   * les fichiers [[daos]]
+   * les fichiers [[jforms|forms]]
 
 Pour les thèmes, voir [[themes|la page spécifique]]. Le thème par défaut se nommant "default", il suffit de mettre les nouveaux templates dans le répertoire de ce thème.
 
-Pour les autres types de fichiers, il faut mettre les nouveaux fichiers dans le répertoire var/overloads/. Ce répertoire contient des sous-répertoires ayant les noms des modules. Ces sous-répertoires sont alors organisés comme les modules. 
+Pour les autres types de fichiers, il faut mettre les nouveaux fichiers dans le répertoire @@F@var/overloads/@@. Ce répertoire contient des sous-répertoires ayant les noms des modules. Ces sous-répertoires sont alors organisés comme les modules. 
 
 Par exemple, imaginons que vous vouliez redéfinir des fichiers du module //exemple//.
 
-  * vous placerez les daos dans var/overloads/exemple/daos/
-  * vous placerez les forms dans var/overloads/exemple/forms/
-  * vous placerez les locales dans var/overloads/exemple/locales/
+  * vous placerez les daos dans @@F@var/overloads/exemple/daos/@@
+  * vous placerez les forms dans @@F@var/overloads/exemple/forms/@@
+  * vous placerez les locales dans @@F@var/overloads/exemple/locales/@@
 
 Les noms des fichiers doivent être les mêmes que les originaux. Pour les daos, n'oubliez pas de respecter l'api du dao original. C'est à dire que si des méthodes sont définies dans le dao original, il faut aussi les définir dans le nouveau fichier, sinon vous risquez d'avoir des erreurs PHP parce que les classes du module ne pourront appeler lesdites méthodes.
 
-Ensuite c'est tout. Le fait de mettre un fichier dans le répertoire var/overloads/ redéfinit automatiquement le fichier original correspondant. Ce sera ce nouveau fichier qui sera utilisé et non pas l'original.
+Ensuite c'est tout. Le fait de mettre un fichier dans le répertoire @@F@var/overloads/@@ redéfinit automatiquement le fichier original correspondant. Ce sera ce nouveau fichier qui sera utilisé et non pas l'original.

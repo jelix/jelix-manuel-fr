@@ -1,17 +1,17 @@
-~~LANG:EN@//en/manual-1.1/responseatom~~
+~~LANG:EN@//en/manual-1.2/responseatom~~
 
 
-Jelix permet, [[responserss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet jResponseAtom10, qui prend en charge  quasiment la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
+Jelix permet, [[responserss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet @@C@jResponseAtom10@@, qui prend en charge  quasiment la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
 
 <code php>
   $rep = $this->getResponse('atom1.0');
 </code>
 
-La manipulation de jResponseAtom10 est identique à jResponseRss20. La difference se situe sur quelques propriétés dans les informations du fil ou des items.
+La manipulation de jResponseAtom10 est identique à jResponseRss20. La différence se situe sur quelques propriétés dans les informations du fil ou des items.
 
 ===== Informations sur le fil atom =====
 
-jResponseAtom10, comme jresponseRss20, possède une propriété infos, qui est un objet permettant de spécifier les propriétés du fil Atom. Exemple :
+jResponseAtom10, comme jResponseRss20, possède une propriété @@P@infos@@, qui est un objet permettant de spécifier les propriétés du fil Atom. Exemple :
 
 <code php>
    $rep->infos->title = 'Actualité de Jelix';
@@ -22,18 +22,18 @@ jResponseAtom10, comme jresponseRss20, possède une propriété infos, qui est u
    $rep->infos->selfLink=jUrl::get();
 </code>
 
-Le champs //updated// est la date de dernière mise à jour du fil Atom. Elle est en général déterminée par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil Atom d'un blog, ce sera la date du dernier billet.
+Le champ @@P@updated@@ est la date de dernière mise à jour du fil Atom. Elle est en général déterminée par la date de publication de l'item le plus récent qui sera présenté dans le fil. Par exemple, pour un fil Atom d'un blog, ce sera la date du dernier billet.
 
-La propriété //selfLink// est l'url de ce fils Atom.
+La propriété @@P@selfLink@@ est l'url de ce fils Atom.
 
-Par défaut, la description doit être du texte normal. Cependant vous pouvez indiquer du HTML ou XHTML. Dans ce cas vous devez l'indiquer dans la propriété //descriptionType//, qui peut prendre la valeur "html", "xhtml" ou "text".
+Par défaut, la description doit être du texte normal. Cependant vous pouvez indiquer du HTML ou XHTML. Dans ce cas vous devez l'indiquer dans la propriété @@P@descriptionType@@, qui peut prendre la valeur "html", "xhtml" ou "text".
 
 
 ===== Informations sur les items =====
 
 Il faut ensuite remplir le channel avec les items que vous voulez publier. Pour un blog par exemple, les items seront les descriptifs des derniers billets publiés.
 
-Pour chaque item, vous devez appeler la méthode //createItem()// de jResponseAtom10 pour récupérer un objet qui contiendra les informations de l'item. Vous remplissez alors cet objet et vous le stockez dans l'objet jResponseAtom10 avec la méthode //addItem()//
+Pour chaque item, vous devez appeler la méthode @@M@createItem()@@ de @@C@jResponseAtom10@@ pour récupérer un objet qui contiendra les informations de l'item. Vous remplissez alors cet objet et vous le stockez dans l'objet @@C@jResponseAtom10@@ avec la méthode @@M@addItem()@@.
 
 Voici un exemple avec une dao de news :
 
@@ -82,4 +82,4 @@ Voici un exemple avec une dao de news :
 
 ===== Autres informations =====
 
-Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de référence]] sur les objets jAtom10Info et jAtom10Item.
+Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de référence]] sur les objets @@C@jAtom10Info@@ et @@C@jAtom10Item@@.

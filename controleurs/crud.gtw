@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/controllers/crud~~
+~~LANG:EN@//en/manual-1.2/controllers/crud~~
 
 ===== Introduction =====
 
@@ -40,6 +40,14 @@ Vous avez alors toutes les pages qu'il faut pour gérer les enregistrements de l
 
 Important : par défaut, le controleur récupère la réponse HTML définie dans jelix, c'est à dire qu'il vous faut faire [[//traitements_communs#personnalisation-de-reponse-commune|une réponse HTML personnalisée]]. Si vous n'en avez pas, rien ne s'affichera. Si vous ne voulez pas faire de réponse personnalisée (ce qui est dommage), il faudra configurer le contrôleur.
 
+
+Note : vous pouvez aussi utiliser la commande jelix @@createdaocrud@@ qui vous permet de créer à la fois le contrôleur, le dao et le formulaire, en indiquant la table que l'on veut gérer.
+<code bash>
+php jelix.php --myapp createdaocrud le_module la_table le_nom_du_controleur
+</code>
+
+Voir l'aide de cette commande (@@php jelix.php help createdaocrud@@) pour les options.
+
 ===== Personnalisation du contrôleur =====
 
 Il se peut que le comportement par défaut du contrôleur et des affichages des pages ne correspondent pas à ce que vous voulez, et qu'il faille faire des choses au niveau du formulaire (pré remplir à la main des listbox par exemple). Voici donc ce qui est possible de faire.
@@ -49,7 +57,7 @@ Il se peut que le comportement par défaut du contrôleur et des affichages des 
 Si il faut utiliser un profil de connexion spécifique, indiquez le dans la propriété //$dbProfil// :
 
 <code php>
-  protected $dbProfil = 'admin';
+  protected $dbProfile = 'admin';
 </code>
 
 ==== Configurer la réponse ====
@@ -197,7 +205,7 @@ La méthode //index// appelle une méthode protégée //_index// que vous pouvez
 ==== Page création d'un enregistrement ====
 Elle est affichée par les actions //precreate//, //create//, //savecreate//.
 
-//precreate// créer et prépare le formulaire et redirige vers l'action //create//. L'action //create// affiche le formulaire pour éditer le nouvel enregistrement, et envoi les données vers l'action //savecreate//. Cette dernière action vérifie le contenu du formulaire, et enregistre les données si c'est ok.
+L'action //precreate// crée et prépare le formulaire puis redirige vers l'action //create//. L'action //create// affiche le formulaire pour éditer le nouvel enregistrement, et envoi les données vers l'action //savecreate//. Cette dernière action vérifie le contenu du formulaire, et enregistre les données si c'est ok.
 
 En plus de la méthode //_create// indiquée plus haut pour personnaliser l'affichage, vous pouvez aussi redéfinir les autres méthodes:
 
@@ -222,3 +230,20 @@ En plus de la méthode //_update// indiquée plus haut pour personnaliser l'affi
 
 Elle est affichée par l'action //delete//. Vous pouvez redéfinir la méthode //_delete// pour faire des traitements additionnels.
 
+===== Configurer les URLS =====
+
+Si vous avez activé les urls significatives, voici le contenu que vous pouvez mettre dans le fichier @@F@urls.xml@@ du module, dans l’hypothèse ici où le contrôleur s'appelle "mycrud" et que l'on veut avoir des urls vers ce contrôleur qui commencent par "thedata" :
+
+<code xml>
+<url pathinfo="/thedata/" action="mycrud:index" />
+<url pathinfo="/thedata/view/:id" action="mycrud:view" />
+<url pathinfo="/thedata/precreate" action="mycrud:precreate" />
+<url pathinfo="/thedata/create" action="mycrud:create" />
+<url pathinfo="/thedata/savecreate" action="mycrud:savecreate" />
+<url pathinfo="/thedata/preedit/:id" action="mycrud:preupdate" />
+<url pathinfo="/thedata/edit/:id" action="mycrud:editupdate" />
+<url pathinfo="/thedata/save/:id" action="mycrud:saveupdate" />
+<url pathinfo="/thedata/delete/:id" action="mycrud:delete" />
+</code>
+
+Il y a donc en tout 9 actions donc 9 urls à définir. 

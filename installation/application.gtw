@@ -1,14 +1,17 @@
-~~LANG:EN@//en/manual-1.1/installation/applications~~
+~~LANG:EN@//en/manual-1.2/installation/applications~~
 
-Nous allons prendre l'installation de **testapp** en exemple mais les explications sont valables pour n'importe quelle application.
+Ce chapitre explique comment installer une application existante, créée avec Jelix. Nous allons prendre l'installation de **testapp** en exemple mais les explications sont valables pour n'importe quelle application.
 
 Testapp est disponible en téléchargement. C'est une application testant divers composants de Jelix. Elle sert principalement aux développeurs de Jelix, mais vous pouvez l'installer pour voir des exemples d'utilisation.
 
-===== Décompression de l'archive =====
+===== Installation des fichiers =====
 
-Quand vous décompressez l'archive de testapp, vous obtenez les répertoires suivants :
+L'application peut être fournie sous forme d'une archive zip ou gz. Il est également possible que vous ayez accés au code source de l'application au travers d'un gestionnaire de code source (subversion, mercurial, git...).  Cette deuxième solution est à préférer, surtout en milieu professionnel : ça facilite les mises à jour.
+
+Quand vous décompressez l'archive, ou récupérerez les sources à partir d'un gestionnaire de sources, vous obtenez les répertoires suivants :
 
   testapp/          répertoire de l'application
+      install/      scripts d'installation
       modules/      modules de l'application
       plugins/      plugins de l'application
       responses/    les réponses personnalisées
@@ -17,7 +20,10 @@ Quand vous décompressez l'archive de testapp, vous obtenez les répertoires sui
          log/       fichiers journaux de l'application et de Jelix
       www/          racine du site de l'application (document root)
 
-Copiez ce répertoire dans le repertoire @@F@monsite/@@. Vous avez donc :
+Peut être aussi est-il fourni le répertoire @@F@lib/@@ de Jelix, ainsi qu'un répertoire temp. Si ce n'est pas le cas, vous devez télécharger Jelix.
+
+
+Vous copierez ensuite tout ces répertoires sur le serveur, dans le répertoire adéquate, qu'on appellera ici @@F@monsite/@@. Vous avez donc :
 
   monsite/
       lib/
@@ -26,20 +32,44 @@ Copiez ce répertoire dans le repertoire @@F@monsite/@@. Vous avez donc :
 
 Par défaut, l'arborescence des sources est organisée de façon à installer l'application sur un serveur sur lequel vous pouvez spécifier le répertoire racine public du site (document root). Ce répertoire est @@F@monsite/testapp/www/@@ .
 
-Vous pourrez bien entendu modifier l'emplacement de ces répertoires si par exemple vous ne pouvez pas modifier le document root. Nous allons voir comment faire plus loin.
+Vous pouvez modifier l'emplacement de ces répertoires si par exemple vous ne pouvez pas modifier le document root, mais ce n'est pas recommandé, pour des raisons de sécurité.
 
 Vous remarquerez que les fichiers propres à l'application et ceux du framework sont séparés. Vous pouvez ainsi partager le répertoire lib avec plusieurs applications.
 
 
-
 ===== Renommer les fichiers de configuration =====
 
-Dans @@F@testapp/var/config/@@ vous avez des fichiers @@F@*.dist@@. Renommez-les en enlevant cette particule '.dist'. Il y a certainement des choses à modifier dans ces nouveaux fichiers, comme les paramètres d'accès à la base de donnée (@@F@dbprofils.ini.php@@) etc..
+Dans @@F@testapp/var/config/@@ vous avez probablement des fichiers @@F@*.dist@@. Renommez-les en enlevant cette particule '.dist'. Il y a certainement des choses à modifier dans ces nouveaux fichiers, comme les paramètres d'accès à la base de donnée (@@F@dbprofils.ini.php@@) etc. Nous allons voir comment plus loin.
 
 ===== Créer le répertoire temporaire =====
 
 Dans @@F@monsite/temp/@@ vous devez créer le dossier @@F@testapp@@. Peut-être votre application contient-elle plusieurs fichiers @@F@*.init.php@@, similaires au fichier @@F@application.init.php@@. Il se peut que chacun de ces fichiers déclare un répertoire temporaire différent. Créez donc ces répertoires temporaires.
 
-===== Configurer l'application =====
+===== Configurer le serveur =====
 
-Voir le [[//configurer-application|chapitre dédié sur la configuration]].
+Vous devez configurer le serveur web correctement (virtual host, document root..) ainsi qu'une éventuelle base de donnée. Reportez vous [[//configurer-server|au chapitre correspondant]], et continuez à la section suivante.
+
+===== Installer l'application =====
+
+Il y a trois façon d'installer une application Jelix, selon ce qui est fourni avec l'application.
+
+==== Avec un assistant d'installation ====
+
+Un script @@F@testapp/www/install.php@@ peut être fourni. Il s'agit alors très probablement d'un script d'installation se lançant via le navigateur (un wizard). Ouvrez donc votre navigateur, et taper l'url de votre application, par exemple @@http://www.monsite.com/install.php@@. Suivez alors les instructions. Un wizard bien conçu modifiera pour vous les fichiers de configuration, comme pour la connexion à la base de données, et d'autres paramètres, après vous avoir demander les informations nécessaires.
+
+==== Avec le script d'installation de l'application ====
+
+Si il y a un script @@F@testapp/install/installer.php@@, il s'agit alors d'un script à lancer en ligne de commande, et qui va installer l'application. Il vous faut au préalable renseigner vous même à la main les fichiers @@F@dbprofils.ini.php@@ et @@F@defaultconfig.ini.php@@. Lisez la documentation de l'application. Ensuite, en ligne de commande, vous taperez @@php.exe installer.php@@ en étant dans le répertoire @@F@testapp/install/@@.
+
+==== Avec l'installateur de Jelix ====
+
+Si il n'y a ni wizard, ni script d'installation dédié, il faudra alors utiliser la commande @@installapp@@ du script jelix.php. Comme précédemment, renseignez bien le contenu des fichiers @@F@dbprofils.ini.php@@ et @@F@defaultconfig.ini.php@@, et lancez en ligne de commande, dans le répertoire @@F@lib/jelix-scripts/@@, @@php jelix.php --testapp installapp@@. Voir [[//jelix-scripts|le chapitre sur jelix-scripts]] pour plus de détails sur le fonctionnement de @@F@jelix.php@@
+
+Après l'une de ces manipulations, l'application devrait fonctionner correctement.
+
+
+==== Si le system d'installation est désactivé dans la configuration ====
+
+Pour certains projets, spécialement pour des projets internes où le processus de mise en production ou de mise à jour est vraiment spécifique, le choix de désactiver le système d'installation de jelix (@@disableInstallers=on@@) a pu être fait. Dans ce cas, il n'y a pas besoin de lancer l'installateur de l'application ou de jelix, il est de la responsabilité de l'intervenant de configurer et d'installer tout ce qu'il faut pour que l'application fonctionne (base de données et son contenu par ex), "à la main" ou par des scripts "maison" du processus d'installation interne.
+
+

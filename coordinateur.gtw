@@ -1,7 +1,7 @@
-~~LANG:EN@//en/manual-1.1/coordinator~~
+~~LANG:EN@//en/manual-1.2/coordinator~~
 
 
-Le coordinateur est le cœur du framework. C'est en quelque sorte le chef d'orchestre de l'exécution d'une action.
+Le coordinateur est le coeur du framework. C'est en quelque sorte le chef d'orchestre de l'exécution d'une action.
 
 À partir des paramètres donnés par un objet jRequest, le coordinateur en déduit les informations suivantes :
 

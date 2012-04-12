@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/classic-forms~~
+~~LANG:EN@//en/manual-1.2/classic-forms~~
 
 
 Créer et gérer des formulaires "à la main" (par opposition aux automatismes offerts par le système de formulaire [[jforms|jForms]]), n'est pas très différent par rapport à ce que l'on fait dans une application PHP classique. Quelques petites choses sont cependant à savoir pour profiter au mieux de ce qu'offre Jelix dans ce cas.
@@ -46,12 +46,12 @@ Vous pouvez bien sûr y ajouter du javascript pour vérifier les données saisie
 
 Par contre, l'exemple n'est pas totalement bon, dans la mesure où l'url est en dur dans le formulaire. Cela est problématique par exemple quand on utilise des urls significatives, qu'on les change, ou qu'on veuille réutiliser dans un autre projet. En effet, suivant l'url choisie, le contenu de l'attribut action peut être différent, le nombre de champs cachés aussi. 
 
-Il est donc préférable d'utiliser les plugins de templates **formurl** et **formurlparam**, auxquels vous indiquez le sélecteur de l'action de traitement du formulaire, et de la liste des paramètres (comme quand vous appelez jUrl::get()). Le premier sert à générer l'url à mettre dans l'attribut action, et l'autre à générer les champs cachés contenant les éventuels paramètres supplémentaires propres à l'action. Vous devez toujours utiliser les deux ensembles. Le formulaire devient alors :
+Il est donc préférable d'utiliser les plugins de templates @@formurl@@ et @@formurlparam@@, auxquels vous indiquez le sélecteur de l'action de traitement du formulaire, et de la liste des paramètres (comme quand vous appelez @@jUrl::get()@@). Le premier sert à générer l'url à mettre dans l'attribut action, et l'autre à générer les champs cachés contenant les éventuels paramètres supplémentaires propres à l'action. Vous devez toujours utiliser les deux ensembles. Le formulaire devient alors :
 
 <code html>
   <form action="{formurl 'monmodule~default:save'}" method="POST">
   <fieldset> <legend>Indiquez votre identité</legend>
-     {formurlparam 'monmodule~default:save'}
+     {formurlparam}
      <table>
       ...
       </table>
@@ -73,11 +73,11 @@ Le formulaire résultant sera le même que le premier exemple si le moteur d'url
   </form>
 </code>
 
-Attention, si vous utilisez le moteur significant, il faut bien prendre garde à spécifier les paramètres dans les appels aux deux plugins de templates **formurl** et **formurlparam**. En effet **formurlparam** devient sans effet avec ce moteur et c'est l'URL générée pour la soumission du formulaire qui recevra les paramètres.
+Notez que pour les versions de Jelix antérieures à 1.2, il fallait spécifier les paramètres dans les appels aux deux plugins de templates @@formurl@@ et @@formurlparam@@. Depuis 1.2, les paramètres à formurlparam sont facultatifs.
 
 ===== Traitement des données en retour =====
 
-Dans l'action servant à traiter les données, vous récupèrerez celles-ci grâce à **$this->param('champs')** dans votre contrôleur. Vous avez d'autres méthodes similaires, comme  **$this->intParam('champs')**, **$this->floatParam('champs')** et **$this->boolParam('champs')**, qui permettent de récupérer directement les valeurs sous un type particulier (voir [[controleurs|la page sur les contrôleurs]]).
+Dans l'action servant à traiter les données, vous récupèrerez celles-ci grâce à @@$this->param('champs')@@ dans votre contrôleur. Vous avez d'autres méthodes similaires, comme  @@$this->intParam('champs')@@, @@$this->floatParam('champs')@@ et @@$this->boolParam('champs')@@, qui permettent de récupérer directement les valeurs sous un type particulier (voir [[controleurs|la page sur les contrôleurs]]).
 
 Vous pouvez utiliser en plus jFilter, qui est une classe permettant de vérifier le format des données (utilise l'extension filter quand Jelix est généré pour PHP 5.2). exemple :
 

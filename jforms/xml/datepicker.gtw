@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/jforms/xml-1.1/datepicker~~
+~~LANG:EN@//en/manual-1.2/jforms/xml-1.1/datepicker~~
 
 
 Pour avoir une saisie simplifié de date dans vos formulaires, il faut utiliser la balise @@E@date@@ (ou @@E@datetime@@ pour saisie une date et une heure). Cela affiche alors un "datepicker".
@@ -60,9 +60,12 @@ Pour déclarer un nouveau type de datepicker, vous devez créer un fichier javas
 
 Cette fonction doit avoir pour nom @@f@jelix_datepicker_xxx@@ où xxx est le nom du type. Cette fonction doit accepter en paramètre :
 
-   * un objet javascript (jFormsJQControlDate ou jFormsJQControlDatetime avec le builder jforms basé sur jQuery) qui contient des propriétés comme le nom des champs de saisie (@@P@name@@), la date maximum (@@P@maxDate@@) ou la date minimum (@@P@minDate@@).
-   * une chaine contenant le code de la langue
-   * la valeur du basePath (qui dans bien des cas, est donc égale au chemin web jusqu'au fichier index.php de votre application)
+   * un objet javascript (@@C@jFormsJQControlDate@@ ou @@C@jFormsJQControlDatetime@@ avec le builder jforms basé sur jQuery) qui contient des propriétés comme le nom des champs de saisie (@@P@name@@), la date maximum (@@P@maxDate@@) ou la date minimum (@@P@minDate@@).
+   * un objet contenant des options de configuration :
+     * @@P@locale@@ : le code de langue (valeur de $gJConfig->locale)
+     * @@P@basePath@@ : le basePath de l'application 
+     * @@P@jqueryPath@@ : le chemin URL vers le répertoire de jquery
+     * @@P@jelixWWWPath@@ : le chemin URL vers le répertoire de jelix-www
 
 Pour chaque datepicker du même type utilisé dans un formulaire, la fonction sera appelée, et devra initialiser le datepicker sur les champs de saisie de la date. jForms génère en effet au moins 3 champs, dont les noms ont pour base le nom du formulaire et le nom du control. Exemple, pour un formulaire "sample.form.xml" dans le module "testapp" de votre application, et qui contient un controle @@E@<date>@@ de nom "datenaissance", vous aurez alors des champs html de nom "jforms_testapp_sample_datenaissance_month", "jforms_testapp_sample_datenaissance_day", et "jforms_testapp_sample_datenaissance_year".
 

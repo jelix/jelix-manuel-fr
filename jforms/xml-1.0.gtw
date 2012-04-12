@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/jforms/xml-1.0~~
+~~LANG:EN@//en/manual-1.2/jforms/xml-1.0~~
 
 
 
@@ -402,11 +402,11 @@ Exemple :
 
 ==== Données dynamiques avec une classe ====
 
-Si vous voulez fournir les données dynamiquement d'une autre manière que par un dao, vous pouvez créer une classe, qui devra implémenter l'interface **jIFormDatasource**. Elle sera stockée dans un répertoire //classes/// d'un module, et vous l'indiquerez via l'attribut dsclass.
+Si vous voulez fournir les données dynamiquement d'une autre manière que par un dao, vous pouvez créer une classe, qui devra implémenter l'interface @@C@jIFormsDatasource@@. Elle sera stockée dans un répertoire @@F@classes/@@ d'un module, et vous l'indiquerez via l'attribut @@A@dsclass@.
 
 Exemple de classe :
 <code php>
-class listDatas implements jIFormDatasource
+class listDatas implements jIFormsDatasource
 {
   protected $formId = 0;
 
@@ -448,7 +448,7 @@ Et dans le fichier jforms :
 
 Si l'utilisation d'un DAO, d'une classe ou de données statiques n'est pas suffisant pour vous, regardez la section "Définir les choix d'un champ à multiple choix" dans la page [[utilisation|Utilisation de jforms]].
 
-Dans ce cas-là, vous ne devez pas indiquer de balises <item> ou d'attributs dao*/dsclass.
+Dans ce cas-là, vous ne devez pas indiquer de balises @@E@<item>@@ ou d'attributs dao*/dsclass.
 
 ==== Présélection de valeurs ====
 

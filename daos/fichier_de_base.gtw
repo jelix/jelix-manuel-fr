@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/daos/file~~
+~~LANG:EN@//en/manual-1.2/daos/file~~
 
 Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping objet-relationnel, c'est à dire indiquer dans ce fichier la correspondance entre les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
 
@@ -9,7 +9,7 @@ Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping obje
 Le fichier d'un DAO peut être généré par le script //jelix// en ligne de commande, à partir d'une table de base de données existante.
 
 <code bash>
- php jelix.php --nom_application createdao nom_module nom_dao nom_table
+ php jelix.php --nom_application createdao nom_module nom_dao nom_table nom_sequence
 </code>
 
 Par exemple, si vous voulez créer dans le module "myshop", un DAO "product" qui sera basé sur la table "shop_product", vous taperez donc :
@@ -18,7 +18,7 @@ Par exemple, si vous voulez créer dans le module "myshop", un DAO "product" qui
  php jelix.php --nom_application createdao myshop product shop_product
 </code>
 
-Dans le répertoire @@F@daos@@ du module //myshop// vous allez donc avoir un fichier XML @@F@product.dao.xml@@ qui va contenir la description du mapping.
+Dans le répertoire @@F@daos@@ du module //myshop// vous allez donc avoir un fichier XML @@F@product.dao.xml@@ qui va contenir la description du mapping. Le nom de la table est optionnel si vous voulez utiliser le même nom de dao que celui de la table, et que vous n'avez pas de séquence. Indiquez le nom de la séquence utilisée pour auto incrémenter la clé primaire (paramètre nécessaire pour les bases oracles et parfois postgresql).
 
 Bien que la génération automatique permette de gagner du temps, il faut souvent retoucher le fichier pour que le mapping corresponde mieux à ce que l'on veut faire, le générateur ne pouvant tout deviner. Voyez alors la suite pour le compléter, ou en créer un à la main.
 
@@ -41,7 +41,7 @@ La structure d'un fichier DAO ressemble à cela :
 </dao>
 </code>
 
-Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes") est facultative et est décrite [[methodes_xml|dans une autre page dédiée]].
+Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes") est facultative et est décrite [[methodes_xml|dans un autre chapitre dédiée]].
   * @@E@datasources@@ : indique les tables sur lequel reposera l'objet.
   * @@E@record@@ : indique la correspondance entre les propriétés de l'objet et les champs des tables et définit donc les propriétés qu'il y aura sur l'objet record.
 
@@ -52,11 +52,11 @@ Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes") es
 
 ==== Déclaration de la table ====
 
-On appelle correspondance simple, une correspondance où un record = une table. Pour déclarer la table sur laquelle reposera le DAO, on utilise la balise @@E@<primarytable>@@, avec les attributs suivants :
+On appelle correspondance simple, une correspondance où un record est mappé sur une seule table. Pour déclarer la table sur laquelle reposera le DAO, on utilise la balise @@E@<primarytable>@@, avec les attributs suivants :
 
   * @@A@name@@ : alias donné à la table et qui sera utilisé dans les requêtes
   * @@A@realname@@ (facultatif) : nom réel de la table dans la base de données. Si cet attribut n'est pas précisé, il prend la même valeur que l'attribut @@A@name@@. Dans ce cas @@A@name@@ doit être le nom réel de la table.
-  * @@A@primarykey@@ indique la clé primaire. Vous pouvez indiquer plusieurs clés en les séparant par un espace ou une virgule.
+  * @@A@primarykey@@ indique la clé primaire. Vous pouvez indiquer plusieurs champs en les séparant par un espace ou une virgule.
 
 
 <code xml>
@@ -72,19 +72,18 @@ Il n'y a toujours qu'une seule table "primaire" dans un DAO (donc une seule bali
 Ensuite, il faut déclarer la correspondance propriété - champs.
 
 
-
 ==== Déclaration des propriétés ====
 
 La section @@E@<record>@@ déclare les propriétés d'un objet @@record@@ (enregistrement). Chaque propriété correspond à l'un des champs de la table primaire, ou l'un de ceux des tables étrangères comme vous le verrez plus loin. Bien sûr, vous n'êtes pas obligés de déclarer une propriété pour tous les champs existants. On peut ainsi faire plusieurs DAO qui travaillent sur une même table mais qui sont destinés à des usages différents. Par exemple faire un DAO spécifique pour récupérer des listes légères d'enregistrement (on ne déclarera que les propriétés essentielles), et un autre pour les gérer de manière complète (on y indiquera tous les champs).
 
-La section @@E@record@@ doit donc contenir une ou plusieurs balises @@E@<property>@@ :
+La section @@E@record@@ doit donc contenir une ou plusieurs balises @@E@<property>@@. Voici une balise @@E@<property>@@ avec la liste des attributs possibles :
 
 <code xml>
   <property 
       name="nom simplifié" 
       fieldname="nom du champ" 
       datatype="" required="true/false" minlength="" maxlength="" regexp="" 
-      sequence="nom de la sequence"
+      sequence="nom de la sequence" autoincrement="true/false"
       updatepattern="" insertpattern="" selectpattern=""
       default="" 
    />
@@ -92,28 +91,34 @@ La section @@E@record@@ doit donc contenir une ou plusieurs balises @@E@<propert
 
 L'attribut @@A@name@@ est le nom de la propriété de l'objet.
 
-L'attribut @@A@fieldname@@ est le nom du champ qui correspond.
-Si @@A@name@@ et @@A@fieldname@@ sont égaux, on peut omettre @@A@fieldname@@.
+L'attribut @@A@fieldname@@ est le nom du champ qui correspond. Si @@A@name@@ et @@A@fieldname@@ sont égaux, on peut omettre @@A@fieldname@@.
 
 Les attributs @@A@datatype@@, @@A@required@@, @@A@minlength@@, @@A@maxlength@@, et @@A@regexp@@ sont des contraintes. Cela permet par la suite d'appeler la méthode @@M@check()@@ sur un record pour vérifier les valeurs des propriétés (avant son stockage par exemple).
 
-L'attribut @@A@default@@ (depuis jelix 1.0RC1) permet d'indiquer une valeur par défaut.
+L'attribut @@A@default@@ permet d'indiquer une valeur par défaut.
 
-L'attribut @@A@datatype@@ peut prendre les valeurs :
-  * @@string@@
-  * @@int@@ / @@integer@@
-  * @@autoincrement@@
-  * @@double@@ / @@float@@
-  * @@numeric@@ / @@bigautoincrement@@
-  * @@date@@
-  * @@time@@
-  * @@datetime@@
-  * @@boolean@@
-  * @@varbinary@@ (depuis jelix 1.1.6)
+L'attribut @@A@datatype@@ indique le type SQL du champs. Voici les types de champs reconnus par jDao, qui sont bien plus nombreux que dans les versions précédentes de jelix :
 
-Sur certaines bases, on peut associer une séquence à un champ. L'attribut @@A@sequence@@ indique son nom.
 
-Les attributs @@A@updatepattern@@, @@A@insertpattern@@ et @@A@selectpattern@@ permettent d'indiquer un "motif" à appliquer lors de la mise à jour, l'insertion ou la lecture de la valeur du champ dans la table. Ce motif doit en fait être une expression SQL, contenant éventuellement la chaîne "%s" qui sera remplacée par la valeur ou le nom du champ. Par défaut leurs valeurs vaut "%s". Si on indique une valeur vide, cela correspond à une opération nulle (le champ n'est pas lu,  inséré ou mis à jour).
+  * @@varchar@@, @@varchar2@@, @@nvarchar2@@, @@character@@, @@character varying@@, @@char@@, @@nchar@@, @@name@@, @@longvarchar@@, @@string@@ (deprecated),
+  * @@int@@, @@integer@@, @@tinyint@@, @@smallint@@, @@mediumint@@, @@bigint@@, 
+  * @@autoincrement@@, @@serial@@, @@bigserial@@, @@bigautoincrement@@,
+  * @@double@@, @@double precision@@, @@float@@, @@real@@, @@number@@, @@binary_float@@, @@binary_double@@, @@money@@,
+  * @@numeric@@, @@decimal@@, @@dec@@,
+  * @@date@@, @@time@@, @@datetime@@, @@timestamp@@, @@utimestamp@@, @@year@@, @@interval@@
+  * @@boolean@@, @@bool@@, @@bit@@
+  * @@tinytext@@, @@text@@, @@mediumtext@@, @@longtext@@, @@long@@, @@clob@@, @@nclob@@
+  * @@tinyblob@@, @@blob@@, @@mediumblob@@, @@longblob@@, @@bfile@@,
+  * @@varbinary@@, @@bytea@@, @@binary@@, @@raw@@, @@long raw@@
+  * @@enum@@, @@set@@, @@xmltype@@, @@point@@, @@line@@, @@lsed@@, @@box@@, @@path@@, @@polygon@@, @@circle@@, @@cidr@@, @@inet@@, @@macaddr@@, @@bit varyong@@, @@arrays@@, @@complex types@@
+
+Les bases de données ne reconnaissent pas tous ces types de champs. Ne vous inquietez pas, indiquez le type que vous voulez, et jDao utilisera le type qui correspond le mieux pour la base de donnée utilisée. Par exemple, si vous indiquez @@bytea@@, c'est un type utilisé par postgresql. Si vous utilisez mysql, jDao utilisera en fait le type @@longblob@@.
+
+Les valeurs des champs seront convertis dans le type PHP le plus approprié, la plupart du temps, une chaine.
+
+Pour les champs auto incrementés, vous pouvez indiquer le type @@serial@@ ou @@autoincrement@@. Mais dans certain cas, il est préférable d'indiquer le type d'entier (@@integer@@, @@tinyint@@..) et de mettre un attribut @@A@autoincrement@@ à @@true@@. Sur certaines bases, on peut associer une séquence à un champ. L'attribut @@A@sequence@@ doit alors indiquer son nom.
+
+Les attributs @@A@updatepattern@@, @@A@insertpattern@@ et @@A@selectpattern@@ permettent d'indiquer un "motif" à appliquer lors de la mise à jour, l'insertion ou la lecture de la valeur du champ dans la table. Ce motif doit en fait être une expression SQL, contenant éventuellement la chaîne "%s" qui sera remplacée par la valeur ou le nom du champ. Par défaut leurs valeurs vaut "%s". Si on indique une valeur vide, cela correspond à une opération nulle (le champ n'est pas lu,  inséré ou mis à jour). Vous pouvez utiliser @@A@insertpattern@@ et @@A@selectpattern@@ sur des clés primaires, mais pas @@A@updatepattern@@.
 
 === Exemple 1 ===
 
@@ -170,5 +175,5 @@ Indiquer des tables annexes n'a de sens que si vous voulez avoir une ou plusieur
    />
 </code>
 
-Dans la propriété //libelle_categorie// du record, se trouvera la valeur du champ //label// de la table //categories// ("cat" étant l'alias de cette table, comme il a été défini plus haut dans la balise @@E@foreigntable@@ ).
+Dans la propriété @@P@$libelle_categorie@@ du record, se trouvera la valeur du champ @@label@@ de la table @@categories@@ ("cat" étant l'alias de cette table, comme il a été défini plus haut dans la balise @@E@foreigntable@@ ).
 

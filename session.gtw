@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/session~~
+~~LANG:EN@//en/manual-1.2/session~~
 
 
 
@@ -47,16 +47,20 @@ Pour utiliser jSession avec un Dao :
   dao_db_profile = ""
 </code>
 
-NB : un dao est fourni par défaut dans le module jelix, son sélecteur est : jelix~jsession.
+Un dao est fourni par défaut dans le module jelix, son sélecteur est : @@jelix~jsession@@.
 
-La structure de table pour ce DAO est :
+Jelix créé automatiquement la table correspondante quand vous installez votre application et que la configuration dans la section @@sessions@@ est faite.
+
+en cours de développement, vous pouvez exécuter l'un des scripts SQL @@F@lib/jelix/core-modules/jelix/install/sql/install_jsession.schema.*@@.
+
+Concrètement, la table installée sera celle-ci :
 
 <code php>
-  CREATE TABLE `jsessions` (
+CREATE TABLE  IF NOT EXISTS `jsessions` (
   `id` varchar(64) NOT NULL,
   `creation` datetime NOT NULL,
   `access` datetime NOT NULL,
-  `data` text NOT NULL,
+  `data` longblob NOT NULL,
   PRIMARY KEY  (`id`)
-  ) DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 </code>

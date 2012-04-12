@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/controllers~~
+~~LANG:EN@//en/manual-1.2/controllers~~
 
 Les contrôleurs sont les objets qui vont effectuer les actions correspondantes à chacune des urls de votre application.
 
@@ -101,33 +101,3 @@ Aussi, pour récupérer un objet "réponse" précis, vous appelez la méthode @@
 @@V@$rep@@ contient ici une réponse qui va générer du html. l'objet @@V@$rep@@  est du type @@C@jResponseHtml@@.
 
 Sachez que vous pouvez définir vos propres types de réponses, voire plusieurs types de réponses issues d'un même type, afin d'éviter de dupliquer du code, ou de prendre en charge un format que ne connaît pas jelix. Voyez pour cela [[creer_response|la partie sur la création des réponses]]
-
-==== Récupérer les paramètres de requête ====
-
-Comme vous le savez, les paramètres de la requête http sont stockés dans un objet @@C@jRequest@@, qui lui même est stocké dans l'objet @@C@jCoordinator@@. On peut ainsi  récupérer un paramètre de cette façon :
-
-<code php>
-  $id = $GLOBALS['gJCoord']->request->getParam('id');
-</code>
-
-Mais il y a plus pratique : la méthode @@M@param()@@ disponible dans les contrôleurs, au résultat équivalent.
-
-<code php>
-  $id = $this->param('id');
-</code>
-
-Si il n'y a pas de paramètre de nom id, le résultat sera la valeur @@L@null@@. Vous pouvez aussi indiquer en deuxième argument une valeur qui sera prise si le paramètre indiqué n'existe pas.
-
-<code php>
-  $titre = $this->param('title','un titre');
-</code>
-
-
-Il y a d'autres méthodes similaires, comme @@M@intParam()@@, @@M@floatParam()@@ ou @@M@boolParam()@@, prenant les mêmes arguments, mais transformant le paramètre récupéré dans le type de donnée correspondant. Cela permet ainsi de "filtrer" les données.
-
-
-   * @@M@intParam()@@, pour récupérer un nombre entier;
-   * @@M@floatParam()@@, un décimal.
-   * @@M@boolParam()@@, vous obtiendrez @@L@true@@ si le paramètre vaut @@L@"true"@@, @@L@"1"@@, @@L@"on"@@, ou @@L@"yes"@@, et @@L@false@@ dans le cas contraire.
-
-Si vous voulez un filtrage pour d'autres types de données, utilisez la classe @@C@jFilter@@.

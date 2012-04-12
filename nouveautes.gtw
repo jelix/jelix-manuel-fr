@@ -1,0 +1,13 @@
+~~LANG:EN@//en/manual-1.2/new-features~~
+
+Principales nouveautés apportées par la version 1.2 :
+
+  * une nouvelle gestion des modules
+  * un nouveau système d'installation et de mise à jour des modules
+  * une petite application pour créer un wizard d'installation graphique
+  * une amélioration de la performance et de la flexibilité des profiles jDb
+  * une nouvelle classe jCache pour stocker tout ce que vous voulez dans un cache, où vous voulez (memcache, files..)
+  * Un support des base de données nosql avec jKVDb
+  * possibilité de compresser à la volée les fichiers CSS et javascript
+  * génération de sitemap avec la nouvelle réponse jResponseSitemap
+

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/jforms/usage~~
+~~LANG:EN@//en/manual-1.2/jforms/usage~~
 
 Les données d'un formulaire jforms sont stockées en sessions. On manipule ces données au travers d'un //objet formulaire//, instance d'une classe héritant de @@C@jFormsBase@@. Cette classe est générée automatiquement à partir du fichier XML que vous fournissez. Comme pour les DAOs, elle  est stockée dans un cache évitant de la recréer à chaque utilisation.
 
@@ -19,7 +19,7 @@ Comme il est déjà expliqué dans le [[//formulaires-classique|guide sur les fo
 
 ===== Créer une instance d'un formulaire =====
 
-Avant de pouvoir utiliser jForms, il faut bien sûr [[xml|créer un fichier xml décrivant le formulaire]], et il faut ensuite, avant toute utilisation, qu'une de vos actions crée une instance de votre formulaire. Cela se fait au moyen de la méthode statique @@M@create@@ de la classe @@C@jForms@@. Comme toutes les autres méthodes statiques de la classe @@C@jForms@@, elle prend en premier argument le sélecteur du fichier xml, et un deuxième argument facultatif qui est un identifiant de l'instance à créer.
+Avant de pouvoir utiliser jForms, il faut bien sûr [[xml|créer un fichier xml décrivant le formulaire]], et il faut ensuite avant toute utilisation, qu'une de vos actions crée une instance de votre formulaire. Cela se fait au moyen de la méthode statique @@M@create@@ de la classe @@C@jForms@@. Comme toutes les autres méthodes statiques de la classe @@C@jForms@@, elle prend en premier argument le sélecteur du fichier xml, et un deuxième argument facultatif qui est un identifiant de l'instance à créer.
 
 En admettant que votre fichier xml soit @@F@contact.form.xml@@ dans le module "main" :
 <code php>

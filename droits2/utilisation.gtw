@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/rights2/use~~
+~~LANG:EN@//en/manual-1.2/rights2/use~~
 
 
 Quand vous voulez que votre module fonctionne selon des droits, il vous faut durant la réalisation de ce module :
@@ -66,10 +66,10 @@ Pour ce faire, activez le plugin jacl2 dans la configuration de l'application
 
 <code ini>
 [coordplugins]
-jacl2 = jacl2.coord.ini.php
+jacl2 = "index/jacl2.coord.ini.php"
 </code>
 
-Copiez le fichier lib/jelix/plugins/coord/jacl2/jacl2.coord.ini.php.dist dans var/config/index/jacl2.coord.ini.php
+Copiez le fichier @@F@lib/jelix/plugins/coord/jacl2/jacl2.coord.ini.php.dist@@ dans @@F@var/config/index/jacl2.coord.ini.php@@.
 
 Éditez ce fichier pour indiquer les actions vers lesquelles aller en cas de défaut de droits, ou le message à afficher.
 

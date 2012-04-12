@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/plugins/coord~~
+~~LANG:EN@//en/manual-1.2/plugins/coord~~
 
 Il est possible d'ajouter des plugins au [[//coordinateur|coordinateur]] (le cœur de Jelix, jCoordinator) qui permettent de faire des traitements supplémentaires à différentes étapes de l'exécution d'une action, quelle que soit cette action.
 
@@ -64,7 +64,7 @@ Indique que toutes les actions du contrôleur ont un paramètre nommé "auth.req
 
 ==== Exemples de plugins ====
 
-== magiquotes ==
+== magicquotes ==
 
 Il sert à traiter les magicquotes sur les serveurs où ces magic quotes sont activés. Pas de configuration pour ce plugin.
 

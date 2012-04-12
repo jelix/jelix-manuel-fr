@@ -1,10 +1,8 @@
-~~LANG:EN@//en/manual-1.1/creating-a-module~~
-
-===== Déclarer les modules =====
+~~LANG:EN@//en/manual-1.2/creating-a-module~~
 
 Un module est un répertoire dans lequel il y a une arborescence précise. Les modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe de modules, ou aussi dépôt de modules.
 
-==== Configuration générale ====
+===== Déclarer un dépôt de module =====
 
 Pour avoir accès aux modules, il faut déclarer ces dépôts de modules dans la configuration, par la propriété @@V@modulesPath@@. On peut y indiquer plusieurs chemins en les séparant par des virgules. On peut indiquer soit des chemins complets, soit des chemins relatifs à un répertoire spécifique de l'arborescence Jelix. Ces chemins relatifs ont une notation spéciale :
 
@@ -25,49 +23,59 @@ Exemple :
 
 On déclare ici qu'il y a deux dépôts de modules : le premier, //jelix-modules//, se trouvant dans le répertoire @@F@lib/@@ de jelix; le deuxième, le répertoire @@F@modules/@@ de l'application.
 
-Tous les modules se trouvant dans ces deux répertoires seront utilisables et les actions qu'ils déclarent pourront être appelées depuis un navigateur.
+Tous les modules se trouvant dans ces deux répertoires pourront être activés dans l'application.
 
-==== Désactivation totale ====
-
-Dans un dépôt de module, il se peut qu'il y ait des modules que vous n'utilisez pas, et qui donc ne sont pas installés et configurés.
-
-Il est donc nécessaire d'indiquer ces modules pour éviter d'y accéder depuis le web, ou que d'autres modules utilisent leurs ressources (classes, daos etc).
-
-Il faut l'indiquer au niveau de l'option @@V@unusedModules@@ dans la configuration. On peut indiquer plusieurs modules en les séparant par des espaces :
-
-<code ini>
-unusedModules = "foo,bar"
-</code>
-
-Cela indique que les modules foo et bar ne sont pas utilisables.
-
-==== Restrictions à un point d'entrée précis ====
-
-Il peut y avoir des modules que l'on veuille y accéder seulement depuis des points d'entrées spécifiques, ou que l'on veuille empêcher leur accès depuis le web, mais que l'on a installé et que l'on veuille utiliser leur ressources.
-
-On dispose alors de deux paramètres de configuration :
-
-<code ini>
-   checkTrustedModules = on
-   trustedModules = "foo,bar,baz"
-</code>
-
-On active la restriction d'accès via le paramètre @@V@checkTrustedModules@@, et on indique les modules autorisés dans @@V@trustedModules@@. Les autres modules ne seront pas accessibles à l'application. Par contre, les modules autorisés peuvent accéder aux ressources des modules non autorisés (classes, zones, dao...).
-
-Si on veut indiquer cette restriction pour tous les points d'entrée, on indiquera ces paramètres dans @@F@defaultconfig.ini.php@@, ou alors dans les fichiers @@F@config.ini.php@@  de chaque point d'entrée, pour indiquer les modules permis pour chaque point d'entrée.
-
-Il ne faudra pas oublier aussi de [[urls|configurer correctement le moteur d'url]], afin que les urls générées par Jelix utilisent bien le point d'entrée associé à chacun des modules.
 
 ===== Créer un module =====
 
 Le principe : il suffit de créer un répertoire dans un dépôt, avec un nom précis, et d'y mettre les contrôleurs, les daos et tout ce qu'il faut dans leurs sous-répertoires respectifs.
 
-Le plus simple est encore d'utiliser le script jelix et la commande @@createmodule@@ :
+Le plus simple est encore d'utiliser le script jelix et la commande @@c@createmodule@@ :
 
 <code bash>
-   php jelix.php createmodule monmodule
+   php jelix.php --myapp createmodule monmodule
 </code>
 
-Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de l'application, des sous répertoires ainsi qu'un contrôleur par défaut.
+Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de l'application, ainsi que l'arborescence classique d'un module et un contrôleur par défaut.
 
 **Important** : Le nom des modules est repris dans certaines classes générées automatiquement par Jelix, aussi ne peut-il comporter que des caractères autorisés par PHP pour les noms de classes : lettres minuscules, majuscules, non accentuées, les chiffres et le caractère _.
+
+Par défaut, le module est crée dans le répertoire @@F@modules/@@ de l'application, mais si vous voulez le créer dans un autre dépôt de module déclaré dans @@V@modulesPath@@, vous pouvez l'indiquer après le nom du module, en utilisant la même syntaxe que pour @@V@modulesPath@@, à savoir un chemin absolue ou un chemin relatif précédé de "lib:" ou "app:".
+
+Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/ 
+
+<code bash>
+   php jelix.php --myapp createmodule supermodule lib:shared-modules/
+</code>
+
+Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres options.
+
+
+
+
+===== Indiquer le numéro de version et les dépendances =====
+
+Après avoir créer le module, vous devez vérifier que le numéro de version initial est bon pour vous. Par défaut, c'est 0.1pre. Vous devez aussi éventuellement indiquer les dépendances. Ces deux choses sont très importantes pour le système d'installation de jelix.
+
+Vous pouvez indiquer le numéro de version à la commande @@createmodule@@, grâce à l'option @@-ver@@ :
+
+<code bash>
+php jelix.php --myapp createmodule -ver 1.0 supermodule
+</code>
+
+Vous pouvez aussi le modifier directement dans le fichier @@F@module.xml@@ de votre module.
+
+Vous pouvez enfin définir les dépendances de votre module. Les dépendances sont les modules nécessaires à l'exécution du nouveau module. Dans l'élément @@E@<dependencies>@@ dans le fichier @@F@module.xml@@, ajouter autant de balises @@E@<module>@@ que de modules nécessaires.
+
+<code xml>
+   <dependencies>
+     <jelix minversion="1.2" maxversion="1.2.*" />
+     <module name="jauth" minversion="1.2" />
+     <module name="anOtherModule" minversion="1.0" maxversion="1.4.*" />
+   </dependencies>
+</code>
+
+Les attributs @@A@minversion@@ et @@A@maxversion@@ sont facultatifs.
+
+
+Pour plus de détails sur le contenu de module.xml, [[configuration#module.xml|lisez le chapitre correspondant]].

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/modifiers~~
+~~LANG:EN@//en/manual-1.2/ref-plugins/tplplugins/modifiers~~
 
 Les modificateurs sont des fonctions qui permettent de modifier l'affichage d'une variable de template. Ils ne sont donc utilisés que lors des instructions d'affichage.
 
@@ -118,6 +118,114 @@ Contient : 8 mots</p>
 
 ===== eschtml =====
 
+===== gravatar =====
+
+ce modificateur permet d'afficher un avatar issu du site http://gravatar.com/
+
+Pour ce faire il suffit de fournir le courriel dans le template comme suit :
+
+<code php>
+{gravatar 'foo@bar.com'}
+</code>
+ce qui aura pour effet d'afficher votre gravatar à l'endroit voulu dans le template.
+
+===== hook =====
+
+==== Introduction ====
+
+Ce modificateur, permet d'ajouter toutes les fonctionnalités de votre choix dans vos templates.
+
+Pour exploiter les hooks vous écrirez dans votre template :
+
+<code smarty>
+{hook 'event', $params}
+</code>
+où **event** est le nom de l'évènement déclenchant la récuperation de toutes les fonctionnalités et **$params** est un tableau de paramètres à passer au listener qui répondra à **event**.
+
+Exemple dans le template main.tpl : 
+<code smarty>
+{hook 'SampleBannerAnnouncement'}
+</code>
+
+affichera une bannière d'annonce dans le template de votre choix, en répondant à l'évènement **SampleBannerAnnouncement**.
+
+==== Hook : convention de nommage ====
+
+Ceci vous permettra de comprendre, en lisant le nom d'un évènement, à quel template il est lié. Ceci n'est pas une règle figée dans le marbre mais une façon de vous y retrouver dans vos futurs hooks.
+
+  * Before**TemplateName**
+  * **TemplateName**
+  * After**TemplateName**
+
+où :
+  * **TemplateName** est le nom du template où le hook est utilisé
+  * BeforeTemplateName est le nom du hook appelé au début du template TemplateName
+  * TemplateName est le nom du template où le hook est appelé (en général au beau milieu du template)
+  * AfterTemplateName est le nom du hook appelé à la fin du template TemplateName
+
+==== Comment répondre aux hooks ? ====
+
+Il faut produire un module (ou mettre toute la mécanique suivante dans une module existant) avec :
+
+  * un listener 
+  * une zone 
+  * un template
+
+  * le Listener sera chargé de la réponse à l'évènement appelé dans la zone
+<code php>
+class hookListener extends jEventListener{
+    
+   function onhfbSampleBannerAnnouncement ($event) {
+        $event->add( jZone::get('hook~samplebanner_accouncement') );
+   } 
+}
+</code>
+  * fichier events.xml définissant le listener qui répondra à l'évènement 
+<code xml>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<events xmlns="http://jelix.org/ns/events/1.0">
+   <listener name="hook">
+	<event name="hfbSampleBannerAnnouncement" />
+   </listener>
+</events>
+</code>
+  * la zone qui exploitera les données de votre choix et fournira le template
+<code php>
+class samplebanner_accouncementZone extends jZone {
+    protected $_tplname='zone.samplebanner_accouncement';
+    
+    protected function _prepareTpl(){    
+        $this->_tpl->assign('text',jLocale::get('hook~main.welcome'));
+    }        
+}
+</code>
+  * le template qui affichera les données retournées au template //appelant//
+<code smarty>
+<div class="grid_16">
+    <div class="box">
+    <h2>Banner</h2>
+    {$text}
+    </div>
+</div>
+<div class="clear"></div>
+</code>
+
+tout ceci sera renvoyé automatiquement au template main.tpl (de notre exemple) à l'endroit voulu.
+
+===== image =====
+
+
+Ce modificateur de template affiche une image
+
+
+{image 'MonImage.gif', array('width'=>50)}
+
+Le code généré :
+
+<img width="50" src="http://localhost/extracom/cache/images/'MonImage.gif" alt=""/>
+
+Cette fonction va mettre en cache l'image dans le répertoire www ce qui permettra de ne pas regénérer les images
+
 ===== indent =====
 
 
@@ -146,7 +254,7 @@ Ce qui donne :
 
 Indent accepte 2 paramètres : 
   * le nombre de caractères à répéter pour l'indentation. Par défaut vaut 4
-  * le caractère à répéter. Par défaut est un espace.
+  * le caractère à répéter. Par défaut c'est un espace.
 
 <code smarty>
 {$foo|indent:"15"}
@@ -164,7 +272,7 @@ Indent accepte 2 paramètres :
 ===== jdatetime =====
 
 Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[//datetime|classe jDateTime]].\\ 
-Par défaut, le modificateur attend une chaine au format base de données (jDateTime::BD_DTFORMAT) et renvoi la date au format correspondant à la langue sélectionnée (jDateTime::LANG_DTFORMAT).
+Par défaut, le modificateur attend une chaîne au format base de données (jDateTime::BD_DTFORMAT) et renvoie la date au format correspondant à la langue sélectionnée (jDateTime::LANG_DTFORMAT).
 
 <code smarty>
   <p>la date est {$myDate|jdatetime}.</p>
@@ -187,6 +295,8 @@ Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en param�
 | 'db_time' | jDateTime::DB_TFORMAT | heure au format base de données classique : "HH:mm:SS" |
 | 'iso8601' | jDateTime::ISO8601_FORMAT | format ISO8601 |
 | 'timestamp' | jDateTime::TIMESTAMP_FORMAT | simple entier, indiquant le nombre de secondes depuis le 1/1/1970 (timestamp) |
+| 'full_lang_date' | jDateTime::FULL_LANG_DATE | date au format complet (jour de la semaine et mois en toute lettre) en tenant compte de la langue |
+
 
 Le premier paramètre indique le format de la chaîne que le modificateur reçoit,  le deuxième, le format de la chaîne en résultat.
 <code smarty>
@@ -199,22 +309,188 @@ si $myDate='2006-04-15' alors cela affiche
  la date est 1145052000.
 </code>
 
+===== mailto =====
+
+ce modificateur permet d'afficher un lien vers le courriel d'un utilisateur, cela la forme de votre choix 
+
+pour cela plusieurs options possibles :
+  * affichage classique du courriel 
+<code smarty>
+{mailto array('address'=>'me@domain.com')}
+</code>
+  * affichage du courriel encodé en javascript 
+<code smarty>
+{mailto array('address'=>'me@domain.com', 'encode'=>'javascript')}
+</code>
+  * affichage du courriel encodé en héxadécimal
+<code smarty>
+{mailto array('address'=>'me@domain.com', 'encode'=>'hex')}
+</code>
+  * affichage du courriel suivi d'un sujet
+<code smarty>
+{mailto array('address'=>'me@domain.com', 'subject'=>'Hello to you!')}
+</code>
+  * affichage du courriel suivi d'un destinataire mis en copie 
+<code smarty>
+{mailto array('address'=>'me@domain.com', 'cc'=>'you@domain.com,they@domain.com')}
+</code>
+  * utilisation d'options supplémentaires, telle une class CSS 
+<code smarty>
+{mailto array('address'=>'me@domain.com', 'extra'=>'class="mailto"')}
+</code>
+
+
+===== number_format ===== 
+
+Ce modificateur format un nombre à afficher tout comme expliqué dans la doc PHP [[http://fr.php.net/number_format]]
+
+exemple : 
+<code smarty>
+{$number|number_format:2, ',', ' '}
+</code>
+
 ===== regexp_replace =====
 
+ce modificateur permet de remplacer une chaine par une autre dans le template via les expressions réglulières
+
+<code>
+exemple
+//$maVar = 'TOTOO';
+{$maVar|regex_replace:'/O/':'ii'}
+</code>
+
+La chaine TOTOO sera remplacée par titii
+
+
+Il y a cependant un bug si on désire mettre des accolades dans l'expression régulière ticket : http://developer.jelix.org/ticket/1257
+
 ===== replace =====
+ce modificateur permet de remplacer une chaine par une autre dans le template via la fonction str_replace
+
+<code>
+exemple
+//$maVar = 'TOTOO';
+{$maVar|replace:'O':'ii'}
+</code>
+
+La chaine TOTOO sera remplacée par titii
+
+
+**Attention la fonction str_replace est obsolète en php 5.3x, il est préférable d'utiliser le modification regexp_replace**
 
 ===== spacify =====
+Ce modification permet de rajouter un caractère entre chaque lettre
+
+Par exemple
+Cas 1
+<code>
+{assign $mytext = 'Bonjour_tout_le_monde'}
+{$mytext|spacify:}
+</code>
+Résultat : B o n j o u r _ t o u t _ l e _ m o n d e 
+
+**Cas 2**
+<code>
+{assign $mytext = 'Bonjour_tout_le_monde'}
+{$mytext|spacify:'.'}
+</code>
+
+Résultat : B.o.n.j.o.u.r._.t.o.u.t._.l.e._.m.o.n.d.e 
+
+
 
 ===== printf =====
+Ce modification permet de formater une chaine via la fonction sprintf
+
+<code>
+{assign $mytext = 'Bonjour_tout_le_monde'}
+{$mytext|sprintf:'my format %s'}
+</code>
+
+Résultat : my format Bonjour_tout_le_monde 
 
 ===== strip =====
+Ce modification permet de supprimer les espaces qui sont en double dans une chaine et de les remplacer par défaut par un seul espace
+
+exemple :
+<code>
+{assign $mytext = 'Bonjour_tout_le  mmonde'}
+{$mytext|strip}
+</code>
+
+Résultat : Bonjour_tout_le mmonde
+
+PS : pour mieux voir le résultat afficher la source.
+
+<code>
+{assign $mytext = 'Bonjour_tout_le  mmonde'}
+{$mytext|strip:';'}
+</code>
+
+Résultat : Bonjour_tout_le;mmonde 
 
 ===== truncate =====
+Ce modificateur permet de couper une chaine à une longueur voulue (si besoin), et peut eventuellement 
+la séparer dans le milieu d'un mot et ajouter la chaine $etc (comme '...')
+
+**Cas 1**
+<code>
+{$mytext|truncate}
+</code>
+
+exemple : 
+<code>
+{assign $mytext = 'Bonjour_tout_le_monde'}
+{$mytext|truncate}
+</code>
+résultat : Bonjour_tout_le_monde 
+
+**Cas 2**
+<code>
+{$mytext|truncate:10}
+</code>
+
+exemple : 
+<code>
+{assign $mytext = 'Bonjour_tout_le_monde'}
+{$mytext|truncate:10}
+</code>
+résultat : Bonjour...
+
+**Cas 3**
+<code>
+{$mytext|truncate:10}
+</code>
+
+exemple : 
+<code>
+{assign $mytext = 'Bonjour_tout_le_monde'}
+{$mytext|truncate:10:'[...]'}
+</code>
+résultat : Bonjo[...]
+
+
+**Cas 4**
+{$mytext|truncate:60:'...':true}
+
+===== truncatehtml ===== 
+
+Ce modificateur permet de couper une chaine formatée en HTML en fermant tous les tags html ouverts, de sortes que le reste de la page n'est pas impacté
+
+Vous devriez utiliser ce modificateur dans une zone afin que la valeur retournée soit dans la cache.
+
+Exemple d'utilisation 
+<code smarty>
+{$mytext|wordwrap} 
+{$mytext|truncatehtml:150:"\n<a href="...">lire l'article complet</a>"} 
+{$mytext|truncatehtml:45} 
+</code>
+
 ===== wiki =====
 
 Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki, vers le format de votre choix. Ce modificateur utilise la [[http://jelix.org/articles/manuel/wiki|classe jWiki]].\\ 
 
-Par défaut, le modificateur attend une chaine au format wiki (wr3) et la renvoi au format XHTML, exemple :
+Par défaut, le modificateur attend une chaine au format wiki (wr3) et la renvoie au format XHTML, exemple :
 
 <code smarty>
   <p>{$message|wiki}</p>
@@ -230,15 +506,15 @@ le rendu sera
 Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en paramètre au modificateur :
 
 ^ paramètre ^ Rendu  ^ 
-| 'classicwr_to_text' | affichera du text au format wiki (v2 du WikiRender) en texte  |
-| 'classicwr_to_wr3' | affichera du text au format wiki (v2 du WikiRender) en wiki (v3 du WikiRender) | 
-| 'classicwr_to_xhtml' | affichera du text au format wiki (v2 du WikiRender) en XHTML |
-| 'dokuwiki_to_docbook' | affichera du text au format dokuwiki en docbook |
-| 'dokuwiki_to_xhtml' | affichera du text au format dokuwiki en XHTML |
-| 'trac_to_xhtml' | affichera du text au format wiki de Trac en XHTML |
-| 'wr3_to_docbook' | affichera du text au format wiki (v3 du WikiRender) en docbook|
-| 'wr3_to_text' | affichera du text au format wiki (v3 du WikiRender) en texte|
-| 'wr3_to_xhtml' | affichera du text au format wiki (v3 du WikiRender) en XHTML |
+| 'classicwr_to_text' | affichera du texte au format wiki (v2 du WikiRender) en texte  |
+| 'classicwr_to_wr3' | affichera du texte au format wiki (v2 du WikiRender) en wiki (v3 du WikiRender) | 
+| 'classicwr_to_xhtml' | affichera du texte au format wiki (v2 du WikiRender) en XHTML |
+| 'dokuwiki_to_docbook' | affichera du texte au format dokuwiki en docbook |
+| 'dokuwiki_to_xhtml' | affichera du texte au format dokuwiki en XHTML |
+| 'trac_to_xhtml' | affichera du texte au format wiki de Trac en XHTML |
+| 'wr3_to_docbook' | affichera du texte au format wiki (v3 du WikiRender) en docbook|
+| 'wr3_to_text' | affichera du texte au format wiki (v3 du WikiRender) en texte|
+| 'wr3_to_xhtml' | affichera du texte au format wiki (v3 du WikiRender) en XHTML |
 
 Le paramètre indique le format d'origine ''et'' de transformation (voulu)  que le modificateur reçoit
 <code smarty>

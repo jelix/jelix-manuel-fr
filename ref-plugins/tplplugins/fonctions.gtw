@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/functions~~
+~~LANG:EN@//en/manual-1.2/ref-plugins/tplplugins/functions~~
 
 Divers plugins sont de simple fonctions qui affichent quelque chose selon les paramètres.
 
@@ -258,7 +258,7 @@ Il y a deux autres plugins à votre disposition pour mieux contrôler un cycle. 
   {/foreach}
 </code>
 
-Notez que cycle_init attend une chaine avec les valeurs séparées par des virgules au lieu d'un tableau php (dans la version 1.2, il acceptera un tableau).
+Notez que cycle_init attend une chaine avec les valeurs séparées par des virgules, ou un tableau de valeurs.
 
 ==== Cycles nommés ====
 

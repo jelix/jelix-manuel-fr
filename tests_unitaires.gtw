@@ -1,6 +1,15 @@
-~~LANG:EN@//en/manual-1.1/unit-tests~~
+~~LANG:EN@//en/manual-1.2/unit-tests~~
 
-Le développement de test unitaires est de plus en plus présents dans les projets, et jelix propose de quoi en réaliser facilement. La réalisation des tests unitaires fait d'ailleurs partie des méthodes de développement comme XP (eXtreme programming). Le processus de développement veut, en théorie (et en gros), qu'à chaque fois que l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on modifie ou ajoute un bout de code, on lance tout les tests unitaires pour vérifier qu'il n'y a pas de regressions. Cela permet ainsi de garantir un minimum, un fonctionnement robuste de l'application.
+Le développement de tests unitaires est de plus en plus présent dans les projets, et jelix propose de quoi en réaliser facilement. La réalisation des tests unitaires fait d'ailleurs partie des méthodes de développement comme XP (eXtreme programming). Le processus de développement veut, en théorie (et en gros), qu'à chaque fois que l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on modifie ou ajoute un bout de code, on lance tous les tests unitaires pour vérifier qu'il n'y a pas de régressions. Cela permet ainsi de garantir un minimum, un fonctionnement robuste de l'application.
+
+===== Installation =====
+
+Le module jUnitTest doit être installé. Pour cela il vous suffit d'exécuter la commande
+<code>
+php jelix.php --myapp installmodule junittests
+</code>
+
+Copier également le répertoire jelix-modules/junittests/install/www/tests dans myApp/www/
 
 ===== Préparation =====
 
@@ -114,7 +123,7 @@ N'oubliez pas de mettre dans la configuration le paramètre enableTests = on, si
 
 Cette première page présente sur la gauche toute la liste des tests présents dans votre application, classés par module. Il suffit de cliquer sur un des tests pour le lancer et voir le résultat. Vous avez des liens aussi pour lancer tous les tests d'un module, ou tous les tests de votre application (attention cependant, les lancer tous peut être long pour les grosses applications, et provoquer un "timeout" au niveau du navigateur).
 
-À la fin du lancement de tests, il est affiché le nombre de tests unitaires qui sont passés avec succés, et celui des tests échoués.
+À la fin du lancement de tests, il est affiché le nombre de tests unitaires qui sont passés avec succès, et celui des tests échoués.
 
 Notez que le module junittests utilise sa propre réponse HTML, et fait appel à une feuille de style tests/design.css qui doit être placée dans le répertoire www de votre application. Vous en trouverez une dans le répertoire //install// du module junittests.
 
@@ -127,21 +136,21 @@ Voici une listes des différentes commandes disponibles :
 
 === Lister tous les tests ===
 
-Voir la liste de tous les tests de votre application rangés par modules. Vous devez préciser seulement ici le nom du controller car le mot-clé "help" renvoie vers l'aide générale de la ligne de commande de Jelix. Exemple :
+Voir la liste de tous les tests de votre application rangés par modules. Vous devez préciser seulement ici le nom du contrôleur car le mot-clé "help" renvoie vers l'aide générale de la ligne de commande de Jelix. Exemple :
 
 <code>
 php tests.php default:help
 </code>
 
-=== Lancer tout les tests de l'application ===
+=== Lancer tous les tests de l'application ===
 
-Exécuter l'ensemble des tests de votre application. Pas besoin ici de paramètre particulier, car exécuter tous les tests de l'application est l'action par defaut. Exemple :
+Exécuter l'ensemble des tests de votre application. Pas besoin ici de paramètre particulier, car exécuter tous les tests de l'application est l'action par défaut. Exemple :
 
 <code>
 php tests.php
 </code>
 
-=== Lancer tout les tests d'un module ===
+=== Lancer tous les tests d'un module ===
 
 Exécuter l'ensemble des tests d'un module spécifié. Vous devez ici donner le nom de votre module en paramètre. Exemple pour testapp :
 
@@ -158,7 +167,7 @@ php tests.php single jelix_tests core.jlocale
 </code>
 
 
-À la fin du lancement des tests, il est affiché le nombre de tests unitaires qui sont passés avec succés, et celui des tests échoués.
+À la fin du lancement des tests, il est affiché le nombre de tests unitaires qui sont passés avec succès, et celui des tests échoués.
 
 Notez que si vous n'avez pas le fichier ''tests.php'' dans le répertoire scripts, vous pouvez récupérer tous les fichiers nécessaires (le script et le fichier de configuration) dans le répertoire install du module junittests.
 

@@ -1,16 +1,16 @@
-~~LANG:EN@//en/manual-1.1/creating-response~~
+~~LANG:EN@//en/manual-1.2/creating-response~~
 
 
 Il est possible que Jelix ne fournisse pas le moyen de générer du contenu dans un format spécifique voulu. Aussi, il vous faut dans ce cas créer votre propre réponse.
 
 Cela consiste à :
-    - créer une classe héritant de jResponse (ou d'une autre réponse existante), et qui doit implémenter les méthodes adéquates pour manipuler le format en question
-    - stocker cette classe dans le répertoire //responses// de votre application
+    - créer une classe héritant de @@C@jResponse@@ (ou d'une autre réponse existante), et qui doit implémenter les méthodes adéquates pour manipuler le format en question
+    - stocker cette classe dans le répertoire @@F@responses/@@ de votre application
     - déclarer ce type de réponse dans le fichier de configuration
 
 ===== Créer la classe =====
 
-Une classe //response// doit posséder au moins deux méthodes : output() et outputErrors(). Et rédéfinir la propriété $_type avec un identifiant propre à votre type de réponse. output() doit générer le contenu formaté correctement (en faisant des print ou echo). outputErrors est appelé quand des erreurs bloquantes sont survenues pendant le traitement d'une action. Il génère alors une réponse différente, voire spécifique au format dans ce contexte-là. Il ne faut pas oublier non plus d'envoyer un en-tête HTTP correspondant au type de format.
+Une classe //response// doit posséder au moins deux méthodes : @@M@output()@@ et @@M@outputErrors()@@. Et redéfinir la propriété @@P@$_type@@ avec un identifiant propre à votre type de réponse. @@M@output()@@ doit générer le contenu formaté correctement (en faisant des print ou echo). @@M@outputErrors()@@ est appelé quand des erreurs bloquantes sont survenues pendant le traitement d'une action. Il génère alors une réponse différente, voire spécifique au format dans ce contexte-là. Il ne faut pas oublier non plus d'envoyer un en-tête HTTP correspondant au type de format.
 
 
 Exemple d'un format (bidon :-) ):
@@ -45,20 +45,20 @@ class myFooResponse extends jResponse {
 }
 </code>
 
-Comme dans l'exemple ci-dessus avec la propriété $content, vous pouvez rajouter toutes les propriétés et méthodes nécessaires à une manipulation aisée de l'objet dans les actions. Par exemple, l'objet jResponseHtml html instancie d'office un template, contient une propriété pour spécifier le titre d'une page html, des méthodes pour ajouter des choses dans le <head> etc..
+Comme dans l'exemple ci-dessus avec la propriété @@P@$content@@, vous pouvez rajouter toutes les propriétés et méthodes nécessaires à une manipulation aisée de l'objet dans les actions. Par exemple, l'objet @@C@jResponseHtml@@ instancie d'office un template, contient une propriété pour spécifier le titre d'une page html, des méthodes pour ajouter des choses dans le @@E@<head>@@ etc..
 
-N'hésitez pas à regarder le code source des fichiers dans lib/jelix/response/. Peut-être d'ailleurs que votre format s'apparente à un de ceux fournis par Jelix. Dans ce cas, votre objet response peut hériter de cet objet, ajouter des méthodes, en redéfinir etc.
+N'hésitez pas à regarder le code source des fichiers dans @@F@lib/jelix/core/response/@@. Peut-être d'ailleurs que votre format s'apparente à un de ceux fournis par Jelix. Dans ce cas, votre objet response peut hériter de cet objet, ajouter des méthodes, en redéfinir etc.
 
 ===== Stockage de la classe =====
 
-Le nom de la classe importe peu, mais il doit être utilisé dans le nom du fichier, et précèder le suffixe '.class.php'. Dans notre exemple, la classe sera alors stockée dans le fichier myFooResponse.class.php.
+Le nom de la classe importe peu, mais il doit être utilisé dans le nom du fichier, et précéder le suffixe '.class.php'. Dans notre exemple, la classe sera alors stockée dans le fichier @@F@myFooResponse.class.php@@.
 
-Le fichier doit être enregistré dans le répertoire //responses// de votre application.
+Le fichier doit être enregistré dans le répertoire @@F@responses/@@ de votre application.
 
 
 ===== Déclarer la réponse =====
 
-Pour que la réponse soit utilisable par les actions, il faut la déclarer avec un code. Et c'est ce code que vous indiquerez à la méthode getResponse dans les contrôleurs. Pour cela, vous ajouterez dans la section //responses// du fichier de configuration, une ligne //code=classe//.
+Pour que la réponse soit utilisable par les actions, il faut la déclarer avec un code. Et c'est ce code que vous indiquerez à la méthode @@M@getResponse@@ dans les contrôleurs. Pour cela, vous ajouterez dans la section @@responses@@ du fichier de configuration, une ligne @@code=classe@@.
 
 <code ini>
 [responses]
@@ -78,12 +78,12 @@ function index(){
 </code>
 
 
-Pourquoi ne pas indiquer directement le nom de la classe à getResponse ? Parce que cela permet de redéfinir un même type de réponse de façon transparente pour les actions et modules.
+Pourquoi ne pas indiquer directement le nom de la classe à @@M@getResponse@@ ? Parce que cela permet de redéfinir un même type de réponse de façon transparente pour les actions et modules.
 
 ===== À propos des templates =====
 
 Les plugins de templates sont, pour un certain nombre, attribués à un type de réponse particulier. Aussi, si vous créez un nouveau type de réponse spécifique, il vous faudra adapter et aussi dupliquer/copier/recréer les plugins de templates existants pour les autres types de réponses.
 
-Si vous héritez par contre d'un objet response existant (de jResponseHtml par exemple), ne changez pas la propriété //type// de la classe mère, sinon vous ne pourrez pas réutiliser les plugins de templates existants (à moins de les redéfinir).
+Si vous héritez par contre d'un objet response existant (de @@C@jResponseHtml@@ par exemple), ne changez pas la propriété @@P@type@@ de la classe mère, sinon vous ne pourrez pas réutiliser les plugins de templates existants (à moins de les redéfinir).
 
 Voir la [[plugins/tpl|doc pour faire des plugins de templates]].

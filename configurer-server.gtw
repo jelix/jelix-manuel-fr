@@ -1,27 +1,27 @@
-~~LANG:EN@//en/manual-1.1/application-configuration~~
+~~LANG:EN@//en/manual-1.2/server-configuration~~
 
-Vous avez les fichiers de votre application installés sur le disque dur. Maintenant, il faut configurer le serveur et l'application pour qu'elle soit accessible depuis le web. 
+===== Configuration de PHP =====
 
-Notez que la plupart des opérations décrites ici ne sont pas forcément spécifiques à jelix et vous pouvez obtenir des détails en lisant la documentation d'apache, de php, de mysql etc..
+   * @@V@magic_quotes_gpc@@ et @@V@magic_quotes_runtime@@ doivent être à @@L@Off@@. Si ce n'est pas le cas, [[plugins/coord|il faut activer le plugin magicquotes]] livré avec jelix.
+   * @@V@session.auto_start@@ doit être à 0
+   * @@V@safe_mode@@ doit être à @@L@Off@@ (À cause des nombreux fichiers temporaires créés par jelix, il peut être difficile de configurer une installation avec Jelix avec le safe_mode activé)
+  
+Il est également recommandé de mettre ces valeurs :
 
-Dans cette section, "myapp" désigne votre application. Remplacez ce nom par le nom de votre application dans les commandes et valeurs indiquées.
+   * @@V@register_globals = off@@
+   * @@V@asp_tags = off@@
+   * @@V@short_open_tag = off@@
 
-===== Droits sur les répertoires =====
+Un [[http://fr2.php.net/manual/fr/function.phpinfo.php|phpinfo()]] peut vous permettre de vérifier votre configuration. Par défaut la configuration se trouve dans un fichier nommé @@F@php.ini@@.
 
-Vous devez donner le droit en écriture à l'utilisateur exécutant votre serveur web (apache ou autre) au moins sur le répertoire @@F@myapp/var/log/@@, ainsi que tous les répertoires dans le répertoire @@F@temp/@@.
+==== Sur un serveur OVH mutualisé ====
 
-Exemple, sur un serveur debian/ubuntu :
+Si votre serveur de production est chez OVH, vous devez spécifier que vous utilisez PHP 5 (par défaut c'est PHP 4), sinon il y a des parse error. Ça se fait via le fichier ".htaccess" qui sera à la racine publique du site (www/) et vous devez indiquer :
 
-<code bash>
-   sudo chown www-data:www-data temp/myapp*  myapp/var/log
-   sudo chmod g+w temp/myapp* myapp/var/log
-</code>
+    SetEnv PHP_VER 5
+    SetEnv SESSION_USE_TRANS_SID 0
 
-Peut être que pour certaines applications, il y a d'autres répertoires à configurer de la sorte dans @@F@myapp/var/@@. Renseignez-vous dans la procédure d'installation spécifique à cette application si il y en a une.
-
-===== Configurer l'accés à la base de donnée =====
-
-Voir [[bd#profils-et-configuration|la section spécifique dans le chapitre sur jDb]]
+La seconde ligne indique qu'il ne faut pas passer le cookie de session dans l'URL.
 
 ===== Configuration du serveur =====
 
@@ -43,7 +43,7 @@ Par exemple, avec apache, vous indiquerez dans le fichier @@F@httpd.conf@@, quel
 <code htaccess>
    <VirtualHost *>
       ServerName www.monsite.com
-      DocumentRoot /var/www/monsite/myapp/www/ 
+      DocumentRoot /home/monsite/myapp/www/ 
    </VirtualHost>
 </code>
 
@@ -52,11 +52,11 @@ Vous devez indiquer aussi un alias vers le répertoire @@F@lib/jelix-www/@@, en 
 <code htaccess>
    <VirtualHost *>
       ServerName www.monsite.com
-      DocumentRoot /var/www/monsite/myapp/www/ 
-      Alias /jelix/ "/var/www/monsite/lib/jelix-www/"
+      DocumentRoot /home/monsite/myapp/www/ 
+      Alias /jelix/ "/home/monsite/lib/jelix-www/"
    </VirtualHost>
    
-   <Directory "/var/www/monsite/lib/jelix-www/">
+   <Directory "/home/monsite/lib/jelix-www/">
      AllowOverride None
      Order allow,deny
      Allow from all
@@ -85,10 +85,8 @@ Vous devriez donc obtenir une arborescence comme ceci :
     lib/
     temp/
     index.php
-    jsonrpc.php
-    xmlrpc.php
 
-Ici dans notre exemple, @@F@index.php@@, @@F@jsonrpc.php@@, @@F@xmlrpc.php@@ sont des points d'entrées de l'application. Il faut les modifier pour changer les chemins relatifs qu'ils contiennent, et faire de même pour le fichier @@F@myapp/application.init.php@@. Par exemple, après modification, le fichier @@F@index.php@@ devrait ressembler à ceci dans notre exemple :
+Ici dans notre exemple, @@F@index.php@@ est un point d'entrée jelix de l'application. Il faut le modifier pour changer les chemins relatifs qu'il contient, et faire de même pour le fichier @@F@myapp/application.init.php@@. Par exemple, après modification, le fichier @@F@index.php@@ devrait ressembler à ceci dans notre exemple :
 
 <code php>
 require_once ('myapp/application.init.php');
@@ -99,7 +97,7 @@ $jelix = new jCoordinator($config_file);
 $jelix->process(new jClassicRequest());
 </code>
 
-Il faut aussi modifier le fichier @@F@myapp/project.xml@@ pour modifier le chemin de chaque répertoire déplacé :
+Il faut aussi modifier le fichier @@F@myapp/project.xml@@ pour modifier le chemin de chaque répertoire déplacé (les chemins doivent être relatifs au chemin du fichier @@F@project.xml@@) :
 
 <code xml>
 <project xmlns="http://jelix.org/ns/project/1.0">
@@ -127,9 +125,6 @@ Il faut ensuite déplacer le répertoire @@F@lib/jelix-www/@@ à la racine et le
     lib/
     temp/
     index.php
-    jsonrpc.php
-    xmlrpc.php
-
 
 Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous devez alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de configuration de l'application, @@F@myapp/var/config/defaultconfig.ini.php@@, section @@urlengine@@.
 
@@ -140,17 +135,12 @@ Dans le fichier @@F@myapp/application.init.php@@ (et dans tous les autres fichie
 define ('JELIX_APP_WWW_PATH', realpath(JELIX_APP_PATH.'../').'/');
 </code>
 
-Et enfin, dans le fichier @@F@myapp/var/config/defaultconfig.ini.php@@, vous ajusterez l'option @@V@basePath@@, en indiquant le chemin jusqu'au @@F@index.php@@ (ici donc, /) :
-<code ini>
-basePath="/"
-</code>
-
 Vous pouvez alors taper l'adresse de votre site (http://www.monsite.com par exemple, ou http://localhost/)
 
 
 ==== Spécifier une extension de fichier autre que .php ====
 
-Sur certains serveurs, il vous est proposé PHP4 et PHP5 à la fois. En général, les fichiers **.php** doivent être des fichiers PHP4, et **.php5**, des fichiers PHP5. Il vous faut donc faire des modifications pour que votre application jelix fonctionne avec PHP5. Deux façons avec Apache, selon les possibilités.
+Sur certains serveurs, il vous est proposé PHP4 et PHP5 à la fois. En général, les fichiers **.php** sont des fichiers PHP4, et les fichiers **.php5**, des fichiers PHP5. Il vous faut donc faire des modifications pour que votre application jelix fonctionne avec PHP5. Deux façons avec Apache, selon les possibilités.
 
 === Par le .htaccess ===
 
@@ -170,7 +160,7 @@ Et vous n'avez rien d'autre à faire. Si ça ne fonctionne pas, lisez la documen
 
 === En renommant l'extension ===
 
-Renommer le fichier @@F@index.php@@ en @@F@index.php5@@ (idem pour les autres fichiers php se trouvant dans www :  @@F@jsonrpc.php@@, @@F@xmlrpc.php@@, etc...). Par contre, **vous n'avez pas besoin** de renommer les fichiers php des autres répertoires de jelix !
+Renommer le fichier @@F@index.php@@ en @@F@index.php5@@. Par contre, **vous n'avez pas besoin** de renommer les fichiers php des autres répertoires de jelix !
 
 Dans le fichier de configuration @@F@var/config/defaultconfig.ini.php@@, indiquez l'extension dans la partie @@urlengine@@ :
 
@@ -195,3 +185,15 @@ Et pour Apache 2, rajouter :
 
 Pour vérifier que cela fonctionne, créez sur votre site web un fichier @@F@test.php@@ qui affiche @@f@phpinfo()@@ et essayez l'url : @@monsite.com/test/foo/bar@@ . Le phpinfo devrait s'afficher, et vous devriez avoir dans @@V@$_SERVER['PATH_INFO']@@ la chaine "/foo/bar" (voir tout en bas de l'affichage de phpinfo).
 
+===== Droits sur les répertoires =====
+
+Vous devez donner le droit en écriture à l'utilisateur exécutant votre serveur web (apache ou autre) au moins sur le répertoire @@F@myapp/var/log/@@, ainsi que tous les répertoires dans le répertoire @@F@temp/@@.
+
+Exemple, sur un serveur debian/ubuntu :
+
+<code bash>
+   sudo chown www-data:www-data temp/myapp*  myapp/var/log
+   sudo chmod g+w temp/myapp* myapp/var/log
+</code>
+
+Peut être que pour certaines applications, il y a d'autres répertoires à configurer de la sorte dans @@F@myapp/var/@@. Renseignez-vous dans la procédure d'installation spécifique à cette application si il y en a une.

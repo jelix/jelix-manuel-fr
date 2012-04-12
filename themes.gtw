@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/themes~~
+~~LANG:EN@//en/manual-1.2/themes~~
 
 Jelix propose un système de thèmes, permettant donc de personnaliser les templates et les feuilles de style, sans toucher aux fichiers originaux.
 
@@ -35,7 +35,7 @@ Dans un template, vous avez une facilité en utilisant la balise meta :
 
 D'autres sont disponibles pour les feuilles de styles spéciales pour IE
 
-<code html>
+<code>
 {meta_html cssthemeie 'design.css'} pour ie
 {meta_html cssthemeie7 'design.css'} pour ie7
 {meta_html cssthemeltie7 'design.css'} pour ie < 7

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/daos/use-result~~
+~~LANG:EN@//en/manual-1.2/daos/use-result~~
 
 Créer, modifier et supprimer des enregistrements dans une base de données est très utile. Mais c'est encore mieux si on peut les lire.  Voici comment récupérer un ou plusieurs enregistrements.
 
@@ -39,7 +39,7 @@ ou
   $baz = $maFactory->get(array(3, 4));
 </code>
 
-**Attention** : Il est impératif que l'ordre dans lequel sont passées les valeurs soit le même que celui déclaré dans le DAO. En bref, @@$maFactory->get(4, 3)@@ est bien différent de @@$maFactory->get(3, 4)@@.
+**Attention** : Il est impératif que l'ordre dans lequel sont passées les valeurs soit le même que celui déclaré dans l'attribut @@A@primarykey@@. En bref, @@$maFactory->get(4, 3)@@ est bien différent de @@$maFactory->get(3, 4)@@.
 
 La méthode @@M@delete()@@ fonctionne de la même façon.
 

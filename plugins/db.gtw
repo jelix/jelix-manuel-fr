@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/plugins/db~~
+~~LANG:EN@//en/manual-1.2/plugins/db~~
 
 jDb, la couche d'abstraction d'accès aux bases de données, a un système de plugin, ou "drivers". Un driver permet d'accéder à un type de base de données spécifique.
 
@@ -10,47 +10,50 @@ Pour savoir comment activer un driver pour jDb, voyez le [[//bd|chapitre sur jDb
 
 Un driver pour jDb est constitué de trois classes :
 
-   * une classe pour la connexion à la base de données et l'exécution des requêtes, héritant de jDbConnection
-   * une classe pour récupérer les résultats, héritant de jDbResultSet
-   * une classe utilitaire héritant de jDbTools, permettant de récupérer la liste des tables, la liste des champs d'une table etc..
-   * une classe pour construire des requêtes, pour jDao, héritant de jDaoGenerator 
+   * une classe pour la connexion à la base de données et l'exécution des requêtes, héritant de @@C@jDbConnection@@
+   * une classe pour récupérer les résultats, héritant de @@C@jDbResultSet@@
+   * des classes pour interroger et modifier le schéma d'une base de donnée. Elles héritent de @@C@jDbSchema@@ et @@C@jDbTable@@.
+   * une classe utilitaire héritant de @@C@jDbTools@@, permettant de faire les conversions de type SQL en type unifié jDb, d'exécuter des scripts SQL..
+   * une classe pour construire des requêtes, pour jDao, héritant de @@C@jDaoGenerator@@.
 
 ==== Fichiers et nommages ====
 
 Un driver possède un nom identifiant. Prenons le nom "exemple" pour la suite.
 
-Les fichiers du driver doivent se trouver dans un répertoire //db/**exemple**// dans un [[|dépôt de plugins]].
+Les fichiers du driver doivent se trouver dans un répertoire @@F@db/exemple/@@ dans un [[|dépôt de plugins]].
 
 Les noms des fichiers doivent suivre ce nommage :
 
-   * //exemple.dbconnection.php// pour la classe de connexion
-   * //exemple.dbresultset.php// pour la classe de resultset
-   * //exemple.dbtools.php// pour la classe utilitaire
-   * //exemple.daobuilder.php// pour la classe pou jdao
+   * @@F@exemple.dbconnection.php@@ pour la classe de connexion
+   * @@F@exemple.dbresultset.php@@ pour la classe de resultset
+   * @@F@exemple.dbschema.php@@ pour les classes de manipulation de schemas
+   * @@F@exemple.dbtools.php@@ pour la classe utilitaire
+   * @@F@exemple.daobuilder.php@@ pour la classe pou jdao
 
 Et dans chacun de ces fichiers, les classes doivent respectivement avoir le nommage suivant :
 
-   * //exempleDbConnection//
-   * //exempleDbResultSet//
-   * //exempleDbTools//
-   * //exempleDaoBuilder//
+   * @@C@exempleDbConnection@@
+   * @@C@exempleDbResultSet@@
+   * @@C@exempleDbSchema@@ et @@C@exempleTableSchema@@
+   * @@C@exempleDbTools@@
+   * @@C@exempleDaoBuilder@@
 
 ==== Classe de connexion ====
 
-Elle doit hériter de jDbConnection qui contient quelques méthodes abstraites qu'il faut définir. Son rôle est de se connecter/déconnecter à la base de donnée. Elle est chargée aussi d'initier les transactions et de les confirmer ou annuler. Enfin, elle exécute ou prépare les requêtes, en renvoyant un objet résultat. 
+Elle doit hériter de @@C@jDbConnection@@ qui contient quelques méthodes abstraites qu'il faut définir. Son rôle est de se connecter/déconnecter à la base de donnée. Elle est chargée aussi d'initier les transactions et de les confirmer ou annuler. Enfin, elle exécute ou prépare les requêtes, en renvoyant un objet résultat. 
 
 Pour ce faire, elle doit redéfinir les méthodes suivantes :
 
    * le constructeur s'il y a besoin de faire des choses à l'instanciation du driver. Typiquement, vérifier que les fonctions PHP nécessaires sont bien là.
-   * _connect() et _disconnect(), pour la connexion et la déconnexion à la base de données
-   * _quote, pour échapper une chaîne de caractère avant que celle-ci soit utilisée dans une requête
-   * _doQuery et _doLimitQuery, pour lancer des requêtes qui ramènent des enregistrements (SELECT ou procédures stockées). Elles doivent renvoyer un objet exempleDbResultSet ou false si la requête a échoué
-   * _doExec, pour lancer des requêtes ne renvoyant pas d'enregistrements (UPDATE, DELETE, INSERT...). Doit renvoyer le nombre d'enregistrements affectés, ou false si la requête a échoué
-   *  la méthode prepare(), pour préparer les requêtes.
-   * beginTransaction(), commit(), rollback(), pour les transactions
-   * errorInfo() et errorCode() renvoyant l'intitulé et le code de la dernière erreur
-   * lastInsertId(), permettant de récupérer la dernière valeur du dernier id autoincrémenté généré.
-   * _autoCommitNotify()
+   * @@M@_connect()@@ et @@M@_disconnect()@@, pour la connexion et la déconnexion à la base de données
+   * @@M@_quote@@, pour échapper une chaîne de caractère avant que celle-ci soit utilisée dans une requête
+   * @@M@_doQuery@@ et @@M@_doLimitQuery@@, pour lancer des requêtes qui ramènent des enregistrements (SELECT ou procédures stockées). Elles doivent renvoyer un objet @@C@exempleDbResultSet@@ ou false si la requête a échoué
+   * @@M@_doExec@@, pour lancer des requêtes ne renvoyant pas d'enregistrements (UPDATE, DELETE, INSERT...). Doit renvoyer le nombre d'enregistrements affectés, ou false si la requête a échoué
+   * la méthode @@M@prepare()@@, pour préparer les requêtes.
+   * @@M@beginTransaction()@@, @@M@commit()@@, @@M@rollback()@@, pour les transactions
+   * @@M@errorInfo()@@ et @@M@errorCode()@@ renvoyant l'intitulé et le code de la dernière erreur
+   * @@M@lastInsertId()@@, permettant de récupérer la dernière valeur du dernier id autoincrémenté généré.
+   * @@M@_autoCommitNotify()@@
 
 
 Si le driver ne prend pas en charge certaines fonctionnalités, il doit générer une exception.
@@ -59,28 +62,27 @@ Voir [[http://jelix.org/reference/trunk/jelix/db/jDbConnection.html|la référen
 
 ==== Classe de résultat ====
 
-Elle doit hériter de jDbResultSet qui contient quelques méthodes abstraites qu'il faut définir. Un objet de cette classe est normalement renvoyé par les méthodes prepare, _doQuery et _doLimitQuery de la classe exempleDbConnection.
+Elle doit hériter de @@C@jDbResultSet@@ qui contient quelques méthodes abstraites qu'il faut définir. Un objet de cette classe est normalement renvoyé par les méthodes @@M@prepare@@, @@M@_doQuery@@ et @@M@_doLimitQuery@@ de la classe @@C@exempleDbConnection@@.
 
 Vous devez notament redéfinir les méthodes suivantes :
 
-   * _fetch(), qui doit récupérer l'enregistrement suivant dans la liste des résultats. Elle doit tenir compte de la propriété _fetchMode. Dans la propriété _idResult, vous trouverez l'identifiant de la ressource liée aux résultats.
-   * _free(), pour libérer la ressource liée aux résultats (_idResult)
-   * _rewind(), pour revenir au début des résultats
-   * rowCount, pour retourner le nombre de résultats
-   * bindColumn, bindParam, bindValue, columnCount et execute pour les requêtes préparées.
+   * @@M@_fetch()@@, qui doit récupérer l'enregistrement suivant dans la liste des résultats. Elle doit tenir compte de la propriété @@P@_fetchMode@@. Dans la propriété @@P@_idResult@@, vous trouverez l'identifiant de la ressource liée aux résultats.
+   * @@M@_free()@@, pour libérer la ressource liée aux résultats (@@P@_idResult@@)
+   * @@M@_rewind()@@, pour revenir au début des résultats
+   * @@M@rowCount@@, pour retourner le nombre de résultats
+   * @@M@bindColumn@@, @@M@bindParam@@, @@M@bindValue@@, @@M@columnCount@@ et @@M@execute@@ pour les requêtes préparées.
 
 
 Voir [[http://jelix.org/reference/trunk/jelix/db/jDbResultSet.html|la référence de jDbResultSet]] pour plus de détails.
 
 ==== Classe utilitaire ====
 
-Elle doit hériter de jDbTools. Cette classe permet de récupérer des informations sur la base de donnée, sur une table etc. Utilisée notamment par les scripts jelix-scripts.
+Elle doit hériter de @@C@jDbTools@@. Cette classe permet de récupérer des informations sur la base de donnée, sur une table etc. Utilisée notamment par les scripts jelix-scripts.
 
-Vous redéfinirez en particulier les méthodes suivantes :
+Vous redéfinirez en particulier les méthodes et propriétés suivantes :
 
-   * _getTableList(), retournant un tableau contenant les noms des tables présentes
-   * _getFieldList(), retournant la liste des champs de la table dont le nom est donné en argument. Cette liste doit être constitué d'objets jDbFieldProperties.
-   * execSQLScript() si vous voulez redéfinir la manière dont est parsé et exécuté un ensemble de requêtes SQL présentes dans un script.
+   * @@P@$typesInfo@@, un tableau contenant la correspondance entre les types sql et les types unifiés de jDb.
+   * @@M@execSQLScript()@@ si vous voulez redéfinir la manière dont est parsé et exécuté un ensemble de requêtes SQL présentes dans un script.
 
 Voir [[http://jelix.org/reference/trunk/jelix/db/jDbTools.html|la référence de jDbTools]] pour plus de détails.
 
@@ -88,17 +90,17 @@ Voir [[http://jelix.org/reference/trunk/jelix/db/jDbTools.html|la référence de
 
 Cette classe est utilisée par jDao. En effet, jDao génère des classes PHP avec des requêtes "en dur" dans leurs méthodes. Ces requêtes pouvant être différentes d'une base à une autre (au niveau de la syntaxe), il est possible de les définir dans le driver.
 
-La classe doit hériter de jDaoGenerator et redéfinir une ou plusieurs de ces méthodes :
+La classe doit hériter de @@C@jDaoGenerator@@ et redéfinir une ou plusieurs de ces méthodes :
 
-  * genSelectPattern()
-  * _encloseName()
-  * genUpdateAutoIncrementPK()
-  * $propertiesListForInsert
-  * $trueValue, $falseValue
-  * _getAutoIncrementPKField()
+  * @@M@genSelectPattern()@@
+  * @@M@_encloseName()@@
+  * @@M@genUpdateAutoIncrementPK()@@
+  * @@P@$propertiesListForInsert@@
+  * @@P@$trueValue@@, @@P@$falseValue@@
+  * @@M@_getAutoIncrementPKField()@@
 
 Voir [[http://jelix.org/reference/trunk/jelix/dao/jDaoGenerator.html|la référence de jDaoGenerator]] pour plus de détails.
 
 ==== Exemples ====
 
-Voir les drivers pour mysql, postgresql etc dans le répertoire lib/jelix/plugins/db/.
+Voir les drivers pour mysql, postgresql etc dans le répertoire @@F@lib/jelix/plugins/db/@@.
