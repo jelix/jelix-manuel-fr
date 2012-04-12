@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/daos/file~~
+~~LANG:EN@//en/manual-1.3/daos/file~~
 
 Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping objet-relationnel, c'est à dire indiquer dans ce fichier la correspondance entre les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
 
@@ -6,16 +6,16 @@ Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping obje
 ===== Création automatique =====
 
 
-Le fichier d'un DAO peut être généré par le script //jelix// en ligne de commande, à partir d'une table de base de données existante.
+Le fichier d'un DAO peut être généré par le script //cmd// en ligne de commande, à partir d'une table de base de données existante.
 
 <code bash>
- php jelix.php --nom_application createdao nom_module nom_dao nom_table nom_sequence
+ php cmd.php createdao nom_module nom_dao nom_table nom_sequence
 </code>
 
 Par exemple, si vous voulez créer dans le module "myshop", un DAO "product" qui sera basé sur la table "shop_product", vous taperez donc :
 
 <code bash>
- php jelix.php --nom_application createdao myshop product shop_product
+ php cmd.php createdao myshop product shop_product
 </code>
 
 Dans le répertoire @@F@daos@@ du module //myshop// vous allez donc avoir un fichier XML @@F@product.dao.xml@@ qui va contenir la description du mapping. Le nom de la table est optionnel si vous voulez utiliser le même nom de dao que celui de la table, et que vous n'avez pas de séquence. Indiquez le nom de la séquence utilisée pour auto incrémenter la clé primaire (paramètre nécessaire pour les bases oracles et parfois postgresql).

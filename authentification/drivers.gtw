@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/authentification/drivers~~
+~~LANG:EN@//en/manual-1.3/authentification/drivers~~
 
 
 Il existe en standard plusieurs drivers pour l'authentification dans Jelix. 
@@ -10,14 +10,13 @@ Le driver Db propose une authentification pour laquelle les informations sont st
 Jelix fournis un module, jauthdb, qui contient un dao par défaut, et installe une table en base de donnée. Pour l'utiliser, installez le :
 
 <code bash>
-cd lib/jelix-scripts/
-php jelix.php --myapp installmodule jauthdb
+php cmd.php installmodule jauthdb
 
 # ou si vous voulez aussi créer un utilisateur par défaut, "admin" (mot de passe : admin)
-php jelix.php --myapp installmodule -p defaultuser jauthdb
+php cmd.php installmodule -p defaultuser jauthdb
 </code>
 
-Une table jlx_users sera créé dans votre base de donnée. Vous pouvez ajouter des champs dans cette table, et surcharger alors le dao par défaut, ou fournir un autre dao (voir plus loin).
+Une table jlx_users sera créée dans votre base de données. Vous pouvez ajouter des champs dans cette table, et surcharger alors le dao par défaut, ou fournir un autre dao (voir plus loin).
 
 
 Dans le fichier de configuration d'authentification, vous devriez avoir quelque chose comme ceci :
@@ -46,7 +45,7 @@ Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le ch
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/1.2.7/jelix/auth_driver/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules, comme n'importe quelle classe métier.
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/1.3.1/jelix/auth_driver/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 

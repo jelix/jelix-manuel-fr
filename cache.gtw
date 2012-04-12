@@ -1,33 +1,37 @@
-~~LANG:EN@//en/manual-1.2/cache~~
+~~LANG:EN@//en/manual-1.3/cache~~
 
 jCache est une classe permettant de stocker des données dans un système de cache.
 Le système repose sur des pilotes pour les accès aux données. Il est donc possible d’utiliser pour le stockage des données, soit une base de données, soit un système de fichiers ou soit memcache .
 
 ===== Configuration =====
 
-Pour utiliser jCache, il faut d'abord spécifier les paramètres de configuration du système dans un fichier de configuration. Ce fichier est par défaut @@F@cache.ini.php@@ situé dans @@F@var/config/@@. 
-Vous pouvez définir plusieurs configurations du système, que l'on nomme “profils”. Ainsi vous pouvez définir des configurations  pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application. 
+Pour utiliser jCache, il faut d'abord spécifier les paramètres de configuration du système dans le fichier @@F@profiles.ini.php@@ situé dans @@F@var/config/@@. Voir [[configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]].
+
+Vous pouvez définir plusieurs configurations du système, que l'on nomme “profils”. Ainsi vous pouvez définir des configurations  pour le site de production, le site de développement par exemple.
+
+Le type de connexion à indiquer dans les noms des sections de @@F@profiles.ini.php@@ est @@jcache@@.
 
 Chaque profil doit indiquer au moins ces trois paramètres :
 
    * @@driver@@ : indique le pilote à utiliser. 
    * @@enabled@@ : permet d'indiquer si le cache pour ce profil est actif (1) ou non (0). Utile en développement ou débuggage.
-   * @@ttl@@ : indique le temps d’expiration des données (0 signifie n’expire jamais).
+   * @@ttl@@ : indique le temps d’expiration des données (0 signifie n’expire jamais). Vous pouvez indiquer une durée en secondes, un timestamp UNIX ou encore une date textuelle au format US.
    * @@automatic_cleaning_factor@@ : indice de nettoyage automatique du système de cache. 
 
 Un profil peut contenir d'autres paramètres, en fonction du pilote utilisé.
 
-Voici un exemple de fichier @@F@cache.ini.php@@ : 
+Voici un exemple dans le fichier @@F@profiles.ini.php@@ : 
 
 <code ini>
+[jcache]
 default = foo
 
-[foo]
+[jcache:foo]
 enabled = 1
 driver = file
 ttl = 0
 automatic_cleaning_factor = 0
-; répertoire où stocker les données (par défaut 'JELIX_APP_TEMP_PATH/cache/')
+; répertoire où stocker les données (par défaut 'temp/yourapp/cache/')
 ;cache_dir =
 file_locking = 1
 directory_level = 0
@@ -36,7 +40,6 @@ file_name_prefix = "jelix_cache"
 cache_file_umask = 0600
 </code>
 
-Il y a une section “foo”. Chaque section correspond à un profil de configuration. Un paramètre, “default”, indique le profil à utiliser par défaut. 
 
 ==== Pilote memcache ====
 
@@ -47,7 +50,7 @@ Paramètres possibles :
    * @@servers@@ : liste de serveurs memcached.
 
 <code>
-[mymemcache]
+[jcache:mymemcache]
 driver=memcache
 ttl=360
 enabled=1
@@ -89,8 +92,8 @@ Paramètres possibles :
    * @@M@jCache::get($key)@@: Pour récupérer une valeur.
    * @@M@jCache::set($key, $value, $ttl)@@: pour stocker ou modifier une valeur. $ttl est optionnel
    * @@M@jCache::delete($key)@@: pour effacer une valeur
-   * @@M@jCache::increment($key)@@: incremente une valeur
-   * @@M@jCache::decrement($key)@@: decremente une valeur
+   * @@M@jCache::increment($key)@@: incremente une valeur (N.B. : la valeur est réduite à sa partie entière - si elle a une partie décimale - puis incrémentée)
+   * @@M@jCache::decrement($key)@@: decremente une valeur (N.B. : la valeur est réduite à sa partie entière - si elle a une partie décimale - puis décrémentée)
    * @@M@jCache::add($key, $value)@@: pour stocker une nouvelle valeur. Retourne false si la clé existe déjà
    * @@M@jCache::replace($key,$value, $ttl)@@: pour changer une valeur d'une clé existante. Retourne false si la clé n'existe pas. $ttl est optionnel.
    * @@M@jCache::garbage()@@: efface toutes les valeurs expirées

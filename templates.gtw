@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/templates~~
+~~LANG:EN@//en/manual-1.3/templates~~
 
 Jelix inclut son propre moteur de template jTpl. Les templates sont des fichiers portant l'extension ".tpl" et se trouvant dans le répertoire @@F@templates@@ des modules.
 
@@ -221,10 +221,12 @@ Les modificateurs indiqués en exemple sont de simples alias à des fonctions ex
 Les modificateurs existants et leur équivalent php :
     * upper  (strtoupper)
     * lower  (strtolower)
-    * escxml (htmlspecialchars)
+    * escxml and eschtml (htmlspecialchars)
     * strip_tags (strip_tags)
     * escurl (rawurlencode)
     * capitalize (ucwords)
+    * stripslashes (stripslashes)
+    * upperfirst (ucfirst)
 
 D'autres sont fournis. Voir la liste sur [[http://jelix.org/reference/|la référence API]].
 

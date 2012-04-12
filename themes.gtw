@@ -1,15 +1,15 @@
-~~LANG:EN@//en/manual-1.2/themes~~
+~~LANG:EN@//en/manual-1.3/themes~~
 
 Jelix propose un système de thèmes, permettant donc de personnaliser les templates et les feuilles de style, sans toucher aux fichiers originaux.
 
 
 ===== Les templates d'un thème =====
 
-Un thème est un répertoire dans var/themes/. Ce répertoire contient des fichiers templates dans des sous-répertoires qui correspondent à chaque module.
+Un thème est un répertoire dans @@F@var/themes/@@. Ce répertoire contient un répertoire pour chaque theme, et dans chaque répertoire de theme, des répertoires correspondant à chaque module et contenant les templates.
 
-Par exemple, vous voulez adapter le template //main.tpl// du module //exemple//, pour le thème //web20//, vous stockerez un fichier main.tpl dans var/themes/web20/exemple/. Notez donc que le template original et le nouveau template possèdent le même nom.
+Par exemple, vous voulez adapter le template @@F@main.tpl@@ du module "**exemple**", pour le thème "**web20**", vous stockerez un fichier @@F@main.tpl@@ dans @@F@var/themes/web20/exemple/@@. Notez donc que le template original et le nouveau template possèdent le même nom.
 
-Le thème par défaut ayant pour nom "default", si vous voulez redéfinir un template d'un module, même si vous n'utilisez pas explicitement les thèmes, vous placerez ce template dans var/themes/default/le_module/le_template.tpl.
+Le thème par défaut ayant pour nom "default", si vous voulez redéfinir un template d'un module, même si vous n'utilisez pas explicitement les thèmes, vous placerez ce template dans @@F@var/themes/default/le_module/le_template.tpl@@.
 
 
 

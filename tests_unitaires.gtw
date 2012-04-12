@@ -1,17 +1,44 @@
-~~LANG:EN@//en/manual-1.2/unit-tests~~
+~~LANG:EN@//en/manual-1.3/unit-tests~~
 
 Le développement de tests unitaires est de plus en plus présent dans les projets, et jelix propose de quoi en réaliser facilement. La réalisation des tests unitaires fait d'ailleurs partie des méthodes de développement comme XP (eXtreme programming). Le processus de développement veut, en théorie (et en gros), qu'à chaque fois que l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on modifie ou ajoute un bout de code, on lance tous les tests unitaires pour vérifier qu'il n'y a pas de régressions. Cela permet ainsi de garantir un minimum, un fonctionnement robuste de l'application.
 
-===== Installation =====
+
+===== Créer des tests avec PHPUnit =====
+
+L'utilisation du [[https://github.com/sebastianbergmann/phpunit/|framework de tests PHPUnit]] est la solution "officielle" depuis Jelix 1.3. Lire son manuel pour en savoir plus sur son fonctionnement. De plus, il n'est pas fourni avec Jelix, vous devez donc l'installer.
+
+Cependant, Jelix fourni de quoi l'intégrer au mieux dans votre application. La commande @@createapp@@  a créé un script @@F@tests/runtests.php@@ dans votre application (ou copier le fichier @@F@lib/jelix-scripts/templates/tests/runtests.php@@).
+
+Vous devez exécuter ce fichier en ligne de commande plutot que PHPUnit pour lancer les tests. Il vous évite de créer un fichier @@F@phpunit.xml@@, et lance les tests qui sont stockés dans le repertoire @@F@tests/@@ de chacun de vos modules.
+
+Pour créer des tests :
+
+   * les fichiers doivent être dans le répertoire @@tests/@@ de vos modules
+   * les noms des fichiers doivent avoir un suffix @@.pu.php@@ (et non pas @@Tests.php@@ comme c'est le cas en général pour PHPUnit)
+   * lancez @@php runtests.php --all-modules@@ pour démarrer les tests de tout les modules
+   * lancez @@php runtests.php --module foo@@ pour démarrer les tests du module "foo"
+   * vous pouvez ajouter l'option @@--testtype xxxx@@ et cela lancera uniquement les tests des fichiers en @@*.xxxx.pu.php@@. Ainsi, vous pouvez séparer par exemple, les tests unitaires des tests fonctionnels.
+
+Vous pouvez aussi ajouter les options usuelles de PHPUnit.
+
+
+
+
+
+
+
+=====  Créer des tests avec Simpletest =====
+
+Simpletest était le framework de tests unitaires utilisé jusqu'à la version 1.2 incluse. Il est maintenant obsolète dans le projet Jelix, mais est toujours présent pour encore une ou deux versions, pour des raisons de compatibilité.
 
 Le module jUnitTest doit être installé. Pour cela il vous suffit d'exécuter la commande
 <code>
-php jelix.php --myapp installmodule junittests
+php cmd.php installmodule junittests
 </code>
 
 Copier également le répertoire jelix-modules/junittests/install/www/tests dans myApp/www/
 
-===== Préparation =====
+==== Préparation ====
 
 Les tests unitaires dans Jelix ne peuvent s'effectuer qu'avec l'édition "developer" de Jelix. Celle-ci contient en effet un module spécifique pour lancer les tests unitaires, junittests, et la bibliothèque [[http://www.lastcraft.com/simple_test.php|SimpleTest]]. Si vous voulez absolument lancer les tests unitaires sur un serveur en production avec une édition "optimized" de jelix, vous devez y copier les répertoires lib/simpletest/ et lib/jelix-modules/junittests de l'édition "developer".
 
@@ -22,8 +49,6 @@ Pour pouvoir lancer les tests, il faut aussi ajouter au début du fichier de con
 </code>
 
 Vous **devez** mettre à off quand vous passez votre application sur le serveur de production, ou utilisez une édition "optimized" de jelix (ou encore supprimer le module junittests tout simplement). Cela évite que n'importe qui puisse lancer les tests unitaires.
-
-===== Création de tests unitaires =====
 
 
 ==== les fichiers de tests ====
@@ -109,13 +134,7 @@ Vous pouvez ajouter autant de méthodes de tests que vous voulez dans une même 
 
 
 
-===== Lancement des tests =====
-
-Une fois vos tests réalisés, il faut les lancer avec le module junittests.
-
-
-
-==== Via l'interface web ====
+==== Lancement des tests via l'interface web ====
 
 Le lancement des tests se fait en appelant la page principale du module junittests. Un exemple d'url : http://testapp.jelix.org/index.php?module=junittests . Vous pouvez d'ailleurs vous rendre à cette url précise : vous y verrez tous les tests unitaires sur jelix ;-)
 
@@ -128,7 +147,7 @@ Cette première page présente sur la gauche toute la liste des tests présents 
 Notez que le module junittests utilise sa propre réponse HTML, et fait appel à une feuille de style tests/design.css qui doit être placée dans le répertoire www de votre application. Vous en trouverez une dans le répertoire //install// du module junittests.
 
 
-==== Via la ligne de commande ====
+==== Lancements des tests via la ligne de commande ====
 
 Le lancement des tests se fait en exécutant un script ''tests.php'' se trouvant dans le répertoire scripts de l'application jelix. Vous pouvez utiliser l'application [[http://jelix.org/articles/telechargement/stable|testapp]] (voir dans "Application de test") pour en voir un exemple.
 

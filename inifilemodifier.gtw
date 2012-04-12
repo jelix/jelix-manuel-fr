@@ -11,8 +11,8 @@ Le constructeur permet de lire le fichier de configuration. Attention, le nom du
 
 <code>
 // on ira lire le fichier dans le répertoire /var/config de l'application
-$monfichier = JELIX_APP_CONFIG_PATH.'exemple.ini.php';
-$ini = new jIniFileModifier ($MonFichier);
+$monfichier = jApp::configPath('exemple.ini.php');
+$ini = new jIniFileModifier ($monfichier);
 </code>
 
 ===== Fonction getValue =====

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms/display~~
+~~LANG:EN@//en/manual-1.3/jforms/display~~
 
 
 Pour afficher les données d'un formulaire jforms, vous pouvez appeler la méthode @@M@getAllData()@@ d'un objet formulaire, et vous obtiendrez un tableau contenant toutes les données. Vous pouvez passer ensuite ce tableau à un template pour afficher votre formulaire HTML avec les données. Vous pouvez aussi récupérer les erreurs avec @@M@getErrors()@@ et ainsi afficher les éventuelles erreurs.
@@ -223,7 +223,33 @@ Ou encore, vous pouvez utiliser plusieurs plugins @@formsubmit@@, sans @@formsub
 <div> {formsubmit 'preview'} {formsubmit 'save'} </div>
 </code>
 
-**Attention** : @@{formsubmits}@@ boucle sur la liste des contrôles @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://dev.jelix.org/ticket/429|ticket #429]])
+**Attention** : @@{formsubmits}@@ boucle sur la liste des contrôles @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://developer.jelix.org/ticket/429|ticket #429]])
+
+
+
+===== Ajouter du code javascript =====
+Vous pouvez ajouter des comportements sur n'importe quel contrôle avec javascript, avec votre bibliothèque JS préférée (jQuery étant celle utilisée par jForms par défaut).
+
+Tout les champs générés par jForms ont un id. Les id sont des noms composés : "jforms_module_nomform_refcontrole". Par exemple, pour un contrôle qui a un ref="adresse", déclaré par le formulaire "identite" fournis dans le module "utilisateurs", l'id du champs sera : "jforms_utilisateurs_identite_adresse".
+
+L'élément html <form> est aussi généré avec un id, composé du nom du module et de celui du formulaire : "jforms_module_nomform". Dans notre exemple, il vaudra "jforms_utilisateurs_identite".
+
+Sachant ces ids, vous pouvez récupérer tout les champs de formulaire ou l'élément form, avec la fonction  @@document.getElementById()@@.
+
+Pour ajouter des vérifications ou traitements additionnels durant l'évènement submit du formulaire, vous ne devez pas utiliser un listener sur l'évènement submit, mais vous devez utiliser un "submit handler" avec l'objet jforms en javascript. Un "submit handler" est une fonction qui accepte en argument un objet DOM event, et doit retourner @@true@@ si le formulaire peut être envoyé, ou false sinon. Vous ajoutez ce "submit handler" avec la méthode @@M@addSubmitHandler@@ de l'objet javascript jforms.
+
+Voici un exemple pour ajouter un message de confirmation:
+<code javascript>
+jQuery(document).ready(function(){
+    jFormsJQ.getForm("the_id_of_formelement").addSubmitHandler(function(ev){
+         return window.confirm("Voulez vous vraiment envoyer ces données ?");
+       });
+});
+</code>
+
+Par défaut, la fonction indiquée est exécutée après la vérification des données. Si vous voulez l’exécuter avant la vérification, ajouter un second paramètre @@true@@ à la méthode @@M@addSubmitHandler@@.
+
+Toutes les fonctions "handlers" sont exécutées, même si une des fonctions retourne @@false@@ ou que la vérification des données échoue. Si vous voulez stopper l’exécution des handlers qui suivent l'un deux, générez simplement une exception dans ce dernier.
 
 ===== Choisir un générateur =====
 

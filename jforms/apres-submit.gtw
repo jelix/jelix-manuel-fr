@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms/after-submit~~
+~~LANG:EN@//en/manual-1.3/jforms/after-submit~~
 
 Une fois un formulaire créé, il faut, dans une action l'afficher, ce qui est expliqué [[affichage|dans un chapitre à part]]. Et dans une autre action, qui sera appelée quand l'utilisateur validera le formulaire, il faudra gérer les données saisies : récupération des données, vérification de leur contenu et enfin traitement (stockage par exemple).
 
@@ -94,8 +94,6 @@ Ensuite, après un submit par exemple, vous pouvez appeler la méthode //getModi
 </code>
 
 
-Note : dans Jelix 1.1 beta1, il n'y avait pas de méthode //initModifiedControlsList()// (anciennement //resetModifiedControlsList()// qui a été dépréciée entre la beta1 et la rc1). De plus //getModifiedControls()// indiquait les valeurs modifiées que depuis le dernier submit. Si le formulaire était affiché plusieurs fois de suite (parce qu'il contenait des erreurs par exemple), on ne pouvait pas savoir les champs modifiés depuis l'initialisation du formulaire (sauf à le gérer soi-même).
-
 ===== Stockage des données =====
 
 Une fois la vérification faite, vous pouvez extraire les données du formulaire avec la méthode @@M@getData()@@ ou @@M@getAllData()@@ qui renvoie toutes les données sous forme de tableau. Ensuite libre à vous d'en faire ce que vous voulez : les stocker avec jDb ou jDao, les envoyer par mail etc... 
@@ -158,7 +156,7 @@ Exemple :
     $form->saveFile('photo', '', $id.'.png');
 </code>
 
-//saveAllFiles// sauve tous les fichiers, sans distinction, dans un même répertoire. Le répertoire par défaut est //var/uploads/nommodule~nomform///, mais vous pouvez le changer en l'indiquant en paramètre.
+//saveAllFiles// sauve tout les fichiers, sans distinction, dans un même répertoire. Le répertoire par défaut est //var/uploads/nommodule~nomform///, mais vous pouvez le changer en l'indiquant en paramètre.
 
 <code php>
     $form->saveAllFiles();

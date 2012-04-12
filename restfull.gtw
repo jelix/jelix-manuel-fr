@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/restfull~~
+~~LANG:EN@//en/manual-1.3/restfull~~
 
 
 La technique REST consiste à utiliser les fonctionnalités du protocole HTTP pour manipuler une ressource. En effet, il existe les méthodes POST et GET que vous connaissez, mais il existe aussi les méthodes PUT et DELETE. Ainsi, pour effectuer  une création, un affichage, un effacement d'une ressource, plutôt que d'avoir plusieurs URLs spécifiques pour faire cela, il y a une seule URL, et on utilise le champ "method" de HTTP pour indiquer l'action à effectuer.

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/installation/jelix~~
+~~LANG:EN@//en/manual-1.3/installation/jelix~~
 
 
 Jelix est fourni sous forme d'une archive tar.gz ou zip. Cette archive contient un répertoire @@F@jelix/lib/@@ qui comprend tous les fichiers du framework et les bibliothèques dépendantes, ainsi qu'un répertoire @@F@jelix/temp/@@. 
@@ -6,7 +6,7 @@ Jelix est fourni sous forme d'une archive tar.gz ou zip. Cette archive contient 
 Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
 
 <code bash>
-  tar xvzf jelix-1.2.tar.gz
+  tar xvzf jelix-1.3.tar.gz
 </code>
 
 Vous obtenez les répertoires suivants : 

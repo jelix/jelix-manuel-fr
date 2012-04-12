@@ -1,8 +1,8 @@
-~~LANG:EN@//en/manual-1.2/session~~
+~~LANG:EN@//en/manual-1.3/session~~
 
+jSession est utilisé par Jelix pour la gestion du stockage des sessions. Cet objet n'est pas utilisé pour lire ou écrire des variables en session. Pour faire ceci, **utilisez $_SESSION comme d'habitude**.
 
-
-jSession permet de stocker les sessions de façon personnalisée, en fonction de paramètres déclarés dans app/var/config/defaultconfig.ini.php 
+Les paramètres du moteur de stockage de la session sont indiqués dans la section @@sessions@@ du fichier de configuration @@F@app/var/config/defaultconfig.ini.php@@.
 
 ===== Nom de la session =====
 

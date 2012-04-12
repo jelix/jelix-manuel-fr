@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/controllers/crud~~
+~~LANG:EN@//en/manual-1.3/controllers/crud~~
 
 ===== Introduction =====
 
@@ -32,7 +32,7 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 }
 </code>
 
-Et c'est tout ! En imaginant que ce contrôleur se trouve dans le module main, affichez alors la page
+Et c'est tout ! En imaginant que ce contrôleur se trouve dans le module main, affichez alors la page (url pour une appli en mode basic_significant)
 
   index.php/main/samplecrud/index
 
@@ -43,11 +43,10 @@ Important : par défaut, le controleur récupère la réponse HTML définie dans
 
 Note : vous pouvez aussi utiliser la commande jelix @@createdaocrud@@ qui vous permet de créer à la fois le contrôleur, le dao et le formulaire, en indiquant la table que l'on veut gérer.
 <code bash>
-php jelix.php --myapp createdaocrud le_module la_table le_nom_du_controleur
+php cmd.php createdaocrud le_module la_table le_nom_du_controleur
 </code>
 
-Voir l'aide de cette commande (@@php jelix.php help createdaocrud@@) pour les options.
-
+Voir l'aide de cette commande (@@php cmd.php help createdaocrud@@) pour les options.
 ===== Personnalisation du contrôleur =====
 
 Il se peut que le comportement par défaut du contrôleur et des affichages des pages ne correspondent pas à ce que vous voulez, et qu'il faille faire des choses au niveau du formulaire (pré remplir à la main des listbox par exemple). Voici donc ce qui est possible de faire.
@@ -246,4 +245,4 @@ Si vous avez activé les urls significatives, voici le contenu que vous pouvez m
 <url pathinfo="/thedata/delete/:id" action="mycrud:delete" />
 </code>
 
-Il y a donc en tout 9 actions donc 9 urls à définir. 
+Il y a donc en tout 9 actions donc 9 urls à définir.

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/cmdline~~
+~~LANG:EN@//en/manual-1.3/cmdline~~
 
 Jelix vous permet de lancer des actions spécialement en ligne de commande. Ceci est très pratique pour effectuer des traitements sur un serveur et les planifier.
 
@@ -16,18 +16,18 @@ Les jelix-scripts vont vous permettre de créer ces éléments facilement.
 
 === À l'aide des jelix-scripts ===
 
-Le point d'entrée se crée lors de la création de l'application avec la commande @@c@createapp@@ ou n'importe quand avec la commande @@c@createentrypoint@@.
+Le point d'entrée se crée lors de la création de l'application avec le script @@c@createapp@@ ou n'importe quand avec la commande @@c@createentrypoint@@.
 
 <code bash>
-$ php jelix.php createapp -withcmdline
+$ php createapp.php -withcmdline myapp
 </code>
 
-Avec cette commande, vous allez créer la structure d'une nouvelle application qui contiendra en plus un répertoire @@F@scripts@@ contenant alors le point d'entrée cmdline : @@F@cmdline.php@@.
+Avec ce script, vous allez créer la structure d'une nouvelle application qui contiendra en plus un répertoire @@F@scripts@@ contenant alors le point d'entrée cmdline : @@F@cmdline.php@@.
 
 Si vous avez déjà créé votre application, vous pouvez utiliser la commande @@F@createentrypoint@@ :
 
 <code bash>
-$ php jelix.php createentrypoint -type cmdline myscript
+$ php cmd.php createentrypoint -type cmdline myscript
 </code>
 
 Cela créera un point d'entrée pour un script en ligne de commande sous le nom @@F@myscript.php@@ dans le répertoire @@F@scripts/@@ de l'application.
@@ -38,7 +38,7 @@ Vous pouvez créer le point d'entrée à la main. Il faut créer un fichier @@F@
 
 <code php>
 <?php
-require_once ('../application-cli.init.php');
+require_once ('../application.init.php');
 require_once (JELIX_LIB_CORE_PATH.'jCmdlineCoordinator.class.php');
 require_once (JELIX_LIB_CORE_PATH.'request/jCmdLineRequest.class.php');
 
@@ -50,7 +50,6 @@ $jelix->process(new jCmdLineRequest());
 
 Notez les différences par rapport à un point d'entrée classique :
 
-   * un fichier @@F@application-cli.init.php@@, similaire à @@F@application.init.php@@ mais définissant entre autres un répertoire temporaire différent (il peut sinon y avoir des problèmes de droits puisqu'à priori, on lance le script avec un utilisateur système différent de celui utilisé pour le serveur Web)
    * l'utilisation d'un objet @@C@jCmdlineCoordinator@@ au lieu de @@C@jCoordinator@@
    * l'utilisation d'un objet @@C@jCmdLineRequest@@ au lieu de @@C@jClassicRequest@@
    * un fichier de configuration spécifique @@F@myapp/var/config/cmdline/config.ini.php@@
@@ -68,20 +67,20 @@ Il faut également déclarer le script dans le fichier @@F@myapp/project.xml@@, 
 
 Pour pouvoir travailler en mode cmdline, vous allez devoir créer un contrôleur spécifique à la ligne de commande.
 
-=== À l'aide des jelix-scripts ===
+=== À l'aide des commandes jelix-scripts ===
 
 Vous pouvez créer votre contrôleur en utilisant les jelix-scripts :
 
 <code bash>
 # création du module foo avec un controller cmdline
-$ php jelix.php createmodule -cmdline foo  
+$ php cmd.php createmodule -cmdline foo  
 </code>
 
 ou
 
 <code bash>
 # création du controller bar dans le module foo
-$ php jelix.php createctrl -cmdline foo bar 
+$ php cmd.php createctrl -cmdline foo bar 
 </code>
 
 === Manuellement ===

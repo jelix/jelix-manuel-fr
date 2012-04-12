@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/installation/requirements~~
+~~LANG:EN@//en/manual-1.3/installation/requirements~~
 
 
 Vous devez installer au minimum la version **5.2** de PHP. Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl** et **tokenizer** sont requises (elles sont actives en général dans une installation standard de PHP 5.2). Si une de ces extensions n'était pas livrée avec le paquet PHP5, veillez à installer le paquet correspondant.
@@ -10,5 +10,5 @@ Vous pouvez installer aussi un connecteur de base de données. Jelix prend en ch
 **Pour tester la compatibilité de votre serveur** avec Jelix, installez  sur votre site le fichier @@F@lib/jelix_check_server.php@@ livré avec jelix (sans jelix, il n'en a pas besoin pour fonctionner), et appelez le via votre navigateur (exemple : http://example.com/jelix_check_server.php ). La page qui s'affiche vous indiquera les extensions PHP manquantes, si la version PHP est supportée etc.
 
 
-Il est fourni un script @@F@jelix.php@@, à exécuter en ligne de commande, et aidant au développement. Il vous faut alors aussi installer la version ligne de commande (CLI) de PHP (php.exe sous windows).
+Il est fourni des scripts à exécuter en ligne de commande, dont @@F@createapp.php@@ et @@F@cmd.php@@, et aidant au développement. Il vous faut alors aussi installer la version ligne de commande (CLI) de PHP (php.exe sous windows).
 

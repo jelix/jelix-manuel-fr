@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/common-processes~~
+~~LANG:EN@//en/manual-1.3/common-processes~~
 
 
 Il y a plusieurs types de traitements : les traitements métiers, et ceux dédiés à la génération de la page web. Pour les traitements métiers, vous utiliserez des classes métiers, des classes services, des daos. Celles-ci pouvant être utilisables par tous les modules, c'est un premier moyen de réaliser des traitements métiers qui puissent être réutilisables. Voir [[http://jelix.org/articles/manuel/classes-metiers]].

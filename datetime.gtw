@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/datetime~~
+~~LANG:EN@//en/manual-1.3/datetime~~
 
 jDateTime est une classe encapsulant une date, permettant de la convertir dans divers formats, mais aussi de faire des calculs de dates.
 
@@ -7,8 +7,8 @@ Pour créer un objet jDateTime, on peut :
    * soit passer les valeurs de la date par le constructeur : l'année, le mois, le jour, l'heure, les minutes et les secondes. Toutes ces valeurs sont facultatives et doivent être des entiers.
    * soit l'instancier sans paramètre et utiliser la méthode setFromString pour l'initialiser à partir d'une chaîne contenant une date et/ou une heure.
 
-Note : pour vos calculs de dates, **préférez l'utilisation de l'objet DateTime de PHP**, apparu dans PHP 5.2. jDatetime ayant des limitations (ne travaille pas avec des dates inférieures au 01/01/1970).
 
+Note : pour vos calculs de dates, **préférez l'utilisation de l'objet DateTime** de PHP, apparu dans PHP 5.2. jDatetime ayant des limitations (ne travaille pas avec des dates inférieures au 01/01/1970).
 
 ===== Récupérer la date courante =====
 La méthode ''now'' permet à l'objet jDateTime de récupérer la date courante.

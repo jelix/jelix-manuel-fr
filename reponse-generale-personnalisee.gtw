@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/personnalized-common-response~~
+~~LANG:EN@//en/manual-1.3/personnalized-common-response~~
 
 Il est fort probable que vous ayez dans la plupart de vos actions, à initialiser la même feuille de style, les mêmes zones de menus, et autres traitements de personnalisation de la réponse. Plutôt que de répéter toutes ces opérations dans chaque contrôleur, vous allez créer un objet response qui fait le travail commun à toutes les actions. 
 

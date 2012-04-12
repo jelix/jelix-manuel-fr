@@ -1,44 +1,56 @@
-~~LANG:EN@//en/manual-1.2/requests~~
+~~LANG:EN@//en/manual-1.3/requests~~
 
 ===== Un objet jRequest pour chaque type de requête =====
 
 Un objet jRequest prend en charge le traitement des données en entrée afin de les rendre disponibles facilement au framework et plus spécifiquement aux actions. Il permet entre autres de déterminer le module et l'action à exécuter. 
 
-Il y a plusieurs types d'objets jRequest qui permettent de traiter différentes données en entrée. En effet, on ne récupère pas les données en entrée pour une page HTML (situées dans l'URL pour une requête GET ou URL-encodées dans son corps pour une requête POST) de la même manière que celles d'un appel XML-RPC (les données étant situées dans le corps de la requête HTTP sous forme XML).
+Il y a plusieurs types d'objets jRequest qui permettent de traiter différentes données en entrée. En effet, on ne récupère pas les données en entrée pour une page HTML (situées dans l'URL pour une requête GET ou URL-encodées dans son corps pour une requête POST) de la même manière que celles d'un appel SOAP (les données étant situées dans le corps de la requête HTTP sous forme XML).
 
 À chaque type d'objet jRequest correspond un ou plusieurs formats de sortie autorisés, donc un ou plusieurs objets jResponse permis.
 
 
 Les objets jRequest disponibles sont :
   * classic : pour les requêtes classiques dont le type de réponse est indifférent (HTML, texte, redirection...),
+  * soap : pour les requêtes de services SOAP. La réponse sera au format SOAP.
   * xmlrpc : pour les requêtes XML-RPC. La réponse sera nécessairement en XML-RPC,
   * jsonrpc : pour les requêtes JSON-RPC. La réponse sera nécessairement en JSON-RPC.
 
-D'autres sont possibles (SOAP par exemple).
+D'autres sont possibles biens sûr.
 
+===== Points d'entrée =====
 
-===== Point d'entrée =====
+Un point d'entrée est un script par lequel passe une partie ou toutes les actions. Seuls les points d'entrée sont en principe accessibles depuis le Web, donc dans le répertoire www de l'application.
 
-Il faut un fichier d'entrée PHP pour chaque type de requête que l'on veut utiliser.
-Pour le classique (a priori, index.php), ça ressemble à ça :
+Ce sont eux qui instancient un objet jCoordinator, un objet de type jRequest qui analysera la requête, et qui indiquent le fichier de configuration à utiliser. Il faut donc un fichier d'entrée PHP pour chaque type de requête que l'on veut utiliser. Et il y aura en général une configuration spécifique à chaque point d'entrée.
+
+Un point d'entrée contient un bout de code comme celui-ci, ici le point d'entrée index.php pour les requêtes "normales".
 
 <code php>
-// inclusion du fichier principal de l'application, 
-// qui inclut lui-même les bibliothèques de jelix
-require_once ('../../myapp/application.init.php');
+// chargement du fichier d'initialisation de l'application
+require_once ('../../testapp/application.init.php');
 
-// inclusion d'un objet jRequest de son choix
-require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
-
-// on indique le fichier de configuration correspondant au point d'entrée
-// ici le fichier de config est dans var/config/index/
+// le fichier de configuration à utiliser
 $config_file = 'index/config.ini.php';
 
-// instanciation du coordinateur et lancement du processus
+// instanciation du coordinateur
+
 $jelix = new jCoordinator($config_file);
-$jelix->process(new jClassicRequest());
+
+// instanciation d'un objet de type jRequest
+require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
+$request = new jClassicRequest();
+
+// exécution de l'action
+$jelix->process($request);
 
 </code>
+
+On ne créera différents points d'entrées que dans les cas suivants :
+
+   * un point d'entrée par type de requête
+   * un point d'entrée spécifique à un ou plusieurs modules spécifiques.
+
+Si on veut accéder aux mêmes actions d'un module à travers plusieurs points d'entrées, ce n'est théoriquement pas possible. Si vous pensez avoir vraiment besoin de cela, interrogez vous plutôt sur la nécessité d'avoir plusieurs applications (et c'est souvent le vrai besoin), sachant qu'elles peuvent partager la même base de données, partager des modules, partager le même répertoire www.
 
 
 ===== API =====
@@ -56,10 +68,18 @@ Mais dans un contrôleur, vous avez à votre disposition des méthodes "raccourc
     $myfooValue = $this->param('foo');
 </code>
 
-Les autres propriétés de ''request'' qui peuvent être utiles :
+Les autres propriétés de @@C@jRequest@@ qui peuvent être utiles :
 
-| type | Pour connaître le type de la requête |
-| url_script_path | Le chemin dans l'URL jusqu'au script |
-| url_script_name | Le nom du script (le nom du fichier point d'entrée) |
-| url_path_info | La partie pathinfo de l'URL |
-| params        | Les paramètres de la requête |
+| @@P@type@@ | Pour connaître le type de la requête |
+| @@P@urlScriptPath@@| Le chemin dans l'URL jusqu'au script |
+| @@P@urlScriptName@@ | Le nom du script (le nom du fichier point d'entrée) |
+| @@P@urlPathInfo@@ | La partie pathinfo de l'URL |
+| @@P@params@@        | Les paramètres de la requête |
+
+
+Quelques méthodes utiles :
+
+  * @@M@getIp()@@: pour récupérer la vraie IP de l'utilisateur (tient compte des proxy, firewall etc.)
+  * @@M@isAjax()@@: pour savoir si la requête est une requête ajax ou pas.
+
+

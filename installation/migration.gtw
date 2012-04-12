@@ -1,52 +1,104 @@
-~~LANG:EN@//en/manual-1.2/installation/migrate~~
+~~LANG:EN@//en/manual-1.3/installation/migrate~~
 
 Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins ces étapes à faire :
 
-  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet jelix 1.2.
+  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet jelix.
   * Ne pas oublier de remettre dans le nouveau répertoire @@F@lib/@@ vos éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
   * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@ 
   * adapter votre code en suivant les instructions indiquées pour chaque ancienne version de Jelix. Voir ci-dessous.
 
-===== Mettre à jour depuis Jelix 1.1.x =====
+===== Mettre à jour depuis Jelix 1.2 =====
 
-==== Ce qu'il faut savoir avant de mettre à jour ====
-
-La gestion des modules a changé. Dans le fichier de configuration, @@unusedModules@@, @@trustedModules@@ et @@checkTrustedModules@@ ne sont plus utilisés. Il y a maintenant une section "modules", dans laquelle un niveau d'accès de chaque module est déclaré.
-
-Pour être utilisé, un module devrait être "installé". En fait un nouveau fichier @@F@installer.ini.php@@ est crée par le système d'installation de Jelix dans le répertoire de configuration, et contient, pour chaque point d'entrée, la liste des modules installés, et pour chaque d'eux, la version installée. Des nouvelles commandes "installapp" et "installmodule" sont fournies pour installer et mettre à jour les modules.
-
-==== Migration ====
-
-Une commande "migrate" est fournie dans le but d'effectuer les modifications nécessaires dans le fichier de configuration de votre application et pour créer le fichier @@F@installer.ini.php@@.
-
-  * sauver les fichiers de votre application, en particulier la configuration et la base de donnée. Si la commande migrate échoue durant l'installation virtuelle des modules, il vous faudra restaurer les fichiers originaux et supprimer les nouveaux fichiers avant de relancer la commande migrate. Il est d'ailleurs fortement conseillé de travailler avec un gestionnaire de code source tel que Mercurial, Git ou Subversion, cela facilite la restauration des fichiers modifiés.
-  * remplacer le répertoire @@F@lib/@@ par le @@F@lib/@@ de Jelix 1.2
-  * vérifier que le @@F@project.xml@@ est bon, qu'il contient une balise @@E@<jelix>@@ avec la version max à "1.1.*" et la liste des points d'entrées. Voir [[//configuration#project.xml|le chapitre sur ce point]].
-  * dans vos fichiers de configuration (@@F@defaultconfig.ini.php@@ et autres fichiers ini):
-     * mettre @@checkTrustedModules@@ à "on"
-     * supprimer de @@modulesPath@@, les répertoires où vous n'utilisez pas de modules
-     * lister tous les modules qui peuvent être appelés depuis le web dans @@trustedModules@@
-     * lister tous les modules non utilisés du tout dans @@unusedModules@@, en particulier, si dans @@modulesPath@@ vous indiquez @@lib/jelix-admin-modules@@ et/ou @@lib/jelix-modules/@@, voyez la liste des modules dans ces répertoires (elle a changé depuis jelix 1.1) et indiquez les modules que vous n'utilisez pas.
-  * aller dans @@F@lib/jelix-scripts/@@ et lancer @@php jelix.php --yourapp migrate@@
-  * si la commande migrate échoue (une erreur est affichée)
-     * si l'erreur est "Installation of modules failed", écraser les fichiers de votre application avec votre sauvegarde, écraser votre base avec votre sauvegarde, corrigez l'erreur, et relancez la commande migrate
-     * si il s'agit d'une autre erreur, corrigez l'erreur et relancez la commande migrate
-  * supprimer tous les fichiers de @@F@temp/yourapp/@@
-  * lire la rubrique suivante pour effectuer des modifications dans votre code.
-  * tester votre application. Cela devrait être ok.
-
-Un nouveau script d'installation @@F@yourapp/install/installer.php@@ a été créé, que vous pourrez utiliser plus tard (en ligne de commande) pour installer ou mettre à jour facilement votre application. Vous pouvez créer des scripts dans le répertoire @@F@install/@@ de vos modules, qui seront appeler pour installer ou mettre à jours les modules. Voir le chapitre correspondant dans le manuel.
+Voici les instructions à suivre dans l'ordre.
 
 
-== Autres étapes de migration ==
+==== Sauvegarde ====
 
-  * Le support des anciens sélecteurs d'action et ancien nommage des classes tels qu'utilisés dans Jelix 1.0 beta ont été supprimés. Vous devrez modifier vos sélecteur et nom de classe si vous migrez depuis une très vieille version de jelix < 1.0
-  * Si vous utilisez directement @@F@jelixuser.dao.xml@@, vous devrez changer votre sélecteur : il a été supprimé du module jauth pour se retrouver dans le module jauthdb
-  * Si vous aviez fait votre propre driver jDb avec un plugin pour jDaoGenerator, vous devrez modifier certains appels de méthodes car certaines d'entre elles ont été renommées. Une réécriture a été faite et vous pouvez redéfinir plus de méthodes.
-  * Pour les sources de données personnalisées pour jForms, remplacez le nom de l'interface @@C@jIFormDatasource@@ par @@C@jIFormsDatasource@@.
-  * la méthode obsolète @@M@jResponseHtml::_commonProcess()@@ a été supprimé (vous devez la renommer en @@M@doAfterActions@@)
+Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers de configuration etc.
+
+==== Répertoires temporaires ====
+
+Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votreapp/@@. Vous pouvez aussi supprimer les autres répertoires temporaires @@F@temp/votreapp-cli/@@ et  @@F@temp/votreapp-scripts/@@, ils ne sont plus utilisés.
+
+==== Changez le fichier application.init.php ====
+
+Ce script ne doit plus définir des constantes JELIX_APP_*, mais doit définir les divers chemins de l'application avec l'objet @@jApp::initPaths()@@. Vous pouvez maintenant accéder à chaque chemin en utilisant cet objet @@C@jApp@@. jCoordinator génère cependant les constantes JELIX_APP_* pour garder une compatibilité, mais vous devez tout de même supprimer l'utilisation de ces constantes dans vos modules, car elles ne seront plus disponibles dans des versions ultérieures.
+
+Votre script @@F@application.init.php@@ doit contenir ce genre d'instruction :
+
+<code php>
+$appPath = dirname (__FILE__).'/';
+require ($appPath.'../lib/jelix/init.php');
+
+jApp::initPaths(
+    $appPath
+    //$appPath.'www/',
+    //$appPath.'var/',
+    //$appPath.'var/log/',
+    //$appPath.'var/config/',
+    //$appPath.'scripts/'
+);
+jApp::setTempBasePath(realpath($appPath.'../temp/testapp/').'/');
+</code>
+
+==== Suppression de fichiers ====
+
+Vous pouvez supprimer @@F@application-cli.init.php@@ et @@F@jelix-scripts.init.php@@, ils sont maintenant inutiles. Sans oublier toutefois de remplacer dans vos scripts en ligne de commandes (normalement, dans le répertoire @@F@scripts/@@ de votre application),  l'utilisation de @@F@application-cli.init.php@@ par @@F@application.init.php@@.
+
+==== Modifications générales ====
+
+  * Si vous avez activé la minification des fichiers js et css dans la réponse HTML, cela ne fonctionnera plus, la configuration a changé. Certaines options ont disparu, le répertoire @@F@www/cache/minify@@ n'est plus utilisé, et un fichier minify.php doit être installé dans @@F@www/@@. Copiez le fichier @@F@lib/jelix-scripts/templates/www/minify.php.tpl@@ dans @@F@votre_appli/www/minify.php@@. L'outils de mise à jour du module jelix modifiera la configuration pour vous. Voyez [[//responsehtml#compression-des-fichiers-css-et-javascript|la partie sur minify]] pour en savoir plus.
+  * Si vous voulez utiliser PHPUnit pour ajouter des tests unitaires, copiez le fichier @@F@lib/jelix-scripts/templates/tests/runtests.php@@ dans le répertoire @@F@tests/@@ de votre application. Et lisez le chapitre sur les tests unitaires pour savoir comment en écrire.
+
+==== Mise à jour des modules ====
+
+Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.3.
+
+Et pour vos propres modules, vous devez adapter le code source en faisant les modifications suivantes :
+
+  * comme indiqué plus haut, remplacez l'usage des constantes JELIX_APP_* par l'utilisation de l'objet @@C@jApp@@.
+  * dans les fichiers module.xml, indiquez que le module est compatible avec Jelix 1.3 (changer l'attribut maxversion). Exemple : @@<jelix minversion="1.1" maxversion="1.3.*"/>@@
+  * L'API et le schéma de donnée de jAcl2Db a changé.
+    * les identifiants des groupes d'utilisateurs ne sont plus des nombres, mais des noms (chaines). Par conséquent, il vous faudra modifier vos données si elles contiennent des identifiants de groupes. Lors de la migration, Jelix utilise la valeur de l'ancien champs "code" d'un groupe comme identifiant, si il est renseigné (ce champs a été supprimé). L'identifiant @@__anonymous@@ est réservé.
+    * il faut remplacer vos appels de @@M@jAcl2DbUserGroup::getGroupByCode@@ par @@M@jAcl2DbUserGroup::getGroup@@. L'argument est le même : l'identifiant/code du groupe. En revanche @@getGroup()@@ renvoie un objet correspondant à l'ensemble des champs du groupe, et non seulement son id.
+    * vous pouvez maintenant regrouper vos "sujets" de droits en les assignant à des "groupes de sujets". Cela améliore la lisibilité de l'interface d'administration. Vous avez pour cela des nouvelles sous commandes avec la commande @@cmd.php acl2right@@ : subject_group_create, subject_group_list, subject_group_delete.
+
+Nouvelles API que vous pouvez utiliser (non exhaustives):
+   * @@C@jApp@@ qui contient un certain nombre de méthode pour récupérer divers chemins
+   * @@M@jApp::loadPlugin@@ pour charger les plugins de n'importe quel composant (API interne)
+   * @@C@jInstallerApplication@@ pour récupérer la liste des points d'entrées, les modules utilisés , 
+   * @@M@jLog::logEx()@@ pour journaliser facilement les exceptions
+   * @@M@jRequest::isAjax()@@ pour savoir si la requête est une requête faites par xmlHttpRequest
+   * @@M@jRequest::getIp()@@
+   * @@C@jSoapClient@@ pour effectuer des requêtes soap, avec les informations de connexion dans le fichier profiles.ini.php.
+   * @@jFormsJQ.addSubmitHandler()@@ en JavaScript, pour ajouter du code pour faire des vérifications supplémentaires lors de la soumission du formulaire.
+
+API que vous ne pouvez plus utiliser :
+   *  @@M@jUrl::parseFromRequest()@@
 
 
-===== Mettre à jour depuis jelix 1.0 =====
 
-Suivez les indications de migration de Jelix 1.0 à Jelix 1.1 dans le manuel de Jelix 1.1. Vous pourrez ensuite migrer vers Jelix 1.2.
+==== Mise à jour du script installer.php ===
+
+Dans le dossier install de votre application, éditer le script installer.php en changeant application-cli.init.php par application.init.php
+
+==== Mise à jour de Jelix ====
+
+Après toutes les modifications effectuées, vous devez lancer le script installer.php de votre application. Le module jelix fera le reste des modifications, en particulier :
+
+  * dans vos fichiers de configuration.
+  * il crééra un nouveau fichier profiles.ini.php, qui remplace vos fichiers dbprofils.ini.php, cache.ini.php, jkvdbprofiles.ini.php. Ces fichiers seront supprimés.
+  * ajoute le nouveau script cmd.php à la racine de votre application, pour lancer les commandes jelix-scripts à partir de votre application. @@F@cmd.php@@ remplace le script @@F@lib/jelix-scripts/jelix.php@@ qui n'existe plus.
+
+Le module jacl2db, si vous l'utilisez, mettra à jour votre base de données.
+
+==== Autres modifications éventuelles ====
+
+Quand une erreur survient, une page spécifique s'affiche dorénavant. Vous pouvez la redéfinir pour mieux l'intégrer dans le design de votre site. Voir [[//errormanager#la-page-d-erreur|la rubrique dédié]] pour le faire.
+
+La page d'erreur n'affiche plus les détails de l'erreur (pour des raisons de sécurité et de "convivialité"). Durant le développement, pour avoir les infos sur les informations sur l'erreur et sur d'autres choses, [[//deboggage|activez la debug barre et éventuellement certains fichiers de log]].
+
+
+===== Mettre à jour depuis jelix 1.1 et précédent =====
+
+Suivez les indications de migration de chaque version intermédiaire, avant de mettre à jour pour jelix 1.3.

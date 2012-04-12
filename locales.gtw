@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/locales~~
+~~LANG:EN@//en/manual-1.3/locales~~
 
 Jelix possède son propre mécanisme de localisation/internationalisation. Les fonctions setlocale et gettext de php ne sont pas utilisées car trop contraignantes à mettre en place, et leur configuration est aléatoire sur les serveurs.
 
@@ -97,7 +97,7 @@ Dans le template, il faut récupérer cette chaine localisée uniquement avec @@
 
 ===== Récupération d'une chaîne localisée =====
 
-Pour récupérer une chaîne, il faut utiliser la méthode statique get de jLocale. Cette méthode accepte en premier argument un sélecteur de locale, qui a cette structure : //module~codefichier.clechaine//. la partie "module~" est facultative si il s'agit d'un fichier se trouvant dans le module courant.
+Pour récupérer une chaîne, il faut utiliser la méthode statique get de jLocale. Cette méthode accepte en premier argument un sélecteur de locale, qui a cette structure : //module~codefichier.clechaine//. la partie "module~" est facultative s'il s'agit d'un fichier se trouvant dans le module courant.
 
 Pour récupérer par exemple la valeur de buttons.save dans foo.ISO-8859-1.properties situé dans le module "bar" : 
 

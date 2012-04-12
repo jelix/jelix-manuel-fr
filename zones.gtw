@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/zones~~
+~~LANG:EN@//en/manual-1.3/zones~~
 
 ===== Principes d'une zone ===== 
 
@@ -61,6 +61,21 @@ Et le template (stocké dans @@F@templates/template_test.tpl@@):
 <code xml>
 <p>Ceci est un template. Et foo vaut {$foo}.</p>
 </code>
+
+=== Création en utilisant jelix-scripts ===
+Vous pouvez utiliser [[jelix-scripts|jelix-scripts]] pour créer votre zone accompagnée ou non d'un template.
+
+Exécutez simplement la commande suivante :
+<code>
+php cmd.php  createzone [MonModule] [MaZone] [MonTemplate] 
+</code>
+où le paramètre [MonTemplate] est facultatif. Le nom du template est identique au nom de la zone dans ce cas.
+
+Pour ne pas créer de template précisez simplement l'option -notpl.
+<code>
+php cmd.php  createzone -notpl [MonModule] [MaZone] [MonTemplate] 
+</code>
+
 
 ==== Appel ====
 

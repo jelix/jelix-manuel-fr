@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms/xml-1.1~~
+~~LANG:EN@//en/manual-1.3/jforms/xml-1.1~~
 
 La version 1.1 du format décrit dans cette page est utilisable depuis Jelix 1.1.
 
@@ -68,7 +68,14 @@ On peut indiquer une [[//locales|locale]] plutôt qu'une chaine "en dur" :
   </input>
 </code>
 
+==== Saisie obligatoire ====
 
+Pour rendre la saisie obligatoire sur un champ de saisie, il faut mettre l'attribut @@A@required@@ avec la valeur @@L@true@@. Cet attribut n'est pas valable sur les éléments @@E@<submit>@@, @@E@<checkbox>@@, @@E@<group>@@, @@E@<choice>@@, @@E@<hidden>@@ et @@E@<output>@@.
+
+
+==== Lecture seule ====
+
+Il est possible d'empêcher la modification d'un champ de saisie. Pour cela, il faut mettre l'attribut @@A@readonly@@ avec la valeur @@L@true@@. Cet attribut n'est pas valable sur l'élément @@E@<submit>@@ et @@E@<output>@@. Vous pouvez modifier cette propriété en PHP.
 
 ==== Messages informatifs ====
 
@@ -94,7 +101,7 @@ Un autre type de message informatif peut être affiché sous forme de tooltip. I
 
 ==== Messages d'erreurs ====
 
-Quand le contenu du champ de saisie est invalide, ou que la saisie est manquante alors qu'elle est requise, jForms affiche des messages d'erreurs prédéfinis. Cependant vous pouvez fournir vous-mêmes ces messages au moyen de la balise @@E@<alert>@@. Un attribut @@A@type@@ permet de définir soit le message pour l'erreur d'invalidité, soit le message pour la saisie obligatoire. Et comme les balises précédentes, vous pouvez indiquer le message complet, ou indiquer une locale au moyen de l'attribut locale.
+Quand le contenu du champ de saisie est invalide (il n'est pas du type attendu par exemple), ou que la saisie est manquante lorsqu'elle est requise (attribut @@A@required@@), jForms affiche des messages d'erreurs prédéfinis. Cependant vous pouvez fournir vous-mêmes ces messages au moyen de la balise @@E@<alert>@@. Un attribut @@A@type@@ permet de définir soit le message pour l'erreur d'invalidité, soit le message pour la saisie obligatoire. Et comme les balises précédentes, vous pouvez indiquer le message complet, ou indiquer une locale au moyen de l'attribut locale.
 
 <code xml>
   <input ref="datenaissance" type="date">
@@ -104,14 +111,7 @@ Quand le contenu du champ de saisie est invalide, ou que la saisie est manquante
   </input>
 </code>
 
-==== Saisie obligatoire ====
 
-Pour rendre la saisie obligatoire sur un champ de saisie, il faut mettre l'attribut @@A@required@@ avec la valeur @@L@true@@. Cet attribut n'est pas valable sur les éléments @@E@<submit>@@, @@E@<checkbox>@@, @@E@<group>@@, @@E@<choice>@@, @@E@<hidden>@@ et @@E@<output>@@.
-
-
-==== Lecture seule ====
-
-Il est possible d'empêcher la modification d'un champ de saisie. Pour cela, il faut mettre l'attribut @@A@readonly@@ avec la valeur @@L@true@@. Cet attribut n'est pas valable sur l'élément @@E@<submit>@@ et @@E@<output>@@. Vous pouvez modifier cette propriété en PHP.
 
 ===== Champs de saisie =====
 
@@ -642,6 +642,8 @@ Si vous voulez fournir les données dynamiquement d'une autre manière que par u
 
 Exemple de classe :
 <code php>
+require_once (JELIX_LIB_PATH.'forms/jFormsDatasource.class.php');
+
 class listData implements jIFormsDatasource
 {
   protected $formId = 0;

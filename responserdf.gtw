@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/responserdf~~
+~~LANG:EN@//en/manual-1.3/responserdf~~
 
 jResponseRdf permet de générer un document au format RDF. Cela est utile entre autre lors de la réalisation d'application en XUL, pour les templates XUL. Son alias est "rdf".
 

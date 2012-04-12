@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms/security~~
+~~LANG:EN@//en/manual-1.3/jforms/security~~
 
 Par défaut, jForms a des mécanismes de sécurité. Par exemple, les generateurs HTML de jForms échappent les contenus à l'affichage pour éviter les problèmes de sécurités comme Cross Site Scripting.
 

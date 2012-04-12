@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/authentification~~
+~~LANG:EN@//en/manual-1.3/authentification~~
 
 Le système d'authentification de Jelix ne s'occupe que d'une seule chose : gérer des identifiants/mots de passe et des utilisateurs.
 
@@ -36,8 +36,8 @@ Pour l'activer, vous avez deux choix :
 Utilisez la commande installmodule de jelix pour installer le module :
 
 <code bash>
-$ cd lib/jelix-scripts/
-$ php jelix.php --myapp installmodule jauth
+$ cd myapp/
+$ php cmd.php installmodule jauth
 </code>
 
 Cela activera le module et le plugin, et creera un nouveau fichier @@F@var/config/index/auth.coord.ini.php@@, qui est la configuration du plugin et du système d'authentification.
@@ -191,6 +191,7 @@ Les paramètres @@after_login@@ et @@after_logout@@ doivent contenir les sélect
 
 Il est possible dans un formulaire d'authentification ou de déconnexion, d'ajouter un paramètre caché contenant l'URL vers laquelle il faut rediriger. Cela permet de rediriger vers une page différente en fonction de la page sur laquelle on est quand on se connecte ou déconnecte. Dans ce cas, ce paramètre caché doit se nommer « @@auth_url_return@@ », et doit contenir l'URL. Et vous devez mettre les paramètres de configuration @@enable_after_login_override@@ et/ou @@enable_after_logout_override@@ à @@L@on@@.
 
+
 ==== Configuration des URLS significants ====
 
 si vous utilisez le moteur d'urls significant, il vous faudra également ajouté dans votre fichier @@F@var/config/urls.xml@@ la ligne 
@@ -220,7 +221,7 @@ Pour connecter et déconnecter un utilisateur, il faut utiliser les méthodes @@
    // Connexion
    $ok = jAuth::login('le_login', 'le_mot_de_passe_en_clair');
    
-   // deconnection
+   // deconnexion
    jAuth::logout();
 </code>
 
@@ -261,7 +262,7 @@ Pour créer un utilisateur, il faut là aussi passer par jAuth. Vous devez d'abo
    $newUser->birthday = '1980-01-01';
    
    // création de l'utilisateur par le driver
-   $ok = jAuth:saveNewUser($newUser);
+   $ok = jAuth::saveNewUser($newUser);
 </code>
 
 ==== Modifier un utilisateur ====
@@ -304,6 +305,7 @@ Pour récupérer la liste des utilisateurs, utilisez @@M@jAuth::getUserList()@@ 
 </code>
 
 Vous récupérez alors un iterateur que vous pouvez utiliser avec un foreach. Chaque élément est un objet contenant les infos d'un utilisateur (comme avec @@M@getUser()@@)
+
 
 
 ==== Évènements ====

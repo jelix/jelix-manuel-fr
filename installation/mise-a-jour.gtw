@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/installation/application-update~~
+~~LANG:EN@//en/manual-1.3/installation/application-update~~
 
 Votre application tourne déjà sur votre serveur en production. Et maintenant, vous voulez mettre à jour votre application. Les principales étapes sont:
 
@@ -23,14 +23,14 @@ Pour ré-ouvrir l'application, supprimez simplement le fichier @@F@var/config/CL
 Vous pouvez manipuler ce fichier manuellement (si vous avez seulement un accès FTP à votre site web, c'est la solution), ou, si vous avez un accès en ligne de commande, vous pouvez appeler les commandes jelix: @@openapp@@ and @@closeapp@@
 
 <code bash>
-$ php jelix.php closeapp
-$ php jelix.php openapp
+$ php cmd.php closeapp
+$ php cmd.php openapp
 </code>
 
 Vous pouvez donner un message à la commande @@closeapp@@. Cela va remplacer le tag @@%message%@@ dans le fichier closed.html.
 
 <code bash>
-$ php jelix.php closeapp "Sorry, we are closed for the moment, a new version is comming."
+$ php cmd.php closeapp "Sorry, we are closed for the moment, a new version is comming."
 </code>
 
 ===== Mettre à jour les fichiers =====

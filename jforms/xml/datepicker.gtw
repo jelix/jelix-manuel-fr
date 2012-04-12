@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms/xml-1.1/datepicker~~
+~~LANG:EN@//en/manual-1.3/jforms/xml-1.1/datepicker~~
 
 
 Pour avoir une saisie simplifié de date dans vos formulaires, il faut utiliser la balise @@E@date@@ (ou @@E@datetime@@ pour saisie une date et une heure). Cela affiche alors un "datepicker".

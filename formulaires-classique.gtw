@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/classic-forms~~
+~~LANG:EN@//en/manual-1.3/classic-forms~~
 
 
 Créer et gérer des formulaires "à la main" (par opposition aux automatismes offerts par le système de formulaire [[jforms|jForms]]), n'est pas très différent par rapport à ce que l'on fait dans une application PHP classique. Quelques petites choses sont cependant à savoir pour profiter au mieux de ce qu'offre Jelix dans ce cas.

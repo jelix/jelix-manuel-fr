@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/mailer~~
+~~LANG:EN@//en/manual-1.3/mailer~~
 
 jMailer est une classe permettant l'envoi d'email depuis un contrôleur ou une classe métier. Elle est basée sur la classe [[http://phpmailer.codeworxtech.com|PHPMailer]]. 
 
@@ -141,7 +141,7 @@ L'envoi de fichier en pièce jointe se fait très simplement, en donnant le chem
 
 <code php>
 $mail = new jMailer();
-$mail->AddAttachment(JELIX_APP_VAR_PATH.'nom_fichier_original.pdf', 'nom_fichier_pour_email.pdf');
+$mail->AddAttachment(jApp::varPath('nom_fichier_original.pdf'), 'nom_fichier_pour_email.pdf');
 ...
 $mail->Send();
 </code>

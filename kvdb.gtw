@@ -1,14 +1,16 @@
-~~LANG:EN@//en/manual-1.2/kvdb~~
+~~LANG:EN@//en/manual-1.3/kvdb~~
 
 Jelix contient une couche d'abstraction aux bases de données de type key-value, moins complexes que les bases de données SQL.
 
-Vous avez @@C@jKVDb@@ dont vous pouvez récupérer un connecteur à une base de données clé-valeur. Tout comme jDb, il y a des profiles définis dans un fichier @@F@kvprofiles.ini.php@@, où vous pouvez définir des paramètres pour vous connecter à ces bases de données.
+Vous avez @@C@jKVDb@@ dont vous pouvez récupérer un connecteur à une base de données clé-valeur. Tout comme jDb, il y a des profiles définis dans un fichier @@F@profiles.ini.php@@ (Voir [[configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]), où vous pouvez définir des paramètres pour vous connecter à ces bases de données.
 
 jKVDb fonctionne avec des "drivers" pour accéder aux données clé-valeur. Jelix fourni des drivers pour de simples fichiers (file et file2), memcache, redis, et ... sql. Voir plus bas pour plus d'informations sur ces drivers.
 
 ===== Configuration ===== 
 
-Comme jDb, @@F@kvprofiles.ini.php@@ contient des sections, une pour chaque base de données à laquelle vous voulez accèder. Chaque section contient au moins un paramètre @@driver@@ donnant le nom du driver à utiliser Des autres paramètres peuvent être définis en fonction du driver sélectionné.
+Comme jDb, @@F@profiles.ini.php@@ contient des sections, une pour chaque base de données à laquelle vous voulez accéder. Chaque section contient au moins un paramètre @@driver@@ donnant le nom du driver à utiliser Des autres paramètres peuvent être définis en fonction du driver sélectionné.
+
+Le type de connexion à indiquer dans les noms des sections de @@F@profiles.ini.php@@ est @@jkvdb@@.
 
 ===== Accéder à une base de données =====
 
@@ -42,7 +44,7 @@ Il utilise l'API memcache de PHP (à ne pas confondre avec l'autre API: memcache
 Dans le profil, vous devez indiquer un host et un port, ou plusieurs host/port. Voici un exemple avec un simple serveur:
 
 <code ini>
-[mymemcacheserver]
+[jkvdb:mymemcacheserver]
 driver=memcache
 host=localhost
 </code>
@@ -50,7 +52,7 @@ host=localhost
 Ou avec plusieurs serveurs:
 
 <code ini>
-[mymemcacheserver]
+[jkvdb:mymemcacheserver]
 driver=memcache
 
 host=memcache_server1:11211;memcache_server2:11212
@@ -70,7 +72,7 @@ Ce driver supporte l'interface @@I@jIKVttl@@.
 Ce driver permet d'accéder à une base de données Redis. Il utilise la librairie php5redis. Pour le configurer, il suffit d'indiquer un @@host@@ et un paramètre @@port@@.
 
 <code ini>
-[myredis]
+[jkvdb:myredis]
 driver=redis
 host = localhost
 port = 6379

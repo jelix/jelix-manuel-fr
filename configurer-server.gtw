@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/server-configuration~~
+~~LANG:EN@//en/manual-1.3/server-configuration~~
 
 ===== Configuration de PHP =====
 
@@ -129,10 +129,17 @@ Il faut ensuite déplacer le répertoire @@F@lib/jelix-www/@@ à la racine et le
 Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous devez alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de configuration de l'application, @@F@myapp/var/config/defaultconfig.ini.php@@, section @@urlengine@@.
 
 
-Dans le fichier @@F@myapp/application.init.php@@ (et dans tous les autres fichiers @@F@*.init.php@@ qui sont dans @@F@myapp/@@), vous devez modifier la constante @@V@JELIX_APP_WWW_PATH@@ :
+Dans le fichier @@F@myapp/application.init.php@@, vous devez modifier le chemin indiqué à @@C@jApp@@ pour le répertoire www (deuxième argument) :
 
 <code php>
-define ('JELIX_APP_WWW_PATH', realpath(JELIX_APP_PATH.'../').'/');
+jApp::initPaths(
+    $appPath
+    $appPath.'../',
+    //$appPath.'var/',
+    //$appPath.'var/log/',
+    //$appPath.'var/config/',
+    //$appPath.'scripts/'
+);
 </code>
 
 Vous pouvez alors taper l'adresse de votre site (http://www.monsite.com par exemple, ou http://localhost/)

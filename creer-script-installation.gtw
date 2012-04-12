@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/create-install-scripts~~
+~~LANG:EN@//en/manual-1.3/create-install-scripts~~
 
 Depuis sa version 1.2, Jelix fournit un système d'installation automatique qui permet d'exécuter des scripts lorsque vous installez un module dans une application ou à l'installation de l'application complète.
 
@@ -134,7 +134,7 @@ Pour lire les paramètres depuis le script d'installation, vous avez la méthode
 
 ===== Scripts de mise à jour d'un module =====
 
-Ces scripts ont des noms de fichiers spécifiques. Depuis Jelix 1.2.6, ils doivent avoir pour nom  @@F@upgrade_{label}.php@@  où @@{label}@@ doit être remplacé par un nom qui sera une partie du nom de la classe. Jusqu'à Jelix 1.2.5, les noms des fichiers devaient être @@F@upgrade_to_{version}_{label}.php@@, où @@{version}@@ était un numéro de version. Ces noms restent compatibles avec les version 1.2.6 et suivantes, mais ils sont obsolètes.
+Ces scripts ont des noms de fichiers spécifiques. Depuis Jelix 1.2.6 et 1.3RC3, ils doivent avoir pour nom  @@F@upgrade_{label}.php@@  où @@{label}@@ doit être remplacé par un nom qui sera une partie du nom de la classe. Jusqu'à Jelix 1.2.5, les noms des fichiers devaient être @@F@upgrade_to_{version}_{label}.php@@, où @@{version}@@ était un numéro de version. Ces noms restent compatibles avec les versions 1.2.6/1.3RC3 et suivantes, mais ils sont obsolètes.
 
 Ces scripts doivent être stockés dans le répertoire @@F@install/@@ du module. Il seront exécutés en ordre ascendant de version indiquée dans la classe d'installation (Jelix 1.2.6 ou plus) ou dans le nom de fichier (Jelix 1.2.5 et inférieur). Et seuls ceux dont la version est plus grande que la version actuelle installée du module, et plus petite ou égale à la nouvelle version du module, seront exécutés. Imaginez que vous ayez ces scripts :
 
@@ -153,13 +153,13 @@ Si la version courant du module est 1.1 et que la nouvelle version du module (in
     * @@F@upgrade_fff.php@@
 
 
-Un script de mise à jour contient un classe, appelée @@{module}ModuleUpgrader_{label}@@, où @@{module}@@ doit être le nom du module, et @@{label}}@@, le label indiqué dans le nom de fichier du script.
+Un script de mise à jour contient un classe, appelée @@{module}ModuleUpgrader_{label}@@, où @@{module}@@ doit être le nom du module, et @@{label}@@, le label indiqué dans le nom de fichier du script.
 
-Puisque plusieurs scripts de mise à jour peuvent être exécutés pour le module, alors le nom de classe doit être différent (sinon PHP ne vas pas aimer ça. C'est pourquoi nous utilisons un label, qui **doit être différent pour chaque script du module**. (Les développeurs Jelix pourraient utiliser le numéro de version au lieu d'un label, mais malheureusement, PHP n'aime pas les caractères comme "." ou "-" dans un nom de classe).
+Puisque plusieurs scripts de mise à jour peuvent être exécutés pour le module, alors le nom de classe doit être différent (sinon PHP ne va pas aimer ça). C'est pourquoi nous utilisons un label, qui **doit être différent pour chaque script du module**. (Les développeurs Jelix pourraient utiliser le numéro de version au lieu d'un label, mais malheureusement, PHP n'aime pas les caractères comme "." ou "-" dans un nom de classe).
 
 La classe devra hériter de @@M@jInstallerModule@@, pour que vous puissiez avoir exactement les mêmes comportements et méthodes que le script d'installation. Vous devez donc implémenter la méthode  @@M@install@@, vous pouvez appeler @@M@firstDbExec@@, @@M@getParameter@@ etc..
 
-Pour les scripts de mise à jour sans numéro de version dans le nom de fichier (jelix 1.2.6 et supérieur), vous devez indiquer le numéro de version dans la propriété @@P@$targetVersions@@ (qui est un tableau), et une date au format 'yyyy-mm-dd' ou 'yyyy-mm-dd HH:ii' dans la propriété @@P@$date@@.
+Pour les scripts de mise à jour sans numéro de version dans le nom de fichier (jelix 1.2.6/1.3RC3 et supérieur), vous devez indiquer le numéro de version dans la propriété @@P@$targetVersions@@ (qui est un tableau), et une date au format 'yyyy-mm-dd' ou 'yyyy-mm-dd HH:ii' dans la propriété @@P@$date@@.
 
 
 <code php>

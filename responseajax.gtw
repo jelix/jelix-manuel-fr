@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/responseajax~~
+~~LANG:EN@//en/manual-1.3/responseajax~~
 
 Bien que le terme AJAX précise qu'une réponse doit être en XML (d'où le X dans AJAX), AJAX est souvent utilisé avec d'autres types de format.
 
@@ -9,6 +9,7 @@ Selon ce que vous attendez côté client, soit dans la propriété responseText,
   * Pour renvoyer des fragments de code HTML, il ne faut **pas** utiliser @@C@jResponseHtml@@, mais @@C@jResponseHtmlFragment@@ (voir exemple ci-dessous).
   * Dans les autres cas, vous utiliserez certainement [[responsetext|jResponseText]].
 
+Dans votre controleur, vous pouvez utiliser @@$GLOBALS['gJCoord']->request->isAjax()@@ pour vérifier que la requête est une vrai requête AJAX (envoyée donc avec XMLHttpRequest).
 
 ===== Renvoyer des fragments de code HTML =====
 

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/urls~~
+~~LANG:EN@//en/manual-1.3/urls~~
 
 
 
@@ -27,7 +27,7 @@ Une URL est composée de différentes parties :
 Les moteurs d'URLs analysent le pathinfo et les paramètres pour déterminer le module/action
 
 
-Note : il peut y avoir certaines options à activer dans apache. Voir la page [[http://jelix.org/articles/fr/manuel-1.2/installation]]
+Note : il peut y avoir certaines options à activer dans apache. Voir la page [[configurer-server#configuration-pour-les-urls-cools]]
 
 
 ===== Configuration générale =====
@@ -36,7 +36,7 @@ La configuration de jUrl se fait dans la section ''urlengine'' du fichier de con
 
 === ''engine'' ===
 
-Indique le type de moteur à utiliser. Les deux valeurs disponibles sont ''simple'', ''basic_significant'' et ''significant''.
+Indique le type de moteur à utiliser. Les trois valeurs disponibles sont ''simple'', ''basic_significant'' et ''significant''.
 
 === ''enableParser'' ===
 

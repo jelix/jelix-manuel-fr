@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/create-application/administration-app~~
+~~LANG:EN@//en/manual-1.3/create-application/administration-app~~
 
 ===== La commande initadmin =====
 
@@ -8,26 +8,24 @@ La commande @@initadmin@@ permet d'ajouter facilement une interface d'administra
 **Important** : pour des raisons de sécurité, de facilité d'utilisation du framework etc, il est fortement recommandé de créer une application spécifique pour une interface d'administration.
 
 
-Pour créer une interface d'administration, [[//bd/configuration|vous devez d'abord configurer jDb]]. Exécutez ensuite :
+Pour créer une interface d'administration, [[//bd/configuration|vous devez d'abord configurer jDb]]. Exécutez ensuite dans votre application :
 
 <code bash>
-   php jelix.php --myapp initadmin index
+   php cmd.php initadmin index
 </code>
 
-   * "myapp" est le nom de votre application
-   * "index" est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à l'interface d'administration.
-
+   * "index" est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à l'interface d'administration. 
+ 
 Si vous tenez absolument à créer cette interface dans une application existante utilisant déjà index.php, indiquez un autre point d'entrée, "admin" par exemple, ou un autre nom. La commande crée le point d'entrée s'il n'existe pas déjà. La configuration du point d'entrée sera modifiée afin d'avoir une interface totalement fonctionnelle. Par exemple, deux nouvelles réponses sont ajoutées dans le répertoire @@F@myapp/responses/@@. Vous pouvez ainsi personnaliser l'interface générale.
 
-Notez qu'avant d'exécuter cette commande, vous devez avoir configuré correctement l'accès à la base de donnée dans le fichier @@F@dbprofils.ini.php@@, car les tables pour jAuth et jAcl2 seront créés. Si vous préférez configurer jAuth et/ou jAcl2 par vous même, indiquez les options @@-noauthdb@@ et @@-noacl2db@@ à la commande.
+
+Notez qu'avant d'exécuter cette commande, vous devez avoir configuré correctement l'accès à la base de donnée dans le fichier @@F@profiles.ini.php@@, car les tables pour jAuth et jAcl2 seront créés. Si vous préférez configurer jAuth et/ou jAcl2 par vous même, indiquez les options @@-noauthdb@@ et @@-noacl2db@@ à la commande.
 
 Après avoir créé l'interface (et configuré jAuth et jAcl2 si vous avez choisi de le faire vous-même), vous pouvez démarrer l'application en appelant le point d'entrée créé.
 
 Vous verrez alors un écran demandant votre login et mot de passe (affiché par le module jauth). Par défaut, un utilisateur "admin" avec le mot de passe "admin" est créé. Tapez ces informations, et vous pourrez alors entrer dans l'interface. Voir plus de détails sur la page du [[//ref-modules/master_admin|module master_admin]].
 
-**Rappelez-vous : vous ne pouvez pas utiliser les contrôleurs d'un module sur deux points d'entrée en même temps.** Aussi, si vous utilisez déjà le contrôleur et les zones de jAuth dans votre application, pour autre chose que l'interface d'admin, vous allez avoir des problèmes d'Url, et donc des comportements bizarres, comme par exemple le formulaire de login de l'admin qui est soumis sur le point d'entrée du site web au lieu de l'admin. Si vous voulez utiliser les contrôleurs et formulaires de jauth sur deux points d'entrées, il vous faut séparer l'application en deux.
-
-
+**Rappelez-vous : vous ne pouvez pas utiliser les contrôleurs d'un module sur deux points d'entrée en même temps**. Aussi, si vous utilisez déjà le contrôleur et les zones de jAuth dans votre application, pour autre chose que l'interface d'admin, vous allez avoir des problèmes d'Url, et donc des comportements bizarres, comme par exemple le formulaire de login de l'admin qui est soumis sur le point d'entrée du site web au lieu de l'admin. Si vous voulez utiliser les contrôleurs et formulaires de jauth sur deux points d'entrées, il vous faut séparer l'application en deux.
 ===== Interface d'administration et moteur d'url significatives =====
 
 A cause de certaines contraintes (hébergement notamment) ou de certains besoins, vous voudriez peut-être utiliser la même configuration que le reste de l'application, et donc peut-être utiliser le [[//urls/significant|moteur d'urls significatives]] si celui ci est activé dans votre application (ce qui n'est pas le cas par défaut).

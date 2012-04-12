@@ -1,6 +1,6 @@
-~~LANG:EN@//en/manual-1.2/create-wizard~~
+~~LANG:EN@//en/manual-1.3/create-wizard~~
 
-~~LANG:EN@//en/manual-1.2/create-wizard~~
+~~LANG:EN@//en/manual-1.3/create-wizard~~
 
 Une application, "installWizard", est fournie avec Jelix. Elle permet de créer un assistant, pour installer une application Jelix aisément, avec un navigateur. Il pourrait être très utile pour distribuer une application publique. Comme par exemple, un forum...
 
@@ -196,12 +196,12 @@ Cette page vérifie si la configuration du serveur et l'installation de Jelix es
 
 === dbprofile ===
 
-Cette page permet de configurer le fichier dbprofils.ini.php. 
-Il affiche un formulaire où vous pouvez définir le nom du serveur de base de données, le nom de la base de données, le nom de connexion à cette page et le mot de passe de celui ci. Vous pouvez fournir un  @@F@dbprofils.ini.php.dist@@ dans le répertoire @@var/config/@@ de l'application: la page prendra celle-ci comme "un template" pour générer le fichier @@F@dbprofils.ini.php@@. C'est l'opportunité pour vous d'indiquer tout les profils à créer.
+Cette page permet de configurer le fichier profiles.ini.php. 
+Il affiche un formulaire où vous pouvez définir le nom du serveur de base de données, le nom de la base de données, le nom de connexion à cette page et le mot de passe de celui ci. Vous pouvez fournir un  @@F@profiles.ini.php.dist@@ dans le répertoire @@var/config/@@ de l'application: la page prendra celle-ci comme "un template" pour générer le fichier @@F@profiles.ini.php@@. C'est l'opportunité pour vous d'indiquer tout les profils à créer.
 
 Paramètres de configuration:
 
-   * @@ignoreProfiles@@: liste des profils à ignorer dans le fichier donné @@F@dbprofils.ini.php.dist@@
+   * @@ignoreProfiles@@: liste des profils à ignorer dans le fichier donné @@F@profiles.ini.php.dist@@
    * @@availabledDrivers@@: liste des types de base de données que votre application supporte. (mysql, pgsql, sqlite...)
 
 === confmail ===

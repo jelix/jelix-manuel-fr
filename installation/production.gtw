@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/installation/production-server~~
+~~LANG:EN@//en/manual-1.3/installation/production-serveur~~
 
 On appelle //serveur de production//, le serveur sur lequel sera installé votre application une fois terminée, donc accessible aux utilisateurs finaux. Par opposition, il y a le serveur de développement, celui sur lequel vous développez votre application.
 
@@ -7,7 +7,7 @@ Il y a certaines choses différentes à prendre compte dans le cas du serveur de
 
 ===== Choisir la bonne édition de Jelix =====
 
-Pour développer, vous utilisez bien sûr **l'édition "developer"** de Jelix. Cette édition comprend les outils de scripts en ligne de commande et d'autres choses pour le développement.
+Pour développer, vous utilisez bien sûr **l'édition "developer"** de Jelix. Le code source de cette édition contient des instructions aidant au déboggage, pour la debugbar par exemple.
 
 Cependant, pour l'installation sur un serveur de production, il est préférable d'installer **l'édition "optimized"** de Jelix. Comme son nom l'indique, elle est optimisée, et débarrassée des choses inutiles en production. Notez toutefois que votre application fonctionnera à l'identique avec l'une ou l'autre des éditions de Jelix, à un détail près : on pourra observer de légères améliorations de performance avec l'édition "Optimized" ;-).
 
@@ -21,50 +21,19 @@ Une **édition "Gold"** est disponible en téléchargement, pour les développeu
 
   - Tous les répertoires autre que le @@F@www@@ de votre application devraient être en dehors du "document root" du site web. Voir [[//configurer-server|le chapitre sur la configuration d'un serveur]] pour des exemples.
   - Bien spécifier les droits sur le répertoire @@F@temp/@@, en particulier, que le propriétaire soit l'utilisateur qui exécute apache (ou celui de votre compte, chez certains hébergeurs) et qu'il ait les droits en écriture. Par exemple, sur linux, il n'est pas recommandé de mettre les droits 0777 sur le répertoire @@F@temp/@@ ;-)
+  - Idem pour les répertoires @@F@var/log/@@, @@F@var/mails/@@ etc de votre application
 
 ==== Au niveau de l'application ====
 
 Voici quelques conseils au niveau de la configuration de l'application, donc les modifications à faire au niveau du fichier @@F@var/config/defaultconfig.ini.php@@ .
 
-=== Section error_handling ===
+=== section jResponseHtml ===
 
-Dans la section @@error_handling@@, la configuration suivante est vivement conseillée :
+Désactivez le plugin debugbar.
 
-<code ini>
-[error_handling]
-messageLogFormat = "%date%\t[%code%]\t%msg%\t%file%\t%line%\n\t%url%\n"
-logFile = error.log
-email = root@localhost
-emailHeaders = "From: webmaster@yoursite.com\nX-Mailer: Jelix\nX-Priority: 1 (Highest)\n"
-quietMessage="A technical error has occured. Sorry for this trouble."
+=== configuration du logger ===
 
-showInFirebug = off
-
-; mots clés que vous pouvez utiliser : ECHO, ECHOQUIET, EXIT, LOGFILE, SYSLOG, MAIL, TRACE
-default      = ECHOQUIET EXIT LOGFILE TRACE
-error        = ECHOQUIET EXIT LOGFILE TRACE
-warning      = ECHOQUIET LOGFILE TRACE
-notice       =  
-strict       = 
-; pour les exceptions, il y a implicitement un EXIT
-exception    = ECHOQUIET LOGFILE TRACE
-
-</code>
-
-En clair, il est déconseillé d'utiliser le mot clé @@L@ECHO@@, qui affiche tous les détails des erreurs dans les pages web (informations qui pourraient être utiles pour des pirates), mais plutôt @@L@ECHOQUIET@@, qui affiche simplement le message indiqué dans le paramètre @@V@quietMessage@@.
-
-Toutefois, il est utile d'être informé des erreurs et de leurs détails. Aussi, parallèlement à @@L@ECHOQUIET@@, il est recommandé d'ajouter l'un de ces mots clés 
-    * @@L@LOGFILE@@ : les erreurs sont insérées dans le fichier indiqué dans logFile
-    * @@L@SYSLOG@@ : les erreurs sont enregistrées au niveau du système
-    * @@L@MAIL@@ : les erreurs sont envoyées par Mail.
-
-Attention à l'usage de @@L@EMAIL@@ : ne l'utiliser qu'une fois que vous savez que votre application fonctionne bien sur le serveur de production. Sinon vous risquez d'être inondé de mails (voire même que votre hébergeur n'apprécie pas l'usage intensif du mail, pouvant vous prendre pour un spammeur).
-
-Attention aussi à l'usage de @@L@SYSLOG@@ : ne mettre cette option que s'il s'agit de **votre** serveur (c'est à dire que vous êtes administrateur de la machine). Sinon le propriétaire de la machine risque de ne pas apprécier.
-
-En conclusion : @@L@LOGFILE@@ est plutôt conseillé par rapport à @@L@EMAIL@@ et à @@L@SYSLOG@@ ;-)
-
-Vous pouvez aussi utiliser le mot clé @@L@TRACE@@ pour avoir le contenu de la pile d'appel, afin d'aider au deboggage.
+Si vous gardez l'édition "dev" en production, mettez en commentaire la ligne @@sql=...@@ et peut être aussi @@soap=..@@ et autre type de log qui ne vous semble pas pertinent. Et supprimez "memory" pour chaque type de log, cela économisera de la mémoire (n'est utile que pour la debugbar).
 
 === Section compilation ===
 
@@ -81,3 +50,34 @@ L'option @@V@checkCacheFiletime@@ évite à Jelix de vérifier tout le temps que
 === Section mailer ===
 
 N'oubliez pas de mettre à jour les paramètres de la section @@V@[mailer]@@. En effet, les paramètres pour envoyer des mails ne sont pas toujours identiques entre le serveur de développement et le serveur de production.
+
+=== Si votre serveur est derrière un proxy ===
+
+Il va falloir indiquer de forcer les ports aux valeurs standards, quand Jelix gènère des urls. Cela se passe dans la section générale :
+
+<code ini>
+forceHTTPPort = true
+forceHTTPSPort = true
+</code>
+
+Et indiquer le vrai nom de domaine du site (sinon jelix prend le nom de domaine du serveur derrière le proxy)
+<code>
+domainName = www.example.com
+</code>
+
+Si le "basePath" du serveur derrière le proxy n'est pas le même que le basePath public (ex: le proxy redirige les urls http://example.com/index.php vers http://backend.example.com/foo/bar/index.php), il faut indiquer le basePath public et le basePath "backend" :
+
+<code ini>
+[urlengine]
+basePath = /
+backendBasePath = /foo/bar
+</code>
+
+Et si le proxy transforme les requêtes HTTPS en HTTP vers votre serveur web, il faut désactiver la vérification HTTPS de jelix
+
+<code ini>
+[urlengine]
+checkHttpsOnParsing = off
+</code>
+
+

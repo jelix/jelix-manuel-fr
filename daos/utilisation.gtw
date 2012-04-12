@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/daos/use~~
+~~LANG:EN@//en/manual-1.3/daos/use~~
 
 Vous avez vu comment décrire dans un fichier XML un DAO (voir [[fichier_de_base]]). Ce fichier, vous devez le stocker dans un répertoire @@F@daos/@@ d'un module et le nommer comme ceci : @@F@nom.dao.xml@@. //nom// est le nom de votre DAO.
 

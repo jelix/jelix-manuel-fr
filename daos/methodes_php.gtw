@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/daos/php_methods~~
+~~LANG:EN@//en/manual-1.3/daos/php_methods~~
 
 
 Les [[methodes_xml|méthodes déclarées en XML]] permettent de créer facilement des méthodes, et peuvent répondre à beaucoup de situations. Néanmoins elles sont tout de même limitées dans la cadre de requêtes complexes. On ne peut pas créer des requêtes complexes.

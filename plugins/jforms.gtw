@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/plugins/jforms~~
+~~LANG:EN@//en/manual-1.3/plugins/jforms~~
 
 Comme il est indiqué [[//jforms/affichage|dans le chapitre sur l'affichage des formulaires jforms]], il est possible de choisir un plugin qui s'occupera de générer le code du formulaire (en HTML, XUL, javascript etc..) renvoyé au navigateur. 
 
@@ -13,7 +13,7 @@ Il faut d'abord donner un nom à votre générateur. Prenons "monhtml" par exemp
 
 Dans cette classe, vous devez implémenter les méthodes qui suivent. Ces méthodes doivent afficher les différentes parties du formulaire (en clair, faire des echos), et ne renvoient pas de valeurs. Ces méthodes sont appelées par les différents plugins de templates de jforms.
 
-Après chaque modification de votre générateur de jforms, **pensez à vider le cache de votre application**  (par exemple en utilisant la commande @@cleartemp@@ du [[//jelix-scripts|script jelix.php]]), ceci afin de prendre en compte vos modifications.
+Après chaque modification de votre générateur de jforms, **pensez à vider le cache de votre application**  (par exemple en utilisant la commande @@cleartemp@@), ceci afin de prendre en compte vos modifications.
 
 
 ==== outputMetaContent ====

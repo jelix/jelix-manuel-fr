@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/creating-a-module~~
+~~LANG:EN@//en/manual-1.3/creating-a-module~~
 
 Un module est un répertoire dans lequel il y a une arborescence précise. Les modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe de modules, ou aussi dépôt de modules.
 
@@ -30,22 +30,22 @@ Tous les modules se trouvant dans ces deux répertoires pourront être activés 
 
 Le principe : il suffit de créer un répertoire dans un dépôt, avec un nom précis, et d'y mettre les contrôleurs, les daos et tout ce qu'il faut dans leurs sous-répertoires respectifs.
 
-Le plus simple est encore d'utiliser le script jelix et la commande @@c@createmodule@@ :
+Le plus simple est encore d'utiliser la commande @@c@createmodule@@. Dans votre application :
 
 <code bash>
-   php jelix.php --myapp createmodule monmodule
+   php cmd.php createmodule monmodule
 </code>
 
 Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de l'application, ainsi que l'arborescence classique d'un module et un contrôleur par défaut.
 
 **Important** : Le nom des modules est repris dans certaines classes générées automatiquement par Jelix, aussi ne peut-il comporter que des caractères autorisés par PHP pour les noms de classes : lettres minuscules, majuscules, non accentuées, les chiffres et le caractère _.
 
-Par défaut, le module est crée dans le répertoire @@F@modules/@@ de l'application, mais si vous voulez le créer dans un autre dépôt de module déclaré dans @@V@modulesPath@@, vous pouvez l'indiquer après le nom du module, en utilisant la même syntaxe que pour @@V@modulesPath@@, à savoir un chemin absolue ou un chemin relatif précédé de "lib:" ou "app:".
+Par défaut, le module est créé dans le répertoire @@F@modules/@@ de l'application, mais si vous voulez le créer dans un autre dépôt de module déclaré dans @@V@modulesPath@@, vous pouvez l'indiquer après le nom du module, en utilisant la même syntaxe que pour @@V@modulesPath@@, à savoir un chemin absolu ou un chemin relatif précédé de "lib:" ou "app:".
 
 Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/ 
 
 <code bash>
-   php jelix.php --myapp createmodule supermodule lib:shared-modules/
+   php cmd.php createmodule supermodule lib:shared-modules/
 </code>
 
 Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres options.
@@ -60,7 +60,7 @@ Après avoir créer le module, vous devez vérifier que le numéro de version in
 Vous pouvez indiquer le numéro de version à la commande @@createmodule@@, grâce à l'option @@-ver@@ :
 
 <code bash>
-php jelix.php --myapp createmodule -ver 1.0 supermodule
+php cmd.php createmodule -ver 1.0 supermodule
 </code>
 
 Vous pouvez aussi le modifier directement dans le fichier @@F@module.xml@@ de votre module.

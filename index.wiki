@@ -1,24 +1,25 @@
-~~LANG:EN@//en/manual-1.2~~
+~~LANG:EN@//en/manual-1.3~~
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.2.7
+subtitle= Jelix 1.3.1
 title_short= Guide du développeur
-edition = Jelix 1.2.7
+edition = Jelix 1.3.1
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
-copyright_years=2006-2012
+copyright_years=2006-2011
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
 
-Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel|le manuel au format PDF]] !
+
+Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.3.pdf|le manuel au format PDF]] !
 
 <bookcontents>
 
 - part: [[introduction|Introduction]]
   - chapter: [[nouveautes|Nouveautés]]
-  - chapter: [[installation/migration|Migration d'une application jelix 1.1 vers jelix 1.2]]
+  - chapter: [[installation/migration|Migration d'une application jelix 1.2 vers jelix 1.3]]
 
 - part:  [[mise-en-route|Mise en route]]
   - chapter: [[installation/prerequis|Pré-requis sur le serveur]]
@@ -28,13 +29,14 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
   - chapter: [[configurer-server|Configurer le serveur]]
 
 - part: [[fondamentaux|Fondamentaux]]
-   - chapter:[[principes|Principes de fonctionnement]]
+   - chapter: [[principes|Principes de fonctionnement]]
      - section: [[selecteurs|Les sélecteurs]]
-     - section: [[requests|Les objets jRequest]]
+     - section: [[requests|Les objets jRequest et points d'entrée]]
      - section: [[coordinateur|Le coordinateur]]
      - section: [[jresponse|Les objets jResponse]]
      - section: [[appel-action|Appeler une action]] et les sélecteurs d'action.
-   - chapter:[[modules|Développement d'un module]]
+   - chapter: [[configuration|Les fichiers de configuration]]
+   - chapter: [[modules|Développement d'un module]]
      - section: [[creer-un-module|Créer un module]]
      - section: [[installer-un-module|Installer un module]]
      - section: [[controleurs|Développer un contrôleur]]
@@ -118,22 +120,24 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
    - chapter: [[surcharge-de-fichiers|Surcharge de fichiers de modules]]
    - chapter: [[plugins|Développer et utiliser des plugins]]
       - section: [[plugins/coord|plugins de coordinateur]]
+      - section: [[plugins/logger|plugins pour jLog]]
       - section: [[plugins/auth|drivers pour jAuth]]
       - section: [[plugins/db|drivers pour jDb]]
       - section: [[plugins/tpl|plugins de templates]]
       - section: [[plugins/urls_engine|moteurs d'urls]]
       - section: [[plugins/jforms|générateurs jforms]]
-   - chapter: [[configuration|La configuration en détails]]
+      - section: [[plugins/debugbar|plugins pour la debugbar]]
+      - section: [[plugins/htmlresponse|plugins pour jResponseHtml]]
+   - chapter: [[details-configuration|La configuration en détails]]
    - chapter: [[objets_globaux|les objets globaux utiles]]
    - chapter: [[cache|Utiliser le cache]]
    - chapter: [[creer-script-installation|Créer des scripts d'installation automatiques]]
    - chapter: [[creer-wizard|Créer un wizard d'installation]]
 
 - part: [[aide-developpement|Aide au développement]]
-   - chapter: [[errormanager|Configurer le gestionnaire d'erreur]]
+   - chapter: [[errormanager|Configurer la gestion des erreurs]]
+   - chapter: [[deboggage|Debuggage et utilisation de jLog]]
    - chapter: [[tests_unitaires|Développer des tests unitaires]]
-   - chapter: [[deboggage|Les aides pour déboguer]] (jLog..)
-
 
 - part: [[installation/deploiement|Déployer une application jelix]]
   - chapter: [[installation/production|Configurer un serveur de production]]
@@ -143,6 +147,7 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
 
 - part: [[references|Références]]
    - chapter: [[classes-utiles|Les classes utilitaires]]
+      - section: [[japp|jApp : chemins de l'application]]
       - section: [[datetime|jDateTime : manipulation de dates et heures]]
       - section: [[file|jFile : lire ou créer des fichiers]]
       - section: [[filtre|jFilter : vérification et filtrage de données]]
@@ -153,7 +158,6 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
       - section: [[message|jMessage : informations entre actions]]
       - section: [[session|jSession : stockage de sessions]]
       - section: [[wiki|jWiki : transformation de texte wiki]]
-
 
    - chapter: [[ref-plugins/tplplugins|Plugins de template]]
         - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]
@@ -171,6 +175,7 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
    - chapter: [[ref-modules|Les modules de Jelix]]
       - section: [[ref-modules/master_admin|master_admin]]
    - chapter: [[ref-javascript-library|Bibliothèques Javascript]]
+ 
 </bookcontents>
 
 <booklegalnotice>

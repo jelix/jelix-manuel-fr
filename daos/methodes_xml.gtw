@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/daos/xml_methods~~
+~~LANG:EN@//en/manual-1.3/daos/xml_methods~~
 
 Une factory générée par jDao contient par défaut un certain nombre de méthodes  (find, findAll, get, insert, etc...) comme décrit sur la page sur [[utilisation|l'utilisation des daos]]. Cependant, elles ne sont pas forcément suffisantes, et l'on a souvent besoin de faire des sélections, des mises à jour ou des suppressions particulières. 
 
@@ -163,6 +163,7 @@ Voici la description de la balise //<conditions>// qui peut être utilisée dans
       <lteq       property="foo" value="" />
       <gteq       property="foo" value="" />
       <like       property="foo" value="" />
+      <notlike    property="foo" value="" />
       <isnull     property="foo"/>
       <isnotnull  property="foo"/>
       <in         property="foo" value="" />

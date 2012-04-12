@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/urls/significant~~
+~~LANG:EN@//en/manual-1.3/urls/significant~~
 
 Le moteur d'url “significant” permet d'attribuer à chaque action une url spécifique de la forme que l'on veut. 
 
@@ -114,6 +114,7 @@ Quand le paramètre est de type string il n'est pas obligatoire de mettre une ba
 | year   | une année sur 4 chiffres |
 | month | un mois sur deux chiffres |
 | day | un jour sur deux chiffres |
+| path | un sous chemin. dans ce cas ce paramètre doit être le dernier dans l'url  |
 
 
 Note : vous devrez bien entendu indiquer les valeurs de ces paramètres lors de l'appel à jUrl.
@@ -307,7 +308,7 @@ Si vous voulez définir des URLs qui ne contiennent pas le nom du point d'entré
 
 === Suppression du nom du point d'entrée dans l'URL ===
 
-Un exemple d'utilisation du mod_rewrite n'est pas forcément de transformer complétement les URLs, mais par exemple d'ajouter le fichier index.php dans les URLs dans lesquelles on l'aurait supprimé pour faire "joli".
+Un exemple d'utilisation du mod_rewrite n'est pas forcément de transformer complétement les URLs comme indiqué précédement, mais par exemple d'ajouter le fichier index.php dans les URLs dans lesquelles on l'aurait supprimé pour faire "joli".
 
 Par exemple nos URLs sont de la forme :
 <code>

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/rights2/use~~
+~~LANG:EN@//en/manual-1.3/rights2/use~~
 
 
 Quand vous voulez que votre module fonctionne selon des droits, il vous faut durant la réalisation de ce module :
@@ -62,7 +62,7 @@ if( jAcl2::check("cms.articles.update", $article_id)){
 
 Dans les contrôleurs dont on veut vérifier les droits automatiquement, on peut utiliser le plugin jacl2 pour le coordinateur.
 
-Pour ce faire, activez le plugin jacl2 dans la configuration de l'application
+Pour ce faire, activez le plugin jacl2 dans la configuration de l'application (si vous avez installé le module jacl2db, il l'a fait pour vous).
 
 <code ini>
 [coordplugins]
@@ -73,7 +73,7 @@ Copiez le fichier @@F@lib/jelix/plugins/coord/jacl2/jacl2.coord.ini.php.dist@@ d
 
 Éditez ce fichier pour indiquer les actions vers lesquelles aller en cas de défaut de droits, ou le message à afficher.
 
-Et dans vos contrôleurs, mettez les valeurs suivantes dans la propriété $pluginParams :
+Et dans vos contrôleurs, mettez les valeurs suivantes dans la propriété @@$pluginParams@@ :
 
 <code php>
 

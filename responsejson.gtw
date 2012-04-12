@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/responsejson~~
+~~LANG:EN@//en/manual-1.3/responsejson~~
 
 [[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui réutilise des éléments syntaxiques de Javascript. Cela facilite alors grandement l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus utilisé pour la technique AJAX.
 

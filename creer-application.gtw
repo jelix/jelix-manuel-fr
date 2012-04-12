@@ -1,17 +1,17 @@
-~~LANG:EN@//en/manual-1.2/create-application~~
+~~LANG:EN@//en/manual-1.3/create-application~~
 
-La première chose à faire pour utiliser Jelix, c'est de créer une application. Vous pouvez en créer une "à la main", mais il y a une manière plus simple : utiliser la commande @@createapp@@ de [[jelix-scripts|jelix.php]].
+La première chose à faire pour utiliser Jelix, c'est de créer une application. Vous pouvez en créer une "à la main", mais il y a une manière plus simple : utiliser le script @@createapp@@ fourni avec Jelix.
 
-Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et executez:
+Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et exécutez :
 
 <code bash>
-php jelix.php --myapp createapp
+php createapp.php /chemin/vers/le/nouveau/répertoire/de/myapp
 </code>
 
 @@myapp@@ est le nom de votre application (que vous pouvez bien sûr choisir librement).
 
 
-@@createapp@@ crée un répertoire @@F@myapp/@@, au même niveau que le répertoire @@F@lib/@@. Son contenu est :
+@@createapp@@ crée un répertoire @@F@myapp/@@ avec le chemin indiqué. Son contenu est :
 
   myapp/
      modules/      modules de l'application
@@ -19,10 +19,10 @@ php jelix.php --myapp createapp
      responses/    classes pour les objets réponses HTML
      var/config/   fichiers de configuration
      var/log/      fichier de log
-     var/themes/   les themes disponibles pour votre application
+     var/themes/   les thèmes disponibles pour votre application
      var/overloads/ contiendra les différents fichiers qui redéfinissent des fichiers de modules que vous aurez récupéré
-     www/          racine du repertoire public de votre application
+     www/          racine du répertoire public de votre application
 
 Vous avez aussi un nouveau répertoire @@F@temp/myapp@@, où seront stockés tout les fichiers de caches créés par Jelix.
 
-Maintenant vous devez configurer votre server avant de lancer votre application une première fois.
+Maintenant vous devez configurer votre serveur avant de lancer votre application une première fois.
