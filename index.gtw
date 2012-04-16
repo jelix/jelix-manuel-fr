@@ -134,12 +134,12 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
    - chapter: [[tests_unitaires|Développer des tests unitaires]]
    - chapter: [[deboggage|Les aides pour déboguer]] (jLog..)
 
-
 - part: [[installation/deploiement|Déployer une application jelix]]
   - chapter: [[installation/production|Configurer un serveur de production]]
   - chapter: [[installation/application|Installation d'une application]] pour jelix
   - chapter: [[installation/mise-a-jour|Mettre à jour une application]] pour jelix
 
+- part: [[astuces|Astuces]]
 
 - part: [[references|Références]]
    - chapter: [[classes-utiles|Les classes utilitaires]]
@@ -154,7 +154,6 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
       - section: [[session|jSession : stockage de sessions]]
       - section: [[wiki|jWiki : transformation de texte wiki]]
 
-
    - chapter: [[ref-plugins/tplplugins|Plugins de template]]
         - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]
         - section: [[ref-plugins/tplplugins/fonctions|Fonctions diverses]]
@@ -168,9 +167,11 @@ Téléchargez [[http://jelix.org/articles/fr/telechargement/stable/1.2#le-manuel
    - chapter: [[ref-plugins/coordplugins|Plugins pour le coordinateur]]
       - section: [[coordplugins/history|history]]
       - section: [[coordplugins/zendframework|zendframework]]
+
    - chapter: [[ref-modules|Les modules de Jelix]]
       - section: [[ref-modules/master_admin|master_admin]]
    - chapter: [[ref-javascript-library|Bibliothèques Javascript]]
+
 </bookcontents>
 
 <booklegalnotice>
