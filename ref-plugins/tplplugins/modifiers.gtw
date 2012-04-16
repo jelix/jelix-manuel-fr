@@ -524,3 +524,23 @@ Le paramètre indique le format d'origine ''et'' de transformation (voulu)  que 
 ===== wordwrap =====
 
 ===== html:nl2br =====
+
+Ce modificateur remplace les retours à la ligne en balise html <br/> dans un texte contenu dans une variable de template.
+
+= Exemple =
+
+Prenons la variable $foo contenant le texte suivant et qu’on assigne au template :
+<code php>
+$foo = "Lorem ipsum dolor sit amet,\nconsectetuer adipiscing elit." 
+$rep->body->assign('foo', $foo);
+</code>
+
+On affiche alors le texte contenu dans $foo dans le template :
+<code smarty>
+<p>{$foo|nl2br}</p>
+</code>
+
+Ce qui donne :
+<html>
+<p>Lorem ipsum dolor sit amet,<br/>consectetuer adipiscing elit.</p>
+</html>
