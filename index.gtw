@@ -136,6 +136,8 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter: [[file|jFile : lire ou créer des fichiers]]
    - chapter: [[inifilemodifier|jIniFileModifier: lire ou modifier des fichiers de configuration (ini)]]
 
+- part: [[astuces|Astuces]]
+
 - part: [[ref-plugins|Les plugins de Jelix]]
    - chapter: [[ref-plugins/tplplugins|Plugins de template]]
         - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]
@@ -152,6 +154,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[coordplugins/zendframework|zendframework]]
 - part: [[ref-modules|Les modules de Jelix]]
    - chapter: [[ref-modules/master_admin|master_admin]]
+
 </bookcontents>
 
 <booklegalnotice>
