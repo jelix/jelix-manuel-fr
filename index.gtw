@@ -109,6 +109,8 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter: [[session|jSession : stockage de sessions]]
    - chapter: [[file|jFile : lire ou créer des fichiers]]
 
+- part: [[astuces|Astuces]]
+
 - part: [[ref-plugins|Les plugins de Jelix]]	 
    - chapter: [[ref-plugins/tplplugins|Plugins de template]]	 
       - section: [[ref-plugins/tplplugins/modifiers|Modificateurs]]	 

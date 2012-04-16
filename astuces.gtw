@@ -1,0 +1,40 @@
+====== Trucs et Astuces ======
+
+Cette section recense les astuces indispensables qui vont vous aider pour le développement de votre application.
+
+== Placez l'expression suivante au début de votre action, cela vous évitera certaines erreurs ==
+
+<code php>
+$rep = $this->getResponse('html');
+</code>
+
+==Pour récupérer l'action courante utilisez l'expression suivante dans un controleur, une zone ou votre classe response==
+
+<code php>
+$GLOBALS['gJCoord']->action->toString();
+</code>
+
+== Pour récuperer les variables de session ==
+
+Jelix utilise par défaut les sessions PHP. Lorsque vous utilisez jAuth, cette classe utilise les informations définies dans la partie "record" du DAO de la table jelix_user et les enregistre dans une session PHP. Pour récupérer cette information il suffit de manipuler l'objet $_SESSION['JELIX_USER'] dont les propriétés correspondent aux informations de l'utilisateur :
+
+<code php>
+$_SESSION['JELIX_USER']->login
+</code>
+
+== Pour enregistrer la date courante dans la base de donnée ==
+
+s'applique aux champs dates si ils sont au format datetime ou date dans votre base de données.
+Il suffit d'ajouter les attributs suivants dans la "property" de votre champ date dans la partie "record" du fichier xml de votre DAO. :
+
+<code php>
+inserpattern="NOW()"
+</code>
+
+ajoutera la date courante à la création de l'enregistrement.
+
+<code php>
+updatepattern="NOW()"
+</code>
+
+ajoutera la date courante à la modification de l'enregistrement.
