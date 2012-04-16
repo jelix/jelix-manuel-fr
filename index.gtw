@@ -144,6 +144,7 @@ Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.
   - chapter: [[installation/application|Installation d'une application]] pour jelix
   - chapter: [[installation/mise-a-jour|Mettre à jour une application]] pour jelix
 
+- part: [[astuces|Astuces]]
 
 - part: [[references|Références]]
    - chapter: [[classes-utiles|Les classes utilitaires]]
@@ -172,10 +173,11 @@ Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.
    - chapter: [[ref-plugins/coordplugins|Plugins pour le coordinateur]]
       - section: [[coordplugins/history|history]]
       - section: [[coordplugins/zendframework|zendframework]]
+
    - chapter: [[ref-modules|Les modules de Jelix]]
       - section: [[ref-modules/master_admin|master_admin]]
    - chapter: [[ref-javascript-library|Bibliothèques Javascript]]
- 
+
 </bookcontents>
 
 <booklegalnotice>
