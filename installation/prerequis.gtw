@@ -10,7 +10,7 @@ Si vous comptez utiliser les scripts en ligne de commande d'aide au développeme
 
 ===== Configuration de PHP =====
 
-   * **magic_quotes_gpc** et **magic_quotes_runtime** doivent être à **Off**. Si ce n'est pas le cas, [[//plugins/coord|il faut activer le plugin magicquotes]] livré avec jelix.
+   * **magic_quotes_gpc** et **magic_quotes_runtime** doivent être à **Off**. Si ce n'est pas le cas, [[/plugins/coord|il faut activer le plugin magicquotes]] livré avec jelix.
    * **session.auto_start** doit être à 0
    * **safe_mode** doit être à **Off** (À cause des nombreux fichiers temporaires créés par jelix, il peut être difficile de configurer une installation avec Jelix avec le safe_mode activé)
   

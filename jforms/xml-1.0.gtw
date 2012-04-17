@@ -44,7 +44,7 @@ Tout champ de saisie doit contenir un libellé indiqué au moyen de la balise **
   </input>
 </code>
 
-On peut indiquer une [[//locales|locale]] plutôt qu'une chaîne "en dur" :
+On peut indiquer une [[/locales|locale]] plutôt qu'une chaîne "en dur" :
 
 <code xml>
   <input ref="nom">

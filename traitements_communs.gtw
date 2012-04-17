@@ -1,5 +1,5 @@
 
-Il y a plusieurs types de traitements : les traitements métiers, et ceux dédiés à la génération de la page web. Pour les traitements métiers, vous utiliserez des classes métiers, des classes services, des daos. Celles-ci pouvant être utilisable par tous les modules, c'est un premier moyen de réaliser des traitements métiers qui puissent être réutilisables. Voir [[http://jelix.org/articles/manuel/classes-metiers]].
+Il y a plusieurs types de traitements : les traitements métiers, et ceux dédiés à la génération de la page web. Pour les traitements métiers, vous utiliserez des classes métiers, des classes services, des daos. Celles-ci pouvant être utilisable par tous les modules, c'est un premier moyen de réaliser des traitements métiers qui puissent être réutilisables. Voir [[/classes-metiers]].
 
 Pour ce qui concerne la génération d'une page, c'est un peu plus complexe que ça car il y a plusieurs façons de faire. Nous sommes donc devant le cas suivant : nous avons plusieurs pages qui ont des parties communes. Cela peut être par exemple un bandeau, un pied de page, un menu sur le coté etc.. Il peut y avoir aussi quelques pages qui ont un peu plus que ça en commun. Voici diverses solutions selon le contexte.
 

@@ -34,7 +34,7 @@ Et c'est tout ! En imaginant que ce contrôleur se trouve dans le module main, a
 
 Vous avez alors toutes les pages qu'il faut pour gérer les enregistrements de la table.
 
-Important : par défaut, le controleur récupère la réponse HTML définit dans jelix, c'est à dire qu'il vous faut faire [[//traitements_communs#personnalisation-de-reponse-commune|une réponse HTML personnalisée]]. Si vous n'en avez pas, rien ne s'affichera. Si vous ne voulez pas faire de réponse personnalisée (ce qui est dommage), il faudra configurer le contrôleur.
+Important : par défaut, le controleur récupère la réponse HTML définit dans jelix, c'est à dire qu'il vous faut faire [[/traitements_communs#personnalisation-de-reponse-commune|une réponse HTML personnalisée]]. Si vous n'en avez pas, rien ne s'affichera. Si vous ne voulez pas faire de réponse personnalisée (ce qui est dommage), il faudra configurer le contrôleur.
 
 ====== Personnalisation ======
 

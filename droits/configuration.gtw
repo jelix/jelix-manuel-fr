@@ -9,7 +9,7 @@ Le driver jAcl.db ne fonctionne qu'avec une base de données. Il vous faut donc 
 
 === Configuration de la connexion ===
 
-Pour cela, il vous faut vous reporter à la [[//bd|page sur jDb]]. 
+Pour cela, il vous faut vous reporter à la [[/bd|page sur jDb]]. 
 
 Cependant, si les tables jAcl ne sont pas dans la base indiquée par le profil par défaut, il vous faut alors créer un profil de connexion, et l'indiquer dans le parametre "**jacl_profil**". Un exemple de fichier dbprofils.ini.php :
 

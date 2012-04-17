@@ -1,4 +1,4 @@
-Vous pouvez ajouter vos propres fonctionnalités de templates dans le [[//templates|moteur de template jTpl]]. Elles doivent être implémentées dans un plugin de template. Il y a quatre types de plugin :
+Vous pouvez ajouter vos propres fonctionnalités de templates dans le [[/templates|moteur de template jTpl]]. Elles doivent être implémentées dans un plugin de template. Il y a quatre types de plugin :
 
    * les fonctions
    * les modificateurs
@@ -13,7 +13,7 @@ Les plugins sont stockés dans un répertoire ayant une arborescence précise : 
 
 C'est ainsi que dans un dépôt de plugin de template, vous avez un sous répertoire "html", "xul", "text" et "common". Le sous-répertoire "common" est celui dans lequel sont mis les plugins qui ne sont pas destinés à des types de réponses précis.
 
-lib/jelix/plugins/tpl/ est le dépôt par défaut de jelix pour les plugins de template. Mais vous mettrez en général vos propres plugins de template dans le répertoire //plugins/// de votre application, ou dans un autre dépôt à votre convenance (dépôt à déclarer, comme indiqué sur la [[|page des plugins]]). Sachant que dans le dépôt en question, il vous faut mettre comme indiqué précédemment vos plugins dans tpl/common/, tpl/html/, ou tpl/text/ etc...
+lib/jelix/plugins/tpl/ est le dépôt par défaut de jelix pour les plugins de template. Mais vous mettrez en général vos propres plugins de template dans le répertoire //plugins/// de votre application, ou dans un autre dépôt à votre convenance (dépôt à déclarer, comme indiqué sur la [[/plugins#declaration-d-un-depot-de-plugins|page des plugins]]). Sachant que dans le dépôt en question, il vous faut mettre comme indiqué précédemment vos plugins dans tpl/common/, tpl/html/, ou tpl/text/ etc...
 
 ===== plugin type "function" =====
 

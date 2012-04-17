@@ -19,7 +19,7 @@ $jelix->process(new jJsonRpcRequest());
 
 </code>
 
-Il ne faut pas oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[urls|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
+Il ne faut pas oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[urls/simple|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
 
 <code ini>
 jsonrpc = "@jsonrpc"

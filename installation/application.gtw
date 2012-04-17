@@ -173,7 +173,7 @@ Dans le fichier de configuration //var/config/defaultconfig.ini.php//, indiquez 
 
 ==== Configuration pour les urls "cools" ====
 
-Pour pouvoir utiliser des urls significatives avec le [[//urls|système d'url automatique de jelix]], il faut activer dans apache (au niveau de la configuration serveur ou dans le .htaccess si cela est permis) :
+Pour pouvoir utiliser des urls significatives avec le [[/urls|système d'url automatique de jelix]], il faut activer dans apache (au niveau de la configuration serveur ou dans le .htaccess si cela est permis) :
 
    Options +Multiviews
 

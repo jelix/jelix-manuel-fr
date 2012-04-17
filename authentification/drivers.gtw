@@ -148,7 +148,7 @@ password_crypt_function = "md5"
 
 ===== LDS =====
 
-C'est un driver qui repose sur un serveur LDS (http://lds.linbox.org/). Il appelle l'API xml-rpc d'un serveur LDS. La configuration que vous devez indiquer doit donc être celle-ci :
+C'est un driver qui repose sur un serveur LDS (http://www.linbox.com/ucome.rvt/any/fr/Produits/LDS). Il appelle l'API xml-rpc d'un serveur LDS. La configuration que vous devez indiquer doit donc être celle-ci :
 
 
 <code ini>
@@ -170,4 +170,4 @@ Le driver interrogera donc le serveur **foo.com** sur le port **80**, avec le lo
 
 Vous avez peut-être votre propre système d'authentification, que vous voulez mieux intégrer dans le framework. Dans ce cas, il vous faut créer un driver. Au passage, nous acceptons toutes contributions de ce type !
 
-Pour les détails, voir [[//plugins/auth|la page sur la création des drivers d'authentification]].
+Pour les détails, voir [[/plugins/auth|la page sur la création des drivers d'authentification]].
