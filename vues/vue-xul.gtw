@@ -66,7 +66,7 @@ $rep->addContent('Mon contenu XUL après le template');
 $rep->addContent('Mon contenu XUL avant le template', true);
 </code>
 
-Notez que le contenu à ajouter peut être aussi le contenu de [[zones|zones]]
+Notez que le contenu à ajouter peut être aussi le contenu de [[/zones|zones]]
 
 
 ===== Réaliser des overlays =====
@@ -75,7 +75,7 @@ Un overlay est un fichier XUL qui permet d'ajouter des modifications à une autr
 
 ==== principe ====
 
-La façon dont ça fonctionne est assez simple et repose sur [[events|le système d'évènement de Jelix]]. En fait un objet jResponseXul, avant de générer le contenu final, envoie un évènement pour se signaler. En réponse, les modules peuvent lui renvoyer l'url d'un overlay. Une balise //<?xul-overlay?>// sera ajoutée alors dans la page.
+La façon dont ça fonctionne est assez simple et repose sur [[/events|le système d'évènement de Jelix]]. En fait un objet jResponseXul, avant de générer le contenu final, envoie un évènement pour se signaler. En réponse, les modules peuvent lui renvoyer l'url d'un overlay. Une balise //<?xul-overlay?>// sera ajoutée alors dans la page.
 
 Une condition pour que ça fonctionne vraiment : il faut que l'action qui génère la page xul mette la propriété //$fetchOverlays// à true :
 

@@ -167,7 +167,7 @@ $rep->addContent('Mon contenu HTML après le template');
 $rep->addContent('Mon contenu HTML avant le template', true);
 </code>
 
-Notez que le contenu à ajouter peut être aussi le contenu de [[zones|zones]]
+Notez que le contenu à ajouter peut être aussi le contenu de [[/zones|zones]]
 
 <code php>
 $rep->addContent(jZone::get('monmodule~uneZone'));
@@ -180,7 +180,7 @@ Bien souvent, les pages d'un site ont un gabarit commun, et seules certaines zon
 
 Et pour éviter que dans chaque action on définisse à chaque fois le template principal, les élements communs (feuilles de style etc), on créera un objet réponse HTML qui héritera de jResponseHtml.
 
-Pour savoir comment faire, lire [[traitements_communs#personnalisation-de-reponse-commune|la section sur la personnalisation de réponse commune]].
+Pour savoir comment faire, lire [[/traitements_communs#personnalisation-de-reponse-commune|la section sur la personnalisation de réponse commune]].
 
 
 === Générer sans template ===

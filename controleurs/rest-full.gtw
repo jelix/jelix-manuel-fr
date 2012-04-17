@@ -52,7 +52,7 @@ Avec l'url obtenu par jUrl::get("leModule~exemple:"), vous pouvez alors appeler 
 
 ==== Note ====
 
-Vous pouvez bien sûr faire du REST avec un contrôleur classique, en testant dans votre action, la valeur de $_SERVER['REQUEST_METHOD'] qui indique le type de la méthode HTTP. Mais c'est peut-être moins "sexy" que d'utiliser le procédé indiqué dans cette page pour implémenter du REST ;-)
+Vous pouvez bien sûr faire du REST avec un contrôleur classique, en testant dans votre action, la valeur de @@$_SERVER['REQUEST_METHOD']@@ qui indique le type de la méthode HTTP. Mais c'est peut-être moins "sexy" que d'utiliser le procédé indiqué dans cette page pour implémenter du REST ;-)
 
 
 ===== Récupérer les paramètres de requêtes =====

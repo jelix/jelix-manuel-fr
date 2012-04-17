@@ -45,7 +45,7 @@ Si on indique width ou height, les paramètres suivants peuvent s'appliquer :
 
 Vous pouvez aussi indiquer en paramètre des attributs HTML ('alt', 'class', 'id', 'style', 'longdesc', 'name', 'ismap', 'usemap', 'title', 'dir', 'lang', 'onclick', 'ondblclick', 'onmousedown','onmouseup', 'onmouseover', 'onmousemove', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup'). Ils seront simplement renvoyé (voir modifié pour l'attribut style).
 
-Pour des exemples de transformation, voyez [[ref-plugins/tplplugins/fct_image|l'utilisation du plugin image]].
+Pour des exemples de transformation, voyez [[/ref-plugins/tplplugins/fct_image|l'utilisation du plugin image]].
 
 L'image résultante est une image gif, jpeg ou png.
 

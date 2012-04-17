@@ -1,7 +1,7 @@
 ~~LANG:EN@//en/manual-1.3/responseatom~~
 
 
-Jelix permet, [[responserss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet @@C@jResponseAtom10@@, qui prend en charge  quasiment la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
+Jelix permet, [[vue-rss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet @@C@jResponseAtom10@@, qui prend en charge  quasiment la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
 
 <code php>
   $rep = $this->getResponse('atom1.0');

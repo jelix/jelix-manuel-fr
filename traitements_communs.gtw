@@ -105,5 +105,5 @@ Il se peut qu'un ensemble de pages possède une ou plusieurs zones identiques, s
 
 ===== Personnalisation de réponse commune =====
 
-Créer son propre objet réponse est un autre moyen de factoriser les traitements dédiés à la génération du contenu final. Voir le chapitre sur la [[reponse-generale-personnalisee|création de réponses générales personnalisées]]
+Créer son propre objet réponse est un autre moyen de factoriser les traitements dédiés à la génération du contenu final. Voir le chapitre sur la [[/vues/reponse-generale-personnalisee|création de réponses générales personnalisées]]
 

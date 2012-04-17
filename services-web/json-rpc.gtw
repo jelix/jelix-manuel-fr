@@ -4,7 +4,7 @@ Jelix propose la prise en charge du protocole [[http://json-rpc.org/|json-rpc]].
 
 ===== Point d'entrée spécifique =====
 
-Une requête JSON-RPC est spécifique, et pour y répondre, on ne peut pas utiliser [[requests|l'objet request]] "classic". Il vous faut créer un point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@jsonrpc.php@@ par exemple, qui utilise @@C@jJsonRpcRequest@@ plutôt que @@C@jClassicRequest@@. Le type de requête et du point d'entrée est donc "jsonrpc".
+Une requête JSON-RPC est spécifique, et pour y répondre, on ne peut pas utiliser [[/concepts/objets-request|l'objet request]] "classic". Il vous faut créer un point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@jsonrpc.php@@ par exemple, qui utilise @@C@jJsonRpcRequest@@ plutôt que @@C@jClassicRequest@@. Le type de requête et du point d'entrée est donc "jsonrpc".
 
 Le point d'entrée devra contenir ceci :
 
@@ -20,7 +20,7 @@ $jelix->process(new jJsonRpcRequest());
 
 </code>
 
-Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[urls|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
+Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[/urls/simple|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
 
 <code ini>
 jsonrpc = "@jsonrpc"
@@ -28,7 +28,7 @@ jsonrpc = "@jsonrpc"
 
 //jsonrpc// étant le nom du point d'entrée, et //@jsonrpc// indiquant le type de point d'entrée.
 
-Si vous utilisez [[urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
+Si vous utilisez [[/urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
 <code xml>
 <entrypoint type="jsonrpc" name="jsonrpc" default="true" />
 </code>
@@ -43,7 +43,7 @@ Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action
 
 Comme on a affaire à un type de requête particulier, le nom du fichier du contrôleur doit avoir le suffixe ".jsonrpc.php". Par exemple, un contrôleur "default" : "default.jsonrpc.php". (Vous pouvez bien sûr avoir un autre contrôleur "default" pour d'autres types de requêtes, "default.classic.php" par exemple).
 
-Ensuite, le contenu du contrôleur est similaire à ce que vous avez l'habitude de faire, à la seule différence que vous utiliserez jResponseJsonRpc, qui a pour alias "jsonrpc", pour répondre aux requêtes JsonRpc :
+Ensuite, le contenu du contrôleur est similaire à ce que vous avez l'habitude de faire, à la seule différence que vous utiliserez @@C@jResponseJsonRpc@@, qui a pour alias "jsonrpc", pour répondre aux requêtes JsonRpc :
 
 <code php>
 class defaultCtrl extends jController {

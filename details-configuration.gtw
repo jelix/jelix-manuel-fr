@@ -303,7 +303,7 @@ notfoundAct =
 </code> 	
   * **notfoundAct** : contient le nom de l'action qui affichera l'erreur 404. Si le paramètre est laissé vide alors c'est l'action @@jelix~error:notfound@@ qui sera utilisée.
 
-Utiliser la syntaxe des sélecteurs (Cf.[[selecteurs|L'utilité des sélecteurs]]) et placer le sélecteur de votre action entre guillemet :
+Utiliser la syntaxe des sélecteurs (Cf. [[/concepts/selecteurs|L'utilité des sélecteurs]]) et placer le sélecteur de votre action entre guillemet :
 
 <code ini>
 notfoundAct = "monModule~monControleur:monAction"	
@@ -394,7 +394,7 @@ driver =
 
 
 ==== section sessions ====
-Définit le mode de gestion des sessions PHP (fichier ou bases de données). Pour plus de détails, voir la documentation sur les [[session|sessions]]
+Définit le mode de gestion des sessions PHP (fichier ou bases de données). Pour plus de détails, voir la documentation sur les [[/classes-utiles/jsession|sessions]]
 
 <code ini>
 [sessions]

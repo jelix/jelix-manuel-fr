@@ -11,4 +11,4 @@ Un objet jResponse implémente un certain nombre de méthodes, dont les plus uti
 
 Ces méthodes sont disponibles pour tout type de réponse. 
 
-Pour connaître les spécificités des différents objets réponses, voir le [[responses|chapitre sur les réponses]].
+Pour connaître les spécificités des différents objets réponses, voir le [[/vues/index|chapitre sur les réponses]].

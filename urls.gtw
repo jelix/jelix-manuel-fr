@@ -72,7 +72,7 @@ Extensions des points d'entrées. Par défaut, c'est .php, mais il est possible 
 
 === ''notfoundAct'' ===
 
-L'action à effectuer quand une URL ne correspond à rien. Indiquez-la sous forme de [[appel-action|sélecteur d'action]]: "module~action". L'action indiquée devra correspondre à l'affichage d'une page d'erreur par exemple et renvoyer le code http 404.
+L'action à effectuer quand une URL ne correspond à rien. Indiquez-la sous forme de [[/concepts/appel-action|sélecteur d'action]]: "module~action". L'action indiquée devra correspondre à l'affichage d'une page d'erreur par exemple et renvoyer le code http 404.
 
 Attention ! Quand vous êtes en développement, il est recommandé de ne rien mettre dans ce paramètre. Ainsi ce sera plus facile à déboguer car en cas d'appel d'une module/action inconnue vous aurez un message d'erreur de la part de Jelix qui sera plus explicite qu'une simple page 404.
 

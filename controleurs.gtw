@@ -100,4 +100,4 @@ Aussi, pour récupérer un objet "réponse" précis, vous appelez la méthode @@
 
 @@V@$rep@@ contient ici une réponse qui va générer du html. l'objet @@V@$rep@@  est du type @@C@jResponseHtml@@.
 
-Sachez que vous pouvez définir vos propres types de réponses, voire plusieurs types de réponses issues d'un même type, afin d'éviter de dupliquer du code, ou de prendre en charge un format que ne connaît pas jelix. Voyez pour cela [[creer_response|la partie sur la création des réponses]]
+Sachez que vous pouvez définir vos propres types de réponses, voire plusieurs types de réponses issues d'un même type, afin d'éviter de dupliquer du code, ou de prendre en charge un format que ne connaît pas jelix. Voyez pour cela [[/creer_response|la partie sur la création des réponses]]

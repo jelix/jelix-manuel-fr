@@ -3,7 +3,7 @@
 ===== URL : identification d'une action =====
 
 
-Une fois que l'on a fait [[controleurs|un contrôleur]] on veut bien sûr pouvoir appeler l'une de ces méthodes, donc indiquer les informations nécessaires dans les URLs.
+Une fois que l'on a fait [[/controleurs|un contrôleur]] on veut bien sûr pouvoir appeler l'une de ces méthodes, donc indiquer les informations nécessaires dans les URLs.
 
 Avec la configuration par défaut de Jelix (donc avec le moteur d'URL //basic_significant//), il faut indiquer dans l'URL :
 
@@ -33,7 +33,7 @@ Notez que le nom du contrôleur et celui de la méthode doivent être séparés 
 
 Dans vos templates et dans votre code en général, vous n'indiquerez jamais d'URL "en dur". Jelix comporte des mécanismes (la classe @@C@jUrl@@ notament) pour générer les URLs correspondantes à des actions. Ceci permet de choisir son moteur d'URL préféré (simple ou significant) et de modifier le "mapping" entre des URLs significatives et des actions. Tout ceci sans toucher ni aux templates, ni aux contrôleurs.
 
-Aussi vous allez devoir la plupart du temps indiquer à divers objets ou méthodes de l'API de Jelix des //sélecteurs d'action// accompagnés d'éventuels paramètres. Voir la [[selecteurs|page sur les sélecteurs]] pour en savoir plus sur les sélecteurs en général.
+Aussi vous allez devoir la plupart du temps indiquer à divers objets ou méthodes de l'API de Jelix des //sélecteurs d'action// accompagnés d'éventuels paramètres. Voir la [[/concepts/selecteurs|page sur les sélecteurs]] pour en savoir plus sur les sélecteurs en général.
 
 Les sélecteurs d'action ont cette syntaxe :
 
@@ -76,5 +76,5 @@ Pour la plupart des URLs on indiquera certainement "@classic".
 
 Si dans un sélecteur d'action on indique juste le type de requête, seront utilisés le module et l'action indiqués respectivement dans startModule et startAction de la configuration de l'application. Ainsi par exemple le sélecteur "@classic" correspondra à l'URL "index.php".
 
-Pour en savoir plus : [[urls|configuration et la manipulation des URLs dans Jelix]].
+Pour en savoir plus : [[/urls|configuration et la manipulation des URLs dans Jelix]].
 

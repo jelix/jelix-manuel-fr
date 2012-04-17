@@ -4,7 +4,7 @@ Il est fort probable que vous ayez dans la plupart de vos actions, à initialise
 
 Si vous voulez réaliser des modules réutilisables, cette façon de faire est d'autant plus intéressante puisqu'alors tout ce qui ne concerne pas le module est réalisé à l'extérieur de ce module. Il est donc plus indépendant de l'application, contrairement au cas où il gère lui même dans ses actions les parties communes des pages du site (bandeau etc...).
 
-Dans cette section, nous allons parler principalement de la création d'un objet réponse héritant d'un autre objet réponse "évolué" existant. Si vous voulez créer un objet réponse pour un nouveau type de format, voir le chapitre sur la [[creer_response|génération d'un contenu dans un format spécifique]].
+Dans cette section, nous allons parler principalement de la création d'un objet réponse héritant d'un autre objet réponse "évolué" existant. Si vous voulez créer un objet réponse pour un nouveau type de format, voir le chapitre sur la [[/creer_response|génération d'un contenu dans un format spécifique]].
 
 ===== Créer un objet réponse à partir d'une classe existante =====
 
