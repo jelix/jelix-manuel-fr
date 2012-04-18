@@ -202,7 +202,7 @@ Notez que vous pouvez afficher une version HTML de la liste des services SOAP, e
 
 
 
-N'oubliez pas d'installer le module jWSDL (pour plus d'information : [[//installer-un-module|Installer un module]])
+N'oubliez pas d'installer le module jWSDL (pour plus d'information : [[/installer-un-module|Installer un module]])
   php.exe jelix.php --app installmodule jWSDL
 
 **N'oubliez pas non plus d'installer le module jWSDL pour le point d'entrée soap**

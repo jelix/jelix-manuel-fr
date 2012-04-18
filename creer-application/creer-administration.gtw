@@ -8,7 +8,7 @@ La commande @@initadmin@@ permet d'ajouter facilement une interface d'administra
 **Important** : pour des raisons de sécurité, de facilité d'utilisation du framework etc, il est fortement recommandé de créer une application spécifique pour une interface d'administration.
 
 
-Pour créer une interface d'administration, [[//bd/configuration|vous devez d'abord configurer jDb]]. Exécutez ensuite :
+Pour créer une interface d'administration, [[/bd/configuration|vous devez d'abord configurer jDb]]. Exécutez ensuite :
 
 <code bash>
    php jelix.php --myapp initadmin index

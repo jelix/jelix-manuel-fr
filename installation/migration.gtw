@@ -21,7 +21,7 @@ Une commande "migrate" est fournie dans le but d'effectuer les modifications né
 
   * sauver les fichiers de votre application, en particulier la configuration et la base de donnée. Si la commande migrate échoue durant l'installation virtuelle des modules, il vous faudra restaurer les fichiers originaux et supprimer les nouveaux fichiers avant de relancer la commande migrate. Il est d'ailleurs fortement conseillé de travailler avec un gestionnaire de code source tel que Mercurial, Git ou Subversion, cela facilite la restauration des fichiers modifiés.
   * remplacer le répertoire @@F@lib/@@ par le @@F@lib/@@ de Jelix 1.2
-  * vérifier que le @@F@project.xml@@ est bon, qu'il contient une balise @@E@<jelix>@@ avec la version max à "1.1.*" et la liste des points d'entrées. Voir [[//configuration#project.xml|le chapitre sur ce point]].
+  * vérifier que le @@F@project.xml@@ est bon, qu'il contient une balise @@E@<jelix>@@ avec la version max à "1.1.*" et la liste des points d'entrées. Voir [[/configuration#project.xml|le chapitre sur ce point]].
   * dans vos fichiers de configuration (@@F@defaultconfig.ini.php@@ et autres fichiers ini):
      * mettre @@checkTrustedModules@@ à "on"
      * supprimer de @@modulesPath@@, les répertoires où vous n'utilisez pas de modules

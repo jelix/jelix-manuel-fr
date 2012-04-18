@@ -66,4 +66,4 @@ function MaFonction()
 
 Bien évidemment cet exemple reste un exemple simple, on peut y mettre ce que l'on veut et faire passer les paramètres soit en get soit en post.
 
-Petit rappel, les deux arrays que l'on trouve dans la chaîne url (coté javascript) permettent tout simplement pour le premier de faire passer un paramètre en statique (codé en dur) et le deuxième provenant d'une variable javascript. [[http://jelix.org/articles/fr/manuel-1.1/ref-plugins/tplplugins/fonctions|Les fonctions de templates]].
+Petit rappel, les deux arrays que l'on trouve dans la chaîne url (coté javascript) permettent tout simplement pour le premier de faire passer un paramètre en statique (codé en dur) et le deuxième provenant d'une variable javascript. [[/ref-plugins/tplplugins/fonctions|Les fonctions de templates]].

@@ -1,4 +1,4 @@
-~~LANG:en@//en/manual-1.2/jforms/xml/htmleditor~~
+~~LANG:EN@//en/manual-1.2/jforms/xml/htmleditor~~
 
 Pour utiliser un éditeur HTML wysywg dans vos formulaire, il faut utiliser la balise @@E@<htmleditor>@@.
 

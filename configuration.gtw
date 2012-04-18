@@ -404,7 +404,7 @@ notfoundAct =
   * **notfoundAct** : contient le nom de l'action qui affichera l'erreur 404. Si le paramètre est laissé vide alors c'est l'action @@jelix~error:notfound@@ qui sera utilisée
 
 ===  urls.xml ===
-Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et Module/action/parametres, voir la documentation du le [[http://jelix.org/articles/fr/manuel-1.2/urls/significant|moteur significant]] 	
+Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et Module/action/parametres, voir la documentation du le [[/urls/significant|moteur significant]] 	
 <code ini> 	
 significantFile = "urls.xml" 
 </code> 

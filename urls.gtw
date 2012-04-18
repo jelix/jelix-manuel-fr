@@ -27,7 +27,7 @@ Une URL est composée de différentes parties :
 Les moteurs d'URLs analysent le pathinfo et les paramètres pour déterminer le module/action
 
 
-Note : il peut y avoir certaines options à activer dans apache. Voir la page [[http://jelix.org/articles/fr/manuel-1.2/installation]]
+Note : il peut y avoir certaines options à activer dans apache. Voir la section [[/configurer-server|sur la configuration server]]
 
 
 ===== Configuration générale =====
