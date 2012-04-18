@@ -2,4 +2,4 @@
 
 jFilter est une classe qui permet de vérifier et valider le contenu de chaîne de caractères : mail, nombre, url etc. Elle est utilisée entre autre par jForms, mais vous pouvez l'utiliser pour vos propres besoins. Pour bon nombre de ces méthodes, elle fait appel à l'extension filter de PHP (sauf dans les packages de Jelix déstiné à PHP 5.0 et 5.1).
 
-Pour le moment, voir [[http://jelix.org/reference/1.0.3/jelix/utils/jFilter.html|l'API de réference de jFilter]].
+Pour le moment, voir [[http://jelix.org/reference/1.1.12/jelix/utils/jFilter.html|l'API de réference de jFilter]].

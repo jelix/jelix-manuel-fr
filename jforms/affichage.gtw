@@ -204,7 +204,7 @@ Ou encore, vous pouvez utiliser plusieurs plugins //formsubmit//, sans //formsub
 
 ===== Choisir un générateur =====
 
-Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis avec Jelix 1.1 : "html" et "htmllight". [[//plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas, par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
+Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis avec Jelix 1.1 : "html" et "htmllight". [[/plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas, par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
 
 Le générateur par défaut de Jelix est 'html'. Il est spécifié par la variable //defaultJformsBuilder// du fichier de configuration. 
 
@@ -235,5 +235,5 @@ Pour en savoir plus sur chaque générateur :
 
 ===== Utilisation de jforms dans des réponses Ajax =====
 
-Voir [[//responseajax|la note sur la page des réponses ajax]]
+Voir [[/responseajax|la note sur la page des réponses ajax]]
 

@@ -3,7 +3,7 @@
 ===== La commande initadmin =====
 
 
-La commande @@initadmin@@ permet d'ajouter facilement une interface d'administration à votre application. Elle active le [[//ref-modules/master_admin|module master_admin]], et peut configurer automatiquement l'authentification ([[//authentification|jAuth]]) et/ou le système de droit ([[//droits2|jAcl2]]).
+La commande @@initadmin@@ permet d'ajouter facilement une interface d'administration à votre application. Elle active le [[/ref-modules/master_admin|module master_admin]], et peut configurer automatiquement l'authentification ([[/authentification|jAuth]]) et/ou le système de droit ([[/droits2|jAcl2]]).
 
 Pour créer une interface d'administration, exécutez:
 
@@ -20,11 +20,11 @@ Notez qu'avant d'exécuter cette commande, vous devez avoir configuré correctem
 
 Après avoir créé l'interface (et configuré jAuth et jAcl2 si vous avez choisi de le faire vous-même), vous pouvez démarrer l'application en appelant le point d'entrée créé.
 
-Vous verrez alors un écran demandant votre login et mot de passe (affiché par le module jauth). Par défaut, un utilisateur "admin" avec le mot de passe "admin" est créé. Tapez ces informations, et vous pourrez alors entrer dans l'interface. Voir plus de détails sur la page du [[//ref-modules/master_admin|module master_admin]].
+Vous verrez alors un écran demandant votre login et mot de passe (affiché par le module jauth). Par défaut, un utilisateur "admin" avec le mot de passe "admin" est créé. Tapez ces informations, et vous pourrez alors entrer dans l'interface. Voir plus de détails sur la page du [[/ref-modules/master_admin|module master_admin]].
 
 ===== Interface d'administration et moteur d'url significatives =====
 
-A cause de certaines contraintes (hébergement notamment) ou de certains besoins, vous voudriez peut-être utiliser la même configuration que le reste de l'application, et donc peut-être utiliser le [[//urls/significant|moteur d'urls significatives]] si celui ci est activé dans votre application (ce qui n'est pas le cas par défaut).
+A cause de certaines contraintes (hébergement notamment) ou de certains besoins, vous voudriez peut-être utiliser la même configuration que le reste de l'application, et donc peut-être utiliser le [[/urls/significant|moteur d'urls significatives]] si celui ci est activé dans votre application (ce qui n'est pas le cas par défaut).
 
 Dans ce cas, il faudra effectuer quelques modifications dans votre fichier @@F@urls.xml@@. En effet sans cela, votre interface d'administration sera inaccessible puisque les urls ne seront pas connues.
 
@@ -36,7 +36,7 @@ Tout d'abord il faut ajouter le nouveau point d'entrée pour l'admin :
  </classicentrypoint>
 </code>
 
-L'administration utilise le système d'authentification de jelix [[//authentification|jAuth]]. Il faut donc définir pour votre point d'entrée, les urls permettant l'affichage du formulaire de connexion, celle de la validation de ce formulaire et celle de déconnexion.
+L'administration utilise le système d'authentification de jelix [[/authentification|jAuth]]. Il faut donc définir pour votre point d'entrée, les urls permettant l'affichage du formulaire de connexion, celle de la validation de ce formulaire et celle de déconnexion.
 
 <code xml>
  <classicentrypoint name="admin">

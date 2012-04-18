@@ -133,7 +133,7 @@ password_crypt_function = "md5"
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/trunk/jelix/auth/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/1.1.12/jelix/auth/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 

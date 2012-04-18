@@ -193,7 +193,7 @@ autolocale = autolocale.coord.ini.php
 
 Dans certains cas, pour éviter d'avoir trop de chaînes locales, il peut s'avérer intéressant de traduire un template complet.
 
-Pour cela il suffit de placer le template qui nécessite l'internationalisation dans un sous-répertoire du répertoire templates. Comme pour les [[http://jelix.org/articles/fr/manuel-1.1/locales#fichiers-properties|fichiers de locales]] un sous-répertoire est nécessaire pour chaque langue (Exemple :templates/fr_FR/, templates/en_US/).
+Pour cela il suffit de placer le template qui nécessite l'internationalisation dans un sous-répertoire du répertoire templates. Comme pour les [[/locales#fichiers-properties|fichiers de locales]] un sous-répertoire est nécessaire pour chaque langue (Exemple :templates/fr_FR/, templates/en_US/).
 
 
 ===== Détection automatique de la langue =====

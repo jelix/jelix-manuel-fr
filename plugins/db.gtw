@@ -55,7 +55,7 @@ Pour ce faire, elle doit redéfinir les méthodes suivantes :
 
 Si le driver ne prend pas en charge certaines fonctionnalités, il doit générer une exception.
 
-Voir [[http://jelix.org/reference/trunk/jelix/db/jDbConnection.html|la référence de jDbConnection]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.1.12/jelix/db/jDbConnection.html|la référence de jDbConnection]] pour plus de détails.
 
 ==== Classe de résultat ====
 
@@ -70,7 +70,7 @@ Vous devez notament redéfinir les méthodes suivantes :
    * bindColumn, bindParam, bindValue, columnCount et execute pour les requêtes préparées.
 
 
-Voir [[http://jelix.org/reference/trunk/jelix/db/jDbResultSet.html|la référence de jDbResultSet]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.1.12/jelix/db/jDbResultSet.html|la référence de jDbResultSet]] pour plus de détails.
 
 ==== Classe utilitaire ====
 
@@ -82,7 +82,7 @@ Vous redéfinirez en particulier les méthodes suivantes :
    * _getFieldList(), retournant la liste des champs de la table dont le nom est donné en argument. Cette liste doit être constitué d'objets jDbFieldProperties.
    * execSQLScript() si vous voulez redéfinir la manière dont est parsé et exécuté un ensemble de requêtes SQL présentes dans un script.
 
-Voir [[http://jelix.org/reference/trunk/jelix/db/jDbTools.html|la référence de jDbTools]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.1.12/jelix/db/jDbTools.html|la référence de jDbTools]] pour plus de détails.
 
 ==== Classe génératrice de requêtes SQL ====
 
@@ -97,7 +97,7 @@ La classe doit hériter de jDaoGenerator et redéfinir une ou plusieurs de ces m
   * $trueValue, $falseValue
   * _getAutoIncrementPKField()
 
-Voir [[http://jelix.org/reference/trunk/jelix/dao/jDaoGenerator.html|la référence de jDaoGenerator]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.1.12/jelix/dao/jDaoGenerator.html|la référence de jDaoGenerator]] pour plus de détails.
 
 ==== Exemples ====
 

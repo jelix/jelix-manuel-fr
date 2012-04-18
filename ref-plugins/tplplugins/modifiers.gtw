@@ -213,7 +213,7 @@ si $myDate='2006-04-15' alors cela affiche
 ===== truncate =====
 ===== wiki =====
 
-Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki, vers le format de votre choix. Ce modificateur utilise la [[http://jelix.org/articles/manuel/wiki|classe jWiki]].\\ 
+Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki, vers le format de votre choix. Ce modificateur utilise la [[/wiki|classe jWiki]]. 
 
 Par défaut, le modificateur attend une chaine au format wiki (wr3) et la renvoi au format XHTML, exemple :
 

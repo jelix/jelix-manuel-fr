@@ -11,7 +11,7 @@ Il va vous falloir tout de même créer un point d'entrée spécifique, et de su
 
 ===== Point d'entrée spécifique =====
 
-Une requête SOAP est spécifique, et pour y répondre, on ne peut pas utiliser [[//requests|l'objet request]] "classic". Il vous faut créer un point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@soap.php@@ par exemple, qui utilise @@C@jSOAPRequest@@ plutôt que @@C@jClassicRequest@@, et un objet coordinateur @@C@jSoapCoordinator@@. Le type de requête et du point d'entrée est donc "soap".
+Une requête SOAP est spécifique, et pour y répondre, on ne peut pas utiliser [[/requests|l'objet request]] "classic". Il vous faut créer un point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@soap.php@@ par exemple, qui utilise @@C@jSOAPRequest@@ plutôt que @@C@jClassicRequest@@, et un objet coordinateur @@C@jSoapCoordinator@@. Le type de requête et du point d'entrée est donc "soap".
 
 Le point d'entrée devra contenir ceci :
 
@@ -33,7 +33,7 @@ $jelix->processSoap();
 
 </code>
 
-Il ne faut pas oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[//urls|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
+Il ne faut pas oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[/urls|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
 
 <code ini>
 soap = "@soap"
@@ -45,7 +45,7 @@ Si vous utilisez le moteur d'url basic_significant, vous devez ajouter dans la s
 soap = on 
 </code>
 
-Si vous utilisez [[//urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
+Si vous utilisez [[/urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
 <code xml>
 <soapentrypoint name="soap" default="true" />
 </code>

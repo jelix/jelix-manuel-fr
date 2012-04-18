@@ -2,7 +2,7 @@
 
 @@master_admin@@ est un module fournissant une interface web dediée à l'administration (backend).
 
-Avant de commencer la personnalisation de l'interface d'administration, [[//creer-application/creer-administration|vous devez la créer]].
+Avant de commencer la personnalisation de l'interface d'administration, [[/creer-application/creer-administration|vous devez la créer]].
 
 Le module contient trois zones :
 

@@ -118,7 +118,7 @@ Les templates par défaut utilisés par le contrôleur sont indiqués dans les p
 </code>
 
 
-Vous pouvez bien sûr les [[//themes|surcharger dans un thème]], soit en indiquer d'autres que vous aurez crées dans vos propres modules.
+Vous pouvez bien sûr les [[/themes|surcharger dans un thème]], soit en indiquer d'autres que vous aurez crées dans vos propres modules.
 
 === Variables de template ===
 
