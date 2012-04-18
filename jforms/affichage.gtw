@@ -223,15 +223,16 @@ Ou encore, vous pouvez utiliser plusieurs plugins @@formsubmit@@, sans @@formsub
 <div> {formsubmit 'preview'} {formsubmit 'save'} </div>
 </code>
 
-**Attention** : @@{formsubmits}@@ boucle sur la liste des contrôles @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://dev.jelix.org/ticket/429|ticket #429]])
+**Attention** : @@{formsubmits}@@ boucle sur la liste des contrôles @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://developer.jelix.org/ticket/429|ticket #429]])
 
 ===== Choisir un générateur =====
 
-Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis avec Jelix 1.2 : "html" et "htmllight". [[//plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas. Par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
+Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis avec Jelix 1.2 : "html" et "htmllight". [[/plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas. Par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
 
 Le générateur par défaut de Jelix est 'html'. Il est spécifié par la variable //defaultJformsBuilder// du fichier de configuration. 
 
 Pour spécifier son propre choix de générateur pour l'ensemble d'une application, il vous suffit de modifier cette variable dans le fichier de configuration:
+
 <code ini>
 [tplplugins] 
 defaultJformsBuilder = myformbuilder
@@ -257,5 +258,5 @@ Pour en savoir plus sur chaque générateur :
 
 ===== Utilisation de jforms dans des réponses Ajax =====
 
-Voir [[//responseajax|la note sur la page des réponses ajax]]
+Voir [[/responseajax|la note sur la page des réponses ajax]]
 

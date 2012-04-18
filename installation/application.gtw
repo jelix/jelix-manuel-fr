@@ -72,4 +72,3 @@ Après l'une de ces manipulations, l'application devrait fonctionner correctemen
 
 Pour certains projets, spécialement pour des projets internes où le processus de mise en production ou de mise à jour est vraiment spécifique, le choix de désactiver le système d'installation de jelix (@@disableInstallers=on@@) a pu être fait. Dans ce cas, il n'y a pas besoin de lancer l'installateur de l'application ou de jelix, il est de la responsabilité de l'intervenant de configurer et d'installer tout ce qu'il faut pour que l'application fonctionne (base de données et son contenu par ex), "à la main" ou par des scripts "maison" du processus d'installation interne.
 
-

@@ -1,20 +1,20 @@
 ~~LANG:EN@//en/manual-1.2/plugins/auth~~
 
 
-Si les [[//authentification/drivers|drivers standards]] pour [[//authentification|jAuth]] ne vous conviennent pas, vous pouvez donc en créer un. Voici comment.
+Si les [[/authentification/drivers|drivers standards]] pour [[/authentification|jAuth]] ne vous conviennent pas, vous pouvez donc en créer un. Voici comment.
 
 ===== Création =====
 
 
-Un driver est une classe qui respecte [[http://jelix.org/reference/trunk/jelix/auth/jIAuthDriver.html|l'interface jIAuthDriver]], qui reprend à peu de chose près l'API de jAuth (**mais ne dérive pas de jAuth**).
+Un driver est une classe qui respecte [[http://jelix.org/reference/1.1.12/jelix/auth/jIAuthDriver.html|l'interface jIAuthDriver]], qui reprend à peu de chose près l'API de jAuth (**mais ne dérive pas de jAuth**).
 
 Ces drivers sont appelés par jAuth. Ils font les opérations de "bas" niveau (accès base de données, ou à un annuaire ldap, ou à un fichier texte etc...)
 
-Soit //exemple// le nom de votre driver : vous devez créer une classe **exempleAuthDriver**, dans un fichier **exemple.auth.php**, et placer celui-ci dans un répertoire //auth/exemple/// dans un [[|dépôt de plugins]].
+Soit //exemple// le nom de votre driver : vous devez créer une classe **exempleAuthDriver**, dans un fichier **exemple.auth.php**, et placer celui-ci dans un répertoire //auth/exemple/// dans un [[/plugins#declaration-d-un-depot-de-plugins|dépôt de plugins]].
 
 ===== Activation =====
 
-Pour utiliser votre nouveau driver, vous devez indiquer "exemple" au niveau de l'option "**driver**" du [[//authentification|fichier de configuration du plugin auth]], et avoir une section "exemple" suivit des éventuelles options spécifiques au driver.
+Pour utiliser votre nouveau driver, vous devez indiquer "exemple" au niveau de l'option "**driver**" du [[/authentification|fichier de configuration du plugin auth]], et avoir une section "exemple" suivit des éventuelles options spécifiques au driver.
 
 Exemple :
 <code ini>

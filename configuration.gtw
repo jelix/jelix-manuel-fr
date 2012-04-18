@@ -472,6 +472,7 @@ smtpTimeout = 10
 
 
 ==== section acl et acl2 ====
+
 Définit les paramètres de la gestion des droits d'accès dans l'application. Voir la documentation sur la [[/droits2|gestion des droits]]. Vous choisirez d'utiliser soit jAcl (qui est obsolète), soit jAcl2 mais il n'est pas recommandé d'utiliser les deux en même temps.
 
 <code ini>
@@ -559,4 +560,5 @@ default.engine.file = jelix/markitup/jquery.markitup.js
 default.config.path = jelix/markitup/sets/wr3/
 ; define the path to the image of buttons of the toolbar
 default.image.path = jelix/markitup/sets/wr3/images/
-default.skin = jelix/markitup/skins/simple/style.css                                     </code>                                                                                                   
+default.skin = jelix/markitup/skins/simple/style.css
+</code>

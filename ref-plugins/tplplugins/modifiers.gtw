@@ -271,7 +271,8 @@ Indent accepte 2 paramètres :
 
 ===== jdatetime =====
 
-Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[//datetime|classe jDateTime]].\\ 
+Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[/datetime|classe jDateTime]].
+
 Par défaut, le modificateur attend une chaîne au format base de données (jDateTime::BD_DTFORMAT) et renvoie la date au format correspondant à la langue sélectionnée (jDateTime::LANG_DTFORMAT).
 
 <code smarty>
@@ -488,7 +489,7 @@ Exemple d'utilisation
 
 ===== wiki =====
 
-Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki, vers le format de votre choix. Ce modificateur utilise la [[http://jelix.org/articles/manuel/wiki|classe jWiki]].\\ 
+Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki, vers le format de votre choix. Ce modificateur utilise la [[/wiki|classe jWiki]].
 
 Par défaut, le modificateur attend une chaine au format wiki (wr3) et la renvoie au format XHTML, exemple :
 
