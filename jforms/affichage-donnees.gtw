@@ -32,7 +32,7 @@ Les libellés et les valeurs du formulaires s'affichent dans un tableau.
 
 ===== Affichage contrôlé =====
 
-Comme pour [[affichage|l'affichage du formulaire]], il est possible de mieux contrôler l'affichage, en particulier les balises générées, et donc de pouvoir définir les endroits où les champs seront placés.
+Comme pour [[/jforms/affichage|l'affichage du formulaire]], il est possible de mieux contrôler l'affichage, en particulier les balises générées, et donc de pouvoir définir les endroits où les champs seront placés.
 
 Vous pouvez utiliser les plugins {formcontrols} et {ctrl_label} que vous connaissez déjà, ainsi que {ctrl_value} :
 

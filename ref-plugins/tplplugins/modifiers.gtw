@@ -163,7 +163,8 @@ Indent accepte 2 paramètres :
 
 ===== jdatetime =====
 
-Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[//datetime|classe jDateTime]].\\ 
+Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[/datetime|classe jDateTime]].
+
 Par défaut, le modificateur attend une chaine au format base de données (jDateTime::BD_DTFORMAT) et renvoi la date au format correspondant à la langue sélectionnée (jDateTime::LANG_DTFORMAT).
 
 <code smarty>

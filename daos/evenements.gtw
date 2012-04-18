@@ -1,6 +1,6 @@
 ~~LANG:EN@//en/manual-1.1/daos/events~~
 
-Une factory de DAO peut générer automatiquement [[//events|des évènements]] pour certains types de méthodes.
+Une factory de DAO peut générer automatiquement [[/events|des évènements]] pour certains types de méthodes.
 
 ===== Évènements des méthodes natives =====
 

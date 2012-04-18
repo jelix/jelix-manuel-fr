@@ -16,7 +16,7 @@ Pour récupérer ces objets il faut passer par l'objet @@C@jDao@@ qui propose di
    * @@M@createRecord()@@ : permet d'obtenir un objet DAO record vide.
    * @@M@createConditions()@@ : permet d'obtenir un objet @@C@jDAOConditions@@ qui permet d'indiquer des conditions de sélection pour récupérer un ensemble d'objets record.
    
-@@M@get()@@, @@M@create()@@ et @@M@createRecord()@@ prennent tous en argument un sélecteur de fichier DAO et un deuxième paramètre facultatif qui est le nom du [[//bd|profil jDb]] à utiliser (si paramètre absent, il prendra celui par défaut).
+@@M@get()@@, @@M@create()@@ et @@M@createRecord()@@ prennent tous en argument un sélecteur de fichier DAO et un deuxième paramètre facultatif qui est le nom du [[/bd|profil jDb]] à utiliser (si paramètre absent, il prendra celui par défaut).
 
 Si le profil jDb utilisé spécifie un préfixe de table, alors toutes les tables indiquées dans le DAO verront leur nom préfixé par la valeur de ce paramètre.
 
