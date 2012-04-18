@@ -148,7 +148,7 @@ password_crypt_function = "md5"
 
 ===== LDS =====
 
-C'est un driver qui repose sur un serveur LDS (http://www.linbox.com/ucome.rvt/any/fr/Produits/LDS). Il appelle l'API xml-rpc d'un serveur LDS. La configuration que vous devez indiquer doit donc être celle-ci :
+C'est un driver qui repose sur [[http://www.linbox.com/ucome.rvt/any/fr/Produits/LDS|un serveur LDS]]. Il appelle l'API xml-rpc d'un serveur LDS. La configuration que vous devez indiquer doit donc être celle-ci :
 
 
 <code ini>
