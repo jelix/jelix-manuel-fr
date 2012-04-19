@@ -47,7 +47,7 @@ Vous pouvez supprimer @@F@application-cli.init.php@@ et @@F@jelix-scripts.init.p
 
 ==== Modifications générales ====
 
-  * Si vous avez activé la minification des fichiers js et css dans la réponse HTML, cela ne fonctionnera plus, la configuration a changé. Certaines options ont disparu, le répertoire @@F@www/cache/minify@@ n'est plus utilisé, et un fichier minify.php doit être installé dans @@F@www/@@. Copiez le fichier @@F@lib/jelix-scripts/templates/www/minify.php.tpl@@ dans @@F@votre_appli/www/minify.php@@. L'outils de mise à jour du module jelix modifiera la configuration pour vous. Voyez [[//responsehtml#compression-des-fichiers-css-et-javascript|la partie sur minify]] pour en savoir plus.
+  * Si vous avez activé la minification des fichiers js et css dans la réponse HTML, cela ne fonctionnera plus, la configuration a changé. Certaines options ont disparu, le répertoire @@F@www/cache/minify@@ n'est plus utilisé, et un fichier minify.php doit être installé dans @@F@www/@@. Copiez le fichier @@F@lib/jelix-scripts/templates/www/minify.php.tpl@@ dans @@F@votre_appli/www/minify.php@@. L'outils de mise à jour du module jelix modifiera la configuration pour vous. Voyez [[/responsehtml#compression-des-fichiers-css-et-javascript|la partie sur minify]] pour en savoir plus.
   * Si vous voulez utiliser PHPUnit pour ajouter des tests unitaires, copiez le fichier @@F@lib/jelix-scripts/templates/tests/runtests.php@@ dans le répertoire @@F@tests/@@ de votre application. Et lisez le chapitre sur les tests unitaires pour savoir comment en écrire.
 
 ==== Mise à jour des modules ====
@@ -94,9 +94,9 @@ Le module jacl2db, si vous l'utilisez, mettra à jour votre base de données.
 
 ==== Autres modifications éventuelles ====
 
-Quand une erreur survient, une page spécifique s'affiche dorénavant. Vous pouvez la redéfinir pour mieux l'intégrer dans le design de votre site. Voir [[//errormanager#la-page-d-erreur|la rubrique dédié]] pour le faire.
+Quand une erreur survient, une page spécifique s'affiche dorénavant. Vous pouvez la redéfinir pour mieux l'intégrer dans le design de votre site. Voir [[/errormanager#la-page-d-erreur|la rubrique dédié]] pour le faire.
 
-La page d'erreur n'affiche plus les détails de l'erreur (pour des raisons de sécurité et de "convivialité"). Durant le développement, pour avoir les infos sur les informations sur l'erreur et sur d'autres choses, [[//deboggage|activez la debug barre et éventuellement certains fichiers de log]].
+La page d'erreur n'affiche plus les détails de l'erreur (pour des raisons de sécurité et de "convivialité"). Durant le développement, pour avoir les infos sur les informations sur l'erreur et sur d'autres choses, [[/deboggage|activez la debug barre et éventuellement certains fichiers de log]].
 
 
 ===== Mettre à jour depuis jelix 1.1 et précédent =====

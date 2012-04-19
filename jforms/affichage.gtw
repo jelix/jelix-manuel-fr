@@ -253,7 +253,7 @@ Toutes les fonctions "handlers" sont exécutées, même si une des fonctions ret
 
 ===== Choisir un générateur =====
 
-Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis avec Jelix 1.2 : "html" et "htmllight". [[/plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas. Par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
+Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs sont fournis : "html" et "htmllight". [[/plugins/jforms|Vous pouvez en créer d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas. Par exemple, un générateur qui génère un formulaire en se reposant une bibliothèque javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire en XUL, en XForms etc... 
 
 Le générateur par défaut de Jelix est 'html'. Il est spécifié par la variable //defaultJformsBuilder// du fichier de configuration. 
 

@@ -1,6 +1,6 @@
 ~~LANG:EN@//en/manual-1.3/db/configuration~~
 
-Pour pouvoir accéder à une base de données, il faut d'abord indiquer les paramètres de connexion dans le fichier de profils. Voir [[//configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]. Vous pouvez définir plusieurs connexions, que l'on nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application.
+Pour pouvoir accéder à une base de données, il faut d'abord indiquer les paramètres de connexion dans le fichier de profils. Voir [[/configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]. Vous pouvez définir plusieurs connexions, que l'on nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application.
 
 Voici un exemple de profile dans @@F@profiles.ini.php@@ :
 

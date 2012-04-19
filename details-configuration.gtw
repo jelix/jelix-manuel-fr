@@ -54,7 +54,7 @@ Cet élément @@E@<directories>@@ doit contenir des informations sur les dépend
 
 <code xml>
 <dependencies>
-     <jelix minversion="1.2.0" maxversion="1.2.*" />
+     <jelix minversion="1.3.0" maxversion="1.3.*" />
 </dependencies>
 </code>
 
@@ -310,7 +310,7 @@ notfoundAct = "monModule~monControleur:monAction"
 </code> 
 
 ===  urls.xml ===
-Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et Module/action/parametres, voir la documentation du le [[http://jelix.org/articles/fr/manuel-1.2/urls/significant|moteur significant]] 	
+Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et Module/action/parametres, voir la documentation du le [[/urls/significant|moteur significant]] 	
 <code ini> 	
 significantFile = "urls.xml" 
 </code> 

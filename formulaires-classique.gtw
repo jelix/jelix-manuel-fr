@@ -94,4 +94,4 @@ Vous pouvez utiliser en plus jFilter, qui est une classe permettant de vérifier
     }
 </code>
 
-Voir la [[http://jelix.org/reference/1.2.7/jelix/utils/jFilter.html|documentation de référence de jFilter]]
+Voir la [[http://jelix.org/reference/1.3.1/jelix/utils/jFilter.html|documentation de référence de jFilter]]
