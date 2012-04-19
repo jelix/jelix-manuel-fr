@@ -94,9 +94,9 @@ Le module jacl2db, si vous l'utilisez, mettra à jour votre base de données.
 
 ==== Autres modifications éventuelles ====
 
-Quand une erreur survient, une page spécifique s'affiche dorénavant. Vous pouvez la redéfinir pour mieux l'intégrer dans le design de votre site. Voir [[//errormanager#la-page-d-erreur|la rubrique dédié]] pour le faire.
+Quand une erreur survient, une page spécifique s'affiche dorénavant. Vous pouvez la redéfinir pour mieux l'intégrer dans le design de votre site. Voir [[/errormanager#la-page-d-erreur|la rubrique dédié]] pour le faire.
 
-La page d'erreur n'affiche plus les détails de l'erreur (pour des raisons de sécurité et de "convivialité"). Durant le développement, pour avoir les infos sur les informations sur l'erreur et sur d'autres choses, [[//deboggage|activez la debug barre et éventuellement certains fichiers de log]].
+La page d'erreur n'affiche plus les détails de l'erreur (pour des raisons de sécurité et de "convivialité"). Durant le développement, pour avoir les infos sur les informations sur l'erreur et sur d'autres choses, [[/deboggage|activez la debug barre et éventuellement certains fichiers de log]].
 
 
 ===== Mettre à jour depuis jelix 1.1 et précédent =====

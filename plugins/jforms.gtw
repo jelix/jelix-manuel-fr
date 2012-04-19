@@ -1,6 +1,6 @@
 ~~LANG:EN@//en/manual-1.3/plugins/jforms~~
 
-Comme il est indiqué [[//jforms/affichage|dans le chapitre sur l'affichage des formulaires jforms]], il est possible de choisir un plugin qui s'occupera de générer le code du formulaire (en HTML, XUL, javascript etc..) renvoyé au navigateur. 
+Comme il est indiqué [[/jforms/affichage|dans le chapitre sur l'affichage des formulaires jforms]], il est possible de choisir un plugin qui s'occupera de générer le code du formulaire (en HTML, XUL, javascript etc..) renvoyé au navigateur. 
 
 Vous pouvez donc créer un plugin qui génèrera les formulaires comme bon vous semble, dans le format que vous souhaitez.
 

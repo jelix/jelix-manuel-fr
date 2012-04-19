@@ -56,7 +56,7 @@ Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il
         <description>unit tests for jelix</description>
     </info>
     <dependencies>
-        <jelix minversion="1.2" maxversion="1.2.*" />
+        <jelix minversion="1.3" maxversion="1.3.*" />
         <module name="testurls" minversion="1.0.2" maxversion="1.1b1" />
         <module name="jauthdb" />
         <module name="jacl2db" />

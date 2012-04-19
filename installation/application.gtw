@@ -47,7 +47,7 @@ Dans @@F@monsite/temp/@@ vous devez créer le dossier @@F@testapp@@. Peut-être 
 
 ===== Configurer le serveur =====
 
-Vous devez configurer le serveur web correctement (virtual host, document root..) ainsi qu'une éventuelle base de donnée. Reportez vous [[//configurer-server|au chapitre correspondant]], et continuez à la section suivante.
+Vous devez configurer le serveur web correctement (virtual host, document root..) ainsi qu'une éventuelle base de donnée. Reportez vous [[/configurer-server|au chapitre correspondant]], et continuez à la section suivante.
 
 ===== Installer l'application =====
 
@@ -63,7 +63,7 @@ Si il y a un script @@F@testapp/install/installer.php@@, il s'agit alors d'un sc
 
 ==== Avec l'installateur de Jelix ====
 
-Si il n'y a ni wizard, ni script d'installation dédié, il faudra alors utiliser la commande @@installapp@@ de jelix-scripts. Comme précédemment, renseignez bien le contenu des fichiers @@F@profiles.ini.php@@ et @@F@defaultconfig.ini.php@@, et lancez en ligne de commande, dans le répertoire @@F@testapp/@@, @@php cmd.php installapp@@. Voir [[//jelix-scripts|le chapitre sur jelix-scripts]] pour plus de détails sur le fonctionnement de @@F@cmd.php@@
+Si il n'y a ni wizard, ni script d'installation dédié, il faudra alors utiliser la commande @@installapp@@ de jelix-scripts. Comme précédemment, renseignez bien le contenu des fichiers @@F@profiles.ini.php@@ et @@F@defaultconfig.ini.php@@, et lancez en ligne de commande, dans le répertoire @@F@testapp/@@, @@php cmd.php installapp@@. Voir [[/jelix-scripts|le chapitre sur jelix-scripts]] pour plus de détails sur le fonctionnement de @@F@cmd.php@@
 
 Après l'une de ces manipulations, l'application devrait fonctionner correctement.
 
@@ -71,5 +71,4 @@ Après l'une de ces manipulations, l'application devrait fonctionner correctemen
 ==== Si le system d'installation est désactivé dans la configuration ====
 
 Pour certains projets, spécialement pour des projets internes où le processus de mise en production ou de mise à jour est vraiment spécifique, le choix de désactiver le système d'installation de jelix (@@disableInstallers=on@@) a pu être fait. Dans ce cas, il n'y a pas besoin de lancer l'installateur de l'application ou de jelix, il est de la responsabilité de l'intervenant de configurer et d'installer tout ce qu'il faut pour que l'application fonctionne (base de données et son contenu par ex), "à la main" ou par des scripts "maison" du processus d'installation interne.
-
 

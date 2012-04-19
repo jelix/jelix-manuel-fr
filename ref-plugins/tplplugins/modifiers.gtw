@@ -219,13 +219,14 @@ tout ceci sera renvoyé automatiquement au template main.tpl (de notre exemple) 
 
 Ce modificateur de template affiche une image
 
-
+<code html>
 {image 'MonImage.gif', array('width'=>50)}
-
+</code>
 Le code généré :
 
+<code html>
 <img width="50" src="http://localhost/extracom/cache/images/'MonImage.gif" alt=""/>
-
+</code>
 Cette fonction va mettre en cache l'image dans le répertoire www ce qui permettra de ne pas regénérer les images
 
 ===== indent =====
@@ -248,9 +249,10 @@ On affiche alors le texte contenu dans $foo dans le template :
 </code>
 
 Ce qui donne :
-
+<code>
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Vivamus ornare, enim bibendum mollis interdum.
+</code>
 
 ==== Paramètres ====
 
@@ -261,26 +263,33 @@ Indent accepte 2 paramètres :
 <code smarty>
 {$foo|indent:"15"}
 </code>
+donne :
+<code>
                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
                Vivamus ornare, enim bibendum mollis interdum.
+</code>
+
 <code smarty>
 {$foo|indent:"1":"\t"}
 </code>
+donne :
+<code>
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Vivamus ornare, enim bibendum mollis interdum.
-
+</code>
 
 
 ===== jdatetime =====
 
-Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[/classes-utiles/jdatetime|classe jDateTime]].\\ 
+Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[/classes-utiles/jdatetime|classe jDateTime]].
+
 Par défaut, le modificateur attend une chaîne au format base de données (jDateTime::BD_DTFORMAT) et renvoie la date au format correspondant à la langue sélectionnée (jDateTime::LANG_DTFORMAT).
 
 <code smarty>
   <p>la date est {$myDate|jdatetime}.</p>
 </code>
 
-Si $myDate='2006-04-12 01:05:26' et si la langue est fr, alors cela affiche
+Si @@$myDate='2006-04-12 01:05:26'@@ et si la langue est fr, alors cela affiche :
 
 <code>
  la date est 12/04/2006 01h05mn26s.
@@ -473,7 +482,9 @@ résultat : Bonjo[...]
 
 
 **Cas 4**
+<code>
 {$mytext|truncate:60:'...':true}
+</code>
 
 ===== truncatehtml ===== 
 
@@ -543,6 +554,6 @@ On affiche alors le texte contenu dans $foo dans le template :
 </code>
 
 Ce qui donne :
-<html>
+<code html>
 <p>Lorem ipsum dolor sit amet,<br/>consectetuer adipiscing elit.</p>
-</html>
+</code>

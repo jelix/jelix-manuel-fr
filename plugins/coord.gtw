@@ -12,8 +12,8 @@ Les plugins pour le coordinateur sont aussi appelés //plugins coord// dans le j
 
 Pour activer un plugin coord, vous avez deux choses à faire dans le fichier de configuration d'un point d'entrée :
 
-  * bien sûr, [[|déclarer le dépôt]] contenant le répertoire de votre plugin, dans l'option //pluginsPath// de la configuration
-  * indiquer le plugin dans la section [coordplugins] , ainsi que son éventuel fichier de configuration
+  * bien sûr, [[/plugins#declaration-d-un-depot-de-plugins|déclarer le dépôt]] contenant le répertoire de votre plugin, dans l'option //pluginsPath// de la configuration
+  * indiquer le plugin dans la section [coordplugins], ainsi que son éventuel fichier de configuration
 
 Si vous placez votre plugin //foo// dans votreApplication/plugins/coord/ alors vous devez déclarer comme ceci :
 
@@ -98,7 +98,7 @@ La méthode //beforeOutput// sera appelée après exécution de l'action.
 
 Le méthode //afterProcess// sera appelée en fin de traitement (après affichage donc).
 
-Cette classe est à placer dans un [[|dépôt de plugins]]. Par exemple, le répertoire //plugins/// de votre application. Ou alors dans un répertoire //plugins/// d'un module. Le sous-répertoire dans lequel est placé le plugin doit porter le nom du plugin, et la classe doit suivre un nommage particulier. Si le plugin s'appelle //exemple//, alors :
+Cette classe est à placer dans un [[/plugins#declaration-d-un-depot-de-plugins|dépôt de plugins]]. Par exemple, le répertoire //plugins/// de votre application. Ou alors dans un répertoire //plugins/// d'un module. Le sous répertoire dans lequel est placé le plugin doit porter le nom du plugin, et la classe doit suivre un nommage particulier. Si le plugin s'appelle //exemple//, alors :
 
    * le répertoire du plugin sera **plugins/coord/exemple/**
    * le fichier contenant la classe du plugin devra être **plugins/coord/exemple/exemple.coord.php**

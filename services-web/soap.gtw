@@ -41,6 +41,7 @@ soap = "@soap"
 //soap// étant le nom du point d'entrée, et //@soap// indiquant le type de point d'entrée.
 
 Si vous utilisez [[/urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
+
 <code xml>
 <entrypoint type="soap" name="soap" default="true" />
 </code>
@@ -198,7 +199,6 @@ Remarque : ce type d'url est disgracieux, et vous pouvez parfaitement configurer
 Notez que vous pouvez afficher une version HTML de la liste des services SOAP, en appelant la méthode "index" du contrôleur WSDL.
 
   http://monsite.com/index.php/jWSDL/WSDL?service=unModule~unControleur
-
 
 
 N'oubliez pas d'installer le module jWSDL (pour plus d'information : [[/installer-un-module|Installer un module]])

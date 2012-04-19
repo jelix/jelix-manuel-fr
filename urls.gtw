@@ -27,7 +27,7 @@ Une URL est composée de différentes parties :
 Les moteurs d'URLs analysent le pathinfo et les paramètres pour déterminer le module/action
 
 
-Note : il peut y avoir certaines options à activer dans apache. Voir la page [[configurer-server#configuration-pour-les-urls-cools]]
+Note : il peut y avoir certaines options à activer dans apache. Voir la section [[/configurer-server#configuration-pour-les-urls-cools|sur la configuration server]]
 
 
 ===== Configuration générale =====

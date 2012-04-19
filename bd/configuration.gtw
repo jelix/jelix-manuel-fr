@@ -1,6 +1,6 @@
 ~~LANG:EN@//en/manual-1.3/db/configuration~~
 
-Pour pouvoir accéder à une base de données, il faut d'abord indiquer les paramètres de connexion dans le fichier de profils. Voir [[//configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]. Vous pouvez définir plusieurs connexions, que l'on nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application.
+Pour pouvoir accéder à une base de données, il faut d'abord indiquer les paramètres de connexion dans le fichier de profils. Voir [[/configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]. Vous pouvez définir plusieurs connexions, que l'on nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application.
 
 Voici un exemple de profile dans @@F@profiles.ini.php@@ :
 
@@ -21,7 +21,7 @@ Le type de connexion à indiquer dans les noms des sections de @@F@profiles.ini.
 Dans la section, vous voyez un certain nombre de paramètres, dont quelques-un sont utilisables pour tous les drivers :
 
   * **driver** indique le driver à utiliser. Le nombre et le nom des autres paramètres diffèrent en fonction du driver utilisé. 
-  * **table_prefix** : permet d'indiquer un préfixe de table.\\ Lors de l'utilisation d'un [[//daos|DAO]] avec un profil spécifiant ce paramètre, les tables indiquées dans le DAO sont préfixées **dynamiquement** par cette valeur.\\ Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez préfixer vos tables en fonction du profil utilisé grâce à la méthode @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre le nom de la table à préfixer.
+  * **table_prefix** : permet d'indiquer un préfixe de table.\\ Lors de l'utilisation d'un [[/daos|DAO]] avec un profil spécifiant ce paramètre, les tables indiquées dans le DAO sont préfixées **dynamiquement** par cette valeur.\\ Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez préfixer vos tables en fonction du profil utilisé grâce à la méthode @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre le nom de la table à préfixer.
 
 ===== Profil mysql =====
 

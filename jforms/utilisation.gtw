@@ -7,7 +7,7 @@ Dans les contrôleurs, vous créez, récupérez et détruisez cet //objet formul
 
 ===== Les actions à mettre en oeuvre =====
 
-Comme il est déjà expliqué dans le [[//formulaires-classique|guide sur les formulaires classiques]], pour faire une gestion complète de la saisie d'un formulaire, la création des actions suivantes est recommandée (les noms utilisés sont juste à titre d'exemple, vous utilisez les noms que vous voulez bien sûr):
+Comme il est déjà expliqué dans le [[/formulaires-classique|guide sur les formulaires classiques]], pour faire une gestion complète de la saisie d'un formulaire, la création des actions suivantes est recommandée (les noms utilisés sont juste à titre d'exemple, vous utilisez les noms que vous voulez bien sûr):
 
    * une action "prepare" qui crée avec @@C@jForms@@ une nouvelle instance d'un objet formulaire. S'il faut pré-remplir le formulaire, cette action devra le faire aussi. Redirection vers "show".
    * une action "show" qui récupère l'instance du formulaire, toujours avec l'objet @@C@jForms@@, et l'utilise dans un template pour l'afficher avec  les éventuelles erreurs de saisie trouvées lors d'une validation précédente. La soumission du formulaire par l'utilisateur dirigera vers l'action "save".
