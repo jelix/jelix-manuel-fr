@@ -4,7 +4,7 @@ jDb, la couche d'abstraction d'accès aux bases de données, a un système de pl
 
 ===== Activation =====
 
-Pour savoir comment activer un driver pour jDb, voyez le [[//bd|chapitre sur jDb]]
+Pour savoir comment activer un driver pour jDb, voyez le [[/bd|chapitre sur jDb]]
 
 ===== Création d'un driver =====
 
@@ -58,7 +58,7 @@ Pour ce faire, elle doit redéfinir les méthodes suivantes :
 
 Si le driver ne prend pas en charge certaines fonctionnalités, il doit générer une exception.
 
-Voir [[http://jelix.org/reference/trunk/jelix/db/jDbConnection.html|la référence de jDbConnection]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.2.7/jelix/db/jDbConnection.html|la référence de jDbConnection]] pour plus de détails.
 
 ==== Classe de résultat ====
 
@@ -73,7 +73,7 @@ Vous devez notament redéfinir les méthodes suivantes :
    * @@M@bindColumn@@, @@M@bindParam@@, @@M@bindValue@@, @@M@columnCount@@ et @@M@execute@@ pour les requêtes préparées.
 
 
-Voir [[http://jelix.org/reference/trunk/jelix/db/jDbResultSet.html|la référence de jDbResultSet]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.2.7/jelix/db/jDbResultSet.html|la référence de jDbResultSet]] pour plus de détails.
 
 ==== Classe utilitaire ====
 
@@ -84,7 +84,7 @@ Vous redéfinirez en particulier les méthodes et propriétés suivantes :
    * @@P@$typesInfo@@, un tableau contenant la correspondance entre les types sql et les types unifiés de jDb.
    * @@M@execSQLScript()@@ si vous voulez redéfinir la manière dont est parsé et exécuté un ensemble de requêtes SQL présentes dans un script.
 
-Voir [[http://jelix.org/reference/trunk/jelix/db/jDbTools.html|la référence de jDbTools]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.2.7/jelix/db/jDbTools.html|la référence de jDbTools]] pour plus de détails.
 
 ==== Classe génératrice de requêtes SQL ====
 
@@ -99,7 +99,7 @@ La classe doit hériter de @@C@jDaoGenerator@@ et redéfinir une ou plusieurs de
   * @@P@$trueValue@@, @@P@$falseValue@@
   * @@M@_getAutoIncrementPKField()@@
 
-Voir [[http://jelix.org/reference/trunk/jelix/dao/jDaoGenerator.html|la référence de jDaoGenerator]] pour plus de détails.
+Voir [[http://jelix.org/reference/1.2.7/jelix/dao/jDaoGenerator.html|la référence de jDaoGenerator]] pour plus de détails.
 
 ==== Exemples ====
 

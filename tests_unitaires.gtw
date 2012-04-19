@@ -40,7 +40,7 @@ Copier également le répertoire jelix-modules/junittests/install/www/tests dans
 
 ==== Préparation ====
 
-Les tests unitaires dans Jelix ne peuvent s'effectuer qu'avec l'édition "developer" de Jelix. Celle-ci contient en effet un module spécifique pour lancer les tests unitaires, junittests, et la bibliothèque [[http://www.lastcraft.com/simple_test.php|SimpleTest]]. Si vous voulez absolument lancer les tests unitaires sur un serveur en production avec une édition "optimized" de jelix, vous devez y copier les répertoires lib/simpletest/ et lib/jelix-modules/junittests de l'édition "developer".
+Les tests unitaires dans Jelix ne peuvent s'effectuer qu'avec l'édition "developer" de Jelix. Celle-ci contient en effet un module spécifique pour lancer les tests unitaires, junittests, et la bibliothèque [[http://simpletest.org|SimpleTest]]. Si vous voulez absolument lancer les tests unitaires sur un serveur en production avec une édition "optimized" de jelix, vous devez y copier les répertoires lib/simpletest/ et lib/jelix-modules/junittests de l'édition "developer".
 
 Pour pouvoir lancer les tests, il faut aussi ajouter au début du fichier de configuration de votre application : 
 

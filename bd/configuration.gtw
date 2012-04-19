@@ -21,7 +21,7 @@ Le type de connexion à indiquer dans les noms des sections de @@F@profiles.ini.
 Dans la section, vous voyez un certain nombre de paramètres, dont quelques-un sont utilisables pour tous les drivers :
 
   * **driver** indique le driver à utiliser. Le nombre et le nom des autres paramètres diffèrent en fonction du driver utilisé. 
-  * **table_prefix** : permet d'indiquer un préfixe de table.\\ Lors de l'utilisation d'un [[//daos|DAO]] avec un profil spécifiant ce paramètre, les tables indiquées dans le DAO sont préfixées **dynamiquement** par cette valeur.\\ Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez préfixer vos tables en fonction du profil utilisé grâce à la méthode @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre le nom de la table à préfixer.
+  * **table_prefix** : permet d'indiquer un préfixe de table.\\ Lors de l'utilisation d'un [[/daos|DAO]] avec un profil spécifiant ce paramètre, les tables indiquées dans le DAO sont préfixées **dynamiquement** par cette valeur.\\ Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez préfixer vos tables en fonction du profil utilisé grâce à la méthode @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre le nom de la table à préfixer.
 
 ===== Profil mysql =====
 

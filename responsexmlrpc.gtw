@@ -1,7 +1,6 @@
 ~~LANG:EN@//en/manual-1.3/responsexmlrpc~~
 
-Jelix propose la prise en charge de [[http://www.xmlrpc.com/spec/|xml-rpc]]. C'est un protocole d'échange de données en XML :  un client envoie un contenu XML indiquant une fonction à exécuter et des paramètres. Le serveur renvoie un résultat, toujours sous forme de XML (RPC = Remote Procedure Call). 
-
+Jelix propose la prise en charge de [[http://xmlrpc.scripting.com/|xml-rpc]]. C'est un protocole d'échange de données en XML :  un client envoie un contenu XML indiquant une fonction à exécuter et des paramètres. Le serveur renvoie un résultat, toujours sous forme de XML (RPC = Remote Procedure Call). 
 
 ===== Point d'entrée spécifique =====
 
@@ -21,7 +20,7 @@ $jelix->process(new jXmlRpcRequest());
 
 </code>
 
-Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[urls|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
+Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[urls/simple|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
 
 <code ini>
 xmlrpc = "@xmlrpc"
@@ -66,7 +65,7 @@ class defaultCtrl extends jController {
 
 ===== Appel depuis le client =====
 
-Qui dit XmlRpc, dit une partie cliente qui envoie une requête xmlrpc. Comme vous pouvez le lire dans [[http://www.xmlrpc.com/spec|la spécification de xml-rpc]], il faut envoyer du contenu XML de ce type :
+Qui dit XmlRpc, dit une partie cliente qui envoi une requête xmlrpc. Comme vous pouvez le lire dans [[http://xmlrpc.scripting.com/|la spécification de xml-rpc]], il faut envoyer du contenu XML de ce type :
 
 <code xml>
 <?xml version="1.0" ?>

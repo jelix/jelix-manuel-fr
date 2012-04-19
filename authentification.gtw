@@ -165,7 +165,7 @@ D'autres paramètres sont disponibles :
 
 Le module jauth propose des contrôleurs que vous pouvez utiliser pour gérer les actions de connexion, de déconnexion, en faisant appel à la classe @@C@jAuth@@. Il propose aussi des zones et des templates.
 
-Si vous voulez avoir des fonctionnalités de gestion de compte comme sur un portail, utilisez le module jCommunity, disponible en dehors de Jelix (http://bitbucket.org/laurentj/jcommunity/). Il propose des formulaires de changement de mot de passe, des formulaires de destruction de compte, de création de compte et de récupération de mot de passe. 
+Si vous voulez avoir des fonctionnalités de gestion de compte comme sur un portail, utilisez le module jCommunity, disponible en dehors de Jelix ([[http://bitbucket.org/laurentj/jcommunity/]]). Il propose des formulaires de changement de mot de passe, des formulaires de destruction de compte, de création de compte et de récupération de mot de passe. 
 
 ==== Configuration classique ====
 
@@ -207,7 +207,7 @@ Vous pouvez utiliser vos propres contrôleurs pour gérer l'authentification : f
 
 ===== Classe jAuth =====
 
-C'est la classe principale du système d'authentification. Toutes ses méthodes sont statiques. Elle permet de gérer un utilisateur, de « connecter » et « déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous d'une bonne partie du travail. Voir [[http://jelix.org/reference/trunk/jelix/auth/jAuth.html|son descriptif dans la référence]].
+C'est la classe principale du système d'authentification. Toutes ses méthodes sont statiques. Elle permet de gérer un utilisateur, de « connecter » et « déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous d'une bonne partie du travail. Voir [[http://jelix.org/reference/1.2.7/jelix/auth/jAuth.html|son descriptif dans la référence]].
 
 l'objet "user" que vous passez à certaines méthodes vous est donné par @@C@jAuth@@ lui même. C'est un objet contenant les données d'un utilisateur et il n'a pas de classe précise : son type dépend du driver utilisé et éventuellement de sa configuration (pour le driver Db, on peut fournir un DAO de notre choix par exemple). Il doit par contre respecter l'interface attendue par le driver, et doit avoir au moins un champ @@P@login@@ et un champ @@P@password@@.
 
