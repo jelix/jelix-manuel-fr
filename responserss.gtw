@@ -82,5 +82,7 @@ Voici un exemple avec une dao de news :
 
 ===== Autres informations =====
 
-Il est possible d'indiquer plus d'informations sur le fil rss ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de reference]] sur les objets jRSS20Info et jRSSItem.
+Il est possible d'indiquer plus d'informations sur le fil rss ou sur chaque item.
+Consultez la documentation de reference sur les classes [[refclass:core_response/jRSS20Info|jRSS20Info]]
+et [[refclass:core_response/jRSSItem|jRSSItem]].
 

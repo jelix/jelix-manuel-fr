@@ -202,7 +202,7 @@ Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont p
   } 
 </code>
 
-Pour le reste des méthodes, voyez [[http://jelix.org/reference/|la documentation de référence]].
+Pour le reste des méthodes, voyez [[refclass:db/jDbResultSet|la documentation de référence]].
 
 ==== Utilisation dans un template ====
 
@@ -270,4 +270,4 @@ jDbWidget est une classe fournissant des méthodes utiles.
 
 </code>
 
-Pour le reste des méthodes, voyez [[http://jelix.org/reference/|la documentation de référence]].
+Pour le reste des méthodes, voyez [[refclass:db/jDbWidget|la documentation de référence]].
