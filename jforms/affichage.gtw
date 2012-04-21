@@ -183,7 +183,9 @@ Ou encore, vous pouvez utiliser plusieurs plugins //formsubmit//, sans //formsub
 <div> {formsubmit 'preview'} {formsubmit 'save'} </div>
 </code>
 
-**Attention** : //{formsubmits}// boucle sur la liste des contrôles submit, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://developer.jelix.org/ticket/429|ticket #429]])
+**Attention** : //{formsubmits}// boucle sur la liste des contrôles submit, pas sur les item d'un submit !
+Il n'est pas possible pour le moment de boucler sur les items d'un submit
+(voir [[ticket:429|ticket #429]])
 
 
 

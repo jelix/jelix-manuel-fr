@@ -20,7 +20,7 @@ Il est également recommandé de mettre ces valeurs :
    * **asp_tags = off**
    * **short_open_tag = off**
 
-Un [[http://fr2.php.net/manual/fr/function.phpinfo.php|phpinfo()]] peut vous permettre de vérifier votre configuration. Par défaut la configuration se trouve dans un fichier nommé //php.ini//.
+Un [[phpapi:phpinfo|phpinfo()]] peut vous permettre de vérifier votre configuration. Par défaut la configuration se trouve dans un fichier nommé //php.ini//.
 
 
 ===== Configuration de PHP-Cli pour MAMP (MacIntosh) =====
