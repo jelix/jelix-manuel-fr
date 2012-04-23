@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/errormanager~~
+~~LANG:EN@enman:errormanager~~
 
 Les classes du framework peuvent générer des erreurs de deux façons différentes par : 
   * un trigger_error (erreur PHP)

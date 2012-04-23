@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/bd~~
+~~LANG:EN@enman:bd~~
 
 
 Jelix possède un système d'accès abstrait aux bases de données : jDb. jDb propose donc une API commune à toutes les bases de données. Pour le moment, les drivers fournis sont ceux pour :

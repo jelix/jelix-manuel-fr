@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsexml~~
+~~LANG:EN@enman:responsexml~~
 
 jResponseXML permet de renvoyer au navigateur du XML. Son alias est "xml"
 

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/ref-plugins/tplplugins/modifiers~~
+~~LANG:EN@enman:ref-plugins/tplplugins/modifiers~~
 
 Les modificateurs sont des fonctions qui permettent de modifier l'affichage d'une variable de template. Ils ne sont donc utilisés que lors des instructions d'affichage.
 

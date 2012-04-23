@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/oldrights/configuration~~
+~~LANG:EN@enman:oldrights/configuration~~
 
 Avant de pouvoir utiliser l'API de jAcl dans vos modules et le driver db de jAcl, il faut d'abord initialiser la base de données, et mémoriser les différents éléments utilisés pour les droits. 
 

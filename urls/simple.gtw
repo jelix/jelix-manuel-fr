@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/urls/simple~~
+~~LANG:EN@enman:urls/simple~~
 
 
 Ce moteur est celui activé par défaut. Toutes les URLs ressembleront à **pointentree.php?module=..&action=...&...** . C'est un moteur qui est donc très simple et performant. Son principal inconvénient si on peut dire, c'est qu'avec lui, les URLs ne sont pas très "jolies".

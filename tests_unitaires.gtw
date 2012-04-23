@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/unit-tests~~
+~~LANG:EN@enman:unit-tests~~
 
 Le développement de test unitaires est de plus en plus présents dans les projets, et jelix propose de quoi en réaliser facilement. La réalisation des tests unitaires fait d'ailleurs partie des méthodes de développement comme XP (eXtreme programming). Le processus de développement veut, en théorie (et en gros), qu'à chaque fois que l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on modifie ou ajoute un bout de code, on lance tout les tests unitaires pour vérifier qu'il n'y a pas de regressions. Cela permet ainsi de garantir un minimum, un fonctionnement robuste de l'application.
 

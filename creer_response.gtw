@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/creating-response~~
+~~LANG:EN@enman:creating-response~~
 
 
 Il est possible que Jelix ne fournisse pas le moyen de générer du contenu dans un format spécifique voulu. Aussi, il vous faut dans ce cas créer votre propre réponse.

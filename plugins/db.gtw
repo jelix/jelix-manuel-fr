@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/plugins/db~~
+~~LANG:EN@enman:plugins/db~~
 
 jDb, la couche d'abstraction d'accès aux bases de données, a un système de plugin, ou "drivers". Un driver permet d'accéder à un type de base de données spécifique.
 

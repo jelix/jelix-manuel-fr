@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/jresponse~~
+~~LANG:EN@enman:jresponse~~
 
 Un objet jResponse représente la vue dans le modèle MVC. Il est chargé de contrôler et de générer correctement la réponse, c'est à dire les données en sortie. Toute demande d'"affichage" passe par cet objet. 
 

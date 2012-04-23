@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/daos/xml_methods~~
+~~LANG:EN@enman:daos/xml_methods~~
 
 Une factory générée par jDao contient par défaut un certain nombre de méthodes  (find, findAll, get, insert, etc...) comme décrit sur la page sur [[utilisation|l'utilisation des daos]]. Cependant, elles ne sont pas forcément suffisantes, et l'on a souvent besoin de faire des sélections, des mises à jour ou des suppressions particulières. 
 

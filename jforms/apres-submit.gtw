@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/jforms/after-submit~~
+~~LANG:EN@enman:jforms/after-submit~~
 
 Une fois un formulaire créé, il faut, dans une action l'afficher, ce qui est expliqué [[affichage|dans un chapitre à part]]. Et dans une autre action, qui sera appelée quand l'utilisateur validera le formulaire, il faudra gérer les données saisies : récupération des données, vérification de leur contenu et enfin traitement (stockage par exemple).
 

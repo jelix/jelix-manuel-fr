@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/datetime~~
+~~LANG:EN@enman:datetime~~
 
 jDateTime est une classe encapsulant une date, permettant de la convertir dans divers formats, mais aussi de faire des calculs de dates.
 

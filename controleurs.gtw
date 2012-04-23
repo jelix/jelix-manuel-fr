@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/controllers~~
+~~LANG:EN@enman:controllers~~
 
 Les contrôleurs sont les objets qui vont effectuer les actions correspondantes à chacune des urls de votre application.
 

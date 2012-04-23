@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsehtml~~
+~~LANG:EN@enman:responsehtml~~
 
 Pour récupérer une réponse xhtml/html, vous indiquez l'alias "html" à la méthode @@M@getResponse()@@. Vous récupérez ainsi la réponse comme ceci :
 

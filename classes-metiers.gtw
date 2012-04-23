@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/business_classes~~
+~~LANG:EN@enman:business_classes~~
 
 Pour respecter le modèle en couche, il est recommandé de réaliser tout ses traitements métiers et services dans des classes dédiées.
 

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/authentification~~
+~~LANG:EN@enman:authentification~~
 
 Le système d'authentification de Jelix ne s'occupe que d'une seule chose : gérer des identifiants/mots de passe et des utilisateurs.
 Il repose sur des pilotes((drivers)) pour accéder aux données d'un utilisateur. C'est ainsi qu'il peut s'appuyer sur une base de données, un annuaire LDAP, etc. Pour le moment, il existe un pilote pour une base de données, un pilote pour un annuaire géré par un serveur LDS et un pilote pouvant utiliser une classe quelconque.

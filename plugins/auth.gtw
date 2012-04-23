@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/plugins/auth~~
+~~LANG:EN@enman:plugins/auth~~
 
 
 Si les [[/authentification/drivers|drivers standards]] pour [[/authentification|jAuth]] ne vous conviennent pas, vous pouvez donc en créer un. Voici comment.

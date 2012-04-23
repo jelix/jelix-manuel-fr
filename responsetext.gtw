@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responsetext~~
+~~LANG:EN@enman:responsetext~~
 
 Il faut utiliser jResponseText qui est récupérable via l'alias "text". Cet objet possède une propriété "content" dans laquelle vous mettez le texte voulu.
 
@@ -67,4 +67,4 @@ function MaFonction()
 
 Bien évidemment cet exemple reste un exemple simple, on peut y mettre ce que l'on veut et faire passer les parametres soit en get soit en post.
 
-Petit rappel, les deux array que l'on trouve dans la chaine url (coté javascript) permet tout simplement pour le premier de faire passer un parametre en statique (codé en dur) et le deuxième provenant d'une variable javascript. [[http://jelix.org/articles/fr/manuel-1.1/ref-plugins/tplplugins/fonctions|Les fonctions de templates]].
+Petit rappel, les deux array que l'on trouve dans la chaine url (coté javascript) permet tout simplement pour le premier de faire passer un parametre en statique (codé en dur) et le deuxième provenant d'une variable javascript. [[/ref-plugins/tplplugins/fonctions|Les fonctions de templates]].

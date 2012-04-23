@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/responseatom~~
+~~LANG:EN@enman:responseatom~~
 
 
 Jelix permet, [[responserss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet jResponseAtom10, qui prend en charge  quasiment la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".

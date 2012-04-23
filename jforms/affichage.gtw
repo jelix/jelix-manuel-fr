@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.1/jforms/display~~
+~~LANG:EN@enman:jforms/display~~
 
 
 Pour afficher les données d'un formulaire jforms, vous pouvez appeler la méthode //getAllData()// d'un objet formulaire, et vous obtiendrez un tableau contenant toutes les données. Vous pouvez passer ensuite ce tableau à un template pour afficher votre formulaire HTML avec les données. Vous pouvez aussi récupérer les erreurs avec //getErrors()// et ainsi afficher les éventuelles erreurs.
