@@ -225,7 +225,7 @@ Les modificateurs existants et leur équivalent php :
     * escurl (rawurlencode)
     * capitalize (ucwords)
 
-D'autres sont fournis. Voir la liste sur [[http://jelix.org/reference/|la référence API]].
+D'autres sont fournis. Voir la liste sur [[refapi:/|la référence API]].
 
 === Modificateur avec paramètres ===
 

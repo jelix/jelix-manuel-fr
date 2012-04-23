@@ -12,7 +12,9 @@ Vous devez ensuite indiquer un nom de fichier. C'est sous ce nom que le contenu 
 $rep->zipFilename='myCrazyPackage.zip';
 </code>
 
-Ensuite, il faut créer le zip. La propriété //$content// est un objet jZipCreator, dont vous utiliserez les méthodes pour ajouter du contenu dans le zip. (Voyez la [[http://jelix.org/reference/|documentation de référence]] sur jZipCreator).
+Ensuite, il faut créer le zip. La propriété //$content// est un objet jZipCreator,
+dont vous utiliserez les méthodes pour ajouter du contenu dans le zip.
+Voyez la documentation de référence [[refclass:utils/jZipCreator|jZipCreator]].
 
 <code php>
 // ajoute le contenu du fichier datas/truc.txt stocké sur le serveur, 

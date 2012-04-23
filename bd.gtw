@@ -86,7 +86,7 @@ A noter que les fichiers de base de données sqlite doivent être déposés dans
 Paramètres possibles :
 
    * **driver** : doit valoir "pdo"
-   * **dsn** : contient des informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[http://fr.php.net/pdo|doc de pdo sur php.net]]).
+   * **dsn** : contient des informations de connexion (type de base de donnée, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[phpapi:pdo|doc de pdo sur php.net]]).
    * **user** et **password** : le login/mot de passe pour la connexion. Ne mettre ces paramètres que si nécessaire.
    * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
 
@@ -232,7 +232,7 @@ Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont p
   } 
 </code>
 
-Pour le reste des méthodes, voyez [[http://jelix.org/reference/|la documentation de référence]].
+Pour le reste des méthodes, voyez [[refclass:db/jDbResultSet|la documentation de référence]].
 
 ==== Utilisation dans un template ====
 
@@ -300,4 +300,4 @@ jDbWidget est une classe fournissant des méthodes utiles.
 
 </code>
 
-Pour le reste des méthodes, voyez [[http://jelix.org/reference/|la documentation de référence]].
+Pour le reste des méthodes, voyez [[refclass:db/jDbWidget|la documentation de référence]].

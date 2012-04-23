@@ -26,5 +26,7 @@ Il y a trois types de groupes :
 
 Deux classes accompagnent le driver jAcl.db pour gérer les groupes, utilisateurs, droits etc : jAclDbManager et jAclDbUserGroup (anciennement jAclManager et jAclUserGroup dans jelix 1.0beta2.1 mais leur fonctionnement n'a pas changé).
 
-Leur utilisation est similaire d'un point de vue théorique aux commandes de jelix-scripts (décrites dans [[configuration|Configurer jAcl.db]]), aussi nous vous laissons lire [[http://jelix.org/reference|la documentation de reference]].
+Leur utilisation est similaire d'un point de vue théorique aux commandes de
+jelix-scripts (décrites dans [[configuration|Configurer jAcl.db]]), aussi
+nous vous laissons lire [[refapi:/|la documentation de reference]].
 

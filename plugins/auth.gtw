@@ -6,7 +6,7 @@ Si les [[/authentification/drivers|drivers standards]] pour [[/authentification|
 ===== Création =====
 
 
-Un driver est une classe qui respecte [[http://jelix.org/reference/1.1.12/jelix/auth/jIAuthDriver.html|l'interface jIAuthDriver]], qui reprend à peu de chose près l'API de jAuth (**mais ne dérive pas de jAuth**).
+Un driver est une classe qui respecte [[refclass:auth/jIAuthDriver|l'interface jIAuthDriver]], qui reprend à peu de chose près l'API de jAuth (**mais ne dérive pas de jAuth**).
 
 Ces drivers sont appelés par jAuth. Ils font les opérations de "bas" niveau (accès base de données, ou à un annuaire ldap, ou à un fichier texte etc...)
 
