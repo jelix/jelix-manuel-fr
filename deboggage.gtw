@@ -12,7 +12,7 @@ Le "loggeur" par défaut est le loggeur fichier. Les messages sont stockés dans
 
 ==== Configurer jLog ====
 
-Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez remplir la section @@[logger]@@ dans la configuration. Par défaut :
+Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez remplir la section @@[logger]@@ dans la configuration (pour rappel, dans le fichier @@F@var/config/defaultconfig.ini.php@@ ). Par défaut :
 <code ini>
 
 [logger]
@@ -97,7 +97,7 @@ Sachant que la debugbar est elle-même un plugin de jResponseHtml, voici comment
    * vous devez activer le loggeur "memory" pour les types de messages que vous voulez suivre (et nécessaires pour les plugins de la debugbar), dans la configuration de jLog.
    * éventuellement indiquer la liste des plugins que vous voulez activer pour la debugbar (par défaut: "sqllog, sessiondata, defaultlog"
 
-Voici un exemple typique :
+Voici un exemple typique (dans le fichier de configuration @@F@var/config/defaultconfig.ini.php@@) :
 
 <code ini>
 [jResponseHtml]

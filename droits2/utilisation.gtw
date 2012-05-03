@@ -4,7 +4,7 @@
 Quand vous voulez que votre module fonctionne selon des droits, il vous faut durant la réalisation de ce module :
 
   - déterminer des sujets (droits) que vous utiliserez
-  - éventuellement les enregistrer dans le système de droits utilisé par le driver que vous indiquez à jAcl2 : dans un annuaire ldap si vous utilisez un driver ldap (non fourni pour le moment) ou une base de données si vous utilisez [[configuration|par exemple le driver jAcl2.db]].
+  - éventuellement les enregistrer dans le système de droits utilisé par le driver que vous indiquez à jAcl2 : dans un annuaire LDAP si vous utilisez un driver LDAP (non fourni pour le moment) ou une base de données si vous utilisez [[configuration|par exemple le driver jAcl2.db]].
 
 Ensuite vous pouvez utiliser les méthodes statiques de jAcl2 pour savoir si l'utilisateur courant a tel droit sur tel ou tel sujet. 
 
