@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/main-concepts~~
+~~LANG:EN@enman:main-concepts~~
 
 
 Comme tout framework, Jelix a des principes de fonctionnement et une série d'objets à connaître, en particulier ceux qui sont utilisés dans la logique MVC : Modèle, Vue, Contrôleur.

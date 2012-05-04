@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms~~
+~~LANG:EN@enman:jforms~~
 
 
 jForms est un système complet qui facilite le travail du développeur pour créer des formulaires. Vous décrivez votre formulaire dans un fichier xml, et par le biais d'une API relativement simple et de //plugins// de //template//, jForms s'occupe automatiquement :

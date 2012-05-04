@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms/display/html-generator~~
+~~LANG:EN@enman:jforms/display/html-generator~~
 
 Le générateur "html" de jforms génère un formulaire HTML, utilisant principalement jQuery pour le comportement de certains champs de saisie. Par conséquent, ce genre de formulaire peuvent être assez lourd.
 

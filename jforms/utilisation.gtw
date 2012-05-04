@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/jforms/usage~~
+~~LANG:EN@enman:jforms/usage~~
 
 Les données d'un formulaire jforms sont stockées en sessions. On manipule ces données au travers d'un //objet formulaire//, instance d'une classe héritant de @@C@jFormsBase@@. Cette classe est générée automatiquement à partir du fichier XML que vous fournissez. Comme pour les DAOs, elle  est stockée dans un cache évitant de la recréer à chaque utilisation.
 

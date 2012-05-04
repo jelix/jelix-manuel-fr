@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/responsebinary~~
+~~LANG:EN@enman:responsebinary~~
 
 Pour renvoyer un fichier binaire (un exécutable, une image, une vidéo, une archive ou autre), il faut utiliser @@C@jResponseBinary@@ dont l'alias est "binary"
 

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/creating-a-module~~
+~~LANG:EN@enman:creating-a-module~~
 
 Un module est un répertoire dans lequel il y a une arborescence précise. Les modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe de modules, ou aussi dépôt de modules.
 

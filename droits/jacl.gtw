@@ -1,0 +1,5 @@
+~~LANG:EN@enman:oldrights~~
+
+jAcl est le système de droit fourni dans Jelix 1.0. Il est présent dans Jelix 1.1 pour des raisons de compatibilité avec les applis existantes, mais ne sera probablement plus supporté à l'avenir, car complexe à utiliser. Il est préférable donc d'utiliser jAcl2.
+
+Voici cependant la documentation de jAcl.

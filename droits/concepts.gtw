@@ -1,0 +1,64 @@
+~~LANG:EN@enman:oldrights/concepts~~
+
+jAcl propose un système qui répond à la plupart des besoins en matière de gestion de droits. Il comporte divers éléments qui ensemble définissent des droits.
+
+
+===== Éléments composant un droit =====
+
+Il faut distinguer les différents éléments qui entrent en jeu dans le système de droits :
+
+  * un sujet 
+  * une valeur de droit
+  * un utilisateur
+  * une ressource (facultatif)
+
+une combinaison de chacun de ces types d'éléments représente un droit.
+
+==== Sujet ====
+
+C'est un intitulé représentant un type de ressource ou une fonctionnalité sur laquelle on veut apposer un droit. Par exemple, "**cms.articles**" pourrait être le sujet regroupant les droits sur la gestion des articles d'un CMS.
+
+Par convention, afin d'éviter les collisions entre différents modules, le nom du sujet devrait commencer par le nom du module. Mais ce n'est pas une obligation.
+
+==== Valeur de droit ====
+
+C'est une chaîne, une valeur indiquant précisément un droit. Pour un sujet donné, il y a un ensemble de valeurs précises possibles. Par exemple, pour le sujet "cms.articles", on pourrait avoir les valeurs "LIRE", "MODIFIER", "CREER", "PUBLIER", "EFFACER". Et pour le sujet "comments.management", juste les valeurs "EFFACER" et "MODIFIER".
+
+Ainsi donc, les valeurs de droits sont regroupées en //groupes de valeurs//.
+
+À noter que les intitulés des valeurs de droits dépendent totalement de la manière dont sont stockées les droits dans le système accédé par le driver.
+
+==== Utilisateur ====
+
+Un droit s'exerce toujours sur un ou plusieurs utilisateurs. Mais cette notion est transparente du point de vue de l'API de la classe jAcl. C'est le driver qui s'occupe de "reconnaître" l'utilisateur en cours (au moyen de jAuth en principe). Il se peut même que le driver repose sur un système où les utilisateurs sont dans des groupes auxquels les droits s'appliquent (comme c'est le cas de jAcl.db). Mais vous n'avez pas à vous en préoccuper lors de l'utilisation de jAcl.
+
+==== Ressource ====
+
+Dans la plupart des cas, l'association //sujet + utilisateur + valeur de droit// suffit. Mais parfois on veut pouvoir avoir une granularité plus fine.
+
+Par exemple, dans un système CMS, on veut pouvoir donner le droit de modification à un utilisateur sur ses propres articles, mais pas sur ceux des autres. Il faut alors rajouter dans cette association l'identifiant de l'article.
+
+Par exemple, on donnera les valeurs de droits suivants
+
+   * "CREER" sur le sujet "cms.articles" pour le groupe "redacteurs"
+   * "MODIFIER" sur la ressource "monarticle" pour l'utilisateur toto faisant parti du groupe "redacteurs".
+
+
+
+
+===== Principes de fonctionnement =====
+
+Le cœur de jAcl contient donc des relations entre trois ou quatre types d'élements. 
+
+La mémorisation d'une relation entre un sujet, un utilisateur et une valeur (plus éventuellement une ressource), définit un droit. Quand une relation n'existe pas entre un sujet donné, un utilisateur donné et une valeur donnée, alors cela signifie qu'il n'y a pas de droit défini sur ce triplet.
+
+Par exemple, si on définit juste ces droits suivants dans le système :
+
+   * "LIRE" sur le sujet "cms.articles" pour l'utilisateur "laurent"
+   * "CREER" sur le sujet "cms.articles" pour l'utilisateur "laurent"
+   * "MODIFIER" sur le sujet "cms.articles" pour l'utilisateur "laurent"
+
+L'utilisateur //laurent// aura donc les droits LIRE, CREER et MODIFIER sur le sujet cms.articles, mais pas le droit EFFACER puisque la relation n'existe pas.
+
+Un module CMS qui repose sur ces droits devra, pour savoir ce que peut faire un utilisateur, interroger jAcl, en lui demandant si par exemple l'utilisateur courant a le droit MODIFIER au sujet de "cms.articles". Si oui, alors le module pourra afficher un bouton "modifier" dans l'interface d'administration, et ne l'affichera pas sinon. (Le module devra également faire cette vérification lors de la sauvegarde d'un article, pour éviter les "fraudes" ;-) ).
+

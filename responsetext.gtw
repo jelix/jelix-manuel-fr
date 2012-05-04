@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/responsetext~~
+~~LANG:EN@enman:responsetext~~
 
 Il faut utiliser @@C@jResponseText@@ qui est récupérable via l'alias "text". Cet objet possède une propriété "content" dans laquelle vous mettez le texte voulu.
 

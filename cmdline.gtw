@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/cmdline~~
+~~LANG:EN@enman:cmdline~~
 
 Jelix vous permet de lancer des actions spécialement en ligne de commande. Ceci est très pratique pour effectuer des traitements sur un serveur et les planifier.
 

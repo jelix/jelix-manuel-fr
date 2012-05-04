@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/events~~
+~~LANG:EN@enman:events~~
 
 Jelix propose un système de communication inter-module, basé sur le principe d'événements/écouteurs.
 

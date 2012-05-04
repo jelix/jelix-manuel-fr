@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/daos/php_methods~~
+~~LANG:EN@enman:daos/php_methods~~
 
 
 Les [[methodes_xml|méthodes déclarées en XML]] permettent de créer facilement des méthodes, et peuvent répondre à beaucoup de situations. Néanmoins elles sont tout de même limitées dans la cadre de requêtes complexes. On ne peut pas créer des requêtes complexes.
@@ -43,11 +43,14 @@ La première façon permet d'avoir un fonctionnement un peu plus performant, et 
 Avec la deuxième façon de réaliser les méthodes PHP, vous aurez besoin de lire les informations sur les tables et les propriétés. Sachez que vous trouverez ces informations dans plusieurs propriétés :
 
    * ''$this->_primaryTable'' : l'alias de la table primaire,
-   * ''$this->_tables'' : une liste d'informations (voir la documentation de référence sur la description détaillée),
-   * ''$this->getProperties()'' pour avoir des informations détaillées sur chaque propriétés d'un record (voir la documentation de référence),
+   * ''$this->_tables'' : une liste d'informations,
+   * ''$this->getProperties()'' pour avoir des informations détaillées sur chaque propriétés d'un record,
    * ''$this->getPrimaryKeyNames()'' pour avoir la liste des noms des propriétés servant de clés primaires.
 
-Et sur un record que vous aurez préalablement instancié, vous aurez aussi les même méthodes ''getProperties()'' et ''getPrimaryKeyNames()''.
+Et sur un record que vous aurez préalablement instancié, vous aurez aussi les même
+méthodes ''getProperties()'' et ''getPrimaryKeyNames()''.
+
+Pour les détails, voir [[refclass:dao/jDaoFactoryBase|la documentation de référence de jDaoFactoryBase]]
 
 
 

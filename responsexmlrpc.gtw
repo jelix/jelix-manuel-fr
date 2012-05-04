@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/responsexmlrpc~~
+~~LANG:EN@enman:responsexmlrpc~~
 
 Jelix propose la prise en charge de [[http://xmlrpc.scripting.com/|xml-rpc]]. C'est un protocole d'échange de données en XML :  un client envoie un contenu XML indiquant une fonction à exécuter et des paramètres. Le serveur renvoie un résultat, toujours sous forme de XML (RPC = Remote Procedure Call). 
 

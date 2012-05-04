@@ -1,0 +1,171 @@
+~~LANG:EN@enman:oldrights/use~~
+
+
+Quand vous voulez que votre module fonctionne selon des droits, il vous faut durant la réalisation de ce module :
+
+  - déterminer des sujets et des valeurs de droits que vous utiliserez
+  - éventuellement les enregistrer dans le système de droits utilisé par le driver que vous indiquez à jAcl : dans un annuaire ldap si vous utilisez un driver ldap (non fourni pour le moment) ou une base de données si vous utilisez [[configuration|par exemple le driver jAcl.db]].
+
+Ensuite vous pouvez utiliser les méthodes statiques de jAcl pour savoir si l'utilisateur courant a tel droit sur tel ou tel sujet. 
+
+Si le driver gère des groupes d'utilisateurs, vous n'avez pas à les indiquer lors de ces interrogations : le driver s'en occupe automatiquement. Notez qu'un driver pour jAcl peut utiliser jAuth pour l'authentification.
+
+
+
+===== Configuration =====
+
+Avant toute chose vous devez indiquer quel driver vous utilisez pour jAcl. Les drivers sont des plugins stockés dans un répertoire //acl// d'un dépôt de plugins. Un plugin pour jAcl est une classe fooAclDriver (foo étant le nom du plugin) qui doit implémenter l'interface jIAclDriver et qui est enregistrée dans un fichier foo.acl.php. Par exemple le driver "db" est stocké dans db/db.acl.php et est défini dans la classe dbAclDriver.
+
+Dans la configuration de l'application, vous devriez avoir une section //acl// :
+
+<code ini>
+[acl]
+driver=db
+</code>
+
+Au niveau de l'option driver vous devez y mettre le nom du driver utilisé.
+
+===== Interrogation du système de droits =====
+
+Vous avez principalement deux méthodes statiques de jAcl à connaître : check et getRight.
+
+
+==== jAcl::getRight ====
+
+jAcl::getRight() permet de savoir toutes les valeurs possibles à propos d'un sujet, pour lesquelles un droit à été défini sur l'utilisateur.
+
+<code php>
+  $list = jAcl::getRight("cms.articles");
+</code>
+
+En reprenant l'exemple de l'article jAcl.db, si l'utilisateur fait parti du groupe "lecteurs", la liste vaudra :
+
+<code php>
+  array('LIST','READ');
+</code>
+si il appartient au groupe des redacteurs :
+<code php>
+  array('LIST','READ', 'CREATE','UPDATE','DELETE');
+</code>
+
+Si vous indiquez en plus une ressource, par exemple "opinions" comme dans notre exemple :
+
+<code php>
+  $list = jAcl::getRight("cms.articles", "opinions");
+</code>
+si l'utilisateur fait partie du groupe "lecteurs", la liste vaudra alors :
+<code php>
+  array('LIST','READ', 'UPDATE');
+</code>
+s'il appartient au groupe des rédacteurs, cela ne change pas, puisque les rédacteurs ont de toutes façons le droit de modifier tous les articles, comme cela a été défini précédemment :
+<code php>
+  array('LIST','READ', 'CREATE','UPDATE','DELETE');
+</code>
+
+
+==== jAcl::check ====
+
+C'est probablement la méthode que vous utiliserez le plus avec jAcl. Elle permet de savoir si l'utilisateur a tel ou tel droit, et renvoie donc true ou false. Exemple :
+
+<code php>
+if( jAcl::check("cms.articles","CREATE")){
+   // code à exécuter si l'utilisateur a le droit de créer un article
+
+}else{
+   // code à exécuter si l'utilisateur n'a pas le droit de créer un article
+}
+</code>
+
+Pour interroger sur une ressource précise :
+
+<code php>
+$article_id = "opinions";
+
+if( jAcl::check("cms.articles","UPDATE", $article_id)){
+   // code à exécuter si l'utilisateur a le droit de modifier l'article indiqué
+
+}else{
+   // code à exécuter si l'utilisateur n'a pas le droit de modifier l'article indiqué
+}
+</code>
+
+
+
+
+==== Vérification automatique ====
+
+Dans les contrôleurs dont on veut vérifier les droits automatiquement, on peut utiliser le plugin jacl pour le coordinateur.
+
+Pour ce faire, activez le plugin jacl dans la configuration de l'application
+
+<code ini>
+[coordplugins]
+jacl = jacl.coord.ini.php
+</code>
+
+Copiez le fichier lib/jelix/plugins/coord/jacl/jacl.coord.ini.php.dist dans var/config/index/jacl.coord.ini.php
+
+Éditez ce fichier pour indiquer les actions vers lesquelles aller en cas de défaut de droits, ou le message à afficher.
+
+
+
+
+Et dans vos contrôleurs, mettez les valeurs suivantes dans la propriété $pluginParams :
+
+<code php>
+
+   public $pluginParams = array(
+         '*'=>array( 'jacl.right'=>array('sujet', 'valeur')...)
+        ...
+   );
+</code>
+
+Ou alors, pour vérifier une série de droits que l'utilisateur doit posséder :
+
+<code php>
+
+   public $pluginParams = array(
+     '*'=>array( 'jacl.rights.and'=>array(
+         array('sujet', 'valeur'),
+         array('sujet', 'valeur'),
+         )...
+      ),
+        ...
+   );
+</code>
+
+ou encore, pour vérifier que l'utilisateur possède un des droits parmi une liste :
+
+<code php>
+
+   public $pluginParams = array(
+     '*'=>array( 'jacl.rights.or'=>array(
+         array('sujet', 'valeur'),
+         array('sujet', 'valeur'),
+         )...
+      ),
+        ...
+   );
+</code>
+
+
+==== Plugins de template ifacl et ifnotacl ====
+
+Des plugins de templates sont disponibles pour générer des portions de contenu en fonction des droits. Leurs arguments sont exactement les mêmes que jAcl::check.
+
+<code>
+  {ifacl "cms.articles","CREATE"}
+    <input type="button" value="Créer un article" />
+  {else}
+   <p>Vous ne pouvez pas créer d'articles.</p>
+  {/ifnotacl}
+</code>
+
+Il y aussi {ifnotacl} qui est le contraire de ifacl, c'est à dire qui teste si l'utilisateur n'a **pas** le droit indiqué.
+
+La même chose avec une ressource :
+<code>
+  {ifacl "cms.articles","UPDATE", $article_id}
+    <input type="button" value="Modifier l'article" />
+  {/ifacl}
+</code>

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/daos/use-result~~
+~~LANG:EN@enman:daos/use-result~~
 
 Créer, modifier et supprimer des enregistrements dans une base de données est très utile. Mais c'est encore mieux si on peut les lire.  Voici comment récupérer un ou plusieurs enregistrements.
 

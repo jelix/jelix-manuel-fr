@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/installation/requirements~~
+~~LANG:EN@enman:installation/requirements~~
 
 
 Vous devez installer au minimum la version **5.2** de PHP. Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl** et **tokenizer** sont requises (elles sont actives en général dans une installation standard de PHP 5.2). Si une de ces extensions n'était pas livrée avec le paquet PHP5, veillez à installer le paquet correspondant.

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/webservices~~
+~~LANG:EN@enman:webservices~~
 
 Outre les contenus classiques que l'on peut fournir aux navigateurs (HTML, XML etc), Jelix permet également d'implémenter des services web, que ce soit pour de l'Ajax, en JSON, ou pour fournir des services plus évolués en XML-RPC ou SOAP.
 
