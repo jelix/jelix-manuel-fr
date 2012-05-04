@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/kvdb~~
+~~LANG:EN@enman:kvdb~~
 
 Jelix contient une couche d'abstraction aux bases de données de type key-value, moins complexes que les bases de données SQL.
 

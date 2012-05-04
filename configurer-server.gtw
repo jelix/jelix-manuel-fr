@@ -12,7 +12,7 @@ Il est également recommandé de mettre ces valeurs :
    * @@V@asp_tags = off@@
    * @@V@short_open_tag = off@@
 
-Un [[http://fr2.php.net/manual/fr/function.phpinfo.php|phpinfo()]] peut vous permettre de vérifier votre configuration. Par défaut la configuration se trouve dans un fichier nommé @@F@php.ini@@.
+Un [[phpapi:phpinfo|phpinfo()]] peut vous permettre de vérifier votre configuration. Par défaut la configuration se trouve dans un fichier nommé @@F@php.ini@@.
 
 ==== Sur un serveur OVH mutualisé ====
 

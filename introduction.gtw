@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.2/introduction~~
+~~LANG:EN@enman:introduction~~
 
 Jelix est un framework pour PHP 5.2 qui permet de développer rapidement des applications web de toutes tailles. Il comporte nombre de composants, permettant d'architecturer une appli selon le pattern MVC, d'accéder aux bases de données à travers un ORM, de générer divers types de contenus avec le minimum d'efforts etc.
 
