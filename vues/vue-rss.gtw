@@ -1,4 +1,4 @@
-~~LANG:EN@enman:responserss~~
+~~LANG:EN@enman:views/view-rss~~
 
 Jelix permet de générer un fil RSS assez facilement grâce à @@C@jResponseRss20@@. Cet objet prend en charge totalement la [[http://cyber.law.harvard.edu/rss/rss.html|spécification RSS 2.0]]. Comme tout type de réponse, la première chose à faire est de récupérer l'objet jResponseRss20 (alias "rss2.0"). 
 
