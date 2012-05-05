@@ -1,4 +1,4 @@
-~~LANG:EN@enman:requests~~
+~~LANG:EN@enman:core/request-object~~
 
 ===== Un objet jRequest pour chaque type de requête =====
 

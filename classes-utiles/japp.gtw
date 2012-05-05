@@ -1,4 +1,4 @@
-~~LANG:EN@enman:jApp~~
+~~LANG:EN@enman:class-utilities/jApp~~
 
 jApp est une classe permettant de spécifier (dans le application.init.php) et de récupérer les différents chemins de l'application. Depuis la version 1.3, elle remplace les constantes JELIX_APP_*.
 

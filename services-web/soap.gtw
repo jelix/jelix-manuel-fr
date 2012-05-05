@@ -1,4 +1,4 @@
-~~LANG:EN@enman:responsesoap~~
+~~LANG:EN@enman:web-services/soap~~
 
 Jelix propose la prise en charge de SOAP, qui est un protocole de service web normalisé par le W3C. Jelix utilise [[phpapi:soap|l'API SOAP incluse dans php]], donc vous devez vous assurer qu'elle est bien activée sur votre serveur (vérifiez par un phpinfo() par exemple).
 

@@ -1,4 +1,4 @@
-~~LANG:EN@enman:coordinator~~
+~~LANG:EN@enman:core/coordinator~~
 
 
 Le coordinateur est le coeur du framework. C'est en quelque sorte le chef d'orchestre de l'exécution d'une action.

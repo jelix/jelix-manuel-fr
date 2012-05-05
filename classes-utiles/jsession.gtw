@@ -1,4 +1,4 @@
-~~LANG:EN@enman:session~~
+~~LANG:EN@enman:class-utilities/jsession~~
 
 jSession est utilisé par Jelix pour la gestion du stockage des sessions. Cet objet n'est pas utilisé pour lire ou écrire des variables en session. Pour faire ceci, **utilisez $_SESSION comme d'habitude**.
 

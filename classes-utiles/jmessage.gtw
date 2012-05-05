@@ -1,4 +1,4 @@
-~~LANG:EN@enman:message~~
+~~LANG:EN@enman:class-utilities/jmessage~~
 
 Très souvent, il est utile d'afficher les résultats/conséquences/erreurs d'une action dans une action ultérieure. Par exemple, quand vous renvoyez un utilisateur vers la page d'accueil après un échec de connexion, il serait intéressant de lui afficher les raisons de cette redirection.
 

@@ -1,4 +1,4 @@
-~~LANG:EN@enman:mailer~~
+~~LANG:EN@enman:class-utilities/jmailer~~
 
 jMailer est une classe permettant l'envoi d'email depuis un contrôleur ou une classe métier. Elle est basée sur la classe [[http://phpmailer.codeworxtech.com|PHPMailer]]. 
 

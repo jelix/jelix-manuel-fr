@@ -1,4 +1,4 @@
-~~LANG:EN@enman:file~~
+~~LANG:EN@enman:class-utilities/jfile~~
 
 jFile aide à lire ou créer des fichiers.
 Les fonctions de jFile sont statiques, il n'est pas nécessaire de l'instancier pour les utiliser.
