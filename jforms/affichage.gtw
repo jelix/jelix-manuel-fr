@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/jforms/display~~
+~~LANG:EN@enman:jforms/display~~
 
 
 Pour afficher les données d'un formulaire jforms, vous pouvez appeler la méthode @@M@getAllData()@@ d'un objet formulaire, et vous obtiendrez un tableau contenant toutes les données. Vous pouvez passer ensuite ce tableau à un template pour afficher votre formulaire HTML avec les données. Vous pouvez aussi récupérer les erreurs avec @@M@getErrors()@@ et ainsi afficher les éventuelles erreurs.
@@ -223,7 +223,7 @@ Ou encore, vous pouvez utiliser plusieurs plugins @@formsubmit@@, sans @@formsub
 <div> {formsubmit 'preview'} {formsubmit 'save'} </div>
 </code>
 
-**Attention** : @@{formsubmits}@@ boucle sur la liste des contrôles @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[http://developer.jelix.org/ticket/429|ticket #429]])
+**Attention** : @@{formsubmits}@@ boucle sur la liste des contrôles @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le moment de boucler sur les items d'un submit (voir [[ticket:429|ticket #429]]).
 
 
 

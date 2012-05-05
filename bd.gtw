@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/bd~~
+~~LANG:EN@enman:bd~~
 
 
 Jelix possède un système d'accès abstrait aux bases de données : jDb. jDb propose donc une API commune à toutes les bases de données. Pour le moment, les drivers fournis sont ceux pour :
@@ -9,7 +9,7 @@ Jelix possède un système d'accès abstrait aux bases de données : jDb. jDb pr
 
 Il y a aussi un autre driver, pdo, permettant d'indiquer à jDb d'utiliser pdo plutôt que les classes d'abstractions internes de jDb.
 
-Si dans la liste ci-dessus, il n'y a pas le driver correspondant à votre base de données et que vous n'avez pas PDO, vous pouvez [[plugins/db|créer votre propre driver pour jDb]].
+Si il n'y a pas le driver correspondant à votre base de données et que vous n'avez pas PDO, vous pouvez [[plugins/db|créer votre propre driver pour jDb]].
 
 À noter que bien que jDb soit une API commune à toutes les bases de données, ce n'est en aucun cas une classe qui adaptera les requêtes en fonction des bases de données. Aussi, faites attention à ne pas trop utiliser des spécificités SQL d'une base de données précise dans vos modules, si vous souhaitez qu'ils puissent être réutilisés dans d'autres projets qui n'utiliseront pas la même base.
 

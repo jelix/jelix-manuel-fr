@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/authentification~~
+~~LANG:EN@enman:authentification~~
 
 Le système d'authentification de Jelix ne s'occupe que d'une seule chose : gérer des identifiants/mots de passe et des utilisateurs.
 
@@ -207,7 +207,7 @@ Vous pouvez utiliser vos propres contrôleurs pour gérer l'authentification : f
 
 ===== Classe jAuth =====
 
-C'est la classe principale du système d'authentification. Toutes ses méthodes sont statiques. Elle permet de gérer un utilisateur, de « connecter » et « déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous d'une bonne partie du travail. Voir [[http://jelix.org/reference/1.3.1/jelix/auth/jAuth.html|son descriptif dans la référence]].
+C'est la classe principale du système d'authentification. Toutes ses méthodes sont statiques. Elle permet de gérer un utilisateur, de « connecter » et « déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous d'une bonne partie du travail. Voir [[refclass:auth/jAuth|son descriptif dans la référence]].
 
 l'objet "user" que vous passez à certaines méthodes vous est donné par @@C@jAuth@@ lui même. C'est un objet contenant les données d'un utilisateur et il n'a pas de classe précise : son type dépend du driver utilisé et éventuellement de sa configuration (pour le driver Db, on peut fournir un DAO de notre choix par exemple). Il doit par contre respecter l'interface attendue par le driver, et doit avoir au moins un champ @@P@login@@ et un champ @@P@password@@.
 

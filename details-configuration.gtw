@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/configuration-details~~
+~~LANG:EN@enman:configuration-details~~
 
 
 ===== Le fichier project.xml =====
@@ -378,7 +378,7 @@ smtpTimeout = 10
 
 
 ==== section acl et acl2 ====
-Définit les paramètres de la gestion des droits d'accès dans l'application. Voir la documentation sur la [[http://jelix.org/articles/fr/manuel-1.3/droits|gestion des droits]]. Vous choisirez d'utiliser soit jAcl, soit jAcl2 mais il n'est pas recommandé d'utiliser les deux en même temps.
+Définit les paramètres de la gestion des droits d'accès dans l'application. Voir la documentation sur la [[/droits2|gestion des droits]]. Vous choisirez d'utiliser soit jAcl, soit jAcl2 mais il n'est pas recommandé d'utiliser les deux en même temps.
 
 <code ini>
 [acl]

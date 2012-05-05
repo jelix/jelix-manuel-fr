@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/plugins/coord~~
+~~LANG:EN@enman:plugins/coord~~
 
 Il est possible d'ajouter des plugins au [[/concepts/coordinateur|coordinateur]] (le cœur de Jelix, jCoordinator) qui permettent de faire des traitements supplémentaires à différentes étapes de l'exécution d'une action, quelle que soit cette action.
 

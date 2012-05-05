@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/installing-a-module~~
+~~LANG:EN@enman:installing-a-module~~
 
 Cette section ne concerne pas les modules fraîchement créés avec la commande @@c@createmodule@@, puisque celle-ci leurs assigne automatiquement un niveau d'accès et les installe. Par contre, pour créer un module "à la main" ou utiliser un module existant fourni avec jelix ou provenant d'un autre projet, il faut suivre les instructions qui suivent.
 

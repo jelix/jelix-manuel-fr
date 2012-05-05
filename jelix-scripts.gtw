@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/jelix-scripts~~
+~~LANG:EN@enman:jelix-scripts~~
 
 Jelix est fourni avec plusieurs scripts, dont @@F@lib/jelix-scripts/createapp.php@@, qui permet de créer facilement une nouvelle application, et @@F@cmd.php@@ dans l'application crée, qui permet de modifier facilement des éléments du projet, ou de réaliser des actions sur le projet.
 

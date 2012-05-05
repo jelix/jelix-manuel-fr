@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/responseatom~~
+~~LANG:EN@enman:responseatom~~
 
 
 Jelix permet, [[vue-rss|en plus de RSS]], de pouvoir générer un fil Atom 1.0. Pour cela il faut utiliser l'objet @@C@jResponseAtom10@@, qui prend en charge  quasiment la totalité de la [[http://tools.ietf.org/html/rfc4287|spécification Atom 1.0]]. Son alias est "atom1.0".
@@ -82,4 +82,6 @@ Voici un exemple avec une dao de news :
 
 ===== Autres informations =====
 
-Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item. Consultez la [[http://jelix.org/reference/|documentation de référence]] sur les objets @@C@jAtom10Info@@ et @@C@jAtom10Item@@.
+Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item.
+Consultez la documentation de reference sur les classes
+[[refclass:core_response/jAtom10Info|jAtom10Info]] et [[refclass:core_response/jAtom10Item|jAtom10Item]].

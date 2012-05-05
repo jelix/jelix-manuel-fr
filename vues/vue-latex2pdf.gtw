@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/responselatex2pdf~~
+~~LANG:EN@enman:responselatex2pdf~~
 
 
 Jelix propose un objet @@C@jResponseLatexToPdf@@ qui permet de générer un document PDF à partir d'un document écrit en [[http://fr.wikipedia.org/wiki/LaTeX|LaTeX]]. Son alias est "ltx2pdf".

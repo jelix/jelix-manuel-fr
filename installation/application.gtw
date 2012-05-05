@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/installation/applications~~
+~~LANG:EN@enman:installation/applications~~
 
 Ce chapitre explique comment installer une application existante, créée avec Jelix. Nous allons prendre l'installation de **testapp** en exemple mais les explications sont valables pour n'importe quelle application.
 
