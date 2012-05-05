@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/new-features~~
+~~LANG:EN@enman:new-features~~
 
 Principales nouveautés apportées par la version 1.3 :
 
@@ -17,4 +17,5 @@ Principales nouveautés apportées par la version 1.3 :
   * Amélioration dans jAcl2 :
      * les sujets peuvent être regroupés pour une meilleur lisibilité dans jacl2db_admin
      * un groupe peut maintenant interdire un droit
+
 

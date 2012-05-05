@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/create-application~~
+~~LANG:EN@enman:create-application~~
 
 La première chose à faire pour utiliser Jelix, c'est de créer une application. Vous pouvez en créer une "à la main", mais il y a une manière plus simple : utiliser le script @@createapp@@ fourni avec Jelix.
 

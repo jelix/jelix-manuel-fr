@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/db/configuration~~
+~~LANG:EN@enman:db/configuration~~
 
 Pour pouvoir accéder à une base de données, il faut d'abord indiquer les paramètres de connexion dans le fichier de profils. Voir [[/configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]. Vous pouvez définir plusieurs connexions, que l'on nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application.
 
@@ -67,7 +67,7 @@ Depuis jelix 1.2, il est possible de spécifier d'utiliser PDO pour se connecter
 Sinon, on peut toujours configurer le profil comme dans les versions précédentes, avec les paramètres suivants (mais c'est dorénavant une façon de faire **obsolète**):
 
    * **driver** : doit valoir "pdo"
-   * **dsn** : contient des informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[http://fr.php.net/pdo|doc de pdo sur php.net]]). Pour sqlite, vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de lib/ ou du répertoire var de l'application
+   * **dsn** : contient des informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[phpapi:pdo|doc de pdo sur php.net]]). Pour sqlite, vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de lib/ ou du répertoire var de l'application
    * **user** et **password** : le login/mot de passe pour la connexion. Ne mettre ces paramètres que si nécessaire.
    * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
 

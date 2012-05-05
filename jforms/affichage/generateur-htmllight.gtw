@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/jforms/display/htmllight-generator~~
+~~LANG:EN@enman:jforms/htmllight-generator~~
 
 Le générateur "htmllight" de jforms génère un formulaire HTML "simple", avec du javascript plutôt basique et donc avec un comportement très classique. Son avantage est que le code généré est léger, ce qui peut être intéressant pour avoir des pages légères ou des petits formulaires.
 

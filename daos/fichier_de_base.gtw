@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/daos/file~~
+~~LANG:EN@enman:daos/file~~
 
 Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping objet-relationnel, c'est à dire indiquer dans ce fichier la correspondance entre les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
 

@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/authentification/drivers~~
+~~LANG:EN@enman:authentification/drivers~~
 
 
 Il existe en standard plusieurs drivers pour l'authentification dans Jelix. 
@@ -45,7 +45,7 @@ Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le ch
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faites ce que vous voulez. Elle doit respecter [[http://jelix.org/reference/1.3.1/jelix/auth_driver/jIAuthDriverClass.html|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit respecter [[refclass:auth/jIAuthDriverClass|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 

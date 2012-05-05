@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/responsehtml~~
+~~LANG:EN@enman:responsehtml~~
 
 Pour générer du xhtml/html, vous indiquez l'alias "html" ou "basichtml" à la méthode @@M@getResponse()@@. Vous récupérez alors respectivement une instance de l'objet @@C@jResponseHtml@@ ou @@C@jResponseBasicHtml@@. Voici un exemple :
 

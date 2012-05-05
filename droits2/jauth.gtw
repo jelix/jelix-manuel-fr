@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/rights2/jauth~~
+~~LANG:EN@enman:rights2/jauth~~
 
 Il est très probable que vous utilisiez jAcl2 comme support à jAuth.
 Dans ce cas, vous devez probablement vous poser des questions quant à l'intégration de ces deux composants de jelix. En réalité, c'est très simple.

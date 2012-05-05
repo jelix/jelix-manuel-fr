@@ -1,4 +1,4 @@
-~~LANG:EN@//en/manual-1.3/responsejsonrpc~~
+~~LANG:EN@enman:responsejsonrpc~~
 
 Jelix propose la prise en charge du protocole [[http://json-rpc.org/|json-rpc]]. Ce protocole d'échange est similaire à XML-RPC dans le fonctionnement, mais utilise JSON comme format de donnée au lieu de XML (RPC = Remote Procedure Call).
 
