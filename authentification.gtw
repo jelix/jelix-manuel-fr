@@ -100,6 +100,30 @@ Et dans la configuration de l'authentification :
  password_salt = "votre_sel_ici"
 </code>
 
+Voici un second exemple d'utilisation de la fonction PHP @@bcrypt@@ avec l'utilisation d'une valeur de "sel". Il faut créer une fonction, (ici  @@bcrypt@@ qui est déjà fournie par Jelix, vous n'avez toujours pas à l'écrire):
+
+<code php>
+function bcrypt($salt, $password, $iteration_count = 12) {
+    if (CRYPT_BLOWFISH != 1)
+        throw new jException('jelix~auth.error.bcrypt.inexistant');
+    if(empty($salt) || !ctype_alnum($salt) || strlen($salt) != 22)
+        throw new jException('jelix~auth.error.bcrypt.bad.salt');
+    $hash = crypt($password, '$2a$'.$iteration_count.'$'.$salt.'$');
+    return substr($hash, strrpos($hash, '$')+strlen($salt));
+}
+</code>
+
+Et dans la configuration de l'authentification :
+
+<code ini>
+ driver=Db
+   
+ [Db]
+ dao = "mon_dao"
+ password_crypt_function = "1:bcrypt"
+ password_salt = "votre_sel_de_22caracteres"
+</code>
+
 ==== Timeout ====
 
 L'option @@timeout@@ permet d'indiquer en minutes le temps d'inactivité au bout duquel l'authentification ne sera plus valide. Si vous mettez @@L@0@@, il n'y a pas de limite de temps. La session expirera à la fermeture du navigateur.
