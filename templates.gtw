@@ -349,6 +349,39 @@ Exemple :
 
 Un plugin similaire existe pour XUL, et bien sûr vous pouvez réaliser le vôtre.
 
+===== Templates Virtuels =====
+
+Les templates virtuels ne sont pas des fichiers.
+Ils sont produits dynamiquement depuis le contrôleur, et servi par l'objet $tpl.
+
+Voici un exemple simple :
+
+<code php>
+$template = ' hello 
+ 		{$value} 
+ 		world 
+ 		{for $i=1;$i<=5;$i++} 
+ 		  {$i} 
+ 		{/for}';
+$tpl = new jTpl();
+$tpl->assign('value', 'test'); 
+$tpl->fetchFromString($template, 'text');
+</code>
+Ceci affichera 
+<code html>
+ hello 
+ test 
+world 
+	  1 
+	  2 
+	  3 
+	  4 
+	  5 
+</code>
+Ici @@V@$template@ agit comme le 'corps' d'un fichier existant d'un template et
+ son contenu peut 'héberger' toute la syntaxe jTpl comme un template 'normal'.
+Ainsi quand on assigne à la variable 'test' la valeur @@V@vakue@, elle sera remplacée comme dans un template.
+
 ===== Templates localisées =====
 
 Dans un template, nous avons vu que nous pouvons utiliser {@truc.foo@} pour inclure des chaînes localisés. Cependant, il peut arriver qu'il y en ai beaucoup dans un même template, pouvant rendre alors celui-ci pas très lisible, et surtout plus lent à s'afficher.
