@@ -351,11 +351,10 @@ Un plugin similaire existe pour XUL, et bien sûr vous pouvez réaliser le vôtr
 
 ===== Templates Virtuels =====
 
-Les templates virtuels ne sont pas des fichiers.
-Ils sont produits dynamiquement depuis le contrôleur, et servi par l'objet $tpl.
+Vous pouvez utiliser des templates qui ne sont pas dans des fichiers. Ce sont les templates virtuels.
+Typiquement, votre template doit être dans une chaîne.
 
 Voici un exemple simple :
-
 <code php>
 $template = ' hello 
  		{$value} 
@@ -365,9 +364,13 @@ $template = ' hello
  		{/for}';
 $tpl = new jTpl();
 $tpl->assign('value', 'test'); 
-$tpl->fetchFromString($template, 'text');
+$content = $tpl->fetchFromString($template, 'text');
 </code>
-Ceci affichera 
+Vous devez donc utiliser la méthode @@M@fetchFromString@@, à laquelle vous donnez une chaine contenant un template,
+et éventuellement le type de ce contenu (@@text@@, @@html@@...).
+
+
+Cela renverra le contenu généré à partir du template. Dans notre exemple, @@$content@@ contiendra:
 <code html>
  hello 
  test 
@@ -378,9 +381,9 @@ world
 	  4 
 	  5 
 </code>
-Ici @@V@$template@ agit comme le 'corps' d'un fichier existant d'un template et
- son contenu peut 'héberger' toute la syntaxe jTpl comme un template 'normal'.
-Ainsi quand on assigne à la variable 'test' la valeur @@V@vakue@, elle sera remplacée comme dans un template.
+
+Vous pouvez ensuite utiliser ce contenu pour l'injecter dans un autre template par exemple.
+
 
 ===== Templates localisées =====
 
