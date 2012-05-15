@@ -2,24 +2,24 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.3.1
+subtitle= Jelix 1.4 beta
 title_short= Guide du développeur
-edition = Jelix 1.3.1
+edition = Jelix 1.4 beta
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
-copyright_years=2006-2011
+copyright_years=2006-2012
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
 
 
-Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.3.pdf|le manuel au format PDF]] !
+Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.4b1.pdf|le manuel au format PDF]] !
 
 <bookcontents>
 
 - part: [[introduction|Introduction]]
   - chapter: [[nouveautes|Nouveautés]]
-  - chapter: [[installation/migration|Migration d'une application jelix 1.2 vers jelix 1.3]]
+  - chapter: [[installation/migration|Migration d'une application jelix 1.3 vers jelix 1.4]]
 
 - part:  [[mise-en-route|Mise en route]]
   - chapter: [[installation/prerequis|Pré-requis sur le serveur]]

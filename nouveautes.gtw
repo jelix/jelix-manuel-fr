@@ -1,21 +1,16 @@
 ~~LANG:EN@enman:new-features~~
 
-Principales nouveautés apportées par la version 1.3 :
+Principales nouveautés apportées par la version 1.4 :
 
-
-  * simplifications sur la structure d'une application :
-     * un seul fichier application.init.php et un seul répertoire temporaire pour tout les points d'entrée
-     * un nouveau script cmd.php à la racine de l'application, pour lancer les commandes jelix-scripts directement sans devoir aller dans @@F@lib/jelix-scripts/@@. Le script @@F@lib/jelix-scripts/jelix.php@@ n'existe plus 
-  * les constantes JELIX_APP_* sont remplacées par des propriétés d'un nouvel objet jApp.
-  * Tous les profils de connexion (pour jDb, jKVDb, jCache etc) sont maintenant rassemblés dans un unique fichier @@F@profiles.ini.php@@.
-  * jLog et jResponseHtml ont maintenant des plugins
-  * nouvelle gestion des erreurs :
-     * jLog est maintenant utilisé pour stocker les erreurs
-     * Les erreurs ne sont plus affichées par les objets réponses, et n'apparaissent donc plus sur les pages web
-     * page spécifique (code http 500), personnalisable, affichée quand une erreur est survenue.
-  * nouvelle barre de debug, affichant la liste des erreurs survenues, les requêtes SQL, les divers logs, les variables en session...
-  * Amélioration dans jAcl2 :
-     * les sujets peuvent être regroupés pour une meilleur lisibilité dans jacl2db_admin
-     * un groupe peut maintenant interdire un droit
-
+   * nouvelle méthode @@M@jApp::config()@@ pour récupérer l'objet configuration, et nouvelle méthode @@M@jApp::loadConfig()@@ pour charger la configuration. La variable @@V@$gJConfig@@ est désormais obsolète.
+   * nouvelle méthode @@M@jApp::coord()@@ pour accéder à l'objet coordinateur, et nouvelle méthode @@M@jApp::setCoord()@@ pour définir le coordinateur de l'application. @@V@$gJCoord@@ est désormais obsolète.
+   * Nouveau système de chargement automatique des classes, utilisant l'autoload PHP. Les classes à charger automatiquement peuvent maintenant être indiquées dans les fichiers @@F@module.xml@@. Le système autoload prend en charge  [[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md|la specification PSR0]].
+   * Templates virtuelles : jTpl peut maintenant utiliser des templates qui ne sont pas dans des fichiers.
+   * nouvelle API pour prendre en charge le cache HTTP, fournie par les objets réponses : @@M@cleanCacheHeaders()@@, @@M@setExpires()@@, @@M@setLifetime()@@, @@M@isValidCache()@@.
+   * Nouvelles classes permettant de lire des flux ATOM et RSS.
+   * Nouvelle classe @@C@jPref@@ pour gérer des "préférences", et donc des paramètres dynamiques d'application. une interface est fournie permettant au webmaster de gérer ces préférences.
+   * Les modules peuvent maintenant fournir leur propre objet réponse global que l'on indique directement dans la configuration comme les autres classes de réponses.
+   * Les modules peuvent maintenant fournir leurs propres fichiers CSS, Javascript etc, sans avoir à les copier dans le répertoire @@F@www@@.
+   * Les commandes Jelix-scripts cherchent maintenant un fichier .jelix-scripts.ini dans le répertoire courant et dans les répertoires parent, avant de chercher dans le répertoire de l'utilisateur (HOME), permettant de définir une configuration différente en fonction des projets.
+   * Nouveau driver pour jDb, utilisant l'API PHP mysqli.
 
