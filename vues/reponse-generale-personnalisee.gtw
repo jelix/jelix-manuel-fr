@@ -160,8 +160,8 @@ Toutes les actions qui feront alors appel à la réponse "html", fourniront un o
 
 Lorsque vous définissez une réponse personnalisée, il peut être utile de récupérer certaines valeurs de votre application, comme 
 
-  * le theme: <code php>jApp::config()->theme</code>
-  * les paramètres de la requête: <code php>$gJCoord->request->getParam(..)</code>
+  * le theme: @@jApp::config()->theme@@
+  * les paramètres de la requête: @@jApp::coord()->request->getParam(..)@@
 
 Ci-dessous un exemple :
 
@@ -175,10 +175,10 @@ Ci-dessous un exemple :
    }
 
    protected function doAfterActions(){
-        global $gJCoord;
+
         $this->title .= ($this->title !=''?' - ':'').' My App';
 
-        $param = $gJCoord->request->getParam('paramSommaire')
+        $param = jApp::coord()->request->getParam('paramSommaire')
 
         // toutes les pages auront une zone de login affichée
         $this->body->assignZone("A", "auth~login", array( 'paramSommaire' => $param ) );

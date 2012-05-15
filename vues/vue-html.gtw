@@ -55,7 +55,7 @@ Dans votre contrôleur, vous devez indiquer où @@C@jResponseBasicHtml@@ peut tr
 
 <code php>
    $rep = $this->getResponse('basichtml');
-   $rep->htmlFile = $GLOBALS['gJCoord']->getModulePath('unModule'). 'static/hello.php';
+   $rep->htmlFile = jApp::coord()->getModulePath('unModule'). 'static/hello.php';
 </code>
 
 

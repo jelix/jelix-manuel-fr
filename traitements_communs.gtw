@@ -69,8 +69,7 @@ class myBaseController extends jController {
 Et dans vos contrôleurs :
 
 <code php>
-global $gJCoord;
-include $gJCoord->getModulePath('monModule').'controllers/myBaseController.php';
+include jApp::coord()->getModulePath('monModule').'controllers/myBaseController.php';
 
 class defaultCtrl extends myBaseController {
    

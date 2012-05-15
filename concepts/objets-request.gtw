@@ -29,19 +29,18 @@ Un point d'entrée contient un bout de code comme celui-ci, ici le point d'entr�
 // chargement du fichier d'initialisation de l'application
 require_once ('../../testapp/application.init.php');
 
-// le fichier de configuration à utiliser
-$config_file = 'index/config.ini.php';
+// chargement du fichier de configuration
+jApp::loadConfig('index/config.ini.php');
 
-// instanciation du coordinateur
-
-$jelix = new jCoordinator($config_file);
+// création du coordinateur
+jApp::setCoord(new jCoordinator());
 
 // instanciation d'un objet de type jRequest
 require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
 $request = new jClassicRequest();
 
 // exécution de l'action
-$jelix->process($request);
+jApp::coord()->process($request);
 
 </code>
 
@@ -55,11 +54,11 @@ Si on veut accéder aux mêmes actions d'un module à travers plusieurs points d
 
 ===== API =====
 
-Durant l'exécution de l'action, l'objet jRequest correspondant à la requête est accessible via la propriété ''request'' du coordinateur. Ce dernier est accessible via une variable globale $gJCoord. 
+Durant l'exécution de l'action, l'objet jRequest correspondant à la requête est accessible via la propriété ''request'' du coordinateur. Ce dernier est accessible via l'objet @@jApp@@. 
 
 <code php>
   // pour récupérer un paramètre en dehors d'un contrôleur
-  $myfooValue = $GLOBALS['gJCoord']->request->getParam('foo');
+  $myfooValue = jApp::coord()->request->getParam('foo');
 </code>
 
 Mais dans un contrôleur, vous avez à votre disposition des méthodes "raccourcis" :

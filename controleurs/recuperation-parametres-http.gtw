@@ -23,7 +23,7 @@ C'est pourquoi Jelix propose un moyen, **unifié**, pour récupérer des paramè
 Comme vous le savez, les paramètres de la requête http sont stockés dans un objet @@C@jRequest@@, qui lui même est stocké dans l'objet @@C@jCoordinator@@. On peut ainsi  récupérer un paramètre de cette façon :
 
 <code php>
-  $id = $GLOBALS['gJCoord']->request->getParam('id');
+  $id = jApp::coord()->request->getParam('id');
 </code>
 
 Mais il y a plus pratique : la méthode @@M@param()@@ disponible dans les contrôleurs, au résultat équivalent.

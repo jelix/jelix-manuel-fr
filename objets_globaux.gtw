@@ -1,37 +1,13 @@
 ~~LANG:EN@enman:global-objects~~
 
-Il existe des variables globales, auxquelles vous pouvez accéder depuis n'importe où. Les voici.
+Dans les versions précedentes de jelix (<= 1.3), il existait des variables globales contenant des objets essentiels de Jelix.
 
 
 ===== $gJConfig =====
 
-Dans les versions précedentes de jelix (<= 1.3), l'objet $gJConfig permettait d'accéder à la configuration de l'application Jelix. Il faut maintenant utiliser @@jApp::config()@@ pour y accéder.
+L'objet $gJConfig permettait d'accéder à la configuration de l'application Jelix. Il faut maintenant utiliser @@jApp::config()@@ pour y accéder.
 
 ===== $gJCoord =====
 
-L'objet $gJCoord permet d'accéder aux paramètres de la requête entre autres. Il s'agit en fait d'une instance de la classe @@C@jCoordinator@@. Vous avez alors accés à un certain nombre de chose : liste de ses plugins, l'objet réponse courant, l'objet @@C@jRequest@@ courant (contenant les paramètres de la requête http entre autre), le nom du module et le nom de l'action appelée etc..
+L'objet $gJCoord contenait une instance de la classe @@C@jCoordinator@@, et permettait alors d'accéder aux paramètres de la requête entre autres. Il faut maintenant utiliser @@jApp::coord()@@ pour y accéder.
 
-==== Appel de gJCoord ====
-
-<code php>
-function test()
-{
-   global $gJCoord;
-   $gJCoord->request->type;
-
-   $GLOBALS['gJCoord']->request->type; // équivalent aux 2 premières lignes
-}
-</code>
-
-==== Accès aux paramètres de la requête ====
-
-Si votre script a été appelé par l'URL /index.php?test=1 alors
-<code php>
-function test()
-{
-   global $gJCoord;
-
-   $a = $gJCoord->request->urlScriptName; // "index.php"
-   $b = $gJCoord->request->params['test']; // 1
-}
-</code>

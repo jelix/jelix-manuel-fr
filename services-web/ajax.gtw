@@ -9,7 +9,7 @@ Selon ce que vous attendez côté client, soit dans la propriété responseText,
   * Pour renvoyer des fragments de code HTML, il ne faut **pas** utiliser @@C@jResponseHtml@@, mais @@C@jResponseHtmlFragment@@ (voir exemple ci-dessous).
   * Dans les autres cas, vous utiliserez certainement [[/vues/vue-texte|jResponseText]].
 
-Dans votre controleur, vous pouvez utiliser @@$GLOBALS['gJCoord']->request->isAjax()@@ pour vérifier que la requête est une vrai requête AJAX (envoyée donc avec XMLHttpRequest).
+Dans votre controleur, vous pouvez utiliser @@jApp::coord()->request->isAjax()@@ pour vérifier que la requête est une vrai requête AJAX (envoyée donc avec XMLHttpRequest).
 
 ===== Renvoyer des fragments de code HTML =====
 

@@ -22,9 +22,9 @@ Cette méthode doit récupérer l'objet réponse utilisée par le contrôleur, e
 
 <code php>
    public function outputMetaContent($t) {
-        global $gJCoord;
-        $resp= $gJCoord->response;
-        if($resp === null){
+
+        $resp= jApp::coord()->response;
+        if ($resp === null) {
             return;
         }
         // si les fichiers sont dans le répertoire jelix

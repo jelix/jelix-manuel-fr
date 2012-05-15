@@ -11,7 +11,7 @@ $rep = $this->getResponse('html');
 ==Pour récupérer l'action courante utilisez l'expression suivante dans un controleur, une zone ou votre classe response==
 
 <code php>
-$GLOBALS['gJCoord']->action->toString();
+jApp::coord()->action->toString();
 </code>
 
 == Pour récuperer les variables de session ==
@@ -24,17 +24,17 @@ $_SESSION['JELIX_USER']->login
 
 == Pour enregistrer la date courante dans la base de donnée ==
 
-s'applique aux champs dates si ils sont au format datetime ou date dans votre base de données.
-Il suffit d'ajouter les attributs suivants dans la "property" de votre champ date dans la partie "record" du fichier xml de votre DAO. :
+S'applique aux champs dates si ils sont au format datetime ou date dans votre base de données.
+Il suffit d'ajouter les attributs suivants dans la "property" de votre champ date dans la partie "record" du fichier xml de votre DAO :
 
-<code php>
-inserpattern="NOW()"
+<code xml>
+<property inserpattern="NOW()" .../>
 </code>
 
 ajoutera la date courante à la création de l'enregistrement.
 
-<code php>
-updatepattern="NOW()"
+<code xml>
+<property updatepattern="NOW()" .../>
 </code>
 
 ajoutera la date courante à la modification de l'enregistrement.
