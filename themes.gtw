@@ -23,7 +23,7 @@ Vous les placerez donc dans un répertoire themes/le_nom_du_theme/ dans le répe
 Pour avoir le chemin web du theme, vous pouvez utiliser ceci :
 
 <code php>
-   $chemin = $gJConfig->urlengine['basePath'].'themes/'.$gJConfig->theme.'/'
+   $chemin = jApp::config()->urlengine['basePath'].'themes/'.jApp::config()->theme.'/'
    $rep->addCssLink($chemin.'design.css');
 </code>
 
@@ -66,7 +66,7 @@ Ensuite vous stockez le nom du thème choisi quelque part (en session, ou dans u
 Enfin, pour que le thème soit activé automatiquement, il suffit de récupérer le nom du thème correspondant à l'utilisateur, et de le spécifier dans la configuration, au niveau du paramètre thème:
 
 <code php>
-  $GLOBALS['gJConfig']->theme = $themeChoisi;
+  jApp::config()->theme = $themeChoisi;
 </code>
 
 Bien sûr, le meilleur endroit pour faire ça est dans un [[plugins/coord|plugin de coordinateur]] qu'il vous faut développer.

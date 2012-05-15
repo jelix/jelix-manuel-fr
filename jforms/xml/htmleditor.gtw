@@ -106,7 +106,7 @@ La fonction dans ce fichier doit se nommer d'une manière précise : @@f@jelix_e
 
 Cet objet de configuration contient les propriétés suivantes
 
-  * @@P@locale@@ : le code de langue (valeur de $gJConfig->locale)
+  * @@P@locale@@ : le code de langue (valeur de jApp::config()->locale)
   * @@P@basePath@@ : le basePath de l'application 
   * @@P@jqueryPath@@ : le chemin URL vers le répertoire de jquery
   * @@P@jelixWWWPath@@ : le chemin URL vers le répertoire de jelix-www

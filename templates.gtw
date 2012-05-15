@@ -195,7 +195,7 @@ Pour apporter une certaine facilité, des variables de templates prédéfinies o
    * @@V@$j_themepath@@ : contient le chemin url vers le répertoire du thème courant
    * @@V@$j_datenow@@ : date courante (aaaa-mm-jj)
    * @@V@$j_timenow@@ : heure courante (hh:mm:ss)
-   * @@V@$j_locale@@ : code de la langue courante (valeur de @@$gJConfig->locale@@)
+   * @@V@$j_locale@@ : code de la langue courante (valeur de @@jApp::config()->locale@@)
 
 
 ==== Modificateurs ====

@@ -22,15 +22,15 @@ Cette méthode doit récupérer l'objet réponse utilisée par le contrôleur, e
 
 <code php>
    public function outputMetaContent($t) {
-        global $gJCoord, $gJConfig;
+        global $gJCoord;
         $resp= $gJCoord->response;
         if($resp === null){
             return;
         }
         // si les fichiers sont dans le répertoire jelix
-        $www = $gJConfig->urlengine['jelixWWWPath'];
+        $www = jApp::config()->urlengine['jelixWWWPath'];
         // ou si les fichiers sont dans un répertoire à vous dans www
-        $www = $gJConfig->urlengine['basePath'];
+        $www = jApp::config()->urlengine['basePath'];
 
         $resp->addJSLink($www.'js/fichier.js');
         $resp->addCSSLink($www.'design/fichier.css');

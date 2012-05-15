@@ -62,7 +62,7 @@ Cette fonction doit avoir pour nom @@f@jelix_datepicker_xxx@@ où xxx est le nom
 
    * un objet javascript (@@C@jFormsJQControlDate@@ ou @@C@jFormsJQControlDatetime@@ avec le builder jforms basé sur jQuery) qui contient des propriétés comme le nom des champs de saisie (@@P@name@@), la date maximum (@@P@maxDate@@) ou la date minimum (@@P@minDate@@).
    * un objet contenant des options de configuration :
-     * @@P@locale@@ : le code de langue (valeur de $gJConfig->locale)
+     * @@P@locale@@ : le code de langue (valeur de jApp::config()->locale)
      * @@P@basePath@@ : le basePath de l'application 
      * @@P@jqueryPath@@ : le chemin URL vers le répertoire de jquery
      * @@P@jelixWWWPath@@ : le chemin URL vers le répertoire de jelix-www

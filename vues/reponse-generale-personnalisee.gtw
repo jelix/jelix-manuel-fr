@@ -160,7 +160,7 @@ Toutes les actions qui feront alors appel à la réponse "html", fourniront un o
 
 Lorsque vous définissez une réponse personnalisée, il peut être utile de récupérer certaines valeurs de votre application, comme 
 
-  * le theme: <code php>$gJConfig->theme</code>
+  * le theme: <code php>jApp::config()->theme</code>
   * les paramètres de la requête: <code php>$gJCoord->request->getParam(..)</code>
 
 Ci-dessous un exemple :
@@ -168,10 +168,9 @@ Ci-dessous un exemple :
 <code php>
 
    public function __construct() {
-        global $gJConfig;
         parent::__construct();
 
-        $theme = $gJConfig->urlengine['basePath'].'themes/'.$gJConfig->theme.'/' ;
+        $theme = jApp::config()->urlengine['basePath'].'themes/'.jApp::config()->theme.'/' ;
         $this->addCSSLink($theme.'css/screen.css');
    }
 

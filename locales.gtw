@@ -7,7 +7,7 @@ Jelix possède son propre mécanisme de localisation/internationalisation. Les f
 Chaque texte ou chaîne que vous voulez traduire est associée à une clé, un code. Ces associations sont stockées dans des fichiers "properties". Chaque fichier properties étant attribué à une langue et un encodage de caractère. La langue et l'encodage par défaut sont configurés dans le fichier de config de votre application : ce sont les paramètres //locale// et //charset//, que vous pouvez récupérer en faisant 
 
 <code php>
-  $lang = $GLOBALS['gJConfig']->locale;
+  $lang = jApp::config()->locale;
 </code>
 
 Mais vous n'aurez pas à utiliser ce paramètre, sauf utilisation particulière. En effet, pour récupérer une chaîne dans la langue courante, il suffit d'appeler jLocale::get('selecteurDeLocale'), ou dans les templates d'utiliser la syntaxe @selecteurDeLocale@ (voir [[templates|la page sur les templates]]).
@@ -168,7 +168,7 @@ Pour cela, le plugin regarde si un paramètre est présent dans l'url, indiquant
 Aussi c'est totalement transparent pour vous. Pour connaître la langue à tout moment, il suffit de faire comme d'habitude :
 
 <code php>
-  $lang = $GLOBALS['gJConfig']->locale;
+  $lang = jApp::config()->locale;
 </code>
 
 

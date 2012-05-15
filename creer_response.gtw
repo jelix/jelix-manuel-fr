@@ -26,16 +26,14 @@ class myFooResponse extends jResponse {
      * @return boolean    true si la génération est ok, false sinon
      */
     public function output(){
-        global $gJConfig;
-        $this->_httpHeaders['Content-Type']='text/foo;charset='.$gJConfig->charset;        
+        $this->_httpHeaders['Content-Type']='text/foo;charset='.jApp::config()->charset;
         $this->sendHttpHeaders();
         echo "content:\n".$this->content."/content;";
         return true;
     }
 
     public function outputErrors(){
-        global $gJConfig;
-        header('Content-Type: text/foo;charset='.$gJConfig->charset);
+        header('Content-Type: text/foo;charset='.jApp::config()->charset);
         echo "errors\n";
         foreach( $GLOBALS['gJCoord']->errorMessages  as $e){
             echo '['.$e[0].' '.$e[1].'] '.$e[2]." \t".$e[3]." \t".$e[4]."\n";

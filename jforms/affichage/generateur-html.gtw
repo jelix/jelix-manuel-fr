@@ -135,5 +135,5 @@ Le générateur HTML inclut le script jQuery dans toute réponse HTML contenant 
 Exemple d'inclusion dans votre réponse commune : 
 
 <code>
-  $this->addJSLink($GLOBALS['gJConfig']->urlengine['jelixWWWPath'].'jquery/jquery.js');
+  $this->addJSLink(jApp::config()->urlengine['jelixWWWPath'].'jquery/jquery.js');
 </code>  
