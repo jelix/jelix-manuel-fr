@@ -151,3 +151,16 @@ pour ajouter du contenu supplémentaire dans la balise @@E@<head>@@, il vous suf
 
 
 
+====== meta_htmlmodule ======
+
+Ce meta fourni un racourci pour accéder au CSS, JS et image du module se trouvant dans le dossier www du module
+
+Comme ci dessus, vous pouvez utiliser toutes combinaisons de meta_htmlmodule avec js, css ou autres,
+
+exemple :
+
+<code html>
+{meta_htmlmodule css , 'mymodule', 'css/screen.css', array('media'=>'screen, projection')}
+</code>
+
+Ainsi Jelix ira dans le dossier 'mymodule'/www/css ou 'mymodule'/www/themes/'currenttheme'/css pour trouver le fichier screen.css
