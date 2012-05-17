@@ -1,4 +1,4 @@
-~~LANG:EN@enman:using-classes~~
+~~LANG:EN@enman:using_classes~~
 
 Pour respecter le modèle en couche, il est recommandé de réaliser tous ses traitements métiers et services dans des classes dédiées.
 
