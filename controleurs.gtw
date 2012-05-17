@@ -101,3 +101,18 @@ Aussi, pour récupérer un objet "réponse" précis, vous appelez la méthode @@
 @@V@$rep@@ contient ici une réponse qui va générer du html. l'objet @@V@$rep@@  est du type @@C@jResponseHtml@@.
 
 Sachez que vous pouvez définir vos propres types de réponses, voire plusieurs types de réponses issues d'un même type, afin d'éviter de dupliquer du code, ou de prendre en charge un format que ne connaît pas jelix. Voyez pour cela [[/creer_response|la partie sur la création des réponses]]
+
+==== Récupérer un objet jResponse fourni par votre module ====
+
+Le module fourni la possibilité d'utiliser sa propore réponse en la créant dans le dossier @@F@response@@ de votre module.
+
+Ensuite, après l'avoir créée, tout ce que vous aveze besoin de faire est de la définir dans le fichier de configuration, comme suit :
+
+Par exemple appelons la réponse "mySuperHtmlResp" et voyons comment faire :
+
+<code ini>
+[responses]
+html= "module:mymodule:mySuperHtmlResp" 
+</code>
+
+Ensuite vous sera à même d'utiliser votre réponse dans les actions de votre contrôleur.

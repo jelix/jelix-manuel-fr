@@ -10,6 +10,7 @@ Un module contient un ensemble de fichiers, entre autres :
   * Des fichiers daos
   * Des formulaires
   * Des fichiers de langues
+  * Des réponses
   
 Dans une application, vous devez avoir au moins un module qu'il vous faut créer. Ce sera en général ce qu'on appelle le module principal, qui pourrait contenir par exemple ce qu'il faut pour afficher la page d'accueil de votre site.
 

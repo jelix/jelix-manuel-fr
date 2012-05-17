@@ -5,7 +5,7 @@ Il est possible que Jelix ne fournisse pas le moyen de générer du contenu dans
 
 Cela consiste à :
     - créer une classe héritant de @@C@jResponse@@ (ou d'une autre réponse existante), et qui doit implémenter les méthodes adéquates pour manipuler le format en question
-    - stocker cette classe dans le répertoire @@F@responses/@@ de votre application
+    - stocker cette classe dans le répertoire @@F@responses/@@ de votre application ou aussi de vos modules.
     - déclarer ce type de réponse dans le fichier de configuration
 
 ===== Créer la classe =====
