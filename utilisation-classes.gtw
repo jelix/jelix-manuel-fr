@@ -178,10 +178,25 @@ Votre  @@F@module.xml@@ ressemblerait à présent à ceci :
         <module name="jauthdb" />
         <module name="jacl2db" />
         <module name="jacldb" />
-        <autoloader file="autoloadtest/myautoloader.php" />
+        <autoload>
+             <class name="myautoloadedclass" file="autoloadtest/autoloadtestclass.php" />
+             <classPattern pattern="/^myalclass/" dir="autoloadtest/withpattern/" suffix=".cl.php" />
+             <namespace name="jelixTests\foo" dir="autoloadtest" />
+             <namespacePathMap name="jelixTests\bar" dir="autoloadtest/barns" suffix=".class.php" />
+             <includePath dir="autoloadtest/incpath" suffix=".php" />
+             <autoloader file="autoloadtest/myautoloader.php" />
+        </autoload>
     </dependencies>
 </module>
 </code>
 
-Ainsi, le noeud important ici, est @@autoloader@@, lequel déclenchera l'autoloader Jelix qui lui demander de charger le fichier myautoloader.php se trouvant dans le dossier autoloadtest.
-Et dans votre script myautoloader.php vous ecrirez alors la partie du code qui utilisera [[http://php.net/spl_autoload_register|spl_autoload_register]] et ses amis.
+
+Ainsi le noeud important ici, est @@autoload@@.
+
+Comme vous pouvez les lire à partir des noeuds enfants, il y a differentes façon de charger des classes :
+
+* un classe seule
+* un ensemble de classes correspondant à un pattern donné
+* un espace de nom
+* un ensemble de fichiers inclus depuis un chemin donné
+* un autoloader spécifique depuis lequel vous écrirez la partie du code qui utilisera [[http://php.net/spl_autoload_register|spl_autoload_register]] et ses amis
