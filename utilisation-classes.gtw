@@ -195,8 +195,8 @@ Ainsi le noeud important ici, est @@autoload@@.
 
 Comme vous pouvez les lire à partir des noeuds enfants, il y a differentes façon de charger des classes :
 
-* un classe seule
-* un ensemble de classes correspondant à un pattern donné
-* un espace de nom
-* un ensemble de fichiers inclus depuis un chemin donné
-* un autoloader spécifique depuis lequel vous écrirez la partie du code qui utilisera [[http://php.net/spl_autoload_register|spl_autoload_register]] et ses amis
+  * une classe seule
+  * un ensemble de classes correspondant à un pattern donné
+  * un espace de nom
+  * un ensemble de fichiers inclus depuis un chemin donné
+  * un autoloader spécifique depuis lequel vous écrirez la partie du code qui utilisera [[http://php.net/spl_autoload_register|spl_autoload_register]] et ses amis
