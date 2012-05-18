@@ -51,17 +51,26 @@ N'hésitez pas à regarder le code source des fichiers dans @@F@lib/jelix/core/r
 
 Le nom de la classe importe peu, mais il doit être utilisé dans le nom du fichier, et précéder le suffixe '.class.php'. Dans notre exemple, la classe sera alors stockée dans le fichier @@F@myFooResponse.class.php@@.
 
-Le fichier doit être enregistré dans le répertoire @@F@responses/@@ de votre application.
+Le fichier doit être enregistré dans le répertoire @@F@responses/@@ de votre application ou de votre module.
 
 
 ===== Déclarer la réponse =====
 
 Pour que la réponse soit utilisable par les actions, il faut la déclarer avec un code. Et c'est ce code que vous indiquerez à la méthode @@M@getResponse@@ dans les contrôleurs. Pour cela, vous ajouterez dans la section @@responses@@ du fichier de configuration, une ligne @@code=classe@@.
 
+Voici un exemple de réponse fournie par votre application :
 <code ini>
 [responses]
 foo=myFooResponse
 </code>
+
+Voici un exemple de réponse fournie par votre module :
+<code ini>
+[responses]
+foo="module:mymodule:myFooResponse" 
+</code>
+
+Ensuite vous sera à même d'utiliser votre réponse dans les actions de votre contrôleur.
 
 Et dans un contrôleur, cela donne :
 
