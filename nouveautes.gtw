@@ -11,6 +11,6 @@ Principales nouveautés apportées par la version 1.4 :
    * Nouvelle classe @@C@jPref@@ pour gérer des "préférences", et donc des paramètres dynamiques d'application. une interface est fournie permettant au webmaster de gérer ces préférences.
    * Les modules peuvent maintenant fournir leur propre objet réponse global que l'on indique directement dans la configuration comme les autres classes de réponses.
    * Les modules peuvent maintenant fournir leurs propres fichiers CSS, Javascript etc, sans avoir à les copier dans le répertoire @@F@www@@.
-   * Les commandes Jelix-scripts cherchent maintenant un fichier .jelix-scripts.ini dans le répertoire courant et dans les répertoires parent, avant de chercher dans le répertoire de l'utilisateur (HOME), permettant de définir une configuration différente en fonction des projets.
+   * [[/jelix-scripts#changer-la-configuration-par-defaut|Les commandes Jelix-scripts cherchent maintenant un fichier .jelix-scripts.ini]] dans le répertoire courant et dans les répertoires parent, avant de chercher dans le répertoire de l'utilisateur (HOME), permettant de définir une configuration différente en fonction des projets.
    * Nouveau driver pour jDb, utilisant l'API PHP mysqli.
 

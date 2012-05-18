@@ -20,7 +20,7 @@ Le logiciel MAMP met à votre disposition un programme PHP-Cli. Ce dernier n'est
 Voici comment faire pour mettre le PHP-Cli de MAMP par défaut dans le terminal :
    * Ouvrez le fichier @@F@.profile@@ qui se trouve à la racine de votre répertoire personnel (@@F@/Users/votre_login/@@)
    * Modifiez la ligne où est défini la variable PATH, ou ajoutez la, le but étant d'ajouter les chemins @@/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.3/bin@@ dans cette variable PATH. Cela doit ressembler à quelque chose comme ceci (d'autres chemins peuvent être déjà défini, et il faut dans tout les cas mettre le $PATH à la fin)
-<code>
+<code bash>
 export PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.3/bin:$PATH
 </code>
 
@@ -46,19 +46,22 @@ Avec cette manipulation, vous pourrez exécuter @@F@php.exe@@ depuis n'importe q
 
 ==== Notes pour les utilisateurs d'un hébergement OVH mutualisé ====
 
-Ce paragraphe concerne les utilisateurs hébergeant leur site web sur un 90plan par exemple.
+Ce paragraphe concerne les utilisateurs hébergeant leur site web sur serveur mutualisé d'OVH.
 
 Deux particularités sont à prendre en compte :
-  - en ligne de commande, la version de PHP par défaut semble être la plus ancienne, il faut donc appeler la plus récente (i.e.  @@F@php.ORIG.5.2.9@@) soit manuellement, soit par un alias du BASH, soit par un script
-  - la variable superglobale $_SERVER['SCRIPT_NAME'] ne semble pas être diffusée ce qui gêne à l'exécution du script pour la création des modules
+
+   * en ligne de commande, la version de PHP par défaut semble être la plus ancienne, il faut donc appeler la plus récente (i.e.  @@F@php.ORIG.5.2.9@@) soit manuellement, soit par un alias du BASH, soit par un script
+   * la variable superglobale @@$_SERVER['SCRIPT_NAME']@@ ne semble pas être diffusée ce qui gêne à l'exécution du script pour la création des modules
 
 Une solution simple répondant aux deux problématiques est la suivante. Il faut juste créer un script BASH @@F@jelix.sh@@ auquel on donne les droits d'exécution et avec le contenu suivant :
+
+<code bash>
   #!/bin/bash
   export SCRIPT_NAME=cmd.php
   php.ORIG.5.2.9 cmd.php $*
+</code>
 
 Ensuite on appelle ce script à la place de la commande habituelle @@F@php cmd.php ...@@.
-
 
 
 ===== Lancer cmd.php =====
@@ -116,13 +119,20 @@ Le point d'entrée doit être déclaré dans le fichier project.xml de l'applica
 
 Les commandes de création d'application, de module etc respectent une arborescence précise. Mais ce n'est pas forcément celle que vous voulez utiliser. Il y a aussi des informations qui sont insérées dans les fichiers crées, notamment dans les commentaires d'en-tête, comme par exemple le nom de l'auteur, le site web etc. Vous pouvez changer cela.
 
-Pour ce faire, dans @@F@lib/jelix-scripts/templates/@@, il y a un fichier @@F@jelix-scripts.ini@@. Copiez le dans votre répertoire personnel (@@F@/home/votrelogin/@@ sous linux, @@F@c:\Users\votrelogin\@@ sous windows) en le renommant @@F@.jelix-scripts.ini@@. Modifiez-le ensuite en changeant les valeurs voulues.
+Pour ce faire, dans @@F@lib/jelix-scripts/templates/@@, il y a un fichier @@F@jelix-scripts.ini@@. Vous pouvez le copier à deux endroits différents, en le renommant @@F@.jelix-scripts.ini@@ :
 
-Vous pouvez aussi avoir des paramètres différents en fonction des applications. Créez simplement une section dans ce fichier ini, ayant pour nom celui du répertoire de l'application
+   * soit dans l'un des répertoires parent de l'application
+   * soit dans votre répertoire personnel (@@F@/home/votrelogin/@@ sous linux, @@F@c:\Users\votrelogin\@@ sous windows 7)
+
+Jelix cherchera ce fichier d'abord dans le répertoire courant, puis dans les repertoires parents, et ensuite dans votre répertoire personnel. Cela permet d'avoir des fichiers différents pour chaque projet.
+
+Modifiez-le en changeant les valeurs voulues.
+
+Vous pouvez aussi avoir des paramètres différents en fonction des applications dans un même fichier. Créez simplement une section dans ce fichier ini, ayant pour nom celui du répertoire de l'application
 
 <code ini>
 [myapp]
-infoCopyright = 2011 My Company
+infoCopyright = 2012 My Company
 </code>
 
 ===== Liste des commandes disponibles =====
@@ -153,9 +163,10 @@ php cmd.php  createform [MonModule] [MonForm] [MonDao]
 <code>
 php cmd.php  createzone [-notpl][MonModule] [MaZone] [MonTemplate] 
 </code>
-
    * Création d'un CRUD, cette commande va créer un dao, un form et le contrôleur CRUD
 <code>
 php cmd.php createdaocrud le_module la_table le_nom_du_controleur
 </code>
 
+
+Tapez @@php cmd.php help@@ pour avoir la liste complète des commandes.
