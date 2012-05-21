@@ -10,8 +10,9 @@ Le framework se base sur un principe : à chaque URL correspond une action.
 {{schema_logic.png}}
 
   - Le serveur web reçoit une requête HTTP.
-     * Le point d'entrée est exécuté par le serveur lorsqu'une URL l'indique. Par défaut il s'agit de @@F@index.php@@. 
-     * Ce script instancie un objet de type @@C@jRequest@@ et un coordinateur de type @@C@jCoordinator@@. 
+     * Le point d'entrée est exécuté par le serveur lorsqu'une URL l'indique. Par défaut il s'agit de @@F@index.php@@.
+     * Ce script initialise l'environnement Jelix avec @@C@jApp@@
+     * Il instancie ensuite un objet de type @@C@jRequest@@ et un coordinateur de type @@C@jCoordinator@@. 
      * L'objet @@C@jRequest@@ analyse alors le contenu de la requête HTTP pour en extraire les données. Celles-ci peuvent être dans l'URL et/ou dans le corps de la requête (méthode POST par exemple).
      * En particulier @@C@jRequest@@ détermine le nom de l'action à exécuter et le nom du module concerné.
   - Le paramètre action contient le nom du contrôleur et la méthode à exécuter. Ce contrôleur est donc instancié et la méthode exécutée. La méthode récupère les paramètres de requête pour déterminer les traitements à suivre.
@@ -21,7 +22,7 @@ Le framework se base sur un principe : à chaque URL correspond une action.
 
 ===== Ce que vous avez à manipuler =====
 
-En général, vous n'aurez pas à utiliser un objet @@C@jRequest@@ ou @@C@jCoordinator@@.
+En général, vous n'aurez pas à utiliser un objet @@C@jRequest@@ ou @@C@jCoordinator@@ directement.
 
 Vous aurez par contre à créer un objet de type @@C@jController@@ pour y inclure le code d'une action. Cet objet propose des méthodes pour récupérer les paramètres extraits par @@C@jRequest@@, mais aussi pour récupérer un objet @@C@jResponse@@. Vous aurez donc dans le code de l'action, en plus de manipuler vos objets "métier", à manipuler cet objet @@C@jResponse@@ pour indiquer les données à renvoyer au navigateur.
 

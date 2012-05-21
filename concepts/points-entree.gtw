@@ -1,0 +1,82 @@
+~~LANG:FR@enman:core/entry-points~~
+
+===== Points d'entrée =====
+
+Un point d'entrée est un script par lequel passe une partie ou toutes les actions.
+On peut aussi appeler ce script un "bootstrap".
+Seuls les points d'entrée sont en principe accessibles depuis le Web, donc sont stockés
+dans le répertoire @@F@www/@@ de l'application. En général, vous aurez un point d'entrée
+pour chaque type de requête ("normal", "soap"...). Et donc un fichier de configuration spécifique
+à chaque point d'entrée.
+
+Un point d'entrée initialise l'environnement Jelix, instancie un objet @@C@jCoordinator@@,
+un objet de type @@C@jRequest@@ (qui analysera la requête HTTP), et indique le fichier de
+configuration à utiliser.
+
+Voici un exemple de contenu du fichier PHP d'un point d'entrée "normal".
+
+<code php>
+// chargement du fichier d'initialisation de l'application
+require_once ('../../testapp/application.init.php');
+
+// chargement du fichier de configuration
+jApp::loadConfig('index/config.ini.php');
+
+// création du coordinateur
+jApp::setCoord(new jCoordinator());
+
+// instanciation d'un objet de type jRequest
+require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
+$request = new jClassicRequest();
+
+// exécution de l'action (routage, exécution du contrôleur...)
+jApp::coord()->process($request);
+
+</code>
+
+On ne créera différents points d'entrées que dans les cas suivants :
+
+   * un point d'entrée par type de requête
+   * un point d'entrée spécifique à un ou plusieurs modules spécifiques.
+
+Si on veut accéder aux mêmes actions d'un module à travers plusieurs points
+d'entrées, ce n'est théoriquement pas possible. Si vous pensez avoir vraiment
+besoin de cela, interrogez vous plutôt sur la nécessité d'avoir plusieurs
+applications (et c'est souvent le vrai besoin), sachant qu'elles peuvent partager
+la même base de données, partager des modules, partager le même répertoire www.
+
+
+===== jApp =====
+
+Comme vous l'avez certainement remarqué, un point d'entrée fait appel à une classe, @@C@jApp@@,
+qui est initialisée dans le fichier @@F@application.init.php@@. Elle ne contient que des méthodes
+statiques.
+
+C'est un élément central d'une application Jelix, parce qu'elle contient des informations pour l'exécution
+de l'application. Vous l'utiliserez souvent, au moins pour accéder à la configuration
+(qui est définie avec la méthode  @@M@loadConfig()@@). @@C@jApp@@ contient également une référence vers
+le coordinateur (définit avec la méthode @@M@setCoord()@@). 
+
+<code php>
+ $config = jApp::config(); // Pour récupérer l'objet contenant la configuration
+ $coord = jApp::coord(); // pour récupérer le coordinateur
+</code>
+
+@@C@jApp@@ contient aussi les différents chemins des répertoires les plus importants d'une application.
+Il est fortement recommandé d'utiliser les méthodes suivantes plutôt que de mettre des chemins en dur
+dans votre code.
+
+<code php>
+  $path = jApp::appPath();      // chemin complet du répertoire de l'application
+  $path = jApp::varPath();      // chemin complet du répertoire var de l'application
+  $path = jApp::logPath();      // chemin complet du répertoire log de l'application (app/var/log)
+  $path = jApp::configPath();   // chemin complet du répertoire config de l'applicationn (app/var/config)
+  $path = jApp::wwwPath();      // chemin complet du répertoire www de l'application (app/www)
+  $path = jApp::scriptsPath();  // chemin complet du répertoire scripts de l'application (app/scripts)
+  $path = jApp::tempPath();     // chemin complet du répertoire temporaire correspondant au point d'entrée (temp/app/www/)
+  
+  $modulePath = jApp::getModulePath('myModule'); // chemin complet du répertoire d'un module.
+</code>
+
+Vous pouvez donner un nom de fichier (ou sous-chemin) en paramètre à ces méthodes (excepté @@M@getModulePath@@),
+il sera ajouté au chemin demandé.

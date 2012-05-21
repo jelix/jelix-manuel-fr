@@ -32,6 +32,7 @@ Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.
 - part: [[fondamentaux|Fondamentaux]]
    - chapter: [[concepts/|Principes de fonctionnement]]
      - section: [[concepts/selecteurs|Les sélecteurs]]
+     - section: [[concepts/points-entree|Les points d'entrées et jApp]]
      - section: [[concepts/objets-request|Les objets jRequest et points d'entrée]]
      - section: [[concepts/coordinateur|Le coordinateur]]
      - section: [[concepts/objets-response|Les objets jResponse]]
