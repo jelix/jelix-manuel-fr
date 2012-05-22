@@ -1,9 +1,11 @@
 ~~LANG:EN@enman:cache~~
 
+===== jCache =====
+
 jCache est une classe permettant de stocker des données dans un système de cache.
 Le système repose sur des pilotes pour les accès aux données. Il est donc possible d’utiliser pour le stockage des données, soit une base de données, soit un système de fichiers ou soit memcache .
 
-===== Configuration =====
+==== Configuration ====
 
 Pour utiliser jCache, il faut d'abord spécifier les paramètres de configuration du système dans le fichier @@F@profiles.ini.php@@ situé dans @@F@var/config/@@. Voir [[configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]].
 
@@ -13,14 +15,14 @@ Le type de connexion à indiquer dans les noms des sections de @@F@profiles.ini.
 
 Chaque profil doit indiquer au moins ces trois paramètres :
 
-   * @@driver@@ : indique le pilote à utiliser. 
+   * @@driver@@ : indique le pilote à utiliser.
    * @@enabled@@ : permet d'indiquer si le cache pour ce profil est actif (1) ou non (0). Utile en développement ou débuggage.
    * @@ttl@@ : indique le temps d’expiration des données (0 signifie n’expire jamais). Vous pouvez indiquer une durée en secondes, un timestamp UNIX ou encore une date textuelle au format US.
-   * @@automatic_cleaning_factor@@ : indice de nettoyage automatique du système de cache. 
+   * @@automatic_cleaning_factor@@ : indice de nettoyage automatique du système de cache.
 
 Un profil peut contenir d'autres paramètres, en fonction du pilote utilisé.
 
-Voici un exemple dans le fichier @@F@profiles.ini.php@@ : 
+Voici un exemple dans le fichier @@F@profiles.ini.php@@ :
 
 <code ini>
 [jcache]
@@ -41,11 +43,11 @@ cache_file_umask = 0600
 </code>
 
 
-==== Pilote memcache ====
+=== Pilote memcache ===
 
 Il utilise l'API memcache de PHP (et non pas memcached).
 
-Paramètres possibles : 
+Paramètres possibles :
    * @@driver=memcache@@
    * @@servers@@ : liste de serveurs memcached.
 
@@ -59,7 +61,7 @@ servers = memcache_host1:11211,memcache_host2:11211,memcache_host3:11211
 
 
 
-==== Pilote file ====
+=== Pilote file ===
 
 Le cache est stocké dans des fichiers.
 
@@ -73,7 +75,7 @@ Paramètres possibles :
    * @@file_name_prefix@@ : préfixe des noms de fichiers du système de cache.
    * @@cache_file_umask@@ : attributs utilisés pour les fichiers.
 
-==== Pilote db ====
+=== Pilote db ===
 
 Ce pilote utilise une table SQL pour stocker les valeurs de cache. L'installateur de jelix crée la table nécessaire quand l'application l'utilise. Cependant, pendant le developpement, vous devez vous même créer la table. Utilisez l'un des scripts SQL dans  @@F@lib/jelix/core-modules/jelix/install/sql/install_jcache.schema.*@@ pour créer la table.
 
@@ -85,7 +87,7 @@ Paramètres possibles :
 
 
 
-===== Utilisation =====
+==== Utilisation ====
 
 @@C@jCache@@ est la classe principale du système de cache. Toutes ses méthodes sont statiques. Elle effectue un bon nombre d’opérations comme stockage, suppression, récupération de données. Vous appellerez ces méthodes quand bon vous semble.
 
@@ -103,3 +105,71 @@ Paramètres possibles :
 Toutes ces méthodes statiques acceptent un nom de profile jcache en dernier argument.
 
 
+===== jResponse et le cache HTTP =====
+
+Jelix 1.4 intègre plusieurs nouvelles méthodes dans la classe @@C@jResponse@@ afin de gérer le cache d’une réponse en exploitant les entête prévus à cet effet dans le protocole HTTP.
+
+Ces méthodes sont disponibles dans toutes les réponses pour lesquelles l'utilisation du cache HTTP a du sens.
+
+N’oubliez pas que ce cache se situe côté client, dans le navigateur de l’utilisateur et non sur le serveur.
+
+==== Cache par expiration ====
+
+===setExpires===
+
+La méthode setExpires permet de spécifier une date jusqu'à laquelle la ressource sera considérée valide et gardé en cache.
+
+En interne, cette méthode ajoute un entête HTTP “Expires”.
+
+Dans le controller :
+
+<code php>
+$rep->setExpires($date);
+
+//ou bien
+
+$rep->setExpires(“+1 days”);
+</code>
+
+Note : le paramètre attendu par @@M@setExpires@@ est une date de la forme : @@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction [[phpapi:strtotime|@@f@strtotime@@]].
+
+
+===setLifeTime===
+
+La méthode setLifeTime permet de spécifier un temps (en secondes) pendant lequel la ressource sera considérée valide et gardé en cache.
+
+Vous avez également la possibilité de spécifier si la ressource peut être mise en cache par n’importe quel cache ou si elle doit être privée et ne pas être mise en cache par des proxys (par défaut : privé).
+
+En interne, cette méthode ajoute un entête HTTP “Cache-Control”.
+
+Dans le controller :
+
+<code php>
+$rep->setLifeTime(3600); //1 heure en cache privé
+
+//ou bien
+
+$rep->setLifeTime(600);// 10 minutes en cache partagé
+</code>
+
+==== Cache par validation ====
+
+Vous pouvez également utilisé une politique de validation pour votre cache : vous indiquez explicitement soit la dernière date à laquelle la ressource a été modifiée ("Last-Modified") soit un token correspondant à l'etat de la ressource ("Etag") à la méthode @@M@isValidCache@@, qui retournera @@true@@ si la ressource est encore dans le cache du navigateur (et qu'il n'y a donc pas besoin d'aller plus loin dans la construction de la réponse).
+
+Dans le controller :
+
+<code php>
+$dateLastModified = $foo->updated_at; //date de dernière modification de ma ressource
+if($rep->isValidCache($dateLastModified)){
+   return $rep;
+}
+
+//Ou bien en utilisant “Etag”;
+
+$etag = ... ; //je génère un etag correspondant à l’etat de ma ressource
+if($rep->isValidCache(null, $etag)){
+   return $rep;
+}
+</code>
+
+Note: le paramètre attendu par @@M@isValidCache@@ est une date de la forme : @@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction [[phpapi:strtotime|@@f@strtotime@@]].
