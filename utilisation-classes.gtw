@@ -1,6 +1,6 @@
-~~LANG:EN@enman:business_classes~~
+~~LANG:EN@enman:using_classes~~
 
-Pour respecter le modèle en couche, il est recommandé de réaliser tout ses traitements métiers et services dans des classes dédiées.
+Pour respecter le modèle en couche, il est recommandé de réaliser tous ses traitements métiers et services dans des classes dédiées.
 
 Dans de telles classes, vous manipulerez par exemple des daos, des données issues de daos ou autre, effectuerez donc des traitements autres que de l'affichage. Aussi les méthodes de vos contrôleurs s'en trouveront allégées et les traitements réutilisables dans d'autres actions.
 
@@ -151,3 +151,52 @@ loadClasses = "mymodule~bar,mymodule~subdir/foo, shop~shoesProduct"
 
 
 Note: le nom du module est obligatoire.
+
+===== Autoload =====
+
+Description:
+
+Le système d'autoload supporte la [[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md|spécification PSR0]]
+
+module.xml:
+
+L'autoload peut à présent être défini dans le fichier module.xml de vos modules, pour charger les classes dont vous avez besoin
+The autoload can now be defined into the module.xml file of your modules, to automatically load classes for your own needs.
+
+Votre  @@F@module.xml@@ ressemblerait à présent à ceci :
+
+<code xml>
+<module xmlns="http://jelix.org/ns/module/1.0">
+    <info id="jelix_tests@testapp.jelix.org" name="jelix_tests">
+        <version>1.0</version>
+        <label>Jelix tests</label>
+        <description>unit tests for jelix</description>
+    </info>
+    <dependencies>
+        <jelix minversion="1.4" maxversion="1.4.*" />
+        <module name="testurls" minversion="1.0.2" maxversion="1.1b1" />
+        <module name="jauthdb" />
+        <module name="jacl2db" />
+        <module name="jacldb" />
+        <autoload>
+             <class name="myautoloadedclass" file="autoloadtest/autoloadtestclass.php" />
+             <classPattern pattern="/^myalclass/" dir="autoloadtest/withpattern/" suffix=".cl.php" />
+             <namespace name="jelixTests\foo" dir="autoloadtest" />
+             <namespacePathMap name="jelixTests\bar" dir="autoloadtest/barns" suffix=".class.php" />
+             <includePath dir="autoloadtest/incpath" suffix=".php" />
+             <autoloader file="autoloadtest/myautoloader.php" />
+        </autoload>
+    </dependencies>
+</module>
+</code>
+
+
+Ainsi le noeud important ici, est @@autoload@@.
+
+Comme vous pouvez les lire à partir des noeuds enfants, il y a differentes façon de charger des classes :
+
+  * une classe seule
+  * un ensemble de classes correspondant à un pattern donné
+  * un espace de nom
+  * un ensemble de fichiers inclus depuis un chemin donné
+  * un autoloader spécifique depuis lequel vous écrirez la partie du code qui utilisera [[http://php.net/spl_autoload_register|spl_autoload_register]] et ses amis
