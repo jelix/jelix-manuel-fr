@@ -1,12 +1,12 @@
 ~~LANG:EN@enman:business_classes~~
 
-Pour respecter le modèle en couche, il est recommandé de réaliser tout ses traitements métiers et services dans des classes dédiées.
+Pour respecter le découpage MVC, il est recommandé de réaliser tous ses traitements métiers et services dans des classes dédiées, plutôt que de tout faire dans les contrôleurs.
 
 Dans de telles classes, vous manipulerez par exemple des daos, des données issues de daos ou autre, effectuerez donc des traitements autres que de l'affichage. Aussi les méthodes de vos contrôleurs s'en trouveront allégées et les traitements réutilisables dans d'autres actions.
 
 ===== Création d'une classe =====
 
-Les classes métiers et services dans Jelix sont des classes PHP classiques qui n'ont rien de spécifique. La seule chose à respecter est de les stocker dans un fichier nom_de_la_classe.class.php dans le répertoire classes du module :
+Les classes métiers et services dans Jelix sont des classes PHP classiques qui n'ont rien de spécifique. La seule chose à respecter est de les stocker dans un fichier @@F@nom_de_la_classe.class.php@@ dans le répertoire @@F@classes/@@ du module, pour pouvoir être chargée par @@C@jClasses@@:
 
 <code php>  
    class StockService {
@@ -17,74 +17,49 @@ Les classes métiers et services dans Jelix sont des classes PHP classiques qui 
           
           // ici traitement sur la liste... par exemple
           
-          
           return $liste;      
       }
    }
 </code>
 
-Cette classe devra être stockée dans classes/StockService.class.php.
-
+Cette classe devra être stockée dans @@F@classes/StockService.class.php@@.
 
 La différence entre une classe service et les autres classes est qu'une classe service fournit, comme son nom l'indique, un service. Elle n'a pas besoin d'être instanciée à chaque utilisation car elle ne possède pas de propriétés "discriminantes". Une seule instance suffit pour toute l'application.
 
 Par exemple une classe de type "factory", qui permet de récupérer des ensembles de données, est une classe service. Par contre une classe représentant un produit, qui possède donc des champs identifiants, est une classe non service.
-===== Inclure des classes ou des interfaces définies dans un module =====
 
-@@C@jClasses@@ fournit les méthodes static @@M@inc()@@ et @@M@incIFace@@ pour inclure des classes définies dans le dossier @@F@classes@@ d'un module.
 
-Une classe doit être définie avec la syntaxe PHP (mot clé class) dans un fichier à son nom suivi du suffixe .class.php. Pour déclarer la classe StockUtil par exemple, il faut créer un fichier StockUtil.class.php et y mettre le code suivant :
-<code php><?php
-class StockUtil {
-    […]
-}
-?></code>
+===== Instanciation d'une classe avec jClasses =====
 
-Une interface doit-elle être définie avec la syntaxe PHP (mot clé interface) dans un fichier à son nom suivi du suffixe .iface.php. Pour filer l'exemple précédent, on peut déclarer l'interface IStockUtil dans un fichier IStockUtil.iface.php dans un sous dossier interfaces du dossier classes :
-<code php><?php
-interface ISctockUtil {
-    […]
-}
-?></code>
-
-Pour inclure la classe StockUtil définie dans le module commons, il convient d'utiliser en en-tête du fichier où on l'utiliser la syntaxe suivante :
-<code php><?php
-jClasses::inc('commons~StockUtil');
-
-[…]
-?></code>
-
-Pour une interface, on utilisera cette syntaxe :
-<code php><?php
-jClasses::inIface('commons~interfaces/IStockUtil');
-
-class StockUtil implements IStockUtil {
-    […]
-}
-?></code>
-
-===== Instanciation =====
-
-Jelix propose la classe jClasses, qui vous évite d'avoir à faire un include et une instanciation par vous même.
+Jelix propose la classe @@C@jClasses@@, qui vous évite d'avoir à faire un include et une instanciation par vous même.
 
 jClasses fournit deux méthodes statiques, auxquelles vous indiquez un sélecteur :
 
-    * createInstance($selecteurDeClasse); (ou create($selecteurDeClasse) )
-    * getService($selecteurDeClasse);
+    * @@M@createInstance($selecteurDeClasse)@@ (ou @@M@create($selecteurDeClasse)@@ )
+    * @@M@getService($selecteurDeClasse)@@
 
 
-La première créera à chaque appel une nouvelle instance. Par contre la deuxième renverra toujours une même instance de la classe. getService sera donc utilisé sur les classes services, et createInstance sur les autres.
+La première créera à chaque appel une nouvelle instance. Par contre la deuxième renverra toujours une même instance de la classe. @@M@getService@@ sera donc utilisé sur les classes services, et @@M@createInstance@@ sur les autres.
 
-Si notre classe StockService se trouve dans le module "shop", voici un exemple d'appel dans un contrôleur:
+Si notre classe @@C@StockService@@ se trouve dans le module "shop", voici un exemple d'appel dans un contrôleur :
 
 <code php>
     $stocksrv = jClasses::getService("shop~stockservice");
     $rep->body->assign('liste_produits', $stocksrv->getListeProduits());
 </code>
 
-Cependant dans certains cas, comme celui où le constructeur de la classe métier demande un paramètre, il faut inclure la classe métier puis l'instancier "manuellement".
+Notez que vous pouvez mettre des classes dans des sous-répertoires de @@F@classes/@@, ce qui donne, si on place @@C@StockService@@ dans un répertoire @@F@classes/stocks/@@ :
 
-Dans ce cas la classe jClasses propose la méthode statique inc($selecteurDeClasse). Comme son nom l'indique elle inclut (en fait effectue un require_once) la classe spécifiée par le sélecteur.
+<code php>
+   $stocksrv = jClasses::getService("shop~stocks/stockservice");
+</code>
+
+
+===== Inclure simplement une classe =====
+
+Dans certains cas, comme celui où le constructeur de la classe métier demande un paramètre, il faut inclure la classe métier puis l'instancier "manuellement".
+
+Dans ce cas la classe jClasses propose la méthode statique @@M@inc($selecteurDeClasse)@@. Comme son nom l'indique elle inclut (en fait effectue un require_once) la classe spécifiée par le sélecteur.
 
 Exemple :
 <code php>
@@ -92,12 +67,28 @@ Exemple :
     $shoe = new shoesProduct('43', 'black');
 </code>
 
+===== Inclure une interfaces définies dans un module =====
 
-Notez que vous pouvez mettre des classes dans des sous-répertoires de "classes/", ce qui donne, si on place StockService dans un répertoire classes/stocks/ :
+@@C@jClasses@@ fournit la méthode statique @@M@incIFace@@ pour inclure des interfaces PHP définies dans le dossier @@F@classes@@ d'un module.
 
-<code php>
-   $stocksrv = jClasses::getService("shop~stocks/stockservice");
-</code>
+Une interface doit être définie avec la syntaxe PHP (mot clé @@interface@@) dans un fichier à son nom suivi du suffixe @@.iface.php@@. Par exemple, on peut déclarer l'interface @@C@@IStockUtil@@ dans un fichier @@F@IStockUtil.iface.php@@ dans un sous dossier @@F@interfaces/@@ du dossier @@F@classes/@@ :
+
+<code php><?php
+interface IStockUtil {
+    […]
+}
+?></code>
+
+
+On utilisera ensuite la méthode @@M@jClasses::incIface()@@ dans les fichiers qui en ont besoin :
+
+<code php><?php
+jClasses::incIface('commons~interfaces/IStockUtil');
+
+class StockUtil implements IStockUtil {
+    […]
+}
+?></code>
 
 
 ===== Installer et Utiliser des classes tierces =====
@@ -106,26 +97,26 @@ Il se peut que vous vouliez réutiliser des classes développées en dehors du p
 
 Bien que vous puissiez mettre ces classes où bon vous semble et faire un include classique, il y a toutefois deux emplacements préconisés :
 
-  * le répertoire lib
-  * le répertoire classes d'un module
+  * le répertoire @@F@lib/@@
+  * le répertoire @@F@classes/@@ d'un module
 
-Faire un répertoire spécifique dans lib/ et y placer les fichiers de classes, est intéressant  quand il s'agit de partager ces classes entre plusieurs modules, voir entre plusieurs projets. Pour faire les includes, vous pouvez utiliser la constante LIB_PATH. Par exemple si vous voulez inclure une classe que vous avez dans lib/foo/bar.php, vous ferez alors ceci :
+Faire un répertoire spécifique dans @@F@lib/@@ et y placer les fichiers de classes, est intéressant  quand il s'agit de partager ces classes entre plusieurs modules, voir entre plusieurs projets. Pour faire les includes, vous pouvez utiliser la constante @@LIB_PATH@@. Par exemple si vous voulez inclure une classe que vous avez dans @@F@lib/foo/bar.php@@, vous ferez alors ceci :
 
 <code php>
    require(LIB_PATH.'foo/bar.php');
    $maclasse = new bar();
 </code>
 
-Placer les classes tierces dans le répertoire classes est utile si les classes en question ne sont utilisées que par ce module. Cela permet aussi une réutilisation plus facile : tout est dans le module.
+Placer les classes tierces dans le répertoire @@F@classes/@@ est utile si les classes en question ne sont utilisées que par ce module. Cela permet aussi une réutilisation plus facile : tout est dans le module.
 
-Pour utiliser ces classes, en admettant que vous voulez inclure le fichier bar.php que vous avez placé dans le répertoire classes du module main, vous pouvez faire :
+Pour utiliser ces classes, en admettant que vous voulez inclure le fichier @@F@bar.php@@ que vous avez placé dans le répertoire @@F@classes/@@ du module main, vous pouvez faire :
 
 <code php>
-   require(JELIX_APP_PATH.'modules/main/classes/bar.php');
+   require($GLOBALS['gJCoord']->getModulePath('main') . 'classes/bar.php');
    $maclasse = new bar();
 </code>
 
-Si le nom du fichier de la classe respecte la norme des fichiers de classes pour jelix (bar.class.php), et que la classe s'appelle effectivement "bar", vous pouvez bien entendu utiliser jClasses :
+Si le nom du fichier de la classe respecte la norme des fichiers de classes pour jelix (@@F@bar.class.php@@), et que la classe s'appelle effectivement "bar", vous pouvez bien entendu utiliser jClasses :
 
 <code php>
    $maclasse = jClasses::create('bar');
@@ -148,6 +139,5 @@ Jelix fournit un moyen simple d'indiquer les classes à charger avant ce @@f@sta
 
 loadClasses = "mymodule~bar,mymodule~subdir/foo, shop~shoesProduct"
 </code>
-
 
 Note: le nom du module est obligatoire.
