@@ -191,7 +191,7 @@ Jelix possède un autre moyen de prendre en charge les namespaces, différent de
 <code xml>
    <namespacePathMap name="jelixTests\bar" dir="autoloadtest/barns" suffix=".class.php" />
 </code>
-L'espace de nom indiqué ne correspond pas à un chemin dans le répertoire indiqué. @@E@namespacePathMap@@ indique juste que les classes dans le répertoire indiqué et ses sous répertoires sont dans ce namespace. Ainsi, la classe @@C@jelixTests\foo\bar\baz@@ n'est pas situé dans @@F@autoloadtest/jelixTests/foo/bar/baz.class.php@@ mais dans @@F@autoloadtest/bar/baz.class.php@@.
+Le chemin du fichier de la classe n'est pas un chemin reprenant le nom du namespace. Mais ici toute classes correspondant au namespace se trouvent dans des fichiers directement dans le répertoire indiqué. Ainsi, la classe @@C@jelixTests\foo\bar\baz@@ n'est pas situé dans @@F@autoloadtest/jelixTests/foo/bar/baz.class.php@@ mais dans @@F@autoloadtest/bar/baz.class.php@@.
 
 Il est possible d'indiquer aussi un répertoire d'include classique : Jelix cherchera un fichier du même nom que la classe dans ce répertoire.
 <code xml>
