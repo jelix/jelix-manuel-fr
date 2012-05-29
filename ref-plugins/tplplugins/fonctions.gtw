@@ -300,3 +300,32 @@ Le résultat de la deuxième boucle sera
 ...
 </code>
 
+===== resurl =====
+
+Permet d'utiliser une ressource par module, la ressource doit être placée dans un repertoire www dans le module.
+
+<code>
+    {resurl 'module', 'exemple.png'}
+</code>
+
+=== Paramètres ===
+
+== Module ==
+
+Le module ou la ressource est placée.
+
+== File ==
+
+Le fichier, avec son chemin relatif au repertoire www du module.
+
+== Paramètres additionnels ==
+
+Ce plugin prend 2 paramètres additionnels :
+
+= In Theme ? =
+
+Indiquez true, en troisième paramètre, pour indiquer que la ressource est dans un thème (false par défaut)
+
+= Echappement =
+
+Indiquez false en quatrième paramètre pour que les caractères spéciaux ne soient pas échappés lors de l'affichage (true par défaut)
