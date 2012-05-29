@@ -21,9 +21,38 @@ C'est en fait l'équivalent de
   </div>
 </code>
 
+
 ====== jlocale ======
 
+Permet l'affichage d'une chaine localisée
+
+<code>
+  {jlocale 'module~ma.locale.key'}
+</code>
+
+
 ====== jurl ======
+
+Permet l'affichage d'une url correspondant à une action de jelix
+
+<code>
+  {jurl 'module~controlleur:action', array('id'=>$id)}
+</code>
+
+==== Paramètres ====
+
+== Module~Action ==
+
+Sélecteur de l'action qui doit être appelé par les liens de pages.
+
+== Paramètres de l'action ==
+
+Tableau contenant les paramètres métiers à placer dans l'url.
+
+==Echappement==
+
+Un troisième paramètre permet de dire l'on veut que certains caractères soient échappés ou pas, il vaut true par défaut.
+
 
 ====== html : pagelinks ======
 
