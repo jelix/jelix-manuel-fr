@@ -16,7 +16,7 @@ Cependant, si les tables jAcl2 ne sont pas dans la base indiquée par le profil 
 <code ini>
 
 [jdb:default]
-driver="mysql"
+driver="mysqli"
 database="jelix"
 host= "localhost"
 user= "jelix"
@@ -25,7 +25,7 @@ persistent= on
 force_encoding=true
 
 [jdb:jacl2_profile]
-driver="mysql"
+driver="mysqli"
 database="droits"
 host= "localhost"
 user= "jelix"

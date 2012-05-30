@@ -144,7 +144,7 @@ Exemple, d'un profil de connexion pour jDb, le composant d’accès aux bases de
 
 <code ini>
 [jdb:default]
-driver=mysql
+driver=mysqli
 login=
 password=
 </code>
@@ -163,7 +163,7 @@ Un exemple pour jDb, en définissant un alias 'jacl2_profile' :
 jacl2_profile = default
 
 [jdb:default]
-driver=mysql
+driver=mysqli
 login=
 password=
 
@@ -195,7 +195,7 @@ Exemple :
 
 <code php>
    $params = array(
-       'driver'=>'mysql',
+       'driver'=>'mysqli',
        'host'=>'localhost',
        'database'=>'jelix',
        'user'=>'toto',

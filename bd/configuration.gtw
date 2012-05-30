@@ -7,7 +7,7 @@ Voici un exemple de profile dans @@F@profiles.ini.php@@ :
 <code ini>
 
 [jdb:default]
-driver="mysql"
+driver="mysqli"
 database="jelix"
 host= "localhost"
 user= "jelix"
@@ -26,7 +26,7 @@ Dans la section, vous voyez un certain nombre de paramètres, dont quelques-un s
 ===== Profil mysql =====
 
 Paramètres possibles :
-   * **driver** : doit valoir "mysql"
+   * **driver** : doit valoir "mysql"  (utilisant l'antique API PHP mysql_*) ou "mysqli" (utilisant la nouvelle API PHP mysqli). Préférez "mysqli".
    * **database** : le nom de la base de données à utiliser
    * **host** : le nom du serveur mysql sur lequel se connecter
    * **user** et **password** : le login/mot de passe pour la connexion
@@ -62,15 +62,23 @@ A noter que les fichiers de base de données sqlite doivent être déposés dans
 
 ===== Profil pdo =====
 
-Depuis jelix 1.2, il est possible de spécifier d'utiliser PDO pour se connecter sur une base de donnée dans un profil mysql, postgresql, etc. Il faut alors ajouter le paramètre @@usepdo=on@@.
+Il est possible de spécifier PDO pour se connecter sur une base de donnée dans un profil mysql, postgresql, etc. Il faut alors ajouter le paramètre @@usepdo=on@@. Vous devez avoir alors au moins les paramètres suivants, qui sont quasiement identiques pour les drivers jDb :
 
-Sinon, on peut toujours configurer le profil comme dans les versions précédentes, avec les paramètres suivants (mais c'est dorénavant une façon de faire **obsolète**):
+   * **driver**: le nom du driver PDO à utiliser ("mysql", "pgsql"...)
+   * **host**, **user**, **password** (sauf pour sqlite bien entendu)
+   * **database** :  le nom de la base de donnée. Pour sqlite, vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de @@F@lib/@@ ou du répertoire @@F@var/@@ de l'application
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. Même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
+
+jDb construira le DSN correspondant.
+
+Si vous avez besoin de spécifier un DSN avec des paramètres particuliers, il va falloir utiliser une autre notation, sans utiliser le paramètre @@usepdo@@ :
 
    * **driver** : doit valoir "pdo"
-   * **dsn** : contient des informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[phpapi:pdo|doc de pdo sur php.net]]). Pour sqlite, vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de lib/ ou du répertoire var de l'application
+   * **dsn** : contient les informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[phpapi:pdo|doc de pdo sur php.net]]). 
    * **user** et **password** : le login/mot de passe pour la connexion. Ne mettre ces paramètres que si nécessaire.
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
+   * **force_encoding**
 
+Exemple:
 <code ini>
 [jdb:bar]
 driver=pdo
