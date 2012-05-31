@@ -67,7 +67,10 @@ foo=myFooResponse
 Voici un exemple de réponse fournie par votre module :
 <code ini>
 [responses]
-foo="module:mymodule:myFooResponse" 
+foo="module:mymodule~myFooResponse"
+; ou, sans 'module:'
+foo="mymodule~myFooResponse"
+
 </code>
 
 Ensuite vous sera à même d'utiliser votre réponse dans les actions de votre contrôleur.
