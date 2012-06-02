@@ -14,8 +14,8 @@ Pour créer une interface d'administration, [[/bd/configuration|vous devez d'abo
    php cmd.php initadmin index
 </code>
 
-   * "index" est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à l'interface d'administration. 
- 
+   * "index" est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à l'interface d'administration.
+
 Si vous tenez absolument à créer cette interface dans une application existante utilisant déjà index.php, indiquez un autre point d'entrée, "admin" par exemple, ou un autre nom. La commande crée le point d'entrée s'il n'existe pas déjà. La configuration du point d'entrée sera modifiée afin d'avoir une interface totalement fonctionnelle. Par exemple, deux nouvelles réponses sont ajoutées dans le répertoire @@F@myapp/responses/@@. Vous pouvez ainsi personnaliser l'interface générale.
 
 
@@ -60,6 +60,7 @@ Si vous n'avez pas désactivé l'authentification via jAuthDb et la gestion des 
      <url pathinfo="/login/" module="jauth" include="urls.xml" />
      <url pathinfo="/acl/" module="jacl2db_admin"  include="urls.xml"/>
      <url pathinfo="/auth/" module="jauthdb_admin"  include="urls.xml"/>
+     <url pathinfo="/pref/" module="jpref_admin"  include="urls.xml"/>
 
  </classicentrypoint>
 </code>

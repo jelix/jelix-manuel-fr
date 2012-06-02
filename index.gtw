@@ -158,6 +158,7 @@ Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.
       - section: [[classes-utiles/jinifilemodifier|jIniFileModifier: lire ou modifier des fichiers de configuration (ini)]]
       - section: [[classes-utiles/jmailer|jMailer : envoi de mails]]
       - section: [[classes-utiles/jmessage|jMessage : informations entre actions]]
+      - section: [[classes-utiles/jpref|jPref : gérer vos préferences d'applications]]
       - section: [[classes-utiles/jsession|jSession : stockage de sessions]]
       - section: [[classes-utiles/jwiki|jWiki : transformation de texte wiki]]
 
@@ -182,7 +183,7 @@ Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.
 </bookcontents>
 
 <booklegalnotice>
-Ce manuel est distribué selon les termes de la [[http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes : 
+Ce manuel est distribué selon les termes de la [[http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes :
   * **Paternité**. Vous devez citer le nom de l'auteur original de la manière indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous confère cette autorisation (mais pas d'une manière qui suggérerait qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
   * **Pas d'Utilisation Commerciale**. Vous n'avez pas le droit d'utiliser ce manuel à des fins commerciales.
   * **Partage des Conditions Initiales à l'Identique**. Si vous modifiez, transformez ou adaptez ce manuel, vous n'avez le droit de distribuer la création qui en résulte que sous un contrat identique à celui-ci.

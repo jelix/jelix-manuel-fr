@@ -1,0 +1,97 @@
+~~LANG:EN@enman:class-utilities/jpref~~
+
+===== jPref =====
+
+jPref est une classe très simple qui va vous permettre de récuperer et d'enregistrer des préférences pour votre application (on parle ici de préférences qui peuvent évoluer dans la vie de l'application et non de préférences de configuration fixes qui elles se trouvent dans le @@defaultconfig.ini.php@@).
+
+==== Configuration ====
+
+@@C@jPref@@ est en fait une classe qui encapsule @@C@jKVDb@@. Par conséquent, pour utiliser jPref il vous suffit de définir un driver @@jkvdb@@ ayant comme nom @@jpref@@ : @@[jkvdb:jpref]@@.
+
+Pour plus de détails sur la configuration de ce driver, voir la [[/kvdb#drivers|documentation de jKVDb]].
+
+==== Utilisation ====
+
+   * @@M@jPref::get($key)@@: pour récupérer une préference.
+   * @@M@jPref::set($key, $value, $ttl)@@: pour enregistrer ou modifier une préférence.
+
+
+===== Interface d'admin pour jPref =====
+
+jPref fournit également un controller afin gérer les préférences directement depuis votre interface d'administration. Ce controller est directement intégré à [[/creer-application/creer-administration|master_amin]] (menu "Système", lien "Préferences").
+
+Il faudra d'abord renseigner le fichier @@var/config/preferences.ini.php@@ afin d'organiser et configurer vos préferences (type, locale, valeur par défaut, groupe de préférences, droits de lecture/écriture).
+
+==== Configuration d'une préférence ====
+
+Dans votre fichier @@preferences.ini.php@@ :
+
+<code ini>
+[pref:nom.systeme.de.la.pref]
+; "string" | "integer" | "boolean" | "decimal" (défaut string)
+type =
+; clé de la locale définissant la préférence
+locale =
+; identifiant du groupe auquelle appartient la préférence
+group =
+; acl_subject correspondant au droit de lecture de la préférence
+read_acl_subject =
+; acl_subject correspondant au droit d'écriture de la préférence
+write_acl_subject =
+; valeur par défaut
+default_value =
+</code>
+
+Note : chaque option est optionelle et peut ne pas être remplie.
+
+==== Configuration d'un groupe de préférences ====
+
+Dans votre fichier @@preferences.ini.php@@ :
+
+<code ini>
+[group:nom.syteme.de.la.pref]
+; clé de la locale définissant le groupe
+locale =
+; ordre d'affichage dans la liste des préférences
+order =
+</code>
+
+Note : chaque option est optionelle et peut ne pas être remplie.
+
+==== Exemple ====
+
+<code ini>
+[group:contact]
+locale = "contact~admin.pref.group.contact"
+order = 1
+
+[pref:telephone]
+type = string
+locale = "contact~admin.pref.telephone"
+group = "contact"
+read_acl_subject =
+write_acl_subject = "contact.edit.infos"
+default_value =
+
+
+[group:shop]
+locale = "contact~admin.pref.group.contact"
+order = 2
+
+[pref:nb.items.per.page]
+type = integer
+locale = "shop_admin~admin.pref.nb.items.per.page"
+group = shop
+read_acl_subject =
+write_acl_subject =
+default_value = 15
+
+[pref:shop.is.open]
+type = boolean
+locale = "shop_admin~admin.pref.shop.is.open"
+group = shop
+read_acl_subject =
+write_acl_subject = "shop.edit.shop.status"
+default_value = "false"
+
+</code>
