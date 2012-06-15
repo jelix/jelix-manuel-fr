@@ -112,6 +112,11 @@ Cela installera le module foo, uniquement pour le point d'entrée admin de l'app
 
 Le point d'entrée doit être déclaré dans le fichier project.xml de l'application pour que cela fonctionne.
 
+==== l'option -v ====
+
+C'est une option valable pour toutes les commandes depuis la version 1.3.3. Elle vous permet d'afficher les détails de ce qu'à fait la commande après son exécution. Par défaut, une commande n'affiche rien dans la console, sauf si les erreurs. Si vous voulez afficher les détails à chaque fois, vous pouvez modifier la configuration de jelix-scripts avec l'option @@verboseMode=true@@. Voir ci-dessous.
+
+
 ===== Changer la configuration par défaut =====
 
 Les commandes de création d'application, de module etc respectent une arborescence précise. Mais ce n'est pas forcément celle que vous voulez utiliser. Il y a aussi des informations qui sont insérées dans les fichiers crées, notamment dans les commentaires d'en-tête, comme par exemple le nom de l'auteur, le site web etc. Vous pouvez changer cela.
@@ -131,7 +136,7 @@ Voici une liste non exhaustive des commandes jelix-scripts
 
    * Utilisation Générale :
 <code>
-php cmd.php COMMANDE [-ep ENTRYPOINT] [OPTIONS] [PARAMETRES]
+php cmd.php COMMANDE [-v] [-ep ENTRYPOINT] [OPTIONS] [PARAMETRES]
 </code>
    * Création d'un module
 <code>
