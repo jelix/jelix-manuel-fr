@@ -391,7 +391,7 @@ Dans un template, nous avons vu que nous pouvons utiliser {@truc.foo@} pour incl
 
 Une solution existe : créer des templates pour chaque langue. Bien sûr, cela fait de la duplication de code, aussi, à vous de peser le pour et le contre : maintenance versus performance.
 
-Pour faire un template pour chaque langue, créer des sous-repertoires dans le repertoire de templates, et qui ont pour nom le code de la langue. Exemple, dans un module: @@F@templates/fr_FR@@,  @@F@templates/en_EN@@ etc.. Et placez y dans chacun d'eux un exemplaire de votre template traduit.
+Pour faire un template pour chaque langue, créer des sous-repertoires dans le repertoire de templates, et qui ont pour nom le code de la langue. Exemple, dans un module: @@F@templates/fr_FR@@,  @@F@templates/en_US@@ etc.. Et placez y dans chacun d'eux un exemplaire de votre template traduit.
 
 
 ===== Inclusion de templates dans un template =====

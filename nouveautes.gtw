@@ -6,6 +6,8 @@ Principales nouveautés apportées par la version 1.4 :
    * nouvelle méthode @@M@jApp::coord()@@ pour accéder à l'objet coordinateur, et nouvelle méthode @@M@jApp::setCoord()@@ pour définir le coordinateur de l'application. @@V@$gJCoord@@ est désormais obsolète. (voir [[concepts/points-entree#japp|jApp]]).
    * [[/utilisation-classes#autoload|Nouveau système de chargement automatique des classes]], utilisant l'autoload PHP. Les classes à charger automatiquement peuvent maintenant être indiquées dans les fichiers @@F@module.xml@@. Le système autoload prend en charge  [[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md|la specification PSR0]].
    * [[/templates#templates-virtuels|Templates virtuelles]] : jTpl peut maintenant utiliser des templates qui ne sont pas dans des fichiers.
+   * Prise en charge des paramètres automatiques de langues dans les URL.
+   * Amélioration de la prise en charge des codes langues. Jelix ne prend plus en charge les codes qui ne sont pas des codes standards (en_EN par exemple). Sauf si [[/locales#prise-en-charge-des-codes-de-language-inconnues-ou-alternatifs|vous le forcez dans la configuration]].
    * [[/cache#jresponse-et-le-cache-http|nouvelle API pour prendre en charge le cache HTTP]], fournie par les objets réponses : @@M@cleanCacheHeaders()@@, @@M@setExpires()@@, @@M@setLifetime()@@, @@M@isValidCache()@@.
    * Nouvelles classes permettant de lire des flux ATOM et RSS.
    * Nouvelle classe @@C@jPref@@ pour gérer des "préférences", et donc des paramètres dynamiques d'application. une interface est fournie permettant au webmaster de gérer ces préférences.
