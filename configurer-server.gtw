@@ -45,6 +45,11 @@ Par exemple, avec apache, vous indiquerez dans le fichier @@F@httpd.conf@@, quel
       ServerName www.monsite.com
       DocumentRoot /home/monsite/myapp/www/ 
    </VirtualHost>
+   <Directory "/home/monsite/myapp/www/">
+     AllowOverride None
+     Order allow,deny
+     Allow from all
+   </Directory>
 </code>
 
 Vous devez indiquer aussi un alias vers le répertoire @@F@lib/jelix-www/@@, en le nommant jelix :
@@ -55,7 +60,11 @@ Vous devez indiquer aussi un alias vers le répertoire @@F@lib/jelix-www/@@, en 
       DocumentRoot /home/monsite/myapp/www/ 
       Alias /jelix/ "/home/monsite/lib/jelix-www/"
    </VirtualHost>
-   
+   <Directory "/home/monsite/myapp/www/">
+     AllowOverride None
+     Order allow,deny
+     Allow from all
+   </Directory>
    <Directory "/home/monsite/lib/jelix-www/">
      AllowOverride None
      Order allow,deny

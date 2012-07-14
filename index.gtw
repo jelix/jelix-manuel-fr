@@ -12,14 +12,13 @@ copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
 
-
-Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.5pre-alpha.pdf|le manuel au format PDF]] !
+Téléchargez [[http://download.jelix.org/jelix/documentation/fr/jelix-manuel-1.5.pdf|le manuel au format PDF]].
 
 <bookcontents>
 
 - part: [[introduction|Introduction]]
   - chapter: [[nouveautes|Nouveautés]]
-  - chapter: [[installation/migration|Migration d'une application jelix 1.3 vers jelix 1.4]]
+  - chapter: [[installation/migration|Migration d'une application jelix vers jelix 1.5]]
 
 - part:  [[mise-en-route|Mise en route]]
   - chapter: [[installation/prerequis|Pré-requis sur le serveur]]
