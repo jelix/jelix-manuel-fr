@@ -1,18 +1,5 @@
 ~~LANG:EN@enman:new-features~~
 
-Principales nouveautés apportées par la version 1.4 :
+Principales nouveautés apportées par la version 1.5 :
 
-   * nouvelle méthode @@M@jApp::config()@@ pour récupérer l'objet configuration, et nouvelle méthode @@M@jApp::loadConfig()@@ pour charger la configuration. La variable @@V@$gJConfig@@ est désormais obsolète. (voir [[concepts/points-entree#japp|jApp]]).
-   * nouvelle méthode @@M@jApp::coord()@@ pour accéder à l'objet coordinateur, et nouvelle méthode @@M@jApp::setCoord()@@ pour définir le coordinateur de l'application. @@V@$gJCoord@@ est désormais obsolète. (voir [[concepts/points-entree#japp|jApp]]).
-   * [[/utilisation-classes#autoload|Nouveau système de chargement automatique des classes]], utilisant l'autoload PHP. Les classes à charger automatiquement peuvent maintenant être indiquées dans les fichiers @@F@module.xml@@. Le système autoload prend en charge  [[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md|la specification PSR0]].
-   * [[/templates#templates-virtuels|Templates virtuelles]] : jTpl peut maintenant utiliser des templates qui ne sont pas dans des fichiers.
-   * Prise en charge des paramètres automatiques de langues dans les URL.
-   * Amélioration de la prise en charge des codes langues. Jelix ne prend plus en charge les codes qui ne sont pas des codes standards (en_EN par exemple). Sauf si [[/locales#prise-en-charge-des-codes-de-language-inconnues-ou-alternatifs|vous le forcez dans la configuration]].
-   * [[/cache#jresponse-et-le-cache-http|nouvelle API pour prendre en charge le cache HTTP]], fournie par les objets réponses : @@M@cleanCacheHeaders()@@, @@M@setExpires()@@, @@M@setLifetime()@@, @@M@isValidCache()@@.
-   * Nouvelles classes permettant de lire des flux ATOM et RSS.
-   * Nouvelle classe @@C@jPref@@ pour gérer des "préférences", et donc des paramètres dynamiques d'application. une interface est fournie permettant au webmaster de gérer ces préférences.
-   * Les modules peuvent maintenant fournir leur propre objet réponse global [[/creer_response#declarer-la-reponse|que l'on indique directement dans la configuration]] comme les autres classes de réponses.
-   * [[/ref-plugins/tplplugins/metas#meta_htmlmodule|Les modules peuvent maintenant fournir leurs propres fichiers CSS, Javascript]] etc, sans avoir à les copier dans le répertoire @@F@www@@.
-   * [[/jelix-scripts#changer-la-configuration-par-defaut|Les commandes Jelix-scripts cherchent maintenant un fichier .jelix-scripts.ini]] dans le répertoire courant et dans les répertoires parent, avant de chercher dans le répertoire de l'utilisateur (HOME), permettant de définir une configuration différente en fonction des projets.
-   * [[/bd/configuration#profil-mysql|Nouveau driver "mysqli"]] pour jDb, utilisant l'API PHP mysqli.
-
+   * TODO

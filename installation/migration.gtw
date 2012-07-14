@@ -7,11 +7,11 @@ Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins 
   * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@ 
   * adapter votre code en suivant les instructions indiquées pour chaque ancienne version de Jelix. Voir ci-dessous.
 
-===== Mettre à jour depuis Jelix 1.2 et inférieur =====
+===== Mettre à jour depuis Jelix 1.3 et inférieur =====
 
-Suivez les indications de migration de chaque version intermédiaire (voir les manuels correspondant), avant de mettre à jour pour jelix 1.3.
+Suivez les indications de migration de chaque version intermédiaire (voir les manuels correspondant), avant de mettre à jour pour jelix 1.4.
 
-===== Mettre à jour depuis Jelix 1.3 =====
+===== Mettre à jour depuis Jelix 1.4 =====
 
 Voici les instructions à suivre dans l'ordre.
 
@@ -24,36 +24,6 @@ Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers d
 Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votreapp/@@.
 
 
-
-==== Changez vos points d'entrées ====
-
-@@C@jApp@@ fournissant de nouvelles API, il faut changer le code de vos points d'entrées.
-
-  * L'instance du coordinateur doit être indiqué à @@C@jApp@@.
-  * Le chemin du fichier de configuration doit être lui aussi indiqué à @@C@jApp@@ au lieu d'être passé en paramètre au coordinateur
-  * Voyez un exemple dans le template dans @@F@lib/jelix-scripts/templates/www/index.php.tpl@@
- 
-Voici un exemple typique:
-
-<code php>
-require ('../application.init.php');
-require (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
-
-checkAppOpened();
-
-// Charge la configuration
-jApp::loadConfig('index/config.ini.php');
-
-// nouveau coordinateur, que l'on indique à jApp
-jApp::setCoord(new jCoordinator());
-
-// Nouvel objet request, que l'on passe au coordinateur, pour traiter le routage.
-jApp::coord()->process(new jClassicRequest());
-
-</code>
-
-
-
 ==== Suppression de fichiers ====
 
 
@@ -61,20 +31,15 @@ jApp::coord()->process(new jClassicRequest());
 
 ==== Mise à jour des modules ====
 
-Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.4.
+Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.5.
 
 Et pour vos propres modules, vous devez adapter le code source en faisant les modifications suivantes :
 
-  * La variable globale @@V@$gJConfig@@ est obsolète. Utilisez maintenant @@M@jApp::config()@@ pour récupérer la configuration.
-  * La variable globale @@V@$gJCoord@@  est obsolète. Utilisez maintenant @@M@jApp::coord()@@ pour récupérer l'objet coordinateur.
-  * Le code de locale 'en_EN' est maintenant obsolète. Vous avez alors deux solutions si vous l'utilisez dans vos applications :
-     * une solution rapide mais temporaire : ajoutez le paramètre "en=en_EN" dans la section "[langToLocale]" de la configuration principale.
-     * une meilleure solution: renommez vos repertoires @@F@locales/en_EN@@ en @@F@locales/en_US@@, utilisez le code en_US comme locale par défaut (si vous utilisiez en_EN), et si vous stockiez le code en_EN dans vos données, changez les avec en_US. C'est la solution préférée, car le code en_EN ne sera plus supporté dans des versions futures de Jelix.
-
-  * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible avec Jelix 1.4 (changer l'attribut @@A@maxversion@@). Exemple :
+  * Rien pour le moment
+  * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible avec Jelix 1.5 (changer l'attribut @@A@maxversion@@). Exemple :
 
 <code xml>
-        <jelix minversion="1.3" maxversion="1.4.*"/>
+        <jelix minversion="1.4" maxversion="1.5.*"/>
 </code>
 
 
@@ -90,4 +55,4 @@ API que vous ne pouvez plus utiliser :
 
 Après toutes les modifications effectuées, vous devez lancer le script installer.php de votre application. Le module jelix fera le reste des modifications, en particulier :
 
-  * Le paramètre de configuration @@availableLanguageCode@@ du plugin @@autolocale@@, si vous l'utilisez, est déplacé vers la configuration principale et renommé en @@availableLocales@@.
+  * Rien pour le moment
