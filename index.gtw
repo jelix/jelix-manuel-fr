@@ -2,9 +2,9 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.4 beta
+subtitle= Jelix 1.4 RC1
 title_short= Guide du développeur
-edition = Jelix 1.4 beta
+edition = Jelix 1.4 RC1
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
 copyright_years=2006-2012
@@ -13,7 +13,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
 
 
-Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.4b1.pdf|le manuel au format PDF]] !
+Téléchargez [[http://download.jelix.org/jelix/documentation/fr/manuel-jelix-1.4rc1.pdf|le manuel au format PDF]] !
 
 <bookcontents>
 
