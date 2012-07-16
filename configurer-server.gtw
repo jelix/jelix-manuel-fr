@@ -140,7 +140,7 @@ Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous dev
 **Attention :  il est fortement recommandé de ne pas mettre vos propres scripts et css dans ce répertoire jelix copié.**
 Sinon les futures mises à jour risquent d'être plus compliquées, et vos successeurs ou collègues risquent d'être un peu
 perdu, en ne sachant pas ce qui vient de jelix et ce qui vient de votre appli. Bref, ne touchez pas au contenu de
-jelix-www ou du répertoire qui est la copie de jelix-www. Mettez vos propres scripts dans un autre répertoires, par
+jelix-www ou du répertoire qui est la copie de jelix-www. Mettez vos propres scripts dans un autre répertoire, par
 exemple dans @@F@monsite/js/@@.
 
 Dans le fichier @@F@myapp/application.init.php@@ (et dans tous les autres fichiers @@F@*.init.php@@ qui sont dans @@F@myapp/@@), vous devez modifier la constante @@V@JELIX_APP_WWW_PATH@@ :
