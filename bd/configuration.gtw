@@ -1,6 +1,12 @@
 ~~LANG:EN@enman:db/configuration~~
 
-Pour pouvoir accéder à une base de données, il faut d'abord indiquer les paramètres de connexion dans le fichier de profils. Voir [[/configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]. Vous pouvez définir plusieurs connexions, que l'on nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de production, la base de développement par exemple, ou encore les différentes bases sur lesquelles s'appuie votre application.
+Pour pouvoir accéder à une base de données, il faut d'abord indiquer les
+paramètres de connexion dans le fichier de profils. Voir
+[[/configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]].
+Vous pouvez définir plusieurs connexions, que l'on
+nomme "profiles". Ainsi vous pouvez définir des connexions pour la base de
+production, la base de développement par exemple, ou encore les différentes
+bases sur lesquelles s'appuie votre application.
 
 Voici un exemple de profile dans @@F@profiles.ini.php@@ :
 
@@ -16,12 +22,21 @@ persistent= on
 force_encoding=true
 </code>
 
-Le type de connexion à indiquer dans les noms des sections de @@F@profiles.ini.php@@ est @@jdb@@.
+Le type de connexion à indiquer dans les noms des sections de
+@@F@profiles.ini.php@@ est @@jdb@@.
 
-Dans la section, vous voyez un certain nombre de paramètres, dont quelques-un sont utilisables pour tous les drivers :
+Dans la section, vous voyez un certain nombre de paramètres, dont quelques-un
+sont utilisables pour tous les drivers :
 
-  * **driver** indique le driver à utiliser. Le nombre et le nom des autres paramètres diffèrent en fonction du driver utilisé. 
-  * **table_prefix** : permet d'indiquer un préfixe de table.\\ Lors de l'utilisation d'un [[/daos|DAO]] avec un profil spécifiant ce paramètre, les tables indiquées dans le DAO sont préfixées **dynamiquement** par cette valeur.\\ Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez préfixer vos tables en fonction du profil utilisé grâce à la méthode @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre le nom de la table à préfixer.
+  * **driver** indique le driver à utiliser. Le nombre et le nom des autres
+    paramètres diffèrent en fonction du driver utilisé.
+  * **table_prefix** : permet d'indiquer un préfixe de table. Lors de
+    l'utilisation d'un [[/daos|DAO]] avec un profil spécifiant ce paramètre, les
+    tables indiquées dans le DAO sont préfixées **dynamiquement** par cette
+    valeur. Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez
+    préfixer vos tables en fonction du profil utilisé grâce à la méthode
+    @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre
+    le nom de la table à préfixer.
 
 ===== Profil mysql =====
 
@@ -30,8 +45,14 @@ Paramètres possibles :
    * **database** : le nom de la base de données à utiliser
    * **host** : le nom du serveur mysql sur lequel se connecter
    * **user** et **password** : le login/mot de passe pour la connexion
-   * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. En effet, certains serveurs sont configurés par exemple par défaut avec une connexion en iso-8859-1, même si les données stockées sont en utf-8. Mettez à true si vous voyez que vous n'arrivez pas à afficher les données correctement.
+   * **persistent** : indique si la connexion est persistante (**on**) ou pas
+     (**off**)
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+     l'application, de manière à récupérer les données avec le bon charset. En
+     effet, certains serveurs sont configurés par exemple par défaut avec une
+     connexion en iso-8859-1, même si les données stockées sont en utf-8. Mettez
+     à true si vous voyez que vous n'arrivez pas à afficher les données
+     correctement.
 
 
 
@@ -41,35 +62,68 @@ Paramètres possibles :
 
    * **driver** : doit valoir "pgsql"
    * **database** : le nom de la base de données à utiliser
-   * **host** : le nom du serveur postgresql sur lequel se connecter. Si vous le mettez à vide, la connexion se fera via une socket unix.
-   * **port** : indique le port de connexion. N'indiquez pas ce paramètre si vous voulez utiliser le port par défaut.
-   * **user** et **password** : le login/mot de passe pour la connexion. Ne mettez pas ces paramètres si vous voulez utiliser le login/mot de passe par défaut (indiqués par exemple dans les variables d'environnement du système).
-   * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql.
-   * **timeout** : Nombre de secondes autorisées pour l'établissement de la connexion au serveur avant de générer un timeout
-   * **single_transaction** : Toutes les requêtes d'une même page seront envoyées au serveur au sein d'un même transaction (entre un BEGIN; et un COMMIT;) (**on**) ou non (**off**). Défaut: **off**
-   * **search_path** : indiquer la liste des schémas dans lequel il faut chercher les tables, si le schéma par défaut pour la connexion ne correspond pas à celui dans lequel l'application va chercher.
+   * **host** : le nom du serveur postgresql sur lequel se connecter. Si vous le
+     mettez à vide, la connexion se fera via une socket unix.
+   * **port** : indique le port de connexion. N'indiquez pas ce paramètre si
+     vous voulez utiliser le port par défaut.
+   * **user** et **password** : le login/mot de passe pour la connexion. Ne
+     mettez pas ces paramètres si vous voulez utiliser le login/mot de passe par
+     défaut (indiqués par exemple dans les variables d'environnement du
+     système).
+   * **persistent** : indique si la connexion est persistante (**on**) ou pas
+     (**off**)
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+     l'application, de manière à récupérer les données avec le bon charset. même
+     explication que pour mysql.
+   * **timeout** : Nombre de secondes autorisées pour l'établissement de la
+     connexion au serveur avant de générer un timeout
+   * **single_transaction** : Toutes les requêtes d'une même page seront
+     envoyées au serveur au sein d'un même transaction (entre un BEGIN; et un
+     COMMIT;) (**on**) ou non (**off**). Défaut: **off**
+   * **search_path** : indiquer la liste des schémas dans lequel il faut
+     chercher les tables, si le schéma par défaut pour la connexion ne
+     correspond pas à celui dans lequel l'application va chercher.
 
 ===== Profil sqlite =====
 
 Paramètres possibles :
 
    * **driver** : doit valoir "sqlite"
-   * **database** : le nom du fichier de base de données à utiliser. Vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de lib/ ou du répertoire var de l'application
-   * **persistent** : indique si la connexion est persistante (**on**) ou pas (**off**)
+   * **database** : le nom du fichier de base de données à utiliser. Vous pouvez
+     utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à
+     partir de celui de l'application, de lib/ ou du répertoire var de
+     l'application
+   * **persistent** : indique si la connexion est persistante (**on**) ou pas
+     (**off**)
 
-A noter que les fichiers de base de données sqlite doivent être déposés dans le répertoire : @@F@var/db/sqlite/@@ de votre application et qu'à la fois ce répertoire et le fichier de base de données sqlite doivent avoir les droits de lecture/écriture adéquats (ceux du serveur web).
+A noter que les fichiers de base de données sqlite doivent être déposés dans le
+répertoire : @@F@var/db/sqlite/@@ de votre application et qu'à la fois ce
+répertoire et le fichier de base de données sqlite doivent avoir les droits de
+lecture/écriture adéquats (ceux du serveur web).
 
 ===== Profil pdo =====
 
-Depuis jelix 1.2, il est possible de spécifier d'utiliser PDO pour se connecter sur une base de donnée dans un profil mysql, postgresql, etc. Il faut alors ajouter le paramètre @@usepdo=on@@.
+Depuis jelix 1.2, il est possible de spécifier d'utiliser PDO pour se connecter
+sur une base de donnée dans un profil mysql, postgresql, etc. Il faut alors
+ajouter le paramètre @@usepdo=on@@.
 
-Sinon, on peut toujours configurer le profil comme dans les versions précédentes, avec les paramètres suivants (mais c'est dorénavant une façon de faire **obsolète**):
+Sinon, on peut toujours configurer le profil comme dans les versions
+précédentes, avec les paramètres suivants (mais c'est dorénavant une façon de
+faire **obsolète**):
 
    * **driver** : doit valoir "pdo"
-   * **dsn** : contient des informations de connexion (type de base de données, serveur, nom de la base..). Le format doit être celui attendu par PDO (voir la [[phpapi:pdo|doc de pdo sur php.net]]). Pour sqlite, vous pouvez utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à partir de celui de l'application, de lib/ ou du répertoire var de l'application
-   * **user** et **password** : le login/mot de passe pour la connexion. Ne mettre ces paramètres que si nécessaire.
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans l'application, de manière à récupérer les données avec le bon charset. même explication que pour mysql, et ce paramètre n'est pour le moment valable que pour mysql et postgresql.
+   * **dsn** : contient des informations de connexion (type de base de données,
+     serveur, nom de la base..). Le format doit être celui attendu par PDO (voir
+     la [[phpapi:pdo|doc de pdo sur php.net]]). Pour sqlite, vous pouvez
+     utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à
+     partir de celui de l'application, de lib/ ou du répertoire var de
+     l'application
+   * **user** et **password** : le login/mot de passe pour la connexion. Ne
+     mettre ces paramètres que si nécessaire.
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+     l'application, de manière à récupérer les données avec le bon charset. même
+     explication que pour mysql, et ce paramètre n'est pour le moment valable
+     que pour mysql et postgresql.
 
 <code ini>
 [jdb:bar]

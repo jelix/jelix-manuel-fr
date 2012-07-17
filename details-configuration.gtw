@@ -3,9 +3,11 @@
 
 ===== Le fichier project.xml =====
 
-Le fichier @@F@project.xml@@ contient des informations sur l'application, dont certaines sont importantes puisqu'elles servent à l'installateur, entre autre.
+Le fichier @@F@project.xml@@ contient des informations sur l'application, dont
+certaines sont importantes puisqu'elles servent à l'installateur, entre autre.
 
-C'est un fichier XML avec une balise racine @@E@<project>@@, qui contient 4 autres balises.
+C'est un fichier XML avec une balise racine @@E@<project>@@, qui contient 4
+autres balises.
 
 <code xml>
 <project xmlns="http://jelix.org/ns/project/1.0">
@@ -27,7 +29,10 @@ C'est un fichier XML avec une balise racine @@E@<project>@@, qui contient 4 autr
 
 ==== info ====
 
-Dans la balise @@E@info@@, il y a des informations purement indicatives sur l'application, comme le nom, une description, le copyright, le créateur etc. Notez que cet élément peut être aussi utilisé dans un fichier @@F@module.xml@@ pour identifier un module. Voici un exemple:
+Dans la balise @@E@info@@, il y a des informations purement indicatives sur
+l'application, comme le nom, une description, le copyright, le créateur etc.
+Notez que cet élément peut être aussi utilisé dans un fichier @@F@module.xml@@
+pour identifier un module. Voici un exemple:
 
 <code xml>
 <info id="testapp@jelix.org" name="testapp" createdate="2005-01-01">
@@ -42,15 +47,22 @@ Dans la balise @@E@info@@, il y a des informations purement indicatives sur l'ap
 </info>
 </code>
 
-Seuls la balise @@E@<version>@@ et les attributs @@A@id@@ et @@A@name@@ sur @@E@<info>@@ sont obligatoires. Les autres éléments sont optionnels.
+Seuls la balise @@E@<version>@@ et les attributs @@A@id@@ et @@A@name@@ sur
+@@E@<info>@@ sont obligatoires. Les autres éléments sont optionnels.
 
-L'attribut id doit être un identifiant unique. Il est donc recommandé d'avoir un identifiant qui ressemble à un email (ou alors un UUID mais c'est moins lisible).
+L'attribut id doit être un identifiant unique. Il est donc recommandé d'avoir un
+identifiant qui ressemble à un email (ou alors un UUID mais c'est moins
+lisible).
 
-L'attribut @@A@name@@ doit être un nom "informatique" (en général, le nom du répertoire de l'application, ou celui du module). L'élément @@E@label@@ contient un nom affichable. 
+L'attribut @@A@name@@ doit être un nom "informatique" (en général, le nom du
+répertoire de l'application, ou celui du module). L'élément @@E@label@@ contient
+un nom affichable. 
 
 ==== dependencies ====
 
-Cet élément @@E@<directories>@@ doit contenir des informations sur les dépendances de l'application. Pour le moment, seules des informations sur la version de jelix requises sont nécessaires.
+Cet élément @@E@<directories>@@ doit contenir des informations sur les
+dépendances de l'application. Pour le moment, seules des informations sur la
+version de jelix requises sont nécessaires.
 
 <code xml>
 <dependencies>
@@ -58,7 +70,10 @@ Cet élément @@E@<directories>@@ doit contenir des informations sur les dépend
 </dependencies>
 </code>
 
-Cet élément peut être utilisé aussi dans un fichier @@F@module.xml@@, et peut contenir alors une ou plusieurs balises @@E@<module>@@, indiquant alors que ce ou ces modules doivent être installés pour que le module puisse fonctionner correctement.
+Cet élément peut être utilisé aussi dans un fichier @@F@module.xml@@, et peut
+contenir alors une ou plusieurs balises @@E@<module>@@, indiquant alors que ce
+ou ces modules doivent être installés pour que le module puisse fonctionner
+correctement.
 
 <code xml>
   <module name="testurls" minversion="2.2" maxversion="2.3" />
@@ -68,7 +83,9 @@ Cet élément peut être utilisé aussi dans un fichier @@F@module.xml@@, et peu
 
 ==== directories ====
 
-Cet élément indique le chemin de certains répertoires, relatifs au répertoire de l'application. Toutes les balises de l'exemple suivant sont obligatoires :
+Cet élément indique le chemin de certains répertoires, relatifs au répertoire de
+l'application. Toutes les balises de l'exemple suivant sont obligatoires :
+
 <code xml>
     <directories>
         <config>var/config</config>
@@ -81,7 +98,9 @@ Cet élément indique le chemin de certains répertoires, relatifs au répertoir
 
 ==== entrypoints ====
 
-La balise @@E@entrypoints@@ liste tout les points d'entrée de l'application (qu'ils soient dans @@F@www/@@ ou @@F@scripts/@@), leur fichier de configuration et leur type.
+La balise @@E@entrypoints@@ liste tout les points d'entrée de l'application
+(qu'ils soient dans @@F@www/@@ ou @@F@scripts/@@), leur fichier de configuration
+et leur type.
 
 <code xml>
     <entrypoints>
@@ -95,7 +114,10 @@ La balise @@E@entrypoints@@ liste tout les points d'entrée de l'application (qu
 
 ===== Le fichier module.xml =====
 
-Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il contient une balise racine @@E@module@@ qui doit contenir une balise @@E@<info>@@ et @@E@<dependencies>@@. Voir plus haut pour savoir comment écrire ces balises. voici un exemple:
+Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il
+contient une balise racine @@E@module@@ qui doit contenir une balise
+@@E@<info>@@ et @@E@<dependencies>@@. Voir plus haut pour savoir comment écrire
+ces balises. voici un exemple:
 
 <code xml>
 <module xmlns="http://jelix.org/ns/module/1.0">
@@ -117,14 +139,17 @@ Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il
 
 ===== Les fichiers defaultconfig.ini et config.ini =====
 
-Pour avoir la liste complète des options, voir le fichier commenté @@F@lib/jelix/core/defaultconfig.ini.php@@, qui est "l'original" de la copie que vous devez avoir dans @@F@var/config/@@.
+Pour avoir la liste complète des options, voir le fichier commenté
+@@F@lib/jelix/core/defaultconfig.ini.php@@, qui est "l'original" de la copie que
+vous devez avoir dans @@F@var/config/@@.
 
 Voici cependant quelques explications sur les différentes sections.
 
 
 ==== section générale ====
 
-Ce sont les paramètres situés en début de fichier. Ils définissent des valeurs par défaut ou génériques à l'application.
+Ce sont les paramètres situés en début de fichier. Ils définissent des valeurs
+par défaut ou génériques à l'application.
 
 
 <code ini>
@@ -143,27 +168,40 @@ use_error_handler = on
 </code>
 
 Détails des paramètres :
-  * **startModule, startAction** : module et action par défaut (redéfinis en général pour chaque type de réponse. Voir la section [[configuration#organisation|précédente]])
-  * **locale, charset** : langue et encodage par défaut des réponses 
-  * **timeZone** : définit le décalage horaire pour toutes les fonctions de dates et heures
+  * **startModule, startAction** : module et action par défaut (redéfinis en
+    général pour chaque type de réponse. Voir la section
+    [[configuration#organisation|précédente]])
+  * **locale, charset** : langue et encodage par défaut des réponses
+  * **timeZone** : définit le décalage horaire pour toutes les fonctions de
+    dates et heures
   * **pluginsPath** : liste des chemins d'accès aux plugins
-  * **theme** : nom du thème sélectionné par défaut. Voir la description du système des [[themes|thèmes]] de Jelix   
-  * **use_error_handler** : cette option devrait rester à //on// pour que Jelix retourne  des informations pertinentes sur les erreurs et exceptions des scripts.
+  * **theme** : nom du thème sélectionné par défaut. Voir la description du
+    système des [[themes|thèmes]] de Jelix
+  * **use_error_handler** : cette option devrait rester à //on// pour que Jelix
+    retourne des informations pertinentes sur les erreurs et exceptions des
+    scripts.
 
 ==== section modules ====
 
 Elle indique, pour chaque module, leur niveau d'accés.
 
    * 0: le module ne doit pas être installé, et n'est pas utilisé
-   * 1: le module est utilisé, mais ne doit pas être accessible directement par le web, et ne peut donc être appelé que par des modules (il n'a donc en général pas de contrôleur, juste des ressources daos, forms etc)
+   * 1: le module est utilisé, mais ne doit pas être accessible directement par
+     le web, et ne peut donc être appelé que par des modules (il n'a donc en
+     général pas de contrôleur, juste des ressources daos, forms etc)
    * 2: module utilisable normalement
 
 
 ==== section coordplugins ====
 
-Doit contenir les noms des plugins à activer. Ils seront chargés à partir des chemins définis dans le paramètre général pluginsPath.
+Doit contenir les noms des plugins à activer. Ils seront chargés à partir des
+chemins définis dans le paramètre général pluginsPath.
 
-Par exemple, ci-dessous la configuration active le plugin de coordinateur gérant l'authentification et dont les paramètres se trouve dans le fichier auth.coord.ini.php. Pour plus de détails, voir la documentation sur [[authentification|l'authentification]]
+Par exemple, ci-dessous la configuration active le plugin de coordinateur gérant
+l'authentification et dont les paramètres se trouve dans le fichier
+auth.coord.ini.php. Pour plus de détails, voir la documentation sur
+[[authentification|l'authentification]]
+
 <code ini>
 [coordplugins]
 auth = "auth.coord.ini.php"
@@ -171,10 +209,13 @@ auth = "auth.coord.ini.php"
 
 
 ==== section responses ====
-Cette section permet de personnaliser les types réponses et leurs alias.
-Chaque ligne est un couple @@<alias de réponse>=<class de la réponse>@@. 
 
-Par exemple, Il est assez courant de vouloir surcharger la réponse html par défaut (jResponseHtml) en introduisant une ligne @@html=myhtmlresponse@@. Voir plus en détails dans [[traitements_communs#personnalisation-de-reponse-commune|personnalisation de réponse commune]] 
+Cette section permet de personnaliser les types réponses et leurs alias. Chaque
+ligne est un couple @@<alias de réponse>=<class de la réponse>@@.
+
+Par exemple, Il est assez courant de vouloir surcharger la réponse html par
+défaut (jResponseHtml) en introduisant une ligne @@html=myhtmlresponse@@. Voir
+plus en détails dans [[traitements_communs#personnalisation-de-reponse-commune|personnalisation de réponse commune]] 
 
 Ci-dessous les valeurs par défaut des différents type de réponses:
 <code ini>
@@ -202,9 +243,14 @@ tcpdf = jResponseTcpdf
 </code>
 
 ==== section error_handling ====
-Les paramètres de cette section permettent de configurer les notifications  survenant lors de l'exécution d'un script de l'application. Pour plus de détails, voir la documentation sur la [[errormanager|gestion d'erreurs]].
 
-Les notifications ont différents niveaux d'importance. Jelix définit les niveaux suivants correspondant à ceux de PHP : 
+Les paramètres de cette section permettent de configurer les notifications
+survenant lors de l'exécution d'un script de l'application. Pour plus de
+détails, voir la documentation sur la [[errormanager|gestion d'erreurs]].
+
+Les notifications ont différents niveaux d'importance. Jelix définit les niveaux
+suivants correspondant à ceux de PHP :
+
   * //default//     = niveau sélectionné si aucun autre niveau ne correspond 
   * //error//       = signale une erreur nécessitant l'interruption du script 
   * //warning//     = signale un mauvais traitement sans toutefois nécessiter l'interruption du script 
@@ -213,6 +259,7 @@ Les notifications ont différents niveaux d'importance. Jelix définit les nivea
   * //strict//      = signale des messages de moteur PHP pour améliorer l'interopérabilité et la compatibilité du script 
 
 Ci-dessous, l'ensemble des paramètres de la section :
+
 <code ini>
 [error_handling]
 messageLogFormat = "%date%\t%ip\t[%code%]\t%msg%\t%file%\t%line%\n"
@@ -243,7 +290,10 @@ les dernières options permettent d'associer un format de sortie à chaque nivea
 
 
 ==== section compilation ====
-Définit le comportement du moteur de template de Jelix. Et notamment de la phase de compilation. Voir la documentation sur les [[templates|templates]] pour plus de détails. 
+
+Définit le comportement du moteur de template de Jelix. Et notamment de la phase
+de compilation. Voir la documentation sur les [[templates|templates]] pour plus
+de détails. 
 
 <code>
 [compilation]
@@ -251,12 +301,16 @@ checkCacheFiletime  = on
 force  = off
 </code>
 
-  * **checkCacheFiletime ** : si //on// alors un template est recompilé si sa date de modification est plus récente que le fichier PHP résultant de la compilation.
+  * **checkCacheFiletime ** : si //on// alors un template est recompilé si sa
+    date de modification est plus récente que le fichier PHP résultant de la
+    compilation.
   * **force** : si //on//, le template est recompilé systématiquement.
 
 ==== section zones ====
 
-Parfois, il peut arriver que l'on veuille désactiver le cache des zones, pour voir le résultat quand on modifie leur contenus. Pour cela, vous pouvez modifier un paramètre dans la configuration, au niveau de la section "zones"
+Parfois, il peut arriver que l'on veuille désactiver le cache des zones, pour
+voir le résultat quand on modifie leur contenus. Pour cela, vous pouvez modifier
+un paramètre dans la configuration, au niveau de la section "zones"
 
 <code ini>
 [zones]
@@ -265,7 +319,9 @@ disableCache = on  // off par defaut
 
 
 ==== section urlengine ====
+
 définition du moteur d'url utilisé.
+
 <code ini>
 [urlengine] 	
 engine        = significant
@@ -283,44 +339,80 @@ defaultEntrypoint= index
 entrypointExtension= .php 	
 
 simple_urlengine_https = 	
-</code> 
+</code>
+
 Détails des paramètres :
-  * **engine** : les moteurs existants sont : simple, basic_significant ou significant
-  * **enableParser** : active la lecture de l'URL. Désactivez le paramètre si l'URL est déjà gérée par un autre programme ( comme le mod_rewrite d'apache), si la réécriture de l'URL correspond à une URL simple et que vous utilisez le moteur "significant". Si vous utilisez le moteur d'URL "simple" désactivez ce paramètre.
-  * **multiView** : si le paramètre est activé dans Apache, vous ne devez pas indiquez le suffix ".php", alors activez ce paramètre
-  * **scriptNameServerVariable** : le nom de la variable $_SERVER qui contient le nom du script exemple : si vous appelez http://mysite.com/foo/index.php, c'est la variable qui contient "/foo/index.php". Ce nom peut être SCRIPT_NAME, ORIG_SCRIPT_NAME, PHP_SELF ou REDIRECT_SCRIPT_URL. Il est automatiquement détecté par jelix mais peut parfois échouer, donc vous pourriez le définir ici.
-  * **pathInQueryParameter** : si vous utilisez des règles de réécriture qui déplacent le pathinfo dans le queryparameter comme @@RewriteRule ^(.*)$ index.php/?jpathinfo=$1 [L,QSA]@@ alors vous devriez indiquer dans pathInfoInQueryParameter le nom du paramètre qui contient la valeur de pathinfo (exemple "jpathinfo"), laissez vide si vous n'utilisez pas de telles règles de réécriture
-  * **basePath** : ce paramètre correspond au répertoire "de base" de votre application, indiquez /aaa/bbb/www si vous accédez à votre application par http://foo.com/aaa/bbb/www/index.php, ou indiquez juste / si l'accès se fait via  http://foo.com/index.php
-  * **jelixWWWPath** : contient le chemin vers les CSS de Jelix, si vous le modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
+
+  * **engine** : les moteurs existants sont : simple, basic_significant ou
+    significant
+  * **enableParser** : active la lecture de l'URL. Désactivez le paramètre si
+    l'URL est déjà gérée par un autre programme ( comme le mod_rewrite
+    d'apache), si la réécriture de l'URL correspond à une URL simple et que vous
+    utilisez le moteur "significant". Si vous utilisez le moteur d'URL "simple"
+    désactivez ce paramètre.
+  * **multiView** : si le paramètre est activé dans Apache, vous ne devez pas
+    indiquez le suffix ".php", alors activez ce paramètre
+  * **scriptNameServerVariable** : le nom de la variable $_SERVER qui contient
+    le nom du script exemple : si vous appelez http://mysite.com/foo/index.php,
+    c'est la variable qui contient "/foo/index.php". Ce nom peut être
+    SCRIPT_NAME, ORIG_SCRIPT_NAME, PHP_SELF ou REDIRECT_SCRIPT_URL. Il est
+    automatiquement détecté par jelix mais peut parfois échouer, donc vous
+    pourriez le définir ici.
+  * **pathInQueryParameter** : si vous utilisez des règles de réécriture qui
+    déplacent le pathinfo dans le queryparameter comme @@RewriteRule ^(.*)$ index.php/?jpathinfo=$1 [L,QSA]@@
+    alors vous devriez indiquer dans pathInfoInQueryParameter le nom du
+    paramètre qui contient la valeur de pathinfo (exemple "jpathinfo"), laissez
+    vide si vous n'utilisez pas de telles règles de réécriture
+  * **basePath** : ce paramètre correspond au répertoire "de base" de votre
+    application, indiquez /aaa/bbb/www si vous accédez à votre application par
+    http://foo.com/aaa/bbb/www/index.php, ou indiquez juste / si l'accès se fait
+    via http://foo.com/index.php
+  * **jelixWWWPath** : contient le chemin vers les CSS de Jelix, si vous le
+       modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
   * **defaultEntrypoint** : contient le nom du pont d'entrée de l'application
   * **entrypointExtension** : contient l'extension de ce dernier
-  * **simple_urlengine_https** : contient la liste des actions requérant le protocole HTTPS
+  * **simple_urlengine_https** : contient la liste des actions requérant le
+    protocole HTTPS
 
 === notfound ===
-Gestion des redirections vers une page 404 quand l'url n'est pas trouvée 	
+
+Gestion des redirections vers une page 404 quand l'url n'est pas trouvée
+
 <code ini>
 notfoundAct = 	
-</code> 	
-  * **notfoundAct** : contient le nom de l'action qui affichera l'erreur 404. Si le paramètre est laissé vide alors c'est l'action @@jelix~error:notfound@@ qui sera utilisée.
+</code>
 
-Utiliser la syntaxe des sélecteurs (Cf.[[selecteurs|L'utilité des sélecteurs]]) et placer le sélecteur de votre action entre guillemet :
+  * **notfoundAct** : contient le nom de l'action qui affichera l'erreur 404. Si le
+paramètre est laissé vide alors c'est l'action @@jelix~error:notfound@@ qui sera
+utilisée.
+
+Utiliser la syntaxe des sélecteurs (Cf.[[selecteurs|L'utilité des sélecteurs]])
+et placer le sélecteur de votre action entre guillemet :
 
 <code ini>
 notfoundAct = "monModule~monControleur:monAction"	
 </code> 
 
 ===  urls.xml ===
-Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et Module/action/parametres, voir la documentation du le [[/urls/significant|moteur significant]] 	
-<code ini> 	
+
+Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et
+Module/action/parametres, voir la documentation du le [[/urls/significant|moteur significant]] 
+
+<code ini>
 significantFile = "urls.xml" 
 </code> 
-  * **significantFile** : nom du fichier contenant les regles de réécritures de l'application
+
+  * **significantFile** : nom du fichier contenant les regles de réécritures de
+l'application
 
 ==== section logfiles ====
+
 Cette section définit comment seront écrits les logs à l'aide de [[deboggage|jLog]].
 
 Les fichiers logs sont stockés dans le dossier /var/log/ de votre application.
-Vous pouvez définir un fichier de log par module en associant le nom du module à un nom de fichier log et faisant un appel à jLog en passant en dernier argument le nom du module.
+Vous pouvez définir un fichier de log par module en associant le nom du module à
+un nom de fichier log et faisant un appel à jLog en passant en dernier argument
+le nom du module.
 
 <code ini>
 ; log par défaut
@@ -330,20 +422,28 @@ Vous pouvez définir un fichier de log par module en associant le nom du module 
   news = news.log
 </code>
 
-Autre exemple utilisant l'extension Firebug du navigateur Firefox (ce qui permet une vision très rapide des messages de débogage). 
+Autre exemple utilisant l'extension Firebug du navigateur Firefox (ce qui permet
+une vision très rapide des messages de débogage).
+
 <code ini>
 [logfiles]
 default="!firebug"
 file = "messages.log"
 </code>
 
-Et pour un dump de contenu de taille importante, il suffit d'indiquer le type 'file' au dernier paramètres des méthodes de jLog pour l'obtenir à nouveau dans un fichier de log classique. 
+Et pour un dump de contenu de taille importante, il suffit d'indiquer le type
+'file' au dernier paramètres des méthodes de jLog pour l'obtenir à nouveau dans
+un fichier de log classique. 
 
-Pour plus de détails sur l'utilisation des fichiers log dans Jelix se reporter au manuel concernant [[deboggage|jLog]]
+Pour plus de détails sur l'utilisation des fichiers log dans Jelix se reporter
+au manuel concernant [[deboggage|jLog]].
 
 
 ==== section mailer ====
-Définit les paramètres d'envoi de mail à travers l'application, comme par exemple pour une authentification ou encore au plus bas niveau pour les notifications.
+
+Définit les paramètres d'envoi de mail à travers l'application, comme par
+exemple pour une authentification ou encore au plus bas niveau pour les
+notifications.
 
 <code ini>
 [mailer]
@@ -378,7 +478,11 @@ smtpTimeout = 10
 
 
 ==== section acl et acl2 ====
-Définit les paramètres de la gestion des droits d'accès dans l'application. Voir la documentation sur la [[/droits2|gestion des droits]]. Vous choisirez d'utiliser soit jAcl, soit jAcl2 mais il n'est pas recommandé d'utiliser les deux en même temps.
+
+Définit les paramètres de la gestion des droits d'accès dans l'application. Voir
+la documentation sur la [[/droits2|gestion des droits]]. Vous choisirez
+d'utiliser soit jAcl, soit jAcl2 mais il n'est pas recommandé d'utiliser les
+deux en même temps.
 
 <code ini>
 [acl]
@@ -392,9 +496,10 @@ driver =
 </code>
 
 
-
 ==== section sessions ====
-Définit le mode de gestion des sessions PHP (fichier ou bases de données). Pour plus de détails, voir la documentation sur les [[session|sessions]]
+
+Définit le mode de gestion des sessions PHP (fichier ou bases de données). Pour
+plus de détails, voir la documentation sur les [[session|sessions]].
 
 <code ini>
 [sessions]
@@ -418,6 +523,7 @@ shared_session = off
 ==== section forms ====
 
 définition de la forme du datepicker
+
 <code ini>                                                                                                    
 [forms]
 ; define input type for datetime widgets : "textboxes" or "menulists"
@@ -436,6 +542,7 @@ default = jelix/js/jforms/datepickers/default/init.js
 ==== section htmleditors ====
 
 définition du chemin de l'editeur html
+
 <code ini>
 [htmleditors]
 default.engine.name = wymeditor
@@ -454,7 +561,9 @@ Rôle : FIXME
 </code>
 
 ==== section wikieditors ====
+
 définition de la barre d'outils de l'éditeur wiki 
+
 <code ini>
 [wikieditors]
 default.engine.name = wr3

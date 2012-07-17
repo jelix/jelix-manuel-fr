@@ -1,19 +1,30 @@
 ~~LANG:EN@enman:responseajax~~
 
-Bien que le terme AJAX précise qu'une réponse doit être en XML (d'où le X dans AJAX), AJAX est souvent utilisé avec d'autres types de format.
+Bien que le terme AJAX précise qu'une réponse doit être en XML (d'où le X dans
+AJAX), AJAX est souvent utilisé avec d'autres types de format.
 
-Selon ce que vous attendez côté client, soit dans la propriété responseText, soit dans la propriété responseXml de l'objet xmlHttpRequest, vous utiliserez un objet jResponse différent.
+Selon ce que vous attendez côté client, soit dans la propriété responseText,
+soit dans la propriété responseXml de l'objet xmlHttpRequest, vous utiliserez un
+objet jResponse différent.
 
-  * Pour tout ce qui est contenu XML quelconque, vous utiliserez [[responsexml|jResponseXml]]
+  * Pour tout ce qui est contenu XML quelconque, vous utiliserez
+    [[responsexml|jResponseXml]]
   * Pour des réponses en JSON, vous utiliserez [[responsejson|jResponseJson]]
-  * Pour renvoyer des fragments de code HTML, il ne faut **pas** utiliser @@C@jResponseHtml@@, mais @@C@jResponseHtmlFragment@@ (voir exemple ci-dessous).
-  * Dans les autres cas, vous utiliserez certainement [[responsetext|jResponseText]].
+  * Pour renvoyer des fragments de code HTML, il ne faut **pas** utiliser
+    @@C@jResponseHtml@@, mais @@C@jResponseHtmlFragment@@ (voir exemple
+    ci-dessous).
+  * Dans les autres cas, vous utiliserez certainement
+    [[responsetext|jResponseText]].
 
-Dans votre controleur, vous pouvez utiliser @@$GLOBALS['gJCoord']->request->isAjax()@@ pour vérifier que la requête est une vrai requête AJAX (envoyée donc avec XMLHttpRequest).
+Dans votre controleur, vous pouvez utiliser
+@@$GLOBALS['gJCoord']->request->isAjax()@@ pour vérifier que la requête est une
+vrai requête AJAX (envoyée donc avec XMLHttpRequest).
 
 ===== Renvoyer des fragments de code HTML =====
 
-Il ne faut pas utiliser @@C@jResponseHtml@@, car cet objet génère tout ce qu'il faut pour une page HTML : le ''<head>'', le ''<body>'' etc... Bien souvent, dans une requête AJAX, on ne veut récupérer qu'un fragment de code HTML.
+Il ne faut pas utiliser @@C@jResponseHtml@@, car cet objet génère tout ce qu'il
+faut pour une page HTML : le ''<head>'', le ''<body>'' etc... Bien souvent, dans
+une requête AJAX, on ne veut récupérer qu'un fragment de code HTML.
 
 @@C@jResponseHtmlFragment@@ est adaptée pour cela :
 
@@ -36,8 +47,16 @@ Il ne faut pas utiliser @@C@jResponseHtml@@, car cet objet génère tout ce qu'i
 
 ==== À propos de l'utilisation de jforms dans les réponses Ajax ====
 
-Il y a un souci connu quand on utilise [[jforms|un formulaire jforms]] dans un template pour une réponse autre que html pour faire une réponse ajax.
+Il y a un souci connu quand on utilise [[jforms|un formulaire jforms]] dans un
+template pour une réponse autre que html pour faire une réponse ajax.
 
-En effet, pour fonctionner correctement, un formulaire jforms a besoin de la présence du fichier @@F@jforms.js@@ dans la page qui appelle la requête ajax. Ce fichier est inclus automatiquement par le plugin form, en appelant la méthode @@M@addJsLink@@ de la réponse. 
+En effet, pour fonctionner correctement, un formulaire jforms a besoin de la
+présence du fichier @@F@jforms.js@@ dans la page qui appelle la requête ajax. Ce
+fichier est inclus automatiquement par le plugin form, en appelant la méthode
+@@M@addJsLink@@ de la réponse.
 
-Comme les fragments HTML renvoyés par les reponses ajax n'ont pas d'en-tête HTML @@E@<head>@@, le script n'est pas inclus dans la page html final, ce qui causera des erreurs javascript. Pour le moment, il n'y a pas d'autre solution que d'inclure ce script jforms.js "à la main" lors de la génération de la page hôte (celle qui fait donc la requête ajax).
+Comme les fragments HTML renvoyés par les reponses ajax n'ont pas d'en-tête HTML
+@@E@<head>@@, le script n'est pas inclus dans la page html final, ce qui causera
+des erreurs javascript. Pour le moment, il n'y a pas d'autre solution que
+d'inclure ce script jforms.js "à la main" lors de la génération de la page hôte
+(celle qui fait donc la requête ajax).

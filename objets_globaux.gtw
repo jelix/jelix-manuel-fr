@@ -1,11 +1,15 @@
 ~~LANG:EN@enman:global-objects~~
 
-Il existe des variables globales, auxquelles vous pouvez accéder depuis n'importe où. Les voici.
+Il existe des variables globales, auxquelles vous pouvez accéder depuis
+n'importe où. Les voici.
 
 
 ===== $gJConfig =====
 
-L'objet $gJConfig permet d'accéder à la configuration de l'application Jelix. Chacune de ses propriétés correspond à un paramètre de configuration des fichiers ini ( fusion du fichier @@F@defaultconfig.ini.php@@ et celui indiqué pour le point d'entrée).
+L'objet $gJConfig permet d'accéder à la configuration de l'application Jelix.
+Chacune de ses propriétés correspond à un paramètre de configuration des
+fichiers ini ( fusion du fichier @@F@defaultconfig.ini.php@@ et celui indiqué
+pour le point d'entrée).
 
 ==== Appel de gJConfig ====
 
@@ -25,6 +29,7 @@ function test()
 ==== Accès à la configuration ====
 
 Si le fichier config.ini.php de votre point d'entrée contient ceci :
+
 <code ini>
 startModule = "testapp"
 startAction = "main:index"
@@ -51,7 +56,11 @@ function test()
 
 ===== $gJCoord =====
 
-L'objet $gJCoord permet d'accéder aux paramètres de la requête entre autres. Il s'agit en fait d'une instance de la classe @@C@jCoordinator@@. Vous avez alors accés à un certain nombre de chose : liste de ses plugins, l'objet réponse courant, l'objet @@C@jRequest@@ courant (contenant les paramètres de la requête http entre autre), le nom du module et le nom de l'action appelée etc..
+L'objet $gJCoord permet d'accéder aux paramètres de la requête entre autres. Il
+s'agit en fait d'une instance de la classe @@C@jCoordinator@@. Vous avez alors
+accés à un certain nombre de chose : liste de ses plugins, l'objet réponse
+courant, l'objet @@C@jRequest@@ courant (contenant les paramètres de la requête
+http entre autre), le nom du module et le nom de l'action appelée etc..
 
 ==== Appel de gJCoord ====
 
@@ -68,6 +77,7 @@ function test()
 ==== Accès aux paramètres de la requête ====
 
 Si votre script a été appelé par l'URL /index.php?test=1 alors
+
 <code php>
 function test()
 {

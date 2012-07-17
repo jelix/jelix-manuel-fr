@@ -1,26 +1,38 @@
 ~~LANG:EN@enman:coordplugins/zendframework~~
 
-Le plugin zendframework est un plugin pour le coordinateur. Il permet d'inclure la classe Zend_Loader du Zend Framework afin de pouvoir l'utiliser dans votre code Jelix pour appeler les librairies du Zend Framework.
+Le plugin zendframework est un plugin pour le coordinateur. Il permet d'inclure
+la classe Zend_Loader du Zend Framework afin de pouvoir l'utiliser dans votre
+code Jelix pour appeler les librairies du Zend Framework.
 
 ===== Déclaration du plugin =====
 
-Pour activer le plugin zendframework, indiquez-le avec son fichier de configuration dans la section [coordplugins] du fichier de configuration de votre application :
+Pour activer le plugin zendframework, indiquez-le avec son fichier de
+configuration dans la section [coordplugins] du fichier de configuration de
+votre application :
 
 <code ini>
 [coordplugins]
 zendframework = zendframework.coord.ini.php
 </code>
 
-Copier le fichier de configuration //zendframework.coord.ini.php// dans le répertoire de ''var/config/'' de votre application, depuis ''lib/jelix/plugins/coord/zendframework/zendframework.coord.ini.php.dist''.
+Copier le fichier de configuration //zendframework.coord.ini.php// dans le
+répertoire de ''var/config/'' de votre application, depuis
+''lib/jelix/plugins/coord/zendframework/zendframework.coord.ini.php.dist''.
 
-Éditez ensuite le fichier ''zendframework.coord.ini.php'' et remplissez la variable ''zendLibPath'' pour indiquer le chemin vers le Zend Framework sur votre serveur.
+Éditez ensuite le fichier ''zendframework.coord.ini.php'' et remplissez la
+variable ''zendLibPath'' pour indiquer le chemin vers le Zend Framework sur
+votre serveur.
 
 
 ===== Utiliser le plugin =====
 
-Bien que le plugin zendframework soit activé dans votre application, le Zend Framework n'est pas chargé. En effet il est inutile de l'inclure à chaque action alors que vous n'allez avoir besoin d'utiliser certaines de ses librairies que dans peu d'actions.
+Bien que le plugin zendframework soit activé dans votre application, le Zend
+Framework n'est pas chargé. En effet il est inutile de l'inclure à chaque action
+alors que vous n'allez avoir besoin d'utiliser certaines de ses librairies que
+dans peu d'actions.
 
-Il faut donc explicitement déclarer que vous voulez utiliser les bibliothèques du Zend Framework dans des actions pour lesquelles vous en avez besoin.
+Il faut donc explicitement déclarer que vous voulez utiliser les bibliothèques
+du Zend Framework dans des actions pour lesquelles vous en avez besoin.
 
 Cela se fait en utilisant la variable de classe ''$pluginParams'' du controller.
 
@@ -32,7 +44,8 @@ public $pluginParams = array(
 );
 </code>
 
-Vous pouvez donc ensuite utiliser les bibliothèques du Zend Framework dans votre action ''index'', exemple avec Zend_Pdf :
+Vous pouvez donc ensuite utiliser les bibliothèques du Zend Framework dans votre
+action ''index'', exemple avec Zend_Pdf :
 
 <code php>
 function index() {

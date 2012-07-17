@@ -1,32 +1,53 @@
 ~~LANG:EN@enman:locales~~
 
-Jelix possède son propre mécanisme de localisation/internationalisation. Les fonctions setlocale et gettext de php ne sont pas utilisées car trop contraignantes à mettre en place, et leur configuration est aléatoire sur les serveurs.
+Jelix possède son propre mécanisme de localisation/internationalisation. Les
+fonctions setlocale et gettext de php ne sont pas utilisées car trop
+contraignantes à mettre en place, et leur configuration est aléatoire sur les
+serveurs.
 
 ===== Principes =====
 
-Chaque texte ou chaîne que vous voulez traduire est associée à une clé, un code. Ces associations sont stockées dans des fichiers "properties". Chaque fichier properties étant attribué à une langue et un encodage de caractère. La langue et l'encodage par défaut sont configurés dans le fichier de config de votre application : ce sont les paramètres //locale// et //charset//, que vous pouvez récupérer en faisant 
+Chaque texte ou chaîne que vous voulez traduire est associée à une clé, un code.
+Ces associations sont stockées dans des fichiers "properties". Chaque fichier
+properties étant attribué à une langue et un encodage de caractère. La langue et
+l'encodage par défaut sont configurés dans le fichier de config de votre
+application : ce sont les paramètres //locale// et //charset//, que vous pouvez
+récupérer en faisant 
 
 <code php>
   $lang = $GLOBALS['gJConfig']->locale;
 </code>
 
-Mais vous n'aurez pas à utiliser ce paramètre, sauf utilisation particulière. En effet, pour récupérer une chaîne dans la langue courante, il suffit d'appeler jLocale::get('selecteurDeLocale'), ou dans les templates d'utiliser la syntaxe @selecteurDeLocale@ (voir [[templates|la page sur les templates]]).
+Mais vous n'aurez pas à utiliser ce paramètre, sauf utilisation particulière. En
+effet, pour récupérer une chaîne dans la langue courante, il suffit d'appeler
+jLocale::get('selecteurDeLocale'), ou dans les templates d'utiliser la syntaxe
+@selecteurDeLocale@ (voir [[templates|la page sur les templates]]).
 
 
 
 ===== Fichiers properties =====
 
-Ce sont des fichiers contenant des traductions. Ils sont situés dans le répertoire //locales// des modules. Ce répertoire a une organisation spécifique. Il contient des sous répertoires pour chaque langue. Exemple ://locales/fr_FR///, //locales/en_US///, etc. Et dans chacun de ces sous-répertoires, il y a les fichiers properties correspondant à la langue.
+Ce sont des fichiers contenant des traductions. Ils sont situés dans le
+répertoire //locales// des modules. Ce répertoire a une organisation spécifique.
+Il contient des sous répertoires pour chaque langue. Exemple
+://locales/fr_FR///, //locales/en_US///, etc. Et dans chacun de ces
+sous-répertoires, il y a les fichiers properties correspondant à la langue.
 
 ==== Noms des fichiers ====
 
-Le nom des fichiers properties est structuré comme suit : //codefichier.charset//.properties. Codefichier est un nom de code que l'on utilisera dans les sélecteurs, et charset correspond à un encodage de caractères. Exemple : foo.ISO-8859-1.properties , foo.UTF-8.properties etc.
+Le nom des fichiers properties est structuré comme suit :
+//codefichier.charset//.properties. Codefichier est un nom de code que l'on
+utilisera dans les sélecteurs, et charset correspond à un encodage de
+caractères. Exemple : foo.ISO-8859-1.properties , foo.UTF-8.properties etc.
 
-Si dans la configuration, "locale=fr_FR" et "charset=ISO-8859-1", alors ce sera le fichier fr_FR/foo.ISO-8859-1.properties qui sera utilisé.
+Si dans la configuration, "locale=fr_FR" et "charset=ISO-8859-1", alors ce sera
+le fichier fr_FR/foo.ISO-8859-1.properties qui sera utilisé.
 
 ==== Contenu des fichiers ====
 
-La structure des fichiers est simple : il s'agit d'une suite de lignes //cle=chaine traduite//. Exemple, pour un fichier fr_FR/foo.ISO-8859-1.properties :
+La structure des fichiers est simple : il s'agit d'une suite de lignes
+//cle=chaine traduite//. Exemple, pour un fichier
+fr_FR/foo.ISO-8859-1.properties :
 
 <code ini>
 title.offlineElements = éléments à traiter
@@ -51,7 +72,9 @@ buttons.search=Search
 
 == Passage à la ligne ==
 
-Si un texte est long et que vous voulez l'écrire sur plusieurs lignes, vous devez mettre un anti-slash (\) à la fin de chaque retour à la ligne (sauf sur la dernière du texte)
+Si un texte est long et que vous voulez l'écrire sur plusieurs lignes, vous
+devez mettre un anti-slash (\) à la fin de chaque retour à la ligne (sauf sur la
+dernière du texte)
 
 <code ini>
 intro=ceci est un trés tres\
@@ -60,7 +83,8 @@ plusieurs lignes
 foo=bar
 </code>
 
-Cependant, cela n'insère pas un saut de ligne (\n) dans la chaine. Pour insérer un vrai saut de ligne, il faut utiliser \n ou \r
+Cependant, cela n'insère pas un saut de ligne (\n) dans la chaine. Pour insérer
+un vrai saut de ligne, il faut utiliser \n ou \r
 
 <code ini>
 intro=ceci est un très très\
@@ -70,11 +94,17 @@ intro=ceci est un très très\
 
 == Commentaires ==
 
-Vous pouvez aussi mettre des commentaires. Ils doivent commencer par un #,  le reste de la ligne étant alors ignoré. Vous pouvez mettre un commentaire en début de ligne ou à la suite d'une chaîne traduite. De ce fait, si vous voulez utiliser un # dans votre chaîne, il faut précéder ce caractère par un "\".
+Vous pouvez aussi mettre des commentaires. Ils doivent commencer par un #, le
+reste de la ligne étant alors ignoré. Vous pouvez mettre un commentaire en début
+de ligne ou à la suite d'une chaîne traduite. De ce fait, si vous voulez
+utiliser un # dans votre chaîne, il faut précéder ce caractère par un "\".
 
 
 == Espaces ==
-Il y a un "trim" qui est fait sur la chaîne traduite, c'est à dire que les espaces avant et après sont supprimés. Si vous voulez que la chaîne soit un espace, vous utiliserez alors \w
+
+Il y a un "trim" qui est fait sur la chaîne traduite, c'est à dire que les
+espaces avant et après sont supprimés. Si vous voulez que la chaîne soit un
+espace, vous utiliserez alors \w
 
 <code ini>
 foo= \w
@@ -82,24 +112,41 @@ foo= \w
 
 == Entités HTML ==
 
-Les chaînes localisées ne devraient pas contenir du code HTML. D'une part parce qu'une chaîne localisée n'est pas forcément destinée à être incluse dans du HTML, mais aussi parce que les réponses HTML échappent (htmlspecialchars) à plusieurs endroits le contenu que vous lui donnez. 
-De ce fait, les entités et autres signes HTML seront échappés si vous donnez par exemple une chaîne pour en faire le titre d'une page. Les entités ne seront donc pas interprétées comme telles par le navigateur.
+Les chaînes localisées ne devraient pas contenir du code HTML. D'une part parce
+qu'une chaîne localisée n'est pas forcément destinée à être incluse dans du
+HTML, mais aussi parce que les réponses HTML échappent (htmlspecialchars) à
+plusieurs endroits le contenu que vous lui donnez. De ce fait, les entités et
+autres signes HTML seront échappés si vous donnez par exemple une chaîne pour en
+faire le titre d'une page. Les entités ne seront donc pas interprétées comme
+telles par le navigateur.
 
-Si vous avez besoin d'utiliser des caractères spécifiques, choisissez l'encodage adéquat plutôt que de recourir aux entités HTML. C'est pour cette raison qu'il est fortement encouragé d'utiliser l'encodage UTF-8, qui est d'ailleurs en passe d'être l'encodage "universel" dans les applications web (en plus d'Unicode/UTF-16).
+Si vous avez besoin d'utiliser des caractères spécifiques, choisissez l'encodage
+adéquat plutôt que de recourir aux entités HTML. C'est pour cette raison qu'il
+est fortement encouragé d'utiliser l'encodage UTF-8, qui est d'ailleurs en passe
+d'être l'encodage "universel" dans les applications web (en plus
+d'Unicode/UTF-16).
 
-Malgré tout si vous souhaitez absolument mettre du html dans une chaîne localisée qui doit être utilisée dans un template, la possibilité est de mettre ".html" au bout de la chaîne comme suit :
+Malgré tout si vous souhaitez absolument mettre du html dans une chaîne
+localisée qui doit être utilisée dans un template, la possibilité est de mettre
+".html" au bout de la chaîne comme suit :
 
 <code ini>
 mon.beau.titre.de.paragraphe.html = <strong>Mon Titre de paragraphe</strong>
 </code>
 
-Dans le template, il faut récupérer cette chaine localisée uniquement avec @@{jlocale}@@, qui n'échappera donc pas le contenu si le nom de la locale se termine par ".html". 
+Dans le template, il faut récupérer cette chaine localisée uniquement avec
+@@{jlocale}@@, qui n'échappera donc pas le contenu si le nom de la locale se
+termine par ".html". 
 
 ===== Récupération d'une chaîne localisée =====
 
-Pour récupérer une chaîne, il faut utiliser la méthode statique get de jLocale. Cette méthode accepte en premier argument un sélecteur de locale, qui a cette structure : //module~codefichier.clechaine//. la partie "module~" est facultative s'il s'agit d'un fichier se trouvant dans le module courant.
+Pour récupérer une chaîne, il faut utiliser la méthode statique get de jLocale.
+Cette méthode accepte en premier argument un sélecteur de locale, qui a cette
+structure : //module~codefichier.clechaine//. la partie "module~" est
+facultative s'il s'agit d'un fichier se trouvant dans le module courant.
 
-Pour récupérer par exemple la valeur de buttons.save dans foo.ISO-8859-1.properties situé dans le module "bar" : 
+Pour récupérer par exemple la valeur de buttons.save dans
+foo.ISO-8859-1.properties situé dans le module "bar" : 
 
 <code php>
   $chaine = jLocale::get("bar~foo.buttons.save");
@@ -111,48 +158,60 @@ Dans un template cela donnerait par exemple :
   <input type="button" value="{@bar~foo.buttons.save@}" />
 </code>
 
-Note : pour l'utilisation dans les templates, voir les possibilités dans [[templates|la page sur les templates]]
+Note : pour l'utilisation dans les templates, voir les possibilités dans
+[[templates|la page sur les templates]]
 
 
 ===== Chaîne localisée avec paramètres =====
 
-Il peut être utile d'avoir des chaînes localisées dans lesquelles on veut insérer des valeurs dynamiquement. Par exemple, imaginons que voulez écrire :
+Il peut être utile d'avoir des chaînes localisées dans lesquelles on veut
+insérer des valeurs dynamiquement. Par exemple, imaginons que voulez écrire :
 
 <code>
    Vous allez sur le site http://foo.com et vous cliquez sur la rubrique voiture
 </code>
 
-Vous voulez pouvoir changer l'url du site et le nom de la rubrique. Vous pouvez alors passer les données en paramètres à jLocal :
+Vous voulez pouvoir changer l'url du site et le nom de la rubrique. Vous pouvez
+alors passer les données en paramètres à jLocal :
 
 
 <code php>
   $chaine = jLocale::get("bar~foo.phrase", array('http://foo.com', 'voiture'));
 </code>
 
-Et dans le fichier properties, vous mettez un %s partout où vous voulez insérer des valeurs dynamiques :
+Et dans le fichier properties, vous mettez un %s partout où vous voulez insérer
+des valeurs dynamiques :
 
 <code>
    phrase = Vous allez sur le site %s et vous cliquez sur la rubrique %s
 </code>
 
-Et il faut donner les paramètres dans l'ordre d'apparition des %s. En fait, la chaîne est traité par la fonction sprintf de php, donc vous avez toutes les possibilités syntaxiques de sprintf.
+Et il faut donner les paramètres dans l'ordre d'apparition des %s. En fait, la
+chaîne est traité par la fonction sprintf de php, donc vous avez toutes les
+possibilités syntaxiques de sprintf.
 
-En particulier, il se peut que l'ordre d'insertion des paramètres change d'une langue à une autre. Plutôt donc que de modifier l'ordre des paramètres quand vous appelez jLocale, vous indiquez quel paramètre va à quel endroit dans la chaîne localisée, au moyen de la syntaxe %x$s où x est un nombre d'ordre.
+En particulier, il se peut que l'ordre d'insertion des paramètres change d'une
+langue à une autre. Plutôt donc que de modifier l'ordre des paramètres quand
+vous appelez jLocale, vous indiquez quel paramètre va à quel endroit dans la
+chaîne localisée, au moyen de la syntaxe %x$s où x est un nombre d'ordre.
 
 <code>
    phrase = Vous allez sur le site %1$s et vous cliquez sur la rubrique %2$s
 </code>
 
-En anglais (même si ce n'est pas la véritable traduction, c'est juste pour l'exemple) ça pourrait donner ça :
+En anglais (même si ce n'est pas la véritable traduction, c'est juste pour
+l'exemple) ça pourrait donner ça :
 
 <code>
    phrase = Clic on the %2$s section, when you go on the %1$s web site.
 </code>
 
-Ainsi le premier paramètre ira à l'emplacement de %1$s, le deuxième à la place de %2$s etc...
+Ainsi le premier paramètre ira à l'emplacement de %1$s, le deuxième à la place
+de %2$s etc...
 
 
-Par contre, dans un template, vous ne pouvez pas utiliser la notion "@foo@" quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
+Par contre, dans un template, vous ne pouvez pas utiliser la notion "@foo@"
+quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
 
 <code>
    <p>{jlocale "bar~foo.phrase", array('http://foo.com', 'voiture')}</p>
@@ -161,20 +220,30 @@ Par contre, dans un template, vous ne pouvez pas utiliser la notion "@foo@" quan
 
 ===== Changer la langue dynamiquement =====
 
-Jelix fourni un plugin pour le coordinateur  qui permet de changer la langue dynamiquement. C'est le plugin autolocale (qui est situé dans lib/jelix/plugins/coord/). (voir [[plugins/coord|la section sur les plugins de coordinateur]]).
+Jelix fourni un plugin pour le coordinateur qui permet de changer la langue
+dynamiquement. C'est le plugin autolocale (qui est situé dans
+@@F@lib/jelix/plugins/coord/@@). (voir [[plugins/coord|la section sur les plugins de
+coordinateur]]).
 
-Pour cela, le plugin regarde si un paramètre est présent dans l'url, indiquant la nouvelle langue à prendre en compte, et utilisera cette langue durant le reste de la visite. En fait le nouveau code langue est stocké dans une variable de session, et le plugin modifie l'option de configuration //locale// une fois la configuration lue (le fichier de configuration n'est donc pas modifié).
+Pour cela, le plugin regarde si un paramètre est présent dans l'url, indiquant
+la nouvelle langue à prendre en compte, et utilisera cette langue durant le
+reste de la visite. En fait le nouveau code langue est stocké dans une variable
+de session, et le plugin modifie l'option de configuration //locale// une fois
+la configuration lue (le fichier de configuration n'est donc pas modifié).
 
-Aussi c'est totalement transparent pour vous. Pour connaître la langue à tout moment, il suffit de faire comme d'habitude :
+Aussi c'est totalement transparent pour vous. Pour connaître la langue à tout
+moment, il suffit de faire comme d'habitude :
 
 <code php>
   $lang = $GLOBALS['gJConfig']->locale;
 </code>
 
 
-Pour utiliser le plugin, copiez le fichier //lib/jelix/plugins/coord/autolocale/autolocale.coord.ini.php.dist// dans //var/config/// en le renommant autolocale.coord.ini.php.
+Pour utiliser le plugin, copiez le fichier
+@@F@lib/jelix/plugins/coord/autolocale/autolocale.coord.ini.php.dist@@ dans
+@@F@var/config/@@ en le renommant @@F@autolocale.coord.ini.php@@.
 
-Les trois paramètres importants dans ce fichier sont 
+Les trois paramètres importants dans ce fichier sont :
 
 <code ini>
 enableUrlDetection= on
@@ -182,16 +251,24 @@ urlParamNameLanguage=lang
 availableLanguageCode = fr_FR,en_US
 </code>
 
-Il faut bien sûr activer la détection de la langue dans l'url avec le paramètre //enableUrlDetection//. //availableLanguageCode// permet d'indiquer la liste des code des langues disponibles sur le site, ainsi les autres codes langues ne seront pas possibles. Le paramètre //urlParamNameLanguage// contient le nom du paramètre de l'url qui contiendra le code langue à utiliser. Aussi, vous pouvez mettre des liens sur votre site qui permettent à l'utilisateur de changer la langue. Exemple :
+Il faut bien sûr activer la détection de la langue dans l'url avec le paramètre
+//enableUrlDetection//. //availableLanguageCode// permet d'indiquer la liste des
+code des langues disponibles sur le site, ainsi les autres codes langues ne
+seront pas possibles. Le paramètre //urlParamNameLanguage// contient le nom du
+paramètre de l'url qui contiendra le code langue à utiliser. Aussi, vous pouvez
+mettre des liens sur votre site qui permettent à l'utilisateur de changer la
+langue. Exemple :
 
 <code html>
   <a href="index.php?lang=fr_FR">français</a>
   <a href="index.php?lang=en_EN">english</a>
 </code>
 
-Bien sûr, si vous utilisez le moteur d'url //significant//, il est possible que vous définissiez des urls significatives spécifiques pour chaque langue.
+Bien sûr, si vous utilisez le moteur d'url //significant//, il est possible que
+vous définissiez des urls significatives spécifiques pour chaque langue.
 
-Enfin, il faut activer le plugin. Pour cela, dans la configuration de jelix, mettez dans la section //coordplugins// :
+Enfin, il faut activer le plugin. Pour cela, dans la configuration de jelix,
+mettez dans la section //coordplugins// :
 
 <code ini>
 [coordplugins]
@@ -200,15 +277,24 @@ autolocale = autolocale.coord.ini.php
 
 ===== Template localisé =====
 
-Dans certains cas, pour éviter d'avoir trop de chaînes locales, il peut s'avérer intéressant de traduire un template complet.
+Dans certains cas, pour éviter d'avoir trop de chaînes locales, il peut s'avérer
+intéressant de traduire un template complet.
 
-Pour cela il suffit de placer le template qui nécessite l'internationalisation dans un sous-répertoire du répertoire templates. Comme pour les [[/locales#fichiers-properties|fichiers de locales]] un sous-répertoire est nécessaire pour chaque langue (Exemple :templates/fr_FR/, templates/en_US/).
+Pour cela il suffit de placer le template qui nécessite l'internationalisation
+dans un sous-répertoire du répertoire templates. Comme pour les
+[[/locales#fichiers-properties|fichiers de locales]] un sous-répertoire est
+nécessaire pour chaque langue (Exemple : templates/fr_FR/, templates/en_US/).
 
 
 ===== Détection automatique de la langue =====
 
-Le plugin //autolocale// (voir paragraphe du dessus), permet aussi de détecter automatiquement la langue en fonction du navigateur. 
+Le plugin //autolocale// (voir paragraphe du dessus), permet aussi de détecter
+automatiquement la langue en fonction du navigateur.
 
-Pour cela, il suffit de mettre le paramètre //useDefaultLanguageBrowser// à on dans la configuration du plugin. Et quand l'internaute arrive pour la première fois sur le site, le plugin détecte la langue utilisée dans son navigateur et donc active la bonne langue dans jelix (si bien sûr, ce code langue est l'un de ceux que vous aurez indiqué dans //availableLanguageCode//).
+Pour cela, il suffit de mettre le paramètre //useDefaultLanguageBrowser// à on
+dans la configuration du plugin. Et quand l'internaute arrive pour la première
+fois sur le site, le plugin détecte la langue utilisée dans son navigateur et
+donc active la bonne langue dans jelix (si bien sûr, ce code langue est l'un de
+ceux que vous aurez indiqué dans //availableLanguageCode//).
 
 

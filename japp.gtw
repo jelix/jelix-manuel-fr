@@ -1,9 +1,12 @@
 ~~LANG:EN@enman:jApp~~
 
-jApp est une classe permettant de spécifier (dans le application.init.php) et de récupérer les différents chemins de l'application. Depuis la version 1.3, elle remplace les constantes JELIX_APP_*.
+jApp est une classe permettant de spécifier (dans le application.init.php) et de
+récupérer les différents chemins de l'application. Depuis la version 1.3, elle
+remplace les constantes JELIX_APP_*.
 
 
 ===== Récupérer du répertoire de l'application =====
+
 La méthode @@M@appPath()@@ permet de retourner le chemin absolu de votre application.
 La correspondance avec les anciennes versions de jelix : JELIX_APP_PATH
 
@@ -14,6 +17,7 @@ $chemin = jApp::appPath();
 </code>
 
 ===== Récupérer du répertoire temporaire =====
+
 La méthode @@M@tempPath()@@ permet de retourner le chemin absolu du temporaire.
 La correspondance avec les anciennes versions de jelix : JELIX_APP_TEMP_PATH
 

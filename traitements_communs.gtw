@@ -1,8 +1,17 @@
 ~~LANG:EN@enman:common-processes~~
 
-Il y a plusieurs types de traitements : les traitements métiers, et ceux dédiés à la génération de la page web. Pour les traitements métiers, vous utiliserez des classes métiers, des classes services, des daos. Celles-ci pouvant être utilisable par tous les modules, c'est un premier moyen de réaliser des traitements métiers qui puissent être réutilisables. Voir [[/classes-metiers]].
+Il y a plusieurs types de traitements : les traitements métiers, et ceux dédiés
+à la génération de la page web. Pour les traitements métiers, vous utiliserez
+des classes métiers, des classes services, des daos. Celles-ci pouvant être
+utilisable par tous les modules, c'est un premier moyen de réaliser des
+traitements métiers qui puissent être réutilisables. Voir [[/classes-metiers]].
 
-Pour ce qui concerne la génération d'une page, c'est un peu plus complexe que ça car il y a plusieurs façons de faire. Nous sommes donc devant le cas suivant : nous avons plusieurs pages qui ont des parties communes. Cela peut être par exemple un bandeau, un pied de page, un menu sur le coté etc.. Il peut y avoir aussi quelques pages qui ont un peu plus que ça en commun. Voici diverses solutions selon le contexte.
+Pour ce qui concerne la génération d'une page, c'est un peu plus complexe que ça
+car il y a plusieurs façons de faire. Nous sommes donc devant le cas suivant :
+nous avons plusieurs pages qui ont des parties communes. Cela peut être par
+exemple un bandeau, un pied de page, un menu sur le coté etc.. Il peut y avoir
+aussi quelques pages qui ont un peu plus que ça en commun. Voici diverses
+solutions selon le contexte.
 
   * Utilisation de méthodes privées de contrôleurs
   * Héritage de contrôleurs
@@ -12,7 +21,9 @@ Pour ce qui concerne la génération d'une page, c'est un peu plus complexe que 
 
 ===== Méthodes privées de contrôleurs =====
 
-Si la similitude des pages se résume à quelques actions qui sont dans un même contrôleur, alors vous pouvez utiliser une méthode privée/protégée, qui va faire le travail commun à toutes ces actions.
+Si la similitude des pages se résume à quelques actions qui sont dans un même
+contrôleur, alors vous pouvez utiliser une méthode privée/protégée, qui va faire
+le travail commun à toutes ces actions.
 
 <code php>
 
@@ -43,15 +54,20 @@ class defaultCtrl extends jController {
 
 </code>
 
-Dans cette exemple, les deux actions index et liste font appel à une méthode commune qui va réaliser le travail commun.
+Dans cette exemple, les deux actions index et liste font appel à une méthode
+commune qui va réaliser le travail commun.
 
 
 
 ===== Héritage de contrôleurs =====
 
-Si plusieurs actions de plusieurs contrôleurs ont des traitements en commun, alors vous pouvez utiliser le mécanisme d'héritage objet. C'est à dire réaliser un contrôleur de base, qui ne sera pas utilisé directement, mais dont hériteront les contrôleurs concernés.
+Si plusieurs actions de plusieurs contrôleurs ont des traitements en commun,
+alors vous pouvez utiliser le mécanisme d'héritage objet. C'est à dire réaliser
+un contrôleur de base, qui ne sera pas utilisé directement, mais dont hériteront
+les contrôleurs concernés.
 
-Voici un exemple de contrôleur de base, dans le fichier controllers/myBaseController.php :
+Voici un exemple de contrôleur de base, dans le fichier
+controllers/myBaseController.php :
 
 <code php>
 class myBaseController extends jController {
@@ -91,18 +107,31 @@ class defaultCtrl extends myBaseController {
 
 </code>
 
-Notez l'include et le  //extends myBaseController//;
+Notez l'include et le //extends myBaseController//;
 
-Bien sûr, le contrôleur de base peut contenir des propriétés, d'autres méthodes, voire des méthodes d'actions. C'est à dire que vous pouvez ainsi avoir plusieurs contrôleurs qui possèdent au final des actions communes (qui peuvent elle-même tenir compte de propriétés ou d'autres méthodes pour gérer des différences).
+Bien sûr, le contrôleur de base peut contenir des propriétés, d'autres méthodes,
+voire des méthodes d'actions. C'est à dire que vous pouvez ainsi avoir plusieurs
+contrôleurs qui possèdent au final des actions communes (qui peuvent elle-même
+tenir compte de propriétés ou d'autres méthodes pour gérer des différences).
 
-Vous pouvez faire par exemple un contrôleur de base, qui définit une série d'actions : //liste//, //creation//, //modification//, //suppression//. Ces actions se basant sur des propriétés pour savoir les daos et les templates à utiliser. Ainsi, il est aisé de réaliser plusieurs contrôleurs, héritant de ce contrôleur de base, et n'ayant plus qu'à indiquer dans des propriétés les daos et les templates. De quoi ainsi se faire une administration basique assez rapidement (c'est d'ailleurs ce que fait le contrôleur générique [[controleurs/crud|jDaoCrudController]])
+Vous pouvez faire par exemple un contrôleur de base, qui définit une série
+d'actions : //liste//, //creation//, //modification//, //suppression//. Ces
+actions se basant sur des propriétés pour savoir les daos et les templates à
+utiliser. Ainsi, il est aisé de réaliser plusieurs contrôleurs, héritant de ce
+contrôleur de base, et n'ayant plus qu'à indiquer dans des propriétés les daos
+et les templates. De quoi ainsi se faire une administration basique assez
+rapidement (c'est d'ailleurs ce que fait le contrôleur générique
+[[controleurs/crud|jDaoCrudController]])
 
 ===== Utilisation de zones =====
 
-Il se peut qu'un ensemble de pages possède une ou plusieurs zones identiques, sans que cela soit général à tout le site. Vous pouvez alors [[zones|créer des zones]].
+Il se peut qu'un ensemble de pages possède une ou plusieurs zones identiques,
+sans que cela soit général à tout le site. Vous pouvez alors [[zones|créer des zones]].
 
 
 ===== Personnalisation de réponse commune =====
 
-Créer son propre objet réponse est un autre moyen de factoriser les traitements dédiés à la génération du contenu final. Voir le chapitre sur la [[reponse-generale-personnalisee|création de réponses générales personnalisées]]
+Créer son propre objet réponse est un autre moyen de factoriser les traitements
+dédiés à la génération du contenu final. Voir le chapitre sur la
+[[reponse-generale-personnalisee|création de réponses générales personnalisées]]
 

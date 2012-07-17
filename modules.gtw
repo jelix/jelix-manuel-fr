@@ -1,6 +1,7 @@
 ~~LANG:EN@enman:modules~~
 
-Les contrôleurs et fonctionnalités de votre application doivent être regroupés en modules. 
+Les contrôleurs et fonctionnalités de votre application doivent être regroupés
+en modules.
 
 Un module contient un ensemble de fichiers, entre autres :
 
@@ -11,15 +12,29 @@ Un module contient un ensemble de fichiers, entre autres :
   * Des formulaires
   * Des fichiers de langues
   
-Dans une application, vous devez avoir au moins un module qu'il vous faut créer. Ce sera en général ce qu'on appelle le module principal, qui pourrait contenir par exemple ce qu'il faut pour afficher la page d'accueil de votre site.
+Dans une application, vous devez avoir au moins un module qu'il vous faut créer.
+Ce sera en général ce qu'on appelle le module principal, qui pourrait contenir
+par exemple ce qu'il faut pour afficher la page d'accueil de votre site.
 
-Notez qu'il y a implicitement un autre module déclaré automatiquement dans votre application : le module "jelix", situé dans @@F@lib/jelix/core-modules/jelix@@.
+Notez qu'il y a implicitement un autre module déclaré automatiquement dans votre
+application : le module "jelix", situé dans @@F@lib/jelix/core-modules/jelix@@.
 
 
-Ensuite vous pouvez créer autant de modules que vous voulez, les fichiers d'un même module ayant en principe un rapport entre eux. Par exemple, vous pouvez créer un module par domaine fonctionnel. Un module "news" contiendra tous les fichiers qu'il faut pour afficher et/ou gérer les news.
+Ensuite vous pouvez créer autant de modules que vous voulez, les fichiers d'un
+même module ayant en principe un rapport entre eux. Par exemple, vous pouvez
+créer un module par domaine fonctionnel. Un module "news" contiendra tous les
+fichiers qu'il faut pour afficher et/ou gérer les news.
 
-Le découpage en modules est étroitement lié au degré de complexité de votre application, et de ce que vous voulez faire de votre application. Par exemple, si certains besoins fonctionnels pourraient être partagés avec d'autres applications, il est tout naturel d'avoir un ou plusieurs modules spécifiques à ces besoins, de manière à favoriser la réutilisation du code. De plus, s'il s'agit d'une application de 3 pages, inutile non plus de faire 3 modules.
+Le découpage en modules est étroitement lié au degré de complexité de votre
+application, et de ce que vous voulez faire de votre application. Par exemple,
+si certains besoins fonctionnels pourraient être partagés avec d'autres
+applications, il est tout naturel d'avoir un ou plusieurs modules spécifiques à
+ces besoins, de manière à favoriser la réutilisation du code. De plus, s'il
+s'agit d'une application de 3 pages, inutile non plus de faire 3 modules.
 
-Bref, le découpage des modules se fait selon **votre** organisation, et selon la manière qui vous satisfait le mieux pour maintenir et faire évoluer votre application. Il n'y a donc pas de recette toute faite pour l'organisation des modules.
+Bref, le découpage des modules se fait selon **votre** organisation, et selon la
+manière qui vous satisfait le mieux pour maintenir et faire évoluer votre
+application. Il n'y a donc pas de recette toute faite pour l'organisation des
+modules.
 
 Dans la suite, nous allons voir comment créer un module et un contrôleur.

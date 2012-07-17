@@ -2,19 +2,32 @@
 
 ===== jLog =====
 
-jLog est une classe qui permet de tracer, ou plus précisément d'écrire des messages ou le contenu de variable dans un fichier journal ou un autre système de sortie : syslog, firebug etc. Cela peut être utile pour tracer certains évènements, mais aussi pour aider au débogage. Depuis Jelix 1.3, jlog a des plugins pour ajouter des supports de log (appelé "loggeur", et est aussi utilisé pour stocker les erreurs. La classe @@C@jLog@@ possède deux méthodes statiques :
+jLog est une classe qui permet de tracer, ou plus précisément d'écrire des
+messages ou le contenu de variable dans un fichier journal ou un autre système
+de sortie : syslog, firebug etc. Cela peut être utile pour tracer certains
+évènements, mais aussi pour aider au débogage. Depuis Jelix 1.3, jlog a des
+plugins pour ajouter des supports de log (appelé "loggeur"), et est aussi
+utilisé pour stocker les erreurs. La classe @@C@jLog@@ possède deux méthodes
+statiques :
 
-  * @@jLog::log($message, $logType)@@ pour écrire un message dans le fichier journal
-  * @@jLog::dump($variable, $message, $logType)@@ pour écrire le contenu de la variable dans le fichier journal (il s'agit en fait d'un @@var_export@@)
+  * @@jLog::log($message, $logType)@@ pour écrire un message dans le fichier
+    journal
+  * @@jLog::dump($variable, $message, $logType)@@ pour écrire le contenu de la
+    variable dans le fichier journal (il s'agit en fait d'un @@var_export@@)
 
-Le "loggeur" par défaut est le loggeur fichier. Les messages sont stockés dans un fichier @@F@var/log/messages.log@@, ou @@F@var/log/errors.log@@ pour les erreurs. @@$logType@@ indique le type de message. Et à chaque type sont assignés un ou plusieurs loggeurs.
+Le "loggeur" par défaut est le loggeur fichier. Les messages sont stockés dans
+un fichier @@F@var/log/messages.log@@, ou @@F@var/log/errors.log@@ pour les
+erreurs. @@$logType@@ indique le type de message. Et à chaque type sont assignés
+un ou plusieurs loggeurs.
 
 
 ==== Configurer jLog ====
 
-Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez remplir la section @@[logger]@@ dans la configuration (pour rappel, dans le fichier @@F@var/config/defaultconfig.ini.php@@ ). Par défaut :
-<code ini>
+Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez
+remplir la section @@[logger]@@ dans la configuration (pour rappel, dans le
+fichier @@F@var/config/defaultconfig.ini.php@@ ). Par défaut :
 
+<code ini>
 [logger]
 _all =
 default=file
@@ -26,27 +39,37 @@ strict=
 debug=
 </code>
 
-Les nom d'options sont les types de messages ($logType). Vous pouvez utiliser n'importe quel nom, bien que certains noms soient déjà réservés :
+Les nom d'options sont les types de messages ($logType). Vous pouvez utiliser
+n'importe quel nom, bien que certains noms soient déjà réservés :
 
 
    * @@default@@ : loggeurs par défaut,
-   * @@error@@, @@warning@@, @@notice@@, @@deprecated@@, @@strict@@ : utilisé par le gestionnaire d'erreur, pour les messages d'erreurs.
+   * @@error@@, @@warning@@, @@notice@@, @@deprecated@@, @@strict@@ : utilisé
+     par le gestionnaire d'erreur, pour les messages d'erreurs.
    * @@sql@@, pour jDb (dans l'édition dev), pour logguer les requêtes SQL
    * @@soap@@, pour jSoapClient, pour logger les messages soap.
 
-Et les valeurs des options sont des listes de loggeurs (les noms correspondant aux noms des plugins). Vous indiquerez :
+Et les valeurs des options sont des listes de loggeurs (les noms correspondant
+aux noms des plugins). Vous indiquerez :
 
-   * @@file@@ pour stocker dans les fichiers. Les noms des fichiers sont indiqués dans une section @@[filelogger]@@.
+   * @@file@@ pour stocker dans les fichiers. Les noms des fichiers sont
+     indiqués dans une section @@[filelogger]@@.
    * @@syslog@@ pour envoyer les messages au syslog
-   * @@firebug@@, pour afficher les messages dans l'extension Firebug pour Firefox (ou tout autre navigateur supportant l'objet javascript @@console@@)
+   * @@firebug@@, pour afficher les messages dans l'extension Firebug pour
+     Firefox (ou tout autre navigateur supportant l'objet javascript
+     @@console@@)
    * @@mail@@, pour envoyer les messages dans une boite mail
-   * @@memory@@, pour stocker les message en mémoire temporairement. Utilisé par d'autres composants comme la debug barre.
+   * @@memory@@, pour stocker les message en mémoire temporairement. Utilisé par
+     d'autres composants comme la debug barre.
    * et tout autre plugin que vous avez ajouté ou créé.
 
 
 ==== Loggeur fichier ====
 
-Quand vous utilisez ce loggeur, vous devez indiquer dans quel fichier vont les messages. Les fichiers sont indiqués dans la section @@[filelogger]@@. Les noms des options sont les types de messages, et les valeurs les noms des fichiers (dans @@F@var/log/@@).
+Quand vous utilisez ce loggeur, vous devez indiquer dans quel fichier vont les
+messages. Les fichiers sont indiqués dans la section @@[filelogger]@@. Les noms
+des options sont les types de messages, et les valeurs les noms des fichiers
+(dans @@F@var/log/@@).
 
 Exemple (valeurs par défaut) :
 <code ini>
@@ -61,7 +84,11 @@ debug=debug.log
 </code>
 
 
-Il arrive que plusieurs développeurs travaillent sur un même serveur : il y aurait alors dans un même fichier toutes les traces que chacun aurait mises. Il est possible d'avoir autant de fichiers journaux que de développeurs, à condition qu'ils aient une adresse IP différente. Il suffit d'inclure "%ip%" dans le nom du fichier :
+Il arrive que plusieurs développeurs travaillent sur un même serveur : il y
+aurait alors dans un même fichier toutes les traces que chacun aurait mises. Il
+est possible d'avoir autant de fichiers journaux que de développeurs, à
+condition qu'ils aient une adresse IP différente. Il suffit d'inclure "%ip%"
+dans le nom du fichier :
 
 <code ini>
 [fileLogger]
@@ -69,9 +96,13 @@ default = "messages_%ip%.log"
 news = "%ip%_modulenews.log"
 </code>
 
-Ainsi, si un développeur a son poste de travail en 192.168.1.2, alors il y aura des fichiers @@F@var/log/192.168.1.2_modulenews.log@@ et @@F@var/log/messages_192.168.1.2.log@@.
+Ainsi, si un développeur a son poste de travail en 192.168.1.2, alors il y aura
+des fichiers @@F@var/log/192.168.1.2_modulenews.log@@ et
+@@F@var/log/messages_192.168.1.2.log@@.
 
-Vous pouvez aussi construire les noms des fichiers de log avec la date et l'heure : pour cela, incluez un ou plusieurs des "tags" suivant dans le nom : %Y% (année), %m% (mois), %d% (jour),  %H% (heure).
+Vous pouvez aussi construire les noms des fichiers de log avec la date et
+l'heure : pour cela, incluez un ou plusieurs des "tags" suivant dans le nom :
+%Y% (année), %m% (mois), %d% (jour), %H% (heure).
 
 ==== Loggeur mail ====
 
@@ -84,20 +115,36 @@ email = root@localhost
 emailHeaders = "Content-Type: text/plain; charset=UTF-8\nFrom: webmaster@yoursite.com\nX-Mailer: Jelix\nX-Priority: 1 (Highest)\n"
 </code>
 
-Evitez d'utiliser ce loggeur, sauf si vous savez votre application très stable, où les erreurs ou messages sont rares. Sinon votre boîte risque d'être littéralement spammée (et votre hébergeur pas très content).
+Evitez d'utiliser ce loggeur, sauf si vous savez votre application très stable,
+où les erreurs ou messages sont rares. Sinon votre boîte risque d'être
+littéralement spammée (et votre hébergeur pas très content).
 
-Il est plutôt recommandé, si c'est possible, de configurer le serveur de manière à envoyer par mail, une fois par jour par exemple, le contenu du fichier errors.log. Cela peut se faire sous linux en créant un script bach qui sera programmé dans le cron.
+Il est plutôt recommandé, si c'est possible, de configurer le serveur de manière
+à envoyer par mail, une fois par jour par exemple, le contenu du fichier
+errors.log. Cela peut se faire sous linux en créant un script bach qui sera
+programmé dans le cron.
+
 ===== La debug barre =====
 
-Jusqu'à la version 1.2, Jelix affichait les messages directement dans la page web, dans une simple boîte. Depuis Jelix 1.3, il y a une véritable boîte à outils, la "debugbar", qui permet d'afficher non seulement les détails des erreurs, mais aussi d'autres informations : données en sessions, requêtes sql etc. Chacune de ces informations étant fournis par des plugins. Vous pouvez donc créer vos propres plugins pour enrichir cette debug barre.
+Jusqu'à la version 1.2, Jelix affichait les messages directement dans la page
+web, dans une simple boîte. Depuis Jelix 1.3, il y a une véritable boîte à
+outils, la "debugbar", qui permet d'afficher non seulement les détails des
+erreurs, mais aussi d'autres informations : données en sessions, requêtes sql
+etc. Chacune de ces informations étant fournis par des plugins. Vous pouvez donc
+créer vos propres plugins pour enrichir cette debug barre.
 
-Sachant que la debugbar est elle-même un plugin de jResponseHtml, voici comment faire pour l'activer :
+Sachant que la debugbar est elle-même un plugin de jResponseHtml, voici comment
+faire pour l'activer :
 
    * vous devez ajouter "debugbar" dans la liste des plugins de jResponseHtml
-   * vous devez activer le loggeur "memory" pour les types de messages que vous voulez suivre (et nécessaires pour les plugins de la debugbar), dans la configuration de jLog.
-   * éventuellement indiquer la liste des plugins que vous voulez activer pour la debugbar (par défaut: "sqllog, sessiondata, defaultlog"
+   * vous devez activer le loggeur "memory" pour les types de messages que vous
+     voulez suivre (et nécessaires pour les plugins de la debugbar), dans la
+     configuration de jLog.
+   * éventuellement indiquer la liste des plugins que vous voulez activer pour
+     la debugbar (par défaut: "sqllog, sessiondata, defaultlog"
 
-Voici un exemple typique (dans le fichier de configuration @@F@var/config/defaultconfig.ini.php@@) :
+Voici un exemple typique (dans le fichier de configuration
+@@F@var/config/defaultconfig.ini.php@@) :
 
 <code ini>
 [jResponseHtml]

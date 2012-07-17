@@ -1,13 +1,19 @@
 ~~LANG:EN@enman:message~~
 
-Très souvent, il est utile d'afficher les résultats/conséquences/erreurs d'une action dans une action ultérieure. Par exemple, quand vous renvoyez un utilisateur vers la page d'accueil après un échec de connexion, il serait intéressant de lui afficher les raisons de cette redirection.
+Très souvent, il est utile d'afficher les résultats/conséquences/erreurs d'une
+action dans une action ultérieure. Par exemple, quand vous renvoyez un
+utilisateur vers la page d'accueil après un échec de connexion, il serait
+intéressant de lui afficher les raisons de cette redirection.
 
-@@C@jMessage@@ est conçu pour cela. En bref, jMessage stocke des messages en session et expose des méthodes statiques pour les ajouter, les récupérer où les effacer.
+@@C@jMessage@@ est conçu pour cela. En bref, jMessage stocke des messages en
+session et expose des méthodes statiques pour les ajouter, les récupérer où les
+effacer.
 
 ===== Variable de session =====
 
-jMessage utilise une variable de session dont le nom par défaut est : JELIX_MESSAGE. 
-Vous pouvez le modifier à travers le membre statique @@P@jMessage::session_name@@. 
+jMessage utilise une variable de session dont le nom par défaut est :
+JELIX_MESSAGE. Vous pouvez le modifier à travers le membre statique
+@@P@jMessage::session_name@@. 
 
 Exemple : 
 
@@ -17,7 +23,9 @@ Exemple :
    
 ===== Ajouter un message =====
 
-Utilisez la méthode statique @@M@jMessage::add@@ pour ajouter un message à afficher ultérieurement. Vous passez votre message en premier argument. Notez qu'un second argument optionnel décrit le type du message.
+Utilisez la méthode statique @@M@jMessage::add@@ pour ajouter un message à
+afficher ultérieurement. Vous passez votre message en premier argument. Notez
+qu'un second argument optionnel décrit le type du message.
 
 Exemple :
 <code php>
@@ -30,7 +38,8 @@ Exemple :
 
 ===== Afficher un message =====
 
-Utilisez le plugin de template @@f@jMessage@@ pour afficher le(s) message(s) en attente. 
+Utilisez le plugin de template @@f@jMessage@@ pour afficher le(s) message(s) en
+attente. 
 
 Exemple : 
 <code>
@@ -41,13 +50,15 @@ Exemple :
 </code>
 
 le template ci-dessus donnera le fragment de html suivant :
+
 <html>
   <ul class="jelix-msg">
    <li class="jelix-msg-item-default">identification échouée : mot de passe incorrect</li>
   </ul>
 </html>
 
-Une autre option est d'utiliser la méthode statique @@M@jMessage::get@@ pour récupérer les messages dans un contrôleur.
+Une autre option est d'utiliser la méthode statique @@M@jMessage::get@@ pour
+récupérer les messages dans un contrôleur.
 
 Exemple :
 <code php>
@@ -58,14 +69,19 @@ Exemple :
    $tpl->assign('messages', $messages);
 </code>
 
-Note : si vos messages ont été ajoutés avec un type particulier, vous devez appeler @@M@jMessage::get('montype')@@ pour les récupérer. 
+Note : si vos messages ont été ajoutés avec un type particulier, vous devez
+appeler @@M@jMessage::get('montype')@@ pour les récupérer.
 
-Vous pouvez aussi récupérer tous les messages quel que soit leur type avec @@M@jMessage::getAll()@@.
+Vous pouvez aussi récupérer tous les messages quel que soit leur type avec
+@@M@jMessage::getAll()@@.
 
 
 ===== Effacer les messages =====
 
-Pour effacer les messages et ainsi éviter de trop grossir les données de sessions, appelez @@M@jMessage::clearAll()@@. 
+Pour effacer les messages et ainsi éviter de trop grossir les données de
+sessions, appelez @@M@jMessage::clearAll()@@.
 
-Vous pouvez aussi effacer un seul type de message avec @@M@jMessage::clear()@@. cette méthode accepte un argument optionnel décrivant un type. Si le type est vide, la méthode effacera les messages du type //default//. 
+Vous pouvez aussi effacer un seul type de message avec @@M@jMessage::clear()@@.
+cette méthode accepte un argument optionnel décrivant un type. Si le type est
+vide, la méthode effacera les messages du type //default//. 
 

@@ -1,11 +1,18 @@
 ~~LANG:EN@enman:create-wizard~~
 
-Une application, "installWizard", est fournie avec Jelix. Elle permet de créer un assistant, pour installer une application Jelix aisément, avec un navigateur. Il pourrait être très utile pour distribuer une application publique. Comme par exemple, un forum...
+Une application, "installWizard", est fournie avec Jelix. Elle permet de créer
+un assistant, pour installer une application Jelix aisément, avec un navigateur.
+Il pourrait être très utile pour distribuer une application publique. Comme par
+exemple, un forum...
 
-Un assistant contient quelques pages. Une liste de pages à exécuter, leur paramètres, et l'ordre dans lequel les exécuter, est indiqué dans un fichier ini. 
+Un assistant contient quelques pages. Une liste de pages à exécuter, leur
+paramètres, et l'ordre dans lequel les exécuter, est indiqué dans un fichier
+ini.
 
-InstallWizard contient quelque pages prêtes à l'emploi, mais bien sûr vous pouvez créer vos propres pages.
-Vous pouvez aussi redéfinir des templates des pages existantes, et redéfinir les fichiers contenant les locales (qui ne sont pas exactement les mêmes fichiers locales de jelix).
+InstallWizard contient quelque pages prêtes à l'emploi, mais bien sûr vous
+pouvez créer vos propres pages. Vous pouvez aussi redéfinir des templates des
+pages existantes, et redéfinir les fichiers contenant les locales (qui ne sont
+pas exactement les mêmes fichiers locales de jelix).
 
 Notez que "InstallWizard" n'est pas une application Jelix.
 
@@ -16,29 +23,51 @@ En premier lieu, copier ces fichiers:
    * Le lanceur, à appeler depuis le navigateur: @@F@lib/installwizard/install.php.dist@@ en @@F@votreapp/www/install.php@@
    * Le fichier de configuration: @@F@lib/installwizard/wizard.ini.php.dist@@ en @@F@votreapp/install/wizard.ini.php@@
 
-Le wizard est en théorie utilisable pour les applis non Jelix, et dans ce cas, vous n'avez rien à changer dans le @@F@install.php@@. Pour installer une application jelix par contre, il faut dé-commenter certaines lignes.
+Le wizard est en théorie utilisable pour les applis non Jelix, et dans ce cas,
+vous n'avez rien à changer dans le @@F@install.php@@. Pour installer une
+application jelix par contre, il faut dé-commenter certaines lignes.
 
 ==== Configuration globale ====
 
 Dans la configuration, vous devez définir ces propriétés globales:
 
-   * @@pagesPath@@: devrait contenir la liste des répertoires où installWizard trouvera les pages. Le chemin doit être relatif au fichier ini. Par défaut, c'est @@"../../lib/installwizard/pages/,pages/"@@, donc le répertoire @@F@pages/@@ dans installwizard, et le répertoire @@F@pages/@@ dans votre application (donc @@F@votreapp/install/pages/@@, si vous fournissez vos propres pages d'assistant.
-   * @@tempPath@@: le chemin vers le répertoire où sont stockés les fichiers temporaires.
-   * @@customPath@@: le chemin où les fichiers personnalisés sont stockées, relatifs au fichier du fichier ini.
-   * @@supportedLang@@: la liste des code langue (sans le code pays), supporté par votre assistant. Bien sûr, vous devriez fournir tous les fichiers des locales pour les langues indiquées. InstallWizard devinera la langue de l'utilisateur et utilisera l'une d'elles.
+   * @@pagesPath@@: devrait contenir la liste des répertoires où installWizard
+     trouvera les pages. Le chemin doit être relatif au fichier ini. Par défaut,
+     c'est @@"../../lib/installwizard/pages/,pages/"@@, donc le répertoire
+     @@F@pages/@@ dans installwizard, et le répertoire @@F@pages/@@ dans votre
+     application (donc @@F@votreapp/install/pages/@@, si vous fournissez vos
+     propres pages d'assistant.
+   * @@tempPath@@: le chemin vers le répertoire où sont stockés les fichiers
+     temporaires.
+   * @@customPath@@: le chemin où les fichiers personnalisés sont stockées,
+     relatifs au fichier du fichier ini.
+   * @@supportedLang@@: la liste des code langue (sans le code pays), supporté
+     par votre assistant. Bien sûr, vous devriez fournir tous les fichiers des
+     locales pour les langues indiquées. InstallWizard devinera la langue de
+     l'utilisateur et utilisera l'une d'elles.
    * @@start@@: le nom de la première page à afficher.
-   * @@onalreadydone@@ = le nom de la page à afficher quand l'application est déjà installée. Par défaut, c'est la même page que la dernière page de l'assistant.
-   * @@appname@@: le nom de votre assistant, pour votre application. Il sera utilisé dans les templates.
+   * @@onalreadydone@@ = le nom de la page à afficher quand l'application est
+     déjà installée. Par défaut, c'est la même page que la dernière page de
+     l'assistant.
+   * @@appname@@: le nom de votre assistant, pour votre application. Il sera
+     utilisé dans les templates.
 
 Vous devez aussi créer des sections ini, une par page que vous voulez afficher.
 
 ==== Liste des pages ====
 
-Chaque page de l'assistant est déclarée dans une section. Le nom de la section est le nom de la page suivie par @@.step@@.
+Chaque page de l'assistant est déclarée dans une section. Le nom de la section
+est le nom de la page suivie par @@.step@@.
 
-Dans chaque section, vous devez indiquer au moins une propriété: @@next@@ (excepté pour la dernière page de l'assistant). @@next@@ doit contenir le nom de la page à afficher quand l'utilisateur clique sur le bouton "suivant". S'il n'est pas donné, l'assistant arrêtera sur la page actuelle.
+Dans chaque section, vous devez indiquer au moins une propriété: @@next@@
+(excepté pour la dernière page de l'assistant). @@next@@ doit contenir le nom de
+la page à afficher quand l'utilisateur clique sur le bouton "suivant". S'il
+n'est pas donné, l'assistant arrêtera sur la page actuelle.
 
-@@next@@ peut aussi contenir un tableau de page. Certaines page peuvent offrir la possibilité d'afficher une page spécifique ou une autre, dépendant de l'action de l'utilisateur. La page retourne un code numérique, et elle devrait correspondre à une page. Par défault, elle retourne toujours 0.
+@@next@@ peut aussi contenir un tableau de page. Certaines page peuvent offrir
+la possibilité d'afficher une page spécifique ou une autre, dépendant de
+l'action de l'utilisateur. La page retourne un code numérique, et elle devrait
+correspondre à une page. Par défault, elle retourne toujours 0.
 
 <code ini>
 [apage.step]
@@ -47,14 +76,20 @@ next[1] = bar
 next[2] = bla
 </code>
 
-Si le code de résultat est 0, alors l'assistant affichera la page "foo", si c'est égale à 1, il affichera la page "bar" etc.
+Si le code de résultat est 0, alors l'assistant affichera la page "foo", si
+c'est égale à 1, il affichera la page "bar" etc.
 
 Autres propriétés communes à paramétrer :
 
-   * @@noprevious=on@@: indique que, quand la page est affichée, il n'y a pas de bouton "précédant", ce qui signifie que l'utilisateur ne peut pas revenir en arrière (parce que cela n'aurait pas de sens par exemple).
-   * @@messageHeader@@ et @@messageFooter@@: la clé locale de quelque texte pour ajouter en haut ou en bas de la page. Utile pour ajouter du contenu sans modifier le code source d'une page existante.
+   * @@noprevious=on@@: indique que, quand la page est affichée, il n'y a pas de
+     bouton "précédant", ce qui signifie que l'utilisateur ne peut pas revenir
+     en arrière (parce que cela n'aurait pas de sens par exemple).
+   * @@messageHeader@@ et @@messageFooter@@: la clé locale de quelque texte pour
+     ajouter en haut ou en bas de la page. Utile pour ajouter du contenu sans
+     modifier le code source d'une page existante.
 
-Vous avez certainement d'autres propriétés à ajouter, en fonction de la page. Vous devriez vous référer à la documentation de la page pour les connaître.
+Vous avez certainement d'autres propriétés à ajouter, en fonction de la page.
+Vous devriez vous référer à la documentation de la page pour les connaître.
 
 ==== Exemple d'assistant basique ====
 
@@ -87,23 +122,28 @@ availabledDrivers = mysql,pgsql
 noprevious = on
 </code>
 
-Dans cet exemple, l'assistant affiche d'abord la page "welcome" (parceque @@start=welcome@@). Ensuite il affiche "checkjelix", "dbprofile", "installapp" et enfin la page "end". 
-Toutes ces pages sont déjà fournies dans installWizard.
+Dans cet exemple, l'assistant affiche d'abord la page "welcome" (parceque
+@@start=welcome@@). Ensuite il affiche "checkjelix", "dbprofile", "installapp"
+et enfin la page "end". Toutes ces pages sont déjà fournies dans installWizard.
 
 
 ===== Qu'est-ce qu'une page d'assistant ? =====
 
-Chaque page de l'assistante sont mises en oeuvre ou décrites en plusieurs fichiers:
+Chaque page de l'assistante sont mises en oeuvre ou décrites en plusieurs
+fichiers:
 
-   * une classe, dans laquelle l'affichage et le processus d'un formulaire optionel sont mis en oeuvre
-   * un template, utilisé pour afficher la page 
-   * un fichier locale, dans lequel est stocké, en PHP, une chaine traduite. Ceci devrait être dans un fichier locale pour chaque langue. Il devrait avoir au moins un fichier locale pour la langue anglaise.
+   * une classe, dans laquelle l'affichage et le processus d'un formulaire
+     optionel sont mis en oeuvre
+   * un template, utilisé pour afficher la page
+   * un fichier locale, dans lequel est stocké, en PHP, une chaine traduite.
+     Ceci devrait être dans un fichier locale pour chaque langue. Il devrait
+     avoir au moins un fichier locale pour la langue anglaise.
 
 
 === fichiers ===
 
-Les fichiers de page sont stockées dans le même répertoire, et une page est identifiée par son nom. Par exemple,
-si le nom de la page est "welcome":
+Les fichiers de page sont stockées dans le même répertoire, et une page est
+identifiée par son nom. Par exemple, si le nom de la page est "welcome":
 
    * le répertoire pour la page est nommé @@F@welcome/@@.
    * @@F@welcome/welcome.page.php@@ est le fichier qui met en oeuvre la classe de la page.
@@ -114,19 +154,36 @@ si le nom de la page est "welcome":
 
 === La Classe ===
 
-La class devra héritée de @@C@installWizardPage@@ et implémentée deux méthodes: @@M@show()@@ et @@M@process()@@.
+La class devra héritée de @@C@installWizardPage@@ et implémentée deux méthodes:
+@@M@show()@@ et @@M@process()@@.
 
-La méthode @@M@show()@@ dans la classe devra préparer le template. Elle reçoit un objet @@C@jTpl@@ comme argument. Elle devra affecter les valeurs si nécessaire. Par exemple, si le template contient des éléments d'un formulaire, la méthode @@M@show()@@ pourra initialiser ses valeurs, ou afficher les erreur quand la soumission du formulaire échoue. Il devra retourner @@true@@ si l'assistant peut continuer après cette page.
+La méthode @@M@show()@@ dans la classe devra préparer le template. Elle reçoit
+un objet @@C@jTpl@@ comme argument. Elle devra affecter les valeurs si
+nécessaire. Par exemple, si le template contient des éléments d'un formulaire,
+la méthode @@M@show()@@ pourra initialiser ses valeurs, ou afficher les erreur
+quand la soumission du formulaire échoue. Il devra retourner @@true@@ si
+l'assistant peut continuer après cette page.
 
-La méthode @@M@process()@@ est appelée quand un utilisateur appuye sur le bouton "suivant" (qui est en fait un bouton submit), et avant de rediriger à la page suivante. Dans la méthode @@M@process()@@, vous pourrez retourner les valueur du formulaire (avec @@$_POST@@). Il doit retourner false si l'assistant doit réafficher la page, ou un entier (typiquement 0), qui est en fait l'index de la page "suivante" indiquée dans le fichier ini.
+La méthode @@M@process()@@ est appelée quand un utilisateur appuye sur le bouton
+"suivant" (qui est en fait un bouton submit), et avant de rediriger à la page
+suivante. Dans la méthode @@M@process()@@, vous pourrez retourner les valueur du
+formulaire (avec @@$_POST@@). Il doit retourner false si l'assistant doit
+réafficher la page, ou un entier (typiquement 0), qui est en fait l'index de la
+page "suivante" indiquée dans le fichier ini.
 
 
 === Templates ===
 
-Un fichier template doit contenir seulement un fragment de HTML, lequel sera inséré dans un template principal fourni par installWizard. Donc vous ne devriez pas inclure les éléments @@E@<head>@@, @@E@<body>@@, par exemple.
-Vous ne devez pas utiliser l'élément @@E@<form>@@, puisque votre fragment sera inclus dans l'élément  @@E@<form>@@ existant du template principal. Cependant, vous pouvez utiliser n'importe quel élément comme @@E@<input>@@, @@E@<textarea>@@ etc.. Leur contenu, après la soumission, sera disponible, comme d'habitude, dans @@$_POST@@.
+Un fichier template doit contenir seulement un fragment de HTML, lequel sera
+inséré dans un template principal fourni par installWizard. Donc vous ne devriez
+pas inclure les éléments @@E@<head>@@, @@E@<body>@@, par exemple. Vous ne devez
+pas utiliser l'élément @@E@<form>@@, puisque votre fragment sera inclus dans
+l'élément @@E@<form>@@ existant du template principal. Cependant, vous pouvez
+utiliser n'importe quel élément comme @@E@<input>@@, @@E@<textarea>@@ etc.. Leur
+contenu, après la soumission, sera disponible, comme d'habitude, dans
+@@$_POST@@.
 
-jTpl est utilisé pour les templates, donc vous pouvez utiliser la syntaxe jTpl. 
+jTpl est utilisé pour les templates, donc vous pouvez utiliser la syntaxe jTpl.
 
 Quelques variables de template sont prédéfinies dans le template:
 
@@ -136,9 +193,11 @@ Quelques variables de template sont prédéfinies dans le template:
 
 === Localisation ===
 
-Les fichiers correspondant à une langue, sont des fichiers PHP, qui devraient définir un tableau dans une variable nommée @@V@$locales@@. 
+Les fichiers correspondant à une langue, sont des fichiers PHP, qui devraient
+définir un tableau dans une variable nommée @@V@$locales@@.
 
-Les clés des tableaux sont des chaines à traduire, et la valeurs les chaines traduites.
+Les clés des tableaux sont des chaines à traduire, et la valeurs les chaines
+traduites.
 
 <code php>
 $locales = array(
@@ -148,14 +207,15 @@ $locales = array(
 </code>
 
 
-Vous pouvez l'appeler dans votre template en utilisant la clé de la chaine traduite:
+Vous pouvez l'appeler dans votre template en utilisant la clé de la chaine
+traduite:
+
 <code>
-
 <h1>{@subtitle@}</h1>
-
 </code>
 
-A l'intérieur de la classe, vous avez le contenu de @@V@$locales@@ dans une propriété @@P@locales@@:
+A l'intérieur de la classe, vous avez le contenu de @@V@$locales@@ dans une
+propriété @@P@locales@@:
 
 <code php>
  function show() {
@@ -170,11 +230,14 @@ A l'intérieur de la classe, vous avez le contenu de @@V@$locales@@ dans une pro
 
 ===== Le template principal =====
 
-Il y a un template, @@F@wiz_layout.tpl@@, qui contient toute la page HTML de l'assistant (excepté bien sûr, le contenu spécifique généré par toutes les pages).
+Il y a un template, @@F@wiz_layout.tpl@@, qui contient toute la page HTML de
+l'assistant (excepté bien sûr, le contenu spécifique généré par toutes les
+pages).
  
 C'est ici qu'il y a l'entête et de pied de chaque page de l'assistant.
 
-Vous pouvez la redéfinir si vous voulez un design différent, un contenu différent. Voir ci dessous.
+Vous pouvez la redéfinir si vous voulez un design différent, un contenu
+différent. Voir ci dessous.
 
 ===== Pages existantes =====
 
@@ -183,28 +246,39 @@ Quelques pages sont fournies avec installWizard.
 
 === welcome ===
 
-Elle affiche une page simple, avec un message de bienvenue. Vous pouvez la changer en redéfinissant le template ou les fichiers de locales.
+Elle affiche une page simple, avec un message de bienvenue. Vous pouvez la
+changer en redéfinissant le template ou les fichiers de locales.
 
 === checkjelix ===
 
-Cette page vérifie si la configuration du serveur et l'installation de Jelix est ok pour installer l'application. Les paramètres de configuration sont:
+Cette page vérifie si la configuration du serveur et l'installation de Jelix est
+ok pour installer l'application. Les paramètres de configuration sont:
 
    * @@verbose=on@@, affiche plus de détails.
-   * @@databases=mysql,pgsql@@: liste des type de base de données. La page vérifiera si l'API de la base de données demandée, est disponible.
+   * @@databases=mysql,pgsql@@: liste des type de base de données. La page
+     vérifiera si l'API de la base de données demandée, est disponible.
 
 === dbprofile ===
 
-Cette page permet de configurer le fichier profiles.ini.php. 
-Il affiche un formulaire où vous pouvez définir le nom du serveur de base de données, le nom de la base de données, le nom de connexion à cette page et le mot de passe de celui ci. Vous pouvez fournir un  @@F@profiles.ini.php.dist@@ dans le répertoire @@var/config/@@ de l'application: la page prendra celle-ci comme "un template" pour générer le fichier @@F@profiles.ini.php@@. C'est l'opportunité pour vous d'indiquer tout les profils à créer.
+Cette page permet de configurer le fichier profiles.ini.php. Il affiche un
+formulaire où vous pouvez définir le nom du serveur de base de données, le nom
+de la base de données, le nom de connexion à cette page et le mot de passe de
+celui ci. Vous pouvez fournir un @@F@profiles.ini.php.dist@@ dans le répertoire
+@@var/config/@@ de l'application: la page prendra celle-ci comme "un template"
+pour générer le fichier @@F@profiles.ini.php@@. C'est l'opportunité pour vous
+d'indiquer tout les profils à créer.
 
 Paramètres de configuration:
 
-   * @@ignoreProfiles@@: liste des profils à ignorer dans le fichier donné @@F@profiles.ini.php.dist@@
-   * @@availabledDrivers@@: liste des types de base de données que votre application supporte. (mysql, pgsql, sqlite...)
+   * @@ignoreProfiles@@: liste des profils à ignorer dans le fichier donné
+     @@F@profiles.ini.php.dist@@
+   * @@availabledDrivers@@: liste des types de base de données que votre
+     application supporte. (mysql, pgsql, sqlite...)
 
 === confmail ===
 
-Cette page permet de configurer le mailer. Il modifie donc le fichier @@F@defaultconfig.ini.php@@ de votre application.
+Cette page permet de configurer le mailer. Il modifie donc le fichier
+@@F@defaultconfig.ini.php@@ de votre application.
 
 Aucun paramètres de configuration.
 
@@ -213,21 +287,32 @@ Aucun paramètres de configuration.
 il installe un application jelix. Il appelle les modules installers etc..
 
 Paramètre de configuration :
-    * @@level@@, avec une de ces valeurs: @@error@@, @@notice@@, @@warning@@. Il indique l'importance du message affiché. 
+    * @@level@@, avec une de ces valeurs: @@error@@, @@notice@@, @@warning@@. Il
+      indique l'importance du message affiché. 
 
 === end ===
 
-Cette page affiche un simple message pour dire que l'installation est finie. Vous devriez l'utiliser pour la dernière page de votre assistant.
+Cette page affiche un simple message pour dire que l'installation est finie.
+Vous devriez l'utiliser pour la dernière page de votre assistant.
 
 
 ===== Redéfinir les templates et locales =====
-Vous pourriez vouloir changer le design or le contenu HTML de page déjà fourni par installWizard.
 
-Pour cela, vous devrez créer un répertoire où sont stockées vos propres versions des templates de pages.
-Déclarer le répertoire dans @@customPath@@ dans la section option du fichier ini. Pour une application Jelix, ce chemin est typiquement @@F@myapp/install/wizard/custom@@, donc vous indiquerez @@customPath= "custom/"@@.
+Vous pourriez vouloir changer le design or le contenu HTML de page déjà fourni
+par installWizard.
 
-Copier les fichiers originaux dans ce répertoire, et modifier les comme voulu. Vous pouvez faire de même avec les fichiers des locales.
+Pour cela, vous devrez créer un répertoire où sont stockées vos propres versions
+des templates de pages. Déclarer le répertoire dans @@customPath@@ dans la
+section option du fichier ini. Pour une application Jelix, ce chemin est
+typiquement @@F@myapp/install/wizard/custom@@, donc vous indiquerez
+@@customPath= "custom/"@@.
 
-De la même manière vous pouvez ajouter des nouveaux fichiers locales pour de nouvelles langues.
+Copier les fichiers originaux dans ce répertoire, et modifier les comme voulu.
+Vous pouvez faire de même avec les fichiers des locales.
 
-Vous pouvez aussi copier le template @@F@wiz_layout.tpl@@ dans celui ci, lequel est le template principale. Vous pouvez alors modifier cette copie. Même chose pour les locales pour le template principal (@@F@wiz_layout.en.php@@).
+De la même manière vous pouvez ajouter des nouveaux fichiers locales pour de
+nouvelles langues.
+
+Vous pouvez aussi copier le template @@F@wiz_layout.tpl@@ dans celui ci, lequel
+est le template principale. Vous pouvez alors modifier cette copie. Même chose
+pour les locales pour le template principal (@@F@wiz_layout.en.php@@).

@@ -1,10 +1,17 @@
 ~~LANG:EN@enman:responsejsonrpc~~
 
-Jelix propose la prise en charge du protocole [[http://json-rpc.org/|json-rpc]]. Ce protocole d'échange est similaire à XML-RPC dans le fonctionnement, mais utilise JSON comme format de donnée au lieu de XML (RPC = Remote Procedure Call).
+Jelix propose la prise en charge du protocole [[http://json-rpc.org/|json-rpc]].
+Ce protocole d'échange est similaire à XML-RPC dans le fonctionnement, mais
+utilise JSON comme format de donnée au lieu de XML (RPC = Remote Procedure
+Call).
 
 ===== Point d'entrée spécifique =====
 
-Une requête JSON-RPC est spécifique, et pour y répondre, on ne peut pas utiliser [[requests|l'objet request]] "classic". Il vous faut créer un point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@jsonrpc.php@@ par exemple, qui utilise @@C@jJsonRpcRequest@@ plutôt que @@C@jClassicRequest@@. Le type de requête et du point d'entrée est donc "jsonrpc".
+Une requête JSON-RPC est spécifique, et pour y répondre, on ne peut pas utiliser
+[[requests|l'objet request]] "classic". Il vous faut créer un point d'entrée
+spécifique dans le répertoire @@F@www/@@, @@F@jsonrpc.php@@ par exemple, qui
+utilise @@C@jJsonRpcRequest@@ plutôt que @@C@jClassicRequest@@. Le type de
+requête et du point d'entrée est donc "jsonrpc".
 
 Le point d'entrée devra contenir ceci :
 
@@ -20,7 +27,11 @@ $jelix->process(new jJsonRpcRequest());
 
 </code>
 
-Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[/urls/simple|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
+Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration
+des moteurs d'urls simple ou significant. Si vous utilisez [[/urls/simple|le
+moteur d'url simple]], vous devez mettre dans la section
+//simple_urlengine_entrypoints// de la configuration de jelix la déclaration
+suivante : 
 
 <code ini>
 jsonrpc = "@jsonrpc"
@@ -33,7 +44,8 @@ Si vous utilisez [[urls/significant|le moteur d'url significant]], vous devez aj
 <entrypoint type="jsonrpc" name="jsonrpc" default="true" />
 </code>
 
-Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action pour jsonrpc comme ceci :
+Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action
+pour jsonrpc comme ceci :
 
 <code php>
   $url = jUrl::get("module~action@jsonrpc");
@@ -41,9 +53,15 @@ Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action
 
 ===== Contrôleur =====
 
-Comme on a affaire à un type de requête particulier, le nom du fichier du contrôleur doit avoir le suffixe ".jsonrpc.php". Par exemple, un contrôleur "default" : "default.jsonrpc.php". (Vous pouvez bien sûr avoir un autre contrôleur "default" pour d'autres types de requêtes, "default.classic.php" par exemple).
+Comme on a affaire à un type de requête particulier, le nom du fichier du
+contrôleur doit avoir le suffixe ".jsonrpc.php". Par exemple, un contrôleur
+"default" : "default.jsonrpc.php". (Vous pouvez bien sûr avoir un autre
+contrôleur "default" pour d'autres types de requêtes, "default.classic.php" par
+exemple).
 
-Ensuite, le contenu du contrôleur est similaire à ce que vous avez l'habitude de faire, à la seule différence que vous utiliserez jResponseJsonRpc, qui a pour alias "jsonrpc", pour répondre aux requêtes JsonRpc :
+Ensuite, le contenu du contrôleur est similaire à ce que vous avez l'habitude de
+faire, à la seule différence que vous utiliserez jResponseJsonRpc, qui a pour
+alias "jsonrpc", pour répondre aux requêtes JsonRpc :
 
 <code php>
 class defaultCtrl extends jController {
@@ -66,7 +84,9 @@ class defaultCtrl extends jController {
 
 ===== Appel depuis le client =====
 
-Qui dit JsonRpc, dit une partie cliente qui envoie une requête jsonrpc. Comme vous pouvez le lire dans [[http://json-rpc.org/|la spécification de jsonrpc]], il faut envoyer une chaîne de ce type :
+Qui dit JsonRpc, dit une partie cliente qui envoie une requête jsonrpc. Comme
+vous pouvez le lire dans [[http://json-rpc.org/|la spécification de jsonrpc]],
+il faut envoyer une chaîne de ce type :
 
 <code>
 { method : "",
@@ -75,21 +95,30 @@ Qui dit JsonRpc, dit une partie cliente qui envoie une requête jsonrpc. Comme v
 }
 </code>
 
-Dans method, vous indiquerez, dans le cas d'un appel à une application jelix, le sélecteur de l'action à appeler :
+Dans method, vous indiquerez, dans le cas d'un appel à une application jelix, le
+sélecteur de l'action à appeler :
 
 <code>
 method:"monModule~default:index"
 </code>
 
-Les données que vous mettrez dans params seront mises dans le paramètre "params" dans la réponse. Ainsi, pour les récupérer dans l'action vous ferez :
+Les données que vous mettrez dans params seront mises dans le paramètre "params"
+dans la réponse. Ainsi, pour les récupérer dans l'action vous ferez :
 
 <code php>
   $parametres = $this->param('params');
 </code>
 
-Bien entendu, ce que vous avez dans $parametres sera des données "php" (chaine, array ou autre), la transformation de la chaine json étant réalisée par @@C@jJsonRpcRequest@@..
+Bien entendu, ce que vous avez dans $parametres sera des données "php" (chaine,
+array ou autre), la transformation de la chaine json étant réalisée par
+@@C@jJsonRpcRequest@@..
 
-Notez qu'un script javascript est fourni dans @@F@lib/jelix-www/js/json.js@@. Il vous permet, dans vos pages HTML de transformer vos données javascript en chaine json. Pour cela, sur les objets, tableaux et autre type de donnée javascript, il suffit d'appeler la méthode javascript @@M@toJSONString()@@ qui renvoie une chaîne. Il suffit ensuite de passer cette chaîne à xmlHttpRequest pour envoyer la requête JSONRPC à jelix. Exemple, dans votre page HTML :
+Notez qu'un script javascript est fourni dans @@F@lib/jelix-www/js/json.js@@. Il
+vous permet, dans vos pages HTML de transformer vos données javascript en chaine
+json. Pour cela, sur les objets, tableaux et autre type de donnée javascript, il
+suffit d'appeler la méthode javascript @@M@toJSONString()@@ qui renvoie une
+chaîne. Il suffit ensuite de passer cette chaîne à xmlHttpRequest pour envoyer
+la requête JSONRPC à jelix. Exemple, dans votre page HTML :
 
 <code javascript>
  var jsonrpc = { method : "monModule~default:index",

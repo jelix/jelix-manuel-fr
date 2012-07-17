@@ -2,7 +2,8 @@
 
 @@master_admin@@ est un module fournissant une interface web dediée à l'administration (backend).
 
-Avant de commencer la personnalisation de l'interface d'administration, [[/creer-application/creer-administration|vous devez la créer]].
+Avant de commencer la personnalisation de l'interface d'administration,
+[[/creer-application/creer-administration|vous devez la créer]].
 
 Le module contient trois zones :
 
@@ -14,9 +15,14 @@ l'action @@default:index@@ affiche le tableau de bord
 
 ===== Activer un module pour qu'il soit utilisable via l'interface d'administration =====
 
-Si l'administration a un point d'entrée spécifique, comme admin.php par défaut, vous devez indiquer dans la configuration que ce module est accessible uniquement via ce point d'entrée.
+Si l'administration a un point d'entrée spécifique, comme admin.php par défaut,
+vous devez indiquer dans la configuration que ce module est accessible
+uniquement via ce point d'entrée.
 
-Pour ce faire, dans la configuration (à la fois dans defaultconfig.ini.php et dans admin/config.ini.php), dans la section @@simple_urlengine_entrypoints@@, au niveau de la clé admin, vous devez ajouter votre module. Si il s'appelle adminactu par exemple, ça donne ça :
+Pour ce faire, dans la configuration (à la fois dans defaultconfig.ini.php et
+dans admin/config.ini.php), dans la section @@simple_urlengine_entrypoints@@, au
+niveau de la clé admin, vous devez ajouter votre module. Si il s'appelle
+adminactu par exemple, ça donne ça :
 
 <code ini>
  [simple_urlengine_entrypoints]
@@ -24,18 +30,24 @@ Pour ce faire, dans la configuration (à la fois dans defaultconfig.ini.php et d
 </code>
 
 
-Note : vous devriez avoir toujours des modules uniquement dédiés à l'admin, et des modules dédiés uniquement à la partie publique du site. Il est déconseillé donc d'avoir des contrôleurs pour l'admin et des contrôleurs pour la partie public du site, dans un même module. Cela facilite la configuration de la sécurité.
+Note : vous devriez avoir toujours des modules uniquement dédiés à l'admin, et
+des modules dédiés uniquement à la partie publique du site. Il est déconseillé
+donc d'avoir des contrôleurs pour l'admin et des contrôleurs pour la partie
+public du site, dans un même module. Cela facilite la configuration de la
+sécurité.
 
 
 ===== Utilisation du système de menu =====
 
-la zone @@admin_menu@@ affiche un menu. Ce menu contient en fait des sous-menus, et les sous-menus contiennent des éléments. 
-Chaque élément et sous-menu a un id.
+la zone @@admin_menu@@ affiche un menu. Ce menu contient en fait des sous-menus,
+et les sous-menus contiennent des éléments. Chaque élément et sous-menu a un id.
 
-Si vous voulez ajouter des éléments ou sous-menus, vous devez créer un listener pour l'évènement @@masteradminGetMenuContent@@.
+Si vous voulez ajouter des éléments ou sous-menus, vous devez créer un listener
+pour l'évènement @@masteradminGetMenuContent@@.
 
-Imaginez que vous avez un module "adminactu", et souhaitez ajouter un élément de menu à votre contrôleur CRUD pour gérer les actualités. 
-Dans @@F@adminactu/events.xml@@ :
+Imaginez que vous avez un module "adminactu", et souhaitez ajouter un élément de
+menu à votre contrôleur CRUD pour gérer les actualités. Dans
+@@F@adminactu/events.xml@@ :
 
 <code xml>
 <events xmlns="http://jelix.org/ns/events/1.0">
@@ -45,7 +57,9 @@ Dans @@F@adminactu/events.xml@@ :
 </events>
 </code>
 
-Et dans @@F@adminactu/classes/news.listener.php@@, vous devriez retourner à l'évènement l'objet @@C@masterAdminMenuItem@@ pour chaque élément que vous voulez ajouter:
+Et dans @@F@adminactu/classes/news.listener.php@@, vous devriez retourner à
+l'évènement l'objet @@C@masterAdminMenuItem@@ pour chaque élément que vous
+voulez ajouter:
 
 <code php>
 class newsListener extends jEventListener{
@@ -66,7 +80,8 @@ Voici les paramètres pour @@C@masterAdminMenuItem@@ pour ajouter un lien :
    * l'ordre dans le sous-menu
    * l'id du sous-menu où ajouter des éléments. Par défaut il y a deux sous-menus : 'toplinks' et 'system'.
 
-Si au niveau de l'item de menu, vous voulez ajouter n'importe quel contenu HTML à la place d'un simple lien, indiquez plutôt ces paramètres :
+Si au niveau de l'item de menu, vous voulez ajouter n'importe quel contenu HTML
+à la place d'un simple lien, indiquez plutôt ces paramètres :
 
    * un id pour l'élément du menu
    * une chaîne vide
@@ -75,13 +90,19 @@ Si au niveau de l'item de menu, vous voulez ajouter n'importe quel contenu HTML 
    * l'id du sous-menu où ajouter des éléments. Par défaut il y a deux sous-menus : 'toplinks' et 'system'.
    * Le type du contenu, @@V@'content'@@, pour indiquer qu'il s'agit d'un contenu HTML.
 
-Vous pouvez ajouter des nouveaux sous-menus. Créer simplement un objet @@C@masterAdminMenuItem@@, où l'id du sous-menu est vide.
+Vous pouvez ajouter des nouveaux sous-menus. Créer simplement un objet
+@@C@masterAdminMenuItem@@, où l'id du sous-menu est vide.
 
 
 
 ===== Utilisation de l'infobox =====
 
-En haut à droite de l'interface utilisateur de master_admin, il y a la zone @@admin_infobox@@. Cette zone affiche le nom de l'utilisateur, un lien vers son profil, et un lien pour se déconnecter. Vous pouvez rajouter d'autres liens ou informations concernant l'utilisateur dans cette zone. Il faut pour cela répondre à l'évènement @@masteradminGetInfoBoxContent@@, en renvoyant une liste d'objets @@C@masterAdminMenuItem@@.
+En haut à droite de l'interface utilisateur de master_admin, il y a la zone
+@@admin_infobox@@. Cette zone affiche le nom de l'utilisateur, un lien vers son
+profil, et un lien pour se déconnecter. Vous pouvez rajouter d'autres liens ou
+informations concernant l'utilisateur dans cette zone. Il faut pour cela
+répondre à l'évènement @@masteradminGetInfoBoxContent@@, en renvoyant une liste
+d'objets @@C@masterAdminMenuItem@@.
 
 Rajoutons cet évènement dans le fichier @@F@adminactu/events.xml@@ :
 
@@ -95,7 +116,9 @@ Rajoutons cet évènement dans le fichier @@F@adminactu/events.xml@@ :
 </code>
 
 
-Et dans la classe @@C@newsListener@@, rajoutons la méthode @@M@onmasteradminGetInfoBoxContent@@, qui va renvoyer un item pour afficher un lien vers la liste des news postées par l'utilisateur.
+Et dans la classe @@C@newsListener@@, rajoutons la méthode
+@@M@onmasteradminGetInfoBoxContent@@, qui va renvoyer un item pour afficher un
+lien vers la liste des news postées par l'utilisateur.
 
 <code php>
 class newsListener extends jEventListener{
@@ -113,15 +136,19 @@ class newsListener extends jEventListener{
 
 ===== Utilisation du dashboard =====
 
-Un tableau de bord est souvent utile dans l'administration d'un site web. 
-C'est souvent la page de démarrage pour ce genre d'application, qui affiche des informations diverses et variées.
+Un tableau de bord est souvent utile dans l'administration d'un site web. C'est
+souvent la page de démarrage pour ce genre d'application, qui affiche des
+informations diverses et variées.
 
-Chaque module peut afficher des informations sur le tableau de bord.
-Ils doivent écouter l'évènement @@masterAdminGetDashboardWidget@@, et ajouter un ou plusieurs objets @@C@masterAdminDashboardWidget@@ à l'évènement, 
-lesquels déclarent un contenu "widget". 
-Cet objet est très simple, il a trois propriétés: @@P@title@@, @@P@content@@ et @@P@order@@
+Chaque module peut afficher des informations sur le tableau de bord. Ils doivent
+écouter l'évènement @@masterAdminGetDashboardWidget@@, et ajouter un ou
+plusieurs objets @@C@masterAdminDashboardWidget@@ à l'évènement, lesquels
+déclarent un contenu "widget". Cet objet est très simple, il a trois propriétés:
+@@P@title@@, @@P@content@@ et @@P@order@@
 
-Donc, vous devez fournir un titre et un contenu html pour chaque "information box" que vous souhaitez ajouter au tableau de bord, et l'ordre de tri d'affichage de ce contenu.
+Donc, vous devez fournir un titre et un contenu html pour chaque "information
+box" que vous souhaitez ajouter au tableau de bord, et l'ordre de tri
+d'affichage de ce contenu.
 
 <code php>
 class newsdashboardListener extends jEventListener {
@@ -148,7 +175,8 @@ Le module contient deux templates:
 
 Vous devez utiliser ce template dans votre objet réponse.
    
-La commande jelix @@c@initadmin@@ crée par défaut deux objets réponse, @@C@adminHtmlResponse@@ et @@C@adminLoginHtmlResponse@@ 
-dans votre répertoire @@F@responses/@@. 
-Ces réponses utilisent le template master_admin, et vous pouvez évidemment modifier ces objets pour les personnaliser.
+La commande jelix @@c@initadmin@@ crée par défaut deux objets réponse,
+@@C@adminHtmlResponse@@ et @@C@adminLoginHtmlResponse@@ dans votre répertoire
+@@F@responses/@@. Ces réponses utilisent le template master_admin, et vous
+pouvez évidemment modifier ces objets pour les personnaliser.
 

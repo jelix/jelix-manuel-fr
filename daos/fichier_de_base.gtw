@@ -1,26 +1,38 @@
 ~~LANG:EN@enman:daos/file~~
 
-Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping objet-relationnel, c'est à dire indiquer dans ce fichier la correspondance entre les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
+Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping
+objet-relationnel, c'est à dire indiquer dans ce fichier la correspondance entre
+les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
 
 
 ===== Création automatique =====
 
 
-Le fichier d'un DAO peut être généré par le script //cmd// en ligne de commande, à partir d'une table de base de données existante.
+Le fichier d'un DAO peut être généré par le script //cmd// en ligne de commande,
+à partir d'une table de base de données existante.
 
 <code bash>
  php cmd.php createdao nom_module nom_dao nom_table nom_sequence
 </code>
 
-Par exemple, si vous voulez créer dans le module "myshop", un DAO "product" qui sera basé sur la table "shop_product", vous taperez donc :
+Par exemple, si vous voulez créer dans le module "myshop", un DAO "product" qui
+sera basé sur la table "shop_product", vous taperez donc :
 
 <code bash>
  php cmd.php createdao myshop product shop_product
 </code>
 
-Dans le répertoire @@F@daos@@ du module //myshop// vous allez donc avoir un fichier XML @@F@product.dao.xml@@ qui va contenir la description du mapping. Le nom de la table est optionnel si vous voulez utiliser le même nom de dao que celui de la table, et que vous n'avez pas de séquence. Indiquez le nom de la séquence utilisée pour auto incrémenter la clé primaire (paramètre nécessaire pour les bases oracles et parfois postgresql).
+Dans le répertoire @@F@daos@@ du module //myshop// vous allez donc avoir un
+fichier XML @@F@product.dao.xml@@ qui va contenir la description du mapping. Le
+nom de la table est optionnel si vous voulez utiliser le même nom de dao que
+celui de la table, et que vous n'avez pas de séquence. Indiquez le nom de la
+séquence utilisée pour auto incrémenter la clé primaire (paramètre nécessaire
+pour les bases oracles et parfois postgresql).
 
-Bien que la génération automatique permette de gagner du temps, il faut souvent retoucher le fichier pour que le mapping corresponde mieux à ce que l'on veut faire, le générateur ne pouvant tout deviner. Voyez alors la suite pour le compléter, ou en créer un à la main.
+Bien que la génération automatique permette de gagner du temps, il faut souvent
+retoucher le fichier pour que le mapping corresponde mieux à ce que l'on veut
+faire, le générateur ne pouvant tout deviner. Voyez alors la suite pour le
+compléter, ou en créer un à la main.
 
 
 ===== Détails sur le format XML =====
@@ -41,9 +53,12 @@ La structure d'un fichier DAO ressemble à cela :
 </dao>
 </code>
 
-Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes") est facultative et est décrite [[methodes_xml|dans un autre chapitre dédiée]].
+Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes")
+est facultative et est décrite [[methodes_xml|dans un autre chapitre dédiée]].
   * @@E@datasources@@ : indique les tables sur lequel reposera l'objet.
-  * @@E@record@@ : indique la correspondance entre les propriétés de l'objet et les champs des tables et définit donc les propriétés qu'il y aura sur l'objet record.
+  * @@E@record@@ : indique la correspondance entre les propriétés de l'objet et
+    les champs des tables et définit donc les propriétés qu'il y aura sur
+    l'objet record.
 
 
 ===== Correspondance simple =====
@@ -52,11 +67,16 @@ Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes") es
 
 ==== Déclaration de la table ====
 
-On appelle correspondance simple, une correspondance où un record est mappé sur une seule table. Pour déclarer la table sur laquelle reposera le DAO, on utilise la balise @@E@<primarytable>@@, avec les attributs suivants :
+On appelle correspondance simple, une correspondance où un record est mappé sur
+une seule table. Pour déclarer la table sur laquelle reposera le DAO, on utilise
+la balise @@E@<primarytable>@@, avec les attributs suivants :
 
   * @@A@name@@ : alias donné à la table et qui sera utilisé dans les requêtes
-  * @@A@realname@@ (facultatif) : nom réel de la table dans la base de données. Si cet attribut n'est pas précisé, il prend la même valeur que l'attribut @@A@name@@. Dans ce cas @@A@name@@ doit être le nom réel de la table.
-  * @@A@primarykey@@ indique la clé primaire. Vous pouvez indiquer plusieurs champs en les séparant par un espace ou une virgule.
+  * @@A@realname@@ (facultatif) : nom réel de la table dans la base de données.
+    Si cet attribut n'est pas précisé, il prend la même valeur que l'attribut
+    @@A@name@@. Dans ce cas @@A@name@@ doit être le nom réel de la table.
+  * @@A@primarykey@@ indique la clé primaire. Vous pouvez indiquer plusieurs
+    champs en les séparant par un espace ou une virgule.
 
 
 <code xml>
@@ -65,18 +85,31 @@ On appelle correspondance simple, une correspondance où un record est mappé su
   </datasources>
 </code>
 
-On déclare ici que le record sera basé sur la table "products", qui a pour alias "p", et dont la clé primaire est "id_product".
+On déclare ici que le record sera basé sur la table "products", qui a pour alias
+"p", et dont la clé primaire est "id_product".
 
-Il n'y a toujours qu'une seule table "primaire" dans un DAO (donc une seule balise @@E@<primarytable>@@). Vous verrez que l'on peut indiquer des tables annexes (étrangères) plus loin.
+Il n'y a toujours qu'une seule table "primaire" dans un DAO (donc une seule
+balise @@E@<primarytable>@@). Vous verrez que l'on peut indiquer des tables
+annexes (étrangères) plus loin.
 
 Ensuite, il faut déclarer la correspondance propriété - champs.
 
 
 ==== Déclaration des propriétés ====
 
-La section @@E@<record>@@ déclare les propriétés d'un objet @@record@@ (enregistrement). Chaque propriété correspond à l'un des champs de la table primaire, ou l'un de ceux des tables étrangères comme vous le verrez plus loin. Bien sûr, vous n'êtes pas obligés de déclarer une propriété pour tous les champs existants. On peut ainsi faire plusieurs DAO qui travaillent sur une même table mais qui sont destinés à des usages différents. Par exemple faire un DAO spécifique pour récupérer des listes légères d'enregistrement (on ne déclarera que les propriétés essentielles), et un autre pour les gérer de manière complète (on y indiquera tous les champs).
+La section @@E@<record>@@ déclare les propriétés d'un objet @@record@@
+(enregistrement). Chaque propriété correspond à l'un des champs de la table
+primaire, ou l'un de ceux des tables étrangères comme vous le verrez plus loin.
+Bien sûr, vous n'êtes pas obligés de déclarer une propriété pour tous les champs
+existants. On peut ainsi faire plusieurs DAO qui travaillent sur une même table
+mais qui sont destinés à des usages différents. Par exemple faire un DAO
+spécifique pour récupérer des listes légères d'enregistrement (on ne déclarera
+que les propriétés essentielles), et un autre pour les gérer de manière complète
+(on y indiquera tous les champs).
 
-La section @@E@record@@ doit donc contenir une ou plusieurs balises @@E@<property>@@. Voici une balise @@E@<property>@@ avec la liste des attributs possibles :
+La section @@E@record@@ doit donc contenir une ou plusieurs balises
+@@E@<property>@@. Voici une balise @@E@<property>@@ avec la liste des attributs
+possibles :
 
 <code xml>
   <property 
@@ -91,13 +124,19 @@ La section @@E@record@@ doit donc contenir une ou plusieurs balises @@E@<propert
 
 L'attribut @@A@name@@ est le nom de la propriété de l'objet.
 
-L'attribut @@A@fieldname@@ est le nom du champ qui correspond. Si @@A@name@@ et @@A@fieldname@@ sont égaux, on peut omettre @@A@fieldname@@.
+L'attribut @@A@fieldname@@ est le nom du champ qui correspond. Si @@A@name@@ et
+@@A@fieldname@@ sont égaux, on peut omettre @@A@fieldname@@.
 
-Les attributs @@A@datatype@@, @@A@required@@, @@A@minlength@@, @@A@maxlength@@, et @@A@regexp@@ sont des contraintes. Cela permet par la suite d'appeler la méthode @@M@check()@@ sur un record pour vérifier les valeurs des propriétés (avant son stockage par exemple).
+Les attributs @@A@datatype@@, @@A@required@@, @@A@minlength@@, @@A@maxlength@@,
+et @@A@regexp@@ sont des contraintes. Cela permet par la suite d'appeler la
+méthode @@M@check()@@ sur un record pour vérifier les valeurs des propriétés
+(avant son stockage par exemple).
 
 L'attribut @@A@default@@ permet d'indiquer une valeur par défaut.
 
-L'attribut @@A@datatype@@ indique le type SQL du champs. Voici les types de champs reconnus par jDao, qui sont bien plus nombreux que dans les versions précédentes de jelix :
+L'attribut @@A@datatype@@ indique le type SQL du champs. Voici les types de
+champs reconnus par jDao, qui sont bien plus nombreux que dans les versions
+précédentes de jelix :
 
 
   * @@varchar@@, @@varchar2@@, @@nvarchar2@@, @@character@@, @@character varying@@, @@char@@, @@nchar@@, @@name@@, @@longvarchar@@, @@string@@ (deprecated),
@@ -112,42 +151,80 @@ L'attribut @@A@datatype@@ indique le type SQL du champs. Voici les types de cham
   * @@varbinary@@, @@bytea@@, @@binary@@, @@raw@@, @@long raw@@
   * @@enum@@, @@set@@, @@xmltype@@, @@point@@, @@line@@, @@lsed@@, @@box@@, @@path@@, @@polygon@@, @@circle@@, @@cidr@@, @@inet@@, @@macaddr@@, @@bit varyong@@, @@arrays@@, @@complex types@@
 
-Les bases de données ne reconnaissent pas tous ces types de champs. Ne vous inquietez pas, indiquez le type que vous voulez, et jDao utilisera le type qui correspond le mieux pour la base de donnée utilisée. Par exemple, si vous indiquez @@bytea@@, c'est un type utilisé par postgresql. Si vous utilisez mysql, jDao utilisera en fait le type @@longblob@@.
+Les bases de données ne reconnaissent pas tous ces types de champs. Ne vous
+inquietez pas, indiquez le type que vous voulez, et jDao utilisera le type qui
+correspond le mieux pour la base de donnée utilisée. Par exemple, si vous
+indiquez @@bytea@@, c'est un type utilisé par postgresql. Si vous utilisez
+mysql, jDao utilisera en fait le type @@longblob@@.
 
-Les valeurs des champs seront convertis dans le type PHP le plus approprié, la plupart du temps, une chaine.
+Les valeurs des champs seront convertis dans le type PHP le plus approprié, la
+plupart du temps, une chaine.
 
-Pour les champs auto incrementés, vous pouvez indiquer le type @@serial@@ ou @@autoincrement@@. Mais dans certain cas, il est préférable d'indiquer le type d'entier (@@integer@@, @@tinyint@@..) et de mettre un attribut @@A@autoincrement@@ à @@true@@. Sur certaines bases, on peut associer une séquence à un champ. L'attribut @@A@sequence@@ doit alors indiquer son nom.
+Pour les champs auto incrementés, vous pouvez indiquer le type @@serial@@ ou
+@@autoincrement@@. Mais dans certain cas, il est préférable d'indiquer le type
+d'entier (@@integer@@, @@tinyint@@..) et de mettre un attribut
+@@A@autoincrement@@ à @@true@@. Sur certaines bases, on peut associer une
+séquence à un champ. L'attribut @@A@sequence@@ doit alors indiquer son nom.
 
-Les attributs @@A@updatepattern@@, @@A@insertpattern@@ et @@A@selectpattern@@ permettent d'indiquer un "motif" à appliquer lors de la mise à jour, l'insertion ou la lecture de la valeur du champ dans la table. Ce motif doit en fait être une expression SQL, contenant éventuellement la chaîne "%s" qui sera remplacée par la valeur ou le nom du champ. Par défaut leurs valeurs vaut "%s". Si on indique une valeur vide, cela correspond à une opération nulle (le champ n'est pas lu,  inséré ou mis à jour). Vous pouvez utiliser @@A@insertpattern@@ et @@A@selectpattern@@ sur des clés primaires, mais pas @@A@updatepattern@@.
+Les attributs @@A@updatepattern@@, @@A@insertpattern@@ et @@A@selectpattern@@
+permettent d'indiquer un "motif" à appliquer lors de la mise à jour, l'insertion
+ou la lecture de la valeur du champ dans la table. Ce motif doit en fait être
+une expression SQL, contenant éventuellement la chaîne "%s" qui sera remplacée
+par la valeur ou le nom du champ. Par défaut leurs valeurs vaut "%s". Si on
+indique une valeur vide, cela correspond à une opération nulle (le champ n'est
+pas lu, inséré ou mis à jour). Vous pouvez utiliser @@A@insertpattern@@ et
+@@A@selectpattern@@ sur des clés primaires, mais pas @@A@updatepattern@@.
 
 === Exemple 1 ===
 
 Pour un champ qui contient une date de mise à jour, on pourra indiquer :
+
 <code xml>
   <property name="date_update" datatype="datetime" insertpattern="NOW()" updatepattern="NOW()" />
 </code>
 
-Ainsi chaque fois qu'un @@INSERT@@ ou un @@UPDATE@@ sera fait, la valeur insérée sera la date du jour (et non celle que l'on aurait indiquée dans la propriété @@date_update@@ du record).
+Ainsi chaque fois qu'un @@INSERT@@ ou un @@UPDATE@@ sera fait, la valeur insérée
+sera la date du jour (et non celle que l'on aurait indiquée dans la propriété
+@@date_update@@ du record).
 
 
 === Exemple 2 ===
-On peut aussi avoir une propriété qui ne correspond pas directement à un champ, mais qui soit le résultat d'une expression SQL. Dans ce cas, il faut désactiver l'insertion et la mise à jour.
+
+On peut aussi avoir une propriété qui ne correspond pas directement à un champ,
+mais qui soit le résultat d'une expression SQL. Dans ce cas, il faut désactiver
+l'insertion et la mise à jour.
 
 <code xml>
   <property name="identite" datatype="string" selectpattern="CONCAT(nom, ' ',prenom)" insertpattern="" updatepattern="" />
 </code>
 
-Attention, en ce qui concerne l'expression de @@A@selectPattern@@ : 
-  * l'expression doit utiliser des champs d'une même table. Si le dao est basé sur plusieurs tables (ex : A et B, voir section suivante), il n'est pas possible que l'expression utilise à la fois des champs de la table A et de la table B
-  * si l'expression utilise des champs d'une table B qui ne soit pas la table principale, la propriété doit être attribué à cette table B, et non à la table principale. Ce qui veut dire que la propriété doit avoir un attribut @@A@table@@ ayant pour valeur le nom/alias de cette table B.
+Attention, en ce qui concerne l'expression de @@A@selectPattern@@ :
+  * l'expression doit utiliser des champs d'une même table. Si le dao est basé
+    sur plusieurs tables (ex : A et B, voir section suivante), il n'est pas
+    possible que l'expression utilise à la fois des champs de la table A et de
+    la table B
+  * si l'expression utilise des champs d'une table B qui ne soit pas la table
+    principale, la propriété doit être attribué à cette table B, et non à la
+    table principale. Ce qui veut dire que la propriété doit avoir un attribut
+    @@A@table@@ ayant pour valeur le nom/alias de cette table B.
 
 
 ===== Correspondance avec plusieurs tables =====
 
-On peut déclarer une table principale, mais aussi des tables annexes qui seraient liées à la table principale par des jointures. Il est utile, lorsque l'on veut récupérer un enregistrement, de récupérer en même temps des informations de tables annexes. Par exemple, si on veut récupérer un produit de la table "products", et en même temps le libellé de sa catégorie qui se trouve dans une table "category", on déclarera aussi la table "category". À noter que vous ne pourrez modifier que les données issues de la table principale quand vous voudrez mettre à jour un enregistrement.
+On peut déclarer une table principale, mais aussi des tables annexes qui
+seraient liées à la table principale par des jointures. Il est utile, lorsque
+l'on veut récupérer un enregistrement, de récupérer en même temps des
+informations de tables annexes. Par exemple, si on veut récupérer un produit de
+la table "products", et en même temps le libellé de sa catégorie qui se trouve
+dans une table "category", on déclarera aussi la table "category". À noter que
+vous ne pourrez modifier que les données issues de la table principale quand
+vous voudrez mettre à jour un enregistrement.
 
-Pour déclarer de telles tables étrangères, qui en toute logique sont liées à la table principale par des clés étrangères, il faut utiliser :
-  * @@E@<foreigntable>@@ pour indiquer une table étrangère liée par une jointure normale.
+Pour déclarer de telles tables étrangères, qui en toute logique sont liées à la
+table principale par des clés étrangères, il faut utiliser :
+
+  * @@E@<foreigntable>@@ pour indiquer une table étrangère liée par une jointure
+    normale.
   * @@E@<optionalforeigntable>@@ pour indiquer une table étrangère liée par une jointure externe.
 
 ==== Exemple ====
@@ -158,14 +235,23 @@ Pour déclarer de telles tables étrangères, qui en toute logique sont liées �
    <optionalforeigntable name="man" realname="manufacturers" primarykey="id" onforeignkey="id_manufacturer" />
 </code>
 
-Comme pour la balise @@E@<primarytable>@@, il y a les attributs @@A@name@@, @@A@realname@@ et @@A@primarykey@@. Il y a par contre un attribut supplémentaire, @@A@onforeignkey@@, qui indique le nom du champ dans la table primaire, qui est la clé étrangère sur la table en question. Ainsi, avec l'exemple ci-dessus, jDao générera pour les requêtes de type @@SELECT@@ les clauses @@FROM@@ et @@WHERE@@ suivantes : 
+Comme pour la balise @@E@<primarytable>@@, il y a les attributs @@A@name@@,
+@@A@realname@@ et @@A@primarykey@@. Il y a par contre un attribut
+supplémentaire, @@A@onforeignkey@@, qui indique le nom du champ dans la table
+primaire, qui est la clé étrangère sur la table en question. Ainsi, avec
+l'exemple ci-dessus, jDao générera pour les requêtes de type @@SELECT@@ les
+clauses @@FROM@@ et @@WHERE@@ suivantes : 
 
 <code sql>
  FROM products as p left join manufacturers as man on (p.id_manufacturer = man.id),  categories as cat
  WHERE cat.id_cat = p.id_cat
 </code>
 
-Indiquer des tables annexes n'a de sens que si vous voulez avoir une ou plusieurs propriétés correspondantes à leurs champs. Vous ajouterez donc autant de balise @@E@<property>@@ que vous voudrez. La seule différence est qu'il faut ajouter un attribut @@A@table@@ qui indique l'alias de la table dans laquelle se trouve le champ.
+Indiquer des tables annexes n'a de sens que si vous voulez avoir une ou
+plusieurs propriétés correspondantes à leurs champs. Vous ajouterez donc autant
+de balise @@E@<property>@@ que vous voudrez. La seule différence est qu'il faut
+ajouter un attribut @@A@table@@ qui indique l'alias de la table dans laquelle se
+trouve le champ.
 
 <code xml>
   <property 
@@ -175,5 +261,7 @@ Indiquer des tables annexes n'a de sens que si vous voulez avoir une ou plusieur
    />
 </code>
 
-Dans la propriété @@P@$libelle_categorie@@ du record, se trouvera la valeur du champ @@label@@ de la table @@categories@@ ("cat" étant l'alias de cette table, comme il a été défini plus haut dans la balise @@E@foreigntable@@ ).
+Dans la propriété @@P@$libelle_categorie@@ du record, se trouvera la valeur du
+champ @@label@@ de la table @@categories@@ ("cat" étant l'alias de cette table,
+comme il a été défini plus haut dans la balise @@E@foreigntable@@ ).
 

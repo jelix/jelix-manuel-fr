@@ -8,18 +8,22 @@ $rep = $this->getResponse('xml');
 
 Pour indiquer le contenu xml, vous avez deux possibilités. 
 
-**Attention** : dans les deux cas, le XML doit être bien formé. Si ce n'est pas le cas, la réponse sera une erreur.
+**Attention** : dans les deux cas, le XML doit être bien formé. Si ce n'est pas
+le cas, la réponse sera une erreur.
 
 ===== Générer à partir d'un template =====
 
-Par défaut, la propriété @@P@$content@@ contient un objet @@C@jTpl@@. Vous devez indiquer le sélecteur de template dans la propriété @@P@$contentTpl@@.
+Par défaut, la propriété @@P@$content@@ contient un objet @@C@jTpl@@. Vous devez
+indiquer le sélecteur de template dans la propriété @@P@$contentTpl@@.
 
 <code php>
   $rep->contentTpl = 'monModule~monxml';
   $rep->content->assign('foo','bla bla bla');
 </code>
 
-jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@  donc vous n'avez pas à vous en occuper dans le template. Cependant, si le template comporte déjà cette balise, il faudra alors faire :
+jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@ donc vous n'avez pas à
+vous en occuper dans le template. Cependant, si le template comporte déjà cette
+balise, il faudra alors faire :
 
 <code php>
   $rep->sendXMLHeader = false;
@@ -28,13 +32,16 @@ jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@  donc vous n'avez pa
 
 ===== Génération sans template  =====
 
-Si vous ne voulez pas utiliser un template, vous mettez le contenu xml, sous forme de chaine, dans la propriété $content.
+Si vous ne voulez pas utiliser un template, vous mettez le contenu xml, sous
+forme de chaine, dans la propriété $content.
 
 <code php>
   $rep->content = '<mondoc> <title>jelix</title> </mondoc>';
 </code>
 
-jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@  donc vous n'avez pas à vous en occuper. Cependant, si votre contenu comporte déjà cette balise, il faudra alors faire :
+jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@ donc vous n'avez pas à
+vous en occuper. Cependant, si votre contenu comporte déjà cette balise, il
+faudra alors faire :
 
 <code php>
   $rep->sendXMLHeader = false;
@@ -43,7 +50,11 @@ jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@  donc vous n'avez pa
 
 ===== Indiquer des feuilles de styles. =====
 
-Vous pouvez attacher des feuilles de styles CSS ou XSLT au document XML produit. Pour cela, vous devez utilisez les méthodes @@M@addCSSStyleSheet()@@ ou @@M@addXSLStyleSheet()@@. Elles prennent toutes deux en premier argument l'url du fichier, et en deuxième argument optionnel un tableau associatif définissant les pseudo attributs à mettre sur la processing instruction générée.
+Vous pouvez attacher des feuilles de styles CSS ou XSLT au document XML produit.
+Pour cela, vous devez utilisez les méthodes @@M@addCSSStyleSheet()@@ ou
+@@M@addXSLStyleSheet()@@. Elles prennent toutes deux en premier argument l'url
+du fichier, et en deuxième argument optionnel un tableau associatif définissant
+les pseudo attributs à mettre sur la processing instruction générée.
 
 <code php>
  $rep->addCSSStyleSheet('my.css', array('title'=>'super jolie'));

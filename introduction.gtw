@@ -1,9 +1,24 @@
 ~~LANG:EN@enman:introduction~~
 
-Jelix est un framework pour PHP 5.2 qui permet de développer rapidement des applications web de toutes tailles. Il comporte nombre de composants, permettant d'architecturer une appli selon le pattern MVC, d'accéder aux bases de données à travers un ORM, de générer divers types de contenus avec le minimum d'efforts etc.
+Jelix est un framework pour PHP 5.2 qui permet de développer rapidement des
+applications web de toutes tailles. Il comporte nombre de composants, permettant
+d'architecturer une appli selon le pattern MVC, d'accéder aux bases de données à
+travers un ORM, de générer divers types de contenus avec le minimum d'efforts
+etc.
 
-C'est un framework qui impose également une structure assez stricte dans l'organisation des fichiers d'une application, offrant donc une plus grande facilité dans la maintenance d'une application, puisque cette organisation permet de mieux s'y retrouver.
+C'est un framework qui impose également une structure assez stricte dans
+l'organisation des fichiers d'une application, offrant donc une plus grande
+facilité dans la maintenance d'une application, puisque cette organisation
+permet de mieux s'y retrouver.
 
-Enfin cette architecture est conçue pour être modulaire. Les fichiers (contrôleurs, templates, classes métiers...) d'une application peuvent être regroupés par domaine fonctionnel, offrant une réutilisation forte du code. De base, vous avez ainsi un module pour l'authentification, un autre pour une interface d'administration. Il existe aussi des dizaines de modules réalisés pour d'autres projets, mais réutilisables, comme des modules pour un forum, un blog, une boutique électronique etc.
+Enfin cette architecture est conçue pour être modulaire. Les fichiers
+(contrôleurs, templates, classes métiers...) d'une application peuvent être
+regroupés par domaine fonctionnel, offrant une réutilisation forte du code. De
+base, vous avez ainsi un module pour l'authentification, un autre pour une
+interface d'administration. Il existe aussi des dizaines de modules réalisés
+pour d'autres projets, mais réutilisables, comme des modules pour un forum, un
+blog, une boutique électronique etc.
 
-Ce manuel contient toutes les informations pour apprendre à utiliser et développer de tels modules, à construire des petites ou grosses applications, et à profiter des dizaines de fonctionnalités offertes par Jelix.
+Ce manuel contient toutes les informations pour apprendre à utiliser et
+développer de tels modules, à construire des petites ou grosses applications, et
+à profiter des dizaines de fonctionnalités offertes par Jelix.

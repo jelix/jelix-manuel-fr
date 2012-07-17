@@ -4,9 +4,15 @@ Une factory de DAO peut générer automatiquement [[/events|des évènements]] p
 
 ===== Évènements des méthodes natives =====
 
-Les méthodes update, insert, delete et deleteby peuvent générer des évènements, soit avant la fonction, soit après la fonction, soit avant et après. Pour les activer, il faut indiquer les évènements voulus dans l'attribut **events** de la balise factory. Ils doivent être séparés par une virgule. Les noms possibles sont :  deletebefore, deleteafter, updatebefore, updateafter, insertbefore, insertafter, deletebybefore, deletebyafter.
+Les méthodes update, insert, delete et deleteby peuvent générer des évènements,
+soit avant la fonction, soit après la fonction, soit avant et après. Pour les
+activer, il faut indiquer les évènements voulus dans l'attribut **events** de la
+balise factory. Ils doivent être séparés par une virgule. Les noms possibles
+sont : deletebefore, deleteafter, updatebefore, updateafter, insertbefore,
+insertafter, deletebybefore, deletebyafter.
 
-Voici les noms des évènements générés avec les noms de leurs paramètres, sachant qu'ils ont tous un paramètre **dao** qui contient le sélecteur du dao.
+Voici les noms des évènements générés avec les noms de leurs paramètres, sachant
+qu'ils ont tous un paramètre **dao** qui contient le sélecteur du dao.
 
   * daoDeleteBefore : keys (valeurs des clés du record à supprimer)
   * daoDeleteAfter : keys, result (1 si l'enregistrement est supprimé)
@@ -20,7 +26,9 @@ Voici les noms des évènements générés avec les noms de leurs paramètres, s
 Voici un exemple :
 
 ==== Fichier Dao =====
-Il faut ajouter la propriété @@events@@ à la balise @@E@<factory>@@. Il ne faut pas mettre de majuscules dans le nom des événements.
+
+Il faut ajouter la propriété @@events@@ à la balise @@E@<factory>@@. Il ne faut
+pas mettre de majuscules dans le nom des événements.
 
 <code xml>
   <factory events="deleteafter, insertafter"> ...
@@ -28,7 +36,8 @@ Il faut ajouter la propriété @@events@@ à la balise @@E@<factory>@@. Il ne fa
 
 ==== Listener ====
 
-Dans le répertoire classes du module, créer un fichier my.listener.php afin de mettre les évenements à exécuter
+Dans le répertoire classes du module, créer un fichier my.listener.php afin de
+mettre les évenements à exécuter
 
 <code php>
 class myListener extends jEventListener{
@@ -44,14 +53,16 @@ class myListener extends jEventListener{
 </code>
 
 
-Si vous désirez modifier la propriété maPropriete de votre dao, il vous suffit 
+Si vous désirez modifier la propriété maPropriete de votre dao, il vous suffit
+
 <code>
 $event->getParam("record")->maPropriete = $Variable;
 </code>
 
 ==== Fichier events.xml ====
 
-Il faut un fichier events.xml dans le répertoire racine du module. Dans ce fichier seront déclarées toutes les méthodes du listener. Exemple :
+Il faut un fichier events.xml dans le répertoire racine du module. Dans ce
+fichier seront déclarées toutes les méthodes du listener. Exemple :
 
 <code xml>
 <events xmlns="http://jelix.org/ns/events/1.0">
@@ -64,9 +75,14 @@ Il faut un fichier events.xml dans le répertoire racine du module. Dans ce fich
 
 ===== Évènements des méthodes personnalisées =====
 
-Pour les méthodes personnalisées (celles que vous décrivez en XML), et uniquement les méthodes de type update ou delete, vous pouvez indiquer l'attribut eventbefore, et/ou eventafter qui doivent contenir //true// ou //false//.
+Pour les méthodes personnalisées (celles que vous décrivez en XML), et
+uniquement les méthodes de type update ou delete, vous pouvez indiquer
+l'attribut eventbefore, et/ou eventafter qui doivent contenir //true// ou
+//false//.
 
-Les évènements générés sont alors daoSpecificUpdateBefore, daoSpecificUpdateAfter, daoSpecificDeleteBefore et daoSpecificDeleteAfter. Ils ont pour paramètre
+Les évènements générés sont alors daoSpecificUpdateBefore,
+daoSpecificUpdateAfter, daoSpecificDeleteBefore et daoSpecificDeleteAfter. Ils
+ont pour paramètre
   * dao, contenant le sélecteur du dao concerné
   * method, le nom de la méthode
   * params, contenant la liste des paramètres.

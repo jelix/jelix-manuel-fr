@@ -1,25 +1,46 @@
 ~~LANG:EN@enman:personnalized-common-response~~
 
-Il est fort probable que vous ayez dans la plupart de vos actions, à initialiser la même feuille de style, les mêmes zones de menus, et autres traitements de personnalisation de la réponse. Plutôt que de répéter toutes ces opérations dans chaque contrôleur, vous allez créer un objet response qui fait le travail commun à toutes les actions. 
+Il est fort probable que vous ayez dans la plupart de vos actions, à initialiser
+la même feuille de style, les mêmes zones de menus, et autres traitements de
+personnalisation de la réponse. Plutôt que de répéter toutes ces opérations dans
+chaque contrôleur, vous allez créer un objet response qui fait le travail commun
+à toutes les actions.
 
-Si vous voulez réaliser des modules réutilisables, cette façon de faire est d'autant plus intéressante puisqu'alors tout ce qui ne concerne pas le module est réalisé à l'extérieur de ce module. Il est donc plus indépendant de l'application, contrairement au cas où il gère lui même dans ses actions les parties communes des pages du site (bandeau etc...).
+Si vous voulez réaliser des modules réutilisables, cette façon de faire est
+d'autant plus intéressante puisqu'alors tout ce qui ne concerne pas le module
+est réalisé à l'extérieur de ce module. Il est donc plus indépendant de
+l'application, contrairement au cas où il gère lui même dans ses actions les
+parties communes des pages du site (bandeau etc...).
 
-Dans cette section, nous allons parler principalement de la création d'un objet réponse héritant d'un autre objet réponse "évolué" existant. Si vous voulez créer un objet réponse pour un nouveau type de format, voir le chapitre sur la [[creer_response|génération d'un contenu dans un format spécifique]].
+Dans cette section, nous allons parler principalement de la création d'un objet
+réponse héritant d'un autre objet réponse "évolué" existant. Si vous voulez
+créer un objet réponse pour un nouveau type de format, voir le chapitre sur la
+[[creer_response|génération d'un contenu dans un format spécifique]].
 
 ===== Créer un objet réponse à partir d'une classe existante =====
 
-Vos propres classes de réponses peuvent hériter de @@C@jResponseHtml@@ par exemple (mais ça pourrait bien sûr être une autre classe @@jResponse*@@ fournie par Jelix). D'ailleurs, par défaut, quand vous créez une application avec jelix-scripts, un tel objet est déjà créé, @@C@myHtmlResponse@@, qui hérite de @@C@jResponseHtml@@.
+Vos propres classes de réponses peuvent hériter de @@C@jResponseHtml@@ par
+exemple (mais ça pourrait bien sûr être une autre classe @@jResponse*@@ fournie
+par Jelix). D'ailleurs, par défaut, quand vous créez une application avec
+jelix-scripts, un tel objet est déjà créé, @@C@myHtmlResponse@@, qui hérite de
+@@C@jResponseHtml@@.
 
 Dans cette classe, vous pouvez alors :
 
-  * surcharger le constructeur pour réaliser des choses qui seront faites lorsque vous ferez le @@M@getResponse()@@ dans votre contrôleur
-  * surcharger la méthode @@M@doAfterActions()@@. Notez que cette méthode n'existe que pour @@C@jResponseHtml@@. Elle sera appelée **après** votre action, et juste avant l'affichage définitif.
+  * surcharger le constructeur pour réaliser des choses qui seront faites
+    lorsque vous ferez le @@M@getResponse()@@ dans votre contrôleur
+  * surcharger la méthode @@M@doAfterActions()@@. Notez que cette méthode
+    n'existe que pour @@C@jResponseHtml@@. Elle sera appelée **après** votre
+    action, et juste avant l'affichage définitif.
 
-Voyons plus précisément comment ça se gère globalement. Vous avez donc vos pages HTML, qui contiennent la partie @@E@<head>@@ et la partie @@E@<body>@@ :
+Voyons plus précisément comment ça se gère globalement. Vous avez donc vos pages
+HTML, qui contiennent la partie @@E@<head>@@ et la partie @@E@<body>@@ :
 
 {{jresponsehtml_step1.png|}}
 
-Vous aurez un template principal qui s'occupe de générer l'ensemble du contenu de @@E@<body>@@, et ce template va être déclaré au niveau de votre propre  objet réponse. Voici par exemple votre objet @@F@responses/myHtmlResponse.class.php@@ :
+Vous aurez un template principal qui s'occupe de générer l'ensemble du contenu
+de @@E@<body>@@, et ce template va être déclaré au niveau de votre propre objet
+réponse. Voici par exemple votre objet @@F@responses/myHtmlResponse.class.php@@ :
 
 <code php>
 require_once (JELIX_LIB_CORE_PATH.'response/jResponseHtml.class.php');
@@ -50,13 +71,17 @@ Ainsi le template pourrait ressembler à ceci
 <div id="footer"> ...</div>
 </code>
 
-Ces zones A, B, C, D et MAIN peuvent être générées par des sous-templates ou des objets @@C@jZone@@, matérialisés ici par des parties distinctes :
+Ces zones A, B, C, D et MAIN peuvent être générées par des sous-templates ou des
+objets @@C@jZone@@, matérialisés ici par des parties distinctes :
 
 {{jresponsehtml_step3.png|}}
 
-En particulier, la partie MAIN sera générée par les actions, en utilisant un template, une zone ou autre.
+En particulier, la partie MAIN sera générée par les actions, en utilisant un
+template, une zone ou autre.
 
-Ainsi l'objet réponse pourra s'occuper par exemple de la partie A (si celle-ci est commune à toutes les pages), et les autres zones seront remplies à loisir par les actions. Dans l'objet réponse on aura donc :
+Ainsi l'objet réponse pourra s'occuper par exemple de la partie A (si celle-ci
+est commune à toutes les pages), et les autres zones seront remplies à loisir
+par les actions. Dans l'objet réponse on aura donc :
 
 <code php>
 require_once (JELIX_LIB_CORE_PATH.'response/jResponseHtml.class.php');
@@ -107,7 +132,9 @@ Dans les actions (contrôleurs), on fera donc des choses comme :
 
 </code>
 
-Bien sûr, la réponse peut définir aussi autre chose que le template : feuille de styles et cie. Ce qui évite de le faire dans les actions. Exemple, en surchargeant le constructeur :
+Bien sûr, la réponse peut définir aussi autre chose que le template : feuille de
+styles et cie. Ce qui évite de le faire dans les actions. Exemple, en
+surchargeant le constructeur :
 
 <code php>
 class myHtmlResponse extends jResponseHtml {
@@ -142,7 +169,11 @@ class myHtmlResponse extends jResponseHtml {
 </code>
 
 
-**Note** : vous ne devez pas assigner des zones dans le constructeur de la réponse, surtout si la zone en question veut ajouter des feuilles de style ou faire d'autres modifications sur l'objet réponse. En effet, l'objet réponse n'est pas encore déclaré dans l'environnement jelix, et donc la zone ne pourra y accéder.
+**Note** : vous ne devez pas assigner des zones dans le constructeur de la
+réponse, surtout si la zone en question veut ajouter des feuilles de style ou
+faire d'autres modifications sur l'objet réponse. En effet, l'objet réponse
+n'est pas encore déclaré dans l'environnement jelix, et donc la zone ne pourra y
+accéder.
 
 ===== Déclaration de l'objet réponse =====
 
@@ -153,12 +184,16 @@ Cet objet réponse est déclaré comme ceci dans la configuration :
 html=myHtmlResponse
 </code>
 
-Toutes les actions qui feront alors appel à la réponse "html", fourniront un objet @@C@myHtmlResponse@@, et donc une page avec un formulaire de login généré par la zone 'auth~login', un contenu par défaut pour les variables de templates @@V@MAIN@@, @@V@A@@, @@V@B@@ etc (si elles n'ont pas été définies par l'action).
+Toutes les actions qui feront alors appel à la réponse "html", fourniront un
+objet @@C@myHtmlResponse@@, et donc une page avec un formulaire de login généré
+par la zone 'auth~login', un contenu par défaut pour les variables de templates
+@@V@MAIN@@, @@V@A@@, @@V@B@@ etc (si elles n'ont pas été définies par l'action).
 
 
 ===== Astuces utiles =====
 
-Lorsque vous définissez une réponse personnalisée, il peut être utile de récupérer certaines valeurs de votre application, comme 
+Lorsque vous définissez une réponse personnalisée, il peut être utile de
+récupérer certaines valeurs de votre application, comme 
 
   * le theme: <code php>$gJConfig->theme</code>
   * les paramètres de la requête: <code php>$gJCoord->request->getParam(..)</code>
@@ -200,7 +235,8 @@ Ci-dessous un exemple :
 
 ===== Définir plusieurs réponses =====
 
-Notez que vous pouvez définir plusieurs réponses html, dans le cas où votre site comporte plusieurs pages type. Par exemple :
+Notez que vous pouvez définir plusieurs réponses html, dans le cas où votre site
+comporte plusieurs pages type. Par exemple :
 
 <code ini>
 [responses]
@@ -209,7 +245,8 @@ html2 = myOtherHtmlResponse
 admin   = adminHtmlresponse
 </code>
 
-Il suffira alors dans les actions d'indiquer le bon code pour indiquer le type de réponse :
+Il suffira alors dans les actions d'indiquer le bon code pour indiquer le type
+de réponse :
 
 <code php>
   $repHTML = $this->getResponse('html');
@@ -221,7 +258,10 @@ Il suffira alors dans les actions d'indiquer le bon code pour indiquer le type d
 
 ===== Utiliser ponctuellement une réponse d'origine =====
 
-Si dans une action, vous voulez absolument utiliser la classe d'origine fournie par Jelix, et non celle qui redéfinit un type de réponse, vous pouvez alors l'indiquer en indiquant @@L@true@@ en deuxième paramètre de @@M@getResponse()@@ :
+Si dans une action, vous voulez absolument utiliser la classe d'origine fournie
+par Jelix, et non celle qui redéfinit un type de réponse, vous pouvez alors
+l'indiquer en indiquant @@L@true@@ en deuxième paramètre de @@M@getResponse()@@
+:
 
 <code php>
  $rep = $this->getResponse('html', true);

@@ -1,10 +1,17 @@
 ~~LANG:EN@enman:responsexmlrpc~~
 
-Jelix propose la prise en charge de [[http://xmlrpc.scripting.com/|xml-rpc]]. C'est un protocole d'échange de données en XML :  un client envoie un contenu XML indiquant une fonction à exécuter et des paramètres. Le serveur renvoie un résultat, toujours sous forme de XML (RPC = Remote Procedure Call). 
+Jelix propose la prise en charge de [[http://xmlrpc.scripting.com/|xml-rpc]].
+C'est un protocole d'échange de données en XML : un client envoie un contenu XML
+indiquant une fonction à exécuter et des paramètres. Le serveur renvoie un
+résultat, toujours sous forme de XML (RPC = Remote Procedure Call).
 
 ===== Point d'entrée spécifique =====
 
-Une requête XML-RPC est spécifique, et pour y répondre, on ne peut pas utiliser [[requests|l'objet request]] "classic". Il vous faut créer un point d'entrée spécifique dans le répertoire www, xmlrpc.php par exemple, qui utilise jXmlRpcRequest plutôt que jClassicRequest. Le type de requête et du point d'entrée est donc "xmlrpc".
+Une requête XML-RPC est spécifique, et pour y répondre, on ne peut pas utiliser
+[[requests|l'objet request]] "classic". Il vous faut créer un point d'entrée
+spécifique dans le répertoire www, xmlrpc.php par exemple, qui utilise
+jXmlRpcRequest plutôt que jClassicRequest. Le type de requête et du point
+d'entrée est donc "xmlrpc".
 
 Le point d'entrée devra contenir ceci :
 
@@ -20,19 +27,27 @@ $jelix->process(new jXmlRpcRequest());
 
 </code>
 
-Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration des moteurs d'urls simple ou significant. Si vous utilisez [[urls/simple|le moteur d'url simple]], vous devez mettre dans la section //simple_urlengine_entrypoints// de la configuration de jelix la déclaration suivante : 
+Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration
+des moteurs d'urls simple ou significant. Si vous utilisez [[urls/simple|le
+moteur d'url simple]], vous devez mettre dans la section
+//simple_urlengine_entrypoints// de la configuration de jelix la déclaration
+suivante : 
 
 <code ini>
 xmlrpc = "@xmlrpc"
 </code>
+
 //xmlrpc// étant le nom du point d'entrée, et //@xmlrpc// indiquant le type de point d'entrée.
 
-Si vous utilisez [[urls/significant|le moteur d'url significant]], vous devez ajouter la balise suivante :
+Si vous utilisez [[urls/significant|le moteur d'url significant]], vous devez
+ajouter la balise suivante :
+
 <code xml>
 <entrypoint type="xmlrpc" name="xmlrpc" default="true" />
 </code>
 
-Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action pour xmlrpc comme ceci :
+Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action
+pour xmlrpc comme ceci :
 
 <code php>
   $url = jUrl::get("module~action@xmlrpc");
@@ -40,9 +55,15 @@ Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action
 
 ===== Contrôleur =====
 
-Comme on a affaire à un type de requête particulier, le nom du fichier du contrôleur doit avoir le suffixe ".xmlrpc.php". Par exemple, un contrôleur "default" : "default.xmlrpc.php". (Vous pouvez bien sûr avoir un autre contrôleur "default" pour d'autres types de requêtes, "default.classic.php" par exemple).
+Comme on a affaire à un type de requête particulier, le nom du fichier du
+contrôleur doit avoir le suffixe ".xmlrpc.php". Par exemple, un contrôleur
+"default" : "default.xmlrpc.php". (Vous pouvez bien sûr avoir un autre
+contrôleur "default" pour d'autres types de requêtes, "default.classic.php" par
+exemple).
 
-Ensuite, le contenu du contrôleur est similaire à ce que vous avez l'habitude de faire, à la seule différence que vous utiliserez jResponseXmlRpc, qui a pour alias "xmlrpc", pour répondre aux requêtes JsonRpc :
+Ensuite, le contenu du contrôleur est similaire à ce que vous avez l'habitude de
+faire, à la seule différence que vous utiliserez jResponseXmlRpc, qui a pour
+alias "xmlrpc", pour répondre aux requêtes JsonRpc :
 
 <code php>
 class defaultCtrl extends jController {
@@ -65,7 +86,9 @@ class defaultCtrl extends jController {
 
 ===== Appel depuis le client =====
 
-Qui dit XmlRpc, dit une partie cliente qui envoi une requête xmlrpc. Comme vous pouvez le lire dans [[http://xmlrpc.scripting.com/|la spécification de xml-rpc]], il faut envoyer du contenu XML de ce type :
+Qui dit XmlRpc, dit une partie cliente qui envoi une requête xmlrpc. Comme vous
+pouvez le lire dans [[http://xmlrpc.scripting.com/|la spécification de xml-rpc]],
+il faut envoyer du contenu XML de ce type :
 
 <code xml>
 <?xml version="1.0" ?>
@@ -77,15 +100,23 @@ Qui dit XmlRpc, dit une partie cliente qui envoi une requête xmlrpc. Comme vous
 </methodCall>
 </code>
 
-Dans //methodName//, vous indiquerez, dans le cas d'un appel à une application jelix, le sélecteur de l'action à appeler, comme ici "module:default:index".
+Dans //methodName//, vous indiquerez, dans le cas d'un appel à une application
+jelix, le sélecteur de l'action à appeler, comme ici "module:default:index".
 
-Notez qu'il faut indiquer le caractère ":" plutôt que "~" comme séparateur du nom du module et du nom de l'action. En effet, le caractère tilde "~" est interdit dans le nom de la méthode en xmlrpc. De ce fait, il faut **obligatoirement indiquer le module, le controleur et la méthode**.
+Notez qu'il faut indiquer le caractère ":" plutôt que "~" comme séparateur du
+nom du module et du nom de l'action. En effet, le caractère tilde "~" est
+interdit dans le nom de la méthode en xmlrpc. De ce fait, il faut
+**obligatoirement indiquer le module, le controleur et la méthode**.
 
-Les données que vous mettrez dans params seront mises dans le paramètre "params" dans la réponse jelix. Ainsi, dans l'action, pour les récupérer dans l'action, vous ferez :
+Les données que vous mettrez dans params seront mises dans le paramètre "params"
+dans la réponse jelix. Ainsi, dans l'action, pour les récupérer dans l'action,
+vous ferez :
 
 <code php>
   $parametres = $this->param('params');
 </code>
 
-Bien entendu, ce que vous avez dans $parametres sera des données "php" (chaine, array ou autre), la transformation du contenu de la balise <params> étant réalisée par jXmlRpcRequest..
+Bien entendu, ce que vous avez dans $parametres sera des données "php" (chaine,
+array ou autre), la transformation du contenu de la balise @@E@<params>@@ étant
+réalisée par jXmlRpcRequest..
 

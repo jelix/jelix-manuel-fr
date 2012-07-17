@@ -1,9 +1,16 @@
 ~~LANG:EN@enman:urls/simple~~
 
 
-Toutes les URLs ressembleront à **pointentree.php?module=..&action=...&...** . C'est un moteur qui est donc très simple et performant. Son principal inconvénient si on peut dire, c'est qu'avec lui, les URLs ne sont pas très "jolies".
+Toutes les URLs ressembleront à **pointentree.php?module=..&action=...&...** .
+C'est un moteur qui est donc très simple et performant. Son principal
+inconvénient si on peut dire, c'est qu'avec lui, les URLs ne sont pas très
+"jolies".
 
-Si vous utilisez les points d'entrées fournis en standard vous n'avez rien à configurer. Par contre si vous en rajoutez, il faut les indiquer dans la section **simple_urlengine_entrypoints** pour les déclarer et dire quels modules et quels types de requêtes ils concernent. Les paramètres de cette section ont la forme :
+Si vous utilisez les points d'entrées fournis en standard vous n'avez rien à
+configurer. Par contre si vous en rajoutez, il faut les indiquer dans la section
+**simple_urlengine_entrypoints** pour les déclarer et dire quels modules et
+quels types de requêtes ils concernent. Les paramètres de cette section ont la
+forme :
 
    nom_du_script_sans_suffix = "liste de sélecteur séparé par un espace"
 
@@ -28,17 +35,26 @@ Exemple :
    news = "news~*@classic"
 </code>
 
-   * le point d'entrée index.php concerne toutes les actions des requêtes de type classic (sauf celles spécifiées dans d'autres points d'entrées. C'est donc le point d'entrée par défaut pour les requêtes de type classic.
-   * idem pour le point d'entrée xmlrpc.php et jsonrpc.php qui concernent respectivement toutes les actions des requêtes de type xmlrpc et toutes les actions des requêtes de type jsonrpc.
-   * le point d'entrée testnew.php concerne l'action url2 et url3 du module unittest pour le type de requête classic
-   * foo__bar concerne le point d'entrée foo/bar.php et l'action url4 du module unittest pour le type de requête classic
+   * le point d'entrée index.php concerne toutes les actions des requêtes de
+     type classic (sauf celles spécifiées dans d'autres points d'entrées. C'est
+     donc le point d'entrée par défaut pour les requêtes de type classic.
+   * idem pour le point d'entrée xmlrpc.php et jsonrpc.php qui concernent
+     respectivement toutes les actions des requêtes de type xmlrpc et toutes les
+     actions des requêtes de type jsonrpc.
+   * le point d'entrée testnew.php concerne l'action url2 et url3 du module
+     unittest pour le type de requête classic
+   * foo__bar concerne le point d'entrée foo/bar.php et l'action url4 du module
+     unittest pour le type de requête classic
    * le point d'entrée news.php concerne tout le module news
 
 Pour l'action url2, jUrl génèrera donc l'URL  testnews.php?module=unittest&action=url2&autresparametres..
 
 === URL avec https ===
 
-Avec le moteur d'URL simple, pour indiquer les URLs des actions qui devront être en https, vous indiquez la liste des actions dans l'option **simple_urlengine_https** dans la section urlengine. La syntaxe est la même que dans la section simple_urlengine_entrypoints.
+Avec le moteur d'URL simple, pour indiquer les URLs des actions qui devront être
+en https, vous indiquez la liste des actions dans l'option
+**simple_urlengine_https** dans la section urlengine. La syntaxe est la même que
+dans la section simple_urlengine_entrypoints.
 
 
 <code ini>

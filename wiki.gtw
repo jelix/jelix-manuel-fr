@@ -1,19 +1,40 @@
 ~~LANG:EN@enman:wiki~~
 
-jWiki est une classe permettant de transformer un texte wiki dans un autre format, XHTML par exemple. Cette classe repose sur la classe [[http://wikirenderer.jelix.org|Wikirenderer]] version 3.1.
+jWiki est une classe permettant de transformer un texte wiki dans un autre
+format, XHTML par exemple. Cette classe repose sur la classe
+[[http://wikirenderer.jelix.org|Wikirenderer]] version 3.1.
 
-Pour que Wikirenderer puisse réaliser la transformation, il lui faut donner un ensemble d'objets précis, qui ensemble vont régir "les rêgles de transformation".
+Pour que Wikirenderer puisse réaliser la transformation, il lui faut donner un
+ensemble d'objets précis, qui ensemble vont régir "les rêgles de
+transformation".
 
-Un certain nombre d'ensemble de règles sont fournies (voir @@F@lib/wikirenderer/rules/@@), permettant par exemple de transformer du code wiki wr3 en XHTML. Il est possible d'imaginer des règles pour transformer du code dokuwiki en XHTML, ou encore du code mediawiki en docbook. Toutes les combinaisons sont possibles. Il suffit de fournir ou développer ces règles.
+Un certain nombre d'ensemble de règles sont fournies (voir
+@@F@lib/wikirenderer/rules/@@), permettant par exemple de transformer du code
+wiki wr3 en XHTML. Il est possible d'imaginer des règles pour transformer du
+code dokuwiki en XHTML, ou encore du code mediawiki en docbook. Toutes les
+combinaisons sont possibles. Il suffit de fournir ou développer ces règles.
 
-Pour utiliser jWiki, il faut l'instancier en indiquant le nom d'un ensemble de rêgles. Par exemple pour transformer du code wiki wr3 en XHTML, il y a les règles wr3_to_xhtml, on fera donc :
+Pour utiliser jWiki, il faut l'instancier en indiquant le nom d'un ensemble de
+rêgles. Par exemple pour transformer du code wiki wr3 en XHTML, il y a les
+règles wr3_to_xhtml, on fera donc :
 
 <code php>
    $wr = new jWiki('wr3_to_xhtml');
    $xhtml = $wr->render($texte_wiki);
 </code>
 
-Les règles par défaut sont dans @@F@lib/wikirenderer/rules@@, mais vous pouvez ajouter les vôtres dans votre application, par exemple dans @@F@votre_appli/plugins/wr_rules/@@. Bien sûr, il faut déclarer le dépôt de plugins @@votre_appli/plugins@@ dans la configuration de Jelix. À la différence des rules livrées avec wikirenderer, celles que vous mettez dans @@F@votre_appli/plugins/wr_rules/@@ doivent être chacune dans son propre répertoire, comme pour tout plugin Jelix. Si par exemple votre règle se nomme "superwiki_to_xhtml", alors son code source doit se trouver dans @@F@votre_appli/plugins/wr_rules/superwiki_to_xhtml/superwiki_to_xhtml.rule.php@@, avec dedans une classe nommé superwiki_to_xhtml qui hérite de @@C@WikiRendererConfig@@ ou de la classe d'une règle existante.
+Les règles par défaut sont dans @@F@lib/wikirenderer/rules@@, mais vous pouvez
+ajouter les vôtres dans votre application, par exemple dans
+@@F@votre_appli/plugins/wr_rules/@@. Bien sûr, il faut déclarer le dépôt de
+plugins @@votre_appli/plugins@@ dans la configuration de Jelix. À la différence
+des rules livrées avec wikirenderer, celles que vous mettez dans
+@@F@votre_appli/plugins/wr_rules/@@ doivent être chacune dans son propre
+répertoire, comme pour tout plugin Jelix. Si par exemple votre règle se nomme
+"superwiki_to_xhtml", alors son code source doit se trouver dans
+@@F@votre_appli/plugins/wr_rules/superwiki_to_xhtml/superwiki_to_xhtml.rule.php@@,
+avec dedans une classe nommé superwiki_to_xhtml qui hérite de
+@@C@WikiRendererConfig@@ ou de la classe d'une règle existante.
 
-Pour plus d'informations sur l'utilisation de jWiki, voir la documentation de [[http://wikirenderer.jelix.org|Wikirenderer]].
+Pour plus d'informations sur l'utilisation de jWiki, voir la documentation de
+[[http://wikirenderer.jelix.org|Wikirenderer]].
 

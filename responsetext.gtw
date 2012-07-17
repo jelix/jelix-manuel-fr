@@ -1,6 +1,7 @@
 ~~LANG:EN@enman:responsetext~~
 
-Il faut utiliser @@C@jResponseText@@ qui est récupérable via l'alias "text". Cet objet possède une propriété "content" dans laquelle vous mettez le texte voulu.
+Il faut utiliser @@C@jResponseText@@ qui est récupérable via l'alias "text". Cet
+objet possède une propriété "content" dans laquelle vous mettez le texte voulu.
 
 <code php>
    function myaction(){
@@ -11,14 +12,19 @@ Il faut utiliser @@C@jResponseText@@ qui est récupérable via l'alias "text". C
 </code>
 
 
-Par défaut, jResponseText renvoi le type mime text/plain et avec le charset indiqué dans la config de jelix. 
+Par défaut, jResponseText renvoi le type mime text/plain et avec le charset
+indiqué dans la config de jelix.
 
-Toutefois, comme jResponseText dérive de @@C@jResponse@@, vous pouvez modifier les en-têtes http, donc le type mime et le charset.
+Toutefois, comme jResponseText dérive de @@C@jResponse@@, vous pouvez modifier
+les en-têtes http, donc le type mime et le charset.
 
-D'ailleurs, jResponseText peut-être utilisé comme base pour d'autres formats à contenu textuels (CSV par exemple).
+D'ailleurs, jResponseText peut-être utilisé comme base pour d'autres formats à
+contenu textuels (CSV par exemple).
 
 Voici un exemple concret:
-Partie client (javascript)
+
+  * Partie client (javascript)
+
 <code java>
 var http;
 function AppelText()
@@ -51,7 +57,8 @@ function handler()
     }
 }</code>
 
-Partie Serveur (php)
+  * Partie Serveur (php)
+
 <code php>
 function MaFonction()
 {
@@ -64,6 +71,10 @@ function MaFonction()
 }
 </code>
 
-Bien évidemment cet exemple reste un exemple simple, on peut y mettre ce que l'on veut et faire passer les paramètres soit en get soit en post.
+Bien évidemment cet exemple reste un exemple simple, on peut y mettre ce que
+l'on veut et faire passer les paramètres soit en get soit en post.
 
-Petit rappel, les deux arrays que l'on trouve dans la chaîne url (coté javascript) permettent tout simplement pour le premier de faire passer un paramètre en statique (codé en dur) et le deuxième provenant d'une variable javascript. [[/ref-plugins/tplplugins/fonctions|Les fonctions de templates]].
+Petit rappel, les deux arrays que l'on trouve dans la chaîne url (coté
+javascript) permettent tout simplement pour le premier de faire passer un
+paramètre en statique (codé en dur) et le deuxième provenant d'une variable
+javascript. [[/ref-plugins/tplplugins/fonctions|Les fonctions de templates]].

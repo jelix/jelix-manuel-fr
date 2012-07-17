@@ -1,25 +1,43 @@
 ~~LANG:EN@enman:plugins~~
 
-Il existe toutes sortes de plugins pour ajouter des fonctionnalités à diverses parties de Jelix. On peut ainsi ajouter des plugins pour le coordinateur, des drivers pour jDb, des drivers pour jAuth, des plugins pour jTpl ou encore des nouveaux moteurs d'URLs.
+Il existe toutes sortes de plugins pour ajouter des fonctionnalités à diverses
+parties de Jelix. On peut ainsi ajouter des plugins pour le coordinateur, des
+drivers pour jDb, des drivers pour jAuth, des plugins pour jTpl ou encore des
+nouveaux moteurs d'URLs.
 
 Tous les plugins sont regroupés dans des dépôts de plugins.
 
 ===== Déclaration d'un dépôt de plugins =====
 
-Vous pouvez déclarer un ou plusieurs dépôts de plugins. Un dépôt est un répertoire ayant une structure précise (voir plus loin). Il faut déclarer chacun de ces dépôt dans le paramètre @@pluginsPath@@ de la [[configuration|configuration]] de l'application. Par défaut, ce paramètre vaut :
+Vous pouvez déclarer un ou plusieurs dépôts de plugins. Un dépôt est un
+répertoire ayant une structure précise (voir plus loin). Il faut déclarer chacun
+de ces dépôt dans le paramètre @@pluginsPath@@ de la
+[[configuration|configuration]] de l'application. Par défaut, ce paramètre vaut
+:
 
 <code ini>
 pluginsPath = lib:jelix-plugins/,app:plugins/
 </code>
 
-Vous remarquez que vous pouvez indiquer plusieurs dépôts, séparés par une virgule. Ici il est indiqué qu'il y a deux dépôts : le répertoire @@F@jelix-plugins@@ dans le répertoire @@F@lib/@@, et un répertoire plugins dans votre application. Il y en a un troisième, implicitement et automatiquement déclaré, qui est le répertoire @@F@lib/jelix/plugins/@@ et contenant les plugins livrés en standard avec Jelix.
+Vous remarquez que vous pouvez indiquer plusieurs dépôts, séparés par une
+virgule. Ici il est indiqué qu'il y a deux dépôts : le répertoire
+@@F@jelix-plugins@@ dans le répertoire @@F@lib/@@, et un répertoire plugins dans
+votre application. Il y en a un troisième, implicitement et automatiquement
+déclaré, qui est le répertoire @@F@lib/jelix/plugins/@@ et contenant les plugins
+livrés en standard avec Jelix.
 
-Rappel : @@lib:@@ est un raccourci indiquant le répertoire de base @@F@lib/@@, et @@app:@@ un raccourci pour le répertoire de votre application. Vous pouvez aussi indiquer un chemin absolu. Attention toutefois si vous migrez votre application d'une machine à une autre. Il est aussi possible d'utiliser un chemin relatif, mais celui-ci doit être relatif au script de point d'entrée (@@F@index.php@@ par ex).
+Rappel : @@lib:@@ est un raccourci indiquant le répertoire de base @@F@lib/@@,
+et @@app:@@ un raccourci pour le répertoire de votre application. Vous pouvez
+aussi indiquer un chemin absolu. Attention toutefois si vous migrez votre
+application d'une machine à une autre. Il est aussi possible d'utiliser un
+chemin relatif, mais celui-ci doit être relatif au script de point d'entrée
+(@@F@index.php@@ par ex).
 
 
 ===== Structure d'un dépôt et création de plugins =====
 
-Un dépôt de plugins contient un répertoire pour chaque type de plugins et dans chacun de ces répertoires, un répertoire pour chaque plugin.
+Un dépôt de plugins contient un répertoire pour chaque type de plugins et dans
+chacun de ces répertoires, un répertoire pour chaque plugin.
 
 Voici les types de plugins et les répertoires correspondant :
 
@@ -38,7 +56,10 @@ Voici les types de plugins et les répertoires correspondant :
 
 ===== Création de plugins =====
 
-Jelix fournit en standard un certain nombre de plugins dans le dépôt @@F@lib/jelix/plugins/@@. Cependant, il est souvent nécessaire de devoir en créer pour ses propres besoins. D'ailleurs toute contribution de nouveaux plugins est vivement encouragée ;-)
+Jelix fournit en standard un certain nombre de plugins dans le dépôt
+@@F@lib/jelix/plugins/@@. Cependant, il est souvent nécessaire de devoir en
+créer pour ses propres besoins. D'ailleurs toute contribution de nouveaux
+plugins est vivement encouragée ;-)
 
 Les sections suivantes vous indiquent comment développer ces plugins.
 

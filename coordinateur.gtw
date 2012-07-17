@@ -1,17 +1,22 @@
 ~~LANG:EN@enman:coordinator~~
 
 
-Le coordinateur est le coeur du framework. C'est en quelque sorte le chef d'orchestre de l'exécution d'une action.
+Le coordinateur est le coeur du framework. C'est en quelque sorte le chef
+d'orchestre de l'exécution d'une action.
 
-À partir des paramètres donnés par un objet jRequest, le coordinateur en déduit les informations suivantes :
+À partir des paramètres donnés par un objet jRequest, le coordinateur en déduit
+les informations suivantes :
 
   * le nom du module et le nom de l'action à exécuter
   * les données en entrée
   * la liste des types de réponses possibles et le type de la réponse par défaut
 
-Des plugins peuvent modifier éventuellement ces informations (ex: plugin qui vérifie l'authentification et redirige alors vers une autre action, ...).
+Des plugins peuvent modifier éventuellement ces informations (ex: plugin qui
+vérifie l'authentification et redirige alors vers une autre action, ...).
 
-Avec ces informations il va donc récupérer le contrôleur correspondant et exécuter la méthode qui implémente le traitement correspondant à l'action.
+Avec ces informations il va donc récupérer le contrôleur correspondant et
+exécuter la méthode qui implémente le traitement correspondant à l'action.
 
-Il récupérera l'objet jResponse fourni par le traitement de l'action pour alors renvoyer au navigateur le contenu généré par jResponse.
+Il récupérera l'objet jResponse fourni par le traitement de l'action pour alors
+renvoyer au navigateur le contenu généré par jResponse.
 

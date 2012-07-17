@@ -1,14 +1,31 @@
 ~~LANG:EN@enman:installation/requirements~~
 
 
-Vous devez installer au minimum la version **5.2** de PHP. Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl** et **tokenizer** sont requises (elles sont actives en général dans une installation standard de PHP 5.2). Si une de ces extensions n'était pas livrée avec le paquet PHP5, veillez à installer le paquet correspondant.
+Vous devez installer au minimum la version **5.2** de PHP. Les extensions
+**dom**, **simplexml**, **pcre**, **session**, **spl** et **tokenizer** sont
+requises (elles sont actives en général dans une installation standard de PHP
+5.2). Si une de ces extensions n'était pas livrée avec le paquet PHP5, veillez à
+installer le paquet correspondant.
 
-Note concernant DOM et XML : vérifiez que c'est bien [[http://fr2.php.net/manual/fr/intro.dom.php|l'extension DOM]] et non pas [[http://fr2.php.net/manual/fr/intro.domxml.php|l'extension DOM-XML]] qui est activée dans php.ini. Certains paquets WAMP activent l'extension DOM-XML en même temps que DOM, ce qui conduit à des erreurs PHP.
+Note concernant DOM et XML : vérifiez que c'est bien
+[[http://fr2.php.net/manual/fr/intro.dom.php|l'extension DOM]] et non pas
+[[http://fr2.php.net/manual/fr/intro.domxml.php|l'extension DOM-XML]] qui est
+activée dans php.ini. Certains paquets WAMP activent l'extension DOM-XML en même
+temps que DOM, ce qui conduit à des erreurs PHP.
 
-Vous pouvez installer aussi un connecteur de base de données. Jelix prend en charge MySQL 4.1+, PostgreSQL 8.0+, SQLite et PDO.
+Vous pouvez installer aussi un connecteur de base de données. Jelix prend en
+charge MySQL 4.1+, PostgreSQL 8.0+, SQLite et PDO.
 
-**Pour tester la compatibilité de votre serveur** avec Jelix, installez  sur votre site le fichier @@F@lib/jelix_check_server.php@@ livré avec jelix (sans jelix, il n'en a pas besoin pour fonctionner), et appelez le via votre navigateur (exemple : http://example.com/jelix_check_server.php ). La page qui s'affiche vous indiquera les extensions PHP manquantes, si la version PHP est supportée etc.
+**Pour tester la compatibilité de votre serveur** avec Jelix, installez sur
+votre site le fichier @@F@lib/jelix_check_server.php@@ livré avec jelix (sans
+jelix, il n'en a pas besoin pour fonctionner), et appelez le via votre
+navigateur (exemple : http://example.com/jelix_check_server.php ). La page qui
+s'affiche vous indiquera les extensions PHP manquantes, si la version PHP est
+supportée etc.
 
 
-Il est fourni des scripts à exécuter en ligne de commande, dont @@F@createapp.php@@ et @@F@cmd.php@@, et aidant au développement. Il vous faut alors aussi installer la version ligne de commande (CLI) de PHP (php.exe sous windows).
+Il est fourni des scripts à exécuter en ligne de commande, dont
+@@F@createapp.php@@ et @@F@cmd.php@@, et aidant au développement. Il vous faut
+alors aussi installer la version ligne de commande (CLI) de PHP (php.exe sous
+windows).
 

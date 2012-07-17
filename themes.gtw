@@ -1,24 +1,35 @@
 ~~LANG:EN@enman:themes~~
 
-Jelix propose un système de thèmes, permettant donc de personnaliser les templates et les feuilles de style, sans toucher aux fichiers originaux.
+Jelix propose un système de thèmes, permettant donc de personnaliser les
+templates et les feuilles de style, sans toucher aux fichiers originaux.
 
 
 ===== Les templates d'un thème =====
 
-Un thème est un répertoire dans @@F@var/themes/@@. Ce répertoire contient un répertoire pour chaque theme, et dans chaque répertoire de theme, des répertoires correspondant à chaque module et contenant les templates.
+Un thème est un répertoire dans @@F@var/themes/@@. Ce répertoire contient un
+répertoire pour chaque theme, et dans chaque répertoire de theme, des
+répertoires correspondant à chaque module et contenant les templates.
 
-Par exemple, vous voulez adapter le template @@F@main.tpl@@ du module "**exemple**", pour le thème "**web20**", vous stockerez un fichier @@F@main.tpl@@ dans @@F@var/themes/web20/exemple/@@. Notez donc que le template original et le nouveau template possèdent le même nom.
+Par exemple, vous voulez adapter le template @@F@main.tpl@@ du module
+"**exemple**", pour le thème "**web20**", vous stockerez un fichier
+@@F@main.tpl@@ dans @@F@var/themes/web20/exemple/@@. Notez donc que le template
+original et le nouveau template possèdent le même nom.
 
-Le thème par défaut ayant pour nom "default", si vous voulez redéfinir un template d'un module, même si vous n'utilisez pas explicitement les thèmes, vous placerez ce template dans @@F@var/themes/default/le_module/le_template.tpl@@.
+Le thème par défaut ayant pour nom "default", si vous voulez redéfinir un
+template d'un module, même si vous n'utilisez pas explicitement les thèmes, vous
+placerez ce template dans @@F@var/themes/default/le_module/le_template.tpl@@.
 
 
 
 
 ===== Les fichiers web d'un thème =====
 
-Par fichier web, on entend les fichiers CSS, les images etc... Ces fichiers ne doivent pas être placés dans //var/themes/// car var n'est pas censé être accessible publiquement depuis le web.
+Par fichier web, on entend les fichiers CSS, les images etc... Ces fichiers ne
+doivent pas être placés dans //var/themes/// car var n'est pas censé être
+accessible publiquement depuis le web.
 
-Vous les placerez donc dans un répertoire themes/le_nom_du_theme/ dans le répertoire de base de votre application (basePath), en général donc dans www/
+Vous les placerez donc dans un répertoire themes/le_nom_du_theme/ dans le
+répertoire de base de votre application (basePath), en général donc dans www/
 
 Pour avoir le chemin web du theme, vous pouvez utiliser ceci :
 
@@ -41,7 +52,8 @@ D'autres sont disponibles pour les feuilles de styles spéciales pour IE
 {meta_html cssthemeltie7 'design.css'} pour ie < 7
 </code>
 
-Mais vous avez aussi une variable déclarée automatiquement, //j_themepath//, dans un template contenant le chemin des thèmes
+Mais vous avez aussi une variable déclarée automatiquement, //j_themepath//,
+dans un template contenant le chemin des thèmes
 
 <code html>
   <img src="{$j_themepath}logo.png" alt="logo"/>
@@ -49,7 +61,8 @@ Mais vous avez aussi une variable déclarée automatiquement, //j_themepath//, d
 
 ===== Déclarer un thème par défaut =====
 
-L'activation d'un thème se fait dans le fichier de configuration, au niveau du paramètre theme :
+L'activation d'un thème se fait dans le fichier de configuration, au niveau du
+paramètre theme :
 
 <code ini>
 theme = web20
@@ -59,11 +72,16 @@ theme = web20
 
 ===== Déclarer un thème dynamiquement =====
 
-Pour offrir la possibilité à l'internaute de choisir son thème, vous pouvez lui proposer un formulaire avec la liste des thèmes (liste que vous construisez vous même).
+Pour offrir la possibilité à l'internaute de choisir son thème, vous pouvez lui
+proposer un formulaire avec la liste des thèmes (liste que vous construisez vous
+même).
 
-Ensuite vous stockez le nom du thème choisi quelque part (en session, ou dans un cookie par exemple).
+Ensuite vous stockez le nom du thème choisi quelque part (en session, ou dans un
+cookie par exemple).
 
-Enfin, pour que le thème soit activé automatiquement, il suffit de récupérer le nom du thème correspondant à l'utilisateur, et de le spécifier dans la configuration, au niveau du paramètre thème:
+Enfin, pour que le thème soit activé automatiquement, il suffit de récupérer le
+nom du thème correspondant à l'utilisateur, et de le spécifier dans la
+configuration, au niveau du paramètre thème:
 
 <code php>
   $GLOBALS['gJConfig']->theme = $themeChoisi;

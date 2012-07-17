@@ -1,48 +1,102 @@
 ~~LANG:EN@enman:jforms/usage~~
 
-Les données d'un formulaire jforms sont stockées en sessions. On manipule ces données au travers d'un //objet formulaire//, instance d'une classe héritant de @@C@jFormsBase@@. Cette classe est générée automatiquement à partir du fichier XML que vous fournissez. Comme pour les DAOs, elle  est stockée dans un cache évitant de la recréer à chaque utilisation.
+Les données d'un formulaire jforms sont stockées en sessions. On manipule ces
+données au travers d'un //objet formulaire//, instance d'une classe héritant de
+@@C@jFormsBase@@. Cette classe est générée automatiquement à partir du fichier
+XML que vous fournissez. Comme pour les DAOs, elle est stockée dans un cache
+évitant de la recréer à chaque utilisation.
 
-Dans les contrôleurs, vous créez, récupérez et détruisez cet //objet formulaire// via les méthodes statiques de l'objet @@C@jForms@@.
+Dans les contrôleurs, vous créez, récupérez et détruisez cet //objet
+formulaire// via les méthodes statiques de l'objet @@C@jForms@@.
 
 
 ===== Les actions à mettre en oeuvre =====
 
-Comme il est déjà expliqué dans le [[/formulaires-classique|guide sur les formulaires classiques]], pour faire une gestion complète de la saisie d'un formulaire, la création des actions suivantes est recommandée (les noms utilisés sont juste à titre d'exemple, vous utilisez les noms que vous voulez bien sûr):
+Comme il est déjà expliqué dans le [[/formulaires-classique|guide sur les formulaires classiques]],
+pour faire une gestion complète de la saisie d'un formulaire, la création des
+actions suivantes est recommandée (les noms utilisés sont juste à titre
+d'exemple, vous utilisez les noms que vous voulez bien sûr):
 
-   * une action "prepare" qui crée avec @@C@jForms@@ une nouvelle instance d'un objet formulaire. S'il faut pré-remplir le formulaire, cette action devra le faire aussi. Redirection vers "show".
-   * une action "show" qui récupère l'instance du formulaire, toujours avec l'objet @@C@jForms@@, et l'utilise dans un template pour l'afficher avec  les éventuelles erreurs de saisie trouvées lors d'une validation précédente. La soumission du formulaire par l'utilisateur dirigera vers l'action "save".
-   * une action "save". l'instance du formulaire est récupérée auprès de @@C@jForms@@, et elle est remplie avec les données reçues du navigateur. Elle pourra ensuite lancer la vérification des données dans le formulaire. S'il y a des erreurs, il y aura une redirection vers "show". Sinon on pourra traiter les données (sauvegarde en base de données par exemple) et ensuite rediriger vers "end"
-   * une action "end", qui détruira l'instance du formulaire jforms (ce qui effacera les données correspondantes en session), et affichera éventuellement une page de confirmation, ou alors redirigera vers une autre action quelconque...
+   * une action "prepare" qui crée avec @@C@jForms@@ une nouvelle instance d'un
+     objet formulaire. S'il faut pré-remplir le formulaire, cette action devra
+     le faire aussi. Redirection vers "show".
+   * une action "show" qui récupère l'instance du formulaire, toujours avec
+     l'objet @@C@jForms@@, et l'utilise dans un template pour l'afficher avec
+     les éventuelles erreurs de saisie trouvées lors d'une validation
+     précédente. La soumission du formulaire par l'utilisateur dirigera vers
+     l'action "save".
+   * une action "save". l'instance du formulaire est récupérée auprès de
+     @@C@jForms@@, et elle est remplie avec les données reçues du navigateur.
+     Elle pourra ensuite lancer la vérification des données dans le formulaire.
+     S'il y a des erreurs, il y aura une redirection vers "show". Sinon on
+     pourra traiter les données (sauvegarde en base de données par exemple) et
+     ensuite rediriger vers "end"
+   * une action "end", qui détruira l'instance du formulaire jforms (ce qui
+     effacera les données correspondantes en session), et affichera
+     éventuellement une page de confirmation, ou alors redirigera vers une autre
+     action quelconque...
 
 
 
 
 ===== Créer une instance d'un formulaire =====
 
-Avant de pouvoir utiliser jForms, il faut bien sûr [[xml|créer un fichier xml décrivant le formulaire]], et il faut ensuite avant toute utilisation, qu'une de vos actions crée une instance de votre formulaire. Cela se fait au moyen de la méthode statique @@M@create@@ de la classe @@C@jForms@@. Comme toutes les autres méthodes statiques de la classe @@C@jForms@@, elle prend en premier argument le sélecteur du fichier xml, et un deuxième argument facultatif qui est un identifiant de l'instance à créer.
+Avant de pouvoir utiliser jForms, il faut bien sûr [[xml|créer un fichier xml décrivant le formulaire]],
+et il faut ensuite avant toute utilisation, qu'une de vos actions crée une
+instance de votre formulaire. Cela se fait au moyen de la méthode statique
+@@M@create@@ de la classe @@C@jForms@@. Comme toutes les autres méthodes
+statiques de la classe @@C@jForms@@, elle prend en premier argument le sélecteur
+du fichier xml, et un deuxième argument facultatif qui est un identifiant de
+l'instance à créer.
 
-En admettant que votre fichier xml soit @@F@contact.form.xml@@ dans le module "main" :
+En admettant que votre fichier xml soit @@F@contact.form.xml@@ dans le module
+"main" :
+
 <code php>
    $form = jForms::create("main~contact");
 </code>
 
-La variable @@V@$form@@ contiendra un objet qui aura pour classe, celle créée lors de la lecture du fichier XML, et qui hérite de @@C@jFormsBase@@. Vous utiliserez ensuite cette variable @@V@$form@@ pour manipuler les données du formulaire.
+La variable @@V@$form@@ contiendra un objet qui aura pour classe, celle créée
+lors de la lecture du fichier XML, et qui hérite de @@C@jFormsBase@@. Vous
+utiliserez ensuite cette variable @@V@$form@@ pour manipuler les données du
+formulaire.
 
-Dans cet exemple, nous n'indiquons pas le deuxième paramètre. En effet celui-ci ne sert que lorsque l'on veut éditer des informations qui existent déjà. Par exemple, pour un formulaire pour éditer un produit qui est en base de données, on indiquera l'identifiant de ce produit. 
+Dans cet exemple, nous n'indiquons pas le deuxième paramètre. En effet celui-ci
+ne sert que lorsque l'on veut éditer des informations qui existent déjà. Par
+exemple, pour un formulaire pour éditer un produit qui est en base de données,
+on indiquera l'identifiant de ce produit.
 
-Pourquoi ? Avec un navigateur web, l'utilisateur a la possibilité d'ouvrir plusieurs pages à la fois. Il a donc la possibilité d'afficher plusieurs fois la même page qui afficherait par exemple ce formulaire d'édition de produit, mais avec à chaque fois un produit différent. Pour éviter qu'à chaque fois que l'on ouvre cette page, donc qu'à chaque fois que l'on créé une instance du formulaire jForms, on aille écraser les données en sessions du même formulaire d'un autre produit ouvert en même temps, on donne un identifiant de formulaire. Ainsi il n'y a pas de collision des données de chaque instance de formulaire. On peut donner ce que l'on veut comme identifiant (une chaine, un nombre), et en général on donne l'identifiant de l'enregistrement SQL quand il s'agit de l'édition de ce genre d'information.
+Pourquoi ? Avec un navigateur web, l'utilisateur a la possibilité d'ouvrir
+plusieurs pages à la fois. Il a donc la possibilité d'afficher plusieurs fois la
+même page qui afficherait par exemple ce formulaire d'édition de produit, mais
+avec à chaque fois un produit différent. Pour éviter qu'à chaque fois que l'on
+ouvre cette page, donc qu'à chaque fois que l'on créé une instance du formulaire
+jForms, on aille écraser les données en sessions du même formulaire d'un autre
+produit ouvert en même temps, on donne un identifiant de formulaire. Ainsi il
+n'y a pas de collision des données de chaque instance de formulaire. On peut
+donner ce que l'on veut comme identifiant (une chaine, un nombre), et en général
+on donne l'identifiant de l'enregistrement SQL quand il s'agit de l'édition de
+ce genre d'information.
 
-En admettant que votre fichier xml soit @@F@product.form.xml@@ dans le module shop, voici un exemple de création d'un formulaire pour éditer un produit existant.
+En admettant que votre fichier xml soit @@F@product.form.xml@@ dans le module
+shop, voici un exemple de création d'un formulaire pour éditer un produit
+existant.
+
 <code php>
    $form = jForms::create("shop~product", $product_id);
 </code>
 
-Bien sûr, quand il s'agit d'afficher un formulaire vierge pour éditer un nouveau produit, il n'y a pas d'identifiant, et vous n'êtes pas obligé d'en donner un.
+Bien sûr, quand il s'agit d'afficher un formulaire vierge pour éditer un nouveau
+produit, il n'y a pas d'identifiant, et vous n'êtes pas obligé d'en donner un.
+
 <code php>
    $form = jForms::create("shop~product"); // édition d'un nouveau produit
 </code>
 
-Pour l'exemple précédent avec le formulaire de contact, nous n'indiquons pas d'identifiant, car on émet l'hypothèse ici qu'il s'agit d'un formulaire pour que l'utilisateur envoie une demande de contact : ce sera donc toujours un formulaire vierge.
+Pour l'exemple précédent avec le formulaire de contact, nous n'indiquons pas
+d'identifiant, car on émet l'hypothèse ici qu'il s'agit d'un formulaire pour que
+l'utilisateur envoie une demande de contact : ce sera donc toujours un
+formulaire vierge.
 
 ===== Initialisation d'un formulaire =====
 
@@ -51,7 +105,9 @@ Après la création d'un formulaire, il est peut être nécessaire de le pré-re
 
 ==== Initialisation simple ====
 
-Pour cela, vous utiliserez la méthode @@M@setData()@@ sur l'objet formulaire, qui accepte en argument, le nom du champ à préremplir, et la valeur à lui donner :
+Pour cela, vous utiliserez la méthode @@M@setData()@@ sur l'objet formulaire,
+qui accepte en argument, le nom du champ à préremplir, et la valeur à lui donner
+:
 
 <code php>
   $form->setData("prenom","Laurent");
@@ -61,52 +117,93 @@ Les valeurs peuvent être récupérées d'ailleurs, comme bon vous semble.
 
 ==== Initialisation avec un dao ====
 
-Cependant, si vous voulez utiliser un dao, il existe un moyen rapide pour remplir un formulaire. La méthode @@M@initFromDao()@@ permet d'utiliser un DAO pour remplir plusieurs champs du formulaire. Il suffit d'indiquer à cette méthode le selecteur du dao à utiliser. Vous pouvez aussi spécifier en deuxième argument la valeur de la clé primaire si l'identifiant du formulaire ne correspond pas à la valeur de cette clé (sachant que la valeur peut être un tableau de valeurs si la clé est sur plusieurs champs). Par défaut donc, @@M@initFromDao()@@ utilisera la valeur de l'identifiant du formulaire comme identifiant de l'enregistrement à récupérer.
+Cependant, si vous voulez utiliser un dao, il existe un moyen rapide pour
+remplir un formulaire. La méthode @@M@initFromDao()@@ permet d'utiliser un DAO
+pour remplir plusieurs champs du formulaire. Il suffit d'indiquer à cette
+méthode le selecteur du dao à utiliser. Vous pouvez aussi spécifier en deuxième
+argument la valeur de la clé primaire si l'identifiant du formulaire ne
+correspond pas à la valeur de cette clé (sachant que la valeur peut être un
+tableau de valeurs si la clé est sur plusieurs champs). Par défaut donc,
+@@M@initFromDao()@@ utilisera la valeur de l'identifiant du formulaire comme
+identifiant de l'enregistrement à récupérer.
 
 <code php>
    $form = jForms::create("shop~product", $product_id);
    $form->initFromDao("shop~products");
 </code>
 
-Ici le formulaire sera pré-rempli avec les valeurs de l'enregistrement dont la clé est @@V@$product_id@@, et le dao "shop~products" sera utilisé pour cette lecture.
+Ici le formulaire sera pré-rempli avec les valeurs de l'enregistrement dont la
+clé est @@V@$product_id@@, et le dao "shop~products" sera utilisé pour cette
+lecture.
 
-Cependant, seuls les champs de saisie qui ont le même nom que des propriétés du dao indiqué seront pré-remplis. Les autres resteront vides.
+Cependant, seuls les champs de saisie qui ont le même nom que des propriétés du
+dao indiqué seront pré-remplis. Les autres resteront vides.
 
-Notez que vous pouvez utiliser plusieurs daos pour pré-remplir les champs. En effet, on peut avoir besoin d'un formulaire qui contient des champs de saisie qui seront stockés dans plusieurs tables.
+Notez que vous pouvez utiliser plusieurs daos pour pré-remplir les champs. En
+effet, on peut avoir besoin d'un formulaire qui contient des champs de saisie
+qui seront stockés dans plusieurs tables.
 
 
 
 ==== Initialisation d'un champ à choix multiple ====
 
-Pour les champs @@E@<checkboxes>@@ et @@E@<listbox multiple="true">@@, la valeur à initialiser n'est pas forcément une simple valeur, mais une liste de valeurs qui correspondent à tous les choix qu'il faut pré-sélectionner. (Attention, on parle bien ici des valeurs pré sélectionnées, pas de la liste des choix).
+Pour les champs @@E@<checkboxes>@@ et @@E@<listbox multiple="true">@@, la valeur
+à initialiser n'est pas forcément une simple valeur, mais une liste de valeurs
+qui correspondent à tous les choix qu'il faut pré-sélectionner. (Attention, on
+parle bien ici des valeurs pré sélectionnées, pas de la liste des choix).
 
-On peut donc les initialiser avec @@M@setData()@@, en leur passant un tableau contenant les valeurs des choix à présélectionner :
+On peut donc les initialiser avec @@M@setData()@@, en leur passant un tableau
+contenant les valeurs des choix à présélectionner :
 
 <code php>
     $form->setData('categories', array(5, 8, 10));
 </code>
 
-En général cependant, ces listes de valeurs sont stockées dans une base de données, dans ce qu'on appelle une table de jointure. C'est à dire une table qui fait la jointure entre deux tables, et dont la clé primaire est constituée de deux clés étrangères, l'une et l'autre appartenant à une autre table. Par exemple, on a une table pour les produits ('products'), une table pour les catégories de produits ('categories'), et si un produit peut appartenir à plusieurs catégories, il faut une table de jointure ('products_categories'), contenant les clés des produits et les clés des catégories qui sont en relation (product_id et category_id).
+En général cependant, ces listes de valeurs sont stockées dans une base de
+données, dans ce qu'on appelle une table de jointure. C'est à dire une table qui
+fait la jointure entre deux tables, et dont la clé primaire est constituée de
+deux clés étrangères, l'une et l'autre appartenant à une autre table. Par
+exemple, on a une table pour les produits ('products'), une table pour les
+catégories de produits ('categories'), et si un produit peut appartenir à
+plusieurs catégories, il faut une table de jointure ('products_categories'),
+contenant les clés des produits et les clés des catégories qui sont en relation
+(product_id et category_id).
 
-Pour initialiser la liste ou les cases à cocher, il va donc aller lire dans cette table 'products_categories' les relations. Il existe pour cela une méthode, @@M@initControlFromDao()@@ :
+Pour initialiser la liste ou les cases à cocher, il va donc aller lire dans
+cette table 'products_categories' les relations. Il existe pour cela une
+méthode, @@M@initControlFromDao()@@ :
 
 <code php>
    $form->initControlFromDao("categories", "shop~products_categories");
 </code>
 
-Le dao "shop~products_categories" sera utilisé pour lire les valeurs sélectionnées pour le champs catégories. jForms s'attend ici à ce que la première clé déclarée dans le dao corresponde à l'identifiant du produit, et la deuxième clé à l'identifiant des catégories. Si ce n'est pas le cas, il faut alors indiquer les noms de ces clés dans le dao, dans un array à passer en troisième paramètre :
+Le dao "shop~products_categories" sera utilisé pour lire les valeurs
+sélectionnées pour le champs catégories. jForms s'attend ici à ce que la
+première clé déclarée dans le dao corresponde à l'identifiant du produit, et la
+deuxième clé à l'identifiant des catégories. Si ce n'est pas le cas, il faut
+alors indiquer les noms de ces clés dans le dao, dans un array à passer en
+troisième paramètre :
 
 <code php>
    $form->initControlFromDao("categories", "shop~products_categories", array('product_id','category_id'));
 </code>
 
-Vu qu'il s'agit dans cet exemple de la saisie d'un enregistrement product, et que l'identifiant du formulaire correspond à l'identifiant du produit, la valeur de cet identifiant sera utilisée comme critère de recherche dans la table, pour récupérer les id de catégories correspondantes.
+Vu qu'il s'agit dans cet exemple de la saisie d'un enregistrement product, et
+que l'identifiant du formulaire correspond à l'identifiant du produit, la valeur
+de cet identifiant sera utilisée comme critère de recherche dans la table, pour
+récupérer les id de catégories correspondantes.
 
 ==== Définir les choix d'un champs à multiple choix ====
 
-Dans [[xml|le fichier xml jforms]], vous avez vu que pour indiquer la liste des choix possibles dans un @@E@<menulist>@@, une @@E@<listbox>@@, un @@E@<radiobuttons>@@ ou un @@E@<checkboxes>@@, vous pouviez indiquer une liste de valeurs statiques, ou un dao qui servira à récupérer les choix.
+Dans [[xml|le fichier xml jforms]], vous avez vu que pour indiquer la liste des
+choix possibles dans un @@E@<menulist>@@, une @@E@<listbox>@@, un
+@@E@<radiobuttons>@@ ou un @@E@<checkboxes>@@, vous pouviez indiquer une liste
+de valeurs statiques, ou un dao qui servira à récupérer les choix.
 
-Il peut cependant arriver que cela soit insuffisant, et que le remplissage dépende de critères ou autre. Dans ce cas, vous n'indiquerez pas de balise @@E@<item>@@ ni d'attribut dao* dans le fichier xml. Et vous indiquerez la liste des choix dans votre contrôleur, des manières suivantes.
+Il peut cependant arriver que cela soit insuffisant, et que le remplissage
+dépende de critères ou autre. Dans ce cas, vous n'indiquerez pas de balise
+@@E@<item>@@ ni d'attribut dao* dans le fichier xml. Et vous indiquerez la liste
+des choix dans votre contrôleur, des manières suivantes.
 
 <code php>
    // récupérez vos données dans un tableau associatif,
@@ -116,13 +213,22 @@ Il peut cependant arriver que cela soit insuffisant, et que le remplissage dépe
    $form->getControl('nom_du_control')->datasource->data = $data;
 </code>
 
-@@V@$data@@ est un tableau dont les clés sont les valeurs des choix, et les valeurs sont les libellés des choix.
+@@V@$data@@ est un tableau dont les clés sont les valeurs des choix, et les
+valeurs sont les libellés des choix.
 
-Note : ce remplissage doit se faire dans la même action que celle qui affiche le formulaire. Ces données sont perdues à la fin de l'action.
+Note : ce remplissage doit se faire dans la même action que celle qui affiche le
+formulaire. Ces données sont perdues à la fin de l'action.
 
 ==== Activer ou désactiver des champs ====
 
-Il est possible d'avoir des cas où l'on ne veuille pas afficher certains champs du formulaire. Vous avez pour cela les méthodes @@M@deactivate()@@ et @@M@isActivated()@@. À ces deux méthodes, vous devez indiquer le nom du contrôle. La deuxième méthode permet de savoir si un champ est activé : on l'utilisera surtout dans les actions de traitement des données saisies. La première permet d'activer ou désactiver un champ. On peut lui donner en deuxième paramètre (facultatif) un booléen qui indique s'il faut désactiver (true) ou activer (false).
+Il est possible d'avoir des cas où l'on ne veuille pas afficher certains champs
+du formulaire. Vous avez pour cela les méthodes @@M@deactivate()@@ et
+@@M@isActivated()@@. À ces deux méthodes, vous devez indiquer le nom du
+contrôle. La deuxième méthode permet de savoir si un champ est activé : on
+l'utilisera surtout dans les actions de traitement des données saisies. La
+première permet d'activer ou désactiver un champ. On peut lui donner en deuxième
+paramètre (facultatif) un booléen qui indique s'il faut désactiver (true) ou
+activer (false).
 
 <code php>
 
@@ -140,15 +246,20 @@ Il est possible d'avoir des cas où l'on ne veuille pas afficher certains champs
 
 ===== Récupérer une instance d'un formulaire =====
 
-Dans une action spécifique, vous allez créer un formulaire avec @@M@jForms::create()@@, mais dans d'autres actions, vous aurez besoin de récupérer le formulaire créé, pour en manipuler ses données. Pour cela il y a deux méthodes statiques de jForms : @@M@get()@@ et @@M@fill()@@.
+Dans une action spécifique, vous allez créer un formulaire avec
+@@M@jForms::create()@@, mais dans d'autres actions, vous aurez besoin de
+récupérer le formulaire créé, pour en manipuler ses données. Pour cela il y a
+deux méthodes statiques de jForms : @@M@get()@@ et @@M@fill()@@.
 
-La méthode @@M@get()@@ permet de récupérer simplement l'objet formulaire. Comme pour @@M@create()@@, vous indiquez un sélecteur :
+La méthode @@M@get()@@ permet de récupérer simplement l'objet formulaire. Comme
+pour @@M@create()@@, vous indiquez un sélecteur :
 
 <code php>
    $form = jForms::get("shop~product");
 </code>
 
-Si vous aviez donné un identifiant à la création, il faudra le donner aussi ici (récupéré ici à partir des paramètres de la requête http) :
+Si vous aviez donné un identifiant à la création, il faudra le donner aussi ici
+(récupéré ici à partir des paramètres de la requête http) :
 
 <code php>
    $product_id = $this->param('id');
@@ -156,7 +267,11 @@ Si vous aviez donné un identifiant à la création, il faudra le donner aussi i
 </code>
 
 
-Note : la méthode @@M@get()@@ renvoie @@null@@ si le formulaire n'existe pas. Cela veut probablement dire que l'utilisateur a été à l'url de l'action courante sans passer par les urls de l'action qui a créé le formulaire. Il faudrait alors rediriger vers ces actions si @@V@$form@@ est null. Ou alors créer directement le formulaire, ce qui peut être suffisant pour de simples formulaires.
+Note : la méthode @@M@get()@@ renvoie @@null@@ si le formulaire n'existe pas.
+Cela veut probablement dire que l'utilisateur a été à l'url de l'action courante
+sans passer par les urls de l'action qui a créé le formulaire. Il faudrait alors
+rediriger vers ces actions si @@V@$form@@ est null. Ou alors créer directement
+le formulaire, ce qui peut être suffisant pour de simples formulaires.
 
 <code php>
    $form = jForms::get("main~contact");
@@ -165,7 +280,12 @@ Note : la méthode @@M@get()@@ renvoie @@null@@ si le formulaire n'existe pas. C
    }
 </code>
 
-La méthode @@M@fill()@@ récupère aussi le formulaire (c'est à dire appel @@M@jForms::get()@@), mais exécute aussi une opération supplémentaire : elle remplit le contenu du formulaire avec les données trouvées en paramètres de la requête HTTP. En clair, elle est à utiliser lors de la réception du formulaire rempli par l'utilisateur (voir la section plus loin sur l'utilisation d'un formulaire après submit).
+La méthode @@M@fill()@@ récupère aussi le formulaire (c'est à dire appel
+@@M@jForms::get()@@), mais exécute aussi une opération supplémentaire : elle
+remplit le contenu du formulaire avec les données trouvées en paramètres de la
+requête HTTP. En clair, elle est à utiliser lors de la réception du formulaire
+rempli par l'utilisateur (voir la section plus loin sur l'utilisation d'un
+formulaire après submit).
 
 <code php>
    $product_id = $this->param('id');
@@ -173,24 +293,52 @@ La méthode @@M@fill()@@ récupère aussi le formulaire (c'est à dire appel @@M
 </code>
 
 
-Note: l'identifiant (ici id) doit être actuellement récupéré manuellement avant de récupérer le formulaire, mais il est prévu dans les versions ultérieures que cela puisse se faire automatiquement.
+Note: l'identifiant (ici id) doit être actuellement récupéré manuellement avant
+de récupérer le formulaire, mais il est prévu dans les versions ultérieures que
+cela puisse se faire automatiquement.
 
 ==== Ajouter des champs dynamiquement ====
 
-On préférera dans la plupart des cas le principe d'activation/désactivation, cela est plus simple à écrire, et en lisant le fichier XML, on a ainsi toute la liste des contrôles possibles.
+On préférera dans la plupart des cas le principe d'activation/désactivation,
+cela est plus simple à écrire, et en lisant le fichier XML, on a ainsi toute la
+liste des contrôles possibles.
 
-Cependant, il y a des cas où on ne peut déclarer le composant dans le formulaire, comme par exemple le besoin de créer un nombre indéterminé à l'avance d'un élément précis. Un exemple concret : la saisie de fichiers joints à un article. Le formulaire permet de saisir les données de l'article (son titre, son contenu...), mais aussi d'ajouter des fichiers joints, comme des photos illustrant l'article. Quand on modifie un article, pour chaque photo existante, on voudrait pouvoir avoir un champs pour modifier son titre, un autre pour uploader une nouvelle version de cette photo, et un bouton pour la supprimer. Il faut ainsi créer plusieurs de ces champs de saisies en fonction du nombre de ces photos, sans avoir à en limiter le nombre.
+Cependant, il y a des cas où on ne peut déclarer le composant dans le
+formulaire, comme par exemple le besoin de créer un nombre indéterminé à
+l'avance d'un élément précis. Un exemple concret : la saisie de fichiers joints
+à un article. Le formulaire permet de saisir les données de l'article (son
+titre, son contenu...), mais aussi d'ajouter des fichiers joints, comme des
+photos illustrant l'article. Quand on modifie un article, pour chaque photo
+existante, on voudrait pouvoir avoir un champs pour modifier son titre, un autre
+pour uploader une nouvelle version de cette photo, et un bouton pour la
+supprimer. Il faut ainsi créer plusieurs de ces champs de saisies en fonction du
+nombre de ces photos, sans avoir à en limiter le nombre.
 
-Pour ce genre de cas, il faut alors créer les contrôles "à la main" et les ajouter dans le formulaire.
+Pour ce genre de cas, il faut alors créer les contrôles "à la main" et les
+ajouter dans le formulaire.
 
 Le principe est assez simple :
 
-  * récupérer le formulaire avec @@M@jForms::get()@@ ou @@M@jForms::create()@@ (mais pas @@M@jForms::fill()@@, voir plus bas)
-  * instancier un objet qui hérite de @@C@jFormsControl@@. Il existe une classe dédiée à chaque type de contrôle : @@C@jFormsControlInput@@, @@C@jFormsControlListbox@@, @@C@jFormsControlRadiobuttons@@, @@C@jFormsControlHtmlEditor@@, etc. Voir la liste dans la documentation de référence.
-  * ajouter cet objet à l'objet formulaire via la méthode @@M@addControl@@, ou @@M@addControlBefore@@ pour l'ajouter après un autre contrôle existant précis.
-  * vous pouvez ensuite afficher le formulaire, ou le remplir avec les données en paramètre grâce à la méthode @@M@initFromRequest()@@.
+  * récupérer le formulaire avec @@M@jForms::get()@@ ou @@M@jForms::create()@@
+    (mais pas @@M@jForms::fill()@@, voir plus bas)
+  * instancier un objet qui hérite de @@C@jFormsControl@@. Il existe une classe
+    dédiée à chaque type de contrôle : @@C@jFormsControlInput@@,
+    @@C@jFormsControlListbox@@, @@C@jFormsControlRadiobuttons@@,
+    @@C@jFormsControlHtmlEditor@@, etc. Voir la liste dans la documentation de
+    référence.
+  * ajouter cet objet à l'objet formulaire via la méthode @@M@addControl@@, ou
+    @@M@addControlBefore@@ pour l'ajouter après un autre contrôle existant
+    précis.
+  * vous pouvez ensuite afficher le formulaire, ou le remplir avec les données
+    en paramètre grâce à la méthode @@M@initFromRequest()@@.
 
-Il faut savoir qu'il faut ajouter ces champs à chaque fois que vous créez ou récupérez le formulaire. En effet, à chaque fois que vous récupérer un formulaire avec @@M@jForms::get()@@ ou  @@M@jForms::fill()@@, jForms instancie toujours  l'objet form à partir de ce qui est décrit dans le fichier XML (qui est traduit en classe PHP) et donc sans votre champs. C'est pourquoi il faut ajouter votre champs non seulement à la creation avant l'affichage, mais aussi avant son remplissage avec les données soumises.
+Il faut savoir qu'il faut ajouter ces champs à chaque fois que vous créez ou
+récupérez le formulaire. En effet, à chaque fois que vous récupérer un
+formulaire avec @@M@jForms::get()@@ ou @@M@jForms::fill()@@, jForms instancie
+toujours l'objet form à partir de ce qui est décrit dans le fichier XML (qui est
+traduit en classe PHP) et donc sans votre champs. C'est pourquoi il faut ajouter
+votre champs non seulement à la creation avant l'affichage, mais aussi avant son
+remplissage avec les données soumises.
 
 
 1 – Ajout du champ à l'initialisation :
@@ -216,6 +364,10 @@ Il faut savoir qu'il faut ajouter ces champs à chaque fois que vous créez ou r
   $form->initFromRequest();
 </code>
 
-Il est plus esthétique de factoriser la création du champ dans une méthode de votre contrôleur du type @@M@getMyControl()@@ afin de ne pas dupliquer le code.
+Il est plus esthétique de factoriser la création du champ dans une méthode de
+votre contrôleur du type @@M@getMyControl()@@ afin de ne pas dupliquer le code.
 
-**Attention** : Il ne faut surtout pas utiliser la méthode @@M@fill()@@, car cette méthode fait un @@M@get()@@ puis un @@M@initFromRequest()@@ et ne vous donne donc pas l'opportunité d'ajouter votre champ avant que les données soumises soient stockées dans le formulaire (par @@M@initFromRequest()@@).
+**Attention** : Il ne faut surtout pas utiliser la méthode @@M@fill()@@, car
+cette méthode fait un @@M@get()@@ puis un @@M@initFromRequest()@@ et ne vous
+donne donc pas l'opportunité d'ajouter votre champ avant que les données
+soumises soient stockées dans le formulaire (par @@M@initFromRequest()@@).

@@ -3,15 +3,26 @@
 ===== Introduction =====
 
 
-Un contrôleur (jControllerDaoCrud) est fourni avec jelix pour faire du CRUD. CRUD veut dire Create, Read, Update, Delete. En substance, c'est un contrôleur qui contient toutes les actions pour créer, lire, mettre à jour et effacer un enregistrement d'une table, et lister les enregistrements de cette table. Il lui faut en gros pour fonctionner, le nom d'un fichier DAO et d'un fichier jForms. Il s'occupe du reste.
+Un contrôleur (jControllerDaoCrud) est fourni avec jelix pour faire du CRUD.
+CRUD veut dire Create, Read, Update, Delete. En substance, c'est un contrôleur
+qui contient toutes les actions pour créer, lire, mettre à jour et effacer un
+enregistrement d'une table, et lister les enregistrements de cette table. Il lui
+faut en gros pour fonctionner, le nom d'un fichier DAO et d'un fichier jForms.
+Il s'occupe du reste.
 
-C'est donc un contrôleur permettant de mettre en place rapidement une gestion d'un enregistrement de table.
+C'est donc un contrôleur permettant de mettre en place rapidement une gestion
+d'un enregistrement de table.
 
-Note : ce contrôleur ne fonctionne que pour les tables avec une clé primaire simple. Si votre table possède une clé primaire composée de deux champs il faut utiliser jControllerDaoCrudDfk. Pour le reste vous devrez faire votre propre contrôleur.
+Note : ce contrôleur ne fonctionne que pour les tables avec une clé primaire
+simple. Si votre table possède une clé primaire composée de deux champs il faut
+utiliser jControllerDaoCrudDfk. Pour le reste vous devrez faire votre propre
+contrôleur.
 
 ===== Création d'un CRUD =====
 
-Pour l'utiliser, il faut créer un contrôleur dans votre module, qui hérite non pas de jController, mais de jControllerDaoCrud. Exemple, dans un fichier samplecrud.classic.php
+Pour l'utiliser, il faut créer un contrôleur dans votre module, qui hérite non
+pas de jController, mais de jControllerDaoCrud. Exemple, dans un fichier
+samplecrud.classic.php
 
 <code php>
 class sampleCrudCtrl extends jControllerDaoCrud {
@@ -19,7 +30,9 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 }
 </code>
 
-Il faut ensuite lui indiquer un DAO qui utilise la table que l'on veut gérer, et un fichier jforms, qui permettra d'afficher le formulaire d'édition d'un enregistrement. Cela se fait au travers des propriétés $dao et $form :
+Il faut ensuite lui indiquer un DAO qui utilise la table que l'on veut gérer, et
+un fichier jforms, qui permettra d'afficher le formulaire d'édition d'un
+enregistrement. Cela se fait au travers des propriétés $dao et $form :
 
 
 <code php>
@@ -32,28 +45,43 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 }
 </code>
 
-Et c'est tout ! En imaginant que ce contrôleur se trouve dans le module main, affichez alors la page (url pour une appli en mode basic_significant)
+Et c'est tout ! En imaginant que ce contrôleur se trouve dans le module main,
+affichez alors la page (url pour une appli en mode basic_significant)
 
   index.php/main/samplecrud/index
 
-Vous avez alors toutes les pages qu'il faut pour gérer les enregistrements de la table.
+Vous avez alors toutes les pages qu'il faut pour gérer les enregistrements de la
+table.
 
-Important : par défaut, le controleur récupère la réponse HTML définie dans jelix, c'est à dire qu'il vous faut faire [[/traitements_communs#personnalisation-de-reponse-commune|une réponse HTML personnalisée]]. Si vous n'en avez pas, rien ne s'affichera. Si vous ne voulez pas faire de réponse personnalisée (ce qui est dommage), il faudra configurer le contrôleur.
+Important : par défaut, le controleur récupère la réponse HTML définie dans
+jelix, c'est à dire qu'il vous faut faire
+[[/traitements_communs#personnalisation-de-reponse-commune|une réponse HTML personnalisée]].
+Si vous n'en avez pas, rien ne s'affichera. Si vous ne voulez
+pas faire de réponse personnalisée (ce qui est dommage), il faudra configurer le
+contrôleur.
 
 
-Note : vous pouvez aussi utiliser la commande jelix @@createdaocrud@@ qui vous permet de créer à la fois le contrôleur, le dao et le formulaire, en indiquant la table que l'on veut gérer.
+Note : vous pouvez aussi utiliser la commande jelix @@createdaocrud@@ qui vous
+permet de créer à la fois le contrôleur, le dao et le formulaire, en indiquant
+la table que l'on veut gérer.
+
 <code bash>
 php cmd.php createdaocrud le_module la_table le_nom_du_controleur
 </code>
 
 Voir l'aide de cette commande (@@php cmd.php help createdaocrud@@) pour les options.
+
 ===== Personnalisation du contrôleur =====
 
-Il se peut que le comportement par défaut du contrôleur et des affichages des pages ne correspondent pas à ce que vous voulez, et qu'il faille faire des choses au niveau du formulaire (pré remplir à la main des listbox par exemple). Voici donc ce qui est possible de faire.
+Il se peut que le comportement par défaut du contrôleur et des affichages des
+pages ne correspondent pas à ce que vous voulez, et qu'il faille faire des
+choses au niveau du formulaire (pré remplir à la main des listbox par exemple).
+Voici donc ce qui est possible de faire.
 
 ==== Indiquer le profil jDb ====
 
-Si il faut utiliser un profil de connexion spécifique, indiquez le dans la propriété //$dbProfil// :
+Si il faut utiliser un profil de connexion spécifique, indiquez le dans la
+propriété //$dbProfil// :
 
 <code php>
   protected $dbProfile = 'admin';
@@ -61,7 +89,8 @@ Si il faut utiliser un profil de connexion spécifique, indiquez le dans la prop
 
 ==== Configurer la réponse ====
 
-Par défaut, comme il a été dit plus haut, le contrôleur récupère la réponse HTML par défaut. Cela se fait dans la méthode //_getResponse()// du contrôleur :
+Par défaut, comme il a été dit plus haut, le contrôleur récupère la réponse HTML
+par défaut. Cela se fait dans la méthode //_getResponse()// du contrôleur :
 
 <code php>
     protected function _getResponse(){
@@ -69,11 +98,18 @@ Par défaut, comme il a été dit plus haut, le contrôleur récupère la répon
     }
 </code>
 
-L'objet réponse renvoyé par cette méthode est alors utilisé par toutes les actions du contrôleur CRUD.
+L'objet réponse renvoyé par cette méthode est alors utilisé par toutes les
+actions du contrôleur CRUD.
 
-Comme vous le voyez, rien n'est fait au niveau de la réponse (à part dans chaque action l'assignation d'un contenu principal dans la variable de template "MAIN"). Ainsi, pas de déclaration de template principal (bodyTpl), pas de feuille de style ou autre. Le contrôleur s'attend en effet à ce que l'objet renvoyé par //getResponse// soit un objet réponse crée par vos soins et communs à tous vos contrôleurs. 
+Comme vous le voyez, rien n'est fait au niveau de la réponse (à part dans chaque
+action l'assignation d'un contenu principal dans la variable de template
+"MAIN"). Ainsi, pas de déclaration de template principal (bodyTpl), pas de
+feuille de style ou autre. Le contrôleur s'attend en effet à ce que l'objet
+renvoyé par //getResponse// soit un objet réponse crée par vos soins et communs
+à tous vos contrôleurs.
 
-Si vous voulez donc changer ça, redéfinissez donc cette méthode en y ajoutant ce que vous voulez. Exemple:
+Si vous voulez donc changer ça, redéfinissez donc cette méthode en y ajoutant ce
+que vous voulez. Exemple:
 
 <code php>
     protected function _getResponse(){
@@ -84,10 +120,13 @@ Si vous voulez donc changer ça, redéfinissez donc cette méthode en y ajoutant
     }
 </code>
 
-Ainsi la page de liste des enregistrements, de vue et d'édition d'un enregistrement etc auront une feuille de style admin.css et un menu qui est généré par la zone adminmenu.
+Ainsi la page de liste des enregistrements, de vue et d'édition d'un
+enregistrement etc auront une feuille de style admin.css et un menu qui est
+généré par la zone adminmenu.
 
 
-Si vous voulez modifier la réponse pour des pages spécifiques du contrôleur, vous pouvez redéfinir ces méthodes :
+Si vous voulez modifier la réponse pour des pages spécifiques du contrôleur,
+vous pouvez redéfinir ces méthodes :
 
    * **_index($resp, $tpl)**: pour la page de la liste des enregistrements
    * **_view($form, $resp, $tpl)**: pour la page des détails d'un enregistrement
@@ -98,7 +137,11 @@ Dans chacune de ses méthodes, vous recevez la réponse à modifier dans le para
 
 ==== Configurer le formulaire ====
 
-Si vous voulez modifier dynamiquement le formulaire, pour par exemple ajouter ou désactiver des champs de saisie, vous pouvez redéfinir les deux méthodes //_createForm// and //_getForm//, qui doivent appeler respectivement //jForms::create()// et //jForms::get()//  (Vous ne devez pas appeler //jForms::fill()//).
+Si vous voulez modifier dynamiquement le formulaire, pour par exemple ajouter ou
+désactiver des champs de saisie, vous pouvez redéfinir les deux méthodes
+//_createForm// and //_getForm//, qui doivent appeler respectivement
+//jForms::create()// et //jForms::get()// (Vous ne devez pas appeler
+//jForms::fill()//).
 
 Par défaut, ces méthodes sont :
 
@@ -112,7 +155,9 @@ Par défaut, ces méthodes sont :
     }
 </code>
 
-Si vous voulez modifier le formulaire durant des actions spécifiques, redéfinissez les méthodes **_view**, **_create** et **_editUpdate** décrites précédement.
+Si vous voulez modifier le formulaire durant des actions spécifiques,
+redéfinissez les méthodes **_view**, **_create** et **_editUpdate** décrites
+précédement.
 
 ==== Définir les templates ====
 
@@ -125,13 +170,17 @@ Les templates par défaut utilisés par le contrôleur sont indiqués dans les p
 </code>
 
 
-Vous pouvez bien sûr les [[/themes|surcharger dans un thème]], soit en indiquer d'autres que vous aurez crées dans vos propres modules.
+Vous pouvez bien sûr les [[/themes|surcharger dans un thème]], soit en indiquer
+d'autres que vous aurez crées dans vos propres modules.
 
 === Variables de template ===
 
-Voir les sources des templates par défaut (dans lib/jelix/core-modules/jelix/templates) pour connaitre la liste des variables de template. 
+Voir les sources des templates par défaut (dans
+lib/jelix/core-modules/jelix/templates) pour connaitre la liste des variables de
+template. 
 
-Le template de la liste des enregistrements aura les variables spécifiques suivantes :
+Le template de la liste des enregistrements aura les variables spécifiques
+suivantes :
 
    * **list** : liste des résultats (renvoyé par le dao)
    * **primarykey** : le nom de la clé primaire
@@ -144,17 +193,23 @@ Le template de la liste des enregistrements aura les variables spécifiques suiv
 
 === Ajouter d'autres variables ===
 
-Si vous voulez déclarer des variables de template supplémentaires, vous pouvez redéfinir les méthodes **_index**,  **_view**, **_create** et **_editUpdate** décrites plus haut. Dans ces méthodes, vous pouvez utiliser les méthodes et propriétés de l'objet jTpl qui vous est donné en paramètres.
+Si vous voulez déclarer des variables de template supplémentaires, vous pouvez
+redéfinir les méthodes **_index**, **_view**, **_create** et **_editUpdate**
+décrites plus haut. Dans ces méthodes, vous pouvez utiliser les méthodes et
+propriétés de l'objet jTpl qui vous est donné en paramètres.
 
 === Intégration des templates dans la réponse ===
 
-Chaque action d'affichage du contrôleur CRUD utilise un template, dont le contenu sera assigné au template principal de la réponse dans la variable de template MAIN. En d'autres termes, chaque action fait l'équivalent de :
+Chaque action d'affichage du contrôleur CRUD utilise un template, dont le
+contenu sera assigné au template principal de la réponse dans la variable de
+template MAIN. En d'autres termes, chaque action fait l'équivalent de :
 
 <code php>
     $rep->body->assign('MAIN', $resultatTemplateAction);
 </code>
 
-Si vous voulez que ce soit dans une variable de template autre que MAIN, vous pouvez changer la propriété //$templateAssign// :
+Si vous voulez que ce soit dans une variable de template autre que MAIN, vous
+pouvez changer la propriété //$templateAssign// :
 
 <code php>
 class sampleCrudCtrl extends jControllerDaoCrud {
@@ -169,7 +224,8 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 
 ==== Page liste des enregistrements ====
 
-Elle est affichée par l'action //index//. Des propriétés du contrôleur CRUD permettent de configurer l'affichage de la liste.
+Elle est affichée par l'action //index//. Des propriétés du contrôleur CRUD
+permettent de configurer l'affichage de la liste.
 
 === Nombre d'enregistrements par page ===
 
@@ -181,7 +237,9 @@ Il est défini par la propriété //$listPageSize// :
 
 === Liste des propriétés ===
 
-Par défaut, toutes les propriétés du DAO sont affichées. Si vous voulez restreindre, indiquez la liste des propriétés à afficher dans //propertiesForList// :
+Par défaut, toutes les propriétés du DAO sont affichées. Si vous voulez
+restreindre, indiquez la liste des propriétés à afficher dans
+//propertiesForList// :
 
 <code php>
     protected $propertiesForList = array('titre','date_creation','auteur');
@@ -189,36 +247,62 @@ Par défaut, toutes les propriétés du DAO sont affichées. Si vous voulez rest
 
 === Ordre et critères d'affichage ===
 
-Il n'y a pas d'ordre spécifique pour afficher les enregistrements. Pour forcer un ordre précis, indiquez la liste des propriétés du dao qui serviront d'ordre, et le sens :
+Il n'y a pas d'ordre spécifique pour afficher les enregistrements. Pour forcer
+un ordre précis, indiquez la liste des propriétés du dao qui serviront d'ordre,
+et le sens :
 
 <code php>
     protected $propertiesForRecordsOrder = array('date'=>'desc', 'title'=>'asc');
 </code>
 
-Si ce n'est pas suffisant, vous pouvez redéfinir la méthode **_indexSetConditions()**, qui accepte en paramètre un objet jDaoConditions que vous pouvez compléter pour spécifier des critères de sélections des enregistrements à afficher, l'ordre d'affichage..
+Si ce n'est pas suffisant, vous pouvez redéfinir la méthode
+**_indexSetConditions()**, qui accepte en paramètre un objet jDaoConditions que
+vous pouvez compléter pour spécifier des critères de sélections des
+enregistrements à afficher, l'ordre d'affichage..
 
 === Configuration avancée de la liste ===
 
-La méthode //index// appelle une méthode protégée //_index// que vous pouvez redéfinir pour personnaliser l'affichage. Cette méthode reçoit l'objet réponse instancié et l'objet template utilisé pour afficher la liste. Vous pouvez donc en profiter pour finir de configurer la réponse et ajouter éventuellement des variables de templates.
+La méthode //index// appelle une méthode protégée //_index// que vous pouvez
+redéfinir pour personnaliser l'affichage. Cette méthode reçoit l'objet réponse
+instancié et l'objet template utilisé pour afficher la liste. Vous pouvez donc
+en profiter pour finir de configurer la réponse et ajouter éventuellement des
+variables de templates.
 
 ==== Page création d'un enregistrement ====
+
 Elle est affichée par les actions //precreate//, //create//, //savecreate//.
 
-L'action //precreate// crée et prépare le formulaire puis redirige vers l'action //create//. L'action //create// affiche le formulaire pour éditer le nouvel enregistrement, et envoi les données vers l'action //savecreate//. Cette dernière action vérifie le contenu du formulaire, et enregistre les données si c'est ok.
+L'action //precreate// crée et prépare le formulaire puis redirige vers l'action
+//create//. L'action //create// affiche le formulaire pour éditer le nouvel
+enregistrement, et envoi les données vers l'action //savecreate//. Cette
+dernière action vérifie le contenu du formulaire, et enregistre les données si
+c'est ok.
 
-En plus de la méthode //_create// indiquée plus haut pour personnaliser l'affichage, vous pouvez aussi redéfinir les autres méthodes:
+En plus de la méthode //_create// indiquée plus haut pour personnaliser
+l'affichage, vous pouvez aussi redéfinir les autres méthodes:
 
    * **_preCreate($form)**: pour préparer le formulaire juste après sa création.
-   * **_checkData($form, $calltype)**: pour vérifier des données supplémentaires. Cette méthode est aussi appelée par la méthode //saveupdate// (voir plus bas).
-   * **_beforeSaveCreate($form, $form_daorec)**: pour faire des choses juste avant la sauvegarde du nouvel enregistrement.
-   * **_afterCreate($form, $id, $resp)**: pour faire des traitements après la sauvegarde.
+   * **_checkData($form, $calltype)**: pour vérifier des données
+     supplémentaires. Cette méthode est aussi appelée par la méthode
+     //saveupdate// (voir plus bas).
+   * **_beforeSaveCreate($form, $form_daorec)**: pour faire des choses juste
+     avant la sauvegarde du nouvel enregistrement.
+   * **_afterCreate($form, $id, $resp)**: pour faire des traitements après la
+     sauvegarde.
 
 ==== Page mise à jour d'un enregistrement ====
+
 Elle est affichée et gérée par les actions  //preupdate//, //editupdate// et //saveupdate//.
 
-Le processus suit le même schéma que pour la création d'un enregistrement. //preupdate// crée et prépare le formulaire et redirige vers l'action //editupdate//. L'action //editupdate// affiche le formulaire pour éditer l'enregistrement, et envoi les données vers l'action //saveupdate//. Cette dernière action vérifie le contenu du formulaire, et enregistre les données si c'est ok.
+Le processus suit le même schéma que pour la création d'un enregistrement.
+//preupdate// crée et prépare le formulaire et redirige vers l'action
+//editupdate//. L'action //editupdate// affiche le formulaire pour éditer
+l'enregistrement, et envoi les données vers l'action //saveupdate//. Cette
+dernière action vérifie le contenu du formulaire, et enregistre les données si
+c'est ok.
 
-En plus de la méthode //_update// indiquée plus haut pour personnaliser l'affichage, vous pouvez aussi redéfinir les autres méthodes:
+En plus de la méthode //_update// indiquée plus haut pour personnaliser
+l'affichage, vous pouvez aussi redéfinir les autres méthodes:
 
    * **_preUpdate($form)**: pour préparer le formulaire juste après sa création.
    * **_checkData($form, $calltype)**: pour vérifier des données supplémentaires.
@@ -227,11 +311,15 @@ En plus de la méthode //_update// indiquée plus haut pour personnaliser l'affi
 
 ==== Page destruction d'un enregistrement ====
 
-Elle est affichée par l'action //delete//. Vous pouvez redéfinir la méthode //_delete// pour faire des traitements additionnels.
+Elle est affichée par l'action //delete//. Vous pouvez redéfinir la méthode
+//_delete// pour faire des traitements additionnels.
 
 ===== Configurer les URLS =====
 
-Si vous avez activé les urls significatives, voici le contenu que vous pouvez mettre dans le fichier @@F@urls.xml@@ du module, dans l’hypothèse ici où le contrôleur s'appelle "mycrud" et que l'on veut avoir des urls vers ce contrôleur qui commencent par "thedata" :
+Si vous avez activé les urls significatives, voici le contenu que vous pouvez
+mettre dans le fichier @@F@urls.xml@@ du module, dans l’hypothèse ici où le
+contrôleur s'appelle "mycrud" et que l'on veut avoir des urls vers ce contrôleur
+qui commencent par "thedata" :
 
 <code xml>
 <url pathinfo="/thedata/" action="mycrud:index" />

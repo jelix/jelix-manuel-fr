@@ -5,9 +5,11 @@ Il existe en standard plusieurs drivers pour l'authentification dans Jelix.
 
 ===== Db =====
 
-Le driver Db propose une authentification pour laquelle les informations sont stockées en base de données, et de ce fait utilise un DAO pour y accéder.
+Le driver Db propose une authentification pour laquelle les informations sont
+stockées en base de données, et de ce fait utilise un DAO pour y accéder.
 
-Jelix fournis un module, jauthdb, qui contient un dao par défaut, et installe une table en base de donnée. Pour l'utiliser, installez le :
+Jelix fournis un module, jauthdb, qui contient un dao par défaut, et installe
+une table en base de donnée. Pour l'utiliser, installez le :
 
 <code bash>
 php cmd.php installmodule jauthdb
@@ -16,12 +18,15 @@ php cmd.php installmodule jauthdb
 php cmd.php installmodule -p defaultuser jauthdb
 </code>
 
-Une table jlx_users sera créée dans votre base de données. Vous pouvez ajouter des champs dans cette table, et surcharger alors le dao par défaut, ou fournir un autre dao (voir plus loin).
+Une table jlx_users sera créée dans votre base de données. Vous pouvez ajouter
+des champs dans cette table, et surcharger alors le dao par défaut, ou fournir
+un autre dao (voir plus loin).
 
 
-Dans le fichier de configuration d'authentification, vous devriez avoir quelque chose comme ceci :
+Dans le fichier de configuration d'authentification, vous devriez avoir quelque
+chose comme ceci :
+
 <code ini>
-
 driver= Db
 
 [Db]
@@ -29,9 +34,12 @@ dao = "jauthdb~jelixuser"
 password_crypt_function = "sha1"
 </code>
 
-Ce que vous indiquez au niveau du paramètre @@dao@@, c'est un sélecteur vers le fichier dao que vous voulez utiliser.
+Ce que vous indiquez au niveau du paramètre @@dao@@, c'est un sélecteur vers le
+fichier dao que vous voulez utiliser.
 
-Pour le dao que vous indiquez, **il doit avoir au moins les mêmes propriétés et méthodes que le dao jelixusers**. Vous pouvez rajouter d'autres propriétés, autant que vous voulez.
+Pour le dao que vous indiquez, **il doit avoir au moins les mêmes propriétés et**
+**méthodes que le dao jelixusers**. Vous pouvez rajouter d'autres propriétés,
+autant que vous voulez.
 
    * @@P@login@@ and @@P@password@@
    * @@M@getByLoginPassword (login, password)@@
@@ -40,12 +48,18 @@ Pour le dao que vous indiquez, **il doit avoir au moins les mêmes propriétés 
    * @@M@deleteByLogin(login)@@
    * @@M@findByLogin(pattern)@@
 
-Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le champ du login, ou alors qu'il y ait une clé autoincrementée, et un champ @@P@login@@ déclaré avec un index de type "UNIQUE".
+Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le
+champ du login, ou alors qu'il y ait une clé autoincrementée, et un champ
+@@P@login@@ déclaré avec un index de type "UNIQUE".
 
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit respecter [[refclass:auth/jIAuthDriverClass|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui
+fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit
+respecter [[refclass:auth/jIAuthDriverClass|l'interface jIAuthDriverClass]].
+Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,
+comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 
@@ -60,7 +74,9 @@ password_crypt_function = "sha1"
 
 ===== LDS/MDS =====
 
-C'est un driver qui repose sur un serveur MDS ([[http://mds.mandriva.org/]]), anciennement appelé LDS. Il appelle l'API xml-rpc d'un serveur MDS. La configuration que vous devez indiquer doit donc être celle-ci :
+C'est un driver qui repose sur un serveur MDS ([[http://mds.mandriva.org/]]),
+anciennement appelé LDS. Il appelle l'API xml-rpc d'un serveur MDS. La
+configuration que vous devez indiquer doit donc être celle-ci :
 
 <code ini>
 
@@ -74,12 +90,13 @@ password= bar
 scheme= https
 </code>
 
-Le driver interrogera donc le serveur **foo.com** sur le port **80**, avec le login @@L@foo@@ et le mot de passe @@L@bar@@, via une connexion sécurisée https.
+Le driver interrogera donc le serveur **foo.com** sur le port **80**, avec le
+login @@L@foo@@ et le mot de passe @@L@bar@@, via une connexion sécurisée https.
 
 ===== ldap =====
 
-C'est un driver permettant d'authentifier un utilisateur d'un annuaire supportant le protocole LDAP. La configuration préconisée :
-
+C'est un driver permettant d'authentifier un utilisateur d'un annuaire
+supportant le protocole LDAP. La configuration préconisée :
 
 <code ini>
 
@@ -115,6 +132,8 @@ password_crypt_function = sha1
 
 ===== Créer un driver =====
 
-Vous avez peut-être votre propre système d'authentification, que vous voulez mieux intégrer dans le framework. Dans ce cas, il vous faut créer un driver. Au passage, nous acceptons toutes contributions de ce type !
+Vous avez peut-être votre propre système d'authentification, que vous voulez
+mieux intégrer dans le framework. Dans ce cas, il vous faut créer un driver. Au
+passage, nous acceptons toutes contributions de ce type !
 
 Pour les détails, voir [[/plugins/auth|la page sur la création des drivers d'authentification]].

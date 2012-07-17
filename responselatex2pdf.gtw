@@ -1,7 +1,9 @@
 ~~LANG:EN@enman:responselatex2pdf~~
 
 
-Jelix propose un objet @@C@jResponseLatexToPdf@@ qui permet de générer un document PDF à partir d'un document écrit en [[http://fr.wikipedia.org/wiki/LaTeX|LaTeX]]. Son alias est "ltx2pdf".
+Jelix propose un objet @@C@jResponseLatexToPdf@@ qui permet de générer un
+document PDF à partir d'un document écrit en
+[[http://fr.wikipedia.org/wiki/LaTeX|LaTeX]]. Son alias est "ltx2pdf".
 
 <code php>
  $rep = $this->getResponse("ltx2pdf");
@@ -10,15 +12,21 @@ Jelix propose un objet @@C@jResponseLatexToPdf@@ qui permet de générer un docu
 
 **Note : L'utilisation de jResponseLatexToPdf nécessite la présence du programme //pdflatex// sur le serveur !**
 
-Si ce programme n'est pas situé dans les chemins reconnus par le système (définis par la variable d'environnement PATH sous Linux par exemple), il faut indiquer son chemin complet dans la propriété @@P@$pdflatexPath@@. Exemple: 
+Si ce programme n'est pas situé dans les chemins reconnus par le système
+(définis par la variable d'environnement PATH sous Linux par exemple), il faut
+indiquer son chemin complet dans la propriété @@P@$pdflatexPath@@. Exemple: 
 
 <code php>
  $rep->pdflatexPath = '/usr/bin/pdflatex';
 </code>
 
-jResponseLatexToPdf s'occupe de générer un en-tête LaTeX comprenant le titre du document et les auteurs, le reste est à définir (en LaTeX) dans un template que vous indiquerez dans la propriété @@P@$bodyTpl@@. Et vous accédez au moteur de template via la propriété @@P@$body@@.
+jResponseLatexToPdf s'occupe de générer un en-tête LaTeX comprenant le titre du
+document et les auteurs, le reste est à définir (en LaTeX) dans un template que
+vous indiquerez dans la propriété @@P@$bodyTpl@@. Et vous accédez au moteur de
+template via la propriété @@P@$body@@.
 
-Il y a aussi la méthode @@M@addCommand@@ qui permet d'ajouter des commandes LaTeX au début du document.
+Il y a aussi la méthode @@M@addCommand@@ qui permet d'ajouter des commandes
+LaTeX au début du document.
 
 Exemple :
 

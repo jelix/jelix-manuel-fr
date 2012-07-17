@@ -1,14 +1,18 @@
 ~~LANG:EN@enman:session~~
 
-jSession est utilisé par Jelix pour la gestion du stockage des sessions. Cet objet n'est pas utilisé pour lire ou écrire des variables en session. Pour faire ceci, **utilisez $_SESSION comme d'habitude**.
+jSession est utilisé par Jelix pour la gestion du stockage des sessions. Cet
+objet n'est pas utilisé pour lire ou écrire des variables en session. Pour faire
+ceci, **utilisez $_SESSION comme d'habitude**.
 
-Les paramètres du moteur de stockage de la session sont indiqués dans la section @@sessions@@ du fichier de configuration @@F@app/var/config/defaultconfig.ini.php@@.
+Les paramètres du moteur de stockage de la session sont indiqués dans la section
+@@sessions@@ du fichier de configuration
+@@F@app/var/config/defaultconfig.ini.php@@.
 
 ===== Nom de la session =====
 
-Pour diverses raisons, on peut vouloir changer le nom de la session (par défaut, c'est PHPSESSID).
-
-Pour changer ce nom de variable/cookie, on peut utiliser la configuration suivante :
+Pour diverses raisons, on peut vouloir changer le nom de la session (par défaut,
+c'est PHPSESSID). Pour changer ce nom de variable/cookie, on peut utiliser la
+configuration suivante :
 
 <code ini>
 [sessions]
@@ -21,7 +25,8 @@ NB : seuls les caractères alpha-numériques sont autorisés.
 ===== Stockage dans un répertoire =====
 
 Il n'est pas toujours prudent de stocker les sessions dans le répertoire par
-défaut prévu par l'hébergeur, car celui-ci peut être accessible de tout le monde, comme /tmp/ par exemple.
+défaut prévu par l'hébergeur, car celui-ci peut être accessible de tout le
+monde, comme /tmp/ par exemple.
 
 Pour utiliser jSession avec un répertoire personnalisé :
 
@@ -36,7 +41,9 @@ NB : les mots clés app: et lib: sont reconnus.
 
 ===== Stockage dans la base de données =====
 
-On peut avoir besoin de stocker les données de session en base de données, par exemple pour permettre un partage aisé en cas de répartition de charge entre plusieurs serveurs web.
+On peut avoir besoin de stocker les données de session en base de données, par
+exemple pour permettre un partage aisé en cas de répartition de charge entre
+plusieurs serveurs web.
 
 Pour utiliser jSession avec un Dao : 
 
@@ -47,11 +54,14 @@ Pour utiliser jSession avec un Dao :
   dao_db_profile = ""
 </code>
 
-Un dao est fourni par défaut dans le module jelix, son sélecteur est : @@jelix~jsession@@.
+Un dao est fourni par défaut dans le module jelix, son sélecteur est :
+@@jelix~jsession@@.
 
-Jelix créé automatiquement la table correspondante quand vous installez votre application et que la configuration dans la section @@sessions@@ est faite.
+Jelix créé automatiquement la table correspondante quand vous installez votre
+application et que la configuration dans la section @@sessions@@ est faite.
 
-en cours de développement, vous pouvez exécuter l'un des scripts SQL @@F@lib/jelix/core-modules/jelix/install/sql/install_jsession.schema.*@@.
+En cours de développement, vous pouvez exécuter l'un des scripts SQL
+@@F@lib/jelix/core-modules/jelix/install/sql/install_jsession.schema.*@@.
 
 Concrètement, la table installée sera celle-ci :
 
