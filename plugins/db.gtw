@@ -6,8 +6,7 @@ spécifique.
 
 ===== Activation =====
 
-Pour savoir comment activer un driver pour jDb, voyez le [[/bd|chapitre sur
-jDb]]
+Pour savoir comment activer un driver pour jDb, voyez le [[/bd|chapitre sur jDb]].
 
 ===== Création d'un driver =====
 
@@ -28,7 +27,7 @@ Un driver pour jDb est constitué de trois classes :
 Un driver possède un nom identifiant. Prenons le nom "exemple" pour la suite.
 
 Les fichiers du driver doivent se trouver dans un répertoire @@F@db/exemple/@@
-dans un [[|dépôt de plugins]].
+dans un dépôt de plugins.
 
 Les noms des fichiers doivent suivre ce nommage :
 

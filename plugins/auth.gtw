@@ -8,9 +8,8 @@ un. Voici comment.
 ===== Création =====
 
 
-Un driver est une classe qui respecte [[refclass:auth/jIAuthDriver|l'interface
-jIAuthDriver]], qui reprend à peu de chose près l'API de jAuth (**mais ne dérive
-pas de jAuth**).
+Un driver est une classe qui respecte [[refclass:auth/jIAuthDriver|l'interface jIAuthDriver]],
+qui reprend à peu de chose près l'API de jAuth (**mais ne dérive pas de jAuth**).
 
 Ces drivers sont appelés par jAuth. Ils font les opérations de "bas" niveau
 (accès base de données, ou à un annuaire ldap, ou à un fichier texte etc...)
@@ -23,8 +22,8 @@ dans un répertoire //auth/exemple/// dans un
 ===== Activation =====
 
 Pour utiliser votre nouveau driver, vous devez indiquer "exemple" au niveau de
-l'option "**driver**" du [[/authentification|fichier de configuration du plugin
-auth]], et avoir une section "exemple" suivit des éventuelles options
+l'option "**driver**" du [[/authentification|fichier de configuration du plugin auth]],
+et avoir une section "exemple" suivit des éventuelles options
 spécifiques au driver.
 
 Exemple :

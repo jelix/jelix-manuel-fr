@@ -30,7 +30,10 @@ Dans le fichier de configuration de l'application (@@F@defaultconfig.ini.php@@),
 vous avez plusieurs paramètres pour configurer le langage et l'encodage, utilisés
 dans votre application :
 
-   * @@locale@@: indique le code du language. Il peut être changé à la volée si nécessaire. La valeur a une syntaxe particulière, semblable aux tags IETF : un tag primaire + "_" + un sous-tag. Le tag primaire est le code langue, le sous-tag est le code pays. Par défautl, la locale vaut @@en_US@@.
+   * @@locale@@: indique le code du language. Il peut être changé à la volée si
+     nécessaire. La valeur a une syntaxe particulière, semblable aux tags IETF :
+     un tag primaire + "_" + un sous-tag. Le tag primaire est le code langue, le
+     sous-tag est le code pays. Par défautl, la locale vaut @@en_US@@.
    * @@charset@@: indique l'encodage utilisé. Par défaut il vaut @@UTF-8@@.
    * @@availableLocales@@: indique la liste des locales pris en charge par l'application.
    * Il y a aussi une section @@[langToLocale]@@. Voyez la fin du chapitre.
