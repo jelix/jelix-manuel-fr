@@ -1,6 +1,7 @@
 ~~LANG:EN@enman:jforms/xml/wikieditor~~
 
-l'éditeur wiki consiste à fournir une barre d'outils permettant de facilité la mise en forme de son texte.
+l'éditeur wiki consiste à fournir une barre d'outils permettant de facilité la
+mise en forme de son texte.
 
 pour cela [[http://markitup.jaysalvat.com/home/|MarkItUp]] a été intégré.
 
@@ -28,9 +29,13 @@ où :
   * **default.image.path** est le chemin vers les images des boutons
   * **default.skin** est le chemin vers la CSS habillant le textarea
 
-**default.config.path** pourrait avoir pour valeur tout type de //sets// supporté par MarkitUp, tel bbcode, dotclear etc... et pour les utiliser on les ajouterait dans le path de son choix et indiquerait ce path dans defaultconfig.ini.php.
+**default.config.path** pourrait avoir pour valeur tout type de //sets//
+supporté par MarkitUp, tel bbcode, dotclear etc... et pour les utiliser on les
+ajouterait dans le path de son choix et indiquerait ce path dans
+defaultconfig.ini.php.
 
-Voici un exemple (un peu farfelue car la régles de transformation bbcode_to_xhtml n'existe pas, mais vous pourriez vous le créer.) :
+Voici un exemple (un peu farfelue car la régles de transformation
+bbcode_to_xhtml n'existe pas, mais vous pourriez vous le créer.) :
 
 <code>
 [wikieditors]

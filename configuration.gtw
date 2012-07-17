@@ -2,18 +2,25 @@
 
 Une application Jelix possède quelques fichiers de configuration :
 
-  * un fichier project.xml, décrivant des informations générales sur l'application
+  * un fichier project.xml, décrivant des informations générales sur
+    l'application
   * un fichier module.xml dans chaque module
-  * un fichier defaultconfig.ini.php pour la configuration globale, et un fichier config.ini.php pour chaque point d'entrée.
+  * un fichier defaultconfig.ini.php pour la configuration globale, et un
+    fichier config.ini.php pour chaque point d'entrée.
   * un fichier profiles.ini.php pour les profils de connexion.
 
-Ils sont tous générés automatiquement lorsque vous créez une application ou un module. Cependant, vous devez bien souvent les modifier pour apporter des renseignements supplémentaires ou changer des paramètres.
+Ils sont tous générés automatiquement lorsque vous créez une application ou un
+module. Cependant, vous devez bien souvent les modifier pour apporter des
+renseignements supplémentaires ou changer des paramètres.
 
-Ce chapitre présente ces fichiers. Voyez [[details-configuration|le chapitre sur les details de la configuration]] pour en savoir plus sur le contenu.
+Ce chapitre présente ces fichiers. Voyez [[details-configuration|le chapitre sur les details de la configuration]]
+pour en savoir plus sur le contenu.
 
 ===== Le fichier project.xml =====
 
-Le fichier @@F@project.xml@@ contient des informations sur l'application, dont certaines sont importantes puisqu'elles servent à l'installateur, entre autres. Voici un exemple :
+Le fichier @@F@project.xml@@ contient des informations sur l'application, dont
+certaines sont importantes puisqu'elles servent à l'installateur, entre autres.
+Voici un exemple :
 
 <code xml>
 <?xml version="1.0" encoding="iso-8859-1"?>
@@ -46,7 +53,9 @@ Le fichier @@F@project.xml@@ contient des informations sur l'application, dont c
 
 ===== Les fichiers module.xml =====
 
-Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il contient des informations générales, mais aussi les dépendances avec d'autres modules. Voici un exemple:
+Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il
+contient des informations générales, mais aussi les dépendances avec d'autres
+modules. Voici un exemple:
 
 <code xml>
 <module xmlns="http://jelix.org/ns/module/1.0">
@@ -68,13 +77,25 @@ Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il
 
 ===== Les fichiers de configuration ini =====
 
-La configuration du framework est stockée dans un fichier de type "ini". Il s'agit d'un fichier contenant des sections, débutant par un nom entre crochets. Chacune de ces sections contenant une série de paramètres "nom=valeur". Il y a une section "générale", qui n'a pas de nom, et dont les paramètres sont en début du fichier.
+La configuration du framework est stockée dans un fichier de type "ini". Il
+s'agit d'un fichier contenant des sections, débutant par un nom entre crochets.
+Chacune de ces sections contenant une série de paramètres "nom=valeur". Il y a
+une section "générale", qui n'a pas de nom, et dont les paramètres sont en début
+du fichier.
 
 Les fichiers de configuration sont situés dans @@F@var/config/@@.
 
-Chaque point d'entrée peut avoir son fichier de configuration spécifique. Mais la plupart du temps ils ont beaucoup de valeurs de paramètres identiques entre eux. Pour éviter de répéter ces paramètres identiques dans chaque fichier, il y a un fichier de configuration commun, qui a pour nom @@F@defaultconfig.ini.php@@. Il est automatiquement lu, en plus du fichier spécifique au point d'entrée, et il n'est pas besoin de l'indiquer dans les points d'entrée.
+Chaque point d'entrée peut avoir son fichier de configuration spécifique. Mais
+la plupart du temps ils ont beaucoup de valeurs de paramètres identiques entre
+eux. Pour éviter de répéter ces paramètres identiques dans chaque fichier, il y
+a un fichier de configuration commun, qui a pour nom
+@@F@defaultconfig.ini.php@@. Il est automatiquement lu, en plus du fichier
+spécifique au point d'entrée, et il n'est pas besoin de l'indiquer dans les
+points d'entrée.
 
-Un fichier de configuration spécifique ne contiendra donc que les valeurs spécifiques pour le point d'entrée, et peut bien sûr redéfinir des paramètres définis dans le fichier commun.
+Un fichier de configuration spécifique ne contiendra donc que les valeurs
+spécifiques pour le point d'entrée, et peut bien sûr redéfinir des paramètres
+définis dans le fichier commun.
 
 Exemple d'un fichier @@F@defaultconfig.ini.php@@ (extrait) : 
 
@@ -100,7 +121,11 @@ jauth = 2
 
 </code>
 
-Pour les requêtes classiques, passant par @@F@index.php@@, on pourrait avoir le fichier @@F@var/config/index/config.ini.php@@. On le met ici dans un sous-répertoire index pour une meilleure organisation (il peut en effet y avoir des fichiers de configuration de plugins propres à chaque point d'entrée, ça peut donc vite devenir peu lisible dans @@F@var/config/@@).
+Pour les requêtes classiques, passant par @@F@index.php@@, on pourrait avoir le
+fichier @@F@var/config/index/config.ini.php@@. On le met ici dans un
+sous-répertoire index pour une meilleure organisation (il peut en effet y avoir
+des fichiers de configuration de plugins propres à chaque point d'entrée, ça
+peut donc vite devenir peu lisible dans @@F@var/config/@@).
 
 Dans ce fichier, on ne va redéfinir que certaines choses :
 
@@ -126,21 +151,35 @@ Pour le fichier de configuration de xmlrpc.php, on pourrait avoir par exemple :
 
 etc.
 
-Il faut savoir qu'il existe un deuxième fichier @@F@defaultconfig.ini.php@@, situé dans le répertoire @@F@lib/jelix/core/@@. Il contient une liste exhaustive de tout les paramètres possibles. Jelix le lit en premier, puis le @@F@defaultconfig.ini.php@@ de votre application, et ensuite celui du point d'entrée. Les valeurs d'un fichier écrasant celles du fichier lu précédemment.
+Il faut savoir qu'il existe un deuxième fichier @@F@defaultconfig.ini.php@@,
+situé dans le répertoire @@F@lib/jelix/core/@@. Il contient une liste exhaustive
+de tout les paramètres possibles. Jelix le lit en premier, puis le
+@@F@defaultconfig.ini.php@@ de votre application, et ensuite celui du point
+d'entrée. Les valeurs d'un fichier écrasant celles du fichier lu précédemment.
 
 
 ===== Le fichier profiles.ini.php =====
 
-Ce fichier contient tous les paramètres de connexions de certains composants de Jelix : base de données SQL, NOSQL, services web, cache etc. Dans Jelix 1.2, ces données étaient dans plusieurs fichiers (dbprofils.ini.php, cache.ini.php etc). Depuis la version 1.3, tout est rassemblé dans cet unique fichier.
+Ce fichier contient tous les paramètres de connexions de certains composants de
+Jelix : base de données SQL, NOSQL, services web, cache etc. Dans Jelix 1.2, ces
+données étaient dans plusieurs fichiers (dbprofils.ini.php, cache.ini.php etc).
+Depuis la version 1.3, tout est rassemblé dans cet unique fichier.
 
-C'est un fichier au format ini. Chaque section correspond à un profil, un profil étant les paramètres d'une connexion. Les noms des sections sont composés de deux noms séparés par ":":
+C'est un fichier au format ini. Chaque section correspond à un profil, un profil
+étant les paramètres d'une connexion. Les noms des sections sont composés de
+deux noms séparés par ":":
 
-   * Le premier nom est le nom d'un type de connexion (correspondant au composant qui l'utilise)
-   * Le deuxième est le nom du profil, choisi par vous même. Deux noms ont une signification spéciale. Le nom de profil "default" qui est le profil par défaut utilisé quand on n'indique pas de profil au composant. Et le nom "__common__".
+   * Le premier nom est le nom d'un type de connexion (correspondant au
+     composant qui l'utilise)
+   * Le deuxième est le nom du profil, choisi par vous même. Deux noms ont une
+     signification spéciale. Le nom de profil "default" qui est le profil par
+     défaut utilisé quand on n'indique pas de profil au composant. Et le nom
+     "__common__".
 
 Le contenu de la section contient les paramètres de connexions.
 
-Exemple, d'un profil de connexion pour jDb, le composant d’accès aux bases de données :
+Exemple, d'un profil de connexion pour jDb, le composant d’accès aux bases de
+données :
 
 <code ini>
 [jdb:default]
@@ -152,9 +191,13 @@ password=
 
 === Alias de profil ===
 
-Vous pouvez définir des alias de profils. C'est à dire donner plusieurs noms à un profil. C'est utile par exemple si un module utilise un nom de profil particulier. Il est alors possible d'indiquer que ce nom de profil sera rattaché à un profil existant.
+Vous pouvez définir des alias de profils. C'est à dire donner plusieurs noms à
+un profil. C'est utile par exemple si un module utilise un nom de profil
+particulier. Il est alors possible d'indiquer que ce nom de profil sera rattaché
+à un profil existant.
 
-Les alias sont définis dans une section dont le nom contient uniquement le nom du type de connexion.
+Les alias sont définis dans une section dont le nom contient uniquement le nom
+du type de connexion.
 
 Un exemple pour jDb, en définissant un alias 'jacl2_profile' :
 
@@ -173,9 +216,12 @@ Un alias ne doit pas indiquer le nom d'un autre alias.
 
 === Paramètres communs ===
 
-Il est possible de définir des paramètres qui sont communs à tout les profils d'un même type. Cela évite de les répéter dans chaque profil. Pour ce faire, il faut les déclarer dans un profil spécial, @@__common__@@.
+Il est possible de définir des paramètres qui sont communs à tout les profils
+d'un même type. Cela évite de les répéter dans chaque profil. Pour ce faire, il
+faut les déclarer dans un profil spécial, @@__common__@@.
 
-Par exemple, si toutes les connexions aux bases de données SQL (jDb) doivent être persistantes et se font toutes sur le même serveur :
+Par exemple, si toutes les connexions aux bases de données SQL (jDb) doivent
+être persistantes et se font toutes sur le même serveur :
 
 <code ini>
 [jdb:__common__]
@@ -183,13 +229,20 @@ host=my.server.example.com
 persistant=on
 </code>
 
-Vous pouvez bien sûr redéfinir ces paramètres dans les profils, pour les exceptions.
+Vous pouvez bien sûr redéfinir ces paramètres dans les profils, pour les
+exceptions.
 
 === Profil virtuel ===
 
-Vous pouvez utiliser un profil qui n'existe pas dans le fichier @@F@profiles.ini.php@@. Cela permet d'utiliser une connexion dont on ne connaît pas les caractéristiques à l'avance.
+Vous pouvez utiliser un profil qui n'existe pas dans le fichier
+@@F@profiles.ini.php@@. Cela permet d'utiliser une connexion dont on ne connaît
+pas les caractéristiques à l'avance.
 
-Pour cela, avant d'appeler les différentes méthodes du composant concerné, il vous faut déclarer ce profil "virtuel". Vous appellerez alors la méthode @@M@createVirtualProfile@@ de l'objet @@C@jProfiles@@ qui gère les profils. À cette méthode, vous donnerez le type de profil, un nom de profil, ainsi qu'un tableau de paramètres de connexion.
+Pour cela, avant d'appeler les différentes méthodes du composant concerné, il
+vous faut déclarer ce profil "virtuel". Vous appellerez alors la méthode
+@@M@createVirtualProfile@@ de l'objet @@C@jProfiles@@ qui gère les profils. À
+cette méthode, vous donnerez le type de profil, un nom de profil, ainsi qu'un
+tableau de paramètres de connexion.
 
 Exemple :
 

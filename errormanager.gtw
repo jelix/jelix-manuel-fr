@@ -1,56 +1,92 @@
 ~~LANG:EN@enman:errormanager~~
 
-Les classes du framework peuvent générer des erreurs de deux façons différentes par : 
+Les classes du framework peuvent générer des erreurs de deux façons différentes par :
+
   * un trigger_error (erreur PHP)
   * une exception
 
-Une erreur PHP est générée dans le cas d'une erreur technique due à un défaut dans la programmation. C'est alors au développeur de corriger l'erreur.
+Une erreur PHP est générée dans le cas d'une erreur technique due à un défaut
+dans la programmation. C'est alors au développeur de corriger l'erreur.
 
-Une exception est générée dans le cas d'une erreur qui peut survenir de façon imprévisible durant l'exécution d'une action. Par exemple une erreur suite à l'impossibilité de se connecter sur une base de données ou alors une erreur "fonctionnelle", "métier".
+Une exception est générée dans le cas d'une erreur qui peut survenir de façon
+imprévisible durant l'exécution d'une action. Par exemple une erreur suite à
+l'impossibilité de se connecter sur une base de données ou alors une erreur
+"fonctionnelle", "métier".
 
 
 ===== Paramétrage des gestionnaires d'erreurs =====
 
-Quelle que soit l'origine de l'erreur, celle-ci passe par un gestionnaire d'erreur (sauf les exceptions interceptées par un try/catch). Il y a un gestionnaire d'erreur attribué aux erreurs PHP et un autre attribué aux exceptions, mais ils font au final la même chose.
+Quelle que soit l'origine de l'erreur, celle-ci passe par un gestionnaire
+d'erreur (sauf les exceptions interceptées par un try/catch). Il y a un
+gestionnaire d'erreur attribué aux erreurs PHP et un autre attribué aux
+exceptions, mais ils font au final la même chose.
 
-Depuis Jelix 1.3, les gestionnaires utilisent @@C@jLog@@ pour stocker ou envoyer les messages. Par défault, toutes les erreurs et warnings sont stockés dans un fichier @@F@var/log/errors.log@@.
+Depuis Jelix 1.3, les gestionnaires utilisent @@C@jLog@@ pour stocker ou envoyer
+les messages. Par défault, toutes les erreurs et warnings sont stockés dans un
+fichier @@F@var/log/errors.log@@.
 
-Vous pouvez changer ce comportement [[deboggage|en configurant jLog]]. Vous pouvez ainsi logger les notices et autres messages PHP. Vous pouvez envoyer les erreurs dans un syslog, par mail etc.
+Vous pouvez changer ce comportement [[deboggage|en configurant jLog]]. Vous
+pouvez ainsi logger les notices et autres messages PHP. Vous pouvez envoyer les
+erreurs dans un syslog, par mail etc.
 
-Note : toutes les options dans la section @@[error_handling]@@ (sauf @@V@messageLogFormat@@ et @@V@errorMessage@@)  existantes dans Jelix 1.2 et inférieur, ne sont plus utilisées et sont dépréciées.
+Note : toutes les options dans la section @@[error_handling]@@ (sauf
+@@V@messageLogFormat@@ et @@V@errorMessage@@) existantes dans Jelix 1.2 et
+inférieur, ne sont plus utilisées et sont dépréciées.
 
 ==== Le format des messages ====
 
-Les messages d'erreurs stockés dans des fichiers, syslog, mail ou autre, contiennent le message d'erreur lui même, mais aussi les traces de la pile d'appel, et d'autres informations utiles. Vous pouvez indiquer ce que doit contenir le message exactement et de quel manière.
+Les messages d'erreurs stockés dans des fichiers, syslog, mail ou autre,
+contiennent le message d'erreur lui même, mais aussi les traces de la pile
+d'appel, et d'autres informations utiles. Vous pouvez indiquer ce que doit
+contenir le message exactement et de quel manière.
 
-L'option @@V@messageLogFormat@@ dans la section @@[error_handling]@@ de la configuration indique le formatage du message d'erreur. Le formatage supporte des mots clés spéciaux : @@L@%date%@@, @@L@%ip%@@, @@L@%typeerror%@@, @@L@%code%@@, @@L@%msg%@@, @@L@%url%@@, @@L@%file%@@, @@L@%line%@@, @@L@\t@@ et @@L@\n@@.
+L'option @@V@messageLogFormat@@ dans la section @@[error_handling]@@ de la
+configuration indique le formatage du message d'erreur. Le formatage supporte
+des mots clés spéciaux : @@L@%date%@@, @@L@%ip%@@, @@L@%typeerror%@@,
+@@L@%code%@@, @@L@%msg%@@, @@L@%url%@@, @@L@%file%@@, @@L@%line%@@, @@L@\t@@ et
+@@L@\n@@.
 
 
 ==== La page d'erreur ====
 
-Depuis Jelix 1.3, les détails des messages d'erreurs ne sont plus affichés dans le navigateur (sauf dans la debugbar si vous l'activez). Quand une erreur survient, Jelix affiche une page d'erreur générique avec le code HTTP 500.
+Depuis Jelix 1.3, les détails des messages d'erreurs ne sont plus affichés dans
+le navigateur (sauf dans la debugbar si vous l'activez). Quand une erreur
+survient, Jelix affiche une page d'erreur générique avec le code HTTP 500.
 
-Par défaut, il affiche la page @@F@lib/jelix/core/response/error.en_US.php@@. Vous pouvez fournir votre propre page d'erreur en copiant ce fichier dans @@F@yourapp/responses/@@, et en le modifiant en adaptant le design à votre goût.
+Par défaut, il affiche la page @@F@lib/jelix/core/response/error.en_US.php@@.
+Vous pouvez fournir votre propre page d'erreur en copiant ce fichier dans
+@@F@yourapp/responses/@@, et en le modifiant en adaptant le design à votre goût.
 
-Notez que @@error.en_US.php@@ est un simple script PHP. Vous pouvez donc écrire n'importe quel instruction PHP, "à l'ancienne". Cependant, ne faites pas appel aux objets Jelix, ils peuvent ne pas être présent, ou mal initialisé etc. Et ne cherchez pas à afficher le véritable message d'erreur, pour des raisons évidentes de sécurité et de convivialité. En fait, cette page doit être quasi statique. Gardez simplement les instructions @@echo@@ déjà présente.
+Notez que @@error.en_US.php@@ est un simple script PHP. Vous pouvez donc écrire
+n'importe quel instruction PHP, "à l'ancienne". Cependant, ne faites pas appel
+aux objets Jelix, ils peuvent ne pas être présent, ou mal initialisé etc. Et ne
+cherchez pas à afficher le véritable message d'erreur, pour des raisons
+évidentes de sécurité et de convivialité. En fait, cette page doit être quasi
+statique. Gardez simplement les instructions @@echo@@ déjà présente.
 
 La page d'erreur peut ne pas être utilisée dans certains cas :
 
-  *  quand l'erreur survient avant ou pendant la lecture de la configuration (quand le framework n'est pas prêt)
+  *  quand l'erreur survient avant ou pendant la lecture de la configuration
+     (quand le framework n'est pas prêt)
   *  quand le navigateur n'attend pas du HTML
 
-Dans ce cas, Jelix retourne un simple message texte, qui est configuré dans l'option @@errorMessage@@ dans la section @@[error_handling]@@ de la configuration.
+Dans ce cas, Jelix retourne un simple message texte, qui est configuré dans
+l'option @@errorMessage@@ dans la section @@[error_handling]@@ de la
+configuration.
 
 
 ===== Codes erreur =====
 
-Chaque message d'erreur est traduit dans les fichiers properties et chaque erreur devrait posséder un numéro. Ce numéro est indiqué dans les fichiers properties des messages localisés, de cette façon :
+Chaque message d'erreur est traduit dans les fichiers properties et chaque
+erreur devrait posséder un numéro. Ce numéro est indiqué dans les fichiers
+properties des messages localisés, de cette façon :
 
 <code ini>
  cle.chaine = (code_erreur)message d'erreur
 </code>
 
-Le message d'erreur au final ne contiendra pas le code erreur. Et ce dernier sera extrait.
+Le message d'erreur au final ne contiendra pas le code erreur. Et ce dernier
+sera extrait.
 
 Voici les plages de code erreurs
 
@@ -65,4 +101,5 @@ Voici les plages de code erreurs
 | 800-899 | erreurs jforms |
 | > 5000  | erreurs utilisateurs |
 
-Si vous générez des erreurs pour vos propres besoins, leurs codes doivent être supérieur à 5000.
+Si vous générez des erreurs pour vos propres besoins, leurs codes doivent être
+supérieur à 5000.

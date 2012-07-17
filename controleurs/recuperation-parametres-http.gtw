@@ -4,45 +4,67 @@
 ===== Oublier les variables $_GET, $_POST... =====
 
 
-Dans une action d'un contrôleur, une des tâches que vous ferez le plus souvent, est de récupérer les paramètres de la requête HTTP.
+Dans une action d'un contrôleur, une des tâches que vous ferez le plus souvent,
+est de récupérer les paramètres de la requête HTTP.
 
-En PHP "classique", on fait appel à @@$_GET@@, @@$_POST@@, @@$_REQUEST@@, @@$_FILES@@ etc.
+En PHP "classique", on fait appel à @@$_GET@@, @@$_POST@@, @@$_REQUEST@@,
+@@$_FILES@@ etc.
 
-À part pour l'upload des fichiers (@@$_FILES@@), **il ne faut pas utiliser ces variables**, mais passer par certaines méthodes du contrôleur.
+À part pour l'upload des fichiers (@@$_FILES@@), **il ne faut pas utiliser ces variables**,
+mais passer par certaines méthodes du contrôleur.
 
-En effet, un module étant censé être réutilisable, il ne sait donc pas où récupérer les paramètres dont il a besoin. Par exemple, au changement d'une URL, il se peut qu'un paramètre que vous trouviez dans @@$_GET@@ se trouve maintenant dans le @@PATHINFO@@ de l'URL, ou que cela soit passé en $_POST etc... Plus important, des plugins de coordinateurs, peuvent rajouter des paramètres ou modifier ceux qui sont reçu (sans modifier les tableaux originaux), comme le fait par exemple le plugin magicquotes (qui annule l'effet magicquotes).
+En effet, un module étant censé être réutilisable, il ne sait donc pas où
+récupérer les paramètres dont il a besoin. Par exemple, au changement d'une URL,
+il se peut qu'un paramètre que vous trouviez dans @@$_GET@@ se trouve maintenant
+dans le @@PATHINFO@@ de l'URL, ou que cela soit passé en $_POST etc... Plus
+important, des plugins de coordinateurs, peuvent rajouter des paramètres ou
+modifier ceux qui sont reçu (sans modifier les tableaux originaux), comme le
+fait par exemple le plugin magicquotes (qui annule l'effet magicquotes).
 
-Enfin, suivant les protocoles (SOAP, XMLRPC,..), les paramètres peuvent aussi se trouver dans le corps de la requête HTTP..
+Enfin, suivant les protocoles (SOAP, XMLRPC,..), les paramètres peuvent aussi se
+trouver dans le corps de la requête HTTP..
 
-C'est pourquoi Jelix propose un moyen, **unifié**, pour récupérer des paramètres de requêtes : il faut utiliser la méthode @@param()@@ d'un contrôleur.
+C'est pourquoi Jelix propose un moyen, **unifié**, pour récupérer des paramètres
+de requêtes : il faut utiliser la méthode @@param()@@ d'un contrôleur.
 
 
 
 ===== Récupérer les paramètres de requête =====
 
-Comme vous le savez, les paramètres de la requête http sont stockés dans un objet @@C@jRequest@@, qui lui même est stocké dans l'objet @@C@jCoordinator@@. On peut ainsi  récupérer un paramètre de cette façon :
+Comme vous le savez, les paramètres de la requête http sont stockés dans un
+objet @@C@jRequest@@, qui lui même est stocké dans l'objet @@C@jCoordinator@@.
+On peut ainsi récupérer un paramètre de cette façon :
 
 <code php>
   $id = jApp::coord()->request->getParam('id');
 </code>
 
-Mais il y a plus pratique : la méthode @@M@param()@@ disponible dans les contrôleurs, au résultat équivalent.
+Mais il y a plus pratique : la méthode @@M@param()@@ disponible dans les
+contrôleurs, au résultat équivalent.
 
 <code php>
   $id = $this->param('id');
 </code>
 
-Si il n'y a pas de paramètre de nom id, le résultat sera la valeur @@L@null@@. Vous pouvez aussi indiquer en deuxième argument une valeur qui sera prise si le paramètre indiqué n'existe pas.
+Si il n'y a pas de paramètre de nom id, le résultat sera la valeur @@L@null@@.
+Vous pouvez aussi indiquer en deuxième argument une valeur qui sera prise si le
+paramètre indiqué n'existe pas.
 
 <code php>
   $titre = $this->param('title','un titre');
 </code>
 
 
-Il y a d'autres méthodes similaires, comme @@M@intParam()@@, @@M@floatParam()@@ ou @@M@boolParam()@@, prenant les mêmes arguments, mais transformant le paramètre récupéré dans le type de donnée correspondant. Cela permet ainsi de "filtrer" les données.
+Il y a d'autres méthodes similaires, comme @@M@intParam()@@, @@M@floatParam()@@
+ou @@M@boolParam()@@, prenant les mêmes arguments, mais transformant le
+paramètre récupéré dans le type de donnée correspondant. Cela permet ainsi de
+"filtrer" les données.
 
    * @@M@intParam()@@, pour récupérer un nombre entier;
    * @@M@floatParam()@@, un décimal.
-   * @@M@boolParam()@@, vous obtiendrez @@L@true@@ si le paramètre vaut @@L@"true"@@, @@L@"1"@@, @@L@"on"@@, ou @@L@"yes"@@, et @@L@false@@ dans le cas contraire.
+   * @@M@boolParam()@@, vous obtiendrez @@L@true@@ si le paramètre vaut
+     @@L@"true"@@, @@L@"1"@@, @@L@"on"@@, ou @@L@"yes"@@, et @@L@false@@ dans le
+     cas contraire.
 
-Si vous voulez un filtrage pour d'autres types de données, utilisez la classe @@C@jFilter@@.
+Si vous voulez un filtrage pour d'autres types de données, utilisez la classe
+@@C@jFilter@@.

@@ -1,10 +1,14 @@
 ~~LANG:EN@enman:views/view-tcpdf~~
 
-Un objet @@C@jResponseTcpdf@@ permet de générer un PDF à partir de la [[http://tcpdf.sourceforge.net/|classe TCPDF]] (qui est une version améliorée de la célèbre FPDF).
+Un objet @@C@jResponseTcpdf@@ permet de générer un PDF à partir de la
+[[http://tcpdf.sourceforge.net/|classe TCPDF]] (qui est une version améliorée de
+la célèbre FPDF).
 
 ===== Téléchargement et installation =====
 
-Pour l'utiliser, vous devez d'abord télécharger les fontes disponibles sur le site de Jelix (Elles ne sont pas fournies avec Jelix à cause de leur poids), et les installer dans @@F@lib/pdf-fonts/@@.
+Pour l'utiliser, vous devez d'abord télécharger les fontes disponibles sur le
+site de Jelix (Elles ne sont pas fournies avec Jelix à cause de leur poids), et
+les installer dans @@F@lib/pdf-fonts/@@.
 
 ===== Utilisation dans une action =====
 
@@ -23,9 +27,12 @@ Pour l'utiliser, vous devez d'abord télécharger les fontes disponibles sur le 
   return $rep;
 </code>
 
-L'objet dans la propriété @@P@tcpdf@@ est tout simplement un objet @@C@TCPDF@@ ou qui hérite de @@C@TCPDF@@. Voir la documentation de TCPDF pour savoir l'utiliser et connaître son API.
+L'objet dans la propriété @@P@tcpdf@@ est tout simplement un objet @@C@TCPDF@@
+ou qui hérite de @@C@TCPDF@@. Voir la documentation de TCPDF pour savoir
+l'utiliser et connaître son API.
 
-Pour utiliser son propre objet tcpdf, parce que l'on veut redéfinir par exemple certaines méthodes de TCPDF :
+Pour utiliser son propre objet tcpdf, parce que l'on veut redéfinir par exemple
+certaines méthodes de TCPDF :
 
 <code php>
   $rep = $this->getResponse('tcpdf');

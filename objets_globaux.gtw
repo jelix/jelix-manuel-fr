@@ -1,13 +1,17 @@
 ~~LANG:EN@enman:global-objects~~
 
-Dans les versions précedentes de jelix (<= 1.3), il existait des variables globales contenant des objets essentiels de Jelix.
 
+Dans les versions précedentes de jelix (<= 1.3), il existait des variables
+globales contenant des objets essentiels de Jelix.
 
 ===== $gJConfig =====
 
-L'objet $gJConfig permettait d'accéder à la configuration de l'application Jelix. Il faut maintenant utiliser @@jApp::config()@@ pour y accéder.
+L'objet $gJConfig permettait d'accéder à la configuration de l'application
+Jelix. Il faut maintenant utiliser @@jApp::config()@@ pour y accéder.
 
 ===== $gJCoord =====
 
-L'objet $gJCoord contenait une instance de la classe @@C@jCoordinator@@, et permettait alors d'accéder aux paramètres de la requête entre autres. Il faut maintenant utiliser @@jApp::coord()@@ pour y accéder.
+L'objet $gJCoord contenait une instance de la classe @@C@jCoordinator@@, et
+permettait alors d'accéder aux paramètres de la requête entre autres. Il faut
+maintenant utiliser @@jApp::coord()@@ pour y accéder.
 

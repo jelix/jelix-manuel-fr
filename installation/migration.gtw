@@ -1,15 +1,20 @@
 ~~LANG:EN@enman:installation/migrate~~
 
-Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins ces étapes à faire :
+Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins
+ces étapes à faire :
 
-  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet jelix.
-  * Ne pas oublier de remettre dans le nouveau répertoire @@F@lib/@@ vos éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
-  * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@ 
-  * adapter votre code en suivant les instructions indiquées pour chaque ancienne version de Jelix. Voir ci-dessous.
+  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
+    jelix.
+  * Ne pas oublier de remettre dans le nouveau répertoire @@F@lib/@@ vos
+    éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
+  * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@
+  * adapter votre code en suivant les instructions indiquées pour chaque
+    ancienne version de Jelix. Voir ci-dessous.
 
 ===== Mettre à jour depuis Jelix 1.3 et inférieur =====
 
-Suivez les indications de migration de chaque version intermédiaire (voir les manuels correspondant), avant de mettre à jour pour jelix 1.4.
+Suivez les indications de migration de chaque version intermédiaire (voir les
+manuels correspondant), avant de mettre à jour pour jelix 1.4.
 
 ===== Mettre à jour depuis Jelix 1.4 =====
 
@@ -22,7 +27,6 @@ Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers d
 ==== Répertoires temporaires ====
 
 Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votreapp/@@.
-
 
 ==== Suppression de fichiers ====
 
@@ -43,16 +47,16 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
 </code>
 
 
-
 Nouvelles API que vous pouvez utiliser (non exhaustives) :
    * TODO
 
 API que vous ne pouvez plus utiliser :
    * TODO
 
-
 ==== Mise à jour de Jelix ====
 
-Après toutes les modifications effectuées, vous devez lancer le script installer.php de votre application. Le module jelix fera le reste des modifications, en particulier :
+Après toutes les modifications effectuées, vous devez lancer le script
+installer.php de votre application. Le module jelix fera le reste des
+modifications, en particulier :
 
   * Rien pour le moment

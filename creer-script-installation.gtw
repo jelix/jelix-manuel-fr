@@ -1,37 +1,62 @@
 ~~LANG:EN@enman:create-install-scripts~~
 
-Depuis sa version 1.2, Jelix fournit un système d'installation automatique qui permet d'exécuter des scripts lorsque vous installez un module dans une application ou à l'installation de l'application complète.
+Depuis sa version 1.2, Jelix fournit un système d'installation automatique qui
+permet d'exécuter des scripts lorsque vous installez un module dans une
+application ou à l'installation de l'application complète.
 
 ===== Comment un module est installé =====
 
-Quand vous installez un module via la commande @@installmodule@@ ou @@installapp@@ :
+Quand vous installez un module via la commande @@installmodule@@ ou
+@@installapp@@ :
 
-   * jelix regarde la section @@modules@@ située dans la configuration de chaque point d'entrée, et cherche la valeur d'accès du module
-   * Il lancera l'installation du module **pour chaque point d'entrée** si la valeur d'accès du module est supérieur à 0
-   * Il regardera alors le fichier @@F@var/config/installer.ini.php@@ et vérifiera si le module est déjà installé
-   * S'il est déjà installé, il exécutera tous les scripts de mises à jour fournit par le module dont la version est comprise entre celle du module déjà installé et celle de la nouvelle version du module 
-   * S'il n'est pas déjà installé, il exécutera le script d'installation fournit par le module
-   * Après l'installation ou la mise à jour, Jelix enregistre le nouveau numéro de version du module dans le fichier @@F@installer.ini.php@@.
+   * jelix regarde la section @@modules@@ située dans la configuration de chaque
+     point d'entrée, et cherche la valeur d'accès du module
+   * Il lancera l'installation du module **pour chaque point d'entrée** si la
+     valeur d'accès du module est supérieur à 0
+   * Il regardera alors le fichier @@F@var/config/installer.ini.php@@ et
+     vérifiera si le module est déjà installé
+   * S'il est déjà installé, il exécutera tous les scripts de mises à jour
+     fournit par le module dont la version est comprise entre celle du module
+     déjà installé et celle de la nouvelle version du module
+   * S'il n'est pas déjà installé, il exécutera le script d'installation fournit
+     par le module
+   * Après l'installation ou la mise à jour, Jelix enregistre le nouveau numéro
+     de version du module dans le fichier @@F@installer.ini.php@@.
 
-Bien entendu, les scripts d'installation ou de mise à jour ne sont pas indispensables.
+Bien entendu, les scripts d'installation ou de mise à jour ne sont pas
+indispensables.
 
-Mais si vous en fournissez, **il est très important d'indiquer dans le fichier @@F@module.xml@@, le bon numéro de version et la date de la version** !
+Mais si vous en fournissez, **il est très important d'indiquer dans le fichier**
+@@F@module.xml@@, **le bon numéro de version et la date de la version** !
 
 == Pourquoi un script d'installation est appelé plusieurs fois ? ==
 
-Votre installation a probablement besoin d'effectuer certaines modifications sur des points d'entrée bien particuliers. Mais le système d'installation ne peut savoir si votre script le fera et le script d'installation ne peut savoir par avance ni le nombre ni le nom des points d'entrée que votre application possède (souvenez-vous que vos modules peuvent être réutilisés dans d'autres applications).
+Votre installation a probablement besoin d'effectuer certaines modifications sur
+des points d'entrée bien particuliers. Mais le système d'installation ne peut
+savoir si votre script le fera et le script d'installation ne peut savoir par
+avance ni le nombre ni le nom des points d'entrée que votre application possède
+(souvenez-vous que vos modules peuvent être réutilisés dans d'autres
+applications).
 
 C'est pourquoi le script d'installation est exécuté **pour chaque point d'entrée**.
 
-Cependant, vous ne voulez certainement pas exécuter les mêmes choses pour chaque point d'entrée ou pour les mêmes profils de base de données. Heureusement, il y a des méthodes simples pour exécuter certaines choses sans connaitre le nombre de points d'entrée ou de profils de configuration. 
+Cependant, vous ne voulez certainement pas exécuter les mêmes choses pour chaque
+point d'entrée ou pour les mêmes profils de base de données. Heureusement, il y
+a des méthodes simples pour exécuter certaines choses sans connaitre le nombre
+de points d'entrée ou de profils de configuration.
 
 ===== Un script d'installation =====
 
-C'est un script, @@F@install.php@@, que vous placez dans le dossier @@F@install/@@ de votre module.
+C'est un script, @@F@install.php@@, que vous placez dans le dossier
+@@F@install/@@ de votre module.
 
-Il devrait contenir une classe, héritant de @@C@jInstallerModule@@, et nommée @@C@{module}ModuleInstaller@@, où @@{module}@@ est le nom de votre module. Ex: @@C@mainModuleInstaller@@ pour le module @@main@@.
+Il devrait contenir une classe, héritant de @@C@jInstallerModule@@, et nommée
+@@C@{module}ModuleInstaller@@, où @@{module}@@ est le nom de votre module. Ex:
+@@C@mainModuleInstaller@@ pour le module @@main@@.
 
-Dans cette classe, vous devez créer une méthode @@M@install@@ dans laquelle vous ferez toutes les choses nécessaires à l'installation du module : modifications de la base de données, copies de fichiers, changements de configuration etc..
+Dans cette classe, vous devez créer une méthode @@M@install@@ dans laquelle vous
+ferez toutes les choses nécessaires à l'installation du module : modifications
+de la base de données, copies de fichiers, changements de configuration etc..
 
 
 <code php>
@@ -48,9 +73,13 @@ class newsModuleInstaller extends jInstallerModule {
 
 </code>
 
-@@C@jInstallerModule@@ contient un certain nombre de propriétés et de méthodes qui vous aideront à accéder à la base de données, aux fichiers de configuration etc..
+@@C@jInstallerModule@@ contient un certain nombre de propriétés et de méthodes
+qui vous aideront à accéder à la base de données, aux fichiers de configuration
+etc..
 
-Vous pouvez surcharger les fonctions @@M@preInstall@@ et @@M@postInstall@@ qui sont exécutées respectivement avant et après que tout les modules sont installés. Cela vous permet de préparer par exemple certains fichiers.
+Vous pouvez surcharger les fonctions @@M@preInstall@@ et @@M@postInstall@@ qui
+sont exécutées respectivement avant et après que tout les modules sont
+installés. Cela vous permet de préparer par exemple certains fichiers.
 
 
 <code php>
@@ -76,45 +105,93 @@ class newsModuleInstaller extends jInstallerModule {
 Voici quelques propriétés ou méthodes que vous pouvez utiliser :
 
 
-  * @@$this->dbConnection()@@: retourne un objet @@C@jDbConnection@@. Ne pas appeler @@jDb::getConnection()@@, car vous ne savez pas vraiment quel est le profil par défaut.
-  * @@$this->execSQLScript()@@: exécute un script SQL stocké dans le répertoire @@F@install/@@ (ou dans un des ses sous-répertoires). Indiquer simplement un nom, et il chargera le script nommé @@F@{name}.{dbtype}.sql@@. Par exemple, si on appelle @@$this->execSQLScript('sql/install')@@ et si la base de données du profil par défaut est mysql, le fichier @@F@sql/install.mysql.sql@@ sera chargé. Il est possible d'indiquer le nom complet du script, mais cela doit être compatible avec toutes les bases de données supportées par votre application.
-  * @@$this->copyDirectoryContent()@@ pour copier des fichiers, du répertoire install vers un autre endroit, typiquement vers le répertoire @@F@www/@@ de l'application.
-  * @@$this->config@@: l'objet @@C@jIniMultifilesModifier@@ correspond au fichier de configuration du point d'entrée courant. Avec cet objet, vous pouvez récupérer le contenu du fichier de configuration et/ou le modifier.
+  * @@$this->dbConnection()@@: retourne un objet @@C@jDbConnection@@. Ne pas
+    appeler @@jDb::getConnection()@@, car vous ne savez pas vraiment quel est le
+    profil par défaut.
+  * @@$this->execSQLScript()@@: exécute un script SQL stocké dans le répertoire
+    @@F@install/@@ (ou dans un des ses sous-répertoires). Indiquer simplement un
+    nom, et il chargera le script nommé @@F@{name}.{dbtype}.sql@@. Par exemple,
+    si on appelle @@$this->execSQLScript('sql/install')@@ et si la base de
+    données du profil par défaut est mysql, le fichier
+    @@F@sql/install.mysql.sql@@ sera chargé. Il est possible d'indiquer le nom
+    complet du script, mais cela doit être compatible avec toutes les bases de
+    données supportées par votre application.
+  * @@$this->copyDirectoryContent()@@ pour copier des fichiers, du répertoire
+    install vers un autre endroit, typiquement vers le répertoire @@F@www/@@ de
+    l'application.
+  * @@$this->config@@: l'objet @@C@jIniMultifilesModifier@@ correspond au
+    fichier de configuration du point d'entrée courant. Avec cet objet, vous
+    pouvez récupérer le contenu du fichier de configuration et/ou le modifier.
 
-N'hésitez pas à lire l'API de référence de @@C@jInstallerModule@@ et de @@C@jInstallerBase@@, et de regarder le script d'installation des modules fournis par Jelix. Vous apprendrez certainement beaucoup de choses.
+N'hésitez pas à lire l'API de référence de @@C@jInstallerModule@@ et de
+@@C@jInstallerBase@@, et de regarder le script d'installation des modules
+fournis par Jelix. Vous apprendrez certainement beaucoup de choses.
 
 
 ==== Pour ne pas exécuter une partie de votre script ====
 
-Vous remarquerez que dans l'exemple, on appelle la méthode @@M@firstDbExec@@. Celle-ci vous dit si c'est la première fois que vous essayez d'accéder à la base données, pour le profil de base de données courant (certains points d'entrées peuvent partager le même profil). Souvenez-vous que votre script d'installation est appelé pour chaque point d'entrée (voir plus haut).
+Vous remarquerez que dans l'exemple, on appelle la méthode @@M@firstDbExec@@.
+Celle-ci vous dit si c'est la première fois que vous essayez d'accéder à la base
+données, pour le profil de base de données courant (certains points d'entrées
+peuvent partager le même profil). Souvenez-vous que votre script d'installation
+est appelé pour chaque point d'entrée (voir plus haut).
 
-Vous avez aussi la méthode @@M@firstConfExec@@ pour savoir si il y a déjà des changements dans le fichier de configuration courant (certains points d'entrée peuvent partager le même fichier de configuration, autre que @@defaultconfig.ini.php@@). Si elle retourne vrai, vous avez alors accès au fichier de configuration en récupérant la propriété @@P@config@@ , qui est un objet @@C@jIniMultifilesModifier@@.
+Vous avez aussi la méthode @@M@firstConfExec@@ pour savoir si il y a déjà des
+changements dans le fichier de configuration courant (certains points d'entrée
+peuvent partager le même fichier de configuration, autre que
+@@defaultconfig.ini.php@@). Si elle retourne vrai, vous avez alors accès au
+fichier de configuration en récupérant la propriété @@P@config@@ , qui est un
+objet @@C@jIniMultifilesModifier@@.
 
-Vous avez alors la méthode @@M@firstExec@@. Vous passez un mot-clé à cette méthode. Et elle vous dit si vous avez déjà appelé cette méthode avec ce mot clé (false) ou pas (true). Vous pouvez appeler cette méthode pour déterminer vous-même si, dans certaines conditions, vous voulez exécuter plusieurs fois certaines parties de votre script d'installation.
+Vous avez alors la méthode @@M@firstExec@@. Vous passez un mot-clé à cette
+méthode. Et elle vous dit si vous avez déjà appelé cette méthode avec ce mot clé
+(false) ou pas (true). Vous pouvez appeler cette méthode pour déterminer
+vous-même si, dans certaines conditions, vous voulez exécuter plusieurs fois
+certaines parties de votre script d'installation.
 
 ==== Profil d'accès à la base de donnée pour l'installation ====
 
-Si votre script d'installation du module interagit avec une base de donnée (création d'une table, modifications d'enregistrements etc), vous devez utilisez la méthode @@M@dbConnection()@@ ou @@M@execSQLScript()@@. Ces méthodes utilisent le profil "default" pour se connecter. Un profil alternatif peut être indiqué en divers endroits (listés ici par ordre de priorité, le premier étant le plus prioritaire) :
+Si votre script d'installation du module interagit avec une base de donnée
+(création d'une table, modifications d'enregistrements etc), vous devez utilisez
+la méthode @@M@dbConnection()@@ ou @@M@execSQLScript()@@. Ces méthodes utilisent
+le profil "default" pour se connecter. Un profil alternatif peut être indiqué en
+divers endroits (listés ici par ordre de priorité, le premier étant le plus
+prioritaire) :
 
-    * Dans votre classe d'installation, vous appelez la méthode @@M@useDbProfile@@, en lui donnant le nom du profil à utiliser.
-    * Dans la propriété @@P@defaultDbProfile@@ de votre classe d'installation, vous pouvez indiquer le profil à utiliser pour l'installation du module
+    * Dans votre classe d'installation, vous appelez la méthode
+      @@M@useDbProfile@@, en lui donnant le nom du profil à utiliser.
+    * Dans la propriété @@P@defaultDbProfile@@ de votre classe d'installation,
+      vous pouvez indiquer le profil à utiliser pour l'installation du module
 
 
 ==== Paramètres pour une installation ====
 
-Il est possible que vous vouliez lancer l'installation avec des paramètres fournis par l'utilisateur du module.
+Il est possible que vous vouliez lancer l'installation avec des paramètres
+fournis par l'utilisateur du module.
 
-Les paramètres d'un script d'installation peuvent être de simples booléens, ou des valeurs. Pour indiquer des paramètres, l'utilisateur doit définir une option dans la section @@modules@@ du fichier de configuration de l'application. Le nom de cette option est @@{module}.installparam@@. Par exemple, pour un module @@news@@, ce sera @@news.installparam@@.
+Les paramètres d'un script d'installation peuvent être de simples booléens, ou
+des valeurs. Pour indiquer des paramètres, l'utilisateur doit définir une option
+dans la section @@modules@@ du fichier de configuration de l'application. Le nom
+de cette option est @@{module}.installparam@@. Par exemple, pour un module
+@@news@@, ce sera @@news.installparam@@.
 
-Dans ces options, il est possible d'indiquer de simples noms (ce seront des booléens), ou des noms avec des valeurs.
+Dans ces options, il est possible d'indiquer de simples noms (ce seront des
+booléens), ou des noms avec des valeurs.
 
 <code ini>
 news.installparam = "enablecategories,defaultcategory=In the world"
 </code>
 
-Ici, les paramètres seront un booléen nommé "enablecategories", et un paramètre nommé "defaultcategory" avec la valeur "In the world". Il est possible d'imaginer ici que le script d'installation du module "news" a la possibilité d'activer la gestion de catégories, et nous indiquerions la catégorie par défaut à créer.
+Ici, les paramètres seront un booléen nommé "enablecategories", et un paramètre
+nommé "defaultcategory" avec la valeur "In the world". Il est possible
+d'imaginer ici que le script d'installation du module "news" a la possibilité
+d'activer la gestion de catégories, et nous indiquerions la catégorie par défaut
+à créer.
 
-Pour lire les paramètres depuis le script d'installation, vous avez la méthode @@M@getParameter@@. Indiquez le nom du paramètre, et elle retournera sa valeur (true pour un booléen). Si le paramètre n'existe pas dans l'option installparam , elle retourne @@null@@. Exemple :
+Pour lire les paramètres depuis le script d'installation, vous avez la méthode
+@@M@getParameter@@. Indiquez le nom du paramètre, et elle retournera sa valeur
+(true pour un booléen). Si le paramètre n'existe pas dans l'option installparam
+, elle retourne @@null@@. Exemple :
 
 <code php>
   function install() {
@@ -134,9 +211,20 @@ Pour lire les paramètres depuis le script d'installation, vous avez la méthode
 
 ===== Scripts de mise à jour d'un module =====
 
-Ces scripts ont des noms de fichiers spécifiques. Depuis Jelix 1.2.6 et 1.3RC3, ils doivent avoir pour nom  @@F@upgrade_{label}.php@@  où @@{label}@@ doit être remplacé par un nom qui sera une partie du nom de la classe. Jusqu'à Jelix 1.2.5, les noms des fichiers devaient être @@F@upgrade_to_{version}_{label}.php@@, où @@{version}@@ était un numéro de version. Ces noms restent compatibles avec les versions 1.2.6/1.3RC3 et suivantes, mais ils sont obsolètes.
+Ces scripts ont des noms de fichiers spécifiques. Depuis Jelix 1.2.6 et 1.3RC3,
+ils doivent avoir pour nom @@F@upgrade_{label}.php@@ où @@{label}@@ doit être
+remplacé par un nom qui sera une partie du nom de la classe. Jusqu'à Jelix
+1.2.5, les noms des fichiers devaient être
+@@F@upgrade_to_{version}_{label}.php@@, où @@{version}@@ était un numéro de
+version. Ces noms restent compatibles avec les versions 1.2.6/1.3RC3 et
+suivantes, mais ils sont obsolètes.
 
-Ces scripts doivent être stockés dans le répertoire @@F@install/@@ du module. Il seront exécutés en ordre ascendant de version indiquée dans la classe d'installation (Jelix 1.2.6 ou plus) ou dans le nom de fichier (Jelix 1.2.5 et inférieur). Et seuls ceux dont la version est plus grande que la version actuelle installée du module, et plus petite ou égale à la nouvelle version du module, seront exécutés. Imaginez que vous ayez ces scripts :
+Ces scripts doivent être stockés dans le répertoire @@F@install/@@ du module. Il
+seront exécutés en ordre ascendant de version indiquée dans la classe
+d'installation (Jelix 1.2.6 ou plus) ou dans le nom de fichier (Jelix 1.2.5 et
+inférieur). Et seuls ceux dont la version est plus grande que la version
+actuelle installée du module, et plus petite ou égale à la nouvelle version du
+module, seront exécutés. Imaginez que vous ayez ces scripts :
 
     * @@F@upgrade_to_1.0_aaa.php@@
     * @@F@upgrade_to_1.1pre.1234_bbb.php@@
@@ -147,19 +235,34 @@ Ces scripts doivent être stockés dans le répertoire @@F@install/@@ du module.
     * @@F@upgrade_to_1.3_ggg.php@@
 
 
-Si la version courant du module est 1.1 et que la nouvelle version du module (indiquée par le nouveau fichier @@F@module.xml@@) est 1.2, alors seuls les scripts suivants seront lancés, dans cet ordre:
+Si la version courant du module est 1.1 et que la nouvelle version du module
+(indiquée par le nouveau fichier @@F@module.xml@@) est 1.2, alors seuls les
+scripts suivants seront lancés, dans cet ordre:
 
     * @@F@upgrade_to_1.2a1_eee.php@@
     * @@F@upgrade_fff.php@@
 
 
-Un script de mise à jour contient un classe, appelée @@{module}ModuleUpgrader_{label}@@, où @@{module}@@ doit être le nom du module, et @@{label}@@, le label indiqué dans le nom de fichier du script.
+Un script de mise à jour contient un classe, appelée
+@@{module}ModuleUpgrader_{label}@@, où @@{module}@@ doit être le nom du module,
+et @@{label}@@, le label indiqué dans le nom de fichier du script.
 
-Puisque plusieurs scripts de mise à jour peuvent être exécutés pour le module, alors le nom de classe doit être différent (sinon PHP ne va pas aimer ça). C'est pourquoi nous utilisons un label, qui **doit être différent pour chaque script du module**. (Les développeurs Jelix pourraient utiliser le numéro de version au lieu d'un label, mais malheureusement, PHP n'aime pas les caractères comme "." ou "-" dans un nom de classe).
+Puisque plusieurs scripts de mise à jour peuvent être exécutés pour le module,
+alors le nom de classe doit être différent (sinon PHP ne va pas aimer ça). C'est
+pourquoi nous utilisons un label, qui **doit être différent pour chaque script
+du module**. (Les développeurs Jelix pourraient utiliser le numéro de version au
+lieu d'un label, mais malheureusement, PHP n'aime pas les caractères comme "."
+ou "-" dans un nom de classe).
 
-La classe devra hériter de @@M@jInstallerModule@@, pour que vous puissiez avoir exactement les mêmes comportements et méthodes que le script d'installation. Vous devez donc implémenter la méthode  @@M@install@@, vous pouvez appeler @@M@firstDbExec@@, @@M@getParameter@@ etc..
+La classe devra hériter de @@M@jInstallerModule@@, pour que vous puissiez avoir
+exactement les mêmes comportements et méthodes que le script d'installation.
+Vous devez donc implémenter la méthode @@M@install@@, vous pouvez appeler
+@@M@firstDbExec@@, @@M@getParameter@@ etc..
 
-Pour les scripts de mise à jour sans numéro de version dans le nom de fichier (jelix 1.2.6/1.3RC3 et supérieur), vous devez indiquer le numéro de version dans la propriété @@P@$targetVersions@@ (qui est un tableau), et une date au format 'yyyy-mm-dd' ou 'yyyy-mm-dd HH:ii' dans la propriété @@P@$date@@.
+Pour les scripts de mise à jour sans numéro de version dans le nom de fichier
+(jelix 1.2.6/1.3RC3 et supérieur), vous devez indiquer le numéro de version dans
+la propriété @@P@$targetVersions@@ (qui est un tableau), et une date au format
+'yyyy-mm-dd' ou 'yyyy-mm-dd HH:ii' dans la propriété @@P@$date@@.
 
 
 <code php>
@@ -176,4 +279,16 @@ class newsModuleUpgrader_fff extends jInstallerModule {
 } 
 </code>
 
-Vous devinerez que vous pouvez indiquer plusieurs versions dans @@P@$targetVersions@@. Cela est utile quand vous avez plusieurs branches d'un projet, et qu'un script de mise à jour, faisant la même chose, est nécessaire dans chaque branche. Avec la date de la version, Jelix peut déterminer si, lors d'une mise à jour, quel que soit la branche, il peut exécuter le script ou non. Exemple : vous avez un script de mise à jour pour la version 1.2.4 et 1.3.5. Si l'utilisateur met à jour depuis la version 1.2.3, ou depuis la version 1.3.4, le script sera appelé. Par contre si il met à jour depuis une version 1.2.5 vers une version 1.3.6, le script ne sera pas exécuté, puisque la version 1.2.6 était censé déjà inclure la modification apportée par la 1.2.4. Et il le sait en comparant la date des versions que l'utilisateur a installé à l'origine, celle des versions qu'il utilise actuellement, et celle des versions qu'il va installer.
+Vous devinerez que vous pouvez indiquer plusieurs versions dans
+@@P@$targetVersions@@. Cela est utile quand vous avez plusieurs branches d'un
+projet, et qu'un script de mise à jour, faisant la même chose, est nécessaire
+dans chaque branche. Avec la date de la version, Jelix peut déterminer si, lors
+d'une mise à jour, quel que soit la branche, il peut exécuter le script ou non.
+Exemple : vous avez un script de mise à jour pour la version 1.2.4 et 1.3.5. Si
+l'utilisateur met à jour depuis la version 1.2.3, ou depuis la version 1.3.4, le
+script sera appelé. Par contre si il met à jour depuis une version 1.2.5 vers
+une version 1.3.6, le script ne sera pas exécuté, puisque la version 1.2.6 était
+censé déjà inclure la modification apportée par la 1.2.4. Et il le sait en
+comparant la date des versions que l'utilisateur a installé à l'origine, celle
+des versions qu'il utilise actuellement, et celle des versions qu'il va
+installer.

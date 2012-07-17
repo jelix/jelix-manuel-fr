@@ -1,14 +1,24 @@
 ~~LANG:EN@enman:jforms/xml~~
 
 
-jForms se base sur des fichiers descriptifs en XML. Tout formulaire est décrit en XML, avec une grammaire assez simple, à mi-chemin entre HTML et XForms.
+jForms se base sur des fichiers descriptifs en XML. Tout formulaire est décrit
+en XML, avec une grammaire assez simple, à mi-chemin entre HTML et XForms.
 
-Ces fichiers XML sont à placer dans un répertoire //forms// des modules et doivent avoir comme nom //foo.form.xml//, où //foo// est le nom identifiant du formulaire (que vous choisissez bien sûr). Cet identifiant est utilisé ensuite dans les sélecteurs.
+Ces fichiers XML sont à placer dans un répertoire //forms// des modules et
+doivent avoir comme nom //foo.form.xml//, où //foo// est le nom identifiant du
+formulaire (que vous choisissez bien sûr). Cet identifiant est utilisé ensuite
+dans les sélecteurs.
 
-Par exemple "monModule~produit" fait référence au formulaire monModule/forms/produit.form.xml.
+Par exemple "monModule~produit" fait référence au formulaire
+monModule/forms/produit.form.xml.
 
-Le format XML de jforms évolue au gré des versions de Jelix et il existe donc plusieurs versions de ce format. Cependant une vieille version du format XML reste utilisable dans une version récente de Jelix, **sans modification** dudit fichier quand on migre d'une version de Jelix à une autre. 
+Le format XML de jforms évolue au gré des versions de Jelix et il existe donc
+plusieurs versions de ce format. Cependant une vieille version du format XML
+reste utilisable dans une version récente de Jelix, **sans modification** dudit
+fichier quand on migre d'une version de Jelix à une autre.
 
-Chaque version du format a un espace de nom (namespace) spécifique, permettant de les différencier. Faites donc bien attention à bien indiquer le bon namespace dans le fichier XML.
+Chaque version du format a un espace de nom (namespace) spécifique, permettant
+de les différencier. Faites donc bien attention à bien indiquer le bon namespace
+dans le fichier XML.
 
 Il est conseillé d'utiliser la version 1.1 du format, car plus riche.

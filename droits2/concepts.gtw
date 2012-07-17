@@ -1,11 +1,14 @@
 ~~LANG:EN@enman:rights2/concepts~~
 
-jAcl2 propose un système qui répond à la plupart des besoins en matière de gestion de droits. Il comporte divers éléments qui ensemble définissent des droits.
+jAcl2 propose un système qui répond à la plupart des besoins en matière de
+gestion de droits. Il comporte divers éléments qui ensemble définissent des
+droits.
 
 
 ===== Éléments composant un droit =====
 
-Il faut distinguer les différents éléments qui entrent en jeu dans le système de droits :
+Il faut distinguer les différents éléments qui entrent en jeu dans le système de
+droits :
 
   * un sujet 
   * un utilisateur
@@ -15,9 +18,12 @@ une combinaison de chacun de ces types d'éléments représente un droit.
 
 ==== Sujet ====
 
-C'est un libellé représentant un droit. Par exemple, "**cms.articles.create**" pourrait être le droit de rédaction d'un article d'un CMS.
+C'est un libellé représentant un droit. Par exemple, "**cms.articles.create**"
+pourrait être le droit de rédaction d'un article d'un CMS.
 
-Par convention, afin d'éviter les collisions entre différents modules, le nom du sujet devrait commencer par le nom du module puis le nom du controleur et enfin la valeur de droit. Mais ce n'est pas une obligation.
+Par convention, afin d'éviter les collisions entre différents modules, le nom du
+sujet devrait commencer par le nom du module puis le nom du controleur et enfin
+la valeur de droit. Mais ce n'est pas une obligation.
 
 Exemple :
 cms.articles.read
@@ -27,13 +33,23 @@ cms.articles.delete
 
 ==== Utilisateur ====
 
-Un droit s'exerce toujours sur un ou plusieurs utilisateurs. Mais cette notion est transparente du point de vue de l'API de la classe jAcl2. C'est le driver qui s'occupe de "reconnaître" l'utilisateur en cours (au moyen de jAuth en principe). Il se peut même que le driver repose sur un système où les utilisateurs sont dans des groupes auxquels les droits s'appliquent (comme c'est le cas de jAcl2.db). Mais vous n'avez pas à vous en préoccuper lors de l'utilisation de jAcl2.
+Un droit s'exerce toujours sur un ou plusieurs utilisateurs. Mais cette notion
+est transparente du point de vue de l'API de la classe jAcl2. C'est le driver
+qui s'occupe de "reconnaître" l'utilisateur en cours (au moyen de jAuth en
+principe). Il se peut même que le driver repose sur un système où les
+utilisateurs sont dans des groupes auxquels les droits s'appliquent (comme c'est
+le cas de jAcl2.db). Mais vous n'avez pas à vous en préoccuper lors de
+l'utilisation de jAcl2.
 
 ==== Ressource ====
 
-Dans la plupart des cas, l'association //sujet + utilisateur// suffit. Mais parfois on veut pouvoir avoir une granularité plus fine.
+Dans la plupart des cas, l'association //sujet + utilisateur// suffit. Mais
+parfois on veut pouvoir avoir une granularité plus fine.
 
-Par exemple, dans un système CMS, on veut pouvoir donner le droit de modification à un utilisateur sur ses propres articles, mais pas sur ceux des autres. Il faut alors rajouter dans cette association l'identifiant de l'article.
+Par exemple, dans un système CMS, on veut pouvoir donner le droit de
+modification à un utilisateur sur ses propres articles, mais pas sur ceux des
+autres. Il faut alors rajouter dans cette association l'identifiant de
+l'article.
 
 Par exemple, on donnera les valeurs de droits suivants
 
@@ -45,9 +61,13 @@ Par exemple, on donnera les valeurs de droits suivants
 
 ===== Principes de fonctionnement =====
 
-Le cœur de jAcl2 contient donc des relations entre deux ou trois types  d'éléments. 
+Le cœur de jAcl2 contient donc des relations entre deux ou trois types
+d'éléments.
 
-La mémorisation d'une relation entre un sujet, un utilisateur (plus éventuellement une ressource), définit un droit. Quand une relation n'existe pas entre un sujet donné et un utilisateur donné, alors cela signifie qu'il n'y a pas de droit défini sur ce couple.
+La mémorisation d'une relation entre un sujet, un utilisateur (plus
+éventuellement une ressource), définit un droit. Quand une relation n'existe pas
+entre un sujet donné et un utilisateur donné, alors cela signifie qu'il n'y a
+pas de droit défini sur ce couple.
 
 Par exemple, si on définit juste ces droits suivants dans le système :
 
@@ -55,7 +75,14 @@ Par exemple, si on définit juste ces droits suivants dans le système :
    * "cms.articles.create" pour l'utilisateur "laurent"
    * "cms.articles.update" pour l'utilisateur "laurent"
 
-L'utilisateur //laurent// aura donc les droits de lecture, création et de modifications sur des articles du CMS, mais pas le droit d'effacer ("cms.articles.delete") puisque la relation n'existe pas.
+L'utilisateur //laurent// aura donc les droits de lecture, création et de
+modifications sur des articles du CMS, mais pas le droit d'effacer
+("cms.articles.delete") puisque la relation n'existe pas.
 
-Un module CMS qui repose sur ces droits devra, pour savoir ce que peut faire un utilisateur, interroger jAcl2, en lui demandant si par exemple l'utilisateur courant a le droit "cms.articles.update". Si oui, alors le module pourra afficher un bouton "modifier" dans l'interface d'administration, et ne l'affichera pas sinon. (Le module devra également faire cette vérification lors de la sauvegarde d'un article, pour éviter les "fraudes" ;-) ).
+Un module CMS qui repose sur ces droits devra, pour savoir ce que peut faire un
+utilisateur, interroger jAcl2, en lui demandant si par exemple l'utilisateur
+courant a le droit "cms.articles.update". Si oui, alors le module pourra
+afficher un bouton "modifier" dans l'interface d'administration, et ne
+l'affichera pas sinon. (Le module devra également faire cette vérification lors
+de la sauvegarde d'un article, pour éviter les "fraudes" ;-) ).
 

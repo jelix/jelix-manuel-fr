@@ -1,26 +1,43 @@
 ~~LANG:EN@enman:classic-forms~~
 
 
-Créer et gérer des formulaires "à la main" (par opposition aux automatismes offerts par le système de formulaire [[jforms|jForms]]), n'est pas très différent par rapport à ce que l'on fait dans une application PHP classique. Quelques petites choses sont cependant à savoir pour profiter au mieux de ce qu'offre Jelix dans ce cas.
+Créer et gérer des formulaires "à la main" (par opposition aux automatismes
+offerts par le système de formulaire [[jforms|jForms]]), n'est pas très
+différent par rapport à ce que l'on fait dans une application PHP classique.
+Quelques petites choses sont cependant à savoir pour profiter au mieux de ce
+qu'offre Jelix dans ce cas.
 
 
 
 ===== Les actions à mettre en oeuvre =====
 
-L'implémentation très simpliste d'un formulaire consistera au développement de deux actions (les noms sont purement fictifs et servent juste d'exemple):
+L'implémentation très simpliste d'un formulaire consistera au développement de
+deux actions (les noms sont purement fictifs et servent juste d'exemple):
 
    * une action "show" d'affichage de formulaire
-   * une action "save" qui traite les données du formulaire (après le submit) et affiche le résultat
+   * une action "save" qui traite les données du formulaire (après le submit) et
+     affiche le résultat
 
-Mais dans la plupart des cas, pour répondre correctement aux erreurs, pour éviter que l'utilisation des boutons "refresh" des navigateurs provoque une nouvelle exécution du traitement des données (action "save"), etc..., il vaut mieux avoir ce genre de liste d'actions :
+Mais dans la plupart des cas, pour répondre correctement aux erreurs, pour
+éviter que l'utilisation des boutons "refresh" des navigateurs provoque une
+nouvelle exécution du traitement des données (action "save"), etc..., il vaut
+mieux avoir ce genre de liste d'actions :
 
-   * une action "prepare" qui prépare les données pour un nouveau formulaire (initialisation en session par exemple, avec lecture des données initiales en base de données par exemple) et redirige vers "show"
-   * une action "show" qui affiche le formulaire avec les données en sessions, et affiche les éventuelles erreurs de saisie.
-   * une action "save" qui vérifie les données saisies. Si il y a des erreurs, les sauve en session et redirige vers "show", ou alors sauve les données et redirige vers "end"
-   * une action "end", qui nettoie les données en session, et affiche une page de confirmation, ou redirige vers une autre action quelconque...
+   * une action "prepare" qui prépare les données pour un nouveau formulaire
+     (initialisation en session par exemple, avec lecture des données initiales
+     en base de données par exemple) et redirige vers "show"
+   * une action "show" qui affiche le formulaire avec les données en sessions,
+     et affiche les éventuelles erreurs de saisie.
+   * une action "save" qui vérifie les données saisies. Si il y a des erreurs,
+     les sauve en session et redirige vers "show", ou alors sauve les données et
+     redirige vers "end"
+   * une action "end", qui nettoie les données en session, et affiche une page
+     de confirmation, ou redirige vers une autre action quelconque...
+   
 ===== Création d'un formulaire =====
 
-Vous utiliserez en général un template, dans lequel vous y mettrez vos balises html de formulaires. Par exemple :
+Vous utiliserez en général un template, dans lequel vous y mettrez vos balises
+html de formulaires. Par exemple :
 
 <code html>
   <form action="index.php" method="POST">
@@ -42,11 +59,22 @@ Vous utiliserez en général un template, dans lequel vous y mettrez vos balises
   </form>
 </code>
 
-Vous pouvez bien sûr y ajouter du javascript pour vérifier les données saisies coté client et utiliser tous les types de champs de saisies HTML.
+Vous pouvez bien sûr y ajouter du javascript pour vérifier les données saisies
+coté client et utiliser tous les types de champs de saisies HTML.
 
-Par contre, l'exemple n'est pas totalement bon, dans la mesure où l'url est en dur dans le formulaire. Cela est problématique par exemple quand on utilise des urls significatives, qu'on les change, ou qu'on veuille réutiliser dans un autre projet. En effet, suivant l'url choisie, le contenu de l'attribut action peut être différent, le nombre de champs cachés aussi. 
+Par contre, l'exemple n'est pas totalement bon, dans la mesure où l'url est en
+dur dans le formulaire. Cela est problématique par exemple quand on utilise des
+urls significatives, qu'on les change, ou qu'on veuille réutiliser dans un autre
+projet. En effet, suivant l'url choisie, le contenu de l'attribut action peut
+être différent, le nombre de champs cachés aussi.
 
-Il est donc préférable d'utiliser les plugins de templates @@formurl@@ et @@formurlparam@@, auxquels vous indiquez le sélecteur de l'action de traitement du formulaire, et de la liste des paramètres (comme quand vous appelez @@jUrl::get()@@). Le premier sert à générer l'url à mettre dans l'attribut action, et l'autre à générer les champs cachés contenant les éventuels paramètres supplémentaires propres à l'action. Vous devez toujours utiliser les deux ensembles. Le formulaire devient alors :
+Il est donc préférable d'utiliser les plugins de templates @@formurl@@ et
+@@formurlparam@@, auxquels vous indiquez le sélecteur de l'action de traitement
+du formulaire, et de la liste des paramètres (comme quand vous appelez
+@@jUrl::get()@@). Le premier sert à générer l'url à mettre dans l'attribut
+action, et l'autre à générer les champs cachés contenant les éventuels
+paramètres supplémentaires propres à l'action. Vous devez toujours utiliser les
+deux ensembles. Le formulaire devient alors :
 
 <code html>
   <form action="{formurl 'monmodule~default:save'}" method="POST">
@@ -60,7 +88,11 @@ Il est donc préférable d'utiliser les plugins de templates @@formurl@@ et @@fo
   </form>
 </code>
 
-Le formulaire résultant sera le même que le premier exemple si le moteur d'url est celui par défaut, mais pourrait devenir le formulaire suivant si le moteur d'url significant est activé et que l'url correpondante à l'action indiquée est /user/save (sans paramètres supplémentaires, d'où l'absence ici de champs cachés) :
+Le formulaire résultant sera le même que le premier exemple si le moteur d'url
+est celui par défaut, mais pourrait devenir le formulaire suivant si le moteur
+d'url significant est activé et que l'url correpondante à l'action indiquée est
+@@/user/save@@ (sans paramètres supplémentaires, d'où l'absence ici de champs
+cachés) :
 
 <code html>
   <form action="/user/save" method="POST">
@@ -73,13 +105,21 @@ Le formulaire résultant sera le même que le premier exemple si le moteur d'url
   </form>
 </code>
 
-Notez que pour les versions de Jelix antérieures à 1.2, il fallait spécifier les paramètres dans les appels aux deux plugins de templates @@formurl@@ et @@formurlparam@@. Depuis 1.2, les paramètres à formurlparam sont facultatifs.
+Notez que pour les versions de Jelix antérieures à 1.2, il fallait spécifier les
+paramètres dans les appels aux deux plugins de templates @@formurl@@ et
+@@formurlparam@@. Depuis 1.2, les paramètres à formurlparam sont facultatifs.
 
 ===== Traitement des données en retour =====
 
-Dans l'action servant à traiter les données, vous récupèrerez celles-ci grâce à @@$this->param('champs')@@ dans votre contrôleur. Vous avez d'autres méthodes similaires, comme  @@$this->intParam('champs')@@, @@$this->floatParam('champs')@@ et @@$this->boolParam('champs')@@, qui permettent de récupérer directement les valeurs sous un type particulier (voir [[controleurs|la page sur les contrôleurs]]).
+Dans l'action servant à traiter les données, vous récupèrerez celles-ci grâce à
+@@$this->param('champs')@@ dans votre contrôleur. Vous avez d'autres méthodes
+similaires, comme @@$this->intParam('champs')@@, @@$this->floatParam('champs')@@
+et @@$this->boolParam('champs')@@, qui permettent de récupérer directement les
+valeurs sous un type particulier (voir [[controleurs|la page sur les contrôleurs]]).
 
-Vous pouvez utiliser en plus jFilter, qui est une classe permettant de vérifier le format des données (utilise l'extension filter quand Jelix est généré pour PHP 5.2). exemple :
+Vous pouvez utiliser en plus jFilter, qui est une classe permettant de vérifier
+le format des données (utilise l'extension filter quand Jelix est généré pour
+PHP 5.2). exemple :
 
 <code php>
     function save() {
@@ -94,4 +134,5 @@ Vous pouvez utiliser en plus jFilter, qui est une classe permettant de vérifier
     }
 </code>
 
-Voir la [[refclass:utils/jFilter|documentation de référence de jFilter]]
+Voir la [[refclass:utils/jFilter|documentation de référence de jFilter]].
+

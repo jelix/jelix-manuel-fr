@@ -1,24 +1,36 @@
 ~~LANG:EN@enman:plugins/jforms~~
 
-Comme il est indiqué [[/jforms/affichage|dans le chapitre sur l'affichage des formulaires jforms]], il est possible de choisir un plugin qui s'occupera de générer le code du formulaire (en HTML, XUL, javascript etc..) renvoyé au navigateur. 
+Comme il est indiqué [[/jforms/affichage|dans le chapitre sur l'affichage des
+formulaires jforms]], il est possible de choisir un plugin qui s'occupera de
+générer le code du formulaire (en HTML, XUL, javascript etc..) renvoyé au
+navigateur.
 
-Vous pouvez donc créer un plugin qui génèrera les formulaires comme bon vous semble, dans le format que vous souhaitez.
+Vous pouvez donc créer un plugin qui génèrera les formulaires comme bon vous
+semble, dans le format que vous souhaitez.
 
-Il faut d'abord donner un nom à votre générateur. Prenons "monhtml" par exemple. Ensuite :
+Il faut d'abord donner un nom à votre générateur. Prenons "monhtml" par exemple.
+Ensuite :
 
   * Créez un répertoire "monhtml" dans le répertoire "jforms" d'un dépôt de plugins.
   * Créez un fichier monhtml.jformsbuilder.php
   * Dans ce fichier, créez une classe monhtmlJformsBuilder qui hérite de jFormsBuilderBase
 
 
-Dans cette classe, vous devez implémenter les méthodes qui suivent. Ces méthodes doivent afficher les différentes parties du formulaire (en clair, faire des echos), et ne renvoient pas de valeurs. Ces méthodes sont appelées par les différents plugins de templates de jforms.
+Dans cette classe, vous devez implémenter les méthodes qui suivent. Ces méthodes
+doivent afficher les différentes parties du formulaire (en clair, faire des
+echos), et ne renvoient pas de valeurs. Ces méthodes sont appelées par les
+différents plugins de templates de jforms.
 
-Après chaque modification de votre générateur de jforms, **pensez à vider le cache de votre application**  (par exemple en utilisant la commande @@cleartemp@@), ceci afin de prendre en compte vos modifications.
+Après chaque modification de votre générateur de jforms, **pensez à vider le
+cache de votre application** (par exemple en utilisant la commande
+@@cleartemp@@), ceci afin de prendre en compte vos modifications.
 
 
 ==== outputMetaContent ====
 
-Cette méthode doit récupérer l'objet réponse utilisée par le contrôleur, et y spécifier les feuilles de styles, les fichiers javascript à inclure dans la page finale. Exemple :
+Cette méthode doit récupérer l'objet réponse utilisée par le contrôleur, et y
+spécifier les feuilles de styles, les fichiers javascript à inclure dans la page
+finale. Exemple :
 
 <code php>
    public function outputMetaContent($t) {
@@ -41,25 +53,40 @@ La méthode est appelée avant toutes les autres.
 
 ==== outputHeader() ====
 
-Cette méthode doit générer les balises qui constituent la déclaration du formulaire, ainsi que d'autres informations qui ne sont pas propres à chaque contrôle. Par exemple, la méthode @@M@outputHeader@@ du générateur "html" affiche la balise @@E@<form>@@, la liste des erreurs présentes dans le formulaire, les champs cachés, ainsi que quelques lignes de javascript.
+Cette méthode doit générer les balises qui constituent la déclaration du
+formulaire, ainsi que d'autres informations qui ne sont pas propres à chaque
+contrôle. Par exemple, la méthode @@M@outputHeader@@ du générateur "html"
+affiche la balise @@E@<form>@@, la liste des erreurs présentes dans le
+formulaire, les champs cachés, ainsi que quelques lignes de javascript.
 
 ==== outputFooter() ====
 
-C'est la dernière méthode appelée par les plugins de templates. C'est dans celle-là donc que vous afficherez les dernières informations et balises.  Par exemple, la méthode @@M@outputFooter@@ du générateur "html" affiche la balise fermante de @@E@<form>@@, ainsi que d'autres lignes javascript.
+C'est la dernière méthode appelée par les plugins de templates. C'est dans
+celle-là donc que vous afficherez les dernières informations et balises. Par
+exemple, la méthode @@M@outputFooter@@ du générateur "html" affiche la balise
+fermante de @@E@<form>@@, ainsi que d'autres lignes javascript.
 
 ==== outputAllControls() ====
 
-Cette méthode est appelée uniquement par le plugin @@formfull@@. Elle doit afficher tout les contrôles (en dehors des éléments affichés par outputHeader et outputFooter).
+Cette méthode est appelée uniquement par le plugin @@formfull@@. Elle doit
+afficher tout les contrôles (en dehors des éléments affichés par outputHeader et
+outputFooter).
 
 ==== outputControlLabel ====
 
-Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@, pour chaque label de champs de saisie. Cette méthode est donc chargée d'afficher le libellé d'un champ de saisie. 
+Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@,
+pour chaque label de champs de saisie. Cette méthode est donc chargée d'afficher
+le libellé d'un champ de saisie.
 
-Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les informations du champ de saisie dont il faut afficher le label.
+Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
+informations du champ de saisie dont il faut afficher le label.
 
 ==== outputControl ====
 
-Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@, pour chaque champ de saisie. Cette méthode est donc chargée d'afficher un champ de saisie. 
+Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@,
+pour chaque champ de saisie. Cette méthode est donc chargée d'afficher un champ
+de saisie.
 
-Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les informations du champ de saisie à afficher.
+Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
+informations du champ de saisie à afficher.
 

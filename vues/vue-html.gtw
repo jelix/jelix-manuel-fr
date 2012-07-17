@@ -1,6 +1,8 @@
 ~~LANG:EN@enman:views/view-html~~
 
-Pour générer du xhtml/html, vous indiquez l'alias "html" ou "basichtml" à la méthode @@M@getResponse()@@. Vous récupérez alors respectivement une instance de l'objet @@C@jResponseHtml@@ ou @@C@jResponseBasicHtml@@. Voici un exemple :
+Pour générer du xhtml/html, vous indiquez l'alias "html" ou "basichtml" à la
+méthode @@M@getResponse()@@. Vous récupérez alors respectivement une instance de
+l'objet @@C@jResponseHtml@@ ou @@C@jResponseBasicHtml@@. Voici un exemple :
 
 <code php>
    $rep = $this->getResponse('html');
@@ -8,29 +10,40 @@ Pour générer du xhtml/html, vous indiquez l'alias "html" ou "basichtml" à la 
 
 ==== Xhtml ou html ====
 
-jResponseHtml ou jResponseBasicHtml est utilisé pour renvoyer par défaut une réponse au format 
-XHTML. Mais le HTML est possible, en l'indiquant via la méthode @@M@setXhtmlOutput()@@ :
+jResponseHtml ou jResponseBasicHtml est utilisé pour renvoyer par défaut une
+réponse au format XHTML. Mais le HTML est possible, en l'indiquant via la
+méthode @@M@setXhtmlOutput()@@ :
 
 <code php>
 $rep->setXhtmlOutput(true);  // Réponse au format xhtml
 $rep->setXhtmlOutput(false); // Réponse au format html
 </code>
 
-Par la suite, vous pouvez savoir si la réponse renverra du html ou du xhtml en appelant la méthode @@M@isXhtml()@@.
+Par la suite, vous pouvez savoir si la réponse renverra du html ou du xhtml en
+appelant la méthode @@M@isXhtml()@@.
 
-Avec une réponse "html" (et non "basichtml"), vous pouvez aussi changer le doctype si vous le souhaitez, en surchargeant la méthode @@M@outputDoctype()@@, qui doit faire un echo du doctype souhaité.
+Avec une réponse "html" (et non "basichtml"), vous pouvez aussi changer le
+doctype si vous le souhaitez, en surchargeant la méthode @@M@outputDoctype()@@,
+qui doit faire un echo du doctype souhaité.
 
 ===== Renvoyer le contenu d'une page statique =====
 
-Depuis Jelix 1.3, un nouvel objet réponse est apparu : @@C@jResponseBasicHtml@@. Il permet de renvoyer simplement une page HTML complète stockée dans un fichier. Ce fichier doit être un simple fichier PHP, cela ne doit pas être un template pour jTpl.
+Depuis Jelix 1.3, un nouvel objet réponse est apparu : @@C@jResponseBasicHtml@@.
+Il permet de renvoyer simplement une page HTML complète stockée dans un fichier.
+Ce fichier doit être un simple fichier PHP, cela ne doit pas être un template
+pour jTpl.
 
-Il doit contenir tout le code HTML de la page, et trois instructions qui affichent les variables suivantes :
+Il doit contenir tout le code HTML de la page, et trois instructions qui
+affichent les variables suivantes :
 
     * @@V@$HEADBOTTOM@@ : avant la balise de fin @@E@</head>@@
     * @@V@$BODYTOP@@ : aprés la balise d'ouverture @@E@<body>@@
     * @@V@$BODYBOTTOM@@ : avant la balise de fin @@E@</body>@@
 
-Ces variables contiennent du code HTML qui a été indiqué lors des appels des méthodes @@M@addHeadContent()@@ et @@M@addContent()@@ de l'objet @@C@jResponseBasicHtml@@. Elles ont pu être appelé par des contrôleurs, des classes techniques, des plugins. C'est pourquoi il faut indiquer ces variables.
+Ces variables contiennent du code HTML qui a été indiqué lors des appels des
+méthodes @@M@addHeadContent()@@ et @@M@addContent()@@ de l'objet
+@@C@jResponseBasicHtml@@. Elles ont pu être appelé par des contrôleurs, des
+classes techniques, des plugins. C'est pourquoi il faut indiquer ces variables.
 
 Voici un exemple de fichier statique :
 
@@ -51,7 +64,12 @@ Voici un exemple de fichier statique :
 </html>
 </code>
 
-Dans votre contrôleur, vous devez indiquer où @@C@jResponseBasicHtml@@ peut trouver ce fichier, en donnant son chemin complet dans la propriété @@P@$htmlFile@@. Notez que l'objet @@C@jCoordinator@@ possède une méthode permettant de récupérer le chemin d'un module. Il est ainsi aisée de récupérer un fichier d'un module, par exemple se trouvant dans un sous-répertoire @@F@static/@@ du module :
+Dans votre contrôleur, vous devez indiquer où @@C@jResponseBasicHtml@@ peut
+trouver ce fichier, en donnant son chemin complet dans la propriété
+@@P@$htmlFile@@. Notez que l'objet @@C@jCoordinator@@ possède une méthode
+permettant de récupérer le chemin d'un module. Il est ainsi aisée de récupérer
+un fichier d'un module, par exemple se trouvant dans un sous-répertoire
+@@F@static/@@ du module :
 
 <code php>
    $rep = $this->getResponse('basichtml');
@@ -61,19 +79,33 @@ Dans votre contrôleur, vous devez indiquer où @@C@jResponseBasicHtml@@ peut tr
 
 ===== Générer du contenu dynamique =====
 
-Pour renvoyer du contenu dynamique, il est préférable d'utiliser la classe @@C@jResponseHtml@@, donc de récupérer la réponse de type "html". Cette classe implémente des méthodes et propriétés supplémentaires par rapport à la réponse "basichtml", pour manipuler le contenu (X)HTML. Elle est de ce fait bien plus facilement utilisable par les divers composants (zones, templates, classes techniques, contrôleurs..) voulant agir sur la réponse.
+Pour renvoyer du contenu dynamique, il est préférable d'utiliser la classe
+@@C@jResponseHtml@@, donc de récupérer la réponse de type "html". Cette classe
+implémente des méthodes et propriétés supplémentaires par rapport à la réponse
+"basichtml", pour manipuler le contenu (X)HTML. Elle est de ce fait bien plus
+facilement utilisable par les divers composants (zones, templates, classes
+techniques, contrôleurs..) voulant agir sur la réponse.
 
-Le source HTML d'une page est découpé en deux parties : la partie @@E@<head>@@, et la partie @@E@<body>@@ :
+Le source HTML d'une page est découpé en deux parties : la partie @@E@<head>@@,
+et la partie @@E@<body>@@ :
 
 {{jresponsehtml_step1.png|}}
 
-jResponseHTML s'occupe de générer le contenu de la balise @@E@<head>@@, à partir des informations données au travers de ses méthodes. Par contre la génération du contenu de la partie @@E@<body>@@ est de votre ressort, avec l'aide éventuellement d'un template. Voyons tout ça en détails.
+jResponseHTML s'occupe de générer le contenu de la balise @@E@<head>@@, à partir
+des informations données au travers de ses méthodes. Par contre la génération du
+contenu de la partie @@E@<body>@@ est de votre ressort, avec l'aide
+éventuellement d'un template. Voyons tout ça en détails.
 
 
 
 ==== Modification de l'entête HTML ====
 
-Pour modifier le contenu de la balise @@E@<head>@@, vous avez plusieurs méthodes et propriétés. Vous pouvez ainsi modifier le titre du document, le "favicon", les urls des feuilles de styles et des scripts javascripts à lier au document, du CSS ou du javascript à inclure directement dans le @@E@<head>@@, ou encore les mots clés associés, la description de la page, et autres metas. Voyons un exemple qui montre l'ensemble de ces possibilités :
+Pour modifier le contenu de la balise @@E@<head>@@, vous avez plusieurs méthodes
+et propriétés. Vous pouvez ainsi modifier le titre du document, le "favicon",
+les urls des feuilles de styles et des scripts javascripts à lier au document,
+du CSS ou du javascript à inclure directement dans le @@E@<head>@@, ou encore
+les mots clés associés, la description de la page, et autres metas. Voyons un
+exemple qui montre l'ensemble de ces possibilités :
 
 
 <code php>
@@ -105,7 +137,9 @@ $resp->addMetaGenerator('My Super App 1.0');
 
 </code>
 
-Notez que pour les méthodes @@M@addCSSLink@@ et @@M@addJSLink@@, vous pouvez indiquer un paramètre supplémentaire qui doit être un tableau associatif, décrivant les attributs supplémentaires à mettre.
+Notez que pour les méthodes @@M@addCSSLink@@ et @@M@addJSLink@@, vous pouvez
+indiquer un paramètre supplémentaire qui doit être un tableau associatif,
+décrivant les attributs supplémentaires à mettre.
 
 <code php>
 $rep->addCSSLink('maFeuille.css', 
@@ -114,13 +148,19 @@ $rep->addCSSLink('maFeuille.css',
                         'media'=>'all'));
 </code>
 
-Si vous voulez injecter du contenu spécifique dans la balise @@E@<head>@@, vous pouvez le faire via la méthode @@M@addHeadContent()@@
+Si vous voulez injecter du contenu spécifique dans la balise @@E@<head>@@, vous
+pouvez le faire via la méthode @@M@addHeadContent()@@
 
 <code php>
 $rep->addHeadContent('<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="/feed.php" />')
 </code>
 
-Si à un moment ou à un autre, vous voulez annuler les modifications faites dans le head (par exemple, vous êtes dans une zone qui est appelée par un module tiers que vous ne voulez pas/pouvez pas modifier), vous pouvez appeler la méthode @@M@clearHtmlHeader()@@. Cette fonction vous permet d'effacer une partie du header de votre document html, en indiquant quoi effacer : 'CSSLink', 'Styles', 'JSLink', 'JSCode' et/ou 'Others'.
+Si à un moment ou à un autre, vous voulez annuler les modifications faites dans
+le head (par exemple, vous êtes dans une zone qui est appelée par un module
+tiers que vous ne voulez pas/pouvez pas modifier), vous pouvez appeler la
+méthode @@M@clearHtmlHeader()@@. Cette fonction vous permet d'effacer une partie
+du header de votre document html, en indiquant quoi effacer : 'CSSLink',
+'Styles', 'JSLink', 'JSCode' et/ou 'Others'.
 
 <code php>
 $rep->clearHtmlHeader(array('CSSLink', 'Styles'));
@@ -130,16 +170,19 @@ Cela effacera les liens CSS (@@M@addCSSLink@@) et les balises @@E@<style>@@ (@@M
 
 ==== Générer le contenu principal de la page HTML ====
 
-jResponseHtml génère la balise @@E@<body>@@, mais c'est vous qui en contrôlez ses attributs et son contenu.
+jResponseHtml génère la balise @@E@<body>@@, mais c'est vous qui en contrôlez
+ses attributs et son contenu.
 
-Pour définir les attributs de la balise @@E@<body>@@, vous pouvez utiliser la propriété @@P@bodyTagAttributes@@.
+Pour définir les attributs de la balise @@E@<body>@@, vous pouvez utiliser la
+propriété @@P@bodyTagAttributes@@.
 
 <code php>
 $rep->bodyTagAttributes = array('onload'=>'bodyonload()', 
                                 'class'=>'maincontent');
 </code>
 
-Pour générer le contenu même de la balise body, vous avez deux choix : soit utiliser un template, soit utiliser la méthode @@M@addContent()@@.
+Pour générer le contenu même de la balise body, vous avez deux choix : soit
+utiliser un template, soit utiliser la méthode @@M@addContent()@@.
 
 === Générer avec un template ===
 
@@ -156,11 +199,17 @@ $rep->bodyTpl = 'myapp~main';
 $rep->body->assign('person','Laurent');
 </code>
 
-Le contenu généré par le moteur de template sera intégré entre les balises @@E@<body>@@ et @@E@</body>@@.
+Le contenu généré par le moteur de template sera intégré entre les balises
+@@E@<body>@@ et @@E@</body>@@.
 
-Pour en savoir plus sur l'utilisation des templates, consultez le [[templates|chapitre sur les templates]].
+Pour en savoir plus sur l'utilisation des templates, consultez le
+[[templates|chapitre sur les templates]].
 
-Il se peut que vous ayez besoin d'ajouter du contenu en plus de celui produit par le template. Pour cela vous utiliserez la méthode @@M@addContent()@@. Elle prend en paramètre une chaîne pour le contenu, et un booléen (facultatif) pour indiquer si on veut que le contenu soit ajouté avant (true) ou après (false, valeur par défaut) le contenu du template.
+Il se peut que vous ayez besoin d'ajouter du contenu en plus de celui produit
+par le template. Pour cela vous utiliserez la méthode @@M@addContent()@@. Elle
+prend en paramètre une chaîne pour le contenu, et un booléen (facultatif) pour
+indiquer si on veut que le contenu soit ajouté avant (true) ou après (false,
+valeur par défaut) le contenu du template.
 
 <code php>
 $rep->addContent('Mon contenu HTML après le template');
@@ -176,16 +225,26 @@ $rep->addContent(jZone::get('monmodule~uneZone'));
 
 === Générer avec un template principal et des "sous-templates" ===
 
-Bien souvent, les pages d'un site ont un gabarit commun, et seules certaines zones changent (notamment le contenu principal) en fonction de l'action. Il y aura donc un template principal , défini comme on l'a vu précédemment, qui ne contiendra que le contenu commun à toutes les pages, et dans chaque action on utilisera un autre template (un "sous-template") pour générer le contenu spécifique, dont on injectera le résultat dans le template principal. Ce travail peut être fait avec un template directement, ou au moyen d'une zone.
+Bien souvent, les pages d'un site ont un gabarit commun, et seules certaines
+zones changent (notamment le contenu principal) en fonction de l'action. Il y
+aura donc un template principal , défini comme on l'a vu précédemment, qui ne
+contiendra que le contenu commun à toutes les pages, et dans chaque action on
+utilisera un autre template (un "sous-template") pour générer le contenu
+spécifique, dont on injectera le résultat dans le template principal. Ce travail
+peut être fait avec un template directement, ou au moyen d'une zone.
 
-Et pour éviter que dans chaque action on définisse à chaque fois le template principal, les élements communs (feuilles de style etc), on créera un objet réponse HTML qui héritera de jResponseHtml.
+Et pour éviter que dans chaque action on définisse à chaque fois le template
+principal, les élements communs (feuilles de style etc), on créera un objet
+réponse HTML qui héritera de jResponseHtml.
 
-Pour savoir comment faire, lire [[/traitements_communs#personnalisation-de-reponse-commune|la section sur la personnalisation de réponse commune]].
-
+Pour savoir comment faire, lire
+[[/traitements_communs#personnalisation-de-reponse-commune|la section sur la personnalisation de réponse commune]].
 
 === Générer sans template ===
 
-Si vous ne voulez pas utiliser de template pour le body, alors il faut laisser la propriété @@P@$bodyTpl@@ à vide, et utiliser seulement la méthode @@M@addContent()@@ :
+Si vous ne voulez pas utiliser de template pour le body, alors il faut laisser
+la propriété @@P@$bodyTpl@@ à vide, et utiliser seulement la méthode
+@@M@addContent()@@ :
 
 <code php>
 $rep->addContent('contenu pour mon body');
@@ -194,7 +253,9 @@ $rep->addContent('contenu pour mon body');
 
 ===== Autres paramètres pour les réponses html et basichtml =====
 
-Comme @@C@jResponseHtml@@ et @@C@jResponseBasicHtml@@ sont dérivés de @@C@jReponse@@, vous pouvez influer sur les entêtes HTTP, comme le code "status",  et bien sûr ajouter d'autres en-têtes.
+Comme @@C@jResponseHtml@@ et @@C@jResponseBasicHtml@@ sont dérivés de
+@@C@jReponse@@, vous pouvez influer sur les entêtes HTTP, comme le code
+"status", et bien sûr ajouter d'autres en-têtes.
 
 <code php>
  $rep->setHttpStatus  ("404", "Not Found");
@@ -202,7 +263,12 @@ Comme @@C@jResponseHtml@@ et @@C@jResponseBasicHtml@@ sont dérivés de @@C@jRep
 </code> 
 
 
-Il y a aussi une autre propriété : @@P@$xhtmlContentType@@. Cette propriété définit si le contenu xHTML doit être envoyé avec un en-tête HTTP @@Content-Type@@ spécifique : @@application/xhtml+xml@@. Bien sûr, une vérification des capacités du navigateur à recevoir du xhtml est faite, et si le navigateur ne peut pas recevoir du xHTML, la réponse sera envoyée avec le Content-Type @@text/html@@ comme pour le HTML classique.
+Il y a aussi une autre propriété : @@P@$xhtmlContentType@@. Cette propriété
+définit si le contenu xHTML doit être envoyé avec un en-tête HTTP
+@@Content-Type@@ spécifique : @@application/xhtml+xml@@. Bien sûr, une
+vérification des capacités du navigateur à recevoir du xhtml est faite, et si le
+navigateur ne peut pas recevoir du xHTML, la réponse sera envoyée avec le
+Content-Type @@text/html@@ comme pour le HTML classique.
 
 <code php>
 $rep->xhtmlContentType = true ;
@@ -210,9 +276,16 @@ $rep->xhtmlContentType = true ;
 
 ===== Activer des plugins =====
 
-Depuis Jelix 1.3, les classes @@C@jResponseHtml@@ et @@C@jResponseBasicHtml@@ ont un système de plugin. Ces plugins permettent d'enrichir ou agir automatiquement sur le contenu de toutes les pages HTML du site. C'est ainsi qu'il existe par exemple un plugin pour afficher une barre de debug, ou encore un autre pour "minifier" les fichiers CSS et Javascript. 
+Depuis Jelix 1.3, les classes @@C@jResponseHtml@@ et @@C@jResponseBasicHtml@@
+ont un système de plugin. Ces plugins permettent d'enrichir ou agir
+automatiquement sur le contenu de toutes les pages HTML du site. C'est ainsi
+qu'il existe par exemple un plugin pour afficher une barre de debug, ou encore
+un autre pour "minifier" les fichiers CSS et Javascript. 
 
-Ces plugins sont des plugins de type "htmlresponse", ils doivent se trouver dans un répertoire @@F@htmlresponse/@@ d'un dépot de plugin. Et pour les activer, il faut indiquer les noms des plugins utilisé dans l'option @@plugins@@ de la section @@jResponseHtml@@ de la configuration générale. Exemple :
+Ces plugins sont des plugins de type "htmlresponse", ils doivent se trouver dans
+un répertoire @@F@htmlresponse/@@ d'un dépot de plugin. Et pour les activer, il
+faut indiquer les noms des plugins utilisé dans l'option @@plugins@@ de la
+section @@jResponseHtml@@ de la configuration générale. Exemple :
 
 <code ini>
 [jResponseHtml]
@@ -221,11 +294,18 @@ plugins = debugbar, minify
 
 ==== Compression des fichiers css et javascript ====
 
-Jelix est fourni avec [[http://code.google.com/p/minify/|Minify]], qui permet de compresser et concaténer automatiquement les fichiers CSS et Javascript d'une page HTML.
+Jelix est fourni avec [[http://code.google.com/p/minify/|Minify]], qui permet de
+compresser et concaténer automatiquement les fichiers CSS et Javascript d'une
+page HTML.
 
-Dans Jelix 1.2, cette fonctionnalité était incluse directement dans la classe @@C@jResponseHtml@@, mais depuis Jelix 1.3, elle a été déplacée dans un plugin, et sa mise en œuvre est légèrement différente. Note : ce plugin ne fonctionne pas avec jResponseBasicHtml.
+Dans Jelix 1.2, cette fonctionnalité était incluse directement dans la classe
+@@C@jResponseHtml@@, mais depuis Jelix 1.3, elle a été déplacée dans un plugin,
+et sa mise en œuvre est légèrement différente. Note : ce plugin ne fonctionne
+pas avec jResponseBasicHtml.
 
-Pour activer le plugin minify, il faut indiquer son nom dans l'option @@plugins@@ comme indiqué précédemment. Et vous avez une série d'options qui vous permet de contrôler le comportement de Minify.
+Pour activer le plugin minify, il faut indiquer son nom dans l'option
+@@plugins@@ comme indiqué précédemment. Et vous avez une série d'options qui
+vous permet de contrôler le comportement de Minify.
 
 <code ini>
 [jResponseHtml]
@@ -246,6 +326,16 @@ minifyExcludeJS = "jquery.wymeditor.js"
 minifyEntryPoint = minify.php
 </code>
 
-Tout d'abord, vous devez activer la compression en mettant @@minifyCSS@@ et/ou @@minifyJS@@ à "on". Vous pouvez indiquer de ne pas compresser certains fichiers en les listant dans @@minifyExcludeCSS@@ et/ou @@minifyExcludeJS@@. Gardez "jquery.wymeditor.js" dans @@minifyExcludeJS@@, car Wymeditor n'aime pas être concaténé avec d'autres fichiers js.
+Tout d'abord, vous devez activer la compression en mettant @@minifyCSS@@ et/ou
+@@minifyJS@@ à "on". Vous pouvez indiquer de ne pas compresser certains fichiers
+en les listant dans @@minifyExcludeCSS@@ et/ou @@minifyExcludeJS@@. Gardez
+"jquery.wymeditor.js" dans @@minifyExcludeJS@@, car Wymeditor n'aime pas être
+concaténé avec d'autres fichiers js.
 
-La dernière chose à faire est d'installer un script @@F@minify.php@@ dans @@F@www/@@. Copiez simplement le fichier @@F@lib/jelix-scripts/templates/www/minify.php.tpl@@ en @@F@votre_appli/www/minify.php@@. Il y a quelques options supplémentaires pour Minify que vous pouvez changer dans ce fichier (voyez la documentation de Minify), et c'est tout. Si vous voulez nommer ce fichier autrement, indiquez son nom dans l'option @@minifyEntryPoint@@.
+La dernière chose à faire est d'installer un script @@F@minify.php@@ dans
+@@F@www/@@. Copiez simplement le fichier
+@@F@lib/jelix-scripts/templates/www/minify.php.tpl@@ en
+@@F@votre_appli/www/minify.php@@. Il y a quelques options supplémentaires pour
+Minify que vous pouvez changer dans ce fichier (voyez la documentation de
+Minify), et c'est tout. Si vous voulez nommer ce fichier autrement, indiquez son
+nom dans l'option @@minifyEntryPoint@@.

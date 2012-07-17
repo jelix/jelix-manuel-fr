@@ -1,6 +1,8 @@
 ~~LANG:EN@enman:class-utilities/jmailer~~
 
-jMailer est une classe permettant l'envoi d'email depuis un contrôleur ou une classe métier. Elle est basée sur la classe [[http://phpmailer.codeworxtech.com|PHPMailer]]. 
+jMailer est une classe permettant l'envoi d'email depuis un contrôleur ou une
+classe métier. Elle est basée sur la classe
+[[http://phpmailer.codeworxtech.com|PHPMailer]]. 
 
 Voici ses possibilités :
   * envoi de pièces jointes
@@ -9,18 +11,24 @@ Voici ses possibilités :
   * Plusieurs méthodes d'envoi
   * Support de l'authentification SMTP
 
-De nombreux exemples d'utilisation sont disponibles sur internet. Aussi nous n'allons pas détailler la manière dont on utilise cette classe.
+De nombreux exemples d'utilisation sont disponibles sur internet. Aussi nous
+n'allons pas détailler la manière dont on utilise cette classe.
 
-Cependant jMailer apporte quelques fonctionnalités supplémentaires et une façon particulière de configurer l'envoi de mail :
+Cependant jMailer apporte quelques fonctionnalités supplémentaires et une façon
+particulière de configurer l'envoi de mail :
 
-   * la configuration générale d'envoi de mail est indiqué dans le fichier de configuration de votre application
-   * possibilité d'utiliser les templates jTpl pour générer le contenu des mails.
+   * la configuration générale d'envoi de mail est indiqué dans le fichier de
+     configuration de votre application
+   * possibilité d'utiliser les templates jTpl pour générer le contenu des
+     mails.
    * messages d'erreurs traduisible via les fichier properties de jLocale.
    * les erreurs sont renvoyées via des exceptions.
 
 ===== Paramétrage de base =====
 
-Le paramétrage de base utilisé par jMailer s'effectue dans le fichier //var/config/defaultconfig.ini.php// de votre application dans la section [mailer].
+Le paramétrage de base utilisé par jMailer s'effectue dans le fichier
+//var/config/defaultconfig.ini.php// de votre application dans la section
+[mailer].
 
 ==== Les différentes options de configuration ====
 
@@ -30,7 +38,9 @@ Le paramétrage de base utilisé par jMailer s'effectue dans le fichier //var/co
     * "mail" : utilise la fonction mail de PHP
     * "sendmail" : utilise directement la fonction mail du serveur
     * "smtp" : utilise une connexion directe à un/plusieurs hôte SMTP
-  * //hostname// : utilisé dans les en-têtes Message-Id et Received, et aussi comme valeur par defaut pour HELO. Si vide, utilisera la valeur renvoyée par //$_SERVER['SERVER_NAME']// ou "localhost.localdomai".
+  * //hostname// : utilisé dans les en-têtes Message-Id et Received, et aussi
+    comme valeur par defaut pour HELO. Si vide, utilisera la valeur renvoyée par
+    //$_SERVER['SERVER_NAME']// ou "localhost.localdomai".
   * //sendmailPath// : pour l'envoi par sendmail, le chemin de l'executable sendmail.
 
 Pour l'envoi par SMTP :
@@ -44,12 +54,15 @@ Pour l'envoi par SMTP :
   * //smtpTimeout// : la durée maximale de tentative de connection au serveur SMTP.
 
 
-jMailer utilise aussi les paramètres généraux //locale// et //charset// pour configurer la langue et l'encodage des mails.
+jMailer utilise aussi les paramètres généraux //locale// et //charset// pour
+configurer la langue et l'encodage des mails.
 
-Bien sûr, tout ces paramètres sont modifiables pour des besoins ponctuels en utilisant les méthodes et propriétés adéquates.
+Bien sûr, tout ces paramètres sont modifiables pour des besoins ponctuels en
+utilisant les méthodes et propriétés adéquates.
 
 
 ===== Envoi d'un email basique =====
+
 Envoi d'un email texte avec le paramétrage par défaut.
 
 <code php>
@@ -65,13 +78,15 @@ Envoi d'un email texte avec le paramétrage par défaut.
 
 ===== Envoi d'un email basé sur un fichier jTpl =====
 
-Vous pouvez utiliser toutes la puissance de jTpl a l'intérieur de vos mail.
-Pour Cela il vous suffit de créer un fichier .tpl dans l'un de vos module.
+Vous pouvez utiliser toutes la puissance de jTpl a l'intérieur de vos mail. Pour
+Cela il vous suffit de créer un fichier .tpl dans l'un de vos module.
 
 ex :
 
-modules/monmodule/templates/supermail.tpl
+
+
 <code html>
+ {* fichier modules/monmodule/templates/supermail.tpl *}
     {meta Subject 'Super mail.'}
     {meta Priority 1}
     {meta From 'votre nom<votre@mail.com>'}
@@ -86,7 +101,7 @@ modules/monmodule/templates/supermail.tpl
     Voici un super mail généré par jMailer et Jelix.
 </code>
 
-Et dans votre code PHP:
+Et dans votre code PHP :
 
 <code php>
     $mail = new jMailer();
@@ -96,9 +111,9 @@ Et dans votre code PHP:
     $mail->Send();
 </code>
 
-
-
-Il est à noter que @@C@jMailer@@ créé des variables de templates correspondantes à des propriétés (protégées) de PHPMailer. Vous pouvez ainsi y accéder dans votre template.
+Il est à noter que @@C@jMailer@@ créé des variables de templates correspondantes
+à des propriétés (protégées) de PHPMailer. Vous pouvez ainsi y accéder dans
+votre template.
 
 <code html>
     {meta Subject 'Super mail.'}
@@ -119,7 +134,8 @@ Il est à noter que @@C@jMailer@@ créé des variables de templates correspondan
 
 ===== Envoi d'un email en HTML =====
 
-Pour envoyer un email en HTML, il suffit d'appeler la méthode isHTML comme dans l'exemple suivant : 
+Pour envoyer un email en HTML, il suffit d'appeler la méthode isHTML comme dans
+l'exemple suivant : 
 
 <code php>
 $mail = new jMailer();
@@ -137,7 +153,8 @@ $tpl = $mail->Tpl('monmodule~supermail', true);
 
 ===== Envoi d'un email avec pièce jointe =====
 
-L'envoi de fichier en pièce jointe se fait très simplement, en donnant le chemin du fichier stocké sur le disque, et le nom que l'on veut faire apparaitre.
+L'envoi de fichier en pièce jointe se fait très simplement, en donnant le chemin
+du fichier stocké sur le disque, et le nom que l'on veut faire apparaitre.
 
 <code php>
 $mail = new jMailer();
@@ -148,4 +165,7 @@ $mail->Send();
 
 ===== Utiliser les fonctionnalités avancées de jMailer =====
 
-jMailer utilise comme base PHPMailer, si vous voulez avoir d'avantage de documentation, consultez l'[[http://phpmailer.worxware.com/index.php?pg=methods|aide en ligne de PHPMailer]].
+jMailer utilise comme base PHPMailer, si vous voulez avoir d'avantage de
+documentation, consultez
+l'[[http://phpmailer.worxware.com/index.php?pg=methods|aide en ligne de
+PHPMailer]].

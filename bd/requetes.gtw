@@ -4,7 +4,8 @@
 ===== L'objet jDbConnection =====
 
 
-Une fois le fichier de configuration écrit, vous pouvez accéder aux bases de données.
+Une fois le fichier de configuration écrit, vous pouvez accéder aux bases de
+données.
 
 La première chose à faire est de récupérer un objet jDbConnection :
 
@@ -12,10 +13,18 @@ La première chose à faire est de récupérer un objet jDbConnection :
   $cnx = jDb::getConnection();
 </code>
 
-La méthode getConnection() permet de récupérer un objet de type jDbConnection (ou jDbPDOConnection héritant de PDO, si vous  utilisez PDO, ils ont toutefois la même API). Cette méthode accepte un paramètre facultatif : le nom du profil à utiliser. s'il n'est pas indiqué, celui déclaré par défaut sera utilisé.
+La méthode getConnection() permet de récupérer un objet de type jDbConnection
+(ou jDbPDOConnection héritant de PDO, si vous utilisez PDO, ils ont toutefois la
+même API). Cette méthode accepte un paramètre facultatif : le nom du profil à
+utiliser. s'il n'est pas indiqué, celui déclaré par défaut sera utilisé.
 
 
-Pour construire les requêtes, vous avez une méthode importante à connaître : //quote()//, qui permet d'échapper certains caractères dans les valeurs que vous voulez insérer dans vos requêtes. Elle évite dans une certaine mesure les problèmes comme l'injection SQL. Un autre ami de //quote()// est //quote2()// utilisé sur les colonnes **binaires** et s'utilise de la même façon que //quote()//
+Pour construire les requêtes, vous avez une méthode importante à connaître :
+//quote()//, qui permet d'échapper certains caractères dans les valeurs que vous
+voulez insérer dans vos requêtes. Elle évite dans une certaine mesure les
+problèmes comme l'injection SQL. Un autre ami de //quote()// est //quote2()//
+utilisé sur les colonnes **binaires** et s'utilise de la même façon que
+//quote()//
 
 <code php>
   $sql = "INSERT INTO users (nom,prenom) VALUES";
@@ -29,7 +38,9 @@ Pour exécuter des requêtes, il y a principalement deux méthodes, //exec// et 
 
 ==== exec ====
 
-//exec// doit être utilisé pour les requêtes qui ne renvoient pas de résultat (UPDATE, INSERT, DELETE...). cette méthode renvoie juste le nombre de lignes concernées par la requête. Exemple :
+//exec// doit être utilisé pour les requêtes qui ne renvoient pas de résultat
+//(UPDATE, INSERT, DELETE...). cette méthode renvoie juste le nombre de lignes
+//concernées par la requête. Exemple :
 
 <code php>
   $cnx = jDb::getConnection();
@@ -39,7 +50,9 @@ Pour exécuter des requêtes, il y a principalement deux méthodes, //exec// et 
 
 ==== query ====
 
-//query// est fait pour les requêtes qui renvoient des résultats, vides ou pas (SELECT ou procédures stockées). La méthode renvoie alors un objet jDbResultSet.
+//query// est fait pour les requêtes qui renvoient des résultats, vides ou pas
+//(SELECT ou procédures stockées). La méthode renvoie alors un objet
+//jDbResultSet.
 
 Voici un exemple rapide :
 
@@ -56,7 +69,8 @@ Voici un exemple rapide :
 
 ==== limitQuery ====
 
-Vous pouvez faire des requêtes qui récupèrent un nombre limité d'enregistrements. Vous utiliserez alors la méthode //limitQuery// :
+Vous pouvez faire des requêtes qui récupèrent un nombre limité
+d'enregistrements. Vous utiliserez alors la méthode //limitQuery// :
 
 <code php>
   $cnx = jDb::getConnection();
@@ -68,19 +82,24 @@ Vous pouvez faire des requêtes qui récupèrent un nombre limité d'enregistrem
   }
 </code>
 
-Le premier paramètre est la requête. Le deuxième est le numéro, dans la liste des résultats, du premier enregistrement à récupérer. Le troisième paramètre est le nombre d'enregistrements à récupérer.
+Le premier paramètre est la requête. Le deuxième est le numéro, dans la liste
+des résultats, du premier enregistrement à récupérer. Le troisième paramètre est
+le nombre d'enregistrements à récupérer.
 
 
 
 ===== ResultSet =====
 
-jDbResultSet est l'objet que vous récupérez après avoir fait un SELECT (query ou limitQuery).
+jDbResultSet est l'objet que vous récupérez après avoir fait un SELECT (query ou
+limitQuery).
 
-Sa méthode fetch() vous permet de récupérer un à un les enregistrements. À noter que jDbResultSet renvoie toujours un enregistrement sous forme d'objet. 
+Sa méthode fetch() vous permet de récupérer un à un les enregistrements. À noter
+que jDbResultSet renvoie toujours un enregistrement sous forme d'objet. 
 
 Sa méthode fetchAll() permet de récupérer tout d'un coup dans un tableau PHP.
 
-jDbResultSet implémente l'interface Iterator. De ce fait, vous pouvez utiliser cet objet dans certaines boucles, comme les foreach :
+jDbResultSet implémente l'interface Iterator. De ce fait, vous pouvez utiliser
+cet objet dans certaines boucles, comme les foreach :
 
 <code php>
   $cnx = jDb::getConnection();
@@ -92,7 +111,9 @@ jDbResultSet implémente l'interface Iterator. De ce fait, vous pouvez utiliser 
   } 
 </code>
 
-Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont pas de classe précise). Si vous voulez que ce soient des objets d'une certaine classe, vous devez l'indiquer via setFetchMode :
+Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont
+pas de classe précise). Si vous voulez que ce soient des objets d'une certaine
+classe, vous devez l'indiquer via setFetchMode :
 
 
 <code php>
@@ -144,9 +165,13 @@ Dans le template :
 
 ===== Transactions =====
 
-jDb permet de faire des transactions. Bien sûr, il faut que le driver utilisé supporte les transactions.
+jDb permet de faire des transactions. Bien sûr, il faut que le driver utilisé
+supporte les transactions.
 
-Pour marquer le début d'une transaction, vous appellerez la méthode //beginTransaction ()//. Ensuite vous lancerez les requêtes, Puis après avoir fait vos requêtes, vous pourrez valider la transaction en appelant la méthode //commit()//. Pour annuler une transaction, il suffit d'appeler //rollback()//.
+Pour marquer le début d'une transaction, vous appellerez la méthode
+//beginTransaction ()//. Ensuite vous lancerez les requêtes, Puis après avoir
+fait vos requêtes, vous pourrez valider la transaction en appelant la méthode
+//commit()//. Pour annuler une transaction, il suffit d'appeler //rollback()//.
 
 <code php>
    $cnx = jDb::getConnection();

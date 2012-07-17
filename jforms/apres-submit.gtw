@@ -1,10 +1,16 @@
 ~~LANG:EN@enman:jforms/after-submit~~
 
-Une fois un formulaire créé, il faut, dans une action l'afficher, ce qui est expliqué [[affichage|dans un chapitre à part]]. Et dans une autre action, qui sera appelée quand l'utilisateur validera le formulaire, il faudra gérer les données saisies : récupération des données, vérification de leur contenu et enfin traitement (stockage par exemple).
+Une fois un formulaire créé, il faut, dans une action l'afficher, ce qui est
+expliqué [[affichage|dans un chapitre à part]]. Et dans une autre action, qui
+sera appelée quand l'utilisateur validera le formulaire, il faudra gérer les
+données saisies : récupération des données, vérification de leur contenu et
+enfin traitement (stockage par exemple).
 
 ===== Remplissage à partir des données saisies =====
 
-Vous l'avez déjà vu un peu plus haut, pour récupérer l'objet formulaire tout en le remplissant à partir des données reçues du navigateur, il suffit d'appeler //jForms::fill()//:
+Vous l'avez déjà vu un peu plus haut, pour récupérer l'objet formulaire tout en
+le remplissant à partir des données reçues du navigateur, il suffit d'appeler
+//jForms::fill()//:
 
 <code php>
     $form = jForms::fill("main~contact");
@@ -17,7 +23,8 @@ Cela est en fait équivalent à
     $form->initFromRequest();
 </code>
 
-Vous pouvez aussi utiliser la méthode //setData// sur le formulaire pour remplir vous même le contenu du formulaire :
+Vous pouvez aussi utiliser la méthode //setData// sur le formulaire pour remplir
+vous même le contenu du formulaire :
 
 <code php>
     $form = jForms::get("main~contact");
@@ -27,9 +34,17 @@ Vous pouvez aussi utiliser la méthode //setData// sur le formulaire pour rempli
 
 ===== Vérification des données =====
 
-Une fois le formulaire récupéré avec les bonnes données, il est souvent préférable d'en vérifier exactement le contenu avant de traiter les données. Vous avez à votre disposition la méthode //check()// qui vérifie les données en fonction de ce que vous avez indiqué dans le fichier xml (l'aspect obligatoire de la saisie, le type de donnée pour les inputs etc...). La méthode //check()// renvoi true si la vérification est bonne, ou false si il y a des erreurs dans le formulaire.
+Une fois le formulaire récupéré avec les bonnes données, il est souvent
+préférable d'en vérifier exactement le contenu avant de traiter les données.
+Vous avez à votre disposition la méthode //check()// qui vérifie les données en
+fonction de ce que vous avez indiqué dans le fichier xml (l'aspect obligatoire
+de la saisie, le type de donnée pour les inputs etc...). La méthode //check()//
+renvoi true si la vérification est bonne, ou false si il y a des erreurs dans le
+formulaire.
 
-En général, si la validation échoue, vous avez simplement à réafficher le formulaire : les erreurs s'afficheront automatiquement et l'utilisateur devra corriger.
+En général, si la validation échoue, vous avez simplement à réafficher le
+formulaire : les erreurs s'afficheront automatiquement et l'utilisateur devra
+corriger.
 
 <code php>
     $form = jForms::fill("main~contact");
@@ -41,7 +56,9 @@ En général, si la validation échoue, vous avez simplement à réafficher le f
     }
 </code>
 
-Vous pouvez, bien sûr, faire des vérifications approfondies. Vous pouvez alors utiliser la méthode getData pour récupérer la valeur d'un champ de saisie, et setErrorOn pour indiquer une erreur sur un champ.
+Vous pouvez, bien sûr, faire des vérifications approfondies. Vous pouvez alors
+utiliser la méthode getData pour récupérer la valeur d'un champ de saisie, et
+setErrorOn pour indiquer une erreur sur un champ.
 
 <code php>
     $form = jForms::fill("main~contact");
@@ -70,11 +87,17 @@ Vous pouvez, bien sûr, faire des vérifications approfondies. Vous pouvez alors
 
 ===== Connaitre les valeurs qui ont été modifiées =====
 
-Quand un formulaire a été initialisé il peut être utile de savoir quelles valeurs ont été modifiées.
+Quand un formulaire a été initialisé il peut être utile de savoir quelles
+valeurs ont été modifiées.
 
-Pour cela, vous devez d'abord appeler la méthode //initModifiedControlsList()// après avoir initialisé votre formulaire, de manière à indiquer que vous voulez connaitre les différences. N'appelez pas cette méthode inutilement, car cela occupe plus de mémoire dans la session (les valeurs sont dupliquées).
+Pour cela, vous devez d'abord appeler la méthode //initModifiedControlsList()//
+après avoir initialisé votre formulaire, de manière à indiquer que vous voulez
+connaitre les différences. N'appelez pas cette méthode inutilement, car cela
+occupe plus de mémoire dans la session (les valeurs sont dupliquées).
 
-Ensuite, après un submit par exemple, vous pouvez appeler la méthode //getModifiedControls//, qui renvoie un tableau dont les clés sont les noms des contrôles modifiés, et les valeurs étant les anciennes valeurs.
+Ensuite, après un submit par exemple, vous pouvez appeler la méthode
+//getModifiedControls//, qui renvoie un tableau dont les clés sont les noms des
+contrôles modifiés, et les valeurs étant les anciennes valeurs.
 
 
 <code php>
@@ -96,29 +119,48 @@ Ensuite, après un submit par exemple, vous pouvez appeler la méthode //getModi
 
 ===== Stockage des données =====
 
-Une fois la vérification faite, vous pouvez extraire les données du formulaire avec la méthode @@M@getData()@@ ou @@M@getAllData()@@ qui renvoie toutes les données sous forme de tableau. Ensuite libre à vous d'en faire ce que vous voulez : les stocker avec jDb ou jDao, les envoyer par mail etc... 
+Une fois la vérification faite, vous pouvez extraire les données du formulaire
+avec la méthode @@M@getData()@@ ou @@M@getAllData()@@ qui renvoie toutes les
+données sous forme de tableau. Ensuite libre à vous d'en faire ce que vous
+voulez : les stocker avec jDb ou jDao, les envoyer par mail etc... 
 
 
 ==== Stockage via un dao ====
 
-Tout comme il y a @@M@initFromDao()@@ pour initialiser le formulaire, il y a l'opération inverse @@M@saveToDao()@@. Cette méthode permet donc d'enregistrer plusieurs champs via un dao. Les valeurs des champs dont les noms correspondent à des propriétés du dao indiqué seront utilisées pour renseigner les propriétés du dao correspondantes, et le tout sera enregistré dans l'enregistrement dont la clé est indiquée dans l'id du formulaire. Si l'id du formulaire est inexistant, un nouvel enregistrement sera créé, plutôt qu'une mise à jour d'un enregistrement existant.
+Tout comme il y a @@M@initFromDao()@@ pour initialiser le formulaire, il y a
+l'opération inverse @@M@saveToDao()@@. Cette méthode permet donc d'enregistrer
+plusieurs champs via un dao. Les valeurs des champs dont les noms correspondent
+à des propriétés du dao indiqué seront utilisées pour renseigner les propriétés
+du dao correspondantes, et le tout sera enregistré dans l'enregistrement dont la
+clé est indiquée dans l'id du formulaire. Si l'id du formulaire est inexistant,
+un nouvel enregistrement sera créé, plutôt qu'une mise à jour d'un
+enregistrement existant.
 
 <code php>
    $form->saveToDao('shop~products');
 </code>
 
-Si la clé primaire n'est pas auto incrémentale, alors il vous faudra indiquer la valeur de cette clé, en deuxième argument à @@M@saveToDao@@, dans le cas d'un nouvel enregistrement. La méthode accepte aussi un nom de profil jDb en troisième argument.
+Si la clé primaire n'est pas auto incrémentale, alors il vous faudra indiquer la
+valeur de cette clé, en deuxième argument à @@M@saveToDao@@, dans le cas d'un
+nouvel enregistrement. La méthode accepte aussi un nom de profil jDb en
+troisième argument.
 
-Dans certains cas il peut être utile de récupérer la clé primaire d'un enregistrement créé à l'aide de la méthode @@M@saveToDao@@.
+Dans certains cas il peut être utile de récupérer la clé primaire d'un
+enregistrement créé à l'aide de la méthode @@M@saveToDao@@.
 
 <code php>
    $primaryKey = $form->saveToDao('shop~products');
 </code>
 
 
-@@M@saveToDao@@ est très pratique, mais on pourrait vouloir juste pré-remplir un dao avec le contenu du formulaire, manipuler ensuite ce dao pour initialiser d'autres de ces propriétés "à la main", et faire les sauvegardes nous-mêmes.
+@@M@saveToDao@@ est très pratique, mais on pourrait vouloir juste pré-remplir un
+dao avec le contenu du formulaire, manipuler ensuite ce dao pour initialiser
+d'autres de ces propriétés "à la main", et faire les sauvegardes nous-mêmes.
 
-Pour ce faire, il y a la méthode @@M@prepareDaoFromControls@@, qui prend les mêmes arguments que @@M@saveToDao@@, mais renvoie un tableau contenant l'objet record Dao ("daorec"), l'objet factory dao ("dao"), et un boolean ("toInsert") indiquant s'il faut insérer ou mettre à jour l'enregistrement.
+Pour ce faire, il y a la méthode @@M@prepareDaoFromControls@@, qui prend les
+mêmes arguments que @@M@saveToDao@@, mais renvoie un tableau contenant l'objet
+record Dao ("daorec"), l'objet factory dao ("dao"), et un boolean ("toInsert")
+indiquant s'il faut insérer ou mettre à jour l'enregistrement.
 
 <code php>
    $result = $form->prepareDaoFromControls('shop~products');
@@ -132,21 +174,35 @@ Pour ce faire, il y a la méthode @@M@prepareDaoFromControls@@, qui prend les m�
 
 ==== Stockage des valeurs d'un champ à choix multiples ====
 
-Il y a la méthode @@M@saveControlToDao()@@, qui est l'opération inverse de @@M@initControlFromDao()@@. Elle permet donc de sauvegarder les valeurs sélectionnées d'un ensemble de cases à cocher ou d'une liste à choix multiples, dans une table de jointure.
+Il y a la méthode @@M@saveControlToDao()@@, qui est l'opération inverse de
+@@M@initControlFromDao()@@. Elle permet donc de sauvegarder les valeurs
+sélectionnées d'un ensemble de cases à cocher ou d'une liste à choix multiples,
+dans une table de jointure.
 
 <code php>
    $form->saveControlToDao('categories', 'shop~products_categories');
 </code>
 
-Le premier paramètre est le nom du champ concerné, et le deuxième le dao utilisé pour le stockage.
+Le premier paramètre est le nom du champ concerné, et le deuxième le dao utilisé
+pour le stockage.
 
 
 
 ==== Stockage des fichiers ====
 
-Si le formulaire contient des champs de téléchargement de fichiers, il vous faut sauver les fichiers quelque part. Vous avez pour cela deux méthodes, //saveFile()// et //saveAllFiles//. La première pour sauvegarder un fichier précis, et l'autre pour copier tous les fichiers reçus dans un répertoire. Sachez que dans les données du formulaire, la valeur du champ (que l'on récupère via getData) contient le nom du fichier original. Si vous avez besoin de stocker un autre nom, faites un setData.
+Si le formulaire contient des champs de téléchargement de fichiers, il vous faut
+sauver les fichiers quelque part. Vous avez pour cela deux méthodes,
+//saveFile()// et //saveAllFiles//. La première pour sauvegarder un fichier
+précis, et l'autre pour copier tous les fichiers reçus dans un répertoire.
+Sachez que dans les données du formulaire, la valeur du champ (que l'on récupère
+via getData) contient le nom du fichier original. Si vous avez besoin de stocker
+un autre nom, faites un setData.
 
-//saveFile()// prend en argument le nom du champ contenant le fichier. Par défaut, le fichier est alors stocké dans le répertoire //var/uploads/nommodule~nomform///. Vous pouvez indiquer un autre répertoire en donnant son chemin en deuxième paramètre de saveFile(). Et si vous voulez stocker le fichier sous un nom différent, indiquez le en troisième paramètre.
+//saveFile()// prend en argument le nom du champ contenant le fichier. Par
+//défaut, le fichier est alors stocké dans le répertoire
+////var/uploads/nommodule~nomform///. Vous pouvez indiquer un autre répertoire
+//en donnant son chemin en deuxième paramètre de saveFile(). Et si vous voulez
+//stocker le fichier sous un nom différent, indiquez le en troisième paramètre.
 
 Exemple :
 <code php>
@@ -156,7 +212,9 @@ Exemple :
     $form->saveFile('photo', '', $id.'.png');
 </code>
 
-//saveAllFiles// sauve tout les fichiers, sans distinction, dans un même répertoire. Le répertoire par défaut est //var/uploads/nommodule~nomform///, mais vous pouvez le changer en l'indiquant en paramètre.
+//saveAllFiles// sauve tout les fichiers, sans distinction, dans un même
+//répertoire. Le répertoire par défaut est //var/uploads/nommodule~nomform///,
+//mais vous pouvez le changer en l'indiquant en paramètre.
 
 <code php>
     $form->saveAllFiles();
@@ -166,7 +224,11 @@ Exemple :
 
 ===== Détruire une instance d'un formulaire =====
 
-Quand un formulaire n'est plus utilisé (la saisie est finie, les données sauvegardées), il est préférable de faire le ménage pour ne pas encombrer la session de données inutiles. Il faut donc détruire le formulaire. Pour cela on utilise //jForms::destroy//, à laquelle on indique le sélecteur du formulaire, et éventuellement l'identifiant du formulaire concerné.
+Quand un formulaire n'est plus utilisé (la saisie est finie, les données
+sauvegardées), il est préférable de faire le ménage pour ne pas encombrer la
+session de données inutiles. Il faut donc détruire le formulaire. Pour cela on
+utilise //jForms::destroy//, à laquelle on indique le sélecteur du formulaire,
+et éventuellement l'identifiant du formulaire concerné.
 
 <code php>
    jForms::destroy("main~contact");

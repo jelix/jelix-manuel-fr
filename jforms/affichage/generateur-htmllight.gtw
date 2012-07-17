@@ -1,12 +1,16 @@
 ~~LANG:EN@enman:jforms/htmllight-generator~~
 
-Le générateur "htmllight" de jforms génère un formulaire HTML "simple", avec du javascript plutôt basique et donc avec un comportement très classique. Son avantage est que le code généré est léger, ce qui peut être intéressant pour avoir des pages légères ou des petits formulaires.
+Le générateur "htmllight" de jforms génère un formulaire HTML "simple", avec du
+javascript plutôt basique et donc avec un comportement très classique. Son
+avantage est que le code généré est léger, ce qui peut être intéressant pour
+avoir des pages légères ou des petits formulaires.
 
 Le nom à indiquer aux plugins {form} ou {formfull} est "htmllight".
 
 ===== Options =====
 
-Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et @@E@{formfull}@@ :
+Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et
+@@E@{formfull}@@ :
 
   * @@L@errorDecorator@@: le nom de la fonction javascript qui s'occupera de l'affichage des erreurs
   * @@L@method@@: la méthode HTTP à employer ('get' ou 'post'). Par défault : 'post'. 
@@ -43,18 +47,25 @@ jForms affiche deux types de messages :
   * les messages d'erreurs affichés lors de la vérification des champs de saisies
   * Les messages d'aides
 
-Vous pouvez changer l'apparence avec CSS, mais aussi, pour les messages d'erreurs, en indiquant, dans les options du générateur données aux plugins //form// ou //formfull//, le noms de l'objet javascript qui s'occupera d'afficher ces messages.
+Vous pouvez changer l'apparence avec CSS, mais aussi, pour les messages
+d'erreurs, en indiquant, dans les options du générateur données aux plugins
+//form// ou //formfull//, le noms de l'objet javascript qui s'occupera
+d'afficher ces messages.
 
 
 ==== Affichage des messages d'erreurs ====
 
-Pour les messages d'erreurs, il faut créer un objet javascript qui contient trois méthodes :
+Pour les messages d'erreurs, il faut créer un objet javascript qui contient
+trois méthodes :
 
   * **start**, qui est appelé quand le processus de vérification commence
   * **addError**, qui est appelé quand une erreur est trouvée. Cette méthode reçoit un objet javascript //jFormsJQControl// qui contient des données relatives au champ de saisie en faute, et un code erreur : 1 si le champ n'est pas renseigné alors qu'il est obligatoire, et 2 si le contenu saisi est invalide.
   * **end**, qui est appelé quand le processus de vérification est terminé.
 
-Dans ces méthodes vous faites ce que vous voulez. Par exemple, dans addError, vous pouvez insérer dans une liste html le message d'erreur, comme dans l'exemple (l'élément "errors" est une liste <ul> quelque part dans votre page html):
+Dans ces méthodes vous faites ce que vous voulez. Par exemple, dans addError,
+vous pouvez insérer dans une liste html le message d'erreur, comme dans
+l'exemple (l'élément "errors" est une liste <ul> quelque part dans votre page
+html):
 
 <code javascript>
 function MyErrorDecorator(){
@@ -82,7 +93,8 @@ MyErrorDecorator.prototype = {
 </code>
 
 
-Ensuite vous l'indiquez au plugin //form// ou //formfull//, dans la liste des options pour le builder html :
+Ensuite vous l'indiquez au plugin //form// ou //formfull//, dans la liste des
+options pour le builder html :
 
 <code html>
   {form $formulaire, 'monmodule~default:sauver', array(), 'htmllight', array("errorDecorator"=>"MyErrorDecorator")}
@@ -90,7 +102,8 @@ Ensuite vous l'indiquez au plugin //form// ou //formfull//, dans la liste des op
   {/form}
 </code>
 
-En ce qui concerne l'objet jFormsJQControl que addError reçoit en paramètre (ici //control//), voici les propriétés utiles qu'il contient :
+En ce qui concerne l'objet jFormsJQControl que addError reçoit en paramètre (ici
+//control//), voici les propriétés utiles qu'il contient :
 
    * **name** : le nom du contrôle, du champ de saisie
    * **label** : son libellé
@@ -103,4 +116,8 @@ En ce qui concerne l'objet jFormsJQControl que addError reçoit en paramètre (i
 
 ==== Affichage des messages d'aides ====
 
-Dans les versions précédentes, les messages d'aides étaient affichés par un mécanisme similaire à celui des messages d'erreurs. Ce n'est plus le cas depuis la version 1.2, où ils sont directement en dur en HTML, et par défaut affichés dans des info bulles au survol du picto du point interrogation. Vous pouvez bien sûr changer cela en modifiant les CSS, en ajoutant du javascript etc.
+Dans les versions précédentes, les messages d'aides étaient affichés par un
+mécanisme similaire à celui des messages d'erreurs. Ce n'est plus le cas depuis
+la version 1.2, où ils sont directement en dur en HTML, et par défaut affichés
+dans des info bulles au survol du picto du point interrogation. Vous pouvez bien
+sûr changer cela en modifiant les CSS, en ajoutant du javascript etc.

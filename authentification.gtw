@@ -1,17 +1,31 @@
 ~~LANG:EN@enman:authentification~~
 
-Le système d'authentification de Jelix ne s'occupe que d'une seule chose : gérer des identifiants/mots de passe et des utilisateurs.
+Le système d'authentification de Jelix ne s'occupe que d'une seule chose : gérer
+des identifiants/mots de passe et des utilisateurs.
 
-Il repose sur des pilotes (ou aussi appelés drivers) pour accéder aux données d'un utilisateur. C'est ainsi qu'il peut s'appuyer sur une base de données, un annuaire LDAP, etc. Pour le moment, il existe un pilote pour une base de données, un pilote pour un annuaire géré par un serveur LDS/MDS, un pilote pour un annuaire supportant LDAP et un pilote pouvant utiliser une classe quelconque.
+Il repose sur des pilotes (ou aussi appelés drivers) pour accéder aux données
+d'un utilisateur. C'est ainsi qu'il peut s'appuyer sur une base de données, un
+annuaire LDAP, etc. Pour le moment, il existe un pilote pour une base de
+données, un pilote pour un annuaire géré par un serveur LDS/MDS, un pilote pour
+un annuaire supportant LDAP et un pilote pouvant utiliser une classe quelconque.
 
 Le système d'authentification repose sur plusieurs choses :
 
-   * Un [[plugins/coord|plugin pour le coordinateur]], nommé **auth** et livré en standard avec Jelix, vérifiant si l'authentification est effectuée pour les actions où elle est nécessaire.
-   * Une classe @@C@jAuth@@, permettant d'effectuer les différentes opérations sur l'authentification et la gestion des identifiants. Cette classe repose sur un système de pilote.
-   * Un module, **jauth**, proposant un contrôleur et des templates par défaut. Il n'est, en principe, pas indispensable : vous pouvez tout à fait utiliser votre propre contrôleur, la mise en oeuvre étant relativement simple.
-   * Un objet stocké en session, contenant les informations sur l'utilisateur. Il est fourni par le pilote. Cela peut être un objet DAO, une simple classe, etc.
+   * Un [[plugins/coord|plugin pour le coordinateur]], nommé **auth** et livré
+     en standard avec Jelix, vérifiant si l'authentification est effectuée pour
+     les actions où elle est nécessaire.
+   * Une classe @@C@jAuth@@, permettant d'effectuer les différentes opérations
+     sur l'authentification et la gestion des identifiants. Cette classe repose
+     sur un système de pilote.
+   * Un module, **jauth**, proposant un contrôleur et des templates par défaut.
+     Il n'est, en principe, pas indispensable : vous pouvez tout à fait utiliser
+     votre propre contrôleur, la mise en oeuvre étant relativement simple.
+   * Un objet stocké en session, contenant les informations sur l'utilisateur.
+     Il est fourni par le pilote. Cela peut être un objet DAO, une simple
+     classe, etc.
 
-Pour utiliser l'authentification, vous devez installer au moins le plugin pour le coordinateur, et le configurer.
+Pour utiliser l'authentification, vous devez installer au moins le plugin pour
+le coordinateur, et le configurer.
 
 Le rôle du plugin **auth** :
 
@@ -19,7 +33,8 @@ Le rôle du plugin **auth** :
   * gérer un //timeout// de session (optionnel) ;
   * gérer la persistance de l'authentification via un cookie (optionnel) ;
   * indiquer le driver à utiliser pour @@C@jAuth@@ ;
-  * indiquer les paramètres pour le pilote (DAO pour jAuthDb, cn/sn/uid pour un pilote LDAP, etc.) ;
+  * indiquer les paramètres pour le pilote (DAO pour jAuthDb, cn/sn/uid pour un
+    pilote LDAP, etc.) ;
   * indiquer ce qu'il faut faire en cas de non authentification.
   
 
@@ -27,8 +42,10 @@ Le rôle du plugin **auth** :
 
 Pour l'activer, vous avez deux choix :
 
-   * soit vous voulez utiliser le module jauth qui propose zones et contrôleurs, dans ce cas, installez le et le plugin sera activé
-   * soit vous utilisez vos propres contrôleurs pour l'authentification, dans ce cas, il faut activer le plugin à la main.
+   * soit vous voulez utiliser le module jauth qui propose zones et contrôleurs,
+     dans ce cas, installez le et le plugin sera activé
+   * soit vous utilisez vos propres contrôleurs pour l'authentification, dans ce
+     cas, il faut activer le plugin à la main.
 
 
 ==== En installant le module jauth ====
@@ -40,48 +57,77 @@ $ cd myapp/
 $ php cmd.php installmodule jauth
 </code>
 
-Cela activera le module et le plugin, et creera un nouveau fichier @@F@var/config/index/auth.coord.ini.php@@, qui est la configuration du plugin et du système d'authentification.
+Cela activera le module et le plugin, et creera un nouveau fichier
+@@F@var/config/index/auth.coord.ini.php@@, qui est la configuration du plugin et
+du système d'authentification.
 
 
 ==== Installation à la main ====
 
-Copiez le fichier @@F@lib/jelix-modules/jauth/install/var/config/auth.coord.ini.php@@ dans le repertoire de configuration du point d'entrée, par exemple,@@F@var/config/index/auth.coord.ini.php@@.
+Copiez le fichier @@F@lib/jelix-modules/jauth/install/var/config/auth.coord.ini.php@@ dans le
+repertoire de configuration du point d'entrée, par exemple, @@F@var/config/index/auth.coord.ini.php@@.
 
-Dans le fichier de configuration du point d'entrée, vous indiquerez alors dans la section « coordplugins » :
+Dans le fichier de configuration du point d'entrée, vous indiquerez alors dans
+la section « coordplugins » :
 
 <code ini>
 [coordplugins]
 auth = "index/auth.coord.ini.php"
 </code>
 
-**Note sur la déclaration du plugin :** Si vous utilisez plusieurs plugins de coordinateur, l'ordre de déclaration des plugins dans le fichier de configuration a une importance. Ainsi, si vous placez le plugin //auth// en premier, il faut savoir que les autres plugins ne seront pas exécutés dans le cas où le plugin //auth// demande une redirection (par exemple la page d'identification). En général, il convient donc de placer ce plugin après les plugins ne nécessitant pas d'authentification.
+**Note sur la déclaration du plugin :** Si vous utilisez plusieurs plugins de
+coordinateur, l'ordre de déclaration des plugins dans le fichier de
+configuration a une importance. Ainsi, si vous placez le plugin //auth// en
+premier, il faut savoir que les autres plugins ne seront pas exécutés dans le
+cas où le plugin //auth// demande une redirection (par exemple la page
+d'identification). En général, il convient donc de placer ce plugin après les
+plugins ne nécessitant pas d'authentification.
 
 Pour en savoir plus sur les plugins : [[plugins]]
 
 
 ===== Configurer le système d'authentification =====
 
-Vous devez ensuite éditer le fichier @@F@auth.coord.ini.php@@, pour indiquer la configuration du système d'authentification. Voici les différents paramètres.
+Vous devez ensuite éditer le fichier @@F@auth.coord.ini.php@@, pour indiquer la
+configuration du système d'authentification. Voici les différents paramètres.
 
 ==== Indiquer le driver ====
 
-Vous devez indiquer le nom du driver utilisé au niveau de l'option @@driver@@. Vous devez ensuite avoir une section portant ce même nom, pour les options propres au driver.
+Vous devez indiquer le nom du driver utilisé au niveau de l'option @@driver@@.
+Vous devez ensuite avoir une section portant ce même nom, pour les options
+propres au driver.
 
-Les options dépendants des drivers, consultez [[authentification/drivers|la documentation sur les pilotes jauth]] pour activer l'un deux.
+Les options dépendants des drivers, consultez [[authentification/drivers|la documentation sur les pilotes jauth]]
+pour activer l'un deux.
 
 ==== Fonction de cryptage des mots de passe ====
 
-Par défaut la méthode utilisée pour le cryptage des mots de passe est @@M@sha1@@ (dans jelix 1.1 et précedent, c'était @@M@md5@@), mais il est possible d'utiliser une autre fonction, qui accepte une chaine à encrypter, et renvoi la chaine encryptée.
+Par défaut la méthode utilisée pour le cryptage des mots de passe est @@M@sha1@@
+(dans jelix 1.1 et précedent, c'était @@M@md5@@), mais il est possible
+d'utiliser une autre fonction, qui accepte une chaine à encrypter, et renvoi la
+chaine encryptée.
 
-Pour indiquer la fonction de cryptage, indiquez son nom dans l'option @@password_crypt_function@@, dans la section de configuration du driver.
+Pour indiquer la fonction de cryptage, indiquez son nom dans l'option
+@@password_crypt_function@@, dans la section de configuration du driver.
 
-La fonction pourrait accepter d'autres paramètres, comme une valeur de "sel". Pour indiquer une telle fonction, vous devez faire précéder son nom par un nombre et ":" :
-   * "1:nomfunction": la fonction accepte en premier paramètre une valeur de "sel", et en second la chaîne à encrypter. La valeur du sel doit être indiquer dans l'option de configuration @@password_salt@@.
-   * "2:nomfunction": la fonction a besoin de plus d'option ou d'autres options. Elle doit alors accepter en premier paramètre un tableau contenant toutes les options du drivers, et en second paramètre, la chaine à encrypter. Il est alors possible de mettre dans la configuration toutes les valeurs necessaires à cette fonction.
+La fonction pourrait accepter d'autres paramètres, comme une valeur de "sel".
+Pour indiquer une telle fonction, vous devez faire précéder son nom par un
+nombre et ":" :
+   * "1:nomfunction": la fonction accepte en premier paramètre une valeur de
+     "sel", et en second la chaîne à encrypter. La valeur du sel doit être
+     indiquer dans l'option de configuration @@password_salt@@.
+   * "2:nomfunction": la fonction a besoin de plus d'option ou d'autres options.
+     Elle doit alors accepter en premier paramètre un tableau contenant toutes
+     les options du drivers, et en second paramètre, la chaine à encrypter. Il
+     est alors possible de mettre dans la configuration toutes les valeurs
+     necessaires à cette fonction.
 
-Pour créer votre propre fonction, stockez la dans un fichier php, et faites un include dans le fichier @@application.init.php@@ de l'application par exemple.
+Pour créer votre propre fonction, stockez la dans un fichier php, et faites un
+include dans le fichier @@application.init.php@@ de l'application par exemple.
 
-Voici un exemple d'utilisation de la fonction PHP @@sha1@@ avec l'utilisation d'une valeur de "sel". Il faut créer une fonction, (ici  @@sha1WithSalt@@ qui est déjà fournie par Jelix, vous n'avez pas à l'écrire):
+Voici un exemple d'utilisation de la fonction PHP @@sha1@@ avec l'utilisation
+d'une valeur de "sel". Il faut créer une fonction, (ici @@sha1WithSalt@@ qui est
+déjà fournie par Jelix, vous n'avez pas à l'écrire):
 
 <code php>
 function sha1WithSalt($salt, $password) {
@@ -102,18 +148,26 @@ Et dans la configuration de l'authentification :
 
 ==== Timeout ====
 
-L'option @@timeout@@ permet d'indiquer en minutes le temps d'inactivité au bout duquel l'authentification ne sera plus valide. Si vous mettez @@L@0@@, il n'y a pas de limite de temps. La session expirera à la fermeture du navigateur.
+L'option @@timeout@@ permet d'indiquer en minutes le temps d'inactivité au bout
+duquel l'authentification ne sera plus valide. Si vous mettez @@L@0@@, il n'y a
+pas de limite de temps. La session expirera à la fermeture du navigateur.
 
 
 === Contrôler l'authentification pour chaque action ===
 
-Le plugin peut contrôler si l'action demandée a besoin d'une authentification ou non. Avec l'option @@auth_required@@ dans le fichier INI, vous pouvez dire si par défaut toutes les actions nécessitent une authentification (valeur « on »), ou si par défaut, il n'y en a pas besoin (valeur « off »).
+Le plugin peut contrôler si l'action demandée a besoin d'une authentification ou
+non. Avec l'option @@auth_required@@ dans le fichier INI, vous pouvez dire si
+par défaut toutes les actions nécessitent une authentification (valeur « on »),
+ou si par défaut, il n'y en a pas besoin (valeur « off »).
 
 <code ini>
 auth_required=on
 </code>
 
-Dans un cas comme dans l'autre, il faut pouvoir gérer les exceptions (par exemple, une action qui ne nécessite pas une authentification alors que par défaut toutes les actions le nécessitent). Les exceptions sont indiquées au niveau des contrôleurs, dans les paramètres de plugin.
+Dans un cas comme dans l'autre, il faut pouvoir gérer les exceptions (par
+exemple, une action qui ne nécessite pas une authentification alors que par
+défaut toutes les actions le nécessitent). Les exceptions sont indiquées au
+niveau des contrôleurs, dans les paramètres de plugin.
 
 <code php>
 class xxxCtrl extends jController {
@@ -123,7 +177,11 @@ class xxxCtrl extends jController {
 }
 </code>
 
-Pour les actions concernées, vous indiquerez le paramètre @@auth.required@@ et le mettrez à @@L@false@@ ou @@L@true@@. Par exemple pour les actions @@M@index@@ et @@M@affiche@@, il faut une authentification, alors que pour le reste des actions du contrôleur (@@L@*@@ indique « toutes les actions »), ce n'est pas utile :
+Pour les actions concernées, vous indiquerez le paramètre @@auth.required@@ et
+le mettrez à @@L@false@@ ou @@L@true@@. Par exemple pour les actions @@M@index@@
+et @@M@affiche@@, il faut une authentification, alors que pour le reste des
+actions du contrôleur (@@L@*@@ indique « toutes les actions »), ce n'est pas
+utile :
 
 <code php>
 class xxxCtrl extends jController {
@@ -136,40 +194,70 @@ class xxxCtrl extends jController {
 }
 </code>
 
-Voir la page sur [[plugins/coord|les plugins de coordinateurs]] pour mieux comprendre l'usage de @@V@$pluginParams@@.
+Voir la page sur [[plugins/coord|les plugins de coordinateurs]] pour mieux
+comprendre l'usage de @@V@$pluginParams@@.
 
 ==== Spécifier le comportement en cas d'echec d'authentification ====
 
-Si l'authentification n'est pas faite alors que l'action en nécessite une, le plugin va alors agir en fonction de l'option @@on_error@@.
+Si l'authentification n'est pas faite alors que l'action en nécessite une, le
+plugin va alors agir en fonction de l'option @@on_error@@.
 
-Si vous mettez la valeur @@L@1@@, alors le plugin génèrera une erreur dont le message (ou plutôt la clé de la locale du message) est dans l'option @@error_message@@.
+Si vous mettez la valeur @@L@1@@, alors le plugin génèrera une erreur dont le
+message (ou plutôt la clé de la locale du message) est dans l'option
+@@error_message@@.
 
-Si par contre la valeur est @@L@2@@, alors le plugin exécutera l'action définie dans l'option @@on_error_action@@. Cela peut être une action d'un contrôleur du module auth (comme c'est le cas par défaut), ou alors une action de votre propre contrôleur dans un module tierce. Cette action en général affiche une page demandant un login/mot de passe (mais cela peut être autre chose…)
+Si par contre la valeur est @@L@2@@, alors le plugin exécutera l'action définie
+dans l'option @@on_error_action@@. Cela peut être une action d'un contrôleur du
+module auth (comme c'est le cas par défaut), ou alors une action de votre propre
+contrôleur dans un module tierce. Cette action en général affiche une page
+demandant un login/mot de passe (mais cela peut être autre chose…)
 
 ==== Persistance de l'authentification ====
 
-jAuth propose un mécanisme de persistance d'authentification. C'est-à-dire la reconnaissance automatique de l'utilisateur quand il revient sur le site, même plusieurs jours après sa dernière visite (et donc après avoir perdu sa session PHP…). Cela se fait par le biais d'un cookie dans lequel sont stockées un certain nombre d'informations dont une partie est cryptée.
+jAuth propose un mécanisme de persistance d'authentification. C'est-à-dire la
+reconnaissance automatique de l'utilisateur quand il revient sur le site, même
+plusieurs jours après sa dernière visite (et donc après avoir perdu sa session
+PHP…). Cela se fait par le biais d'un cookie dans lequel sont stockées un
+certain nombre d'informations dont une partie est cryptée.
 
 Vous avez pour cela deux paramètres important :
 
-   * @@persistant_enable@@ : mettez le à @@L@on@@ pour activer la persistance de l'authentification
-   * @@persistant_crypt_key@@ : c'est un paramètre à renseigner obligatoirement. **Vous devez** remplacer la valeur par défaut ! Ce paramètre doit contenir une chaîne quelconque de votre choix (plus de 10 lettres de préférence). Elle servira de clé de cryptage pour les données stockées dans le cookie. Si vous changez de clé en cours de route, les cookies seront invalides et les utilisateurs ne sont pas reconnus. Ils devront s'authentifier à nouveau.
+   * @@persistant_enable@@ : mettez le à @@L@on@@ pour activer la persistance de
+     l'authentification
+   * @@persistant_crypt_key@@ : c'est un paramètre à renseigner obligatoirement.
+     **Vous devez** remplacer la valeur par défaut ! Ce paramètre doit contenir
+     une chaîne quelconque de votre choix (plus de 10 lettres de préférence).
+     Elle servira de clé de cryptage pour les données stockées dans le cookie.
+     Si vous changez de clé en cours de route, les cookies seront invalides et
+     les utilisateurs ne sont pas reconnus. Ils devront s'authentifier à
+     nouveau.
 
 D'autres paramètres sont disponibles :
 
-   * @@persistant_cookie_name@@ : indique le nom du cookie à utiliser. Par défaut : @@L@"jelixAuthentificationCookie"@@.
-   * @@persistant_duration@@ : indique la durée en jour de la validité du cookie. Par défaut c'est une journée.
-   * @@persistant_cookie_path@@ : le chemin du cookie. Par défaut (vide), il vaut la valeur de « basePath » dans la config générale.
+   * @@persistant_cookie_name@@ : indique le nom du cookie à utiliser. Par
+     défaut : @@L@"jelixAuthentificationCookie"@@.
+   * @@persistant_duration@@ : indique la durée en jour de la validité du
+     cookie. Par défaut c'est une journée.
+   * @@persistant_cookie_path@@ : le chemin du cookie. Par défaut (vide), il
+     vaut la valeur de « basePath » dans la config générale.
 
 ===== Utiliser le contrôleur par défaut, le module jauth =====
 
-Le module jauth propose des contrôleurs que vous pouvez utiliser pour gérer les actions de connexion, de déconnexion, en faisant appel à la classe @@C@jAuth@@. Il propose aussi des zones et des templates.
+Le module jauth propose des contrôleurs que vous pouvez utiliser pour gérer les
+actions de connexion, de déconnexion, en faisant appel à la classe @@C@jAuth@@.
+Il propose aussi des zones et des templates.
 
-Si vous voulez avoir des fonctionnalités de gestion de compte comme sur un portail, utilisez le module jCommunity, disponible en dehors de Jelix ([[http://bitbucket.org/laurentj/jcommunity/]]). Il propose des formulaires de changement de mot de passe, des formulaires de destruction de compte, de création de compte et de récupération de mot de passe. 
+Si vous voulez avoir des fonctionnalités de gestion de compte comme sur un
+portail, utilisez le module jCommunity, disponible en dehors de Jelix
+([[http://bitbucket.org/laurentj/jcommunity/]]). Il propose des formulaires de
+changement de mot de passe, des formulaires de destruction de compte, de
+création de compte et de récupération de mot de passe. 
 
 ==== Configuration classique ====
 
-Quand on utilise le module **jauth**, il est possible d'ajouter des options de configuration propres au module. Par exemple, une configuration possible dans le fichier @@F@auth.coord.ini.php@@ peut être celle-ci :
+Quand on utilise le module **jauth**, il est possible d'ajouter des options de
+configuration propres au module. Par exemple, une configuration possible dans le
+fichier @@F@auth.coord.ini.php@@ peut être celle-ci :
 
 <code ini>
   on_error_action = "jauth~login:out"
@@ -178,44 +266,72 @@ Quand on utilise le module **jauth**, il est possible d'ajouter des options de c
   on_error_sleep = 3
 </code>
 
-Le paramètre @@on_error_sleep@@ est le nombre de secondes d'attente quand l'utilisateur a donné un mauvais mot de passe ou login. Pour @@after_login@@ et @@after_logout@@, voir plus bas.
+Le paramètre @@on_error_sleep@@ est le nombre de secondes d'attente quand
+l'utilisateur a donné un mauvais mot de passe ou login. Pour @@after_login@@ et
+@@after_logout@@, voir plus bas.
 
-À noter que vous pouvez surcharger les templates du module en créant vos propres templates dans le dossier @@F@var/themes/default/jauth/@@. Voir [[themes|le système de thème]].
+À noter que vous pouvez surcharger les templates du module en créant vos propres
+templates dans le dossier @@F@var/themes/default/jauth/@@. Voir [[themes|le système de thème]].
 
 ==== Configuration de la redirection ====
 
-Dans la configuration du plugin, vous devez spécifier les paramètres @@after_login@@, @@after_logout@@, et éventuellement les options @@enable_after_login_override@@ et @@enable_after_logout_override@@.
+Dans la configuration du plugin, vous devez spécifier les paramètres
+@@after_login@@, @@after_logout@@, et éventuellement les options
+@@enable_after_login_override@@ et @@enable_after_logout_override@@.
 
-Les paramètres @@after_login@@ et @@after_logout@@ doivent contenir les sélecteurs des actions vers lesquelles il faut rediriger une fois que l'identification ou la déconnexion sont effectuées. **Ils sont obligatoires**. Si vous ne les indiquez pas, vous allez avoir des redirections vers l'action @@jauth~default:index@@ qui n'existe pas, donc une erreur…
+Les paramètres @@after_login@@ et @@after_logout@@ doivent contenir les
+sélecteurs des actions vers lesquelles il faut rediriger une fois que
+l'identification ou la déconnexion sont effectuées. **Ils sont obligatoires**.
+Si vous ne les indiquez pas, vous allez avoir des redirections vers l'action
+@@jauth~default:index@@ qui n'existe pas, donc une erreur…
 
 
-Il est possible dans un formulaire d'authentification ou de déconnexion, d'ajouter un paramètre caché contenant l'URL vers laquelle il faut rediriger. Cela permet de rediriger vers une page différente en fonction de la page sur laquelle on est quand on se connecte ou déconnecte. Dans ce cas, ce paramètre caché doit se nommer « @@auth_url_return@@ », et doit contenir l'URL. Et vous devez mettre les paramètres de configuration @@enable_after_login_override@@ et/ou @@enable_after_logout_override@@ à @@L@on@@.
+Il est possible dans un formulaire d'authentification ou de déconnexion,
+d'ajouter un paramètre caché contenant l'URL vers laquelle il faut rediriger.
+Cela permet de rediriger vers une page différente en fonction de la page sur
+laquelle on est quand on se connecte ou déconnecte. Dans ce cas, ce paramètre
+caché doit se nommer « @@auth_url_return@@ », et doit contenir l'URL. Et vous
+devez mettre les paramètres de configuration @@enable_after_login_override@@
+et/ou @@enable_after_logout_override@@ à @@L@on@@.
 
 
 ==== Configuration des URLS significants ====
 
-si vous utilisez le moteur d'urls significant, il vous faudra également ajouté dans votre fichier @@F@var/config/urls.xml@@ la ligne 
-<code>
-<url pathinfo="/auth"     module="jauth" include="urls.xml"/>
-</code>
+si vous utilisez le moteur d'urls significant, il vous faudra également ajouté
+dans votre fichier @@F@var/config/urls.xml@@ la ligne @@<url pathinfo="/auth" module="jauth" include="urls.xml"/>@@
 afin d'obtenir des urls propres au module.
 
 ===== Utiliser son propre contrôleur =====
 
-Vous pouvez utiliser vos propres contrôleurs pour gérer l'authentification : formulaire d'identification, connexion, déconnexion. Vous ferez appel alors à la classe jAuth et ses méthodes statiques pour vérifier les identifiants/mots de passe, connecter et déconnecter un utilisateur.
+Vous pouvez utiliser vos propres contrôleurs pour gérer l'authentification :
+formulaire d'identification, connexion, déconnexion. Vous ferez appel alors à la
+classe jAuth et ses méthodes statiques pour vérifier les identifiants/mots de
+passe, connecter et déconnecter un utilisateur.
 
 
 ===== Classe jAuth =====
 
-C'est la classe principale du système d'authentification. Toutes ses méthodes sont statiques. Elle permet de gérer un utilisateur, de « connecter » et « déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous d'une bonne partie du travail. Voir [[refclass:auth/jAuth|son descriptif dans la référence]].
+C'est la classe principale du système d'authentification. Toutes ses méthodes
+sont statiques. Elle permet de gérer un utilisateur, de « connecter » et «
+déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous
+semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous
+d'une bonne partie du travail. Voir [[refclass:auth/jAuth|son descriptif dans la référence]].
 
-l'objet "user" que vous passez à certaines méthodes vous est donné par @@C@jAuth@@ lui même. C'est un objet contenant les données d'un utilisateur et il n'a pas de classe précise : son type dépend du driver utilisé et éventuellement de sa configuration (pour le driver Db, on peut fournir un DAO de notre choix par exemple). Il doit par contre respecter l'interface attendue par le driver, et doit avoir au moins un champ @@P@login@@ et un champ @@P@password@@.
+l'objet "user" que vous passez à certaines méthodes vous est donné par
+@@C@jAuth@@ lui même. C'est un objet contenant les données d'un utilisateur et
+il n'a pas de classe précise : son type dépend du driver utilisé et
+éventuellement de sa configuration (pour le driver Db, on peut fournir un DAO de
+notre choix par exemple). Il doit par contre respecter l'interface attendue par
+le driver, et doit avoir au moins un champ @@P@login@@ et un champ
+@@P@password@@.
 
-jAuth n'a pas à être surchargée. Elle s'appuie sur des « pilotes » pour gérer les différents types d'authentification.
+jAuth n'a pas à être surchargée. Elle s'appuie sur des « pilotes » pour gérer
+les différents types d'authentification.
 
 ==== Connecter / Déconnecter un utilisateur ====
 
-Pour connecter et déconnecter un utilisateur, il faut utiliser les méthodes @@M@login()@@ et @@M@logout()@@ :
+Pour connecter et déconnecter un utilisateur, il faut utiliser les méthodes
+@@M@login()@@ et @@M@logout()@@ :
 
 <code php>
    // Connexion
@@ -225,15 +341,20 @@ Pour connecter et déconnecter un utilisateur, il faut utiliser les méthodes @@
    jAuth::logout();
 </code>
 
-À partir du moment où @@M@login()@@ a étéé appelé et a renvoyé @@true@@, jAuth stocke des informations sur l'utilisateur en session, qui peuvent être utilisées par d'autres composants. Ces informations sont dans un objet, que vous récupérez par @@M@getUserSession()@@ :
+À partir du moment où @@M@login()@@ a étéé appelé et a renvoyé @@true@@, jAuth
+stocke des informations sur l'utilisateur en session, qui peuvent être utilisées
+par d'autres composants. Ces informations sont dans un objet, que vous récupérez
+par @@M@getUserSession()@@ :
 
 <code php>
   $user = jAuth::getUserSession();
 </code>
 
-La classe de cette objet dépend du driver utilisé. Pour le driver db, ça sera un record du dao indiqué dans la configuration de jAuth.
+La classe de cette objet dépend du driver utilisé. Pour le driver db, ça sera un
+record du dao indiqué dans la configuration de jAuth.
 
-Vous pouvez à tout moment savoir si un utilisateur est identifié avec la méthode @@M@isConnected()@@
+Vous pouvez à tout moment savoir si un utilisateur est identifié avec la méthode
+@@M@isConnected()@@ :
 
 <code php>
   if (jAuth::isConnected()) {
@@ -241,9 +362,12 @@ Vous pouvez à tout moment savoir si un utilisateur est identifié avec la méth
   }
 </code>
 
-Pour authentifier l'utilisateur de manière persistante (il sera reconnu même quand sa session sera détruite), ajoutez @@true@@ en troisième paramètre de @@M@login()@@.
+Pour authentifier l'utilisateur de manière persistante (il sera reconnu même
+quand sa session sera détruite), ajoutez @@true@@ en troisième paramètre de
+@@M@login()@@.
 
-Vous pouvez aussi simplement vérifier un login/mot de passe, sans connecter l'utilisateur qui correspond :
+Vous pouvez aussi simplement vérifier un login/mot de passe, sans connecter
+l'utilisateur qui correspond :
 
 <code php>
   $ok = jAuth::verifyPassword('le_login', 'le_mot_de_passe_en_clair');
@@ -252,7 +376,9 @@ Vous pouvez aussi simplement vérifier un login/mot de passe, sans connecter l'u
 
 ==== Créer un utilisateur ====
 
-Pour créer un utilisateur, il faut là aussi passer par jAuth. Vous devez d'abord lui demander de créer un objet qui contiendra les informations de l'utilisateur, et ensuite lui dire de l'enregistrer
+Pour créer un utilisateur, il faut là aussi passer par jAuth. Vous devez d'abord
+lui demander de créer un objet qui contiendra les informations de l'utilisateur,
+et ensuite lui dire de l'enregistrer
 
 <code php>
    // récupération d'un objet
@@ -267,7 +393,9 @@ Pour créer un utilisateur, il faut là aussi passer par jAuth. Vous devez d'abo
 
 ==== Modifier un utilisateur ====
 
-Pour modifier les informations d'un utilisateur, vous devez récupérer l'objet qui correspond (cela peut être l'utilisateur courant), le modifier, et ensuite indiquer à jAuth de le sauver :
+Pour modifier les informations d'un utilisateur, vous devez récupérer l'objet
+qui correspond (cela peut être l'utilisateur courant), le modifier, et ensuite
+indiquer à jAuth de le sauver :
 
 <code php>
    $user = jAuth::getUserSession()
@@ -280,15 +408,20 @@ Pour modifier les informations d'un utilisateur, vous devez récupérer l'objet 
    jAuth::updateUser($user);
 </code>
 
-Note : si l'utilisateur modifié est celui qui est actuellement connecté, les informations en sessions seront elles aussi modifiées.
+Note : si l'utilisateur modifié est celui qui est actuellement connecté, les
+informations en sessions seront elles aussi modifiées.
 
-N'utilisez pas ce processus pour modifier le mot de passe ! Car vous n'êtes pas censé savoir comment le mot de passe est chiffré/stocké. Cela dépend de la configuration de jAuth et du driver. Pour changer le mot de passe d'un utilisateur, il faut utiliser la méthode @@changePassword()@@
+N'utilisez pas ce processus pour modifier le mot de passe ! Car vous n'êtes pas
+censé savoir comment le mot de passe est chiffré/stocké. Cela dépend de la
+configuration de jAuth et du driver. Pour changer le mot de passe d'un
+utilisateur, il faut utiliser la méthode @@changePassword()@@
 
 <code php>
    jAuth::changePassword('son_login', 'nouveau_mot_de_passe_en_clair');
 </code>
 
-Vous pouvez utiliser @@M@jAuth::getRandomPassword()@@ pour générer un mot de passe aléatoire.
+Vous pouvez utiliser @@M@jAuth::getRandomPassword()@@ pour générer un mot de
+passe aléatoire.
 
 ==== Autres méthodes ====
 
@@ -304,13 +437,18 @@ Pour récupérer la liste des utilisateurs, utilisez @@M@jAuth::getUserList()@@ 
    $list = jAuth::getUserList();
 </code>
 
-Vous récupérez alors un iterateur que vous pouvez utiliser avec un foreach. Chaque élément est un objet contenant les infos d'un utilisateur (comme avec @@M@getUser()@@)
+Vous récupérez alors un iterateur que vous pouvez utiliser avec un foreach.
+Chaque élément est un objet contenant les infos d'un utilisateur (comme avec
+@@M@getUser()@@)
 
 
 
 ==== Évènements ====
 
-Pour la plupart des méthodes de @@C@jAuth@@, un évènement est émis. Cela permet à des modules tiers d'être au courant des différentes actions d'authentification, et donc de charger des données supplémentaires dans l'objet user, ou de gérer les données dépendantes à l'utilisateur etc.
+Pour la plupart des méthodes de @@C@jAuth@@, un évènement est émis. Cela permet
+à des modules tiers d'être au courant des différentes actions
+d'authentification, et donc de charger des données supplémentaires dans l'objet
+user, ou de gérer les données dépendantes à l'utilisateur etc.
 
   * AuthNewUser : indique qu'un utilisateur vient d'être ajouté
   * AuthCanRemoveUser : demande si on peut supprimer l'utilisateur ou pas
@@ -320,7 +458,8 @@ Pour la plupart des méthodes de @@C@jAuth@@, un évènement est émis. Cela per
   * AuthLogin : un utilisateur vient de se connecter
   * AuthLogout : un utilisateur vient de se déconnecter
   * AuthErrorLogin : indique une erreur d'authentification de l'utilisateur
-  * AuthBeforeLogin : permet d'effectuer des traitements spécifiques avant l'authentification de l'utilisateur
+  * AuthBeforeLogin : permet d'effectuer des traitements spécifiques avant
+    l'authentification de l'utilisateur
 
 Les tests sont sur les propriétés suivantes :
   * AuthCanRemoveUser : canremove

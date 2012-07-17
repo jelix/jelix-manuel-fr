@@ -1,6 +1,8 @@
 ~~LANG:EN@enman:cmdline~~
 
-Jelix vous permet de lancer des actions spécialement en ligne de commande. Ceci est très pratique pour effectuer des traitements sur un serveur et les planifier.
+Jelix vous permet de lancer des actions spécialement en ligne de commande. Ceci
+est très pratique pour effectuer des traitements sur un serveur et les
+planifier.
 
 ===== Installation =====
 
@@ -16,25 +18,31 @@ Les jelix-scripts vont vous permettre de créer ces éléments facilement.
 
 === À l'aide des jelix-scripts ===
 
-Le point d'entrée se crée lors de la création de l'application avec le script @@c@createapp@@ ou n'importe quand avec la commande @@c@createentrypoint@@.
+Le point d'entrée se crée lors de la création de l'application avec le script
+@@c@createapp@@ ou n'importe quand avec la commande @@c@createentrypoint@@.
 
 <code bash>
 $ php createapp.php -withcmdline myapp
 </code>
 
-Avec ce script, vous allez créer la structure d'une nouvelle application qui contiendra en plus un répertoire @@F@scripts@@ contenant alors le point d'entrée cmdline : @@F@cmdline.php@@.
+Avec ce script, vous allez créer la structure d'une nouvelle application qui
+contiendra en plus un répertoire @@F@scripts@@ contenant alors le point d'entrée
+cmdline : @@F@cmdline.php@@.
 
-Si vous avez déjà créé votre application, vous pouvez utiliser la commande @@F@createentrypoint@@ :
+Si vous avez déjà créé votre application, vous pouvez utiliser la commande
+@@F@createentrypoint@@ :
 
 <code bash>
 $ php cmd.php createentrypoint -type cmdline myscript
 </code>
 
-Cela créera un point d'entrée pour un script en ligne de commande sous le nom @@F@myscript.php@@ dans le répertoire @@F@scripts/@@ de l'application.
+Cela créera un point d'entrée pour un script en ligne de commande sous le nom
+@@F@myscript.php@@ dans le répertoire @@F@scripts/@@ de l'application.
 
 === Manuellement ===
 
-Vous pouvez créer le point d'entrée à la main. Il faut créer un fichier @@F@myapp/scripts/cmdline.php@@ (ou un autre nom). Voici son contenu :
+Vous pouvez créer le point d'entrée à la main. Il faut créer un fichier
+@@F@myapp/scripts/cmdline.php@@ (ou un autre nom). Voici son contenu :
 
 <code php>
 <?php
@@ -54,7 +62,8 @@ Notez les différences par rapport à un point d'entrée classique :
    * l'utilisation d'un objet @@C@jCmdLineRequest@@ au lieu de @@C@jClassicRequest@@
    * un fichier de configuration spécifique @@F@myapp/var/config/cmdline/config.ini.php@@
 
-Il faut également déclarer le script dans le fichier @@F@myapp/project.xml@@, au niveau de la balise @@E@entrypoints@@ :
+Il faut également déclarer le script dans le fichier @@F@myapp/project.xml@@, au
+niveau de la balise @@E@entrypoints@@ :
 
 <code xml>
     <entrypoints>
@@ -65,7 +74,8 @@ Il faut également déclarer le script dans le fichier @@F@myapp/project.xml@@, 
 
 ==== Création d'un contrôleur cmdline ====
 
-Pour pouvoir travailler en mode cmdline, vous allez devoir créer un contrôleur spécifique à la ligne de commande.
+Pour pouvoir travailler en mode cmdline, vous allez devoir créer un contrôleur
+spécifique à la ligne de commande.
 
 === À l'aide des commandes jelix-scripts ===
 
@@ -85,7 +95,10 @@ $ php cmd.php createctrl -cmdline foo bar
 
 === Manuellement ===
 
-Pour créer le contrôleur manuellement, celui-ci ne devra pas hériter de @@C@jController@@ comme habituellement, mais il devra hériter de @@C@jControllerCmdline@@. Voici l'exemple du contrôleur @@F@default.cmdline.php@@ :
+Pour créer le contrôleur manuellement, celui-ci ne devra pas hériter de
+@@C@jController@@ comme habituellement, mais il devra hériter de
+@@C@jControllerCmdline@@. Voici l'exemple du contrôleur
+@@F@default.cmdline.php@@ :
 
 <code php>
 <?php
@@ -105,22 +118,28 @@ class defaultCtrl extends jControllerCmdLine {
 
 ==== Création du fichier de configuration ====
 
-Si vous avez créé l'application avec l'option @@-withcmdline@@ le fichier de configuration aura été généré pour vous.
+Si vous avez créé l'application avec l'option @@-withcmdline@@ le fichier de
+configuration aura été généré pour vous.
 
 Voici son emplacement : @@F@app/var/config/cmdline/config.ini.php@@
 
-Si le fichier n'existe pas, vous pouvez très simplement le créer à la main en prenant modèle sur le fichier de configuration classic (@@F@app/var/config/index/config.ini.php@@)
+Si le fichier n'existe pas, vous pouvez très simplement le créer à la main en
+prenant modèle sur le fichier de configuration classic
+(@@F@app/var/config/index/config.ini.php@@)
 
 
 ===== Développement d'actions =====
 
-Pour lancer vos actions, vous allez certainement vouloir lui passer des paramètres et des options.
+Pour lancer vos actions, vous allez certainement vouloir lui passer des
+paramètres et des options.
 
 ==== Options ====
 
 === Déclaration ===
 
-Pour déclarer les options que l'on pourra passer à l'action en ligne de commande, il faut utiliser la variable de classe @@P@$allowed_options@@ qui est un tableau.
+Pour déclarer les options que l'on pourra passer à l'action en ligne de
+commande, il faut utiliser la variable de classe @@P@$allowed_options@@ qui est
+un tableau.
 
 <code php>
 protected $allowed_options = array(
@@ -132,7 +151,9 @@ Si le nom de l'option vaut //true// cela signifie qu'une valeur est attendue apr
 
 === Récupération ===
 
-Dans les actions de votre controller cmdline vous allez vouloir récupérer les options passées au script. Pour cela il faut utiliser la méthode @@M@option('-nom_option')@@
+Dans les actions de votre controller cmdline vous allez vouloir récupérer les
+options passées au script. Pour cela il faut utiliser la méthode
+@@M@option('-nom_option')@@
 
 Exemple :
 <code php>
@@ -158,7 +179,9 @@ Ici si le nom du paramètre vaut //true// c'est qu'il est obligatoire, //false//
 
 === Récupération ===
 
-Dans les actions de votre controller cmdline vous allez vouloir récupérer les paramètres passés au script. Pour cela il faut utiliser la méthode @@M@param('nom_parametre')@@
+Dans les actions de votre controller cmdline vous allez vouloir récupérer les
+paramètres passés au script. Pour cela il faut utiliser la méthode
+@@M@param('nom_parametre')@@
 
 Exemple :
 <code php>
@@ -170,7 +193,8 @@ public function myscript() {
 
 ==== Message d'aide ====
 
-Vous pouvez aussi gérer le message d'aide sur les commandes. Celui-ci se déclare dans la variable de classe $help :
+Vous pouvez aussi gérer le message d'aide sur les commandes. Celui-ci se déclare
+dans la variable de classe $help :
 
 <code php>
 public $help = array(
@@ -184,9 +208,12 @@ Nous allons voir dans la partie suivante comment se servir de ce message d'aide
 
 ===== Utilisation =====
 
-Pour utiliser vos scripts, c'est à dire vos actions de vos contrôleurs cmdline, rendez vous en ligne de commande dans le répertoire @@F@myapp/scripts/@@.
+Pour utiliser vos scripts, c'est à dire vos actions de vos contrôleurs cmdline,
+rendez vous en ligne de commande dans le répertoire @@F@myapp/scripts/@@.
 
-Il suffit alors de lancer le script @@F@cmdline.php@@ suivi de l'action à lancer (en utilisant le sélecteur d'action) et suivi du/des options et du/des paramètres voulu
+Il suffit alors de lancer le script @@F@cmdline.php@@ suivi de l'action à lancer
+(en utilisant le sélecteur d'action) et suivi du/des options et du/des
+paramètres voulu
 
 Exemple :
 
@@ -200,7 +227,9 @@ Pour afficher l'aide, il suffit de faire :
 $ php cmdline.php help module~controller:action
 </code>
 
-Si vous voulez qu'un script soit dédié à l'action par défaut indiquée dans la configuration, vous devez alors indiquer le paramètre true au constructeur de jCmdlineRequest dans le point d'entrée :
+Si vous voulez qu'un script soit dédié à l'action par défaut indiquée dans la
+configuration, vous devez alors indiquer le paramètre true au constructeur de
+jCmdlineRequest dans le point d'entrée :
 
 
 <code php>
@@ -211,7 +240,9 @@ $jelix->process(new jCmdLineRequest(true));
 ?>
 </code>
 
-Ainsi vous n'avez plus à indiquer l'action en paramètre du script. Mais bien sûr, vous ne pouvez plus exécuter d'autres actions avec ce script. L'exemple précédent devient :
+Ainsi vous n'avez plus à indiquer l'action en paramètre du script. Mais bien
+sûr, vous ne pouvez plus exécuter d'autres actions avec ce script. L'exemple
+précédent devient :
 
 
 <code bash>

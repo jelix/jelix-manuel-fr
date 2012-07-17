@@ -1,8 +1,13 @@
 ~~LANG:EN@enman:web-services/json~~
 
-[[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui réutilise des éléments syntaxiques de Javascript. Cela facilite alors grandement l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus utilisé pour la technique AJAX.
+[[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui
+réutilise des éléments syntaxiques de Javascript. Cela facilite alors grandement
+l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus
+utilisé pour la technique AJAX.
 
-Pour envoyer un contenu en JSON au navigateur, vous pouvez employer la réponse @@C@jResponseJson@@ dont l'alias est "json". Vous n'avez ensuite qu'à mettre n'importe quelles données dans la propriété @@P@$data@@.
+Pour envoyer un contenu en JSON au navigateur, vous pouvez employer la réponse
+@@C@jResponseJson@@ dont l'alias est "json". Vous n'avez ensuite qu'à mettre
+n'importe quelles données dans la propriété @@P@$data@@.
 
 <code php>
   $rep = $this->getResponse('json');
@@ -10,7 +15,8 @@ Pour envoyer un contenu en JSON au navigateur, vous pouvez employer la réponse 
   return $rep;
 </code>
 
-L'appel du côté client, se fait de la même façon que la technique AJAX
+L'appel du côté client, se fait de la même façon que la technique AJAX :
+
 <code javascript>
    http = new XMLHttpRequest();
 
@@ -38,6 +44,7 @@ L'appel du côté client, se fait de la même façon que la technique AJAX
 </code>
 
 Avec jQuery, c'est plus simple :
+
 <code javascript>
    $.getJSON( url, function (json) {
       // ici traitement de la réponse

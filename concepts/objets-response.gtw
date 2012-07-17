@@ -1,14 +1,22 @@
 ~~LANG:EN@enman:core/response-object~~
 
-Un objet jResponse représente la vue dans le modèle MVC. Il est chargé de contrôler et de générer correctement la réponse, c'est à dire les données en sortie. Toute demande d'"affichage" passe par cet objet. 
+Un objet jResponse représente la vue dans le modèle MVC. Il est chargé de
+contrôler et de générer correctement la réponse, c'est à dire les données en
+sortie. Toute demande d'"affichage" passe par cet objet.
 
-Il existe plusieurs objets qui héritent de la classe jResponse, chacun prenant en charge un format spécifique en sortie : html, texte, fichiers binaires, pdf, XML-RPC etc... Mais aussi des réponses particulières comme la redirection.
+Il existe plusieurs objets qui héritent de la classe jResponse, chacun prenant
+en charge un format spécifique en sortie : html, texte, fichiers binaires, pdf,
+XML-RPC etc... Mais aussi des réponses particulières comme la redirection.
 
-Un objet jResponse implémente un certain nombre de méthodes, dont les plus utiles pour vous sont celles-ci :
+Un objet jResponse implémente un certain nombre de méthodes, dont les plus
+utiles pour vous sont celles-ci :
 
-   * @@M@addHttpHeader ()@@ : pour ajouter un entête HTTP, qui sera envoyé au moment opportun.
+   * @@M@addHttpHeader ()@@ : pour ajouter un entête HTTP, qui sera envoyé au
+     moment opportun.
    * @@M@setHttpStatus ()@@ : pour indiquer le code "status" HTTP (200, 404...)
 
-Ces méthodes sont disponibles pour tout type de réponse. 
+Ces méthodes sont disponibles pour tout type de réponse.
 
-Pour connaître les spécificités des différents objets réponses, voir le [[/vues/index|chapitre sur les réponses]].
+
+Pour connaître les spécificités des différents objets réponses, voir le
+[[/vues/index|chapitre sur les réponses]].

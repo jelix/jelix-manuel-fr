@@ -1,6 +1,7 @@
 ~~LANG:EN@enman:locales~~
 
 Jelix possède son propre mécanisme de localisation/internationalisation. Les
+
 fonctions @@M@setlocale@@ et @@M@gettext@@ de PHP ne sont pas utilisées car
 trop contraignantes à mettre en place, et leur configuration est aléatoire
 sur les serveurs.

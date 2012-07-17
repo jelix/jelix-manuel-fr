@@ -1,12 +1,15 @@
 ~~LANG:EN@enman:views/view-zip~~
 
-Jelix propose @@C@jResponseZip@@ qui permet de générer un fichier zip à la volée, et le proposer en téléchargement à l'utilisateur. L'alias est "zip" :
+Jelix propose @@C@jResponseZip@@ qui permet de générer un fichier zip à la
+volée, et le proposer en téléchargement à l'utilisateur. L'alias est "zip" :
 
 <code php>
 $rep = $this->getResponse('zip');
 </code>
 
-Vous devez ensuite indiquer un nom de fichier. C'est sous ce nom que le contenu zip sera proposé à l'utilisateur. Ce nom de fichier n'est pas forcément celui d'un fichier existant sur le serveur. 
+Vous devez ensuite indiquer un nom de fichier. C'est sous ce nom que le contenu
+zip sera proposé à l'utilisateur. Ce nom de fichier n'est pas forcément celui
+d'un fichier existant sur le serveur. 
 
 <code php>
 $rep->zipFilename='myCrazyPackage.zip';
@@ -30,5 +33,8 @@ $rep->content->addContentFile('dynamic.txt', 'contenu généré comme on veut');
 </code>
 
 Et c'est tout :-)
-L'utilisateur se verra proposer d'enregistrer sur son disque un fichier @@F@myCrazyPackage.zip@@, qui contiendra un fichier @@F@machin.txt@@, un répertoire @@F@exemples/@@, et un fichier @@F@dynamic.txt@@.
+
+L'utilisateur se verra proposer d'enregistrer sur son disque un fichier
+@@F@myCrazyPackage.zip@@, qui contiendra un fichier @@F@machin.txt@@, un
+répertoire @@F@exemples/@@, et un fichier @@F@dynamic.txt@@.
 

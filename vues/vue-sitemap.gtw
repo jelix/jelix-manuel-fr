@@ -1,22 +1,27 @@
 ~~LANG:EN@enman:views/view-sitemap~~
 
 
-jResponseSitemap permet de générer un [[http://sitemaps.org/|sitemap]] (utilisé par les moteurs de recherche, entre autres Google).
+jResponseSitemap permet de générer un [[http://sitemaps.org/|sitemap]] (utilisé
+par les moteurs de recherche, entre autres Google).
 
-Récupération de la réponse dans le controller : 
+Récupération de la réponse dans le controller :
+
 <code php>
 $rep = $this->getResponse('sitemap');
 </code>
+
 Vous avez alors dans $rep une instance de l'objet @@C@jResponseSitemap@@.
 
 ===== Restrictions d'un sitemap =====
 
   * Un fichier sitemap ne peut contenir que 50 000 urls.
-  * Un fichier index de sitemap ne peut contenir que 1000 fichiers sitemap, ce qui donne quand même un total 50 000 000 urls !
+  * Un fichier index de sitemap ne peut contenir que 1000 fichiers sitemap, ce
+    qui donne quand même un total 50 000 000 urls !
 
 ===== Génération manuelle =====
 
-La création d'un sitemap se fait par l'ajout de chacune des urls que vous voulez voir afficher dans le fichier :
+La création d'un sitemap se fait par l'ajout de chacune des urls que vous voulez
+voir afficher dans le fichier :
 
 <code php>
 $rep->addUrl($loc, $lastmod, $changefreq, $priority);
@@ -24,8 +29,12 @@ $rep->addUrl($loc, $lastmod, $changefreq, $priority);
 
   * @@V@$loc@@ : URL de la page
   * @@V@$lastmod@@ : Date de dernière modification de la page, au format Y-m-d 
-  * @@V@$changefreq@@ : Fréquence probable de modification de la page (uniquement les valeurs : always, hourly, daily, weekly, monthly, yearly, never)
-  * @@V@$priorit@@y : Priorité de cette URL par rapport aux autres URL de votre site 
+  * @@V@$changefreq@@ : Fréquence probable de modification de la page
+    (uniquement les valeurs : always, hourly, daily, weekly, monthly, yearly,
+    never)
+  * @@V@$priorit@@y : Priorité de cette URL par rapport aux autres URL de votre
+    site
+  
 Seul le paramètre @@V@$loc@@ est obligatoire.
 
 Exemple :
@@ -40,13 +49,17 @@ $rep->addUrl(jUrl::get('module~contact:index'), null, 'weekly', 1);
 **L'automatisation du sitemap est possible uniquement en utilisant le moteur d'url significatives de jUrl.**
 
 Une fois la réponse instanciée, il suffit d'appeler une seule méthode :
+
 <code php>
 $rep->importFromUrlsXml();
 return $rep;
 </code>
 
 ===== Génération d'un index de sitemap =====
-Si vous avez vraiment un très gros site et qu'un seul fichier sitemap ne suffit pas, vous pouvez en créer plusieurs via les 2 méthodes ci dessus et ensuite les lier dans un index de sitemap :
+
+Si vous avez vraiment un très gros site et qu'un seul fichier sitemap ne suffit
+pas, vous pouvez en créer plusieurs via les 2 méthodes ci dessus et ensuite les
+lier dans un index de sitemap :
 
 <code php>
 $rep->addSitemap($loc, $lastmod);
@@ -57,7 +70,9 @@ $rep->addSitemap($loc, $lastmod);
 Seul le paramètre @@V@$loc@@ est obligatoire.
 
 
-Ainsi vous écrivez plusieurs actions qui génère un sitemap, et une autre action qui va générer l'index. Pour donner l'url des sitemaps à @@M@addSitemap@@, vous pouvez utiliser @@jUrl::get()@@.
+Ainsi vous écrivez plusieurs actions qui génère un sitemap, et une autre action
+qui va générer l'index. Pour donner l'url des sitemaps à @@M@addSitemap@@, vous
+pouvez utiliser @@jUrl::get()@@.
 
 <code php>
 $rep->addSitemap(jUrl::get('mymodule~sitemap:s1');
@@ -71,7 +86,10 @@ s1, s2, s3 et s4 sont des actions  qui génèrent des sitemaps.
 
 ===== Avertir les moteurs de recherche =====
 
-Pour donner l'adresse de votre sitemap aux moteurs de recherche, il y a la méthode manuelle qui consiste à aller sur chacun des moteurs de recherche et de leur fournir l'URL de votre sitemap. Ou vous pouvez utiliser la méthode @@M@ping()@@ :
+Pour donner l'adresse de votre sitemap aux moteurs de recherche, il y a la
+méthode manuelle qui consiste à aller sur chacun des moteurs de recherche et de
+leur fournir l'URL de votre sitemap. Ou vous pouvez utiliser la méthode
+@@M@ping()@@ :
 
 <code php>
 $sitemapurl = jUrl::get('mymodule~sitemap:index')
