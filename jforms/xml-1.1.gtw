@@ -437,8 +437,7 @@ tableau PHP contenant les valeurs des cases qui ont été cochées. Par exemple,
 l'utilisateur a coché "steack", coté serveur vous recevrez @@array(27)@@. Si en
 plus "sucre" est coché, vous recevrez @@array(54, 27)@@.
 
-(voir la page sur la [[utilisation|gestion du contenu d'un formulaire coté
-serveur]])
+(voir la page sur la [[utilisation|gestion du contenu d'un formulaire coté serveur]]).
 
 ==== Boutons radios ====
 
@@ -546,8 +545,8 @@ choisis.
 ==== Téléchargement de fichier ====
 
 Pour permettre à l'utilisateur de télécharger un fichier vers le serveur, vous
-pouvez utiliser la balise @@E@<upload>@@ (équivalent de @@E@<input
-type="file">@@ en HTML). Comme pour les autres contrôles, vous devez y mettre
+pouvez utiliser la balise @@E@<upload>@@ (équivalent de @@E@<input type="file">@@
+en HTML). Comme pour les autres contrôles, vous devez y mettre
 l'attribut @@A@ref@@, et vous pouvez utiliser les balises @@E@<label>@@,
 @@E@<hint>@@, @@E@<alert>@@, @@E@<help>@@ ainsi que les attributs @@A@readonly@@
 et @@A@required@@.
@@ -771,7 +770,7 @@ une balise @@E@<datasource>@@ qui doit avoir au moins 3 attributs :
    - @@A@labelproperty@@, indiquant quelle est la propriété de la DAO qui contient le libellé du choix. 
 
 
-Vous pouvez indiquer un profil jDb (optionnel) à travers l'attribut  @@A@profile@@.
+Vous pouvez indiquer un profil jDb (optionnel) à travers l'attribut @@A@profile@@.
 
 La valeur de chaque choix sera la valeur de la clé primaire de la DAO.
 Cependant, si vous voulez indiquer une autre propriété de la DAO, vous pouvez

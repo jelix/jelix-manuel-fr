@@ -374,8 +374,8 @@ templates pour les réponses Text par exemple.
 ==== Fonctions et modificateurs personnalisés ====
 
 Si vous voulez avoir des fonctions ou modificateurs supplémentaires, vous pouvez
-réaliser des plugins de templates. [[plugins/tpl|Voir la documentation sur ce
-sujet]]. C'est assez simple à faire.
+réaliser des plugins de templates. [[plugins/tpl|Voir la documentation sur ce sujet]].
+C'est assez simple à faire.
 
 Une deuxième solution est de déclarer les modificateurs ou fonctions à la volée
 au moteur de template. Vous avez pour cela deux méthodes
