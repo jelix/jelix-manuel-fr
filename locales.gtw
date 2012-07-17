@@ -222,8 +222,7 @@ quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
 
 Jelix fourni un plugin pour le coordinateur qui permet de changer la langue
 dynamiquement. C'est le plugin autolocale (qui est situé dans
-@@F@lib/jelix/plugins/coord/@@). (voir [[plugins/coord|la section sur les plugins de
-coordinateur]]).
+@@F@lib/jelix/plugins/coord/@@). (voir [[plugins/coord|la section sur les plugins de coordinateur]]).
 
 Pour cela, le plugin regarde si un paramètre est présent dans l'url, indiquant
 la nouvelle langue à prendre en compte, et utilisera cette langue durant le

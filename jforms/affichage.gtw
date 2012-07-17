@@ -125,9 +125,8 @@ Exemple :
 </code>
 
 Notez que les champs seront affichés dans le même ordre que leur déclaration
-dans le fichier XML. Notez également qu'ici le template est **totalement
-indépendant** du contenu du formulaire. Il pourrait être réutilisé avec
-plusieurs formulaires.
+dans le fichier XML. Notez également qu'ici le template est **totalement indépendant**
+du contenu du formulaire. Il pourrait être réutilisé avec plusieurs formulaires.
 
 ==== Aller plus loin dans le contrôle de l'affichage ====
 
@@ -213,8 +212,8 @@ sera affiché par le plugin formcontrols qui suit.
 
 Vous pouvez ajouter des attributs HTML sur les elements HTML générés par
 @@ctrl_control@@. Pour ce faire, ajouter un deuxième paramètre à
-@@ctrl_control@@. Cela doit être un tableau @@('nom attribut'=>'valeur
-attribute')@@. Donnez @@L@""@@ comme premier paramètre quand @@ctrl_control@@
+@@ctrl_control@@. Cela doit être un tableau @@('nom attribut'=>'valeur attribute')@@.
+Donnez @@L@""@@ comme premier paramètre quand @@ctrl_control@@
 est utilisé à l'intérieur d'une boucle @@formcontrols@@
 
 Note : pour les générateurs autre que HTML, ce tableau d'attribut peut être
@@ -342,8 +341,8 @@ exception dans ce dernier.
 
 Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à
 jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs
-sont fournis : "html" et "htmllight". [[/plugins/jforms|Vous pouvez en créer
-d'autres]] si la façon dont sont générés les formulaires ne vous plaît pas. Par
+sont fournis : "html" et "htmllight". [[/plugins/jforms|Vous pouvez en créer d'autres]]
+si la façon dont sont générés les formulaires ne vous plaît pas. Par
 exemple, un générateur qui génère un formulaire en se reposant une bibliothèque
 javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire
 en XUL, en XForms etc...
