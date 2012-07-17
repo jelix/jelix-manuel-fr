@@ -103,7 +103,7 @@ répertoires différents.
 
 Ainsi, en tapant http://www.monsite.com vous accédez à votre site, et
 http://www.monsite.com/jelix/, à @@F@jelix-www/@@, qui contient un certain
-nombre de scripts javascript utiles, des ressources XUL etc..
+nombre de scripts javascript utiles etc..
 
 
 ==== Si vous ne pouvez pas spécifier le document root ====

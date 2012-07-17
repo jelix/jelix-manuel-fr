@@ -17,11 +17,11 @@ comprendre.
 
 Les plugins sont stockés dans un répertoire ayant une arborescence précise : ils
 sont classés dans des sous-répertoires en fonction du type de réponse auxquels
-ils sont destinés. Cela évite ainsi d'utiliser des plugins pour le XUL quand on
+ils sont destinés. Cela évite ainsi d'utiliser des plugins pour le XML quand on
 fait du HTML par exemple.
 
 C'est ainsi que dans un dépôt de plugin de template, vous avez un
-sous-répertoire "html", "xul", "text" et "common". Le sous-répertoire "common"
+sous-répertoire "html", "xml", "text" et "common". Le sous-répertoire "common"
 est celui dans lequel sont mis les plugins qui ne sont pas destinés à des types
 de réponses précis. @@F@lib/jelix/plugins/tpl/@@ est le dépôt par défaut de
 jelix pour les plugins de template. Mais vous mettrez en général vos propres

@@ -107,10 +107,10 @@ Le contenu du template est évalué et affiché directement.
 
 ===== Les fichiers templates =====
 
-Un fichier de template contient du HTML, du XUL ou ce que vous voulez qui soit
+Un fichier de template contient du HTML, du XML ou ce que vous voulez qui soit
 en rapport avec le type de la réponse. Il contient aussi des instructions pour
 incorporer des valeurs que vous aurez fournies, des instructions pour générer
-répétitivement des portions de HTML, XUL etc.
+répétitivement des portions de HTML etc.
 
 La syntaxe utilisée dans @@C@jTpl@@ est à mi chemin entre celle utilisée dans le
 moteur de template Smarty, et la syntaxe PHP. Le but étant d'avoir des templates
@@ -433,7 +433,7 @@ Exemple :
   {meta_html js 'fooscript.js'}
   {meta_html bodyattr array('onload'=>'alert("charge")')}
 
-Un plugin similaire existe pour XUL, et bien sûr vous pouvez réaliser le vôtre.
+Bien sûr vous pouvez réaliser le vôtre.
 
 ===== Templates Virtuels =====
 

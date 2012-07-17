@@ -1,0 +1,7 @@
+~~LANG:EN@enman:other-views~~
+
+Des modules tiers peuvent fournir d'autres types de vues.
+
+
+  * Pour générer du contenu XUL, il y a [[https://github.com/jelix/jelix-contrib/tree/master/modules/jelix/xul/|le module XUL]].
+  Ce module permet de générer des interfaces en XUL.

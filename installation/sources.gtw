@@ -20,7 +20,7 @@ Vous obtenez les répertoires suivants :
       jelix-modules/  modules livrés en standard avec Jelix
       jelix-plugins/  plugins livrés en standard avec Jelix
       jelix-scripts/  scripts en ligne de commande d'aide pour le développeur
-      jelix-www/      ressources javascript, css, xul... 
+      jelix-www/      ressources javascript, css...
     temp/             fichiers temporaires des applications jelix. 
 
 
