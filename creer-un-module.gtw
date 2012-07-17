@@ -1,10 +1,16 @@
 ~~LANG:EN@enman:creating-a-module~~
 
-Un module est un répertoire dans lequel il y a une arborescence précise. Les modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe de modules, ou aussi dépôt de modules.
+Un module est un répertoire dans lequel il y a une arborescence précise. Les
+modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe
+de modules, ou aussi dépôt de modules.
 
 ===== Déclarer un dépôt de module =====
 
-Pour avoir accès aux modules, il faut déclarer ces dépôts de modules dans la configuration, par la propriété @@V@modulesPath@@. On peut y indiquer plusieurs chemins en les séparant par des virgules. On peut indiquer soit des chemins complets, soit des chemins relatifs à un répertoire spécifique de l'arborescence Jelix. Ces chemins relatifs ont une notation spéciale :
+Pour avoir accès aux modules, il faut déclarer ces dépôts de modules dans la
+configuration, par la propriété @@V@modulesPath@@. On peut y indiquer plusieurs
+chemins en les séparant par des virgules. On peut indiquer soit des chemins
+complets, soit des chemins relatifs à un répertoire spécifique de l'arborescence
+Jelix. Ces chemins relatifs ont une notation spéciale :
 
    coderepertoire:chemin/relatif/
 
@@ -13,7 +19,11 @@ Pour avoir accès aux modules, il faut déclarer ces dépôts de modules dans la
 | **lib** | répertoire lib/ de jelix |
 | **app** | répertoire de l'application |
 
-Cela évite d'avoir à indiquer un véritable chemin relatif. Et donc d'avoir à changer à la fois le fichier @@F@application.init.php@@ et le fichier de configuration quand on fait une modification dans l'arborescence, quand on migre l'application d'un serveur à un autre (entre le développement et la production par exemple). 
+Cela évite d'avoir à indiquer un véritable chemin relatif. Et donc d'avoir à
+changer à la fois le fichier @@F@application.init.php@@ et le fichier de
+configuration quand on fait une modification dans l'arborescence, quand on migre
+l'application d'un serveur à un autre (entre le développement et la production
+par exemple). 
 
 Exemple :
 
@@ -21,26 +31,41 @@ Exemple :
    modulesPath = lib:jelix-modules/,app:modules/
 </code>
 
-On déclare ici qu'il y a deux dépôts de modules : le premier, //jelix-modules//, se trouvant dans le répertoire @@F@lib/@@ de jelix; le deuxième, le répertoire @@F@modules/@@ de l'application.
+On déclare ici qu'il y a deux dépôts de modules : le premier, //jelix-modules//,
+se trouvant dans le répertoire @@F@lib/@@ de jelix; le deuxième, le répertoire
+@@F@modules/@@ de l'application.
 
-Tous les modules se trouvant dans ces deux répertoires pourront être activés dans l'application.
+Tous les modules se trouvant dans ces deux répertoires pourront être activés
+dans l'application.
 
 
 ===== Créer un module =====
 
-Le principe : il suffit de créer un répertoire dans un dépôt, avec un nom précis, et d'y mettre les contrôleurs, les daos et tout ce qu'il faut dans leurs sous-répertoires respectifs.
+Le principe : il suffit de créer un répertoire dans un dépôt, avec un nom
+précis, et d'y mettre les contrôleurs, les daos et tout ce qu'il faut dans leurs
+sous-répertoires respectifs.
 
-Le plus simple est encore d'utiliser la commande @@c@createmodule@@. Dans votre application :
+Le plus simple est encore d'utiliser la commande @@c@createmodule@@. Dans votre
+application :
 
 <code bash>
    php cmd.php createmodule monmodule
 </code>
 
-Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de l'application, ainsi que l'arborescence classique d'un module et un contrôleur par défaut.
+Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de
+l'application, ainsi que l'arborescence classique d'un module et un contrôleur
+par défaut.
 
-**Important** : Le nom des modules est repris dans certaines classes générées automatiquement par Jelix, aussi ne peut-il comporter que des caractères autorisés par PHP pour les noms de classes : lettres minuscules, majuscules, non accentuées, les chiffres et le caractère _.
+**Important** : Le nom des modules est repris dans certaines classes générées
+automatiquement par Jelix, aussi ne peut-il comporter que des caractères
+autorisés par PHP pour les noms de classes : lettres minuscules, majuscules, non
+accentuées, les chiffres et le caractère _.
 
-Par défaut, le module est créé dans le répertoire @@F@modules/@@ de l'application, mais si vous voulez le créer dans un autre dépôt de module déclaré dans @@V@modulesPath@@, vous pouvez l'indiquer après le nom du module, en utilisant la même syntaxe que pour @@V@modulesPath@@, à savoir un chemin absolu ou un chemin relatif précédé de "lib:" ou "app:".
+Par défaut, le module est créé dans le répertoire @@F@modules/@@ de
+l'application, mais si vous voulez le créer dans un autre dépôt de module
+déclaré dans @@V@modulesPath@@, vous pouvez l'indiquer après le nom du module,
+en utilisant la même syntaxe que pour @@V@modulesPath@@, à savoir un chemin
+absolu ou un chemin relatif précédé de "lib:" ou "app:".
 
 Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/ 
 
@@ -48,24 +73,33 @@ Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/
    php cmd.php createmodule supermodule lib:shared-modules/
 </code>
 
-Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres options.
+Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres
+options.
 
 
 
 
 ===== Indiquer le numéro de version et les dépendances =====
 
-Après avoir créer le module, vous devez vérifier que le numéro de version initial est bon pour vous. Par défaut, c'est 0.1pre. Vous devez aussi éventuellement indiquer les dépendances. Ces deux choses sont très importantes pour le système d'installation de jelix.
+Après avoir créer le module, vous devez vérifier que le numéro de version
+initial est bon pour vous. Par défaut, c'est 0.1pre. Vous devez aussi
+éventuellement indiquer les dépendances. Ces deux choses sont très importantes
+pour le système d'installation de jelix.
 
-Vous pouvez indiquer le numéro de version à la commande @@createmodule@@, grâce à l'option @@-ver@@ :
+Vous pouvez indiquer le numéro de version à la commande @@createmodule@@, grâce
+à l'option @@-ver@@ :
 
 <code bash>
 php cmd.php createmodule -ver 1.0 supermodule
 </code>
 
-Vous pouvez aussi le modifier directement dans le fichier @@F@module.xml@@ de votre module.
+Vous pouvez aussi le modifier directement dans le fichier @@F@module.xml@@ de
+votre module.
 
-Vous pouvez enfin définir les dépendances de votre module. Les dépendances sont les modules nécessaires à l'exécution du nouveau module. Dans l'élément @@E@<dependencies>@@ dans le fichier @@F@module.xml@@, ajouter autant de balises @@E@<module>@@ que de modules nécessaires.
+Vous pouvez enfin définir les dépendances de votre module. Les dépendances sont
+les modules nécessaires à l'exécution du nouveau module. Dans l'élément
+@@E@<dependencies>@@ dans le fichier @@F@module.xml@@, ajouter autant de balises
+@@E@<module>@@ que de modules nécessaires.
 
 <code xml>
    <dependencies>
@@ -78,4 +112,5 @@ Vous pouvez enfin définir les dépendances de votre module. Les dépendances so
 Les attributs @@A@minversion@@ et @@A@maxversion@@ sont facultatifs.
 
 
-Pour plus de détails sur le contenu de module.xml, [[configuration#module.xml|lisez le chapitre correspondant]].
+Pour plus de détails sur le contenu de module.xml,
+[[configuration#module.xml|lisez le chapitre correspondant]].

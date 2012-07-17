@@ -1,17 +1,22 @@
 ~~LANG:EN@enman:create-application~~
 
-La première chose à faire pour utiliser Jelix, c'est de créer une application. Vous pouvez en créer une "à la main", mais il y a une manière plus simple : utiliser le script @@createapp@@ fourni avec Jelix.
+La première chose à faire pour utiliser Jelix, c'est de créer une application.
+Vous pouvez en créer une "à la main", mais il y a une manière plus simple :
+utiliser le script @@createapp@@ fourni avec Jelix.
 
-Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et exécutez :
+Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et exécutez
+:
 
 <code bash>
 php createapp.php /chemin/vers/le/nouveau/répertoire/de/myapp
 </code>
 
-@@myapp@@ est le nom de votre application (que vous pouvez bien sûr choisir librement).
+@@myapp@@ est le nom de votre application (que vous pouvez bien sûr choisir
+librement).
 
 
-@@createapp@@ crée un répertoire @@F@myapp/@@ avec le chemin indiqué. Son contenu est :
+@@createapp@@ crée un répertoire @@F@myapp/@@ avec le chemin indiqué. Son
+contenu est :
 
   myapp/
      modules/      modules de l'application
@@ -23,6 +28,8 @@ php createapp.php /chemin/vers/le/nouveau/répertoire/de/myapp
      var/overloads/ contiendra les différents fichiers qui redéfinissent des fichiers de modules que vous aurez récupéré
      www/          racine du répertoire public de votre application
 
-Vous avez aussi un nouveau répertoire @@F@temp/myapp@@, où seront stockés tout les fichiers de caches créés par Jelix.
+Vous avez aussi un nouveau répertoire @@F@temp/myapp@@, où seront stockés tout
+les fichiers de caches créés par Jelix.
 
-Maintenant vous devez configurer votre serveur avant de lancer votre application une première fois.
+Maintenant vous devez configurer votre serveur avant de lancer votre application
+une première fois.

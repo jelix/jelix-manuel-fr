@@ -1,24 +1,43 @@
 ~~LANG:EN@enman:daos/use~~
 
-Vous avez vu comment décrire dans un fichier XML un DAO (voir [[fichier_de_base]]). Ce fichier, vous devez le stocker dans un répertoire @@F@daos/@@ d'un module et le nommer comme ceci : @@F@nom.dao.xml@@. //nom// est le nom de votre DAO.
+Vous avez vu comment décrire dans un fichier XML un DAO (voir
+[[fichier_de_base]]). Ce fichier, vous devez le stocker dans un répertoire
+@@F@daos/@@ d'un module et le nommer comme ceci : @@F@nom.dao.xml@@. //nom// est
+le nom de votre DAO.
 
-Souvenez-vous qu'en fait, à partir d'un fichier DAO, vous définissez deux objets PHP : 
+Souvenez-vous qu'en fait, à partir d'un fichier DAO, vous définissez deux objets
+PHP :
 
-   * un objet DAO qui est une factory, basé sur la classe @@C@jDaoFactoryBase@@ : elle permet de récupérer, insérer, modifier, effacer un ou plusieurs enregistrements. Elle propose des méthodes de base, mais contient aussi les méthodes que vous avez définis dans le fichier XML dans la section @@E@<factory>@@.
-   * un objet record DAO, basé sur la classe @@C@jDaoRecordBase@@, qui représente un enregistrement et dont vous avez décrit les propriétés dans la section @@E@<record>@@.
+   * un objet DAO qui est une factory, basé sur la classe @@C@jDaoFactoryBase@@
+     : elle permet de récupérer, insérer, modifier, effacer un ou plusieurs
+     enregistrements. Elle propose des méthodes de base, mais contient aussi les
+     méthodes que vous avez définis dans le fichier XML dans la section
+     @@E@<factory>@@.
+   * un objet record DAO, basé sur la classe @@C@jDaoRecordBase@@, qui
+     représente un enregistrement et dont vous avez décrit les propriétés dans
+     la section @@E@<record>@@.
 
 ===== Récupérer la factory =====
 
-Pour récupérer ces objets il faut passer par l'objet @@C@jDao@@ qui propose diverses méthodes statiques :
+Pour récupérer ces objets il faut passer par l'objet @@C@jDao@@ qui propose
+diverses méthodes statiques :
 
-   * @@M@get()@@ : permet d'obtenir une factory. Renvoie toujours la même instance (utilise un singleton)
-   * @@M@create()@@ : permet d'obtenir une nouvelle instance d'une factory. Rarement utile.
+   * @@M@get()@@ : permet d'obtenir une factory. Renvoie toujours la même
+     instance (utilise un singleton)
+   * @@M@create()@@ : permet d'obtenir une nouvelle instance d'une factory.
+     Rarement utile.
    * @@M@createRecord()@@ : permet d'obtenir un objet DAO record vide.
-   * @@M@createConditions()@@ : permet d'obtenir un objet @@C@jDAOConditions@@ qui permet d'indiquer des conditions de sélection pour récupérer un ensemble d'objets record.
+   * @@M@createConditions()@@ : permet d'obtenir un objet @@C@jDAOConditions@@
+     qui permet d'indiquer des conditions de sélection pour récupérer un
+     ensemble d'objets record.
    
-@@M@get()@@, @@M@create()@@ et @@M@createRecord()@@ prennent tous en argument un sélecteur de fichier DAO et un deuxième paramètre facultatif qui est le nom du [[/bd|profil jDb]] à utiliser (si paramètre absent, il prendra celui par défaut).
+@@M@get()@@, @@M@create()@@ et @@M@createRecord()@@ prennent tous en argument un
+sélecteur de fichier DAO et un deuxième paramètre facultatif qui est le nom du
+[[/bd|profil jDb]] à utiliser (si paramètre absent, il prendra celui par
+défaut).
 
-Si le profil jDb utilisé spécifie un préfixe de table, alors toutes les tables indiquées dans le DAO verront leur nom préfixé par la valeur de ce paramètre.
+Si le profil jDb utilisé spécifie un préfixe de table, alors toutes les tables
+indiquées dans le DAO verront leur nom préfixé par la valeur de ce paramètre.
 
 En admettant qu'il y ait un fichier DAO @@F@foo.dao.xml@@ dans le module bar :
 
@@ -30,12 +49,15 @@ En admettant qu'il y ait un fichier DAO @@F@foo.dao.xml@@ dans le module bar :
    $monRecord = jDao::createRecord("foo");
 </code>
 
-@@V@$maDao@@ contient une factory de foo, et @@V@$monRecord@@ un enregistrement vide de type //foo//.
+@@V@$maDao@@ contient une factory de foo, et @@V@$monRecord@@ un enregistrement
+vide de type //foo//.
 
 
 ===== Créer, modifier, effacer un enregistrement =====
 
-Les méthodes @@M@insert()@@, @@M@update()@@, et @@M@delete()@@ de la factory sont faites pour ça. Aux deux premières, vous indiquez un record. Pour @@M@delete()@@, vous indiquez les clés de l'enregistrement.
+Les méthodes @@M@insert()@@, @@M@update()@@, et @@M@delete()@@ de la factory
+sont faites pour ça. Aux deux premières, vous indiquez un record. Pour
+@@M@delete()@@, vous indiquez les clés de l'enregistrement.
 
 ==== Création ====
 
@@ -57,11 +79,13 @@ Il faut récupérer un nouvel objet record, le remplir, et ensuite appeler la m�
 
 </code>
 
-S'il y a des champs de type autoincrement, les propriétés correspondantes dans @@V@$record@@ seront mises à jour avec la nouvelle valeur.
+S'il y a des champs de type autoincrement, les propriétés correspondantes dans
+@@V@$record@@ seront mises à jour avec la nouvelle valeur.
 
 ==== Modification ====
 
-Le processus est le suivant : on récupère un objet record, on modifie ses propriétés, et on appelle la méthode @@M@update()@@.
+Le processus est le suivant : on récupère un objet record, on modifie ses
+propriétés, et on appelle la méthode @@M@update()@@.
 
 
 <code php>

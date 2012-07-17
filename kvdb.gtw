@@ -1,22 +1,36 @@
 ~~LANG:EN@enman:kvdb~~
 
-Jelix contient une couche d'abstraction aux bases de données de type key-value, moins complexes que les bases de données SQL.
+Jelix contient une couche d'abstraction aux bases de données de type key-value,
+moins complexes que les bases de données SQL.
 
-Vous avez @@C@jKVDb@@ dont vous pouvez récupérer un connecteur à une base de données clé-valeur. Tout comme jDb, il y a des profiles définis dans un fichier @@F@profiles.ini.php@@ (Voir [[configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]), où vous pouvez définir des paramètres pour vous connecter à ces bases de données.
+Vous avez @@C@jKVDb@@ dont vous pouvez récupérer un connecteur à une base de
+données clé-valeur. Tout comme jDb, il y a des profiles définis dans un fichier
+@@F@profiles.ini.php@@ (Voir [[configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]),
+où vous pouvez définir des paramètres pour vous connecter à ces bases de
+données.
 
-jKVDb fonctionne avec des "drivers" pour accéder aux données clé-valeur. Jelix fourni des drivers pour de simples fichiers (file et file2), memcache, redis, et ... sql. Voir plus bas pour plus d'informations sur ces drivers.
+jKVDb fonctionne avec des "drivers" pour accéder aux données clé-valeur. Jelix
+fourni des drivers pour de simples fichiers (file et file2), memcache, redis, et
+... sql. Voir plus bas pour plus d'informations sur ces drivers.
 
-===== Configuration ===== 
+===== Configuration =====
 
-Comme jDb, @@F@profiles.ini.php@@ contient des sections, une pour chaque base de données à laquelle vous voulez accéder. Chaque section contient au moins un paramètre @@driver@@ donnant le nom du driver à utiliser Des autres paramètres peuvent être définis en fonction du driver sélectionné.
+Comme jDb, @@F@profiles.ini.php@@ contient des sections, une pour chaque base de
+données à laquelle vous voulez accéder. Chaque section contient au moins un
+paramètre @@driver@@ donnant le nom du driver à utiliser Des autres paramètres
+peuvent être définis en fonction du driver sélectionné.
 
-Le type de connexion à indiquer dans les noms des sections de @@F@profiles.ini.php@@ est @@jkvdb@@.
+Le type de connexion à indiquer dans les noms des sections de
+@@F@profiles.ini.php@@ est @@jkvdb@@.
 
 ===== Accéder à une base de données =====
 
-Vous devez appeler @@jKVDb::getConnection()@@, en donnant éventuellement un profile (sinon le profile par défaut est utilisé). Vous récupérez un objet qui hérite de @@C@jKVDriver@@.
+Vous devez appeler @@jKVDb::getConnection()@@, en donnant éventuellement un
+profile (sinon le profile par défaut est utilisé). Vous récupérez un objet qui
+hérite de @@C@jKVDriver@@.
 
-Avec cet objet, vous pouvez accéder au contenu de la base clé-valeur, et aussi le modifier. Voici des méthodes que vous pouvez appeler:
+Avec cet objet, vous pouvez accéder au contenu de la base clé-valeur, et aussi
+le modifier. Voici des méthodes que vous pouvez appeler:
 
    * @@M@get($key)@@: pour récupérer un valeur correspondant à une clé donnée.
    * @@M@set($key, $value)@@: pour stocker un nouvelle valeur ou modifier une valeur existante.
@@ -29,19 +43,25 @@ Avec cet objet, vous pouvez accéder au contenu de la base clé-valeur, et aussi
 
 ===== Autres opérations particulières =====
 
-Certains drivers peuvent implémenter des méthodes additionnelles en fonction des possibilités de la base. Un exemple de ces interfaces est @@I@jIKVttl@@, où les valeurs ont un temps de vie limité.
+Certains drivers peuvent implémenter des méthodes additionnelles en fonction des
+possibilités de la base. Un exemple de ces interfaces est @@I@jIKVttl@@, où les
+valeurs ont un temps de vie limité.
 
-Pour stocker de telles valeurs, vous devez appeler la méthode @@M@setWithTtl($key, $value, $ttl)@@, où $ttl est une valeur en secondes.
+Pour stocker de telles valeurs, vous devez appeler la méthode
+@@M@setWithTtl($key, $value, $ttl)@@, où $ttl est une valeur en secondes.
 
-Vous pouvez aussi appeler la méthode @@M@garbage@@ pour effacer toutes les clés que ne sont plus valides.
+Vous pouvez aussi appeler la méthode @@M@garbage@@ pour effacer toutes les clés
+que ne sont plus valides.
 
 ===== Drivers =====
 
 ==== memcache ====
 
-Il utilise l'API memcache de PHP (à ne pas confondre avec l'autre API: memcached). Il supporte uniquement la version 3.0.1 de memcache ou inférieur.
+Il utilise l'API memcache de PHP (à ne pas confondre avec l'autre API:
+memcached). Il supporte uniquement la version 3.0.1 de memcache ou inférieur.
 
-Dans le profil, vous devez indiquer un host et un port, ou plusieurs host/port. Voici un exemple avec un simple serveur:
+Dans le profil, vous devez indiquer un host et un port, ou plusieurs host/port.
+Voici un exemple avec un simple serveur:
 
 <code ini>
 [jkvdb:mymemcacheserver]
@@ -63,13 +83,16 @@ host[]=memcache_server2:11212
 
 </code>
 
-Vous pouvez aussi définir le paramètre @@compress=1@@, pour que les valeurs soient compressées lors du stockage.
+Vous pouvez aussi définir le paramètre @@compress=1@@, pour que les valeurs
+soient compressées lors du stockage.
 
 Ce driver supporte l'interface @@I@jIKVttl@@.
 
 ==== redis ====
 
-Ce driver permet d'accéder à une base de données Redis. Il utilise la librairie php5redis. Pour le configurer, il suffit d'indiquer un @@host@@ et un paramètre @@port@@.
+Ce driver permet d'accéder à une base de données Redis. Il utilise la librairie
+php5redis. Pour le configurer, il suffit d'indiquer un @@host@@ et un paramètre
+@@port@@.
 
 <code ini>
 [jkvdb:myredis]
@@ -82,12 +105,14 @@ Ce driver supporte l'interface @@I@jIKVttl@@.
 
 ==== db ====
 
-Il permet d'utiliser une table SQL pour stocker les clé-valeurs. Pour le configurer, vous devez indiquer:
+Il permet d'utiliser une table SQL pour stocker les clé-valeurs. Pour le
+configurer, vous devez indiquer:
 
   * @@table@@: le nom de la table à utiliser.
   * @@dbprofile@@: le nom du profil jDb à utiliser pour accéder à la base SQL.
 
-La table doit contenir trois champs, avec des noms et des types de champs spécifiques. Voici un script SQL pour créer de telles tables:
+La table doit contenir trois champs, avec des noms et des types de champs
+spécifiques. Voici un script SQL pour créer de telles tables:
 
 <code sql>
 CREATE TABLE mykvdbtable (
@@ -98,7 +123,8 @@ PRIMARY KEY (k_key)
 );
 </code>
 
-Vous pouvez avoir plusieurs tables, pour éviter d'avoir des conflits entre les modules qui utilisent jKVDb.
+Vous pouvez avoir plusieurs tables, pour éviter d'avoir des conflits entre les
+modules qui utilisent jKVDb.
 
 Ce driver supporte l'interface @@I@jIKVttl@@
 
@@ -118,6 +144,8 @@ Ce driver supporte l'interface @@I@jIKVttl@@.
 
 ==== file2 ====
 
-C'est un driver similaire au driver "file", mais en moins sophistiqué. Pas de paramètres de configuration et les fichiers sont stockés dans @@F@temp/filekv/@@.
+C'est un driver similaire au driver "file", mais en moins sophistiqué. Pas de
+paramètres de configuration et les fichiers sont stockés dans
+@@F@temp/filekv/@@.
 
 Vous ne devez l'utiliser que pour des valeurs temporaires.

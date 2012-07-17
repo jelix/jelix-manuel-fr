@@ -1,4 +1,8 @@
-La classe jImageModifier permet de transformer une image et stocker le résultat en cache. En fonction de l'image originale, le système créera un répertoire pour mettre l'image finale en cache dans le répertoire @@F@www/@@. Vous devez avoir l'extension gd de PHP activée.
+
+La classe jImageModifier permet de transformer une image et stocker le résultat
+en cache. En fonction de l'image originale, le système créera un répertoire pour
+mettre l'image finale en cache dans le répertoire @@F@www/@@. Vous devez avoir
+l'extension gd de PHP activée.
 
 Les formats pris en charge sont:
   * gif   -> image/gif
@@ -17,9 +21,11 @@ Les formats pris en charge sont:
   $att = jImageModifier::get('MonImage.jpg', $params, true);
 </code>
 
-Le premier argument est le fichier de l'image originale. Le chemin indiqué doit être relatif au répertoire @@F@www/@@ de l'application.
+Le premier argument est le fichier de l'image originale. Le chemin indiqué doit
+être relatif au répertoire @@F@www/@@ de l'application.
 
-Le deuxième argument est une série de paramètres de transformation. En voici une liste :
+Le deuxième argument est une série de paramètres de transformation. En voici une
+liste :
 
     * width : largeur de la nouvelle image
     * height : hauteur de la nouvelle image
@@ -34,22 +40,35 @@ Le deuxième argument est une série de paramètres de transformation. En voici 
         * sopacity : opacité de l'ombre
         * scolor #000000 : couleur de l'ombre.
 
-Note : préférez l'utilisation du style CSS3 @@box-shadow@@ si vous le pouvez, cela aura un meilleur résultat et ce sera plus performant.
+Note : préférez l'utilisation du style CSS3 @@box-shadow@@ si vous le pouvez,
+cela aura un meilleur résultat et ce sera plus performant.
 
 Si on indique width ou height, les paramètres suivants peuvent s'appliquer :
 
    * zoom : valeur de zoom de 1 à 100.
-   * omo : true si la proportion de la hauteur par rapport à la largeur doit être gardée
-   * alignh : indique l'alignement de l'image en hauteur sur la nouvelle image si il y a de la place. "left", "center", "right", ou un entier.
-   * alignv : indique l'alignement de l'image en largeur sur la nouvelle image si il y a de la place. "top", "center", "bottom", ou un entier.
+   * omo : true si la proportion de la hauteur par rapport à la largeur doit
+     être gardée
+   * alignh : indique l'alignement de l'image en hauteur sur la nouvelle image
+     si il y a de la place. "left", "center", "right", ou un entier.
+   * alignv : indique l'alignement de l'image en largeur sur la nouvelle image
+     si il y a de la place. "top", "center", "bottom", ou un entier.
 
-Vous pouvez aussi indiquer en paramètre des attributs HTML ('alt', 'class', 'id', 'style', 'longdesc', 'name', 'ismap', 'usemap', 'title', 'dir', 'lang', 'onclick', 'ondblclick', 'onmousedown','onmouseup', 'onmouseover', 'onmousemove', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup'). Ils seront simplement renvoyé (voir modifié pour l'attribut style).
+Vous pouvez aussi indiquer en paramètre des attributs HTML ('alt', 'class',
+'id', 'style', 'longdesc', 'name', 'ismap', 'usemap', 'title', 'dir', 'lang',
+'onclick', 'ondblclick', 'onmousedown','onmouseup', 'onmouseover',
+'onmousemove', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup'). Ils seront
+simplement renvoyé (voir modifié pour l'attribut style).
 
-Pour des exemples de transformation, voyez [[/ref-plugins/tplplugins/fct_image|l'utilisation du plugin image]].
+Pour des exemples de transformation, voyez
+[[/ref-plugins/tplplugins/fct_image|l'utilisation du plugin image]].
 
 L'image résultante est une image gif, jpeg ou png.
 
-En résultat, vous récupérez un tableau d'attributs HTML que vous pourrez utiliser dans une balise HTML @@E@<img>@@ par exemple. Vous aurez notament l'attribut @@A@src@@ qui indique l'url de la nouvelle image. Si le troisième paramètre de la méthode est @@true@@, vous aurez aussi un attribut spécial, "cache_path", qui vous indique le chemin sur le disque vers l'image.
+En résultat, vous récupérez un tableau d'attributs HTML que vous pourrez
+utiliser dans une balise HTML @@E@<img>@@ par exemple. Vous aurez notament
+l'attribut @@A@src@@ qui indique l'url de la nouvelle image. Si le troisième
+paramètre de la méthode est @@true@@, vous aurez aussi un attribut spécial,
+"cache_path", qui vous indique le chemin sur le disque vers l'image.
 
 <code>
 $maSource = $att['src']; //Chemin accessible en web
@@ -57,7 +76,12 @@ $monStyle = $att['style'];
 $monCache = $att['cache_path']; // si le dernier paramètre est à true (àa permet d'avoir le chemin du fichier en cache), chemin absolu sur le disque
 </code>
 
-Jusqu'à Jelix 1.2.2, l'image originale devait se trouver dans le répertoire @@F@www/@@, et l'image résultante se trouvait dans @@F@www/cache/images/@@. Depuis Jelix 1.2.3, ces images peuvent se trouver ailleurs. Cela peut être utile si vous avez une application backoffice qui veut lire/stocker les images dans une autre appli (front). Pour ce faire, vous devez ajouter dans la configuration une nouvelle section "imagemodifier".
+Jusqu'à Jelix 1.2.2, l'image originale devait se trouver dans le répertoire
+@@F@www/@@, et l'image résultante se trouvait dans @@F@www/cache/images/@@.
+Depuis Jelix 1.2.3, ces images peuvent se trouver ailleurs. Cela peut être utile
+si vous avez une application backoffice qui veut lire/stocker les images dans
+une autre appli (front). Pour ce faire, vous devez ajouter dans la configuration
+une nouvelle section "imagemodifier".
 
 <code ini>
 [imagemodifier]
@@ -67,7 +91,12 @@ cache_url=
 cache_path=
 </code>
 
-  * src_url et src_path indiquent respectivement l'url et le chemin sur le disque, du repertoire où se trouve l'image d'origine. Par défaut, le répertoire est le @@F@www/@@ de l'application
-  * cache_url et cache_path indiquent respectivement l'url et le chemin sur le disque, du répertoire où sera stocké l'image générée. Par défaut, il s'agit respectivement  basepath + 'cache/images/', et @@F@www/cache/images@@.
+  * src_url et src_path indiquent respectivement l'url et le chemin sur le
+    disque, du repertoire où se trouve l'image d'origine. Par défaut, le
+    répertoire est le @@F@www/@@ de l'application
+  * cache_url et cache_path indiquent respectivement l'url et le chemin sur le
+    disque, du répertoire où sera stocké l'image générée. Par défaut, il s'agit
+    respectivement basepath + 'cache/images/', et @@F@www/cache/images@@.
 
-Vous pouvez indiquer ces valeurs dans un tableau en 4ième paramètre de @@jImageModifier::get@@ pour spécifier d'autres répertoires.
+Vous pouvez indiquer ces valeurs dans un tableau en 4ième paramètre de
+@@jImageModifier::get@@ pour spécifier d'autres répertoires.

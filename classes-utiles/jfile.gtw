@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:class-utilities/jfile~~
 
-jFile aide à lire ou créer des fichiers.
-Les fonctions de jFile sont statiques, il n'est pas nécessaire de l'instancier pour les utiliser.
+jFile aide à lire ou créer des fichiers. Les fonctions de jFile sont statiques,
+il n'est pas nécessaire de l'instancier pour les utiliser.
 
 ===== Fonction read =====
 
@@ -14,7 +14,8 @@ $content = jFile::read('/le/chemin/du/fichier.ext');
 
 ===== Fonction write =====
 
-Écrit un fichier sur le disque. Elle utilise un fichier temporaire puis renomme le fichier à la fin de l'écriture, limitant les conflits d'accés.
+Écrit un fichier sur le disque. Elle utilise un fichier temporaire puis renomme
+le fichier à la fin de l'écriture, limitant les conflits d'accés.
 
 Retourne @@true@@ si tout s'est bien passé.
 
@@ -24,7 +25,8 @@ jFile::write('/le/chemin/du/fichier.ext', 'les données');
 
 ===== Fonction createDir =====
 
-Créer un dossier. Elle crée également tous les dossiers parents si ils n'existent pas.
+Créer un dossier. Elle crée également tous les dossiers parents si ils
+n'existent pas.
 
 <code php>
 jFile::createDir('/le/chemin/du/dossier');
@@ -34,7 +36,8 @@ jFile::createDir('/le/chemin/du/dossier');
 
 Fonction de suppression récursive du contenu d'un dossier.
 
-Le deuxième paramètre permet de supprimer (@@true@@) ou non (@@false@@) le dossier lui même.
+Le deuxième paramètre permet de supprimer (@@true@@) ou non (@@false@@) le
+dossier lui même.
 
 <code php>
 jFile::removeDir('/le/chemin/du/dossier', false);

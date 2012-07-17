@@ -1,7 +1,9 @@
 ~~LANG:EN@enman:class-utilities/jhttp~~
 
 
-jHttp est une classe permettant de faire des requêtes HTTP vers un site web, et d'en récupérer la réponse. Elle est basée sur la classe netHttp de la bibliothèque clearbriks livrée avec Jelix.
+jHttp est une classe permettant de faire des requêtes HTTP vers un site web, et
+d'en récupérer la réponse. Elle est basée sur la classe netHttp de la
+bibliothèque clearbriks livrée avec Jelix.
 
 La classe gère les redirections, les cookies, SSL, le user agent string...
 

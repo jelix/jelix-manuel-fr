@@ -1,8 +1,11 @@
 ~~LANG:EN@enman:controllers~~
 
-Les contrôleurs sont les objets qui vont effectuer les actions correspondantes à chacune des urls de votre application.
+Les contrôleurs sont les objets qui vont effectuer les actions correspondantes à
+chacune des urls de votre application.
 
-Un contrôleur possède une ou plusieurs méthodes correspondant à des actions, qui vont effectuer des traitements et préparer une réponse (html, redirection, ...) pour le navigateur.
+Un contrôleur possède une ou plusieurs méthodes correspondant à des actions, qui
+vont effectuer des traitements et préparer une réponse (html, redirection, ...)
+pour le navigateur.
 
 Un contrôleur est toujours dédié à un type de requête particulier.
 
@@ -12,7 +15,8 @@ Un contrôleur est toujours dédié à un type de requête particulier.
 ==== Fichier ====
 
 
-Les contrôleurs doivent être stockés dans le répertoire @@F@controllers@@ des modules. Ils ont chacun un nom qui va servir de suffixe ou préfixe. 
+Les contrôleurs doivent être stockés dans le répertoire @@F@controllers@@ des
+modules. Ils ont chacun un nom qui va servir de suffixe ou préfixe. 
 
 Le fichier d'un contrôleur a un nom bien précis :
 
@@ -24,18 +28,24 @@ où
    * //tttt// est le type de requête auquel il est dédié.
 
 
-Par exemple, si vous l'appelez "foo", et qu'il est dédié au type de requête "classic" (ce qui sera le plus souvent le cas), le nom du fichier sera //foo.classic.php//.
+Par exemple, si vous l'appelez "foo", et qu'il est dédié au type de requête
+"classic" (ce qui sera le plus souvent le cas), le nom du fichier sera
+//foo.classic.php//.
 
 
 ==== Classe ====
 
-La classe d'un contrôleur doit toujours avoir le suffixe "Ctrl". Dans le cas d'un contrôleur nommé "foo", sa classe devra être nommée "fooCtrl".
+La classe d'un contrôleur doit toujours avoir le suffixe "Ctrl". Dans le cas
+d'un contrôleur nommé "foo", sa classe devra être nommée "fooCtrl".
 
 ===== Création d'un contrôleur =====
 
-Chaque module a en principe un contrôleur principal, que l'on appelle généralement "default". On va prendre ce nom pour l'exemple de création de contrôleur.
+Chaque module a en principe un contrôleur principal, que l'on appelle
+généralement "default". On va prendre ce nom pour l'exemple de création de
+contrôleur.
 
-En suivant les conventions de nommage, on crée donc une classe de nom @@C@defaultCtrl@@ dans un fichier @@F@controllers/default.classic.php@@.
+En suivant les conventions de nommage, on crée donc une classe de nom
+@@C@defaultCtrl@@ dans un fichier @@F@controllers/default.classic.php@@.
 
 Voici le code source minimal :
 
@@ -49,7 +59,9 @@ class defaultCtrl extends jController {
 
 Une classe de contrôleur doit toujours hériter de la classe @@C@jController@@.
 
-Ensuite, il faut ajouter au moins autant de méthodes que d'actions prises en charge par le contrôleur. Ces méthodes sont publiques, n'ont pas d'arguments, et doivent renvoyer un objet de type @@C@jResponse@@.
+Ensuite, il faut ajouter au moins autant de méthodes que d'actions prises en
+charge par le contrôleur. Ces méthodes sont publiques, n'ont pas d'arguments, et
+doivent renvoyer un objet de type @@C@jResponse@@.
 
 Voici un exemple de méthode pour une action "index" :
 
@@ -64,15 +76,20 @@ class defaultCtrl extends jController {
 }
 </code>
 
-La méthode @@M@index()@@ d'un contrôleur est toujours considérée comme étant l'action par défaut du contrôleur.
+La méthode @@M@index()@@ d'un contrôleur est toujours considérée comme étant
+l'action par défaut du contrôleur.
 
-Quand jelix n'arrive pas, à partir de l'url, à déterminer le nom de l'action, voire celui du contrôleur, alors Jelix appelera le contrôleur "default" du module concerné, et la méthode @@M@index()@@.
+Quand jelix n'arrive pas, à partir de l'url, à déterminer le nom de l'action,
+voire celui du contrôleur, alors Jelix appelera le contrôleur "default" du
+module concerné, et la méthode @@M@index()@@.
 
-Il est donc recommandé d'avoir un contrôleur "default" dans un module et une méthode "index" dans chaque contrôleur.
+Il est donc recommandé d'avoir un contrôleur "default" dans un module et une
+méthode "index" dans chaque contrôleur.
 
 === Utilisation d'un constructeur de classe ===
 
-Pour utiliser un constructeur de classe dans un contrôleur, il est nécessaire de mentionner le constructeur parent ainsi que de le lier à l'argument $request.
+Pour utiliser un constructeur de classe dans un contrôleur, il est nécessaire de
+mentionner le constructeur parent ainsi que de le lier à l'argument $request.
 Exemple: 
 
 <code php>
@@ -90,15 +107,24 @@ Dans une action, vous avez un certains nombre de méthodes à votre disposition.
 
 ==== Récupérer un objet jResponse ====
 
-Vous devez toujours renvoyer un objet dérivant de @@C@jResponse@@, qui est en fait le "view" du modèle MVC. Il y a un certain nombre d'objets @@C@jResponse@@ fournies par Jelix, permettant de générer du XHTML, du JSON, du text, du css, du xml, du zip ou même faire des redirections. Chaque type d'objet jResponse est déclaré dans jelix par un mot clé.
+Vous devez toujours renvoyer un objet dérivant de @@C@jResponse@@, qui est en
+fait le "view" du modèle MVC. Il y a un certain nombre d'objets @@C@jResponse@@
+fournies par Jelix, permettant de générer du XHTML, du JSON, du text, du css, du
+xml, du zip ou même faire des redirections. Chaque type d'objet jResponse est
+déclaré dans jelix par un mot clé.
 
-Aussi, pour récupérer un objet "réponse" précis, vous appelez la méthode @@M@getResponse()@@ en indiquant le mot clé correspondant au type de réponse que vous voulez. 
+Aussi, pour récupérer un objet "réponse" précis, vous appelez la méthode
+@@M@getResponse()@@ en indiquant le mot clé correspondant au type de réponse que
+vous voulez. 
 
 <code php>
    $rep = $this->getResponse('html');
 </code>
 
-@@V@$rep@@ contient ici une réponse qui va générer du html. l'objet @@V@$rep@@  est du type @@C@jResponseHtml@@.
+@@V@$rep@@ contient ici une réponse qui va générer du html. l'objet @@V@$rep@@
+est du type @@C@jResponseHtml@@.
 
-Sachez que vous pouvez définir vos propres types de réponses, voire plusieurs types de réponses issues d'un même type, afin d'éviter de dupliquer du code, ou de prendre en charge un format que ne connaît pas jelix. Voyez pour cela [[/creer_response|la partie sur la création des réponses]]
-
+Sachez que vous pouvez définir vos propres types de réponses, voire plusieurs
+types de réponses issues d'un même type, afin d'éviter de dupliquer du code, ou
+de prendre en charge un format que ne connaît pas jelix. Voyez pour cela
+[[/creer_response|la partie sur la création des réponses]]

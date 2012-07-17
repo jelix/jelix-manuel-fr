@@ -1,7 +1,15 @@
 ~~LANG:EN@enman:web-services/~~
 
-Outre les contenus classiques que l'on peut fournir aux navigateurs (HTML, XML etc), Jelix permet également d'implémenter des services web, que ce soit pour de l'Ajax, en JSON, ou pour fournir des services plus évolués en XML-RPC ou SOAP.
+Outre les contenus classiques que l'on peut fournir aux navigateurs (HTML, XML
+etc), Jelix permet également d'implémenter des services web, que ce soit pour de
+l'Ajax, en JSON, ou pour fournir des services plus évolués en XML-RPC ou SOAP.
 
-Une des particularités de développer des services web dans Jelix, est que le principe de développement reste le même que pour les contenus classiques : vous récupérez un objet réponse, vous lui donnez des paramètres, et Jelix s'occupe du reste. Vous n'avez pas à connaître le format précis du protocole du services web utilisé, à gérer les en-têtes HTTP etc.
+Une des particularités de développer des services web dans Jelix, est que le
+principe de développement reste le même que pour les contenus classiques : vous
+récupérez un objet réponse, vous lui donnez des paramètres, et Jelix s'occupe du
+reste. Vous n'avez pas à connaître le format précis du protocole du services web
+utilisé, à gérer les en-têtes HTTP etc.
 
-La seule différence est que pour certains types de services web, vous devez avoir un point d'entrée spécifique au type de services web (donc, autre que index.php).
+La seule différence est que pour certains types de services web, vous devez
+avoir un point d'entrée spécifique au type de services web (donc, autre que
+index.php).

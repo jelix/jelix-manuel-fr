@@ -2,12 +2,15 @@
 
 
 Il existe deux types d'objets de redirection possible :
-  * @@C@jResponseRedirect@@ : redirige vers une action de l'application avec la possibilité de passer des paramètres
-  * @@C@jResponseRedirectUrl@@ : redirige vers une URL quelconque, en particulier une URL externe à votre application jelix
+  * @@C@jResponseRedirect@@ : redirige vers une action de l'application avec la
+    possibilité de passer des paramètres
+  * @@C@jResponseRedirectUrl@@ : redirige vers une URL quelconque, en
+    particulier une URL externe à votre application jelix
 
 ===== jResponseRedirect =====
 
-Pour spécifier une redirection vers une action, vous indiquez le type 'redirect'. Vous récupérez la réponse comme ceci :
+Pour spécifier une redirection vers une action, vous indiquez le type
+'redirect'. Vous récupérez la réponse comme ceci :
 
 <code php>
 $rep = $this->getResponse('redirect');
@@ -27,7 +30,8 @@ $rep->params = array('foo' => 'bar');
 $rep->anchor = 'yo';
 </code>
 
-Définir ces propriétés est facultatif. Ainsi, si on n'indique pas l'action, ce sera l'action actuelle.
+Définir ces propriétés est facultatif. Ainsi, si on n'indique pas l'action, ce
+sera l'action actuelle.
 
 Et ensuite il n'y a plus qu'à renvoyer la réponse.
 
@@ -38,13 +42,18 @@ return $rep;
 
 ===== jResponseRedirectUrl =====
 
-Pour spécifier une redirection vers une URL quelconque, vous indiquez le type 'redirectUrl'. Vous récupérez la réponse comme ceci :
+Pour spécifier une redirection vers une URL quelconque, vous indiquez le type
+'redirectUrl'. Vous récupérez la réponse comme ceci :
 
 <code php>
 $rep = $this->getResponse('redirectUrl');
 </code>
 
-Vous avez alors dans @@V@$rep@@ une instance de la classe @@C@jResponseRedirectUrl@@. Cet objet possède une unique propriété, @@P@$url@@ qui doit contenir une chaine, l'url de la page vers laquelle rediriger (en général, il s'agira d'une url externe à l'application jelix, jResponseRedirect étant plus approprié pour les urls vers l'application jelix).
+Vous avez alors dans @@V@$rep@@ une instance de la classe
+@@C@jResponseRedirectUrl@@. Cet objet possède une unique propriété, @@P@$url@@
+qui doit contenir une chaine, l'url de la page vers laquelle rediriger (en
+général, il s'agira d'une url externe à l'application jelix, jResponseRedirect
+étant plus approprié pour les urls vers l'application jelix).
 
 <code php>
 $rep->url = "http://jelix.org";
@@ -53,7 +62,9 @@ return $rep;
 
 ===== Redirection temporaire ou permanente =====
 
-Par défaut, les redirections sont déclarées temporaires (code http 303). Si vous voulez indiquer au navigateur une redirection permanente, mettez la propriété @@P@temporary@@ à @@false@@.
+Par défaut, les redirections sont déclarées temporaires (code http 303). Si vous
+voulez indiquer au navigateur une redirection permanente, mettez la propriété
+@@P@temporary@@ à @@false@@.
 
 <code php>
 $rep->temporary = false;

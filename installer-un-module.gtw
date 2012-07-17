@@ -1,17 +1,35 @@
 ~~LANG:EN@enman:installing-a-module~~
 
-Cette section ne concerne pas les modules fraîchement créés avec la commande @@c@createmodule@@, puisque celle-ci leurs assigne automatiquement un niveau d'accès et les installe. Par contre, pour créer un module "à la main" ou utiliser un module existant fourni avec jelix ou provenant d'un autre projet, il faut suivre les instructions qui suivent.
+Cette section ne concerne pas les modules fraîchement créés avec la commande
+@@c@createmodule@@, puisque celle-ci leurs assigne automatiquement un niveau
+d'accès et les installe. Par contre, pour créer un module "à la main" ou
+utiliser un module existant fourni avec jelix ou provenant d'un autre projet, il
+faut suivre les instructions qui suivent.
 
 
 ===== Niveau d'accès aux modules =====
 
-Il ne suffit pas d'avoir un module dans un dépôt de module pour que celui-ci soit utilisable directement. Il faut aussi indiquer de quelle manière il sera possible d'y accéder, avant de "l'installer". Ceci pour améliorer la sécurité et éviter des dysfonctionnements. En effet, il se peut que vous ayez un dépôt de modules partagé par plusieurs applications, et vous ne voulez pas forcément que certains de ses modules soient utilisables par votre application.
+Il ne suffit pas d'avoir un module dans un dépôt de module pour que celui-ci
+soit utilisable directement. Il faut aussi indiquer de quelle manière il sera
+possible d'y accéder, avant de "l'installer". Ceci pour améliorer la sécurité et
+éviter des dysfonctionnements. En effet, il se peut que vous ayez un dépôt de
+modules partagé par plusieurs applications, et vous ne voulez pas forcément que
+certains de ses modules soient utilisables par votre application.
 
-Pour ce faire, il y a une section "modules" dans le fichier @@F@defaultconfig.ini.php@@, qui doit contenir le niveau d'accès de chaque module. Il suffit donc d'indiquer le nom d'un module, suivit de ".access", et de lui attribuer un chiffre. La signification de ce chiffre :
+Pour ce faire, il y a une section "modules" dans le fichier
+@@F@defaultconfig.ini.php@@, qui doit contenir le niveau d'accès de chaque
+module. Il suffit donc d'indiquer le nom d'un module, suivit de ".access", et de
+lui attribuer un chiffre. La signification de ce chiffre :
 
-   * 0: le module n'est pas du tout utilisé. C'est l'état par défaut d'un module si celui-ci n'est pas indiqué dans la section modules.
-   * 1: les ressources du modules (classes métiers, daos, templates...) peuvent être utilisées par d'autres modules, mais les contrôleurs de ce module, s'ils existent, ne peuvent être exécutés. Le module n'est donc pas exécutable depuis un navigateur web, même si des urls sont définies vers ses contrôleurs.
-   * 2: le module est utilisable normalement, on peut faire pointer des urls vers ses contrôleurs.
+   * 0: le module n'est pas du tout utilisé. C'est l'état par défaut d'un module
+     si celui-ci n'est pas indiqué dans la section modules.
+   * 1: les ressources du modules (classes métiers, daos, templates...) peuvent
+     être utilisées par d'autres modules, mais les contrôleurs de ce module,
+     s'ils existent, ne peuvent être exécutés. Le module n'est donc pas
+     exécutable depuis un navigateur web, même si des urls sont définies vers
+     ses contrôleurs.
+   * 2: le module est utilisable normalement, on peut faire pointer des urls
+     vers ses contrôleurs.
 
 Un exemple :
 
@@ -26,25 +44,50 @@ jauthdb.access = 1
 jauth.access = 2
 </code>
 
-Les modules testapp, junittests, jWSDL et jauth sont activés normalement. Les modules jacl2db et jauthdb ne sont activés que pour un usage "interne", donc ne sont pas accessibles depuis le web, et seuls d'autres modules peuvent appeler leurs daos, templates etc. Le module jacldb n'est pas du tout activé. Il n'est pas utilisable, et est "invisible" pour tout les modules.
+Les modules testapp, junittests, jWSDL et jauth sont activés normalement. Les
+modules jacl2db et jauthdb ne sont activés que pour un usage "interne", donc ne
+sont pas accessibles depuis le web, et seuls d'autres modules peuvent appeler
+leurs daos, templates etc. Le module jacldb n'est pas du tout activé. Il n'est
+pas utilisable, et est "invisible" pour tout les modules.
 
-Bien sûr, si vous avez plusieurs points d'entrée, vous avez alors forcément des modules utilisables par certains points d'entrées et pas par d'autres. Il faut alors définir la section modules dans les configurations de chaque point d'entrée, sachant que les valeurs définies dans le fichier @@F@defaultconfig.ini.php@@ sont les valeurs "par défaut". Il ne faudra pas oublier aussi de [[/urls|configurer correctement le moteur d'url]], afin que les urls générées par Jelix utilisent bien le point d'entrée associé à chacun des modules.
+Bien sûr, si vous avez plusieurs points d'entrée, vous avez alors forcément des
+modules utilisables par certains points d'entrées et pas par d'autres. Il faut
+alors définir la section modules dans les configurations de chaque point
+d'entrée, sachant que les valeurs définies dans le fichier
+@@F@defaultconfig.ini.php@@ sont les valeurs "par défaut". Il ne faudra pas
+oublier aussi de [[/urls|configurer correctement le moteur d'url]], afin que les
+urls générées par Jelix utilisent bien le point d'entrée associé à chacun des
+modules.
 
-Notez que lorsque vous utilisez la commande @@createmodule@@, le module est par défaut activé avec le niveau 2. De plus, les options de configurations   @@V@checktrustedModules@@,  @@V@trustedModules@@ et @@V@unusedModules@@ qui existaient dans les versions précédentes de Jelix (1.1 et inférieur), ne sont plus supportées et n'ont aucun effet.
+Notez que lorsque vous utilisez la commande @@createmodule@@, le module est par
+défaut activé avec le niveau 2. De plus, les options de configurations
+@@V@checktrustedModules@@, @@V@trustedModules@@ et @@V@unusedModules@@ qui
+existaient dans les versions précédentes de Jelix (1.1 et inférieur), ne sont
+plus supportées et n'ont aucun effet.
 
-Note : si vous voulez rendre accessible tous les modules (access=2), vous pouvez mettre dans la section globale l'option @@enableAllModules=on@@. Les valeurs access dans la section modules ne seront pas pris en compte et ne sont donc pas utiles. **Attention**, ne l'utilisez que si vous êtes sûr de ce que vous faîtes, vous pourriez activer des modules sans le savoir. À réserver donc que dans des cas particuliers où vous maîtrisez la gestion des modules.
+Note : si vous voulez rendre accessible tous les modules (access=2), vous pouvez
+mettre dans la section globale l'option @@enableAllModules=on@@. Les valeurs
+access dans la section modules ne seront pas pris en compte et ne sont donc pas
+utiles. **Attention**, ne l'utilisez que si vous êtes sûr de ce que vous faîtes,
+vous pourriez activer des modules sans le savoir. À réserver donc que dans des
+cas particuliers où vous maîtrisez la gestion des modules.
 
 ===== Paramètres d'installation =====
 
-Un module peut avoir [[creer-script-installation|un script pour l'installer]], et ce script peut avoir besoin de paramètres. Ces paramètres peuvent être indiqués dans une option spécifique de la section "modules" : @@themodule.installparam=something@@. Un exemple pour un module "news":
+Un module peut avoir [[creer-script-installation|un script pour l'installer]],
+et ce script peut avoir besoin de paramètres. Ces paramètres peuvent être
+indiqués dans une option spécifique de la section "modules" :
+@@themodule.installparam=something@@. Un exemple pour un module "news":
 
 <code>
    news.installparam = "enablecategories,defaultcategory=In the world"
 </code>
 
-Les paramètres, séparés par une virgule, peuvent être de simples mot-clefs, ou des clés/valeurs.
+Les paramètres, séparés par une virgule, peuvent être de simples mot-clefs, ou
+des clés/valeurs.
 
-Si vous ne voulez pas exécuter le script d'installation du module, indiquez le avec l'option "skipinstaller" et la valeur "skip":
+Si vous ne voulez pas exécuter le script d'installation du module, indiquez le
+avec l'option "skipinstaller" et la valeur "skip":
 
 <code>
 news.skipinstaller=skip
@@ -52,22 +95,47 @@ news.skipinstaller=skip
 
 ===== Installation d'un module =====
 
-Après avoir défini le niveau d'accès d'un module, il faut ensuite "installer" le module. Ceci se fait au moyen de la commande @@c@installmodule@@, qui, concrètement, exécute les scripts d'installations éventuels fournis dans le module (qui se chargeront par exemple de créer les tables nécessaires en base de données, voir le chapitre sur la création de tels scripts), puis met à jour un fichier @@F@var/config/installer.ini.php@@, qui contient entre autres le numéro de la version de chaque module installé, pour chaque point d'entrée.
+Après avoir défini le niveau d'accès d'un module, il faut ensuite "installer" le
+module. Ceci se fait au moyen de la commande @@c@installmodule@@, qui,
+concrètement, exécute les scripts d'installations éventuels fournis dans le
+module (qui se chargeront par exemple de créer les tables nécessaires en base de
+données, voir le chapitre sur la création de tels scripts), puis met à jour un
+fichier @@F@var/config/installer.ini.php@@, qui contient entre autres le numéro
+de la version de chaque module installé, pour chaque point d'entrée.
 
-Par exemple, pour utiliser le module jauth fourni avec jelix, après lui avoir déclaré son niveau d'accès dans la configuration, il faut faire ceci :
+Par exemple, pour utiliser le module jauth fourni avec jelix, après lui avoir
+déclaré son niveau d'accès dans la configuration, il faut faire ceci :
 
 <code bash>
 php cmd.php installmodule jauth
 </code>
 
-Notez que la commande @@c@createmodule@@ active automatiquement le module nouvellement créé.
+Notez que la commande @@c@createmodule@@ active automatiquement le module
+nouvellement créé.
 
-Note : il est possible de désactiver complètement le système d'installation, donc que les modules soient implicitement "installés", sans avoir à exécuter la commande installapp ou installmodule. Pour ce faire, dans la section globale de la configuration, mettez @@disableInstallers=on@@. Cependant, vous devrez configurer et installer vous même tout ce qu'il faut pour que le module fonctionne (base de données etc..). Cela rend plus difficile également les mises à jour. À réserver donc pour des projets bien particuliers.
+Note : il est possible de désactiver complètement le système d'installation,
+donc que les modules soient implicitement "installés", sans avoir à exécuter la
+commande installapp ou installmodule. Pour ce faire, dans la section globale de
+la configuration, mettez @@disableInstallers=on@@. Cependant, vous devrez
+configurer et installer vous même tout ce qu'il faut pour que le module
+fonctionne (base de données etc..). Cela rend plus difficile également les mises
+à jour. À réserver donc pour des projets bien particuliers.
 
 ===== Mise à jour d'un module =====
 
-Pour mettre à jour un module, il suffit d'abord de remplacer les sources du module existant par celles de la nouvelle version, puis de lancer la commande @@c@installmodule@@. Le système d'installation de Jelix va alors se charger d'exécuter les scripts de migration du module si il y en a, et de mettre à jour le fichier @@F@var/config/installer.ini.php@@. Bien entendu, cela ne fonctionnera que si le fichier @@F@module.xml@@ du module est bien renseigné au niveau du numéro de version du module.
+Pour mettre à jour un module, il suffit d'abord de remplacer les sources du
+module existant par celles de la nouvelle version, puis de lancer la commande
+@@c@installmodule@@. Le système d'installation de Jelix va alors se charger
+d'exécuter les scripts de migration du module si il y en a, et de mettre à jour
+le fichier @@F@var/config/installer.ini.php@@. Bien entendu, cela ne
+fonctionnera que si le fichier @@F@module.xml@@ du module est bien renseigné au
+niveau du numéro de version du module.
 
-Si vous avez plusieurs modules à mettre à jour, vous pouvez exécuter la commande @@c@installapp@@, qui migrera tous les modules à jour. Cela est très utile en fait pour mettre à jour une application en production.
+Si vous avez plusieurs modules à mettre à jour, vous pouvez exécuter la commande
+@@c@installapp@@, qui migrera tous les modules à jour. Cela est très utile en
+fait pour mettre à jour une application en production.
 
-Note : si vous avez désactivé le système d'installation avec @@disableInstallers=on@@, il ne sert à rien d'exécuter la commande installmodule. Mettez à jour les sources du module, faites les mises à jour "à la main" (base de données etc), et c'est tout.
+Note : si vous avez désactivé le système d'installation avec
+@@disableInstallers=on@@, il ne sert à rien d'exécuter la commande
+installmodule. Mettez à jour les sources du module, faites les mises à jour "à
+la main" (base de données etc), et c'est tout.
