@@ -233,7 +233,6 @@ zip = jResponseZip
 rss2.0 = jResponseRss20
 atom1.0 = jResponseAtom10
 css= jResponseCss
-ltx2pdf= jResponseLatexToPdf
 tcpdf = jResponseTcpdf
 </code>
 

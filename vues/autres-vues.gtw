@@ -5,3 +5,4 @@ Des modules tiers peuvent fournir d'autres types de vues.
 
   * Pour générer du contenu XUL, il y a [[https://github.com/jelix/jelix-contrib/tree/master/modules/jelix/xul/|le module XUL]].
   * Pour générer du contenu RDF, il y a [[https://github.com/jelix/jelix-contrib/tree/master/modules/jelix/rdf/|le module RDF]].
+  * Pour générer du PDF à partir d'un contenu Latex, il y a [[https://github.com/jelix/jelix-contrib/tree/master/modules/jelix/latex2pdf/|le module latex2pdf]].

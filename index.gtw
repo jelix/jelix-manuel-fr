@@ -51,7 +51,6 @@ Téléchargez [[http://download.jelix.org/jelix/documentation/fr/jelix-manuel-1.
      - section: [[vues/vue-xml|Générer du XML quelconque]]
      - section: [[vues/vue-rss|Générer un flux de syndication RSS]]
      - section: [[vues/vue-atom|Générer un flux de syndication Atom]]
-     - section: [[vues/vue-latex2pdf|Générer un PDF à partir d'un contenu LaTeX]]
      - section: [[vues/vue-tcpdf|Générer un PDF avec TCPDF]]
      - section: [[vues/vue-fichier-binaire|Renvoyer un fichier binaire]]
      - section: [[vues/vue-zip|Générer un fichier zip]]
