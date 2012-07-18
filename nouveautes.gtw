@@ -8,6 +8,8 @@ Composants obsolètes :
 
    * Le support de XUL a été déplacé dans un module indépendant,
      [[https://github.com/jelix/jelix-contrib/tree/master/modules/jelix/xul/|dans le dépôt jelix-contrib]]
+   * Le support de RDF a été déplacé dans un module indépendant,
+     [[https://github.com/jelix/jelix-contrib/tree/master/modules/jelix/rdf/|dans le dépôt jelix-contrib]]
    * le plugin magicquotes a été supprimé, inutile avec PHP 5.3
    * Suppression de toutes les méthodes obsolètes
       * @@M@jAcl2Db::getProfile()@@

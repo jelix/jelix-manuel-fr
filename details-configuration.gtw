@@ -228,7 +228,6 @@ text = jResponseText
 jsonrpc = jResponseJsonrpc
 json = jResponseJson
 xmlrpc = jResponseXmlrpc
-rdf = jResponseRdf
 xml = jResponseXml
 zip = jResponseZip
 rss2.0 = jResponseRss20
