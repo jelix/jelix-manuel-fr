@@ -22,7 +22,7 @@ s'occupe automatiquement :
      déroulante, liste de boutons radio, etc) ;
    * de sauver les données saisies dans des DAO ;
    * de sauvegarder les fichiers téléchargés ;
-   * de générer d'autres types de formulaires (en AJAX, XUL, XForms, etc.) en ne
+   * de générer d'autres types de formulaires (en AJAX, XForms, etc.) en ne
      modifiant que très peu de choses ;
    * de prendre en charge automatiquement des champs complexes comme les
      captchas, les champs d'édition WYSIWYG, les groupes, etc.
