@@ -85,11 +85,6 @@ par lui même.
 Point d'entrée par défaut de l'application. ''index'' par défaut. Vous ne devez
 pas indiquer le suffixe (.php).
 
-=== ''entrypointExtension'' ===
-
-Extensions des points d'entrées. Par défaut, c'est .php, mais il est possible
-que sur votre serveur, pour utiliser PHP5 il vous faille utiliser l'extension
-.php5 par exemple. Auquel cas vous indiquerez .php5.
 
 === ''notfoundAct'' ===
 

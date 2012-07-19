@@ -330,7 +330,6 @@ basePath = ""
 jelixWWWPath = "jelix/" 	
 
 defaultEntrypoint= index 	
-entrypointExtension= .php 	
 
 simple_urlengine_https = 	
 </code>
@@ -364,7 +363,6 @@ Détails des paramètres :
   * **jelixWWWPath** : contient le chemin vers les CSS de Jelix, si vous le
        modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
   * **defaultEntrypoint** : contient le nom du pont d'entrée de l'application
-  * **entrypointExtension** : contient l'extension de ce dernier
   * **simple_urlengine_https** : contient la liste des actions requérant le
     protocole HTTPS
 

@@ -26,3 +26,4 @@ Composants obsolètes :
       * @@M@jZone::getParam()@@
    * Suppression de la prise en charge des variables obsolètes @@$gJCoord@@
      et @@$gJConfig@@ et de @@M@jApp::initLegacy()@@.
+   * Suppression de l'option de configuration @@entrypointExtension@@
