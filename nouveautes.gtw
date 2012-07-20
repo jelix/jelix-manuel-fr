@@ -19,8 +19,9 @@ Principales nouveautés apportées par la version 1.4 :
      maintenant utiliser des templates qui ne sont pas dans des fichiers.
    * Prise en charge des paramètres automatiques de langues dans les URL.
    * Amélioration de la prise en charge des codes langues. Jelix ne prend plus
-     en charge les codes qui ne sont pas des codes standards (en_EN par
-     exemple). Sauf si [[/locales#prise-en-charge-des-codes-de-language-inconnues-ou-alternatifs|vous le forcez dans la configuration]].
+     en charge les codes qui ne sont pas des codes standards (en_EN par exemple).
+     Sauf si [[/locales#prise-en-charge-des-codes-de-language-inconnues-ou-alternatifs|vous le forcez dans la configuration]].
+   * Le code locale en_US devient le code locale par défaut dans Jelix. en_EN est maintenant déprécié, car c'est un code non standard.
    * [[/cache#jresponse-et-le-cache-http|nouvelle API pour prendre en charge le cache HTTP]],
      fournie par les objets réponses : @@M@cleanCacheHeaders()@@,
      @@M@setExpires()@@, @@M@setLifetime()@@, @@M@isValidCache()@@.
@@ -33,10 +34,14 @@ Principales nouveautés apportées par la version 1.4 :
      comme les autres classes de réponses.
    * [[/ref-plugins/tplplugins/metas#meta_htmlmodule|Les modules peuvent maintenant fournir leurs propres fichiers CSS, Javascript]]
      etc, sans avoir à les copier dans le répertoire @@F@www@@.
+   * Le répertoire “plugins” des modules est maintenant automatiquement reconnu, plus besoin de le déclarer dans @@pluginsPath@@.
    * [[/jelix-scripts#changer-la-configuration-par-defaut|Les commandes Jelix-scripts cherchent maintenant un fichier .jelix-scripts.ini]]
      dans le répertoire courant et dans les répertoires parent, avant de chercher dans
      le répertoire de l'utilisateur (HOME), permettant de définir une
      configuration différente en fonction des projets.
    * [[/bd/configuration#profil-mysql|Nouveau driver "mysqli"]] pour jDb,
      utilisant l'API PHP mysqli.
+   * jDb : plugin experimental pour sqlite3
+   * jDb : suppression du plugin Intuition, plus maintenu depuis longtemps
+
 
