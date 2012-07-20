@@ -88,8 +88,7 @@ modifications suivantes :
   * comme indiqué plus haut, remplacez l'usage des constantes JELIX_APP_* par
     l'utilisation de l'objet @@C@jApp@@.
   * dans les fichiers module.xml, indiquez que le module est compatible avec
-    Jelix 1.3 (changer l'attribut maxversion). Exemple : @@<jelix
-    minversion="1.1" maxversion="1.3.*"/>@@
+    Jelix 1.3 (changer l'attribut maxversion). Exemple : @@<jelix minversion="1.1" maxversion="1.3.*"/>@@
   * L'API et le schéma de donnée de jAcl2Db a changé.
     * les identifiants des groupes d'utilisateurs ne sont plus des nombres, mais
       des noms (chaines). Par conséquent, il vous faudra modifier vos données si
