@@ -12,7 +12,8 @@ de requête. Il n'est pas utile alors d'utiliser le mod_rewrite d'apache.
 
 Pour cette tâche jUrl se repose sur un moteur d'URL. Il y en a trois fournis
 dans Jelix :
-   * un moteur d'URL simples
+
+   * un moteur d'URL "simple" (obsolète, à ne plus utiliser)
    * un moteur d'URL significatives basique (utilisé par défaut)
    * un moteur d'URL significatives
 
@@ -25,16 +26,17 @@ pour des besoins plus spécifiques.
 
 Une URL est composée de différentes parties :
 
+<code>
   http://monsite.com/un/chemin/pointentree.php/path/info?param1=value1
+</code>
 
-   * un/chemin/pointentree correspond au chemin du point d'entrée : /index par exemple
-   * .php    l'extension du point d'entrée. Elle est facultative si le multiview est activé dans apache
-   * /path/info  le pathinfo, partie complémentaire du chemin, ne correspondant pas à un chemin physique sur le disque.
-   * ?param1=value1 : les paramètres.
+; @@un/chemin/pointentree@@ : correspond au chemin du point d'entrée : @@/index@@ par exemple
+; @@.php@@ : l'extension du point d'entrée. Elle est facultative si le multiview est activé dans apache
+; @@/path/info@@ : le pathinfo, partie complémentaire du chemin, ne correspondant pas à un chemin physique sur le disque.
+; @@?param1=value1@@ : les paramètres.
 
 Les moteurs d'URLs analysent le pathinfo et les paramètres pour déterminer le
-module/action
-
+module/action.
 
 Note : il peut y avoir certaines options à activer dans apache. Voir la section
 [[/configurer-server#configuration-pour-les-urls-cools|sur la configuration serveur]].
@@ -45,63 +47,45 @@ Note : il peut y avoir certaines options à activer dans apache. Voir la section
 La configuration de jUrl se fait dans la section ''urlengine'' du fichier de
 configuration dont voici les paramètres :
 
-=== ''engine'' ===
+; @@engine@@ : Indique le type de moteur à utiliser. Les trois valeurs
+    disponibles sont ''simple'', ''basic_significant'' et ''significant''.
+; @@enableParser@@ : Active l'analyse d'URL par le moteur d'URL. Si vous préférez l'utilisation du
+    module mod_rewrite d'apache, vous pouvez alors mettre off.
+; @@multiview@@ : Indique si le multiview est activé ou non dans apache. Cela indique alors au
+    moteur d'URL de ne pas générer l'extension des points d'entrées (.php) lors de
+    la création des URLs. On a ainsi des URLs un peu plus "propres".
+; @@basePath@@ : Chemin jusqu'au répertoire www, ou plutôt, la partie commune des chemins de tous
+    les points d'entrée. Ainsi, si vous accédez à index.php avec l'URL @@http://localhost/jelix/myapp/www/index.php@@,
+    alors vous indiquez : 
 
-Indique le type de moteur à utiliser. Les trois valeurs disponibles sont ''simple'', ''basic_significant'' et ''significant''.
-
-=== ''enableParser'' ===
-
-Active l'analyse d'URL par le moteur d'URL. Si vous préférez l'utilisation du
-module mod_rewrite d'apache, vous pouvez alors mettre off.
-
-=== ''multiview'' ===
-
-Indique si le multiview est activé ou non dans apache. Cela indique alors au
-moteur d'URL de ne pas générer l'extension des points d'entrées (.php) lors de
-la création des URLs. On a ainsi des URLs un peu plus "propres".
-
-=== ''basePath'' ===
-
-Chemin jusqu'au répertoire www, ou plutôt, la partie commune des chemins de tous
-les points d'entrée.
-
-Ainsi, si vous accédez à index.php avec l'URL
-http://localhost/jelix/myapp/www/index.php, alors vous indiquez 
-
+<code>
   basePath= /jelix/myapp/www/
+</code>
 
 Si par contre vous avez spécifié le documentRoot dans apache, pointant sur
-jelix/myapp/www, alors vous indiquerez
+@@jelix/myapp/www@@, alors vous indiquerez :
 
+<code>
   basePath= /
+</code>
 
-Attention, la valeur de basePath doit toujours commencer par un /.
+Attention, la valeur de basePath doit toujours commencer par un @@/@@. Si vous
+n'indiquez aucune valeur, Jelix essaiera de deviner le chemin de base par lui
+même.
 
-Si vous n'indiquez aucune valeur, Jelix essaiera de deviner le chemin de base
-par lui même.
+; @@defaultEntrypoint@@ : Point d'entrée par défaut de l'application. ''index''
+    par défaut. Vous ne devez pas indiquer le suffixe (.php).
+; @@entrypointExtension@@ : Extensions des points d'entrées. Par défaut, c'est
+    @@.php@@, mais il est possible que sur votre serveur, pour utiliser PHP5 il vous
+    faille utiliser l'extension @@.php5@@ par exemple. Auquel cas vous indiquerez @@.php5@@.
+; @@notfoundAct@@ : L'action à effectuer quand une URL ne correspond à rien.
+    Indiquez-la sous forme de [[/concepts/appel-action|sélecteur d'action]]:
+    @@module~action@@. L'action indiquée devra correspondre à l'affichage d'une page
+    d'erreur par exemple et renvoyer le code http 404.
 
-=== ''defaultEntrypoint'' ===
-
-Point d'entrée par défaut de l'application. ''index'' par défaut. Vous ne devez
-pas indiquer le suffixe (.php).
-
-=== ''entrypointExtension'' ===
-
-Extensions des points d'entrées. Par défaut, c'est .php, mais il est possible
-que sur votre serveur, pour utiliser PHP5 il vous faille utiliser l'extension
-.php5 par exemple. Auquel cas vous indiquerez .php5.
-
-=== ''notfoundAct'' ===
-
-L'action à effectuer quand une URL ne correspond à rien. Indiquez-la sous forme
-de [[/concepts/appel-action|sélecteur d'action]]: "module~action". L'action
-indiquée devra correspondre à l'affichage d'une page d'erreur par exemple et
-renvoyer le code http 404.
-
-Attention ! Quand vous êtes en développement, il est recommandé de ne rien
-mettre dans ce paramètre. Ainsi ce sera plus facile à déboguer car en cas
-d'appel d'une module/action inconnue vous aurez un message d'erreur de la part
-de Jelix qui sera plus explicite qu'une simple page 404.
+Remarque : quand vous êtes en développement, veillez bien à configurer l'ecriture
+des erreurs dans un fichier de log, de manière à savoir si la page de cette action
+est affichée suite à une erreur ou non.
 
 
 ===== Configuration des moteur d'URLs =====
@@ -109,7 +93,7 @@ de Jelix qui sera plus explicite qu'une simple page 404.
 En standard Jelix fournis trois moteurs d'URLs :
 
   * Le moteur "simple", qui est performant mais qui ne permet pas d'avoir des
-    URLs "cools"
+    URLs "cools". Il sera supprimé dans les versions suivantes.
   * Le moteur "basic_significant", qui permet d'avoir des urls un peu plus
     propre, et qui reprennent automatiquement le module et l'action :
     "index.php/module/controleur/method?param=1..."
@@ -151,8 +135,7 @@ d'autres paramètres, renvoie l'URL correspondante pour l'application courante :
 Le premier paramètre de la fonction est donc un sélecteur d'action. Ici on
 demande l'URL qui correspond à l'action view du module news, pour le type de
 requête classic avec un paramètre id_news. Avec le moteur d'URL simple, l'URL
-correspondante sera probablement
-''index.php?module=news&action=view&id_news=54''.
+correspondante sera probablement : @@index.php?module=news&action=view&id_news=54@@.
 
 Si le [[urls/significant|moteur d'URL significant]] est utilisé, cela peut être
 n'importe quoi d'autre, en fonction de ce qui est configuré dans le fichier
@@ -162,7 +145,7 @@ urls.xml.
 ==== Plugin de template jurl ====
 
 Dans les templates vous pouvez utiliser le plugin jurl. Sa syntaxe est identique
-à jUrl::get(). Exemple :
+à @@jUrl::get()@@. Exemple :
 
 <code html>
   <p><a href="{jurl 'news~view@classic', array('id_news'=>'54')}">Détails de la news</a></p>

@@ -244,7 +244,7 @@ quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
 ===== Changer la langue dynamiquement =====
 
 Jelix fourni un plugin pour le coordinateur  qui permet de changer la langue
-dynamiquement. C'est le plugin autolocale (qui est situé dans @@F@lib/jelix/plugins/coord/@@).
+dynamiquement. C'est le plugin autolocale, qui est situé dans @@F@lib/jelix/plugins/coord/@@
 (voir [[plugins/coord|la section sur les plugins de coordinateur]]).
 
 Pour cela, le plugin regarde si un paramètre est présent dans l'url, indiquant
@@ -272,7 +272,7 @@ urlParamNameLanguage = lang
 </code>
 
 @@enableUrlDetection@@ permet d'activer la détection de la langue dans l'url.
-Le paramètre @@urlParamNameLanguag@@ contient le nom du paramètre de l'url qui
+Le paramètre @@urlParamNameLanguage@@ contient le nom du paramètre de l'url qui
 contiendra le code du language à utiliser. Aussi, vous pouvez mettre des liens
 sur votre site qui permettent à l'utilisateur de changer la langue. Exemple :
 
@@ -284,17 +284,20 @@ sur votre site qui permettent à l'utilisateur de changer la langue. Exemple :
 Depuis Jelix 1.4, vous pouvez utiliser les codes langues sans le code pays :
 
 <code html>
-  <a href="?lang=fr">français</a>
-  <a href="?lang=en">english</a>
+  <a href="index.php?lang=fr">français</a>
+  <a href="index.php?lang=en">english</a>
 </code>
 
 Bien sûr, si vous utilisez le moteur d'url //[[urls/significant|significant]]//,
-il est possible de définir des urls significatives spécifiques pour chaque langue.
+il est possible de définir des urls significatives spécifiques pour chaque langue,
+et même d'indiquer les paramètres de langues, qui seront renseignés automatiquement ou
+détectés automatiquement, sans avoir à l'indiquer à @@jUrl::get()@@ entre autre
+(voir [[urls/significant|la documentation correspondante]]).
 
 Notez aussi que si le code de language donné n'est pas listé dans le paramètre
 @@availableLocales@@ de la configuration principale, jLocale essaiera d'abord
 d'utiliser la locale la plus approchante (même langue mais d'un autre pays),
-et si il ne trouve pas, il utilisera la langue par défaut.
+et si il ne trouve pas, il utilisera la langue par défaut de l'application.
 
 Enfin, il faut activer le plugin. Pour cela, dans la configuration de jelix,
 mettez dans la section @@[coordplugins]@@ :
@@ -338,7 +341,7 @@ par exemple "en_GB" pour "en" et "fr_CA" pour "fr". Ou encore indiquer un code
 langue non standard qui n'est plus pris en charge par Jelix 1.4 mais qui
 l'était dans les versions précédentes, comme "en_EN". Ou peut être encore vous
 voudriez prendre en charge une langue non reconnue (la liste par défaut se
-trouve dans le fichier @@F@@lib/jelix/core/lang_to_locale.ini.php@@).
+trouve dans le fichier @@F@lib/jelix/core/lang_to_locale.ini.php@@).
 
 Pour modifier ces associations, vous devez remplir la section @@[langToLocale]@@
 dans la configuration principale. La clé du paramètre est le code langue simple,

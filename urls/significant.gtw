@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:urls/significant~~
 
-Le moteur d'url “significant” permet d'attribuer à chaque action une url
+Le moteur d'url “significant” permet d'attribuer à chaque action une URL
 spécifique de la forme que l'on veut.
 
 Le principe de configuration pour ce moteur est d'indiquer dans un fichier
@@ -119,7 +119,12 @@ autres.
 Un autre moyen d'éviter ces ressemblances est de spécifier le format ou le type
 de chaque paramètre. Par défaut le type est une chaîne classique. 
 
-Pour cela il faut indiquer des balises @@E@<param>@@ pour chacun des paramètres dont on veut spécifier le type/format. Elles devront contenir un attribut @@A@name@@ indiquant le paramètre et, soit un attribut @@A@type@@, soit un attribut @@A@regexp@@, contenant une expression régulière du format (sans délimiteur). Dans notre exemple, nous voulons spécifier que "rubrique" est une chaîne et une expression régulière pour "id_art" :
+Pour cela il faut indiquer des balises @@E@<param>@@ pour chacun des paramètres
+dont on veut spécifier le type/format. Elles devront contenir un attribut
+@@A@name@@ indiquant le paramètre et, soit un attribut @@A@type@@, soit un
+attribut @@A@regexp@@, contenant une expression régulière du format (sans
+délimiteur). Dans notre exemple, nous voulons spécifier que "rubrique" est une
+chaîne et une expression régulière pour "id_art" :
 
 <code xml>
    <url pathinfo="/articles/:rubrique/:id_art" module="cms" action="show">
@@ -129,9 +134,8 @@ Pour cela il faut indiquer des balises @@E@<param>@@ pour chacun des paramètres
 </code>
 
 Si l'expression régulière de l'attribut regexp contient des parenthèses, il est
-nécessaire d'indiquer que celles-ci ne doivent pas être capturées.
+nécessaire d'indiquer que celles-ci ne doivent pas être capturées. Exemple :
 
-Exemple :
 <code xml>
 <param name="type" regexp="(?:0|1|2){1}" />
 </code>
@@ -148,7 +152,6 @@ balise @@E@param@@. Les types disponibles sont :
 | month | un mois sur deux chiffres |
 | day | un jour sur deux chiffres |
 | path | un sous chemin. dans ce cas ce paramètre doit être le dernier dans l'url  |
-
 
 Note : vous devrez bien entendu indiquer les valeurs de ces paramètres lors de l'appel à jUrl.
 
@@ -190,7 +193,7 @@ On peut aussi utiliser ce mécanisme pour supporter plusieurs langues :
    </url>
 </code>
 
-Là encore, il ne faut pas oublier de donner le paramètre //lang// à jUrl pour
+Là encore, il ne faut pas oublier de donner le paramètre @@lang@@ à jUrl pour
 que ce dernier puisse savoir quelle url il doit renvoyer.
 
 ==== Utiliser un handler spécifique ====
@@ -235,9 +238,7 @@ class myHandlerUrlsHandler implements jIUrlSignificantHandler {
 Le nom de la classe doit commencer par un préfixe que vous voulez et se terminer
 par ''UrlsHandler''. La classe sera stockée dans le répertoire @@F@classes/@@ du
 module indiqué dans la balise @@E@url@@, sous le nom ''prefixe''.urlhandler.php.
-Pour notre exemple :
-
-  myhandler.urlhandler.php
+Pour notre exemple, cela sera @@myhandler.urlhandler.php@@.
 
 La méthode @@M@parse()@@ est chargée d'analyser une URL (objet @@C@jUrl@@ que
 vous recevez en paramètre), en l'occurence, l'URL demandée dans l'application.
@@ -275,8 +276,8 @@ Vous pouvez bien sûr indiquer un handler d'un autre module. Exemple :
 
 ==== Une même URL pour plusieurs actions possibles ====
 
-Imaginons que nous avons une URL de ce type : "/article/54-titre" et par défaut,
-cela affiche l'article 54 avec une action nommée view par exemple :
+Imaginons que nous avons une URL de ce type @@/article/54-titre@@ et par défaut,
+cela affiche l'article 54 avec une action nommée view, par exemple :
 
 <code xml>
    <url pathinfo="/article/:id_art-:title" module="cms" action="view" />
@@ -285,8 +286,8 @@ cela affiche l'article 54 avec une action nommée view par exemple :
 On veut pouvoir, sans changer l'url, indiquer d'autres actions dans certains
 cas, avec un paramètre action :
 
-   * "/article/54-titre?action=edit"
-   * "/article/54-titre?action=delete"
+   * @@/article/54-titre?action=edit@@
+   * @@/article/54-titre?action=delete@@
 
 Note : On pourrait faire aussi /article/54-titre/edit ou
 /article/54-titre/delete , avec donc plusieurs balises @@E@urls@@, ce qui nous
@@ -333,7 +334,7 @@ action que la requête a été faite en https ou non.
 
 ==== Inclure un fichier d'urls d'un module particulier ====
 
-Depuis la version 1.2, il est possible de déclarer les urls dans chaque module,
+Il est possible de déclarer les urls dans chaque module,
 donc dans des fichiers séparés. Cela évite d'avoir un fichier urls.xml
 volumineux, mais surtout évite d'avoir à définir ou à "recopier" les urls d'un
 module réalisé par un tiers.
@@ -393,7 +394,7 @@ règles de réécriture.
 === Réécriture complète par le serveur web ===
 
 On appelle ici réécriture complète, la réécriture qui consiste à fournir à Jelix
-des URLs simples (index.php?module=...&action=...), à partir d'URLs
+des URLs simples (@@index.php?module=...&action=...@@), à partir d'URLs
 significatives.
 
 Pour cela, vous devez indiquer à Jelix, dans la configuration, de ne pas
@@ -482,7 +483,7 @@ On retrouve ainsi notre point d'entrée index.php ainsi que notre pathinfo.
 
 Il se peut que sur certaines configurations, vous ayez une erreur apache du type
 "Error: No input file specified", en particulier quand PHP est exécuté en CGI
-avec cgi.fix_pathinfo=0 dans php.ini. Mais il y a une solution. Il faut changer
+avec @@cgi.fix_pathinfo=0@@ dans php.ini. Mais il y a une solution. Il faut changer
 la dernière rêgle en :
 
 <code>
@@ -491,8 +492,8 @@ la dernière rêgle en :
 
 Ainsi le but est de mettre le pathinfo dans un paramétre de la requête. Pour que
 cela fonctionne pleinement, il faut ajouter dans la configuration de Jelix, dans
-la section urlengine, le paramètre @@pathInfoInQueryParameter@@ qui doit
-contenir le nom du paramètre (ici dans l'exemple @@jpathinfo@@)
+la section @@urlengine@@, le paramètre @@pathInfoInQueryParameter@@ qui doit
+contenir le nom du paramètre (ici dans l'exemple @@jpathinfo@@) :
 
 <code ini>
 [urlengine]
