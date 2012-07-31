@@ -103,7 +103,7 @@ foo=bar
 
 Cependant, cela n'insère pas un saut de ligne (\n) dans la chaine. Pour
 insérer un vrai saut de ligne, il faut utiliser \n et/ou \r suivant la plateforme
-(\n est recommandé):
+(\n est recommandé) :
 
 <code ini>
 intro=ceci est un très très\
@@ -202,10 +202,10 @@ alors passer les données en paramètres à jLocale :
   $chaine = jLocale::get("bar~foo.phrase", array('http://foo.com', 'voiture'));
 </code>
 
-Dans le fichier properties, vous mettez un %s partout où vous voulez insérer
+Dans le fichier properties, vous mettez un @@%s@@ partout où vous voulez insérer
 des valeurs dynamiques :
 
-<code>
+<code ini>
    phrase = Vous allez sur le site %s et vous cliquez sur la rubrique %s
 </code>
 
@@ -216,27 +216,27 @@ les possibilités syntaxiques de sprintf.
 En particulier, il se peut que l'ordre d'insertion des paramètres change d'une
 langue à une autre. Plutôt donc que de modifier l'ordre des paramètres quand vous
 appelez jLocale, vous indiquez quel paramètre va à quel endroit dans la chaîne
-localisée, au moyen de la syntaxe %x$s où x est un nombre d'ordre.
+localisée, au moyen de la syntaxe @@%x$s@@ où x est un nombre d'ordre.
 
-<code>
+<code ini>
    phrase = Vous allez sur le site %1$s et vous cliquez sur la rubrique %2$s
 </code>
 
 En anglais (même si ce n'est pas la véritable traduction, c'est juste pour
 l'exemple) ça pourrait donner ça :
 
-<code>
+<code ini>
    phrase = Clic on the %2$s section, when you go on the %1$s web site.
 </code>
 
-Ainsi le premier paramètre ira à l'emplacement de %1$s, le deuxième à la place
-de %2$s etc...
+Ainsi le premier paramètre ira à l'emplacement de @@%1$s@@, le deuxième à la place
+de @@%2$s@@ etc...
 
 
 Par contre, dans un template, vous ne pouvez pas utiliser la notion "@foo@"
 quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
 
-<code>
+<code html>
    <p>{jlocale "bar~foo.phrase", array('http://foo.com', 'voiture')}</p>
 </code>
 
@@ -292,7 +292,8 @@ Bien sûr, si vous utilisez le moteur d'url //[[urls/significant|significant]]//
 il est possible de définir des urls significatives spécifiques pour chaque langue,
 et même d'indiquer les paramètres de langues, qui seront renseignés automatiquement ou
 détectés automatiquement, sans avoir à l'indiquer à @@jUrl::get()@@ entre autre
-(voir [[urls/significant|la documentation correspondante]]).
+(voir [[urls/significant|la documentation correspondante]]). Vous n'avez alors
+probablement pas besoin du plugin autolocale.
 
 Notez aussi que si le code de language donné n'est pas listé dans le paramètre
 @@availableLocales@@ de la configuration principale, jLocale essaiera d'abord

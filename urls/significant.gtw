@@ -198,6 +198,18 @@ On peut aussi utiliser ce mécanisme pour supporter plusieurs langues :
 Là encore, il ne faut pas oublier de donner le paramètre @@lang@@ à jUrl pour
 que ce dernier puisse savoir quelle url il doit renvoyer.
 
+<code php>
+jUrl::get('cms~page:view', array('page'=>'foo', 'lang'=>jApp::config()->locale));
+// ou
+jUrl::get('cms~page:view', array('page'=>'foo', 'lang'=>"en"));
+</code>
+
+<code html>
+<a href="{jurl 'cms~page:view', array('page'=>'foo', 'lang'=>$j_locale}">my link</a>
+<a href="{jurl 'cms~page:view', array('page'=>'foo', 'lang'=>'fr_FR'}">my link</a>
+</code>
+
+
 ==== Paramètres automatiques de langues ====
 
 === avec les paramètres statiques ===
