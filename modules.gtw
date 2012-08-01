@@ -8,10 +8,11 @@ Un module contient un ensemble de fichiers, entre autres :
   * Des contrôleurs
   * Des classes métiers
   * Des templates
-  * Des fichiers daos
-  * Des formulaires
+  * Des objets réponses (vues)
+  * Des fichiers daos (jDao)
+  * Des formulaires (jForm)
   * Des fichiers de langues
-  * Des réponses
+  * Des fichiers CSS, JS, images...
   
 Dans une application, vous devez avoir au moins un module qu'il vous faut créer.
 Ce sera en général ce qu'on appelle le module principal, qui pourrait contenir
