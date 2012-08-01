@@ -8,7 +8,7 @@ l'objet @@C@jResponseHtml@@ ou @@C@jResponseBasicHtml@@. Voici un exemple :
    $rep = $this->getResponse('html');
 </code>
 
-==== Xhtml ou html ====
+===== Xhtml ou html =====
 
 jResponseHtml ou jResponseBasicHtml est utilisé pour renvoyer par défaut une
 réponse au format XHTML. Mais le HTML est possible, en l'indiquant via la
@@ -28,13 +28,10 @@ qui doit faire un echo du doctype souhaité.
 
 ===== Renvoyer le contenu d'une page statique =====
 
-Depuis Jelix 1.3, un nouvel objet réponse est apparu : @@C@jResponseBasicHtml@@.
-Il permet de renvoyer simplement une page HTML complète stockée dans un fichier.
-Ce fichier doit être un simple fichier PHP, cela ne doit pas être un template
-pour jTpl.
-
-Il doit contenir tout le code HTML de la page, et trois instructions qui
-affichent les variables suivantes :
+@@C@jResponseBasicHtml@@ permet de renvoyer simplement une page HTML complète
+stockée dans un fichier. Ce fichier doit être un simple fichier PHP, cela ne
+doit pas être un template pour jTpl. Il doit contenir tout le code HTML de la
+page, et trois instructions qui affichent les variables suivantes :
 
     * @@V@$HEADBOTTOM@@ : avant la balise de fin @@E@</head>@@
     * @@V@$BODYTOP@@ : aprés la balise d'ouverture @@E@<body>@@
@@ -42,7 +39,7 @@ affichent les variables suivantes :
 
 Ces variables contiennent du code HTML qui a été indiqué lors des appels des
 méthodes @@M@addHeadContent()@@ et @@M@addContent()@@ de l'objet
-@@C@jResponseBasicHtml@@. Elles ont pu être appelé par des contrôleurs, des
+@@C@jResponseBasicHtml@@. Elles ont pu être appelée par des contrôleurs, des
 classes techniques, des plugins. C'est pourquoi il faut indiquer ces variables.
 
 Voici un exemple de fichier statique :
@@ -159,14 +156,15 @@ Si à un moment ou à un autre, vous voulez annuler les modifications faites dan
 le head (par exemple, vous êtes dans une zone qui est appelée par un module
 tiers que vous ne voulez pas/pouvez pas modifier), vous pouvez appeler la
 méthode @@M@clearHtmlHeader()@@. Cette fonction vous permet d'effacer une partie
-du header de votre document html, en indiquant quoi effacer : 'CSSLink',
-'Styles', 'JSLink', 'JSCode' et/ou 'Others'.
+du header de votre document html, en indiquant quoi effacer : @@CSSLink@@,
+@@Styles@@, @@JSLink@@, @@JSCode@@ et/ou @@Others@@.
 
 <code php>
 $rep->clearHtmlHeader(array('CSSLink', 'Styles'));
 </code>
 
-Cela effacera les liens CSS (@@M@addCSSLink@@) et les balises @@E@<style>@@ (@@M@addStyle@@).
+Cet exemple effacera les liens CSS (@@M@addCSSLink@@) et les balises
+@@E@<style>@@ (@@M@addStyle@@).
 
 ==== Générer le contenu principal de la page HTML ====
 
@@ -298,14 +296,10 @@ Jelix est fourni avec [[http://code.google.com/p/minify/|Minify]], qui permet de
 compresser et concaténer automatiquement les fichiers CSS et Javascript d'une
 page HTML.
 
-Dans Jelix 1.2, cette fonctionnalité était incluse directement dans la classe
-@@C@jResponseHtml@@, mais depuis Jelix 1.3, elle a été déplacée dans un plugin,
-et sa mise en œuvre est légèrement différente. Note : ce plugin ne fonctionne
-pas avec jResponseBasicHtml.
-
 Pour activer le plugin minify, il faut indiquer son nom dans l'option
 @@plugins@@ comme indiqué précédemment. Et vous avez une série d'options qui
-vous permet de contrôler le comportement de Minify.
+vous permet de contrôler le comportement de Minify. Ce plugin ne fonctionne pas
+avec jResponseBasicHtml.
 
 <code ini>
 [jResponseHtml]
