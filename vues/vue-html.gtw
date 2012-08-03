@@ -108,14 +108,14 @@ exemple qui montre l'ensemble de ces possibilités :
 <code php>
 $rep->title = "Le titre de mon document";
 
-// génère une balise <script src="lib.js"....>
-$rep->addJSLink('lib.js');
+// génère une balise <script src="/lib.js"....>
+$rep->addJSLink('/lib.js');
 
 // génère une balise <script>alert....</script> qui sera incluse dans <head>
 $rep->addJSCode('alert("essai");');
 
 // génère une balise <link>
-$rep->addCSSLink('maFeuille.css');
+$rep->addCSSLink('/maFeuille.css');
 
 // génère une balise <style>
 $rep->addStyle('span', 'font-weight:bold;');
@@ -246,15 +246,17 @@ des fichiers javascript à votre page HTML.
 
 @@M@addJSLink()@@ et @@M@addCSSLink()@@ acceptent en premier argument une URL d'un
 fichier Javascript ou d'un fichier CSS. Faites attention cependant à l'URL que vous
-indiquez. À moins que c'est vraiment ce que vous voulez, n'utilisez pas d'URL relative
-(dependante de l'URL de la page), car, puisque la plupart des URLs de votre
-application sont vituelles, l'URL résultante risque de ne pas être la bonne. Par
-exemple, @@'css/styles.css'@@ donne @@http://exemple.com/foo/bar/css/styles.css@@ avec la page
-@@http://exemple.com/foo/bar/@@, mais donne @@http://exemple.com/foo/css/styles.css@@ avec la page
+indiquez. À moins que ce soit vraiment ce que vous voulez, n'utilisez pas d'URL relative
+(dependante de l'URL de la page). Car la plupart des URLs des pages de votre
+application étant vituelles (ne pointant pas vers des fichiers physiques), l'URL
+résultante risque de ne pas être la bonne. Par exemple, @@'css/styles.css'@@
+donne @@http://exemple.com/foo/bar/css/styles.css@@ avec la page
+@@http://exemple.com/foo/bar/@@, mais donne
+@@http://exemple.com/foo/css/styles.css@@ avec la page
 @@http://exemple.com/foo/bar@@ ou @@http://exemple.com/foo/@@. Alors que si vous
-donnez une URL absolue (avec ou sans le nom de domaine), vous obtiendrez toujours
-le bon chemin. @@'/css/styles.css'@@ (notez le @@/@@ au début) donne toujours
-@@http://exemple.com/css/styles.css@@ quelle que soit l'URL de la page.
+donnez une URL absolue (avec ou sans le nom de domaine), vous obtiendrez
+toujours le bon chemin. @@'/css/styles.css'@@ (notez le @@/@@ au début) donne
+toujours @@http://exemple.com/css/styles.css@@ quelle que soit l'URL de la page.
 
 Aussi il est recommandé d'indiquer une URL absolue, dont le chemin débute à la racine
 du site.
@@ -264,9 +266,7 @@ ou le répertoire @@F@www/@@ d'un module.
 
 Si c'est stocké dans le répertoire @@F@www/@@ de l'application, et si ce répertoire
 est le "documentRoot" de l'application, vous pouvez indiquer simplement son chemin
-absolue.
-
-Par exemple, si vous voulez le lien vers le fichier @@F@yourapp/www/css/mystyles.css@@,
+absolue. Par exemple, si vous voulez le lien vers le fichier @@F@yourapp/www/css/mystyles.css@@,
 alors vous feriez :
 
 <code php>
@@ -274,7 +274,7 @@ alors vous feriez :
 </code>
 
 Cependant, si @@F@www/@@ n'est pas le "document root", ou si votre module est déstiné
-à être utilisé par d'autres application, ou encore que l'application peut être installé
+à être utilisé par d'autres application, ou encore que l'application peut être installée
 avec une configuration différente, il est préférable d'ajoute le "basePath" du
 site web :
 
@@ -316,7 +316,7 @@ $rep->addCSSLink('maFeuille.css',
 
 
 Tous les exemples précédent sur la récupération des URL des fichiers CSS,
-fonctionnent aussi bien que pour les fichiers JS que les images et autres fichiers
+fonctionnent aussi bien pour les fichiers JS, les images et autres fichiers
 de ressources, stockés dans le répertoire @@F@www/@@ d'une application, d'un module
 ou dans le répertoire @@F@jelix-www@@.
 
