@@ -198,25 +198,23 @@ indiquer un ordre de récupération.
 Comme expliqué précédemment, la méthode @@M@addCondition()@@ prend en second
 paramètre un opérateur SQL. Ce dernier prend en compte les opérateurs de
 comparaison ainsi que les prédicats suivants :
+
   * LIKE, NOT LIKE, ILIKE,
   * IN, NOT IN,
   * IS, IS NOT,
   * IS NULL, IS NOT NULL,
   * MATCH, REGEXP, NOT REGEXP, RLIKE, SOUNDS LIKE
+  * @@~@@, @@!~@@, @@~*@@, @@!~*@@  (operateurs pour les expressions régulières de postgresql)
 
 == Cas spéciaux avec des valeurs NULL ==
 
-Jusqu'à la version 1.1.3, pour tester une valeur NULL ou non NULL il faut
-utiliser l'operateur "=" ou "!=". Dans les versions suivantes, vous pouvez
-utiliser tout ce que SQL vous propose (IS NULL, IS NOT, ...). N'oubliez pas de
-passer une valeur @@null@@ php et non pas la chaine "NULL".
+Pour tester une valeur NULL ou non NULL, vous pouvez utiliser tout ce que SQL vous propose
+(IS NULL, IS NOT, ...), même "=" ou "!=". N'oubliez pas de passer une valeur @@null@@ PHP
+et non pas la chaine "NULL".
 
 <code php>
-    # version 1.1.3
-    $conditions->addCondition('status','=', null);
-    $conditions->addCondition('status','!=', null);
-
-    # versions 1.1.4 et supérieures 
+    $conditions->addCondition('status','=', null); // equivalent à IS NULL
+    $conditions->addCondition('status','!=', null); // equivalent à IS NOT NULL
     $conditions->addCondition('status','IS', null);
     $conditions->addCondition('status','IS NOT', null);
     $conditions->addCondition('status','IS NULL', null);
@@ -226,15 +224,18 @@ passer une valeur @@null@@ php et non pas la chaine "NULL".
     ...
 </code>
 
-== Autres opérateurs ==
+== Expressions régulières ==
 
-Pour les bases qui le supporte (postgresql par exemple), on peut indiquer une
-expression régulière, avec le mot clé @@REGEXP@@ ou @@NOT REGEXP@@ :
+Pour les bases qui le supporte (postgresql par exemple), on peut indiquer une expression régulière.
+Avec Postgresql, vous utiliserez  @@~@@, @@!~@@, @@~*@@, @@!~*@@.
 
 <code php>
-    $conditions->addCondition('status','REGEXP', '^test');
+    $conditions->addCondition('status','~', '^test');
     ...
 </code>
+
+Pour les autres bases, si elles le supportent, vous utiliserez @@REGEXP@@ ou @@NOT REGEXP@@.
+
 
 === Faire un groupby ===
 

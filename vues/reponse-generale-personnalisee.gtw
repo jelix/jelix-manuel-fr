@@ -23,7 +23,7 @@ Vos propres classes de réponses peuvent hériter de @@C@jResponseHtml@@ par
 exemple (mais ça pourrait bien sûr être une autre classe @@jResponse*@@ fournie
 par Jelix). D'ailleurs, par défaut, quand vous créez une application avec
 jelix-scripts, un tel objet est déjà créé, @@C@myHtmlResponse@@, qui hérite de
-@@C@jResponseHtml@@.
+@@C@jResponseHtml@@ et est stocké dans le répertoire @@F@responses/@@ de l'application.
 
 Dans cette classe, vous pouvez alors :
 
@@ -182,6 +182,15 @@ Cet objet réponse est déclaré comme ceci dans la configuration :
 <code ini>
 [responses]
 html=myHtmlResponse
+</code>
+
+Jelix cherchera la classe indiquée dans le répertoire @@F@responses/@@ de l'application.
+Si cette classe se trouve dans le répertoire @@F@responses/@@ d'un module ("main"
+par exemple), il faut l'indiquer comme un sélecteur :
+
+<code ini>
+[responses]
+html="main~myHtmlResponse"
 </code>
 
 Toutes les actions qui feront alors appel à la réponse "html", fourniront un

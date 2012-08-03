@@ -12,12 +12,14 @@ chemins en les séparant par des virgules. On peut indiquer soit des chemins
 complets, soit des chemins relatifs à un répertoire spécifique de l'arborescence
 Jelix. Ces chemins relatifs ont une notation spéciale :
 
+<code>
    coderepertoire:chemin/relatif/
+</code>
 
 @@coderepertoire@@ est un de ces codes :
 
-| **lib** | répertoire lib/ de jelix |
-| **app** | répertoire de l'application |
+; @@lib@@ : répertoire lib/ de jelix
+; @@app@@ : répertoire de l'application
 
 Cela évite d'avoir à indiquer un véritable chemin relatif. Et donc d'avoir à
 changer à la fois le fichier @@F@application.init.php@@ et le fichier de
@@ -31,12 +33,36 @@ Exemple :
    modulesPath = lib:jelix-modules/,app:modules/
 </code>
 
-On déclare ici qu'il y a deux dépôts de modules : le premier, //jelix-modules//,
+On déclare ici qu'il y a deux dépôts de modules : le premier, @@F@jelix-modules/@@,
 se trouvant dans le répertoire @@F@lib/@@ de jelix; le deuxième, le répertoire
 @@F@modules/@@ de l'application.
 
 Tous les modules se trouvant dans ces deux répertoires pourront être activés
 dans l'application.
+
+===== Arborescence d'un module =====
+
+Un module est un répertoire contenant au moins un fichier [[configuration#module.xml|module.xml]],
+qui contient certaines informations à propos de ce module : version, dépendances... 
+
+Et vous avez un certain nombre de répertoires, en fonction de ce que fourni le module, et
+contenant chacun des fichiers spécifiques. Voici les répertoires possibles :
+
+; @@F@controllers/@@ : les classes utilisées lorsque les URLs correspondantes sont appellées
+; @@F@classes/@@ : classes métiers, utilitaires, listener pour les évènements...
+; @@F@templates/@@ : fichier des contenus à envoyer au navigateur
+; @@F@responses/@@ : objets réponses que le module peut fournir pour l'application entière
+; @@F@locales/@@ : fichiers "properties", contenant les traductions pour les templates ou controleurs
+; @@F@zones/@@ : classes gérant des parties de pages HTML
+; @@F@daos/@@ : fichiers de mapping avec une base de données
+; @@F@forms/@@ : fichiers déclarant les formulaires
+; @@F@install/@@ : scripts d'installation et de mise à jour pour le module
+; @@F@scripts/@@ : scripts à lancer en ligne de commandes
+; @@F@plugins/@@ : plugins pour les divers composants de Jelix (jDb, jTpl...)
+; @@F@www/@@ : images, CSS, fichiers Javascripts. Ces fichiers peuvent être
+               utilisés par un navigateur, en appelant un contrôleur spécifique du module "jelix"
+; @@F@tests/@@ : tests unitaires pour PHPUnit ou Simpletests.
+
 
 
 ===== Créer un module =====
@@ -59,7 +85,7 @@ par défaut.
 **Important** : Le nom des modules est repris dans certaines classes générées
 automatiquement par Jelix, aussi ne peut-il comporter que des caractères
 autorisés par PHP pour les noms de classes : lettres minuscules, majuscules, non
-accentuées, les chiffres et le caractère _.
+accentuées, les chiffres et le caractère @@_@@.
 
 Par défaut, le module est créé dans le répertoire @@F@modules/@@ de
 l'application, mais si vous voulez le créer dans un autre dépôt de module
@@ -75,9 +101,6 @@ Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/
 
 Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres
 options.
-
-
-
 
 ===== Indiquer le numéro de version et les dépendances =====
 
@@ -114,3 +137,4 @@ Les attributs @@A@minversion@@ et @@A@maxversion@@ sont facultatifs.
 
 Pour plus de détails sur le contenu de module.xml,
 [[configuration#module.xml|lisez le chapitre correspondant]].
+

@@ -41,7 +41,7 @@ base de données. Il suffit d'ajouter les attributs suivants dans la "property"
 de votre champ date dans la partie "record" du fichier xml de votre DAO :
 
 <code xml>
-<property inserpattern="NOW()" .../>
+<property insertpattern="NOW()" .../>
 </code>
 
 ajoutera la date courante à la création de l'enregistrement.
