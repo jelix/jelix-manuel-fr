@@ -32,7 +32,7 @@ Principales nouveautés apportées par la version 1.4 :
    * Les modules peuvent maintenant fournir leur propre objet réponse global
      [[/creer_response#declarer-la-reponse|que l'on indique directement dans la configuration]]
      comme les autres classes de réponses.
-   * [[/ref-plugins/tplplugins/metas#meta_htmlmodule|Les modules peuvent maintenant fournir leurs propres fichiers CSS, Javascript]]
+   * Les modules peuvent maintenant fournir [[/vues/vue-html#ajouter-des-feuilles-de-styles-fichiers-javascript-images|leurs propres fichiers CSS, Javascript]]
      etc, sans avoir à les copier dans le répertoire @@F@www@@.
    * Le répertoire “plugins” des modules est maintenant automatiquement reconnu, plus besoin de le déclarer dans @@pluginsPath@@.
    * [[/jelix-scripts#changer-la-configuration-par-defaut|Les commandes Jelix-scripts cherchent maintenant un fichier .jelix-scripts.ini]]

@@ -134,17 +134,6 @@ $resp->addMetaGenerator('My Super App 1.0');
 
 </code>
 
-Notez que pour les méthodes @@M@addCSSLink@@ et @@M@addJSLink@@, vous pouvez
-indiquer un paramètre supplémentaire qui doit être un tableau associatif,
-décrivant les attributs supplémentaires à mettre.
-
-<code php>
-$rep->addCSSLink('maFeuille.css', 
-                  array('title'=>'design bleu',
-                        'rel'=>'alternate stylesheet',
-                        'media'=>'all'));
-</code>
-
 Si vous voulez injecter du contenu spécifique dans la balise @@E@<head>@@, vous
 pouvez le faire via la méthode @@M@addHeadContent()@@
 
@@ -248,6 +237,107 @@ la propriété @@P@$bodyTpl@@ à vide, et utiliser seulement la méthode
 $rep->addContent('contenu pour mon body');
 </code>
 
+
+==== Ajouter des feuilles de styles, fichiers javascript, images... ====
+
+Vous avez probablement remarqué l'exemple sur l'utilisation de @@M@addJSLink()@@ et
+@@M@addCSSLink()@@. Ces méthodes permettent de lier des feuilles de styles CSS et
+des fichiers javascript à votre page HTML.
+
+@@M@addJSLink()@@ et @@M@addCSSLink()@@ acceptent en premier argument une URL d'un
+fichier Javascript ou d'un fichier CSS. Faites attention cependant à l'URL que vous
+indiquez. À moins que c'est vraiment ce que vous voulez, n'utilisez pas d'URL relative
+(dependante de l'URL de la page), car, puisque la plupart des URLs de votre
+application sont vituelles, l'URL résultante risque de ne pas être la bonne. Par
+exemple, @@'css/styles.css'@@ donne @@http://exemple.com/foo/bar/css/styles.css@@ avec la page
+@@http://exemple.com/foo/bar/@@, mais donne @@http://exemple.com/foo/css/styles.css@@ avec la page
+@@http://exemple.com/foo/bar@@ ou @@http://exemple.com/foo/@@. Alors que si vous
+donnez une URL absolue (avec ou sans le nom de domaine), vous obtiendrez toujours
+le bon chemin. @@'/css/styles.css'@@ (notez le @@/@@ au début) donne toujours
+@@http://exemple.com/css/styles.css@@ quelle que soit l'URL de la page.
+
+Aussi il est recommandé d'indiquer une URL absolue, dont le chemin débute à la racine
+du site.
+
+Les fichiers CSS/JS peuvent être stockées dans le répertoire @@F@www/@@ de votre application
+ou le répertoire @@F@www/@@ d'un module.
+
+Si c'est stocké dans le répertoire @@F@www/@@ de l'application, et si ce répertoire
+est le "documentRoot" de l'application, vous pouvez indiquer simplement son chemin
+absolue.
+
+Par exemple, si vous voulez le lien vers le fichier @@F@yourapp/www/css/mystyles.css@@,
+alors vous feriez :
+
+<code php>
+  $resp->addCSSLink('/css/mystyles.css');
+</code>
+
+Cependant, si @@F@www/@@ n'est pas le "document root", ou si votre module est déstiné
+à être utilisé par d'autres application, ou encore que l'application peut être installé
+avec une configuration différente, il est préférable d'ajoute le "basePath" du
+site web :
+
+<code php>
+  $resp->addCSSLink(jApp::config()->urlengine['basepath'].'css/mystyles.css');
+</code>
+
+Si vous voulez lier un fichier CSS/JS du répertoire @@F@lib/jelix-www/@@, vous
+pouvez utiliser la propriété @@jelixWWWPath@@ :
+
+<code php>
+  $resp->addJSLink(jApp::config()->urlengine['jelixWWWPath'].'js/tooltip.js');
+</code>
+
+Si le fichier CSS/JS se trouve dans un module, alors vous ne pouvez pas indiquer
+le chemin direct, les fichiers d'un module n'étant pas accessibles directement
+à partir d'un navigateur, en temps normal. Vous devez passer par une action spécifique
+fournie par le module Jelix, qui est @@jelix~www:getfile@@.
+
+Vous devez donner deux paramètres, @@targetmodule@@ et @@file@@. Le premier
+indique le module où se trouve le fichier, et le deuxième indique le chemin
+dans le répertoire @@F@www/@@. Par exemple, si vous voulez lier le fichier
+@@F@mymodule/www/css/mystyles.css@@ :
+
+<code php>
+  $resp->addCSSLink(jUrl::get('jelix~www:getfile', array('targetmodule=>'mymodule', 'file'=>'css/mystyles.css')));
+</code>
+
+Notez que pour les méthodes @@M@addCSSLink@@ et @@M@addJSLink@@, vous pouvez
+indiquer un paramètre supplémentaire qui doit être un tableau associatif,
+décrivant les attributs supplémentaires à mettre.
+
+<code php>
+$rep->addCSSLink('maFeuille.css', 
+                  array('title'=>'design bleu',
+                        'rel'=>'alternate stylesheet',
+                        'media'=>'all'));
+</code>
+
+
+Tous les exemples précédent sur la récupération des URL des fichiers CSS,
+fonctionnent aussi bien que pour les fichiers JS que les images et autres fichiers
+de ressources, stockés dans le répertoire @@F@www/@@ d'une application, d'un module
+ou dans le répertoire @@F@jelix-www@@.
+
+Et vous pouvez appliquer les mêmes principes dans un template :
+
+<code smarty>
+  {* dans le www/ d'une application *}
+  {meta_html css '/css/mystyles.css'}
+  {meta_html css $j_basepath.'css/mystyles.css'}
+  
+  {* dans le jelix-www/ *}
+  {meta_html js  $j_jelixwww.'js/tooltip.js'}
+
+  {* dans le www/ d'un module *}
+  {meta_htmlmodule css , 'mymodule', 'css/mystyles.css'}
+
+  {* lien vers une image *}  
+  <img src="{jurl 'jelix~www:getfile', array('targetmodule=>'mymodule', 'file'=>'img/mypicture.png')}" />
+</code>
+
+Voyez le chapitre sur les templates pour en savoir plus.
 
 ===== Autres paramètres pour les réponses html et basichtml =====
 
