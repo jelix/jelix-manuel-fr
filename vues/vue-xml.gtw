@@ -6,10 +6,23 @@ jResponseXML permet de renvoyer au navigateur du XML. Son alias est "xml".
 $rep = $this->getResponse('xml');
 </code>
 
-Pour indiquer le contenu xml, vous avez deux possibilités. 
-
-**Attention** : dans les deux cas, le XML doit être bien formé. Si ce n'est pas
+Le XML peut être renvoyé à partir d'un template, ou d'un contenu généré "à la main".
+Dans les deux cas, le XML doit être bien formé. Si ce n'est pas
 le cas, la réponse sera une erreur.
+
+jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@ donc vous n'avez pas à
+vous en occuper, sauf si vous indiquez que vous vous en chargez :
+
+<code php>
+  $rep->sendXMLHeader = false;
+</code>
+
+Le type mime envoyé est par défaut @@text/xml@@. Vous pouvez bien sûr
+changer cela en appelant la méthode @@M@addHttpHeader@@ :
+
+<code php>
+  $rep->addHttpHeader('Content-Type', 'application/xml');
+</code>
 
 ===== Générer à partir d'un template =====
 
@@ -21,15 +34,6 @@ indiquer le sélecteur de template dans la propriété @@P@$contentTpl@@.
   $rep->content->assign('foo','bla bla bla');
 </code>
 
-jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@ donc vous n'avez pas à
-vous en occuper dans le template. Cependant, si le template comporte déjà cette
-balise, il faudra alors faire :
-
-<code php>
-  $rep->sendXMLHeader = false;
-</code>
-
-
 ===== Génération sans template  =====
 
 Si vous ne voulez pas utiliser un template, vous mettez le contenu xml, sous
@@ -38,15 +42,6 @@ forme de chaine, dans la propriété $content.
 <code php>
   $rep->content = '<mondoc> <title>jelix</title> </mondoc>';
 </code>
-
-jResponseXml s'occupe de générer la balise @@E@<?xml ?>@@ donc vous n'avez pas à
-vous en occuper. Cependant, si votre contenu comporte déjà cette balise, il
-faudra alors faire :
-
-<code php>
-  $rep->sendXMLHeader = false;
-</code>
-
 
 ===== Indiquer des feuilles de styles. =====
 
@@ -57,7 +52,11 @@ du fichier, et en deuxième argument optionnel un tableau associatif définissan
 les pseudo attributs à mettre sur la processing instruction générée.
 
 <code php>
- $rep->addCSSStyleSheet('my.css', array('title'=>'super jolie'));
- $rep->addXSLStyleSheet('my.xsl');
+ $rep->addCSSStyleSheet('/my.css', array('title'=>'super jolie'));
+ $rep->addXSLStyleSheet('/my.xsl');
 </code>
+
+Note : comme pour la réponse HTML, vous pouvez indiquer des feuilles de styles
+qui soient stockées dans le www/ de l'application ou du module. Voir la documentation
+sur les vues HTML pour savoir comment récupérer ces URLs.
 
