@@ -174,7 +174,7 @@ date. Avant cette date, le navigateur ne fera pas de demande au serveur, et
 affichera directement la page qu'il a en cache. Par contre, au delà de cette
 date, le navigateur redemandera la page au serveur. Vous pouvez spécifier cette
 date d'expiration soit en indiquant la date proprement dite (méthode
-@@M@setExpires@@), soit en indiquant une durée (méthode @@MsetLifeTime@@).
+@@M@setExpires@@), soit en indiquant une durée (méthode @@M@setLifeTime@@).
 
 === setExpires ===
 
