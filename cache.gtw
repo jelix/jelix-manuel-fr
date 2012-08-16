@@ -1,11 +1,19 @@
 ~~LANG:EN@enman:cache~~
 
+Mettre en cache des données ou des portions de page HTML générées permet d'améliorer
+les performances du site web, voir même d'éviter de transférer des données au niveau navigateur.
+
+Jelix propose plusieurs système de cache. Vous avez probablement vu
+[[/zones#utilisation-du-cache|la mise en cache des zones]]. Vous allez voir ici
+la mise en cache de données quelconques, et l'utilisation du cache HTTP.
+
+
 ===== jCache =====
 
 jCache est une classe permettant de stocker des données dans un système de
 cache. Le système repose sur des pilotes pour les accès aux données. Il est donc
-possible d’utiliser pour le stockage des données, soit une base de données, soit
-un système de fichiers ou soit memcache.
+possible d’utiliser memcache, ou encore une base de données voir même le système
+de fichier. Et vous pouvez développer votre propre pilote.
 
 ==== Configuration ====
 
@@ -43,15 +51,7 @@ default = foo
 [jcache:foo]
 enabled = 1
 driver = file
-ttl = 0
-automatic_cleaning_factor = 0
-; répertoire où stocker les données (par défaut 'temp/yourapp/cache/')
-;cache_dir =
-file_locking = 1
-directory_level = 0
-directory_umask = 0700
-file_name_prefix = "jelix_cache"
-cache_file_umask = 0600
+; autres paramètres...
 </code>
 
 
@@ -137,21 +137,50 @@ Toutes ces méthodes statiques acceptent un nom de profile jcache en dernier arg
 
 ===== jResponse et le cache HTTP =====
 
-Jelix 1.4 intègre plusieurs nouvelles méthodes dans la classe @@C@jResponse@@ afin de gérer le cache d’une réponse en exploitant les entête prévus à cet effet dans le protocole HTTP.
+Le protocole HTTP possède des en-têtes pour informer le navigateur comment
+stocker la page qu'on lui envoi, c'est à dire si le navigateur peut la mettre en
+cache ou pas. Et le navigateur peut, lors d'une requête, indiquer au serveur
+qu'il a ou pas la page demandée dans son cache, et depuis quand. Coté serveur,
+on peut donc savoir si le contenu demandé est dans le cache du navigateur, et si
+il est périmé ou pas, ce qui permet de générer ou pas le contenu.
 
-Ces méthodes sont disponibles dans toutes les réponses pour lesquelles l'utilisation du cache HTTP a du sens.
+Jelix 1.4 intègre des nouvelles méthodes dans la classe @@C@jResponse@@
+afin de gérer facilement le cache HTTP d’une réponse en exploitant les entête
+prévus à cet effet dans le protocole HTTP.
 
-N’oubliez pas que ce cache se situe côté client, dans le navigateur de l’utilisateur et non sur le serveur.
+Ces méthodes sont disponibles dans toutes les réponses pour lesquelles
+l'utilisation du cache HTTP a du sens. N’oubliez pas que ce cache se situe côté
+client, dans le navigateur de l’utilisateur et non sur le serveur.
+
+Il y a deux façons de gérer le cache coté navigateur : le cache par expiration,
+et le cache par validation.
+
+
+Attention : en général, sauf à utiliser la méthode @@M@setLifeTime@@ avec un
+cache privé, la mise en cache ne doit pas concerner des pages "personnalisées"
+incluant par exemple des données relatifs à l'utilisateur. En effet, le contenu
+est succeptible d'être mis en cache par des proxys. Ceux-ci utilisent les
+en-têtes de cache envoyés par le serveur pour stocker en cache (ou pas), mais
+n'utilisent pas les cookies (notamment ceux de sessions) comme paramètres
+discriminants : ils ne mémorisent donc qu'une seule "version" d'une page et tout
+les utilisateurs obtiendront cette version de page. Si elle contient des données
+personnelles, cela peut avoir des conséquences dramatiques.
+
 
 ==== Cache par expiration ====
 
-===setExpires===
+Le cache par expiration est un cache qui restera valide jusqu'à une certaine
+date. Avant cette date, le navigateur ne fera pas de demande au serveur, et
+affichera directement la page qu'il a en cache. Par contre, au delà de cette
+date, le navigateur redemandera la page au serveur. Vous pouvez spécifier cette
+date d'expiration soit en indiquant la date proprement dite (méthode
+@@M@setExpires@@), soit en indiquant une durée (méthode @@MsetLifeTime@@).
 
-La méthode setExpires permet de spécifier une date jusqu'à laquelle la ressource sera considérée valide et gardé en cache.
+=== setExpires ===
 
-En interne, cette méthode ajoute un entête HTTP “Expires”.
-
-Dans le controller :
+La méthode @@M@setExpires@@ permet de spécifier une date jusqu'à laquelle la ressource
+sera considérée valide et gardée en cache. En interne, cette méthode ajoute un
+entête HTTP “Expires”. Dans le contrôleur :
 
 <code php>
 $rep->setExpires($date);
@@ -161,45 +190,70 @@ $rep->setExpires($date);
 $rep->setExpires(“+1 days”);
 </code>
 
-Note : le paramètre attendu par @@M@setExpires@@ est une date de la forme : @@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction [[phpapi:strtotime|@@f@strtotime@@]].
+Le paramètre attendu par @@M@setExpires@@ est une date de la forme
+@@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction
+[[phpapi:strtotime|@@f@strtotime@@]].
 
+=== setLifeTime ===
 
-===setLifeTime===
+La méthode @@M@setLifeTime@@ permet de spécifier un temps (en secondes) pendant lequel
+la ressource sera considérée valide et gardée en cache.
 
-La méthode setLifeTime permet de spécifier un temps (en secondes) pendant lequel la ressource sera considérée valide et gardé en cache.
-
-Vous avez également la possibilité de spécifier si la ressource peut être mise en cache par n’importe quel cache ou si elle doit être privée et ne pas être mise en cache par des proxys (par défaut : privé).
+Vous avez également la possibilité de spécifier si la ressource peut être mise
+en cache par n’importe quel cache ou si elle doit être privée et ne pas être
+mise en cache par des proxys (par défaut : privée).
 
 En interne, cette méthode ajoute un entête HTTP “Cache-Control”.
 
-Dans le controller :
+Dans le contrôleur :
 
 <code php>
 $rep->setLifeTime(3600); //1 heure en cache privé
 
 //ou bien
 
-$rep->setLifeTime(600);// 10 minutes en cache partagé
+$rep->setLifeTime(600, true);// 10 minutes en cache partagé
 </code>
 
 ==== Cache par validation ====
 
-Vous pouvez également utilisé une politique de validation pour votre cache : vous indiquez explicitement soit la dernière date à laquelle la ressource a été modifiée ("Last-Modified") soit un token correspondant à l'etat de la ressource ("Etag") à la méthode @@M@isValidCache@@, qui retournera @@true@@ si la ressource est encore dans le cache du navigateur (et qu'il n'y a donc pas besoin d'aller plus loin dans la construction de la réponse).
+Le cache par validation permet d'utiliser une politique de mise en cache plus
+complexe : le navigateur demande systèmatiquement la page au serveur, en lui
+indiquant une information de validité que lui avait donné le serveur. Mais le
+serveur, en fonction de cette date, peut décider de renvoyer une nouvelle page,
+ou de dire au navigateur d'utiliser celle qu'il a en cache.
 
-Dans le controller :
+C'est donc à vous, dans votre contrôleur, de décider si il faut renvoyer ou non
+un nouveau contenu. Pour cela, vous indiquez explicitement à la méthode
+@@M@isValidCache@@, soit la dernière date à laquelle la ressource a été modifiée
+("Last-Modified"), soit un token correspondant à l'etat de la ressource
+("Etag"). À vous donc de récupérer cette date (par exemple, si c'est une page
+d'un article, la date de modification de cet article), ou de calculer le token
+(qui peut être un checksum md5 par exemple, ou une chaine identifiant de façon unique
+la version de la page..).
+
+La méthode @@M@isValidCache@@, retournera @@true@@ si la ressource du navigateur est encore bonne,
+ou @@false@@ si il faut regénérer la page.
+
+Dans le contrôleur :
 
 <code php>
 $dateLastModified = $foo->updated_at; //date de dernière modification de ma ressource
-if($rep->isValidCache($dateLastModified)){
+
+if ($rep->isValidCache($dateLastModified)) {
+   // le cache est bon, on arrête là
    return $rep;
 }
 
 //Ou bien en utilisant “Etag”;
 
 $etag = ... ; //je génère un etag correspondant à l’etat de ma ressource
-if($rep->isValidCache(null, $etag)){
+
+if ($rep->isValidCache(null, $etag)) {
    return $rep;
 }
 </code>
 
-Note: le paramètre attendu par @@M@isValidCache@@ est une date de la forme : @@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction [[phpapi:strtotime|@@f@strtotime@@]].
+Le paramètre date attendu par @@M@isValidCache@@ est une date de la forme :
+@@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction
+[[phpapi:strtotime|@@f@strtotime@@]].
