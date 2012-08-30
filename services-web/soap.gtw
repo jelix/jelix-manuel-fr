@@ -20,7 +20,6 @@ méthode de vos contrôleurs SOAP.
 
 ===== Point d'entrée spécifique =====
 
-
 Une requête SOAP est spécifique, et pour y répondre, on ne peut pas utiliser
 [[/concepts/objets-request|l'objet request]] "classic". Il vous faut créer un
 point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@soap.php@@ par
@@ -33,19 +32,19 @@ Le point d'entrée devra contenir ceci :
 <code php>
 require_once ('../application.init.php');
 
-require_once (JELIX_LIB_CORE_PATH.'jSoapCoordinator.class.php');
+checkAppOpened();
 
-require_once (JELIX_LIB_CORE_PATH.'request/jSoapRequest.class.php');
+jApp::loadConfig('soap/config.ini');
+ini_set("soap.wsdl_cache_enabled", "0");
 
-ini_set("soap.wsdl_cache_enabled", "0"); // disabling PHP's WSDL cache
+jClasses::inc('jsoap~jSoapCoordinator');
+jClasses::inc('jsoap~jSoapRequest');
 
-$config_file = 'soap/config.ini.php';
-
-$jelix = new JSoapCoordinator($config_file);
-$jelix->request = new JSoapRequest();
+$jelix = new jSoapCoordinator();
+jApp::setCoord($jelix);
+$jelix->request = new jSoapRequest();
 $jelix->request->initService();
 $jelix->processSoap();
-
 </code>
 
 Il ne faut pas oublier de déclarer ce point d'entrée au niveau de la
@@ -74,6 +73,19 @@ pour soap comme ceci :
 </code>
 
 Enfin, créez un fichier de configuration dans @@F@var/config/soap/config.ini.php@@.
+
+===== Activation du module jsoap =====
+
+Comme vous le remarquez dans le point d'entrée, des classes du module jsoap
+sont utilisées. Vous devez donc l'activer.
+
+<code>
+  php.exe cmd.php installmodule jsoap
+</code>
+
+(pour plus d'information : [[/installer-un-module|Installer un module]])
+
+Ce module inclus également tout ce qu'il faut pour faire du WSDL (voir plus bas).
 
 ===== Contrôleur =====
 
@@ -226,15 +238,15 @@ class MyTestStructBis{
 
 Bien entendu, qui dit SOAP, dit un service WSDL qui va permettre aux clients
 SOAP d'être renseignés sur les services web SOAP disponibles dans votre
-application. Pour cela, Jelix propose un module tout prêt : jWSDL. Il contient
+application. Pour cela, le module jsoap inclus tout ce qu'il faut. Il contient
 un contrôleur nommé WSDL et possède une méthode @@M@wsdl()@@. Aussi, pour
 interroger le WSDL, il suffit d'indiquer à votre client SOAP une URL du genre 
 
-   http://monsite.com/index.php/jWSDL/WSDL/wsdl?service=unModule~unControleur
+   http://monsite.com/index.php/jsoap/WSDL/wsdl?service=unModule~unControleur
 
 ou avec le moteur d'url simple:
 
-   http://monsite.com/index.php?module=jWSDL&action=WSDL:wsdl&service=unModule~unControleur
+   http://monsite.com/index.php?module=jsoap&action=WSDL:wsdl&service=unModule~unControleur
 
 
 Notez qu'il faut donner un paramètre de nom "service", dans lequel on met le nom
@@ -248,16 +260,13 @@ services SOAP de toute votre application.
 Remarque : ce type d'url est disgracieux, et vous pouvez parfaitement configurer
 les urls significatives pour avoir des choses plus simple comme
 
-   http://monsite.com/index/wsdl/unModule/unControleur
+   http://monsite.com/index/jsoap/unModule/unControleur
 
 Notez que vous pouvez afficher une version HTML de la liste des services SOAP,
 en appelant la méthode "index" du contrôleur WSDL.
 
-  http://monsite.com/index.php/jWSDL/WSDL?service=unModule~unControleur
+  http://monsite.com/index.php/jsoap/WSDL?service=unModule~unControleur
 
-
-N'oubliez pas d'installer le module jWSDL (pour plus d'information : [[/installer-un-module|Installer un module]])
-  php.exe cmd.php installmodule jWSDL
 
 ===== Appel depuis un client SOAP =====
 
@@ -272,7 +281,7 @@ exemple en PHP utilisant l'extension SOAP :
 
         // Chargement du WSDL
         try {
-            $wsdlURI = "http://monsite.com/index.php/jWSDL/WSDL/wsdl?service=myapp~default";
+            $wsdlURI = "http://monsite.com/index.php/jsoap/WSDL/wsdl?service=myapp~default";
             $client = new SoapClient($wsdlURI, array('trace' => 1, 'soap_version'  => SOAP_1_1));
         } catch (SoapFault $fault) {
             throw new Exception($fault->getMessage());

@@ -33,6 +33,48 @@ Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votr
 
 ==== Modifications générales ====
 
+
+==== Support de SOAP ====
+
+Si vous utilisez les fonctionnalités SOAP de Jelix (points d'entrée, jWSDL...),
+vous devez faire les changements suivants :
+
+  * Dans la configuration, vous devez enlever l'activation du module jWSDL
+    puisqu'il n'existe plus, et activer le module jsoap:
+ 
+<code ini>
+   [modules]
+   jWSDL.access=2  ; <- enlever cette ligne
+   jsoap.access=2 ; <- ajouter cette ligne
+</code>
+
+  * Dans votre soap.php (ou autre points d'entrées pour soap), vous devez changer
+    leur contenu comme ceci:
+
+<code php>
+require_once ('../application.init.php');
+
+checkAppOpened();
+
+jApp::loadConfig('soap/config.ini');
+ini_set("soap.wsdl_cache_enabled", "0");
+
+jClasses::inc('jsoap~jSoapCoordinator');
+jClasses::inc('jsoap~jSoapRequest');
+
+$jelix = new jSoapCoordinator();
+jApp::setCoord($jelix);
+$jelix->request = new jSoapRequest();
+$jelix->request->initService();
+$jelix->processSoap();
+</code>
+
+   * Si vous générez des liens pour jWSDL, changez dans les selecteurs les noms
+   de module "jWSDL" en "soap".
+   * Reconfigurez tout vos clients soap qui interroge votre application, pour
+     changer l'url du WSDL
+
+
 ==== Mise à jour des modules ====
 
 Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.5.
