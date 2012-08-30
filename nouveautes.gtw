@@ -17,6 +17,7 @@ Principales nouveautés apportées par la version 1.4 :
      [[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md|la specification PSR0]].
    * [[/templates#templates-virtuels|Templates virtuelles]] : jTpl peut
      maintenant utiliser des templates qui ne sont pas dans des fichiers.
+   * Le moteur d'URLS "simple" est maintenant obsolète. Il sera retiré dans une future version
    * Prise en charge des [[/urls/significant#parametres-automatiques-de-langues|paramètres automatiques de langues]] dans les URL.
    * Amélioration de la prise en charge des codes langues. Jelix ne prend plus
      en charge les codes qui ne sont pas des codes standards (en_EN par exemple).
