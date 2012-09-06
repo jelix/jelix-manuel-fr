@@ -42,6 +42,10 @@ méthodes @@M@addHeadContent()@@ et @@M@addContent()@@ de l'objet
 @@C@jResponseBasicHtml@@. Elles ont pu être appelée par des contrôleurs, des
 classes techniques, des plugins. C'est pourquoi il faut indiquer ces variables.
 
+Il y a une quatrième variable, @@V@$BASEPATH@@ (depuis Jelix 1.4.1), qui contient le
+chemin de base de l'application, ce qui peut être utile pour vos feuilles de styles
+et autres ressources statiques.
+
 Voici un exemple de fichier statique :
 
 <code html>
@@ -50,6 +54,7 @@ Voici un exemple de fichier statique :
   <head>
      <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
       <title>Hello From Jelix !</title>
+      <link type="text/css" href="<?php echo $BASEPATH; ?>mystyles.css" rel="stylesheet" />
       <?php echo $HEADBOTTOM; ?>
   </head>
   <body>
