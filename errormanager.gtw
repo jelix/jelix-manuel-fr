@@ -64,13 +64,21 @@ cherchez pas à afficher le véritable message d'erreur, pour des raisons
 évidentes de sécurité et de convivialité. En fait, cette page doit être quasi
 statique. Gardez simplement les instructions @@echo@@ déjà présente.
 
+Les variables @@V@$HEADBOTTOM@@ et @@V@$BODYTOP@@ ne sont pour le moment
+pas utilisée. @@V@$BODYBOTTOM@@ contient une message d'erreur "tronqué" :
+il ne contient pas les détails. Enfin, depuis Jelix 1.4.1, @@V@$BASEPATH@@
+est disponible, contenant le chemin de base de l'application pour les
+feuilles de styles etc. Notez que cette variable peut être vide en fonction
+de la nature de l'erreur (une erreur qui survient avant ou pendant la
+lecture de la configuration).
+
 La page d'erreur peut ne pas être utilisée dans certains cas :
 
-  *  quand l'erreur survient avant ou pendant la lecture de la configuration
-     (quand le framework n'est pas prêt)
+  *  quand une erreur fatale PHP survient
+  *  quand une erreur survient pendant l'initialisation du framework
   *  quand le navigateur n'attend pas du HTML
 
-Dans ce cas, Jelix retourne un simple message texte, qui est configuré dans
+Dans ce dernier cas, Jelix retourne un simple message texte, qui est configuré dans
 l'option @@errorMessage@@ dans la section @@[error_handling]@@ de la
 configuration.
 
