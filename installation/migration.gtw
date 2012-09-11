@@ -34,6 +34,15 @@ Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votr
 ==== Modifications générales ====
 
 
+==== Support de PDF avec TCPDF ====
+
+TCPDF, ses fontes, l'objet réponse @@C@jResponseTcpdf@@ et la classe
+@@C@jTcpdf@@ ont été intégré dans un module séparé. Si votre application utilise
+ces objets, il faut installer ce nouveau module jtcpdf, disponible en
+téléchargement. Il n'y a en principe rien à faire d'autre, sauf à changer les
+chemins d'inclusions si vous avez fait des classes héritant de
+@@C@jResponseTcpdf@@.
+
 ==== Support de SOAP ====
 
 Si vous utilisez les fonctionnalités SOAP de Jelix (points d'entrée, jWSDL...),

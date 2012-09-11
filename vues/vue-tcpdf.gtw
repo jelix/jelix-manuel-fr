@@ -6,11 +6,12 @@ la célèbre FPDF).
 
 ===== Téléchargement et installation =====
 
-Pour l'utiliser, vous devez d'abord télécharger les fontes disponibles sur le
-site de Jelix (Elles ne sont pas fournies avec Jelix à cause de leur poids), et
-les installer dans @@F@lib/pdf-fonts/@@.
+Depuis Jelix 1.5, TCPDF et la classe @@C@jResponseTcpdf@@ sont livrés
+dans un module séparé (à cause de la grande taille des fichiers de fontes).
 
-===== Utilisation dans une action =====
+Vous devez donc télécharger et installer le module jtcpdf.
+
+===== Utilisation dans un contrôleur =====
 
 <code php>
   $rep = $this->getResponse('tcpdf');
