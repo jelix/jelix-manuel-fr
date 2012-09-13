@@ -350,4 +350,29 @@ soap_version = SOAP_1_1
 classmap = '{"soaptype":"myclass", "soaptype2":"myclass2"}'
 </code>
 
-Les classes que vous indiquez doivent être déjà chargée avec l'appel à @@jSoapClient::get()@@. 
+Les classes que vous indiquez doivent être déjà chargée avec l'appel à @@jSoapClient::get()@@.
+
+Une alternative fournie depuis Jelix 1.5, est de déclarer ce mapping dans un fichier
+ini séparé, et d'indiquer ce fichier dans une propriété @@classmap_file@@.
+<code ini>
+[jsoapclient:default]
+wsdl= "http://example.com/books.wsdl"
+soap_version = SOAP_1_1
+classmap_file = soap_classmap.ini.php
+</code>
+
+Et dans ce fichier ini, il y a autant de sections que de profils jsoapclient, avec les mêmes
+noms (sans le prefixe "jsoapclient:"). À l'intérieur des sections, il y a une liste de "cle=valeur".
+Les clés sont les noms des types soap, et les valeurs les noms des classes PHP.
+
+<code ini>
+[default]
+soaptype=myclass
+soaptype2=myclass2
+</code>
+
+Vous pouvez aussi avoir une section @@__common__@@ qui déclare un mapping pour tous les profils.
+
+Le mapping pour un profil donné, contiendra le mapping de @@__common__@@, celui de la section correspondante
+dans le fichier de mapping, et éventuellement celui déclaré dans la propriété classmap
+du profil.

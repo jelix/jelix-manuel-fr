@@ -6,8 +6,10 @@ Principales nouveautés apportées par la version 1.5 :
    * Tout ce qui concerne Soap a été migré dans un nouveau module jsoap.
      Le module jWSDL a été fusionné avec jsoap. Les points d'entrées soap doivent
      être modifiés.
-   * Le support PDF avec TCPDF et ses fontes, a été migré dans un nouveau module jtcpdf. Il est
-     livré dans un module séparé (à cause de la taille des fichiers de fontes).
+   * Le support PDF avec TCPDF et ses fontes, a été migré dans un nouveau module jtcpdf. Il n'est
+     pas livré dans l'archive de Jelix (à cause de la taille des fichiers de fontes).
+   * Il est possible de [[services-web/soap#appeller-un-service-soap-avec-jelix|déclarer le "classmap"]]
+     pour @@C@jSoapClient@@, dans un fichier autre que celui des profils.
 
 Composants obsolètes :
 
