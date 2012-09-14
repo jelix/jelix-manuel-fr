@@ -27,7 +27,7 @@ Principales nouveautés apportées par la version 1.4 :
      fournie par les objets réponses : @@M@cleanCacheHeaders()@@,
      @@M@setExpires()@@, @@M@setLifetime()@@, @@M@isValidCache()@@.
    * Nouvelles classes permettant de lire des flux ATOM et RSS.
-   * Nouvelle classe @@C@jPref@@ pour gérer des "préférences", et donc des
+   * [[classes-utiles/jpref|Nouvelle classe @@C@jPref@@]] pour gérer des "préférences", et donc des
      paramètres dynamiques d'application. une interface est fournie permettant
      au webmaster de gérer ces préférences.
    * Les modules peuvent maintenant fournir leur propre objet réponse global

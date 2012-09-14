@@ -2,61 +2,99 @@
 
 ===== jPref =====
 
-jPref est une classe très simple qui va vous permettre de récuperer et d'enregistrer des préférences pour votre application (on parle ici de préférences qui peuvent évoluer dans la vie de l'application et non de préférences de configuration fixes qui elles se trouvent dans le @@defaultconfig.ini.php@@).
+jPref est une classe très simple qui va vous permettre de récuperer et
+d'enregistrer des préférences pour votre application (on parle ici de
+préférences qui peuvent évoluer dans la vie de l'application et non de
+préférences de configuration fixes qui elles se trouvent dans le
+@@defaultconfig.ini.php@@).
 
 ==== Configuration ====
 
-@@C@jPref@@ est en fait une classe qui encapsule @@C@jKVDb@@. Par conséquent, pour utiliser jPref il vous suffit de définir un driver @@jkvdb@@ ayant comme nom @@jpref@@ : @@[jkvdb:jpref]@@.
+@@C@jPref@@ est en fait une classe qui encapsule @@C@jKVDb@@. Par conséquent,
+pour utiliser jPref il vous suffit de définir un profil pour @@jkvdb@@ ayant comme
+nom @@jpref@@.
 
-Pour plus de détails sur la configuration de ce driver, voir la [[/kvdb#drivers|documentation de jKVDb]].
+Dans votre  profiles.ini.php:
+
+<code ini>
+[jkvdb:jpref]
+...
+</code>
+
+
+Pour plus de détails sur la configuration de ce driver, voir la
+[[/kvdb#drivers|documentation de jKVDb]].
 
 ==== Utilisation ====
 
-   * @@M@jPref::get($key)@@: pour récupérer une préference.
-   * @@M@jPref::set($key, $value, $ttl)@@: pour enregistrer ou modifier une préférence.
+   * @@M@jPref::get($key)@@ : pour récupérer une préference.
+   * @@M@jPref::set($key, $value, $ttl)@@ : pour enregistrer ou modifier une préférence.
 
 
 ===== Interface d'admin pour jPref =====
 
-jPref fournit également un controller afin gérer les préférences directement depuis votre interface d'administration. Ce controller est directement intégré à [[/creer-application/creer-administration|master_amin]] (menu "Système", lien "Préferences").
+Un module jpref_admin est fournit afin gérer les préférences directement
+depuis votre interface d'administration. Les pages de ce module sont directement
+accessible depuis le menu de [[/creer-application/creer-administration|master_amin]]
+(menu "Système", lien "Préferences").
 
-Il faudra d'abord renseigner le fichier @@var/config/preferences.ini.php@@ afin d'organiser et configurer vos préferences (type, locale, valeur par défaut, groupe de préférences, droits de lecture/écriture).
+Il faudra d'abord renseigner le fichier @@var/config/preferences.ini.php@@ afin
+d'organiser et configurer vos préferences (type, locale, valeur par défaut,
+groupe de préférences, droits de lecture/écriture).
 
 ==== Configuration d'une préférence ====
 
-Dans votre fichier @@preferences.ini.php@@ :
+Dans votre fichier @@preferences.ini.php@@, vous avez une section pour chaque
+preference, dont le nom commence par "pref:" :
 
 <code ini>
 [pref:nom.systeme.de.la.pref]
 ; "string" | "integer" | "boolean" | "decimal" (défaut string)
 type =
-; clé de la locale définissant la préférence
+; clé de la locale pour le libellé
 locale =
 ; identifiant du groupe auquelle appartient la préférence
 group =
-; acl_subject correspondant au droit de lecture de la préférence
+; sujet jAcl2 correspondant au droit de lecture de la préférence
 read_acl_subject =
-; acl_subject correspondant au droit d'écriture de la préférence
+; sujet jAcl2 correspondant au droit d'écriture de la préférence
 write_acl_subject =
 ; valeur par défaut
 default_value =
 </code>
 
-Note : chaque option est optionelle et peut ne pas être remplie.
+Note : chaque parametre est optionel.
+
+@@read_acl_subject@@ et @@write_acl_subject@@ permette de limiter l'accés
+aux préférences en fonction des utilisateurs. Certaines preferences peuvent
+par exemple n'être accessible et modifiable que par des administrateurs
+par exemple. Il vous faudra donc définir des droits dans jAcl2, et indiquer
+ici les "sujets" correspondant.
+
+Si @@read_acl_subject@@ et @@write_acl_subject@@ ne sont pas rempli,
+tout utilisateur qui a le droit "jprefs.prefs.list" peut lire et modifier
+la préférence.
+
 
 ==== Configuration d'un groupe de préférences ====
 
-Dans votre fichier @@preferences.ini.php@@ :
+Les préferences peuvent être regroupées, afin d'en faciliter la
+gestion. Vous pouvez avoir un groupe par module ou domaine
+fonctionnel par exemple.
+
+Dans votre fichier @@preferences.ini.php@@, déclarez une section
+avec un prefix "group:". Une section contient le label du groupe
+et son ordre d'affichage.
 
 <code ini>
 [group:nom.syteme.de.la.pref]
-; clé de la locale définissant le groupe
+; clé de la locale définissant le label du groupe
 locale =
 ; ordre d'affichage dans la liste des préférences
 order =
 </code>
 
-Note : chaque option est optionelle et peut ne pas être remplie.
+Note : chaque paramètre est optionel et peut ne pas être remplie.
 
 ==== Exemple ====
 
