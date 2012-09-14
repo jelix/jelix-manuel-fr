@@ -28,12 +28,24 @@ Pour plus de détails sur la configuration de ce driver, voir la
 ==== Utilisation ====
 
    * @@M@jPref::get($key)@@ : pour récupérer une préference.
-   * @@M@jPref::set($key, $value, $ttl)@@ : pour enregistrer ou modifier une préférence.
+   * @@M@jPref::set($key, $value)@@ : pour enregistrer ou modifier une préférence.
+
+Exemple :
+
+<code php>
+
+jPref::set('nb.items.per.page', 20);
+
+$val = jPref::get('nb.items.per.page');
+// $val contient 20
+
+</code>
+
 
 
 ===== Interface d'admin pour jPref =====
 
-Un module jpref_admin est fournit afin gérer les préférences directement
+Un module jpref_admin est fournit afin gérer les préférences 
 depuis votre interface d'administration. Les pages de ce module sont directement
 accessible depuis le menu de [[/creer-application/creer-administration|master_amin]]
 (menu "Système", lien "Préferences").
