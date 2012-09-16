@@ -103,13 +103,13 @@ class defaultCtrl extends jController {
 
 ===== Services fournis par jController =====
 
-Dans une action, vous avez un certains nombre de méthodes à votre disposition.
+Dans une action, vous avez un certain nombre de méthodes à votre disposition.
 
 ==== Récupérer un objet jResponse ====
 
 Vous devez toujours renvoyer un objet dérivant de @@C@jResponse@@, qui est en
 fait le "view" du modèle MVC. Il y a un certain nombre d'objets @@C@jResponse@@
-fournies par Jelix, permettant de générer du XHTML, du JSON, du text, du css, du
+fournis par Jelix, permettant de générer du XHTML, du JSON, du text, du css, du
 xml, du zip ou même faire des redirections. Chaque type d'objet jResponse est
 déclaré dans jelix par un mot clé.
 
