@@ -1,17 +1,23 @@
 ~~LANG:EN@enman:rights2/configuration~~
 
 
-Avant de pouvoir utiliser l'API de jAcl2 dans vos modules et le driver db de jAcl2, il faut d'abord initialiser la base de données, et mémoriser les différents éléments utilisés pour les droits. 
+Avant de pouvoir utiliser l'API de jAcl2 dans vos modules et le driver db de
+jAcl2, il faut d'abord initialiser la base de données, et mémoriser les
+différents éléments utilisés pour les droits. 
 
 ===== Installation =====
 
-Le driver jAcl2.db ne fonctionne qu'avec une base de données. Il vous faut donc configurer une connexion de base de données, et créer les tables nécessaires.
+Le driver jAcl2.db ne fonctionne qu'avec une base de données. Il vous faut donc
+configurer une connexion de base de données, et créer les tables nécessaires.
 
 === Configuration de la connexion ===
 
 Pour cela, il vous faut vous reporter à la [[/bd|page sur jDb]]. 
 
-Cependant, si les tables jAcl2 ne sont pas dans la base indiquée par le profil par défaut, il vous faut alors créer un profil de connexion avec le nom "**jacl2_profile**", ou un alias (dans la version 1.1beta1, c'était jacl_profil). Un exemple de fichier @@F@dbprofils.ini.php@@ :
+Cependant, si les tables jAcl2 ne sont pas dans la base indiquée par le profil
+par défaut, il vous faut alors créer un profil de connexion avec le nom
+@@jacl2_profile@@, ou un alias (dans la version 1.1beta1, c'était
+jacl_profil). Un exemple de fichier @@F@dbprofils.ini.php@@ :
 
 <code ini>
 
@@ -37,7 +43,8 @@ force_encoding=true
 
 === Création des tables ===
 
-Pour cela, vous devez installer le module **jacl2db**. L'installateur de ce module créera pour vous les tables nécessaires en base de donnée.
+Pour cela, vous devez installer le module **jacl2db**. L'installateur de ce
+module créera pour vous les tables nécessaires en base de donnée.
 
 Dans @@F@lib/jelix-scripts/@@ :
 <code php>
@@ -52,18 +59,25 @@ php jelix.php --myapp installmodule -p defaultuser jacl2db
 
 ===== Configuration des droits =====
 
-La configuration se fait au moyen de commandes du script jelix en ligne de commande. Il y a deux commandes pour configurer jAcl2.db : @@acl2group@@ et @@acl2right@@. Chacune prenant en argument un nom de "sous-commande" suivi de 0 à n arguments suivant la sous commande.
+La configuration se fait au moyen de commandes du script jelix en ligne de
+commande. Il y a deux commandes pour configurer jAcl2.db : @@acl2group@@ et
+@@acl2right@@. Chacune prenant en argument un nom de "sous-commande" suivi de 0
+à n arguments suivant la sous commande.
 
-Dans la suite, on est dans l'hypothèse où votre application s'appelle myapp. Remplacez bien entendu ce nom par le nom adéquate.
+Dans la suite, on est dans l'hypothèse où votre application s'appelle myapp.
+Remplacez bien entendu ce nom par le nom adéquate.
 
-Notez que le module jacl2db_admin vous permet de configurer et gérer les droits en quelques clics, vous évitant d'utiliser la ligne de commande. Il vous faudra cependant quand même créer les sujets en ligne de commande.
+Notez que le module **jacl2db_admin** vous permet de configurer et gérer les droits
+en quelques clics, vous évitant d'utiliser la ligne de commande. Il vous faudra
+cependant quand même créer les sujets en ligne de commande.
 
 
 ==== Création des sujets ====
 
 Dans le système de droits, vous devez déterminer des "sujets" représentant une valeur de droit.
 
-Imaginons que l'on veuille créer des droits sur les articles d'un CMS, les différents droits seraient : READ, LIST, CREATE, DELETE, UPDATE. Autrement dit :
+Imaginons que l'on veuille créer des droits sur les articles d'un CMS, les
+différents droits seraient : READ, LIST, CREATE, DELETE, UPDATE. Autrement dit :
   * "cms.articles.read",
   * "cms.articles.list",
   * "cms.articles.create",
@@ -85,10 +99,10 @@ id			label key
 --------------------------------------------------------
 </code>
 
-Un sujet est représenté par une valeur de droit et une clé de locale qui indiquera son label (clé que vous devrez enregistrer dans un fichier de locale).
+Un sujet est représenté par une valeur de droit et une clé de locale qui
+indiquera son label (clé que vous devrez enregistrer dans un fichier de locale).
 
 Créons nos sujets :
-
 
 <code bash>
 $ php jelix.php --myapp acl2right subject_create "cms.articles.create" "cms~acl2.articles.create"
@@ -98,7 +112,8 @@ $ php jelix.php --myapp acl2right subject_create "cms.articles.list" "cms~acl2.a
 $ php jelix.php --myapp acl2right subject_create "cms.articles.read" "cms~acl2.articles.read"
 </code>
 
-Si vous n'utilisez pas de module qui permette de gérer les droits, alors la clé de locale n'est pas indispensable. Mettez alors la chaîne que vous voulez.
+Si vous n'utilisez pas de module qui permette de gérer les droits, alors la clé
+de locale n'est pas indispensable. Mettez alors la chaîne que vous voulez.
 
 À l'exécution de la commande, vous obtenez :
 
@@ -108,7 +123,8 @@ Si vous n'utilisez pas de module qui permette de gérer les droits, alors la cl�
 OK
 </code>
 
-Quand une commande acl2 se passe bien, il y a toujours le message OK. On peut le vérifier en listant à nouveau les sujets :
+Quand une commande acl2 se passe bien, il y a toujours le message OK. On peut le
+vérifier en listant à nouveau les sujets :
 
 <code bash>
 $ php jelix.php --myapp acl2right subject_list
@@ -133,7 +149,9 @@ $ php jelix.php --myapp acl2right subject_delete  <nom du sujet>
 
 ==== Création des groupes d'utilisateurs ====
 
-La déclaration d'un droit nécessite un couple sujet/groupe d'utilisateur. Nous devons donc créer un groupe d'utilisateurs. La gestion des groupes d'utilisateurs se fait au moyen de la commande acl2group.
+La déclaration d'un droit nécessite un couple sujet/groupe d'utilisateur. Nous
+devons donc créer un groupe d'utilisateurs. La gestion des groupes
+d'utilisateurs se fait au moyen de la commande acl2group.
 
 Créons par exemple un groupe de rédacteurs.
 
@@ -149,7 +167,9 @@ Le message OK s'affiche, avec l'identifiant du nouveau groupe (ici 1) :
 OK. Group id is: 1
 </code>
 
-Nous allons en créer un deuxième, en indiquant avec l'option **-defaultgroup** que l'on veut que ce soit un groupe par défaut, c'est à dire dans lequel sera mis tout nouvel utilisateur.
+Nous allons en créer un deuxième, en indiquant avec l'option **-defaultgroup**
+que l'on veut que ce soit un groupe par défaut, c'est à dire dans lequel sera
+mis tout nouvel utilisateur.
 
 <code bash>
 $ php jelix.php --myapp acl2group -defaultgroup create "lecteurs"
@@ -166,7 +186,8 @@ id      label name              default
 1       rédacteurs
 </code>
 
-On peut changer le statut "default" plus tard, avec la sous-commande setdefault, en indiquant l'identifiant du groupe (ou son nom) :
+On peut changer le statut "default" plus tard, avec la sous-commande setdefault,
+en indiquant l'identifiant du groupe (ou son nom) :
 
 <code bash>
 $ php jelix.php --myapp acl2group setdefault 1 true
@@ -190,7 +211,8 @@ $ php jelix.php --myapp acl2group delete "super rédacteurs"
 
 ==== Gérer les utilisateurs dans les groupes ====
 
-Dans ces groupes, vous allez indiquer des utilisateurs. Pour ajouter un utilisateur, vous devez d'abord déclarer l'utilisateur dans le système jAcl2.
+Dans ces groupes, vous allez indiquer des utilisateurs. Pour ajouter un
+utilisateur, vous devez d'abord déclarer l'utilisateur dans le système jAcl2.
 
 <code bash>
 $ php jelix.php --myapp acl2group createuser laurent
@@ -198,7 +220,8 @@ $ php jelix.php --myapp acl2group createuser laurent
 
 Cela déclare l'utilisateur Laurent, et un groupe privé lui est crée.
 
-Ensuite, vous pouvez l'ajouter à des groupes. Il faut utiliser la sous-commande "adduser" et le numéro du groupe (ou son nom).
+Ensuite, vous pouvez l'ajouter à des groupes. Il faut utiliser la sous-commande
+"adduser" et le numéro du groupe (ou son nom).
 
 <code bash>
 $ php jelix.php --myapp acl2group adduser lecteurs laurent
@@ -224,9 +247,12 @@ $ php jelix.php --myapp acl2group alluserslist
 
 ==== Création des droits ====
 
-Puisque nous avons maintenant tout ce qu'il faut pour définir des droits, définissons-en. On utilise la commande acl2right.
+Puisque nous avons maintenant tout ce qu'il faut pour définir des droits,
+définissons-en. On utilise la commande acl2right.
 
-Déjà, pour les lecteurs, on va dire qu'ils peuvent lire et lister les articles. On va donc assigner les sujets "cms.articles.list" et "cms.articles.read" au groupe des lecteurs dont l'identifiant est 2 :
+Déjà, pour les lecteurs, on va dire qu'ils peuvent lire et lister les articles.
+On va donc assigner les sujets "cms.articles.list" et "cms.articles.read" au
+groupe des lecteurs dont l'identifiant est 2 :
 
 <code bash>
 $ php jelix.php --myapp acl2right add  2 "cms.articles.list"
@@ -249,7 +275,8 @@ group	subject		resource
 
 </code>
 
-Passons maintenant au groupe rédacteur. On va leur donner tous les droits sur le sujet cms.articles.
+Passons maintenant au groupe rédacteur. On va leur donner tous les droits sur le
+sujet cms.articles.
 
 <code bash>
 $ php jelix.php --myapp acl2right add  1 "cms.articles.list"
@@ -278,7 +305,10 @@ group   subject value           resource
 </code>
 
 
-Imaginons qu'on veuille donner toutefois aux lecteurs le droit de modifier l'article "opinions", on crée alors un droit sur la ressource "opinions", en indiquant l'identifiant de cette ressource en dernier paramètre à la sous-commande add :
+Imaginons qu'on veuille donner toutefois aux lecteurs le droit de modifier
+l'article "opinions", on crée alors un droit sur la ressource "opinions", en
+indiquant l'identifiant de cette ressource en dernier paramètre à la
+sous-commande add :
 
 <code bash>
 $ php jelix.php --myapp acl2right add  2 "cms.articles.update" "opinions"
@@ -305,12 +335,16 @@ group   subject value           resource
 	cms.articles.update
 </code>
 
-On peut aussi retirer un droit avec la sous-commande remove, en indiquant, comme pour la sous-commande create, le groupe d'utilisateur et le sujet (plus éventuellement la ressource si on a une ressource).
+On peut aussi retirer un droit avec la sous-commande remove, en indiquant, comme
+pour la sous-commande create, le groupe d'utilisateur et le sujet (plus
+éventuellement la ressource si on a une ressource).
 
-Exemple, on change d'avis à propos de l'article "opinions" (il y a vraiment trop de spam :-) ) :
+Exemple, on change d'avis à propos de l'article "opinions" :
 <code bash>
 $ php jelix.php --myapp acl2right remove  2 "cms.articles.update" "opinions"
 </code>
 
-Une fois tous les droits établis, l'application peut fonctionner selon vos règles, et les modules peuvent faire appel à l'API de jAcl2 pour agir en fonction des droits que vous avez configuré.
+Une fois tous les droits établis, l'application peut fonctionner selon vos
+règles, et les modules peuvent faire appel à l'API de jAcl2 pour agir en
+fonction des droits que vous avez configuré.
 

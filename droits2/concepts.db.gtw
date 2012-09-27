@@ -1,6 +1,9 @@
 ~~LANG:EN@enman:rights2/concepts.db~~
 
-jAcl2.db est le driver "db" pour jAcl2 et se sert d'une base de données pour stocker les droits. Il implémente les concepts généraux de jAcl2, avec en plus une gestion de groupes d'utilisateurs. Aussi les éléments qui entrent en jeu dans le système de droits de jAcl2.db sont :
+jAcl2.db est le driver "db" pour jAcl2 et se sert d'une base de données pour
+stocker les droits. Il implémente les concepts généraux de jAcl2, avec en plus
+une gestion de groupes d'utilisateurs. Aussi les éléments qui entrent en jeu
+dans le système de droits de jAcl2.db sont :
 
   * un sujet 
   * un groupe d'utilisateurs
@@ -10,9 +13,13 @@ une combinaison de chacun de ces types d'éléments représente un droit.
 
 ===== Groupes et Utilisateur =====
 
-Chaque utilisateur appartient à un ou plusieurs groupes. Un droit s'exerce toujours sur un ou plusieurs groupes et non pas sur un utilisateur précis. 
+Chaque utilisateur appartient à un ou plusieurs groupes. Un droit s'exerce
+toujours sur un ou plusieurs groupes et non pas sur un utilisateur précis. 
 
-Il est possible d'affecter des droits à un seul utilisateur, mais cela se traduit en fait par l'existence d'un groupe 'privé' propre à chaque utilisateur (afin de faciliter les traitements). En clair, chaque utilisateur possède son groupe personnel dans lequel il est seul.
+Il est possible d'affecter des droits à un seul utilisateur, mais cela se
+traduit en fait par l'existence d'un groupe 'privé' propre à chaque utilisateur
+(afin de faciliter les traitements). En clair, chaque utilisateur possède son
+groupe personnel dans lequel il est seul.
 
 Il y a trois types de groupes :
 
@@ -23,7 +30,10 @@ Il y a trois types de groupes :
 
 ===== Classes utilitaires =====
 
-Deux classes accompagnent le driver jAcl2.db pour gérer les groupes, utilisateurs, droits etc : jAcl2DbManager et jAcl2DbUserGroup.
+Deux classes accompagnent le driver jAcl2.db pour gérer les groupes,
+utilisateurs, droits etc : @@C@jAcl2DbManager@@ et @@C@jAcl2DbUserGroup@@.
 
-Leur utilisation est similaire d'un point de vue théorique aux commandes de jelix-scripts (décrites dans [[configuration|Configurer jAcl2.db]]), aussi nous vous laissons lire [[refapi:|la documentation de reference]].
+Leur utilisation est similaire d'un point de vue théorique aux commandes de
+jelix-scripts (décrites dans [[configuration|Configurer jAcl2.db]]), aussi nous
+vous laissons lire [[refapi:|la documentation de reference]].
 

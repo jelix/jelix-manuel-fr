@@ -1,36 +1,58 @@
 ~~LANG:EN@enman:rights2/use~~
 
 
-Quand vous voulez que votre module fonctionne selon des droits, il vous faut durant la réalisation de ce module :
+Quand vous voulez que votre module fonctionne selon des droits, il vous faut
+durant la réalisation de ce module :
 
-  - déterminer des sujets (droits) que vous utiliserez
-  - éventuellement les enregistrer dans le système de droits utilisé par le driver que vous indiquez à jAcl2 : dans un annuaire ldap si vous utilisez un driver ldap (non fourni pour le moment) ou une base de données si vous utilisez [[configuration|par exemple le driver jAcl2.db]].
+   * déterminer des sujets (droits) que vous utiliserez
+   * éventuellement les enregistrer dans le système de droits utilisé par le
+     driver que vous indiquez à jAcl2 : dans un annuaire ldap si vous utilisez
+     un driver ldap (non fourni) ou une base de données si vous
+     utilisez [[configuration|par exemple le driver jAcl2.db]].
 
-Ensuite vous pouvez utiliser les méthodes statiques de jAcl2 pour savoir si l'utilisateur courant a tel droit sur tel ou tel sujet. 
+Ensuite vous pouvez utiliser les méthodes statiques de jAcl2 pour savoir si
+l'utilisateur courant a tel droit sur tel ou tel sujet. 
 
-Si le driver gère des groupes d'utilisateurs, vous n'avez pas à les indiquer lors de ces interrogations : le driver s'en occupe automatiquement. Notez qu'un driver pour jAcl2 peut utiliser jAuth pour l'authentification.
+Si le driver gère des groupes d'utilisateurs, vous n'avez pas à les indiquer
+lors de ces interrogations : le driver s'en occupe automatiquement. Notez qu'un
+driver pour jAcl2 peut utiliser jAuth pour l'authentification.
 
 
 
 ===== Configuration =====
 
-Avant toute chose vous devez indiquer quel driver vous utilisez pour jAcl2. Les drivers sont des plugins stockés dans un répertoire //acl2// d'un dépôt de plugins. Un plugin pour jAcl2 est une classe fooAcl2Driver (foo étant le nom du plugin) qui doit implémenter l'interface jIAcl2Driver et qui est enregistrée dans un fichier foo.acl2.php. Par exemple le driver "db" est stocké dans db/db.acl2.php et est défini dans la classe dbAcl2Driver.
+Avant toute chose vous devez indiquer quel driver vous utilisez pour jAcl2.
 
-Dans la configuration de l'application, vous devriez avoir une section //acl2// :
+Les drivers sont des plugins stockés dans un répertoire @@F@acl2@@ d'un dépôt de
+plugins. Un plugin pour jAcl2 est une classe @@C@fooAcl2Driver@@ (foo étant le nom du
+plugin) qui doit implémenter l'interface @@I@jIAcl2Driver@@ et qui est enregistrée
+dans un fichier @@F@foo.acl2.php@@. Par exemple le driver "db" est stocké dans
+@@F@db/db.acl2.php@@ et est défini dans la classe @@C@dbAcl2Driver@@.
+
+Pour indiquer le driver, vous avez deux choix :
+
+   * Si il est fourni par un module, comme jacl2db, installez le module. Pour jacl2db
+     voyez [[configuration|la configuration de jacl2db]].
+   * Si vous avez juste un plugin fourni, stockez le dans un dépôt de plugin et
+     indiquez sont nom dans une section @@[acl2]@@ de la configuration générale :
 
 <code ini>
 [acl2]
 driver=db
 </code>
 
-Au niveau de l'option driver vous devez y mettre le nom du driver utilisé.
+Au niveau de l'option @@driver@@, vous devez y mettre le nom du driver utilisé.
+
 ===== Interrogation du système de droit =====
 
-Comme jAcl2 se charge de découvrir l'utilisateur actuel, vous n'avez qu'une méthode statique de jAcl2 à connaître pour 99% des cas : check.
+Comme jAcl2 se charge de découvrir l'utilisateur actuel, vous n'avez qu'une
+méthode statique de jAcl2 à connaître pour 99% des cas : @@jAcl2::check@@.
 
 ==== jAcl2::check ====
 
-C'est probablement la méthode que vous utiliserez le plus avec jAcl2. Elle permet de savoir si l'utilisateur a tel ou tel droit, et renvoie donc true ou false. Exemple :
+C'est probablement la méthode que vous utiliserez le plus avec jAcl2. Elle
+permet de savoir si l'utilisateur a tel ou tel droit, et renvoie donc true ou
+false. C'est une méthode statique. Exemple :
 
 <code php>
 if( jAcl2::check("cms.articles.create")){
@@ -55,26 +77,38 @@ if( jAcl2::check("cms.articles.update", $article_id)){
 </code>
 
 
-
-
-
 ==== Vérification automatique ====
 
-Dans les contrôleurs dont on veut vérifier les droits automatiquement, on peut utiliser le plugin jacl2 pour le coordinateur.
+L'installateur du module jacl2db installe le plugin jacl2 pour le coordinateur.
+Il vérifie automatiquement les droits d'une action avant l'exécution d'un
+contrôleur.
 
-Pour ce faire, activez le plugin jacl2 dans la configuration de l'application
+Vous devriez donc avoir ceci dans la configuration :
 
 <code ini>
 [coordplugins]
 jacl2 = "index/jacl2.coord.ini.php"
 </code>
 
-Copiez le fichier @@F@lib/jelix/plugins/coord/jacl2/jacl2.coord.ini.php.dist@@ dans @@F@var/config/index/jacl2.coord.ini.php@@.
 
-Éditez ce fichier pour indiquer les actions vers lesquelles aller en cas de défaut de droits, ou le message à afficher.
+Et avoir donc un fichier @@F@var/config/index/jacl2.coord.ini.php@@. Ce fichier contient
+la configuration du plugin :
 
-Et dans vos contrôleurs, mettez les valeurs suivantes dans la propriété $pluginParams :
+<code ini>
+on_error=2
+error_message="jacl2~errors.action.right.needed"
+on_error_action="jelix~error:badright"
+</code>
 
+   * @@on_error@@ doit être égal à 1 pour les points d'entrée des service web (soap, jsonrpc, xmlrpc...).
+   * @@error_message@@ indique le selecteur de la chaine localidée contenant un message d'erreur, affiché quand les droits ne sont pas bons
+   * @@on_error_action@@ indique le selecteur de l'action où l'application doit redirigé si la vérification échoue.
+
+Le plugin essaiera de récupérer les paramètres de plugins suivant dans les contrôleurs :
+@@jacl2.right@@, @@jacl2.rights.and@@, @@jacl2.rights.or@@. Ces paramètres doivent contenir
+des noms de sujets de droits. Le plugin testera donc si l'utilisateur a les droits indiqués.
+
+Pour vérifier un seul droit, utilisez @@jacl2.right@@ :
 <code php>
 
    public $pluginParams = array(
@@ -83,7 +117,7 @@ Et dans vos contrôleurs, mettez les valeurs suivantes dans la propriété $plug
    );
 </code>
 
-Ou alors, pour vérifier une série de droits que l'utilisateur doit posséder :
+Pour vérifier une série de droits que l'utilisateur doit posséder, utilisez @@jacl2.rights.and@@ :
 
 <code php>
 
@@ -94,7 +128,7 @@ Ou alors, pour vérifier une série de droits que l'utilisateur doit posséder :
    );
 </code>
 
-ou encore, pour vérifier que l'utilisateur possède un des droits parmi une liste :
+Ou encore, pour vérifier que l'utilisateur possède un des droits parmi une liste, utilisez @@jacl2.rights.or@@ :
 
 <code php>
 
@@ -107,7 +141,9 @@ ou encore, pour vérifier que l'utilisateur possède un des droits parmi une lis
 
 ==== Plugins de template ifacl2 et ifnotacl2 ====
 
-Des plugins de templates sont disponibles pour générer des portions de contenus en fonction des droits. Leurs arguments sont exactement les mêmes que jAcl2::check.
+Des plugins de templates sont disponibles pour générer des portions de contenus
+en fonction des droits. Leurs arguments sont exactement les mêmes que
+@@jAcl2::check()@@.
 
 <code>
   {ifacl2 "cms.articles.create"}
@@ -117,9 +153,11 @@ Des plugins de templates sont disponibles pour générer des portions de contenu
   {/ifacl2}
 </code>
 
-Il y aussi {ifnotacl2} qui est le contraire de ifacl2, c'est à dire qui teste si l'utilisateur n'a **pas** le droit indiqué.
+Il y aussi @@{ifnotacl2}@@, le contraire de @@{ifacl2}@@, c'est à dire qui
+teste si l'utilisateur n'a **pas** le droit indiqué.
 
 La même chose avec une ressource :
+
 <code>
   {ifacl2 "cms.articles.update", $article_id}
     <input type="button" value="Modifier l'article" />

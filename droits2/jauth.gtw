@@ -1,22 +1,39 @@
 ~~LANG:EN@enman:rights2/jauth~~
 
 Il est très probable que vous utilisiez jAcl2 comme support à jAuth.
-Dans ce cas, vous devez probablement vous poser des questions quant à l'intégration de ces deux composants de jelix. En réalité, c'est très simple.
+Dans ce cas, vous devez probablement vous poser des questions quant à
+l'intégration de ces deux composants de jelix. En réalité, c'est très simple.
 
 
 ===== Interaction de jAcl2 avec jAuth =====
 
-Il n'y a rien à faire. jAcl2 a besoin de jAuth pour fonctionner, donc vous devez configurer jAuth. jAcl2 ira rechercher l'utilisateur courant de jAuth pour gérer les droits, comme par exemple l'appel à la méthode jAcl2::check().
+Il n'y a rien à faire. jAcl2 a besoin de jAuth pour fonctionner, donc vous devez
+configurer jAuth. jAcl2 ira rechercher l'utilisateur courant de jAuth pour gérer
+les droits, comme par exemple l'appel à la méthode @@M@jAcl2::check()@@.
 
 ===== Interaction de jAuth avec jAcl2 =====
 
 
-Par exemple, lors de l'utilisation du module jCommunity (qui est un module présent dans la forge et qui permet de gérer un espace membre) et de jAcl2, vous voudriez probablement que lorsqu'un nouveau membre est inscrit, celui-ci reçoive automatiquement les droits par défauts attribués, et que lorsque son compte est supprimé, ses droits personnels soient supprimés.
+Par exemple, lors de l'utilisation du module jCommunity (qui est un module
+que vous trouverez sur http://booster.jelix.org et qui permet de gérer un espace
+membre) et de jAcl2, vous voudriez probablement que lorsqu'un nouveau membre est
+inscrit, celui-ci reçoive automatiquement les droits par défauts attribués, et
+que lorsque son compte est supprimé, ses droits personnels soient supprimés.
 
-Plus généralement, quand vous utilisez jAuth::saveNewUser, jAuth::removeUser etc, vous voudriez que les droits concernant l'utilisateur en question soient mis à jour dans jAcl2.
+Plus généralement, quand vous utilisez @@M@jAuth::saveNewUser()@@,
+@@M@jAuth::removeUser()@@ etc, vous voudriez que les droits concernant
+l'utilisateur en question soient mis à jour dans jAcl2.
 
-Ceci n'est pas effectué par défaut, puisque cela dépend du driver activé pour jAcl2. 
+Ceci n'est pas effectué par défaut, puisque cela dépend du driver activé pour
+jAcl2.
 
-Et cela n'est possible pour le moment que pour jAcl2.db. Si vous utilisez ce driver, ce qui est souvent le cas, cela est fait automatiquement.  En fait, le module jacl2db contient un listener pour les évènements //AuthNewUser// et //AuthRemoveUser//. Aussi jAcl2 attribuera automatiquement les droits par défaut à l'inscription d'un membre et supprimera les droits d'un membre lorsque son compte sera supprimé. 
+Et cela n'est possible pour le moment que pour jAcl2.db. Si vous utilisez ce
+driver, ce qui est souvent le cas, cela est fait automatiquement. En fait, le
+module jacl2db contient un listener pour les évènements @@AuthNewUser@@ et
+@@AuthRemoveUser@@. Aussi jAcl2 attribuera automatiquement les droits par défaut
+à l'inscription d'un membre et supprimera les droits d'un membre lorsque son
+compte sera supprimé. 
 
-Si vous utilisez un autre driver, il vous faudra créer un listener de la même façon, et qui ira mettre à jour là où il faut (dans un annuaire ldap si c'est du ldap, etc).
+Si vous utilisez un autre driver, il vous faudra créer un listener de la même
+façon, et qui ira mettre à jour là où il faut (dans un annuaire ldap si c'est du
+ldap, etc).
