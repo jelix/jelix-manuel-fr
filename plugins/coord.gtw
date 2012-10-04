@@ -22,10 +22,11 @@ configuration d'un point d'entrée :
   * bien sûr, [[/plugins#declaration-d-un-depot-de-plugins|déclarer le dépôt]]
     contenant le répertoire de votre plugin, dans l'option //pluginsPath// de la
     configuration
-  * indiquer le plugin dans la section @@[coordplugins]@@, ainsi que son éventuel
-    fichier de configuration
+  * indiquer le plugin dans la section @@[coordplugins]@@, avec comme valeur "1"
+    ou le nom de son fichier de configuration si il en a un (chemin relatif
+    au répertoire de configuration).
 
-Si vous placez votre plugin //foo// dans votreApplication/plugins/coord/ alors
+Si vous placez votre plugin //foo// dans @@F@votreApplication/plugins/coord/@@ alors
 vous devez déclarer comme ceci :
 
 <code ini>
@@ -44,8 +45,13 @@ configuration, vous devez mettre //1// au lieu d'un nom de fichier, comme ceci :
 foo = 1
 </code>
 
-Si vous utilisez plusieurs plugins de coordinateur, l'ordre de déclaration des
-plugins dans le fichier de configuration a une importance. Ainsi le premier
+Depuis Jelix 1.3, @@"1"@@ indique aussi que la configuration du plugin peut être
+dans la configuration du point d'entrée. Cette configuration doit alors être
+placée dans une section @@[coordplugin_XXX]@@ (où XXX est le nom du plugin,
+comme par exemple @@[coordplugin_foo]@@).
+
+**Important** : Si vous utilisez plusieurs plugins de coordinateur,
+l'ordre de déclaration des plugins dans le fichier de configuration a une importance. Ainsi le premier
 plugin déclaré à la priorité sur les autres. C'est à dire que si ce premier
 plugin renvoie une action, les autres plugins ne seront pas exécutés. Il
 convient donc de choisir l'ordre de déclaration des plugins en fonction de la
@@ -63,10 +69,14 @@ bar = 1
 
 
 Un plugin coord peut avoir besoin d'un fichier de configuration. Ce fichier doit
-être alors un fichier de type //ini//, placé dans votreApplication/var/config/
+être alors un fichier de type //ini//, placé dans @@F@@votreApplication/var/config/@@
 et être déclaré dans la configuration comme indiqué précédemment. Le contenu ini
 sera passé au constructeur du plugin sous forme de tableau (résultat de la
-fonction php parse_ini_file).
+fonction php @@parse_ini_file@@).
+
+Ou la configuration peut être, comme indiquée plus haut, dans une section
+@@[coordplugin_XXX]@@ de la configuration du point d'entrée. Le plugin
+reçoit alors le contenu de cette section sous forme de tableau associatif.
 
 
 ==== Paramètres de plugins ====
@@ -78,10 +88,10 @@ vérifier si l'action demandée nécessite ou non d'être authentifié. Pour cel
 va indiquer dans chaque contrôleur un paramètre pour chaque action, destiné au
 plugin auth, qui indique cette information.
 
-Ces paramètres sont stockés dans la propriété pluginParams du contrôleur. C'est
+Ces paramètres sont stockés dans la propriété @@V@pluginParams@@ du contrôleur. C'est
 un tableau associatif. Les clés sont les noms des méthodes, et les valeurs, un
 tableau contenant tous les paramètres de plugins associés à la méthode (et donc
-à l'action correspondante). Une clé particulière, '*', indique les paramètres
+à l'action correspondante). Une clé particulière, @@'*'@@, indique les paramètres
 valables pour toutes les méthodes du contrôleur.
 
 Exemple :
@@ -117,11 +127,11 @@ active.
 Ce plugin permet simplement de gérer la suppression des antislashes \ venant
 échapper les apostrophes ' quand cela est nécessaire.
 
-
+Note : avec PHP 5.4 est suivant, ce plugin n'est pas nécessaire.
 
 ===== Développement d'un plugin coord =====
 
-Un plugin est en fait une classe qui implémente l'interface //jICoordPlugin//.
+Un plugin est en fait une classe qui implémente l'interface @@I@jICoordPlugin@@.
 Cette classe doit donc implémenter les méthodes suivantes :
 
 <code php>
@@ -133,25 +143,25 @@ Cette classe doit donc implémenter les méthodes suivantes :
 
 Le constructeur reçoit la configuration du plugin.
 
-La méthode //beforeAction// reçoit les paramètres de plugins déclarés dans le
-contrôleur. Elle peut renvoyer //null// si tout est ok ou alors un sélecteur
-d'action, //jSelectorAct//, si il faut exécuter une autre action que celle
+La méthode @@M@beforeAction()@@ reçoit les paramètres de plugins déclarés dans le
+contrôleur. Elle peut renvoyer @@null@@ si tout est ok ou alors un sélecteur
+d'action, @@C@jSelectorAct@@, si il faut exécuter une autre action que celle
 prévue.
 
-La méthode //beforeOutput// sera appelée après exécution de l'action.
+La méthode @@M@beforeOutput()@@ sera appelée après exécution de l'action.
 
-Le méthode //afterProcess// sera appelée en fin de traitement (après affichage
+Le méthode @@M@afterProcess()@@ sera appelée en fin de traitement (après affichage
 donc).
 
 Cette classe est à placer dans un
 [[/plugins#declaration-d-un-depot-de-plugins|dépôt de plugins]]. Par exemple, le
-répertoire //plugins/// de votre application. Ou alors dans un répertoire
-//plugins/// d'un module. Le sous répertoire dans lequel est placé le plugin
+répertoire @@F@plugins/@@ de votre application. Ou alors dans un répertoire
+@@F@plugins/@@ d'un module. Le sous répertoire dans lequel est placé le plugin
 doit porter le nom du plugin, et la classe doit suivre un nommage particulier.
 Si le plugin s'appelle //exemple//, alors :
 
-   * le répertoire du plugin sera **plugins/coord/exemple/**
-   * le fichier contenant la classe du plugin devra être **plugins/coord/exemple/exemple.coord.php**
-   * le nom de la classe du plugin devra être **exempleCoordPlugin**, implémentant l'interface **jICoordPlugin**
+   * le répertoire du plugin sera @@F@plugins/coord/exemple/@@
+   * le fichier contenant la classe du plugin devra être @@F@plugins/coord/exemple/exemple.coord.php@@
+   * le nom de la classe du plugin devra être @@C@exempleCoordPlugin@@, implémentant l'interface @@I@jICoordPlugin@@
 
 
