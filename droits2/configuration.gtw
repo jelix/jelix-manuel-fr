@@ -16,7 +16,7 @@ Pour cela, il vous faut vous reporter à la [[/bd|page sur jDb]].
 
 Cependant, si les tables jAcl2 ne sont pas dans la base indiquée par le profil
 par défaut, il vous faut alors créer un profil de connexion avec le nom
-"**jacl2_profile**", ou un alias. Un exemple de fichier @@F@profiles.ini.php@@ :
+@@jacl2_profile@@, ou un alias. Un exemple de fichier @@F@dbprofils.ini.php@@ :
 
 <code ini>
 
@@ -65,7 +65,7 @@ commande. Il y a deux commandes pour configurer jAcl2.db : @@acl2group@@ et
 Dans la suite, on est dans l'hypothèse où votre application s'appelle myapp.
 Remplacez bien entendu ce nom par le nom adéquate.
 
-Notez que le module jacl2db_admin vous permet de configurer et gérer les droits
+Notez que le module **jacl2db_admin** vous permet de configurer et gérer les droits
 en quelques clics, vous évitant d'utiliser la ligne de commande. Il vous faudra
 cependant quand même créer les sujets en ligne de commande.
 
@@ -102,7 +102,6 @@ Un sujet est représenté par une valeur de droit et une clé de locale qui
 indiquera son label (clé que vous devrez enregistrer dans un fichier de locale).
 
 Créons nos sujets :
-
 
 <code bash>
 $ php cmd.php acl2right subject_create "cms.articles.create" "cms~acl2.articles.create"
@@ -332,8 +331,7 @@ On peut aussi retirer un droit avec la sous-commande remove, en indiquant, comme
 pour la sous-commande create, le groupe d'utilisateur et le sujet (plus
 éventuellement la ressource si on a une ressource).
 
-Exemple, on change d'avis à propos de l'article "opinions" (il y a vraiment trop
-de spam :-) ) :
+Exemple, on change d'avis à propos de l'article "opinions" :
 
 <code bash>
 $ php cmd.php acl2right remove  lecteurs "cms.articles.update" "opinions"
@@ -342,6 +340,7 @@ $ php cmd.php acl2right remove  lecteurs "cms.articles.update" "opinions"
 Une fois tous les droits établis, l'application peut fonctionner selon vos
 règles, et les modules peuvent faire appel à l'API de jAcl2 pour agir en
 fonction des droits que vous avez configuré.
+
 
 Pour changer les droits, vous pouvez aussi installer le module jacl2db_admin.
 Une interface vous permettra de gérer plus finement les droits.

@@ -32,7 +32,7 @@ Il y a trois types de groupes :
 ===== Classes utilitaires =====
 
 Deux classes accompagnent le driver jAcl2.db pour gérer les groupes,
-utilisateurs, droits etc : jAcl2DbManager et jAcl2DbUserGroup.
+utilisateurs, droits etc : @@C@jAcl2DbManager@@ et @@C@jAcl2DbUserGroup@@.
 
 Leur utilisation est similaire d'un point de vue théorique aux commandes de
 jelix-scripts (décrites dans [[configuration|Configurer jAcl2.db]]), aussi nous
