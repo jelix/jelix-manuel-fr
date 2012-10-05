@@ -2,21 +2,6 @@
 
 La version 1.1 du format décrit dans cette page est utilisable depuis Jelix 1.1.
 
-===== Différences avec la version 1.0 du format =====
-
-  * Le namespace, qui est http://jelix.org/ns/forms/1.1
-  * Les nouvelles balises @@E@<htmleditor>@@, @@E@<captcha>@@, @@E@<hidden>@@, @@E@<group>@@, @@E@<choice>@@, @@E@<date>@@, @@E@<datetime>@@
-  * Type "html" sur les balises @@E@<input>@@ et @@E@<textarea>@@
-  * Nouvel élement @@E@<emptyitem>@@ pour la balise @@E@<menulist>@@
-  * La façon dont on déclare les sources de données.
-
-Bien que le numéro de version de jforms n'ait pas changé dans jelix 1.2, des
-nouvaux éléments et attributs ont fait leur apparition dans jelix 1.2 :
-
-    * @@E@<wikieditor>@@.
-    * @@E@<itemsgroup>@@ et @@A@groupby@@ pour les sources de données
-    * @@A@pattern@@ sur la balise @@E@<input>@@.
-
 ===== Structure principale =====
 
 Le document XML que vous écrivez dans un fichier jForms est composé d'une balise
@@ -36,7 +21,7 @@ l'affichage de ces contrôles se feront dans le même ordre que celui de leur
 apparition dans le document.
 
 Notez que le namespace pour cette version du format est
-http://jelix.org/ns/forms/1.1
+@@http://jelix.org/ns/forms/1.1@@
 
 ===== Propriétés communes aux contrôles =====
 
