@@ -21,4 +21,5 @@ Chaque version du format a un espace de nom (namespace) spécifique, permettant
 de les différencier. Faites donc bien attention à bien indiquer le bon namespace
 dans le fichier XML.
 
-Il est conseillé d'utiliser la version 1.1 du format, car plus riche.
+Le format 1.0 est obsolète. Pour avoir sa documentation, voyez le manuel des
+version antérieures à jelix 1.3.
