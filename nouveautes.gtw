@@ -11,3 +11,6 @@ Principales nouveautés apportées par la version 1.2 :
   * possibilité de compresser à la volée les fichiers CSS et javascript
   * génération de sitemap avec la nouvelle réponse jResponseSitemap
 
+Nouveauté apportée par la version 1.2.10 :
+
+  * [[authentification|nouveau système de hashage dans jAuth]], pour stocker les mots de passe de manière plus sécurisée.
