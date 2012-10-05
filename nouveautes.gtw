@@ -29,3 +29,6 @@ Principales nouveautés apportées par la version 1.3 :
      * un groupe peut maintenant interdire un droit
 
 
+Nouveauté apportée par la version 1.2.10/1.3.4/1.4.1 :
+
+  * [[authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]], pour stocker les mots de passe de manière plus sécurisée.
