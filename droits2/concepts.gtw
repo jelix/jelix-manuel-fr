@@ -34,9 +34,9 @@ cms.articles.delete
 ==== Utilisateur ====
 
 Un droit s'exerce toujours sur un ou plusieurs utilisateurs. Mais cette notion
-est transparente du point de vue de l'API de la classe jAcl2. C'est le driver
-qui s'occupe de "reconnaître" l'utilisateur en cours (au moyen de jAuth en
-principe). Il se peut même que le driver repose sur un système où les
+est transparente du point de vue de l'API de la classe @@C@jAcl2@@. C'est le
+driver qui s'occupe de "reconnaître" l'utilisateur en cours (au moyen de jAuth
+en principe). Il se peut même que le driver repose sur un système où les
 utilisateurs sont dans des groupes auxquels les droits s'appliquent (comme c'est
 le cas de jAcl2.db). Mais vous n'avez pas à vous en préoccuper lors de
 l'utilisation de jAcl2.
@@ -54,7 +54,8 @@ l'article.
 Par exemple, on donnera les valeurs de droits suivants
 
    * "cms.articles.create" pour le groupe "redacteurs"
-   * "cms.articles.update" sur la ressource "monarticle" pour l'utilisateur toto faisant partie du groupe "redacteurs".
+   * "cms.articles.update" sur la ressource "monarticle" pour l'utilisateur toto
+     faisant partie du groupe "redacteurs".
 
 
 

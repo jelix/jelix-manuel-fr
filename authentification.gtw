@@ -100,14 +100,25 @@ propres au driver.
 Les options dépendants des drivers, consultez [[authentification/drivers|la documentation sur les pilotes jauth]]
 pour activer l'un deux.
 
-==== Fonction de cryptage des mots de passe ====
+==== Fonction de hachage des mots de passe ====
 
-Par défaut la méthode utilisée pour le cryptage des mots de passe est @@M@sha1@@
+Depuis Jelix 1.4.1 (et 1.3.4, 1.2.10), il y a deux systèmes de hachage des mots
+de passe pour leur stockage. Jelix 1.4.1 et supérieur propose en effet une
+méthode plus sécurisée, utilisant l'API password de PHP 5.5 (une implémentation
+pure PHP est fournie dans Jelix pour les versions antérieures de PHP). 
+
+=== Ancien système de hachage ===
+
+Par défaut la méthode utilisée pour le hachage des mots de passe est @@M@sha1@@
 (dans jelix 1.1 et précedent, c'était @@M@md5@@), mais il est possible
-d'utiliser une autre fonction, qui accepte une chaine à encrypter, et renvoi la
-chaine encryptée.
+d'utiliser une autre fonction, qui accepte une chaine à hacher, et renvoi la
+chaine hachée.
 
-Pour indiquer la fonction de cryptage, indiquez son nom dans l'option
+Notez que de nos jours, **@@M@sha1@@ et @@M@md5@@ ne sont plus
+considérés comme des méthodes de hashage sécurisées**. Si possible utilisez
+d'autres méthodes, comme le nouveau système de cryptage de Jelix 1.4.1 .
+
+Pour indiquer la fonction de hachage, indiquez son nom dans l'option
 @@password_crypt_function@@, dans la section de configuration du driver.
 
 La fonction pourrait accepter d'autres paramètres, comme une valeur de "sel".
@@ -115,7 +126,7 @@ Pour indiquer une telle fonction, vous devez faire précéder son nom par un
 nombre et ":" :
    * "1:nomfunction": la fonction accepte en premier paramètre une valeur de
      "sel", et en second la chaîne à encrypter. La valeur du sel doit être
-     indiquer dans l'option de configuration @@password_salt@@.
+     indiquée dans l'option de configuration @@password_salt@@.
    * "2:nomfunction": la fonction a besoin de plus d'option ou d'autres options.
      Elle doit alors accepter en premier paramètre un tableau contenant toutes
      les options du drivers, et en second paramètre, la chaine à encrypter. Il
@@ -145,6 +156,46 @@ Et dans la configuration de l'authentification :
  password_crypt_function = "1:sha1WithSalt"
  password_salt = "votre_sel_ici"
 </code>
+
+=== Nouveau système de hachage ===
+
+Ce système proposé depuis Jelix 1.2.10/1.3.4/1.4.1 repose sur une nouvelle API
+fournie par PHP 5.5, utilisant par défaut la méthode de hashage bcrypt. Un
+équivalent pur PHP pour les versions antérieures existe et est fourni dans Jelix.
+Il utilise la fonction @@crypt@@. Pour utiliser ce nouveau système de
+hachage, il est toutefois nécessaire d'avoir au moins PHP 5.3.7 (ou PHP 5.3.3
+sur les serveurs Debian Squeeze à jour).
+
+La configuration est relativement simple, il faut deux paramètres dans la section
+globale (en dehors des sections @@[Db]@@ ou autre) :
+
+    * @@password_hash_method@@ : indique la méthode à utiliser. Une seule
+      possible pour le moment, BCRYPT. Il faut donc mettre 1. Si vide ou 0, le
+      nouveau système de hachage ne sera pas utilisé
+    * @@password_hash_options@@ : une chaine contenant une suite de
+      "cle=valeur;". Ces options dépendent du hachage utilisé. Pour BCRYPT,
+      vous pouvez indiquer un "salt", et un nombre d'itération "cost".
+
+Quelque soit la méthode utilisée, par défaut ce système génére un "salt" aléatoire
+à chaque fois que l'on veut stocker un nouveau mot de passe (ce qui est plus sécurisé que
+d'avoir le même salt pour tout les mots de passe), et ce salt est stocké en même
+temps que le mot de passe (d'où la nécessité d'avoir un champs de mot de passe
+d'une centaine de caractères).
+
+=== Migration ===
+
+Si vous mettez à jour une application existante vers Jelix 1.2.10/1.3.4/1.4.1 ou
+supérieur, et que vous voulez utiliser le nouve système de hachage, vous devez :
+
+   * agrandir le champs du mot de passe (@@password@@) en base de donnée à 120
+     caractères
+   * modifier le DAO correspondant (si vous n'utilisez pas le dao jelixuser de
+     jauthdb), pour indiquer cette nouvelle taille sur le champs @@password@@.
+
+À chaque fois qu'un utilisateur s'identifiera ou changera son mot de passe,
+l'ancien hash généré avec l'ancien système de hachage sera remplacé par un
+nouveau hash. C'est pourquoi il faut, le temps de la transition, laisser la
+configuration de l'ancien système.
 
 ==== Timeout ====
 

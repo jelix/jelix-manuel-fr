@@ -46,3 +46,6 @@ Principales nouveautés apportées par la version 1.4 :
    * jDb : suppression du plugin Intuition, plus maintenu depuis longtemps
 
 
+Nouveauté apportée par la version 1.2.10/1.3.4/1.4.1 :
+
+  * [[authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]], pour stocker les mots de passe de manière plus sécurisée.
