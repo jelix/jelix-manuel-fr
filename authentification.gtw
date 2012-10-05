@@ -1,4 +1,4 @@
-~~LANG:EN@enman:authentification~~
+~~LANG:EN@enman:authentication~~
 
 Le système d'authentification de Jelix ne s'occupe que d'une seule chose : gérer des identifiants/mots de passe et des utilisateurs.
 
