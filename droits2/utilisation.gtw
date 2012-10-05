@@ -1,6 +1,5 @@
 ~~LANG:EN@enman:rights2/use~~
 
-
 Quand vous voulez que votre module fonctionne selon des droits, il vous faut
 durant la réalisation de ce module :
 
@@ -17,11 +16,16 @@ Si le driver gère des groupes d'utilisateurs, vous n'avez pas à les indiquer
 lors de ces interrogations : le driver s'en occupe automatiquement. Notez qu'un
 driver pour jAcl2 peut utiliser jAuth pour l'authentification.
 
-
-
 ===== Configuration =====
 
-Avant toute chose vous devez indiquer quel driver vous utilisez pour jAcl2.
+Avant toute chose vous devez installer le module jacl2 :
+
+<code php>
+php cmd.php installmodule jacl2
+</code>
+
+
+Ensuite vous devez indiquer quel driver vous utilisez pour jAcl2.
 
 Les drivers sont des plugins stockés dans un répertoire @@F@acl2@@ d'un dépôt de
 plugins. Un plugin pour jAcl2 est une classe @@C@fooAcl2Driver@@ (foo étant le nom du
@@ -46,7 +50,7 @@ Au niveau de l'option @@driver@@, vous devez y mettre le nom du driver utilisé.
 ===== Interrogation du système de droit =====
 
 Comme jAcl2 se charge de découvrir l'utilisateur actuel, vous n'avez qu'une
-méthode statique de jAcl2 à connaître pour 99% des cas : @@jAcl2::check@@.
+méthode statique de jAcl2 à connaître pour 99% des cas : @@M@jAcl2::check()@@.
 
 ==== jAcl2::check ====
 
@@ -79,7 +83,7 @@ if( jAcl2::check("cms.articles.update", $article_id)){
 
 ==== Vérification automatique ====
 
-L'installateur du module jacl2db installe le plugin jacl2 pour le coordinateur.
+L'installateur du module jacl2 installe le plugin jacl2 pour le coordinateur.
 Il vérifie automatiquement les droits d'une action avant l'exécution d'un
 contrôleur.
 
@@ -87,13 +91,15 @@ Vous devriez donc avoir ceci dans la configuration :
 
 <code ini>
 [coordplugins]
-jacl2 = "index/jacl2.coord.ini.php"
+jacl2 = 1
 </code>
 
-Et avoir donc un fichier @@F@var/config/index/jacl2.coord.ini.php@@. Ce fichier contient
-la configuration du plugin :
+La configuration du plugin se trouve dans une section @@coordplugin_jacl2@@ de la configuration
+principale (Avant Jelix 1.5, c'était dans un fichier séparé).
+ 
 
 <code ini>
+[coordplugin_jacl2]
 on_error=2
 error_message="jacl2~errors.action.right.needed"
 on_error_action="jelix~error:badright"
