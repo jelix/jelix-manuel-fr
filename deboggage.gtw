@@ -5,10 +5,11 @@
 jLog est une classe qui permet de tracer, ou plus précisément d'écrire des
 messages ou le contenu de variable dans un fichier journal ou un autre système
 de sortie : syslog, firebug etc. Cela peut être utile pour tracer certains
-évènements, mais aussi pour aider au débogage. Depuis Jelix 1.3, jlog a des
-plugins pour ajouter des supports de log (appelé "loggeur"), et est aussi
-utilisé pour stocker les erreurs. La classe @@C@jLog@@ possède deux méthodes
-statiques :
+évènements, mais aussi pour aider au débogage.
+
+jLog a des plugins pour ajouter des supports de log (appelé "loggeur"), et est
+aussi utilisé pour stocker les erreurs. La classe @@C@jLog@@ possède deux
+méthodes statiques :
 
   * @@jLog::log($message, $logType)@@ pour écrire un message dans le fichier
     journal
@@ -102,7 +103,7 @@ des fichiers @@F@var/log/192.168.1.2_modulenews.log@@ et
 
 Vous pouvez aussi construire les noms des fichiers de log avec la date et
 l'heure : pour cela, incluez un ou plusieurs des "tags" suivant dans le nom :
-%Y% (année), %m% (mois), %d% (jour), %H% (heure).
+@@%Y%@@ (année), @@%m%@@ (mois), @@%d%@@ (jour), @@%H%@@ (heure).
 
 ==== Loggeur mail ====
 
@@ -126,12 +127,10 @@ programmé dans le cron.
 
 ===== La debug barre =====
 
-Jusqu'à la version 1.2, Jelix affichait les messages directement dans la page
-web, dans une simple boîte. Depuis Jelix 1.3, il y a une véritable boîte à
-outils, la "debugbar", qui permet d'afficher non seulement les détails des
-erreurs, mais aussi d'autres informations : données en sessions, requêtes sql
-etc. Chacune de ces informations étant fournis par des plugins. Vous pouvez donc
-créer vos propres plugins pour enrichir cette debug barre.
+Jelix peut afficher une "debugbar", qui permet d'inspecter non seulement les
+détails des erreurs, mais aussi d'autres informations : données en sessions,
+requêtes sql etc. Chacune de ces informations étant fournis par des plugins.
+Vous pouvez donc créer vos propres plugins pour enrichir cette debugbar.
 
 Sachant que la debugbar est elle-même un plugin de jResponseHtml, voici comment
 faire pour l'activer :
@@ -160,6 +159,9 @@ debug=memory
 
 [debugbar]
 plugins = sqllog,sessiondata,defaultlog
-
+defaultPosition = right
 </code>
+
+@@defaultPosition@@ indique si vous voulez afficher la debugbar à droite (@@right@@) ou à gauche (@@left@@)
+sur la page web. Vous pouvez aussi changer la position dynamiquement.
 
