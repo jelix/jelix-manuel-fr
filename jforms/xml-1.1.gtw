@@ -689,6 +689,17 @@ Pour afficher un bouton reset avec jForms, il faut utiliser la balise @@E@<reset
   </reset>
 </code>
 
+==== Bouton simple ====
+
+Vous pouvez afficher un bouton tout simple, avec la balise @@E@<button>@@ :
+<code xml>
+  <button ref="calc">
+    <label>Calculer</label>
+  </button>
+</code>
+
+Ce sera à vous d'integrer le javascript qu'il faut dans votre page pour
+lancer une action sur le click du bouton.
 
 ==== Affichage de valeurs ====
 
