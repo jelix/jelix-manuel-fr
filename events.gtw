@@ -123,3 +123,31 @@ Vous pouvez déclarer autant de listener que vous voulez grâce à la balise
 @@E@<listener>@@. Et dans chacune d'elles vous indiquez tous les évènements que
 prend en charge le listener, grâce à des balises @@E@<event>@@.
 
+===== Désactiver des listeners =====
+
+Il peut arriver que vous vouliez désactiver un listener fourni par un module
+tiers, pour un tas de raison.
+
+Cela est possible en les indiquant dans la section @@[disabledListeners]@@
+de la configuration principale. Les clés sont les noms d'évènements, les
+valeurs sont les selecteurs des listeners.
+
+<code ini>
+[disabledListeners]
+authLogin="aModule~theListener"
+</code>
+
+Dans cet example, le listener @@theListener@@ du module "aModule" ne sera
+pas appelé quand l'évènement @@authLogin@@ sera émis.
+
+Si vous voulez désactiver plusieurs listener pour un même évènement,
+utilisez simplement la notation @@[]@@ pour indiquer un tableau :
+
+<code ini>
+[disabledListeners]
+authLogin[]="aModule~theListener"
+authLogin[]="otherModule~otherListener"
+</code>
+
+
+
