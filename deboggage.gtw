@@ -162,6 +162,7 @@ plugins = sqllog,sessiondata,defaultlog
 defaultPosition = right
 </code>
 
-@@defaultPosition@@ indique si vous voulez afficher la debugbar à droite (@@right@@) ou à gauche (@@left@@)
-sur la page web. Vous pouvez aussi changer la position dynamiquement.
+@@defaultPosition@@ indique si vous voulez afficher la debugbar à droite
+(@@right@@) ou à gauche (@@left@@) sur la page web. Vous pouvez aussi changer la
+position dynamiquement.
 
