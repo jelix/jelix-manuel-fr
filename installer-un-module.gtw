@@ -23,7 +23,7 @@ lui attribuer un chiffre. La signification de ce chiffre :
 
    * 0: le module n'est pas du tout utilisé. C'est l'état par défaut d'un module
      si celui-ci n'est pas indiqué dans la section modules.
-   * 1: les ressources du modules (classes métiers, daos, templates...) peuvent
+   * 1: les ressources du module (classes métiers, daos, templates...) peuvent
      être utilisées par d'autres modules, mais les contrôleurs de ce module,
      s'ils existent, ne peuvent être exécutés. Le module n'est donc pas
      exécutable depuis un navigateur web, même si des urls sont définies vers
@@ -64,7 +64,7 @@ défaut activé avec le niveau 2. De plus, les options de configurations
 existaient dans les versions précédentes de Jelix (1.1 et inférieur), ne sont
 plus supportées et n'ont aucun effet.
 
-Note : si vous voulez rendre accessible tous les modules (access=2), vous pouvez
+Note : si vous voulez rendre accessibles tous les modules (access=2), vous pouvez
 mettre dans la section globale l'option @@enableAllModules=on@@. Les valeurs
 access dans la section modules ne seront pas pris en compte et ne sont donc pas
 utiles. **Attention**, ne l'utilisez que si vous êtes sûr de ce que vous faîtes,
