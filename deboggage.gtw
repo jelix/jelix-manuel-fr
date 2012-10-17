@@ -170,5 +170,5 @@ position dynamiquement.
 @@errors_openon@@ indique pour quel niveau(x) d'erreur la liste des messages s'ouvre
 à l'ouverture de la page. Les valeurs sont à choisir (séparateur virgule) parmi
 @@error@@, @@warning@@, @@notice@@, @@deprecated@@ et @@strict@@ ou plus prosaïquement
-@@*@@ comme racourci de l'ensemble de ces valeurs.
+@@*@@ comme raccourci de l'ensemble de ces valeurs.
 
