@@ -18,7 +18,7 @@ Téléchargez [[http://download.jelix.org/jelix/documentation/fr/jelix-manuel-1.
 
 - part: [[introduction|Introduction]]
   - chapter: [[nouveautes|Nouveautés]]
-  - chapter: [[installation/migration|Migration d'une application jelix 1.1 vers jelix 1.2]]
+  - chapter: [[installation/migration|Migration d'une application vers jelix 1.2.x]]
 
 - part:  [[mise-en-route|Mise en route]]
   - chapter: [[installation/prerequis|Pré-requis sur le serveur]]
