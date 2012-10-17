@@ -144,9 +144,10 @@ d'une centaine de caractères).
 Si vous mettez à jour une application existante vers Jelix 1.2.10/1.3.4/1.4.1 ou
 supérieur, et que vous voulez utiliser le nouve système de hachage, vous devez :
 
-   * agrandir le champs du mot de passe (@@password@@) en base de donnée à 120
+   * Lire l'avertissement un peu plus bas
+   * Agrandir le champs du mot de passe (@@password@@) en base de donnée à 120
      caractères
-   * modifier le DAO correspondant (si vous n'utilisez pas le dao jelixuser de
+   * Modifier le DAO correspondant (si vous n'utilisez pas le dao jelixuser de
      jauthdb), pour indiquer cette nouvelle taille sur le champs @@password@@.
 
 À chaque fois qu'un utilisateur s'identifiera ou changera son mot de passe,
@@ -158,6 +159,8 @@ configuration de l'ancien système.
 différentes instances de votre application (genres dev, integration etc), qui
 n'ont pas encore migré vers cette nouvelle version. Les utilisateurs ne pourront
 plus s'identifier ! (le hash en base n'étant pas compréhensible par les versions précédentes).
+De ce fait, **vous ne pourrez pas revenir en arrière à moins d'avoir fait une sauvegarde**
+de la table des users.
 
 ==== Timeout ====
 
