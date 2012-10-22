@@ -129,7 +129,7 @@ programmé dans le cron.
 
 Jelix peut afficher une "debugbar", qui permet d'inspecter non seulement les
 détails des erreurs, mais aussi d'autres informations : données en sessions,
-requêtes sql etc. Chacune de ces informations étant fournis par des plugins.
+requêtes sql etc. Chacune de ces informations étant fournie par des plugins.
 Vous pouvez donc créer vos propres plugins pour enrichir cette debugbar.
 
 Sachant que la debugbar est elle-même un plugin de jResponseHtml, voici comment
@@ -160,9 +160,15 @@ debug=memory
 [debugbar]
 plugins = sqllog,sessiondata,defaultlog
 defaultPosition = right
+errors_openon=error
 </code>
 
 @@defaultPosition@@ indique si vous voulez afficher la debugbar à droite
 (@@right@@) ou à gauche (@@left@@) sur la page web. Vous pouvez aussi changer la
 position dynamiquement.
+
+@@errors_openon@@ indique pour quel niveau(x) d'erreur la liste des messages s'ouvre
+à l'ouverture de la page. Les valeurs sont à choisir (séparateur virgule) parmi
+@@error@@, @@warning@@, @@notice@@, @@deprecated@@ et @@strict@@ ou plus prosaïquement
+@@*@@ comme raccourci de l'ensemble de ces valeurs.
 
