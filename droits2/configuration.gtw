@@ -213,7 +213,7 @@ $ php cmd.php acl2group createuser laurent
 Cela déclare l'utilisateur Laurent, et un groupe privé lui est crée.
 
 Ensuite, vous pouvez l'ajouter à des groupes. Il faut utiliser la sous-commande
-"adduser" et le numéro du groupe (ou son nom).
+"adduser" et l'identifiant du groupe.
 
 <code bash>
 $ php cmd.php acl2group adduser lecteurs laurent
