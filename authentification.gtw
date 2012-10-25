@@ -114,9 +114,9 @@ Par défaut la méthode utilisée pour le hachage des mots de passe est @@M@sha1
 d'utiliser une autre fonction, qui accepte une chaine à hacher, et renvoi la
 chaine hachée.
 
-Notez que de nos jours, **@@M@sha1@@ et @@M@md5@@ ne sont plus
-considérés comme des méthodes de hashage sécurisées**. Si possible utilisez
-d'autres méthodes, comme le nouveau système de cryptage de Jelix 1.4.1 .
+Notez que de nos jours, **@@M@sha1@@ et @@M@md5@@ ne sont plus**
+**considérés comme des méthodes de hashage sécurisées**. Si possible utilisez
+d'autres méthodes, comme le nouveau système de cryptage de Jelix 1.4.1.
 
 Pour indiquer la fonction de hachage, indiquez son nom dans l'option
 @@password_crypt_function@@, dans la section de configuration du driver.
@@ -187,15 +187,23 @@ d'une centaine de caractères).
 Si vous mettez à jour une application existante vers Jelix 1.2.10/1.3.4/1.4.1 ou
 supérieur, et que vous voulez utiliser le nouve système de hachage, vous devez :
 
-   * agrandir le champs du mot de passe (@@password@@) en base de donnée à 120
+   * Lire l'avertissement un peu plus bas
+   * Agrandir le champs du mot de passe (@@password@@) en base de donnée à 120
      caractères
-   * modifier le DAO correspondant (si vous n'utilisez pas le dao jelixuser de
+   * Modifier le DAO correspondant (si vous n'utilisez pas le dao jelixuser de
      jauthdb), pour indiquer cette nouvelle taille sur le champs @@password@@.
 
 À chaque fois qu'un utilisateur s'identifiera ou changera son mot de passe,
 l'ancien hash généré avec l'ancien système de hachage sera remplacé par un
 nouveau hash. C'est pourquoi il faut, le temps de la transition, laisser la
 configuration de l'ancien système.
+
+**Attention : ne faites pas cette migration avec une base partagée** par
+différentes instances de votre application (genres dev, integration etc), qui
+n'ont pas encore migré vers cette nouvelle version. Les utilisateurs ne pourront
+plus s'identifier ! (le hash en base n'étant pas compréhensible par les versions précédentes).
+De ce fait, **vous ne pourrez pas revenir en arrière à moins d'avoir fait une sauvegarde**
+de la table des users.
 
 ==== Timeout ====
 

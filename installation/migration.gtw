@@ -16,6 +16,13 @@ ces étapes à faire :
 Suivez les indications de migration de chaque version intermédiaire (voir les
 manuels correspondant), avant de mettre à jour pour jelix 1.3.
 
+===== Mettre à jour depuis Jelix 1.4.0 =====
+
+  * si vous le souhaitez, vous pouvez utiliser le
+    [[authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]],
+    apparue dans la version 1.4.0 (et 1.2.10,1.3.4), pour stocker les mots de passe de manière
+    plus sécurisée. Suivez alors [[authentification#migration|la doc de migration]] dédiée.
+
 ===== Mettre à jour depuis Jelix 1.3 =====
 
 Voici les instructions à suivre dans l'ordre.
