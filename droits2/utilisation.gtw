@@ -76,6 +76,8 @@ if( jAcl2::check("cms.articles.update", $article_id)){
 }
 </code>
 
+Une valeur vide ou "-" pour l'identifiant de la ressource indique "pour toute ressource".
+Avant Jelix 1.4.1, seule la valeur vide spécifié cet état.
 
 ==== Vérification automatique ====
 
