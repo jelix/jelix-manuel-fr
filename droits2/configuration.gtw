@@ -76,14 +76,21 @@ Dans le système de droits, vous devez déterminer des "sujets" représentant un
 valeur de droit.
 
 Imaginons que l'on veuille créer des droits sur les articles d'un CMS, les
-différents droits seraient : READ, LIST, CREATE, DELETE, UPDATE. Autrement dit :
+différents droits seraient : read, list, create, delete, update. Autrement dit,
+on pourrait définir les sujets suivants :
+
   * "cms.articles.read",
   * "cms.articles.list",
   * "cms.articles.create",
   * "cms.articles.delete",
   * "cms.articles.update",
 
-On peut d'abord lister les sujets déjà existants :
+Notez que le nom du sujet commence par un prefixe "cms.articles" précisant exactement
+de quoi il s'agit. Ne mettez pas "read" tout court par exemple, ça peut préter à
+confusion et n'est pas très explicite. Indiquez donc toujours dans l'id des mots
+permettant d'identifier "à propos de quoi". Votre code n'en sera que plus compréhensible.
+
+On peut lister les sujets déjà existants :
 
 <code bash>
 $ php cmd.php acl2right subject_list
@@ -213,7 +220,7 @@ $ php cmd.php acl2group createuser laurent
 Cela déclare l'utilisateur Laurent, et un groupe privé lui est crée.
 
 Ensuite, vous pouvez l'ajouter à des groupes. Il faut utiliser la sous-commande
-"adduser" et le numéro du groupe (ou son nom).
+"adduser" et l'identifiant du groupe.
 
 <code bash>
 $ php cmd.php acl2group adduser lecteurs laurent
@@ -263,9 +270,14 @@ group	subject		resource
 
 - group lecteurs
 	cms.articles.list
+		-
 	cms.articles.read
-
+		-
 </code>
+
+Depuis Jelix 1.4, la valeur "-" en dessous des sujets specifie un droit sur
+aucune ressource. Auparavant c'etait la valeur vide (null) qui indiquait ce type
+de droit.
 
 Passons maintenant au groupe rédacteur. On va leur donner tous les droits sur le
 sujet cms.articles.
@@ -287,13 +299,20 @@ group   subject value           resource
 ---------------------------------------------------------------
 - group lecteurs
 	cms.articles.list
+		-
 	cms.articles.read
+		-
 - group redacteurs
 	cms.articles.create
+		-
 	cms.articles.delete
+		-
 	cms.articles.list
+		-
 	cms.articles.read
+		-
 	cms.articles.update
+		-
 </code>
 
 
@@ -315,16 +334,24 @@ group   subject value           resource
 ---------------------------------------------------------------
 - group lecteurs
 	cms.articles.list
+		-
 	cms.articles.read
+		-
 	cms.articles.update
+		-
 		opinions
 
 - group redacteurs
 	cms.articles.create
+		-
 	cms.articles.delete
+		-
 	cms.articles.list
+		-
 	cms.articles.read
+		-
 	cms.articles.update
+		-
 </code>
 
 On peut aussi retirer un droit avec la sous-commande remove, en indiquant, comme
