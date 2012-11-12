@@ -265,3 +265,45 @@ Dans la propriété @@P@$libelle_categorie@@ du record, se trouvera la valeur du
 champ @@label@@ de la table @@categories@@ ("cat" étant l'alias de cette table,
 comme il a été défini plus haut dans la balise @@E@foreigntable@@ ).
 
+===== Utiliser une classe PHP pour les enregistrements =====
+
+Vous voudriez peut-être ajouter des méthodes et propriétés dans
+l'objet @@record@@ généré par jDao. Cela n'est possible qu'en fournissant
+vous-même une classe qui servira de classe de base pour l'objet généré.
+
+**Attention** : cette classe n'est pas destinée à faire des requêtes sql sur la table du DAO. Si vous voulez
+faire cela, voyez plutôt les "méthodes XML/PHP" de la factory. Les méthodes fournies
+par votre classe seront plutôt des méthodes qui calculent par exemple des valeurs de champs,
+qui vérifient des rêgles de gestion etc...
+
+Votre classe aura le nom que vous voudrez, et stockée dans le répertoire @@F@daos/@@ d'un module,
+sous le nom @@<nomclasse>.daorecord.php@@.
+
+Vous indiquerez alors le sélecteur de cette classe @@<nommodule>~<nomclasse>@@ dans un attribut
+@@A@extends@@ de la balise @@E@<record>@@.
+
+Notez que votre classe doit étendre la classe @@C@jDaoRecordBase@@.
+
+Exemple, dans le fichier dao :
+
+<code xml>
+   <record extends="news~news">
+   ...
+   </record>
+</code>
+
+Les enregistrements seront donc de la classe @@C@news@@ situées dans le fichier @@F@daos/news.daorecord.php@@
+du module @@news@@.
+
+<code php>
+class news extends jDaoRecordBase {
+
+   function methodeDeCalcul() {
+        $this->champs = $this->champs2 * 1.196;
+   }
+}
+</code>
+
+
+
+

@@ -20,7 +20,12 @@ Principales nouveautés apportées par la version 1.5 :
    * Deplacement des locales de jacl2db, du module jelix vers le module jacl2db
    * Deplacement des locales de jacldb, du module jelix vers le module jacldb
    * Les classes jPref ont été déplacées dans un nouveau module @@jpref@@.
-
+   * jConfigCompiler est maintenant extensible avec des plugins. Ainsi les
+     composants et modules peuvent précalculer des valeurs de configurations si
+     nécessaire, qui seront stockés alors dans le cache de la configuration.
+   * jDao : [[/daos/fichier_de_base#utiliser-une-classe-php-pour-les-enregistrements|il est possible de fournir sa propre classe record]] qui sera utilisée
+     comme classe de base pour la classe dao record générée. Le nouvel attribut
+     “extends” sur la balise “record” indique la classe à utiliser.
 
 Composants obsolètes :
 
