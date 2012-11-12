@@ -10,6 +10,17 @@ préférences de configuration fixes qui elles se trouvent dans le
 
 ==== Configuration ====
 
+
+@@C@jPref@@ est fourni par le module "jpref". Activez-le dans votre
+configuration :
+
+<code ini>
+[modules]
+jpref.access = 1
+</code>
+
+Et lancez l'installateur de votre application.
+
 @@C@jPref@@ est en fait une classe qui encapsule @@C@jKVDb@@. Par conséquent,
 pour utiliser jPref il vous suffit de définir un profil pour @@jkvdb@@ ayant comme
 nom @@jpref@@.

@@ -33,6 +33,30 @@ Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votr
 
 ==== Modifications générales ====
 
+==== À propos de jAcl2 ====
+
+La classe jAcl2 a été déplacée dans un nouveau module jacl2. Vous devez l'activer :
+
+<code ini>
+   [modules]
+   jacl2.access=1
+</code>
+
+L'installateur de jelix changera d'autres choses automatiquement.
+N'hésitez pas à déclarer la dépendance à ce module dans vos modules qui utilisent jAcl2.
+
+==== À propos de jPref ====
+
+La classe jPref a été déplacée dans un nouveau module jpref. Vous devez
+l'activer si vous utilisez jPref :
+
+<code ini>
+   [modules]
+   jpref.access=1
+</code>
+
+N'hésitez pas à déclarer la dépendance à ce module dans vos modules qui l'utilisent.
+
 
 ==== Support de PDF avec TCPDF ====
 

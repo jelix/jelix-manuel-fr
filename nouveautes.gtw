@@ -19,6 +19,7 @@ Principales nouveautés apportées par la version 1.5 :
    * Debugbar : [[deboggage#la-debug-barre|nouvelle option de configuration, @@defaultPosition@@]], permettant d'afficher la debugbar à gauche ou à droite par défaut.
    * Deplacement des locales de jacl2db, du module jelix vers le module jacl2db
    * Deplacement des locales de jacldb, du module jelix vers le module jacldb
+   * Les classes jPref ont été déplacées dans un nouveau module @@jpref@@.
 
 
 Composants obsolètes :
