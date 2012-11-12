@@ -118,7 +118,8 @@ possibles :
       datatype="" required="true/false" minlength="" maxlength="" regexp="" 
       sequence="nom de la sequence" autoincrement="true/false"
       updatepattern="" insertpattern="" selectpattern=""
-      default="" 
+      default=""
+      comment=""
    />
 </code>
 
@@ -165,6 +166,10 @@ Pour les champs auto incrementés, vous pouvez indiquer le type @@serial@@ ou
 d'entier (@@integer@@, @@tinyint@@..) et de mettre un attribut
 @@A@autoincrement@@ à @@true@@. Sur certaines bases, on peut associer une
 séquence à un champ. L'attribut @@A@sequence@@ doit alors indiquer son nom.
+
+L'attribut @@A@comment@@ permet d'avoir un commentaire sur la propriété. Sa valeur
+peut être utilisée par la commande createform pour générer les labels des champs de
+saisie.
 
 Les attributs @@A@updatepattern@@, @@A@insertpattern@@ et @@A@selectpattern@@
 permettent d'indiquer un "motif" à appliquer lors de la mise à jour, l'insertion

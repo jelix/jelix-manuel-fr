@@ -66,6 +66,9 @@ La structure des fichiers est simple : il s'agit d'une suite de lignes
 nous le verrons dans la suite. Tout d'abord, vous ne pouvez pas utiliser des
 simples ou doubles quotes pour délimiter les chaînes.
 
+Pour les clés, vous pouvez utiliser les caractères "a" à "z" (minuscule/majuscule),
+ainsi que les signes "_", "-", ".".
+
 Exemple, pour un fichier @@F@fr_FR/foo.UTF-8.properties@@ :
 
 <code ini>
