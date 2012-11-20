@@ -96,9 +96,9 @@ Paramètres possibles :
    * **persistent** : indique si la connexion est persistante (**on**) ou pas
      (**off**)
 
-A noter que les fichiers de base de données sqlite doivent être déposés dans le
-répertoire : @@F@var/db/sqlite/@@ de votre application et qu'à la fois ce
-répertoire et le fichier de base de données sqlite doivent avoir les droits de
+A noter que les fichiers de base de données sqlite doivent être dans le dossier @@F@var/db/sqlite/@@
+(pour sqlite2) ou @@F@var/db/sqlite3/@@ (pour sqlite3) de votre application et qu'à la fois ce
+dossier et le fichier de base de données sqlite doivent avoir les droits de
 lecture/écriture adéquats (ceux du serveur web).
 
 ===== Profil pdo =====
