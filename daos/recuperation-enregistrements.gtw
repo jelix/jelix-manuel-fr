@@ -253,3 +253,41 @@ faut faire un @@groupby@@ en SQL. Pour ce faire, il faut appeler la méthode
 
 Ici un groupby sera effectué sur le champs status.
 
+===== Enregistrement personnalisé =====
+
+Si vous avez besoin d'ajouter des méthodes supplémentaires,
+vous avez la possibilité pour chaque dao de définir des enregistrements personnalisés.
+
+
+==== Déclaration ====
+
+Pour déclarer un enregistrement personnalisé, il vous suffira de renseigner l'attribut
+**extends** du tag **record** votre dao:
+
+<code xml>
+ <!-- fichier mymodule/daos/mydao.dao.xml -->
+ ...
+ <record extends="mymodule~myrecord">
+  ...
+ </record>
+ ...
+</code>
+
+==== Creation ====
+
+Un enregistrement doit être stocké dans un fichier @@F@myrecord.daorecord.php@@ dans le
+répertoire @@F@daos/@@ de votre module, et doit être défini de la manière suivante:
+
+  * l' enregistrement doit être déclaré via une classe abstraite
+  * le nom de cette classe est le nom de l'enregistrement suivi du mot "DaoRecord"
+  * la classe doit hériter de la classe @@C@cDaoUserRecord_mymodule_Jx_mydao_Jx@@ avec module et dao correspondant au dao de l'enregistrement en question
+
+<code php>
+// fichier mymodule/daos/myrecord.daorecord.php
+
+abstract class myrecordDaoRecord extends cDaoUserRecord_mymodule_Jx_mydao_Jx {
+    function methode1() {
+      ...
+    }
+}
+</code>
