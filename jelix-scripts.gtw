@@ -75,7 +75,7 @@ accessible de n'importe quel répertoire :
      système" s'il s'agit d'un serveur ou d'une machine avec plusieurs
      utilisateurs (afin que tous puissent bénéficier de cette configuration).
    * Dans la valeur de la variable vous ajoutez le chemin vers le répertoire qui
-     contient @@F@php.exe@@. Ex: @@F@D:\wamp\bin\php\php5.2.6@@ (n'oubliez pas
+     contient @@F@php.exe@@. Ex: @@F@D:\wamp\bin\php\php5.3.13@@ (n'oubliez pas
      d'ajouter le ; à la fin si vous avez plusieurs variables path)
    * Validez en cliquant sur OK
    * Fermez le tout et redémarrez.
@@ -92,7 +92,7 @@ Ce paragraphe concerne les utilisateurs hébergeant leur site web sur serveur mu
 Deux particularités sont à prendre en compte :
 
    * en ligne de commande, la version de PHP par défaut semble être la plus
-     ancienne, il faut donc appeler la plus récente (i.e. @@F@php.ORIG.5.2.9@@)
+     ancienne, il faut donc appeler la plus récente (e.g. @@F@php.ORIG.5.3.5@@)
      soit manuellement, soit par un alias du BASH, soit par un script
    * la variable superglobale @@$_SERVER['SCRIPT_NAME']@@ ne semble pas être
      diffusée ce qui gêne à l'exécution du script pour la création des modules
@@ -104,7 +104,7 @@ et avec le contenu suivant :
 <code bash>
   #!/bin/bash
   export SCRIPT_NAME=cmd.php
-  php.ORIG.5.2.9 cmd.php $*
+  php.ORIG.5.3.5 cmd.php $*
 </code>
 
 Ensuite on appelle ce script à la place de la commande habituelle @@F@php cmd.php ...@@.
