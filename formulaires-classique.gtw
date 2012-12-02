@@ -118,8 +118,7 @@ et @@$this->boolParam('champs')@@, qui permettent de récupérer directement les
 valeurs sous un type particulier (voir [[controleurs|la page sur les contrôleurs]]).
 
 Vous pouvez utiliser en plus jFilter, qui est une classe permettant de vérifier
-le format des données (utilise l'extension filter quand Jelix est généré pour
-PHP 5.2). exemple :
+le format des données (utilise l'extension filter de PHP). exemple :
 
 <code php>
     function save() {
