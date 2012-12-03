@@ -10,9 +10,9 @@ Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins 
 ===== Mettre à jour depuis Jelix 1.2.9 =====
 
   * si vous le souhaitez, vous pouvez utiliser le
-    [[authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]],
+    [[/authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]],
     apparue dans la version 1.2.10, pour stocker les mots de passe de manière
-    plus sécurisée. Suivez alors [[authentification#migration|la doc de migration]] dédiée.
+    plus sécurisée. Suivez alors [[/authentification#migration|la doc de migration]] dédiée.
 
 ===== Mettre à jour depuis Jelix 1.1.x =====
 
