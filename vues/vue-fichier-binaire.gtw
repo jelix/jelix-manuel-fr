@@ -35,7 +35,7 @@ contenu que vous générez vous-même.
 Pour renvoyer un fichier existant :
 
 <code php>
- $rep->fileName = JELIX_APP_VAR_PATH.'fichier_a_renvoyer.gif';
+ $rep->fileName = jApp::varPath('fichier_a_renvoyer.gif');
 </code>
 
 Et sinon, si vous générez vous-même, mettez le contenu dans une chaîne et mettez
