@@ -207,8 +207,8 @@ un autre nom, faites un setData.
 Exemple :
 <code php>
     $form->saveFile('photo');
-    $form->saveFile('photo', JELIX_APP_WWW_PATH.'images/photos/');
-    $form->saveFile('photo', JELIX_APP_WWW_PATH.'images/photos/', $id.'.png');
+    $form->saveFile('photo', jApp::wwwPath('images/photos/'));
+    $form->saveFile('photo', jApp::wwwPath('images/photos/', $id.'.png'));
     $form->saveFile('photo', '', $id.'.png');
 </code>
 
@@ -218,7 +218,7 @@ Exemple :
 
 <code php>
     $form->saveAllFiles();
-    $form->saveAllFiles(JELIX_APP_WWW_PATH.'images/photos/');
+    $form->saveAllFiles(jApp::wwwPath('images/photos/'));
 </code>
 
 
