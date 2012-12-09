@@ -115,7 +115,8 @@ Mettez à jour les sources des modules tiers que vous avez installés, et qui so
 Et pour vos propres modules, vous devez adapter le code source en faisant les modifications suivantes :
 
   * Rien pour le moment
-  * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible avec Jelix 1.5 (changer l'attribut @@A@maxversion@@). Exemple :
+  * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible
+    avec Jelix 1.5 (changer l'attribut @@A@maxversion@@). Exemple :
 
 <code xml>
         <jelix minversion="1.4" maxversion="1.5.*"/>
@@ -124,11 +125,9 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
   * Dans vos pages statiques HTML (via jResponseBasicHtml) et page d'erreur statiques (error.en_US.php etc)
     la variable @@V@$basePath@@ doit être renommée en @@V@$BASEPATH@@. (Jelix 1.4.1)
 
-Nouvelles API que vous pouvez utiliser (non exhaustives) :
-   * TODO
+Lisez [[http://jelix.org/articles/en/changelog/1.5|la liste détaillée des changements]]
+pour savoir la liste des nouvelles classes et méthodes que vous pouvez utiliser. 
 
-API que vous ne pouvez plus utiliser :
-   * TODO
 
 ==== Mise à jour de Jelix ====
 
