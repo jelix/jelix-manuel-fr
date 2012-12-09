@@ -19,13 +19,14 @@ manuels correspondant), avant de mettre à jour pour jelix 1.3.
 ===== Mettre à jour depuis Jelix 1.4.0 =====
 
   * si vous le souhaitez, vous pouvez utiliser le
-    [[authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]],
-    apparue dans la version 1.4.0 (et 1.2.10,1.3.4), pour stocker les mots de passe de manière
-    plus sécurisée. Suivez alors [[authentification#migration|la doc de migration]] dédiée.
+    [[/authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]],
+    apparue dans la version 1.4.0 (et 1.2.10, 1.3.4), pour stocker les mots de passe de manière
+    plus sécurisée. Suivez alors [[/authentification#migration|la doc de migration]] dédiée.
   * Le script de mise à jour de jacl2db remplace dans la table jacl2_rights tous les id de
     ressource nuls par "-", qui est la nouvelle valeur pour indiquer "toutes les ressources".
     Ceci pour pouvoir établir des clés primaires correctes sur cette table avec certains
     SGBD comme Oracle.
+
 
 ===== Mettre à jour depuis Jelix 1.3 =====
 
