@@ -208,7 +208,7 @@ Exemple :
 <code php>
     $form->saveFile('photo');
     $form->saveFile('photo', jApp::wwwPath('images/photos/'));
-    $form->saveFile('photo', jApp::wwwPath('images/photos/', $id.'.png'));
+    $form->saveFile('photo', jApp::wwwPath('images/photos/'), $id.'.png');
     $form->saveFile('photo', '', $id.'.png');
 </code>
 
