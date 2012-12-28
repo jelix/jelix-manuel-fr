@@ -160,7 +160,7 @@ Comme ci dessus, vous pouvez utiliser toutes combinaisons de meta_htmlmodule ave
 exemple :
 
 <code html>
-{meta_htmlmodule css , 'mymodule', 'css/screen.css', array('media'=>'screen, projection')}
+{meta_htmlmodule css 'mymodule', 'css/screen.css', array('media'=>'screen, projection')}
 </code>
 
 Ainsi Jelix ira dans le dossier 'mymodule'/www/css ou 'mymodule'/www/themes/'currenttheme'/css pour trouver le fichier screen.css
