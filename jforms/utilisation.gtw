@@ -6,8 +6,8 @@ données au travers d'un //objet formulaire//, instance d'une classe héritant d
 XML que vous fournissez. Comme pour les DAOs, elle est stockée dans un cache
 évitant de la recréer à chaque utilisation.
 
-Dans les contrôleurs, vous créez, récupérez et détruisez cet //objet
-formulaire// via les méthodes statiques de l'objet @@C@jForms@@.
+Dans les contrôleurs, vous créez, récupérez et détruisez cet
+//objet formulaire// via les méthodes statiques de l'objet @@C@jForms@@.
 
 
 ===== Les actions à mettre en oeuvre =====

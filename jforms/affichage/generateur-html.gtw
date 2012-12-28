@@ -1,8 +1,7 @@
 ~~LANG:EN@enman:jforms/display/html-generator~~
 
 Le générateur "html" de jforms génère un formulaire HTML, utilisant
-principalement jQuery pour le comportement de certains champs de saisie. Par
-conséquent, ce genre de formulaire peuvent être assez lourd.
+principalement jQuery pour gérer le comportement de certains champs de saisie.
 
 Le générateur "html" est celui utilisé par défaut par jForms, et son nom à
 indiquer aux plugins {form} ou {formfull} est "html".
@@ -12,58 +11,34 @@ indiquer aux plugins {form} ou {formfull} est "html".
 Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et
 @@E@{formfull}@@ :
 
-  * @@L@errorDecorator@@: le nom de la fonction javascript qui s'occupera de l'affichage des erreurs
-  * @@L@method@@: la méthode HTTP à employer ('get' ou 'post'). Par défault : 'post'. 
+  * @@L@errorDecorator@@ : le nom de la fonction javascript qui s'occupera de l'affichage des erreurs
+  * @@L@method@@ : la méthode HTTP à employer ('get' ou 'post'). Par défault : 'post'.
+  * @@L@plugins@@ : la liste des plugins à utiliser pour afficher tel ou tel contrôle. C'est un tableau
+    associatif dont les clés sont les identifiants des contrôles, et les valeurs les noms de plugins
+    de type formwidget.
 
-===== Classes CSS à connaître =====
+===== Personnaliser l'affichage des contrôles =====
 
-Pour styler les balises générées par le générateur "html", il y a quelques
-classes de style à connaître.
+Chaque type de contrôle est généré par un plugin dédié, de type formwidget.
 
-  * **jforms-table** : c'est la classe du tableau principal généré par le plugin //formfull//, et contenant tout les champs de saisie d'un formulaire.
-  * **jforms-hidden** : la div contenant tous les champs cachés.
-  * **jforms-error-list** : classe de la liste (ul) des messages d'erreurs.
-  * **jforms-label** : classe placée sur toutes les balises <label>
-  * **jforms-required** : classe placée sur toutes les balises <label> et les champs de saisie qui sont obligatoires
-  * **jforms-error** : classe placée sur toutes les balises <label> et sur les champs de saisies qui sont en erreur
-  * **jforms-readonly** : classe placée sur les champs de saisies qui sont en lecture seule
-  * **jforms-value** : classe sur les éléments span contenant les valeurs des champs de type output.
-  * **jforms-help** : classe placée sur les éléments span contenant les liens d'aide.
-  * **jforms-chkbox** : classe placée sur le span qui entoure chaque checkbox d'un controle checkboxes.
-  * **jforms-radio** : classe placée sur le span qui entoure boutons radio d'un contrôle radiobuttons.
-  * **jforms-ctl-xxx** : classe placée sur chaque checkbox d'un contrôle
-    checkboxes, ou chaque boutons radio d'un contrôle radiobuttons (xxx étant
-    remplacé par le ref du contrôle).
-  * **jforms-captcha-question** : classe placée sur le span qui affiche la question d'un captcha.
-  * **jforms-table-group** : classe placée sur le tableau d'un contrôle <group>
-  * **jforms-choice**  : classe placée sur la liste des items d'un contrôle <choice>
-  * **jforms-item-controls**  : classe placée sur chaque span entourant un contrôle d'un item d'un contrôle <choice>
-  * **jforms-submit-buttons** : c'est la classe de la div générée par le plugin
-    //formfull//, contenant les boutons d'envois.
-  * **jforms-submit** : classe sur chaque bouton submit
-  * **jforms-reset** : classe sur chaque bouton reset
+Les balises HTML générées par ces plugins possèdent des classes CSS (voir plus bas).
+Vous pouvez donc les styler à votre convenance.
 
-<code css>
-.jforms-table {}
-.jforms-hidden {}
-.jforms-error-list {}
-.jforms-label {}
-.jforms-required {}
-.jforms-error {}
-.jforms-readonly {}
-.jforms-value {}
-.jforms-help {}
-.jforms-chkbox {}
-.jforms-radio {}
-.jforms-ctl-xxx {} /* Remplacer xxx par ref du contrôle */
-.jforms-captcha-question {}
-.jforms-table-group {}
-.jforms-choice {}
-.jforms-item-controls {}
-.jforms-submit-buttons {}
-.jforms-submit {}
-.jforms-reset {}
+Cependant, il est possible que le HTML généré ne vous convienne pas. La solution est
+alors d'utiliser un plugin formwidget différent, que vous développerez vous même ou
+que vous aurez récupéré. Vous indiquerez son nom dans l'option //plugins// de @@E@{form}@@.
+
+<code html>
+{form $form, 'module~action', array(), 'html', array('plugins'=> array('saisie'=>'superchamps'))}
 </code>
+
+Dans cet exemple, pour le contrôle qui a pour identifiant "saisie", le plugin "superchamps"
+sera utilisé.
+
+Un plugin formwidget implémente l'interface @@C@jelix\forms\HtmlWidget\WidgetInterface@@
+et peut hériter de la classe @@C@jelix\forms\HtmlWidget\WidgetBase@@.
+
+Voyez les plugins existants et cet interface pour comprendre la création de ce type de plugins.
 
 ===== Personnalisation de l'affichage des messages =====
 
@@ -154,6 +129,72 @@ la version 1.2, où ils sont directement en dur en HTML, et par défaut affiché
 dans des info bulles au survol du picto du point interrogation. Vous pouvez bien
 sûr changer cela en modifiant les CSS, en ajoutant du javascript etc.
 
+==== Manipulation Javascript ====
+
+Le code Javascript généré par jForms dans votre page web repose sur principalement
+sur un objet @@jFormsJQ@@, à partir duquel vous pouvez récupérer les objets JS
+correspondant à chaque contrôle, et qui permettent entre autre de faire les
+vérifications.
+
+Le premier objet que vous pouvez récupérer, c'est l'objet correspondant au
+formulaire même. Pour ce faire, vous devez appeler la fonction
+@@M@jFormsJQ.getForm()@@ avec l'id du formulaire.
+
+<code javascript>
+var f = jFormsJQ.getForm("jforms_utilisateurs_identite");
+</code>
+
+À partir de là, vous avez accés à plusieurs fonctions
+
+<code javascript>
+  f.setErrorDecorator(new MyErrorDecorator); // voir plus haut
+  f.addSubmitHandler(function(event){...}); // voir ci dessous
+
+  var c = f.getControl("ref_d_un_control"); // récupérer l'objet js d'un control
+</code>
+
+L'objet JS d'un contrôle contient un certain nombre de propriété :
+<code javascript>
+    c.name; // son "ref"
+    c.label; // son label
+    c.required; // indique si il est obligatoire, true ou false
+    c.errInvalid; // message si le contenu est invalide
+    c.errRequired; // message si le contenu est requis
+    c.readOnly; // indique si il est en lecture seule, true ou false.
+</code>
+
+Certains objets ont des propriétés supplémentaires en fonction de leur type.
+
+==== Vérification JS sur le submit ====
+
+Pour ajouter des vérifications ou traitements additionnels durant l'évènement
+submit du formulaire, vous ne devez pas utiliser un listener sur l'évènement
+submit, mais vous devez utiliser un "submit handler" avec l'objet jforms en
+javascript. Un "submit handler" est une fonction qui accepte en argument un
+objet DOM event, et doit retourner @@true@@ si le formulaire peut être envoyé,
+ou false sinon. Vous ajoutez ce "submit handler" avec la méthode
+@@M@addSubmitHandler@@ de l'objet javascript jforms.
+
+Voici un exemple pour ajouter un message de confirmation:
+
+<code javascript>
+jQuery(document).ready(function(){
+    jFormsJQ.getForm("the_id_of_formelement").addSubmitHandler(function(ev){
+         return window.confirm("Voulez vous vraiment envoyer ces données ?");
+       });
+});
+</code>
+
+Par défaut, la fonction indiquée est exécutée après la vérification des données.
+Si vous voulez l’exécuter avant la vérification, ajouter un second paramètre
+@@true@@ à la méthode @@M@addSubmitHandler@@.
+
+Toutes les fonctions "handlers" sont exécutées, même si une des fonctions
+retourne @@false@@ ou que la vérification des données échoue. Si vous voulez
+stopper l’exécution des handlers qui suivent l'un deux, générez simplement une
+exception dans ce dernier.
+
+
 ==== jQuery et votre application ====
 
 Le générateur HTML inclut le script jQuery dans toute réponse HTML contenant un
@@ -167,3 +208,56 @@ Exemple d'inclusion dans votre réponse commune :
 <code>
   $this->addJSLink(jApp::config()->urlengine['jelixWWWPath'].'jquery/jquery.js');
 </code>  
+
+
+===== Classes CSS à connaître =====
+
+Pour styler les balises générées par le générateur "html", il y a quelques
+classes de style à connaître.
+
+  * **jforms-table** : c'est la classe du tableau principal généré par le plugin //formfull//, et contenant tout les champs de saisie d'un formulaire.
+  * **jforms-hidden** : la div contenant tous les champs cachés.
+  * **jforms-error-list** : classe de la liste (ul) des messages d'erreurs.
+  * **jforms-label** : classe placée sur toutes les balises <label>
+  * **jforms-required** : classe placée sur toutes les balises <label> et les champs de saisie qui sont obligatoires
+  * **jforms-error** : classe placée sur toutes les balises <label> et sur les champs de saisies qui sont en erreur
+  * **jforms-readonly** : classe placée sur les champs de saisies qui sont en lecture seule
+  * **jforms-value** : classe sur les éléments span contenant les valeurs des champs de type output.
+  * **jforms-help** : classe placée sur les éléments span contenant les liens d'aide.
+  * **jforms-chkbox** : classe placée sur le span qui entoure chaque checkbox d'un controle checkboxes.
+  * **jforms-radio** : classe placée sur le span qui entoure boutons radio d'un contrôle radiobuttons.
+  * **jforms-ctl-xxx** : classe placée sur chaque checkbox d'un contrôle
+    checkboxes, ou chaque boutons radio d'un contrôle radiobuttons (xxx étant
+    remplacé par le ref du contrôle).
+  * **jforms-captcha-question** : classe placée sur le span qui affiche la question d'un captcha.
+  * **jforms-table-group** : classe placée sur le tableau d'un contrôle <group>
+  * **jforms-choice**  : classe placée sur la liste des items d'un contrôle <choice>
+  * **jforms-item-controls**  : classe placée sur chaque span entourant un contrôle d'un item d'un contrôle <choice>
+  * **jforms-submit-buttons** : c'est la classe de la div générée par le plugin
+    //formfull//, contenant les boutons d'envois.
+  * **jforms-submit** : classe sur chaque bouton submit
+  * **jforms-reset** : classe sur chaque bouton reset
+
+<code css>
+.jforms-table {}
+.jforms-hidden {}
+.jforms-error-list {}
+.jforms-label {}
+.jforms-required {}
+.jforms-error {}
+.jforms-readonly {}
+.jforms-value {}
+.jforms-help {}
+.jforms-chkbox {}
+.jforms-radio {}
+.jforms-ctl-xxx {} /* Remplacer xxx par ref du contrôle */
+.jforms-captcha-question {}
+.jforms-table-group {}
+.jforms-choice {}
+.jforms-item-controls {}
+.jforms-submit-buttons {}
+.jforms-submit {}
+.jforms-reset {}
+</code>
+
+

@@ -88,7 +88,6 @@ Téléchargez [[http://download.jelix.org/jelix/nightly/1.5.x/jelix-manuel-1.5.p
       - section: [[jforms/utilisation|Initialiser un formulaire]]
       - section: [[jforms/affichage|Affichage d'un formulaire]].
           -section: [[jforms/affichage/generateur-html|Générateur "html"]]
-          -section: [[jforms/affichage/generateur-htmllight|Générateur "htmllight"]]
       - section: [[jforms/apres-submit|Gérer un formulaire après soumission]]
       - section: [[jforms/affichage-donnees|Affichage simple des données]].
       - section: [[jforms/security|Sécurité dans les formulaires]].

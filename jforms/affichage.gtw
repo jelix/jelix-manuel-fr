@@ -87,7 +87,7 @@ l'ordre :
    * le sélecteur de l'action où le contenu du formulaire sera envoyé
    * facultatif :
       * un tableau des paramètres de l'url de cette action (autre que les champs de saisie)
-      * le nom du générateur à utiliser (entre autre 'html' ou 'htmllight')
+      * le nom du générateur à utiliser (entre autre 'html')
       * un tableau contenant des options pour le générateur
 
 
@@ -292,8 +292,8 @@ Ou encore, vous pouvez utiliser plusieurs plugins @@formsubmit@@, sans
 moment de boucler sur les items d'un submit (voir [[ticket:429|ticket #429]]).
 
 
-
 ===== Ajouter du code javascript =====
+
 Vous pouvez ajouter des comportements sur n'importe quel contrôle avec
 javascript, avec votre bibliothèque JS préférée (jQuery étant celle utilisée par
 jForms par défaut).
@@ -310,45 +310,35 @@ de celui du formulaire : "jforms_module_nomform". Dans notre exemple, il vaudra
 Sachant ces ids, vous pouvez récupérer tout les champs de formulaire ou
 l'élément form, avec la fonction @@document.getElementById()@@.
 
-Pour ajouter des vérifications ou traitements additionnels durant l'évènement
-submit du formulaire, vous ne devez pas utiliser un listener sur l'évènement
-submit, mais vous devez utiliser un "submit handler" avec l'objet jforms en
-javascript. Un "submit handler" est une fonction qui accepte en argument un
-objet DOM event, et doit retourner @@true@@ si le formulaire peut être envoyé,
-ou false sinon. Vous ajoutez ce "submit handler" avec la méthode
-@@M@addSubmitHandler@@ de l'objet javascript jforms.
-
-Voici un exemple pour ajouter un message de confirmation:
-
-<code javascript>
-jQuery(document).ready(function(){
-    jFormsJQ.getForm("the_id_of_formelement").addSubmitHandler(function(ev){
-         return window.confirm("Voulez vous vraiment envoyer ces données ?");
-       });
-});
-</code>
-
-Par défaut, la fonction indiquée est exécutée après la vérification des données.
-Si vous voulez l’exécuter avant la vérification, ajouter un second paramètre
-@@true@@ à la méthode @@M@addSubmitHandler@@.
-
-Toutes les fonctions "handlers" sont exécutées, même si une des fonctions
-retourne @@false@@ ou que la vérification des données échoue. Si vous voulez
-stopper l’exécution des handlers qui suivent l'un deux, générez simplement une
-exception dans ce dernier.
+Pour en savoir plus, voyez les possibilités JS du générateur que vous choisissez,
+notamment [[affichage/generateur-html#verification-js-sur-le-submit|les possibilités JS du générateur par défaut de jforms]],
+comme par exemple sur les traitements du submit.
 
 ===== Choisir un générateur =====
 
-Les plugins de templates de jForms reposent sur d'autres plugins spécifiques à
-jForms, s'occupant de générer le formulaire proprement dit. Deux générateurs
-sont fournis : "html" et "htmllight". [[/plugins/jforms|Vous pouvez en créer d'autres]]
-si la façon dont sont générés les formulaires ne vous plaît pas. Par
-exemple, un générateur qui génère un formulaire en se reposant une bibliothèque
-javascript comme Extjs, un formulaire qui utilise Ajax, ou encore un formulaire
-en XUL, en XForms etc...
+Pour générer le code HTML, les plugins de templates font appel à un générateur (ou builder)
+qui est un composant de jForms.
 
-Le générateur par défaut de Jelix est 'html'. Il est spécifié par la variable
-//defaultJformsBuilder// du fichier de configuration.
+Il est possible de changer de générateur. Ainsi Jelix fourni un générateur
+de code HTML, mais vous pouvez fournir votre propre générateur, si vous ne voulez
+pas par exemple reposer sur jQuery mais d'autres bibliothèques javascript (Extjs par exemple),
+ou encore si vous voulez générer un formulaire dans un autre langage comme XForms par exemple.
+
+Les générateurs sont ainsi des plugins. Mieux encore, depuis Jelix 1.5, le générateur
+HTML par défaut est lui même extensible : vous pouvez fournir vos propres plugins
+pour générer tel ou tel type de contrôle, sans avoir donc à tout redéfinir : ce sont les plugins
+de type "formwidget".
+
+Chaque générateur a un nom. Le générateur par défaut pour HTML s'appelle tout
+naturellement 'html'. Il est spécifié par l'option //defaultJformsBuilder//
+du fichier de configuration.
+
+Note: Depuis Jelix 1.5, l'architecture des générateurs a été modifié. Mais il est
+encore possible d'utiliser les anciens types de générateurs proposés par les versions
+précédentes, y compris vos propres générateurs reposant sur cette ancienne architecture.
+Pour les utiliser, préfixez leur nom par "legacy.". Par exemple, pour utiliser
+l'ancien builder (non extensible), utilisez le nom "legacy.html". Pour une documentation
+sur ces anciens générateurs, voyez le manuel des versions précédentes.
 
 Pour spécifier son propre choix de générateur pour l'ensemble d'une application,
 il vous suffit de modifier cette variable dans le fichier de configuration:
@@ -358,32 +348,27 @@ il vous suffit de modifier cette variable dans le fichier de configuration:
 defaultJformsBuilder = myformbuilder
 </code>
 
-
 Ponctuellement, vous pouvez aussi indiquer le générateur de votre choix en
-passant son nom aux plugins de template @@{form}@@ ou @@{formfull}@@ (4ième
-paramètre) :
+passant son nom aux plugins de template @@{form}@@ ou @@{formfull}@@, en 4ième
+paramètre, ici "legacy.htmllight" :
 
 <code html>
-  {formfull $formulaire, 'monmodule~default:sauver', array(), 'htmllight'}
+  {formfull $formulaire, 'monmodule~default:sauver', array(), 'legacy.htmllight'}
 </code>
 
 Comme indiqué plus haut, ces plugins acceptent un cinquième paramètre, un
 tableau, contenant des options pour le générateur. Ces options dépendent du
-générateur utilisé (//errorDecorator// et //method// par exemple pour 'html' et
-htmllight').
+générateur utilisé (//errorDecorator// et //method// par exemple pour 'html').
 
 Remarque : si vous souhaitez passer la même option dans tous vos formulaires,
 créez le générateur de votre choix en dérivant un générateur existant et
 affectez-lui directement ces options dans son code...
 
-
-Pour en savoir plus sur chaque générateur :
-
-   * [[affichage/generateur-html|Générateur "html"]]
-   * [[affichage/generateur-htmllight|Générateur "htmllight"]]
+Pour en savoir plus sur le générateur HTML
+   * [[affichage/generateur-html|le générateur "html"]]
 
 
 ===== Utilisation de jforms dans des réponses Ajax =====
 
-Voir [[/services-web/ajax|la note sur la page des réponses ajax]]
+Voir [[/services-web/ajax|la note sur la page des réponses ajax]].
 

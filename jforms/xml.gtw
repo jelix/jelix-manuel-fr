@@ -4,13 +4,13 @@
 jForms se base sur des fichiers descriptifs en XML. Tout formulaire est décrit
 en XML, avec une grammaire assez simple, à mi-chemin entre HTML et XForms.
 
-Ces fichiers XML sont à placer dans un répertoire //forms// des modules et
-doivent avoir comme nom //foo.form.xml//, où //foo// est le nom identifiant du
+Ces fichiers XML sont à placer dans un répertoire @@F@forms@@des modules et
+doivent avoir comme nom @@F@foo.form.xml@@, où //foo// est le nom identifiant du
 formulaire (que vous choisissez bien sûr). Cet identifiant est utilisé ensuite
 dans les sélecteurs.
 
 Par exemple "monModule~produit" fait référence au formulaire
-monModule/forms/produit.form.xml.
+@@F@monModule/forms/produit.form.xml@@.
 
 Le format XML de jforms évolue au gré des versions de Jelix et il existe donc
 plusieurs versions de ce format. Cependant une vieille version du format XML
@@ -23,3 +23,5 @@ dans le fichier XML.
 
 Le format 1.0 est obsolète. Pour avoir sa documentation, voyez le manuel des
 version antérieures à jelix 1.3.
+
+La version du format actuel est la version 1.1.

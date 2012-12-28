@@ -4,16 +4,39 @@ Comme il est indiqué [[/jforms/affichage|dans le chapitre sur l'affichage des f
 il est possible de choisir un plugin qui s'occupera de générer le code du
 formulaire (en HTML, javascript etc..) renvoyé au navigateur.
 
-Vous pouvez donc créer un plugin qui génèrera les formulaires comme bon vous
-semble, dans le format que vous souhaitez.
+Note : Il s'agit ici des nouveaux types de plugins de Jelix 1.5 pour jForms. Voyez
+le manuel de Jelix 1.4 pour savoir comment sont réalisés les anciens plugins.
+
+Vous avez deux types de plugins : ceux qui permettent de générer un formulaire entier,
+et donc qui "pilotent" la génération d'un formulaire et les plugins des widgets
+pour le générateur HTML par défaut, pour générer le code d'un seul contrôle de
+formulaire.
+
+
+==== Plugin widget ====
+
+Le générateur HTML fourni par Jelix est un plugin, lui même extensible, utilisant
+des plugins de type "formwidget" pour générer chaque contrôle. Vous n'avez ainsi
+pas à développer tout un plugin générateur pour simplement rédéfinir le code
+HTML et JS généré d'un contrôle, comme c'était le cas dans Jelix 1.4 et précédent.
+
+
+
+
+
+
+
+
+==== Plugin générateur ====
 
 Il faut d'abord donner un nom à votre générateur. Prenons "monhtml" par exemple.
 Ensuite :
 
-  * Créez un répertoire "monhtml" dans le répertoire "jforms" d'un dépôt de plugins.
-  * Créez un fichier monhtml.jformsbuilder.php
-  * Dans ce fichier, créez une classe monhtmlJformsBuilder qui hérite de jFormsBuilderBase
-
+  * Créez un répertoire "monhtml" dans le répertoire "formbuilder" d'un dépôt de plugins.
+  * Créez un fichier @@F@monhtml.formbuilder.php@@
+  * Dans ce fichier, créez une classe @@C@htmlFormBuilder@@ qui hérite de @@C@\\jelix\\forms\\Builder\\BuilderBase@@
+    ou de @@C@\\jelix\\forms\\Builder\\HtmlBuilder@@ si vous faites un formulaire HTML similaire à
+    ce que génère le générateur HTML par défaut de Jelix.
 
 Dans cette classe, vous devez implémenter les méthodes qui suivent. Ces méthodes
 doivent afficher les différentes parties du formulaire (en clair, faire des
@@ -25,7 +48,40 @@ Après chaque modification de votre générateur de jforms,
 @@cleartemp@@), ceci afin de prendre en compte vos modifications.
 
 
-==== outputMetaContent ====
+
+    /**
+     * output the header content of the form
+     */
+    abstract public function outputHeader();
+
+    /**
+     * output the footer content of the form
+     */
+    abstract public function outputFooter();
+
+    /**
+     * displays all the form. outputMetaContent, outputHeader and outputFooters are also called 
+     * @since 1.1
+     */
+    abstract public function outputAllControls();
+
+    /**
+     * displays the content corresponding of the given control
+     * @param jFormsControl $ctrl the control to display
+     * @param array $attributes  attribute to add on the generated code (html attributes for example)
+     */
+    abstract public function outputControl($ctrl, $attributes=array());
+
+    /**
+     * displays the label corresponding of the given control
+     * @param jFormsControl $ctrl the control to display
+     */
+    abstract public function outputControlLabel($ctrl);
+
+
+
+
+=== outputMetaContent ===
 
 Cette méthode doit récupérer l'objet réponse utilisée par le contrôleur, et y
 spécifier les feuilles de styles, les fichiers javascript à inclure dans la page
@@ -48,9 +104,9 @@ finale. Exemple :
    }
 </code>
 
-La méthode est appelée avant toutes les autres.
+Cette méthode est appelée avant toutes les autres.
 
-==== outputHeader() ====
+=== outputHeader() ===
 
 Cette méthode doit générer les balises qui constituent la déclaration du
 formulaire, ainsi que d'autres informations qui ne sont pas propres à chaque
@@ -58,20 +114,20 @@ contrôle. Par exemple, la méthode @@M@outputHeader@@ du générateur "html"
 affiche la balise @@E@<form>@@, la liste des erreurs présentes dans le
 formulaire, les champs cachés, ainsi que quelques lignes de javascript.
 
-==== outputFooter() ====
+=== outputFooter() ===
 
 C'est la dernière méthode appelée par les plugins de templates. C'est dans
 celle-là donc que vous afficherez les dernières informations et balises. Par
 exemple, la méthode @@M@outputFooter@@ du générateur "html" affiche la balise
 fermante de @@E@<form>@@, ainsi que d'autres lignes javascript.
 
-==== outputAllControls() ====
+=== outputAllControls() ===
 
 Cette méthode est appelée uniquement par le plugin @@formfull@@. Elle doit
 afficher tout les contrôles (en dehors des éléments affichés par outputHeader et
 outputFooter).
 
-==== outputControlLabel ====
+=== outputControlLabel ===
 
 Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@,
 pour chaque label de champs de saisie. Cette méthode est donc chargée d'afficher
@@ -80,12 +136,13 @@ le libellé d'un champ de saisie.
 Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
 informations du champ de saisie dont il faut afficher le label.
 
-==== outputControl ====
+=== outputControl ===
 
 Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@,
 pour chaque champ de saisie. Cette méthode est donc chargée d'afficher un champ
 de saisie.
 
 Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
-informations du champ de saisie à afficher.
+informations du champ de saisie à afficher, et un tableau contenant
+la liste des attributs à rajouter à la balise créé ou d'autres informations.
 
