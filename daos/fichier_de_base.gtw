@@ -311,4 +311,39 @@ class news extends jDaoRecordBase {
 
 
 
+===== Importation de dao =====
+
+Dans vos projet, vous aurez parfois besoin de vous calquer sur un dao déjà existant afin de créer votre propre dao.
+Afin de vous éviter de retranscrire tout le contenu du dao initial avec des propriétés et méthodes qui resteront inchangés, vous avez la possibilité de l'importer via l'attribut @@L@import@@ dans la balise @@L@dao@@.
+
+==== Fonctionnement ====
+
+  * le dao à importé est lu en premier: toutes ses propriétés, définitions et méthodes sont d'abord prise en comptes.
+  * le dao à redéfinir est lu ensuite: les propriétés, méthodes et définitions existantes dans le dao à importer sont écrasées, les autres sont ajoutées.
+
+==== Exemple ====
+
+Un bon exemple avec jauth: si vous avez besoin de définir votre propre dao, //"il doit avoir au moins les mêmes propriétés et méthodes que le dao jelixusers"// ([[../authentification/drivers#db|cf doc]]).
+
+<code xml>
+<!-- dao: mymodule~mycustomuser -->
+<dao import="jauthdb~jelixuser">
+	<datasources>
+		<primarytable name="user" realname="myusertable" primarykey="login" />
+	</datasources>
+	<record>
+		<property name="nationality" fieldname="nationality" datatype="string" maxlength="100" required="true">
+	</record>
+	<factory>
+		<method name="findByNationality" type="select">
+			<parameter name="nationality" />
+			<conditions>
+				<eq property="nationality" expr="$nationality" />
+			</conditions>
+		</method>
+	</factory>
+</dao>
+</code>
+
+Ici, vous aurez donc défini simplement un dao personnalisé pour jauth , tout en respectant les critères de base requis (propriétées @@P@login@@ et @@P@password@@, methodes @@M@getByLoginPassword@@, @@M@getByLogin@@, etc...) grace à l'import de @@L@jauthdb~jelixuser@@
 
