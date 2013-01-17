@@ -15,8 +15,10 @@ Principales nouveautés apportées par la version 1.5 :
       également été intégré dans les versions 1.2.10/1.3.4/1.4.1)
    * jEvent :  possibilité de [[events#desactiver-des-listeners|désactiver les listeners de certains modules]]
    * Nouveau contrôle jForms : [[forms/xml-1.1#bouton-simple|button]]
-   * jConfigCompiler is now extensible with plugins, so components can precalculate config parameters that will be stored in the configuration cache
-   * Debugbar : [[deboggage#la-debug-barre|nouvelle option de configuration, @@defaultPosition@@]], permettant d'afficher la debugbar à gauche ou à droite par défaut.
+   * jConfigCompiler est maintenant extensible avec des plugins, ainsi il est possible de précalculer
+     vos propres paramètres de configuration, de faire des vérifications à la mise en cache plutôt qu'à l'execution.
+   * Debugbar : [[deboggage#la-debug-barre|nouvelle option de configuration, @@defaultPosition@@]],
+     permettant d'afficher la debugbar à gauche ou à droite par défaut.
    * Deplacement des locales de jacl2db, du module jelix vers le module jacl2db
    * Deplacement des locales de jacldb, du module jelix vers le module jacldb
    * Les classes jPref ont été déplacées dans un nouveau module @@jpref@@.
@@ -26,6 +28,8 @@ Principales nouveautés apportées par la version 1.5 :
    * jDao : [[/daos/fichier_de_base#utiliser-une-classe-php-pour-les-enregistrements|il est possible de fournir sa propre classe record]] qui sera utilisée
      comme classe de base pour la classe dao record générée. Le nouvel attribut
      “extends” sur la balise “record” indique la classe à utiliser.
+   * jDao : un fichier DAO [[/daos/fichier_de_base#importation-de-dao|peut importer]] la
+     définition d'un autre DAO, afin de faire des DAOs semblables sans répéter les mêmes informations.
 
 Composants obsolètes :
 
