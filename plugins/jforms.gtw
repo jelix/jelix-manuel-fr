@@ -20,12 +20,24 @@ des plugins de type "formwidget" pour générer chaque contrôle. Vous n'avez ai
 pas à développer tout un plugin générateur pour simplement rédéfinir le code
 HTML et JS généré d'un contrôle, comme c'était le cas dans Jelix 1.4 et précédent.
 
+Un plugin "formwidget" doit implementer l'interface @@jelix\forms\HtmlWidget\WidgetInterface@@, et
+donc fournir ces methodes :
 
+   * @@M@getId()@@: renvoi l'id de l'élement HTML généré
+   * @@M@getName()@@: renvoi le nom de l'élement HTML généré
+   * @@M@getValue()@@: renvoi la valeur de l'élement HTML généré (valeur du controle en fait)
+   * @@M@outputMetaContent($resp)@@: génére des liens CSS et Javascript pour la partie @@<head>@@
+   * @@M@outputHelp()@@: génère le code HTML de l'aide pour le champs de saisie
+   * @@M@outputLabel()@@: génère le libellé HTML du champs
+   * @@M@outputControl()@@: génère le champs HTML
+   * @@M@setAttributes($attributes)@@: définie les attributs qui seront ajoutés sur l'élément HTML, ou des options pour le plugin.
 
+Le plugin peut hériter de la classe @@jelix\forms\HtmlWidget\WidgetBase@@, ainsi il y a moins de méthode à implémenter.
 
+Le plugin doit avoir un nom. Il doit être stocké dans un fichier @@F@plugins/formwidget/{nom}/{nom}.formwidget.php@@.
 
-
-
+Voyez le code des plugins existants dans @@F@lib/jelix/plugins/formwidget/@@ pour en savoir plus sur le
+fonctionnement des plugins "formwidget".
 
 ==== Plugin générateur ====
 
@@ -48,7 +60,7 @@ Après chaque modification de votre générateur de jforms,
 @@cleartemp@@), ceci afin de prendre en compte vos modifications.
 
 
-
+<code php>
     /**
      * output the header content of the form
      */
@@ -78,7 +90,7 @@ Après chaque modification de votre générateur de jforms,
      */
     abstract public function outputControlLabel($ctrl);
 
-
+</code>
 
 
 === outputMetaContent ===
@@ -127,7 +139,7 @@ Cette méthode est appelée uniquement par le plugin @@formfull@@. Elle doit
 afficher tout les contrôles (en dehors des éléments affichés par outputHeader et
 outputFooter).
 
-=== outputControlLabel ===
+=== outputControlLabel() ===
 
 Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@,
 pour chaque label de champs de saisie. Cette méthode est donc chargée d'afficher
@@ -136,7 +148,7 @@ le libellé d'un champ de saisie.
 Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
 informations du champ de saisie dont il faut afficher le label.
 
-=== outputControl ===
+=== outputControl() ===
 
 Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@,
 pour chaque champ de saisie. Cette méthode est donc chargée d'afficher un champ

@@ -26,13 +26,13 @@ Vous pouvez donc les styler à votre convenance.
 
 Cependant, il est possible que le HTML généré ne vous convienne pas. La solution est
 alors d'utiliser un plugin formwidget différent, que vous développerez vous même ou
-que vous aurez récupéré. Vous indiquerez son nom dans l'option //plugins// de @@E@{form}@@.
+que vous aurez récupéré. Vous indiquerez son nom dans l'option //plugins// de @@{form}@@.
 
 <code html>
-{form $form, 'module~action', array(), 'html', array('plugins'=> array('saisie'=>'superchamps'))}
+{form $form, 'module~action', array(), 'html', array('plugins'=> array('myctrl'=>'superchamps'))}
 </code>
 
-Dans cet exemple, pour le contrôle qui a pour identifiant "saisie", le plugin "superchamps"
+Dans cet exemple, pour le contrôle qui a pour identifiant "myctrl", le plugin "superchamps"
 sera utilisé.
 
 Un plugin formwidget implémente l'interface @@C@jelix\forms\HtmlWidget\WidgetInterface@@
