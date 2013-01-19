@@ -55,6 +55,7 @@ La structure d'un fichier DAO ressemble à cela :
 
 Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes")
 est facultative et est décrite [[methodes_xml|dans un autre chapitre dédiée]].
+
   * @@E@datasources@@ : indique les tables sur lequel reposera l'objet.
   * @@E@record@@ : indique la correspondance entre les propriétés de l'objet et
     les champs des tables et définit donc les propriétés qu'il y aura sur
@@ -62,8 +63,6 @@ est facultative et est décrite [[methodes_xml|dans un autre chapitre dédiée]]
 
 
 ===== Correspondance simple =====
-
-
 
 ==== Déclaration de la table ====
 
@@ -316,8 +315,8 @@ class news extends jDaoRecordBase {
 Dans vos projet, vous aurez parfois besoin de vous calquer sur un dao déjà
 existant afin de créer votre propre dao. Afin de vous éviter de retranscrire
 tout le contenu du dao initial avec des propriétés et méthodes qui resteront
-inchangés, vous avez la possibilité de l'importer via l'attribut @@L@import@@
-dans la balise @@L@dao@@.
+inchangés, vous avez la possibilité de l'importer via l'attribut @@A@import@@
+dans la balise @@E@dao@@.
 
 ==== Fonctionnement ====
 

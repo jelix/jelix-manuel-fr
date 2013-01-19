@@ -52,6 +52,8 @@ Note : la table sur laquelle repose le dao, doit avoir comme clé primaire le
 champ du login, ou alors qu'il y ait une clé autoincrementée, et un champ
 @@P@login@@ déclaré avec un index de type "UNIQUE".
 
+Pour faire votre dao, vous pouvez aussi faire [[../daos/fichier_de_base#importation-de-dao|un import du dao]] fourni par jauthdb.
+
 
 ===== Class =====
 
