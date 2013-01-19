@@ -332,7 +332,7 @@ Notez que l'import n'est **pas** un héritage au sens objet PHP.
 
 ==== Exemple ====
 
-Un bon exemple avec jauth : si vous avez besoin de définir votre propre dao,
+Un bon exemple avec jauthdb : si vous avez besoin de définir votre propre dao,
 [[../authentification/drivers#db|il est noté dans la documentation]]
 qu' //"il doit avoir au moins les mêmes propriétés et méthodes que le dao jelixusers"//.
 

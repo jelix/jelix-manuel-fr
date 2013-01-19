@@ -18,7 +18,8 @@ Principales nouveautés apportées par la version 1.5 :
    * jConfigCompiler est maintenant extensible avec des plugins, ainsi il est possible de précalculer
      vos propres paramètres de configuration, de faire des vérifications à la mise en cache plutôt qu'à l'execution.
    * Debugbar : [[deboggage#la-debug-barre|nouvelle option de configuration, @@defaultPosition@@]],
-     permettant d'afficher la debugbar à gauche ou à droite par défaut.
+     permettant d'afficher la debugbar à gauche ou à droite par défaut. de plus il n'est plus nécessaire
+     d'activer manuellement dans la conf le logger "memory" pour pouvoir utiliser la debugbar.
    * Deplacement des locales de jacl2db, du module jelix vers le module jacl2db
    * Deplacement des locales de jacldb, du module jelix vers le module jacldb
    * Les classes jPref ont été déplacées dans un nouveau module @@jpref@@.
