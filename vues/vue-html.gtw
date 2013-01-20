@@ -33,6 +33,7 @@ stockée dans un fichier. Ce fichier doit être un simple fichier PHP, cela ne
 doit pas être un template pour jTpl. Il doit contenir tout le code HTML de la
 page, et trois instructions qui affichent les variables suivantes :
 
+    * @@V@$HEADTOP@@ : après la balise d'ouverture @@E@<head>@@
     * @@V@$HEADBOTTOM@@ : avant la balise de fin @@E@</head>@@
     * @@V@$BODYTOP@@ : aprés la balise d'ouverture @@E@<body>@@
     * @@V@$BODYBOTTOM@@ : avant la balise de fin @@E@</body>@@
@@ -42,7 +43,7 @@ méthodes @@M@addHeadContent()@@ et @@M@addContent()@@ de l'objet
 @@C@jResponseBasicHtml@@. Elles ont pu être appelée par des contrôleurs, des
 classes techniques, des plugins. C'est pourquoi il faut indiquer ces variables.
 
-Il y a une quatrième variable, @@V@$BASEPATH@@ (depuis Jelix 1.4.1), qui contient le
+Il y a une quatrième variable, @@V@$BASEPATH@@  qui contient le
 chemin de base de l'application, ce qui peut être utile pour vos feuilles de styles
 et autres ressources statiques.
 
@@ -52,6 +53,7 @@ Voici un exemple de fichier statique :
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_US" lang="en_US">
   <head>
+     <?php echo $HEADTOP; ?>
      <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
       <title>Hello From Jelix !</title>
       <link type="text/css" href="<?php echo $BASEPATH; ?>mystyles.css" rel="stylesheet" />

@@ -2,35 +2,62 @@
 
 Principales nouveautés apportées par la version 1.5 :
 
-   * Support PHP 5.3 minimum
-   * Tout ce qui concerne Soap a été migré dans un nouveau module jsoap.
-     Le module jWSDL a été fusionné avec jsoap. Les points d'entrées soap doivent
-     être modifiés.
-   * Le support PDF avec TCPDF et ses fontes, a été migré dans un nouveau module jtcpdf. Il n'est
-     pas livré dans l'archive de Jelix (à cause de la taille des fichiers de fontes).
-   * Il est possible de [[services-web/soap#appeller-un-service-soap-avec-jelix|déclarer le "classmap"]]
-     pour @@C@jSoapClient@@, dans un fichier autre que celui des profils.
+   * Compatibilité PHP 5.3 minimum. PHP 5.2 n'est plus pris en charge.
+     Utilisation dans Jelix des fonctionnalités introduites par PHP 5.3, comme
+     les fonctions anonymes, late static binding, les namespaces, la constante
+     @@__DIR__@@ etc.
+   * l'objet de réponse HTML génère maintenant du HTML5. Une nouvelle classe
+     jResponseHtml4 a le même comportement que l'ancienne version de
+     jResponseHTML, à savoir la prise en charge de HTML4
+   * jForms :
+      * Nouveau contrôle [[forms/xml-1.1#bouton-simple|button]]
+      * [[jforms/affichage/generateur-html#personnaliser-l-affichage-des-controles|le générateur HTML est maintenant extensible]].
+        Vous pouvez fournir vos propres plugins pour générer tel ou tel contrôle de formulaire.
+   * jDao :
+      * [[/daos/fichier_de_base#utiliser-une-classe-php-pour-les-enregistrements|il est possible de fournir sa propre classe record]] qui sera utilisée
+        comme classe de base pour la classe dao record générée. Le nouvel attribut
+        “extends” sur la balise “record” indique la classe à utiliser.
+      * un fichier DAO [[/daos/fichier_de_base#importation-de-dao|peut importer]] la
+        définition d'un autre DAO, afin de faire des DAOs semblables sans répéter les mêmes informations.
+      * Les balises properties peuvent contenir un commentaire 
    * [[authentification#nouveau-systeme-de-hachage|nouveau système de hashage dans jAuth]],
       pour stocker les mots de passe de manière plus sécurisée. (a
       également été intégré dans les versions 1.2.10/1.3.4/1.4.1)
-   * jEvent :  possibilité de [[events#desactiver-des-listeners|désactiver les listeners de certains modules]]
-   * Nouveau contrôle jForms : [[forms/xml-1.1#bouton-simple|button]]
-   * jConfigCompiler est maintenant extensible avec des plugins, ainsi il est possible de précalculer
-     vos propres paramètres de configuration, de faire des vérifications à la mise en cache plutôt qu'à l'execution.
-   * Debugbar : [[deboggage#la-debug-barre|nouvelle option de configuration, @@defaultPosition@@]],
-     permettant d'afficher la debugbar à gauche ou à droite par défaut. de plus il n'est plus nécessaire
-     d'activer manuellement dans la conf le logger "memory" pour pouvoir utiliser la debugbar.
-   * Deplacement des locales de jacl2db, du module jelix vers le module jacl2db
-   * Deplacement des locales de jacldb, du module jelix vers le module jacldb
-   * Les classes jPref ont été déplacées dans un nouveau module @@jpref@@.
+   * jDb : le driver sqlite3 n'est plus experimental et est stable
+   * jKVDb : nouveau plugin pour l'API dba
+   * Nouveaux modules :
+      * jsoap: Tout ce qui concerne Soap a été migré dans un nouveau module jsoap. Le module jWSDL a été fusionné avec jsoap. Les points d'entrées soap doivent être modifiés.
+      * jtcpdf: Le support PDF avec TCPDF et ses fontes, a été migré dans un nouveau module jtcpdf. Il est à télécharger en plus de Jelix (à cause de la taille des fichiers de fontes).
+      * jacl2: Toutes les resources de jAcl2 (classes, properties…) ont été déplacé dans le nouveau module jacl2
+      * jpref: les classes de jPref ont été déplacé dans ce nouveau module
+
+
+Mais aussi :
+
+   * Ajout d'une variable de template HEADTOP pour les templates des pages
+     d'erreurs et des pages HTML "basiques", et ajout de la possibilité
+     d'ajouter du contenu avant l'entête HTML dans la réponse HTML.
+   * Il est possible de [[services-web/soap#appeller-un-service-soap-avec-jelix|déclarer le "classmap"]]
+     pour @@C@jSoapClient@@, dans un fichier autre que celui des profils.
+   * jEvent : possibilité de [[events#desactiver-des-listeners|désactiver les listeners de certains modules]]
+   * Debugbar :
+       * [[deboggage#la-debug-barre|nouvelle option de configuration, @@defaultPosition@@]],
+         permettant d'afficher la debugbar à gauche ou à droite par défaut. de plus
+       * il n'est plus nécessaire d'activer manuellement dans la conf le logger
+         "memory" pour pouvoir utiliser la debugbar.
+       * affichage de la somme du temps passés par toutes les requêtes SQL
+   * jAcl2Db : nouvelle méthode @@getResByRightByGroup()@@ dans le dao jacl2rights
+   * jZone : les plugins metas n'étaient pas executés lorsque le contenu était en cache (bug #1197)
    * jConfigCompiler est maintenant extensible avec des plugins. Ainsi les
      composants et modules peuvent précalculer des valeurs de configurations si
      nécessaire, qui seront stockés alors dans le cache de la configuration.
-   * jDao : [[/daos/fichier_de_base#utiliser-une-classe-php-pour-les-enregistrements|il est possible de fournir sa propre classe record]] qui sera utilisée
-     comme classe de base pour la classe dao record générée. Le nouvel attribut
-     “extends” sur la balise “record” indique la classe à utiliser.
-   * jDao : un fichier DAO [[/daos/fichier_de_base#importation-de-dao|peut importer]] la
-     définition d'un autre DAO, afin de faire des DAOs semblables sans répéter les mêmes informations.
+   * jelix-scripts
+     * createdao: importation des commentaires de champs à partir de la base (mysql)  (Yves Tan)
+     * createform: les commentaires de propriétés dao peuvent être utilisées comme labels dans le formulaire généré (Yves Tan)
+   * jLocale : ajout de la possibilité d'utiliser un tiret dans les noms des locales
+   * Intégration de la [[https://github.com/jelix/FakeServerConf|bibliothèque FakeServerConf]] pour les tests
+   * Deplacement des locales de jacl2db, du module jelix vers le module jacl2db
+   * Deplacement des locales de jacldb, du module jelix vers le module jacldb
 
 Composants obsolètes :
 
@@ -56,3 +83,7 @@ Composants obsolètes :
    * Suppression de la prise en charge des variables obsolètes @@$gJCoord@@
      et @@$gJConfig@@ et de @@M@jApp::initLegacy()@@.
    * Suppression de l'option de configuration @@entrypointExtension@@
+
+Contributeurs à Jelix 1.5 : Claudio Bernardes (jForms),  Olivier Demah (corrections), Guillaume Dugas (jDao),
+Vincent Morel (jAcl2Db), Yves Tan (jelix-scripts, jDao), Brice Tencé (debugbar et corrections sur jZone),
+Philippe Villiers (jQuery upgrade)
