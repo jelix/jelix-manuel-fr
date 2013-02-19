@@ -8,23 +8,59 @@ l'objet @@C@jResponseHtml@@ ou @@C@jResponseBasicHtml@@. Voici un exemple :
    $rep = $this->getResponse('html');
 </code>
 
-===== Xhtml ou html =====
+===== HTML5 ou HTML4 =====
 
-jResponseHtml ou jResponseBasicHtml est utilisé pour renvoyer par défaut une
-réponse au format XHTML. Mais le HTML est possible, en l'indiquant via la
-méthode @@M@setXhtmlOutput()@@ :
+Depuis Jelix 1.5, @@C@jResponseHtml@@ génère un entête HTML5 plutôt que HTML4.
+Vous pourriez vouloir avoir du HTML4/XHTML1 comme dans les versions précédentes.
+Pour cela, vous devez utiliser la classe @@C@jResponseHtml4@@.
+
+Aussi, si vous avez [[reponse-generale-personnalisee|une classe de réponse personnalisée]]
+(ce qui est le cas par défaut dans les nouvelles applications), vous devez hériter
+de la classe @@C@jResponseHtml4@@ plutôt que @@C@jResponseHtml@@ :
 
 <code php>
-$rep->setXhtmlOutput(true);  // Réponse au format xhtml
-$rep->setXhtmlOutput(false); // Réponse au format html
+require_once (JELIX_LIB_CORE_PATH.'response/jResponseHtml4.class.php');
+
+class myHtmlResponse extends jResponseHtml4 {
+
+}
 </code>
 
-Par la suite, vous pouvez savoir si la réponse renverra du html ou du xhtml en
-appelant la méthode @@M@isXhtml()@@.
+Note: @@C@jResponseHtml4@@ hérite de @@C@jResponseHtml@@, donc dans la suite
+du manuel, toutes les fonctionnalités décrites pour @@C@jResponseHtml@@ sont
+valables pour @@C@jResponseHtml4@@, sauf mention contraire.
 
-Avec une réponse "html" (et non "basichtml"), vous pouvez aussi changer le
-doctype si vous le souhaitez, en surchargeant la méthode @@M@outputDoctype()@@,
-qui doit faire un echo du doctype souhaité.
+
+===== XHTML ou HTML =====
+
+Les classes @@C@jResponseHtml@@ et @@C@jResponseHtml4@@ ont un mode XHTML.
+D'ailleurs, @@C@jResponseHtml4@@ génère du XHTML par défaut, comme le fait
+depuis longtemps Jelix ( <= 1.4).
+
+La méthode @@M@setXhtmlOutput()@@ de ces deux classes permettent de basculer
+en mode XHTML ou HTML :
+
+<code php>
+// jResponseHtml
+$rep->setXhtmlOutput(true);  // Réponse au format XHTML 5
+$rep->setXhtmlOutput(false); // Réponse au format HTML 5 (par défaut)
+
+// jResponseHtml4
+$rep->setXhtmlOutput(true);  // Réponse au format XHTML 1.0 (par défaut)
+$rep->setXhtmlOutput(false); // Réponse au format HTML 4
+
+// connaitre le mode :
+$outputXhtml = $this->isXhtml();
+</code>
+
+Avec @@C@jResponseHtml@@ et @@C@jResponseHtml4@@, vous pouvez aussi changer le
+doctype, en surchargeant la méthode @@M@outputDoctype()@@, qui doit faire un
+echo du doctype souhaité.
+
+Le mode XHTML est utilisable également avec @@C@jResponseBasicHtml@@. Mais cela
+n'influencera que les entêtes HTTP, pas le contenu de la page web. Il faut
+que le template utilisé indique lui-même le DOCTYPE etc.
+
 
 ===== Renvoyer le contenu d'une page statique =====
 
@@ -50,8 +86,8 @@ et autres ressources statiques.
 Voici un exemple de fichier statique :
 
 <code html>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_US" lang="en_US">
+<!DOCTYPE html>
+<html lang="en_US">
   <head>
      <?php echo $HEADTOP; ?>
      <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
@@ -371,7 +407,7 @@ $rep->xhtmlContentType = true ;
 
 ===== Activer des plugins =====
 
-Depuis Jelix 1.3, les classes @@C@jResponseHtml@@ et @@C@jResponseBasicHtml@@
+Les classes @@C@jResponseHtml@@, @@C@jResponseHtml4@@ et @@C@jResponseBasicHtml@@
 ont un système de plugin. Ces plugins permettent d'enrichir ou agir
 automatiquement sur le contenu de toutes les pages HTML du site. C'est ainsi
 qu'il existe par exemple un plugin pour afficher une barre de debug, ou encore
