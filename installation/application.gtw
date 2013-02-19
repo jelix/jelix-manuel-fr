@@ -98,17 +98,17 @@ Si il y a un script @@F@testapp/install/installer.php@@, il s'agit alors d'un
 script à lancer en ligne de commande, et qui va installer l'application. Il vous
 faut au préalable renseigner vous même à la main les fichiers
 @@F@profiles.ini.php@@ et @@F@defaultconfig.ini.php@@. Lisez la documentation de
-l'application. Ensuite, en ligne de commande, vous taperez @@php.exe
-installer.php@@ en étant dans le répertoire @@F@testapp/install/@@.
+l'application. Ensuite, en ligne de commande, vous taperez @@php.exe installer.php@@
+en étant dans le répertoire @@F@testapp/install/@@.
 
 ==== Avec l'installateur de Jelix ====
 
 Si il n'y a ni wizard, ni script d'installation dédié, il faudra alors utiliser
 la commande @@installapp@@ de jelix-scripts. Comme précédemment, renseignez bien
 le contenu des fichiers @@F@profiles.ini.php@@ et @@F@defaultconfig.ini.php@@,
-et lancez en ligne de commande, dans le répertoire @@F@testapp/@@, @@php cmd.php
-installapp@@. Voir [[/jelix-scripts|le chapitre sur jelix-scripts]] pour plus de
-détails sur le fonctionnement de @@F@cmd.php@@
+et lancez en ligne de commande, dans le répertoire @@F@testapp/@@,
+@@php cmd.php installapp@@. Voir [[/jelix-scripts|le chapitre sur jelix-scripts]]
+pour plus de détails sur le fonctionnement de @@F@cmd.php@@
 
 Après l'une de ces manipulations, l'application devrait fonctionner
 correctement.
