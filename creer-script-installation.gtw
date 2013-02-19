@@ -249,8 +249,8 @@ et @@{label}@@, le label indiqué dans le nom de fichier du script.
 
 Puisque plusieurs scripts de mise à jour peuvent être exécutés pour le module,
 alors le nom de classe doit être différent (sinon PHP ne va pas aimer ça). C'est
-pourquoi nous utilisons un label, qui **doit être différent pour chaque script
-du module**. (Les développeurs Jelix pourraient utiliser le numéro de version au
+pourquoi nous utilisons un label, qui **doit être différent pour chaque script du module**.
+(Les développeurs Jelix pourraient utiliser le numéro de version au
 lieu d'un label, mais malheureusement, PHP n'aime pas les caractères comme "."
 ou "-" dans un nom de classe).
 
