@@ -46,7 +46,7 @@ Téléchargez [[http://download.jelix.org/jelix/nightly/1.5.x/jelix-manuel-1.5.p
      - section: [[controleurs/rest-full|Un contrôleur pour REST]]
      - section: [[utilisation-classes|Coder et utiliser des classes]]
    - chapter: [[vues/index|Générer du contenu avec les vues]]
-     - section: [[vues/vue-html|Générer une page HTML]]
+     - section: [[vues/vue-html|Générer une page HTML5]]
      - section: [[vues/vue-texte|Générer du texte brut]]
      - section: [[vues/vue-xml|Générer du XML quelconque]]
      - section: [[vues/vue-rss|Générer un flux de syndication RSS]]

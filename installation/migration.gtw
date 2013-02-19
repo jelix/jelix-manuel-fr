@@ -122,6 +122,8 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
         <jelix minversion="1.4" maxversion="1.5.*"/>
 </code>
 
+  * Les méthodes @@M@jCoordinator::isModuleEnabled()@@ and @@M@jCoordinator::getModulePath()@@ sont désormais obsolète,
+    elles ont été copiée dans @@jApp@@, il faut donc utiliser celle de jApp.
   * Dans vos pages statiques HTML (via jResponseBasicHtml) et page d'erreur statiques (error.en_US.php etc)
     la variable @@V@$basePath@@ doit être renommée en @@V@$BASEPATH@@. (Jelix 1.4.1)
 
