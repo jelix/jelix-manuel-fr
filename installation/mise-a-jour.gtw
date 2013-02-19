@@ -79,8 +79,8 @@ votre navigateur, et supprimez le fichier après la mise à jour.
 ==== Avec l'installateur d'application ====
 
 Si il y a un script @@F@install/installer.php@@, lancez le simplement: ouvrez
-une console, allez dans le répertoire @@F@install/@@, et ensuite tapez @@php.exe
-installer.php@@.
+une console, allez dans le répertoire @@F@install/@@, et ensuite tapez
+@@php.exe installer.php@@.
 
 ==== À la main ====
 
@@ -91,6 +91,5 @@ pour que l'application fonctionne.
 
 ===== Nettoyer le répertoire temp =====
 
-**Vous devez toujours supprimer tous les fichier stockés dans le répertoire
-temp/yourapp/.**, après une installation ou une mise à jour, et avant de lancer
-l'application application.
+**Vous devez toujours supprimer tous les fichier stockés dans le répertoire temp/yourapp/.**,
+après une installation ou une mise à jour, et avant de lancer l'application application.

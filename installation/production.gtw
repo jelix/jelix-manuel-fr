@@ -82,8 +82,9 @@ cache (les fichiers générés par Jelix pour les fichiers de configurations, le
 DAO, templates etc) est bien à jour par rapport aux fichiers de l'application. À
 priori, cette vérification est inutile en production, puisque l'application est
 rarement modifiée. Bien sûr, si vous la désactivez, il faudra **impérativement**
-vider le répertoire de cache (@@F@temp/votre_appli/@@) **à chaque mise à jour de
-votre application** , pour que vos modifications soient bien prises en compte !
+vider le répertoire de cache (@@F@temp/votre_appli/@@)
+**à chaque mise à jour de votre application** ,
+pour que vos modifications soient bien prises en compte !
 (surtout quand il s'agit de modifications dans la configuration, des daos,
 locales, templates..)
 
