@@ -6,7 +6,7 @@ Principales nouveautés apportées par la version 1.5 :
      Utilisation dans Jelix des fonctionnalités introduites par PHP 5.3, comme
      les fonctions anonymes, late static binding, les namespaces, la constante
      @@__DIR__@@ etc.
-   * l'objet de réponse HTML génère maintenant du HTML5. Une nouvelle classe
+   * l'objet de réponse HTML [[vues/vue-html|génère maintenant du HTML5]]. Une nouvelle classe
      jResponseHtml4 a le même comportement que l'ancienne version de
      jResponseHTML, à savoir la prise en charge de HTML4
    * jForms :
