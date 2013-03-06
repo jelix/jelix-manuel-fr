@@ -2,6 +2,16 @@
 
 Principales nouveautés apportées par la version 1.6 :
 
-   * Aucune pour le moment. Le développement n'a pas encore commencé ;-)
 
-Contributeurs à Jelix 1.6 :
+  * @@F@defaultconfig.ini.php@@ a été renommé en @@F@mainconfig.ini.php@@. @@F@defaultconfig.ini.php@@
+     est encore pris en charge mais est déprécié. (Olivier Demah)
+    **ATTENTION** : la documentation sur le sujet n'a pas été mise à jour
+  * Nouvelle méthode @@M@jApp::mainConfigFile()@@ pour récupérer le chemin de la configuration principale.
+  * jDbTools pour Oracle : utilisation des commentaires de colonnes pour générer les labels des formulaires (Philippe Villiers)
+  * jDao: ajout d'un paramètre "pattern" dans jDaoConditions, similaire aux attributs "(select|insert|update)pattern" (Philippe Villiers).
+  * Mise à jour de TCPDF
+
+Le développement n'est pas terminé. D'autres améliorations sont à venir ;-)
+
+
+Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers
