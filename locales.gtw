@@ -49,6 +49,19 @@ de ces sous-répertoires, il y a les fichiers properties correspondant à la lan
 Il peut y en avoir plusieurs, en particuliers, ils peuvent définir les mêmes
 chaînes mais pour des encodage différents.
 
+Les fichiers d'une même langue peuvent aussi être regroupé dans un même répertoire,
+en dehors des modules, afin de faciliter la traduction par des tiers. Le
+répertoire @@F@<yourapp>/var/locales/@@ doit contenir un répertoire par langue,
+et dans chacun de ces répertoires, un répertoire par module, c'est à dire
+@@F@<yourapp>/var/locales/<lang>/<modules>/locales/<fichier.properties>@@. Par exemple :
+@@F@myapp/var/locales/fr_FR/mon_module/locales/exemple.properties@@.
+On peut ainsi copier facilement un répertoire @@F@<yourapp>/var/locales/<lang>/@@
+d'une application à une autre, ou pour une autre langue.
+
+Il y a aussi la possibilité de redéfinir les fichiers properties en mettant une
+copie dans le répertoire @@F@<yourapp>/var/overloads/@@. Voir
+[surcharge-de-fichiers|le chapitre correspondant].
+
 ==== Noms des fichiers ====
 
 Le nom des fichiers properties est structuré comme suit : @@F@NAME.CHARSET.properties@@.

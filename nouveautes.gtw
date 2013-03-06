@@ -25,6 +25,8 @@ Principales nouveautés apportées par la version 1.5 :
       également été intégré dans les versions 1.2.10/1.3.4/1.4.1)
    * jDb : le driver sqlite3 n'est plus experimental et est stable
    * jKVDb : nouveau plugin pour l'API dba
+   * jLocale : il est possible de stocker tous les fichiers properties de l'application
+     pour une langue donnée [locales#fichiers-properties|dans un même répertoire] (Jelix 1.5.1)
    * Nouveaux modules :
       * jsoap: Tout ce qui concerne Soap a été migré dans un nouveau module jsoap. Le module jWSDL a été fusionné avec jsoap. Les points d'entrées soap doivent être modifiés.
       * jtcpdf: Le support PDF avec TCPDF et ses fontes, a été migré dans un nouveau module jtcpdf. Il est à télécharger en plus de Jelix (à cause de la taille des fichiers de fontes).
