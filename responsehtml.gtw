@@ -336,7 +336,8 @@ concaténé avec d'autres fichiers js.
 Les chemins des fichiers indiqués doivent être
    * soit relatifs au basePath (sans / au début)
    * soit des chemins absolus par rapport au domaine (démarrant donc par /)
-   * soit des urls complètes
+
+N'indiquez pas d'URLs complètes, elles sont automatiquement exclues.
 
 La dernière chose à faire est d'installer un script @@F@minify.php@@ dans
 @@F@www/@@. Copiez simplement le fichier
