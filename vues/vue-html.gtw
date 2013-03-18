@@ -374,7 +374,7 @@ Et vous pouvez appliquer les mêmes principes dans un template :
   {meta_html js  $j_jelixwww.'js/tooltip.js'}
 
   {* dans le www/ d'un module *}
-  {meta_htmlmodule css , 'mymodule', 'css/mystyles.css'}
+  {meta_htmlmodule css 'mymodule', 'css/mystyles.css'}
 
   {* lien vers une image *}  
   <img src="{jurl 'jelix~www:getfile', array('targetmodule=>'mymodule', 'file'=>'img/mypicture.png')}" />
