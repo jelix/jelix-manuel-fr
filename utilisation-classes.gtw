@@ -177,8 +177,9 @@ métiers. Mais pour cela, il faut inclure ces classes avant que jelix fasse un
 @@f@session_start()@@, pour que PHP puisse désérialiser correctement l'objet en
 session.
 
-Jelix fournit un moyen simple d'indiquer les classes à charger avant ce
-@@f@start_session()@@ : il suffit d'indiquer la liste des sélecteurs de ces
+Avant le système d'auto-chargement dans les modules (voir la section suivante)
+Jelix fournissait un moyen d'indiquer les classes à charger avant ce
+@@f@start_session()@@ : il suffisait d'indiquer la liste des sélecteurs de ces
 classes dans l'option @@V@loadClasses@@ de la section @@sessions@@ dans la
 configuration :
 
@@ -188,7 +189,11 @@ configuration :
 loadClasses = "mymodule~bar,mymodule~subdir/foo, shop~shoesProduct"
 </code>
 
-Note: le nom du module est obligatoire.
+Le nom du module est obligatoire.
+
+**Note: ce paramètre @@loadClasses@@ est désormais obsolète et vous devez plutôt**
+**déclarer les classes dans le fichier module.xml pour qu'elles soient autochargées.**
+Voir la suite.
 
 ===== Autoload =====
 
