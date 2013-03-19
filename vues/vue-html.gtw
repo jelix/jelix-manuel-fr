@@ -374,7 +374,7 @@ Et vous pouvez appliquer les mêmes principes dans un template :
   {meta_html js  $j_jelixwww.'js/tooltip.js'}
 
   {* dans le www/ d'un module *}
-  {meta_htmlmodule css , 'mymodule', 'css/mystyles.css'}
+  {meta_htmlmodule css 'mymodule', 'css/mystyles.css'}
 
   {* lien vers une image *}  
   <img src="{jurl 'jelix~www:getfile', array('targetmodule=>'mymodule', 'file'=>'img/mypicture.png')}" />
@@ -447,7 +447,7 @@ minifyJS = on
 minifyExcludeCSS = "file1.css,file2.css"
 
 ; liste des fichiers JS qui ne doivent pas être compressé
-minifyExcludeJS = "jquery.wymeditor.js"
+minifyExcludeJS = "jelix/wymeditor/jquery.wymeditor.js"
 
 ; chemin du point d'entrée de Minify, relatif au basePath
 minifyEntryPoint = minify.php
@@ -456,8 +456,14 @@ minifyEntryPoint = minify.php
 Tout d'abord, vous devez activer la compression en mettant @@minifyCSS@@ et/ou
 @@minifyJS@@ à "on". Vous pouvez indiquer de ne pas compresser certains fichiers
 en les listant dans @@minifyExcludeCSS@@ et/ou @@minifyExcludeJS@@. Gardez
-"jquery.wymeditor.js" dans @@minifyExcludeJS@@, car Wymeditor n'aime pas être
+"jelix/wymeditor/jquery.wymeditor.js" dans @@minifyExcludeJS@@, car Wymeditor n'aime pas être
 concaténé avec d'autres fichiers js.
+
+Les chemins des fichiers indiqués doivent être
+   * soit relatifs au basePath (sans / au début)
+   * soit des chemins absolus par rapport au domaine (démarrant donc par /)
+
+N'indiquez pas d'URLs complètes, elles sont automatiquement exclues.
 
 La dernière chose à faire est d'installer un script @@F@minify.php@@ dans
 @@F@www/@@. Copiez simplement le fichier
