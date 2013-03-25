@@ -61,7 +61,7 @@ contenant chacun des fichiers spécifiques. Voici les répertoires possibles :
 ; @@F@plugins/@@ : plugins pour les divers composants de Jelix (jDb, jTpl...)
 ; @@F@www/@@ : images, CSS, fichiers Javascripts. Ces fichiers peuvent être
                utilisés par un navigateur, en appelant un contrôleur spécifique du module "jelix"
-(comme indiqué sur la page [[vues/vue-html##ajouter-des-feuilles-de-styles-fichiers-javascript-images|Générer une page HTML5]])
+               (comme indiqué sur la page [[vues/vue-html#ajouter-des-feuilles-de-styles-fichiers-javascript-images|Générer une page HTML5]])
 ; @@F@tests/@@ : tests unitaires pour PHPUnit ou Simpletests.
 
 
