@@ -114,7 +114,6 @@ Mettez à jour les sources des modules tiers que vous avez installés, et qui so
 
 Et pour vos propres modules, vous devez adapter le code source en faisant les modifications suivantes :
 
-  * Rien pour le moment
   * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible
     avec Jelix 1.5 (changer l'attribut @@A@maxversion@@). Exemple :
 
@@ -135,6 +134,4 @@ pour savoir la liste des nouvelles classes et méthodes que vous pouvez utiliser
 
 Après toutes les modifications effectuées, vous devez lancer le script
 installer.php de votre application. Le module jelix fera le reste des
-modifications, en particulier :
-
-  * Rien pour le moment
+modifications.
