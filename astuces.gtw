@@ -27,11 +27,11 @@ jApp::coord()->action->toString();
 Jelix utilise par défaut les sessions PHP. Lorsque vous utilisez jAuth, cette
 classe utilise les informations définies dans la partie "record" du DAO de la
 table jelix_user et les enregistre dans une session PHP. Pour récupérer cette
-information il suffit de manipuler l'objet @@V@$_SESSION['JELIX_USER']@@ dont les
+information il suffit de manipuler l'objet @@V@jAuth::getUserSession()@@ dont les
 propriétés correspondent aux informations de l'utilisateur :
 
 <code php>
-$_SESSION['JELIX_USER']->login
+jAuth::getUserSession()->login
 </code>
 
 == DAO: Enregistrer la date courante ==
