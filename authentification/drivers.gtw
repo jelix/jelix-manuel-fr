@@ -59,7 +59,7 @@ Pour faire votre dao, vous pouvez aussi faire [[../daos/fichier_de_base#importat
 
 C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui
 fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit
-respecter [[refclass:auth/jIAuthDriverClass|l'interface jIAuthDriverClass]].
+respecter [[refclass:auth/jIAuthDriver|l'interface jIAuthDriver]].
 Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,
 comme n'importe quelle classe métier.
 
