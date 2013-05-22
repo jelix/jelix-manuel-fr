@@ -133,7 +133,7 @@ password_crypt_function = "md5"
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit respecter [[refclass:auth/jIAuthDriverClass|l'interface jIAuthDriverClass]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
+C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit respecter [[refclass:auth/jIAuthDriver|l'interface jIAuthDriver]]. Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,  comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 
