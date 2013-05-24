@@ -57,11 +57,13 @@ Pour faire votre dao, vous pouvez aussi faire [[../daos/fichier_de_base#importat
 
 ===== Class =====
 
-C'est un driver plus universel que celui de Db, dans la mesure où vous devez lui
-fournir une classe, dans laquelle vous faîtes ce que vous voulez. Elle doit
-respecter [[refclass:auth/jIAuthDriverClass|l'interface jIAuthDriverClass]].
-Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules,
-comme n'importe quelle classe métier.
+
+C'est un driver qui permet d'utiliser une classe que vous aurez développé et dans laquelle vous faîtes ce que vous voulez.
+Elle doit respecter [[refclass:auth_driver/jIAuthDriverClass|l'interface jIAuthDriverClass]]. Cette interface est un peu moins
+complexe que l'interface d'un driver pour jauth. Cependant elle pourrait être trop limitative, préférez alors développer un
+driver complet (voir plus bas).
+
+Cette classe doit être stockée dans le répertoire "classes" d'un de vos modules, comme n'importe quelle classe métier.
 
 Dans la configuration du plugin jauth, vous devez mettre :
 
@@ -76,9 +78,10 @@ password_crypt_function = "sha1"
 
 ===== LDS/MDS =====
 
-C'est un driver qui repose sur un serveur MDS ([[http://mds.mandriva.org/]]),
-anciennement appelé LDS. Il appelle l'API xml-rpc d'un serveur MDS. La
-configuration que vous devez indiquer doit donc être celle-ci :
+C'est un driver qui repose sur un serveur LDS, projet qui a changé de nom depuis : [[http://projects.mandriva.org/projects/mmc/wiki/Start#Mandriva-Directory-Server-Identities-and-network-services-management|MDS]]
+(Mandriva Directory Server). Notez que ce driver LDS n'a pas été testé avec les versions récentes de MDS.
+
+Ce driver appelle l'API xml-rpc d'un serveur MDS. La configuration que vous devez indiquer doit donc être celle-ci :
 
 <code ini>
 
