@@ -11,12 +11,12 @@ ces étapes à faire :
   * adapter votre code en suivant les instructions indiquées pour chaque
     ancienne version de Jelix. Voir ci-dessous.
 
-===== Mettre à jour depuis Jelix 1.3 et inférieur =====
+===== Mettre à jour depuis Jelix 1.4 et inférieur =====
 
 Suivez les indications de migration de chaque version intermédiaire (voir les
-manuels correspondant), avant de mettre à jour pour jelix 1.4.
+manuels correspondant), avant de mettre à jour pour jelix 1.6.
 
-===== Mettre à jour depuis Jelix 1.4.x =====
+===== Mettre à jour depuis Jelix 1.5.x =====
 
 Voici les instructions à suivre dans l'ordre.
 
@@ -33,101 +33,23 @@ Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votr
 
 ==== Modifications générales ====
 
-==== À propos de jAcl2 ====
-
-La classe jAcl2 a été déplacée dans un nouveau module jacl2. Vous devez l'activer :
-
-<code ini>
-   [modules]
-   jacl2.access=1
-</code>
-
-L'installateur de jelix changera d'autres choses automatiquement.
-N'hésitez pas à déclarer la dépendance à ce module dans vos modules qui utilisent jAcl2.
-
-==== À propos de jPref ====
-
-La classe jPref a été déplacée dans un nouveau module jpref. Vous devez
-l'activer si vous utilisez jPref :
-
-<code ini>
-   [modules]
-   jpref.access=1
-</code>
-
-N'hésitez pas à déclarer la dépendance à ce module dans vos modules qui l'utilisent.
-
-
-==== Support de PDF avec TCPDF ====
-
-TCPDF, ses fontes, l'objet réponse @@C@jResponseTcpdf@@ et la classe
-@@C@jTcpdf@@ ont été intégré dans un module séparé. Si votre application utilise
-ces objets, il faut installer ce nouveau module jtcpdf, disponible en
-téléchargement. Il n'y a en principe rien à faire d'autre, sauf à changer les
-chemins d'inclusions si vous avez fait des classes héritant de
-@@C@jResponseTcpdf@@.
-
-==== Support de SOAP ====
-
-Si vous utilisez les fonctionnalités SOAP de Jelix (points d'entrée, jWSDL...),
-vous devez faire les changements suivants :
-
-  * Dans la configuration, vous devez enlever l'activation du module jWSDL
-    puisqu'il n'existe plus, et activer le module jsoap:
- 
-<code ini>
-   [modules]
-   jWSDL.access=2  ; <- enlever cette ligne
-   jsoap.access=2 ; <- ajouter cette ligne
-</code>
-
-  * Dans votre soap.php (ou autre points d'entrées pour soap), vous devez changer
-    leur contenu comme ceci:
-
-<code php>
-require_once ('../application.init.php');
-
-checkAppOpened();
-
-jApp::loadConfig('soap/config.ini');
-ini_set("soap.wsdl_cache_enabled", "0");
-
-jClasses::inc('jsoap~jSoapCoordinator');
-jClasses::inc('jsoap~jSoapRequest');
-
-$jelix = new jSoapCoordinator();
-jApp::setCoord($jelix);
-$jelix->request = new jSoapRequest();
-$jelix->request->initService();
-$jelix->processSoap();
-</code>
-
-   * Si vous générez des liens pour jWSDL, changez dans les selecteurs les noms
-   de module "jWSDL" en "soap".
-   * Reconfigurez tout vos clients soap qui interroge votre application, pour
-     changer l'url du WSDL
-
 
 ==== Mise à jour des modules ====
 
-Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.5.
+Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.6.
 
 Et pour vos propres modules, vous devez adapter le code source en faisant les modifications suivantes :
 
   * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible
-    avec Jelix 1.5 (changer l'attribut @@A@maxversion@@). Exemple :
+    avec Jelix 1.6 (changer l'attribut @@A@maxversion@@). Exemple :
 
 <code xml>
-        <jelix minversion="1.4" maxversion="1.5.*"/>
+        <jelix minversion="1.5" maxversion="1.6.*"/>
 </code>
 
-  * Les méthodes @@M@jCoordinator::isModuleEnabled()@@ and @@M@jCoordinator::getModulePath()@@ sont désormais obsolète,
-    elles ont été copiée dans @@jApp@@, il faut donc utiliser celle de jApp.
-  * Dans vos pages statiques HTML (via jResponseBasicHtml) et page d'erreur statiques (error.en_US.php etc)
-    la variable @@V@$basePath@@ doit être renommée en @@V@$BASEPATH@@. (Jelix 1.4.1)
 
-Lisez [[http://jelix.org/articles/en/changelog/1.5|la liste détaillée des changements]]
-pour savoir la liste des nouvelles classes et méthodes que vous pouvez utiliser. 
+Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
+classes et méthodes que vous pouvez utiliser.
 
 
 ==== Mise à jour de Jelix ====
