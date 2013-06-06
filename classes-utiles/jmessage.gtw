@@ -57,6 +57,8 @@ le template ci-dessus donnera le fragment de html suivant :
   </ul>
 </html>
 
+À noter que Jelix fournit des styles par défaut pour les types de messages prédéfinis @@error@@, @@warning@@, @@notice@@ et @@ok@@ dans le module @@master_admin@@.
+
 Une autre option est d'utiliser la méthode statique @@M@jMessage::get@@ pour
 récupérer les messages dans un contrôleur.
 
