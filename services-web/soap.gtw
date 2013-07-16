@@ -34,7 +34,7 @@ require_once ('../application.init.php');
 
 checkAppOpened();
 
-jApp::loadConfig('soap/config.ini');
+jApp::loadConfig('soap/config.ini.php');
 ini_set("soap.wsdl_cache_enabled", "0");
 
 jClasses::inc('jsoap~jSoapCoordinator');
