@@ -103,7 +103,7 @@ $jelix->processSoap();
 </code>
 
    * Si vous générez des liens pour jWSDL, changez dans les selecteurs les noms
-   de module "jWSDL" en "soap".
+   de module "jWSDL" en "jsoap".
    * Reconfigurez tout vos clients soap qui interroge votre application, pour
      changer l'url du WSDL
 
