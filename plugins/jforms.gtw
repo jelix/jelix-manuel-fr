@@ -46,8 +46,8 @@ Ensuite :
 
   * Créez un répertoire "monhtml" dans le répertoire "formbuilder" d'un dépôt de plugins.
   * Créez un fichier @@F@monhtml.formbuilder.php@@
-  * Dans ce fichier, créez une classe @@C@htmlFormBuilder@@ qui hérite de @@C@\\jelix\\forms\\Builder\\BuilderBase@@
-    ou de @@C@\\jelix\\forms\\Builder\\HtmlBuilder@@ si vous faites un formulaire HTML similaire à
+  * Dans ce fichier, créez une classe @@C@htmlFormBuilder@@ qui hérite de @@C@\jelix\forms\Builder\BuilderBase@@
+    ou de @@C@\jelix\forms\Builder\HtmlBuilder@@ si vous faites un formulaire HTML similaire à
     ce que génère le générateur HTML par défaut de Jelix.
 
 Dans cette classe, vous devez implémenter les méthodes qui suivent. Ces méthodes
