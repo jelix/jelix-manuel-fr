@@ -7,11 +7,16 @@ Principales nouveautés apportées par la version 1.6 :
      est encore pris en charge mais est déprécié. (Olivier Demah)
     **ATTENTION** : la documentation sur le sujet n'a pas été mise à jour
   * Nouvelle méthode @@M@jApp::mainConfigFile()@@ pour récupérer le chemin de la configuration principale.
+  * Support complet de l'API oci dans le plugin oci pour jDb (Philippe Villiers)
   * jDbTools pour Oracle : utilisation des commentaires de colonnes pour générer les labels des formulaires (Philippe Villiers)
   * jDao: ajout d'un paramètre "pattern" dans jDaoConditions, similaire aux attributs "(select|insert|update)pattern" (Philippe Villiers).
+  * Ajout des méthodes @@M@addJSLinkModule()@@ et @@M@addCSSLinkModule@@ sur l'objet réponse html pour ajouter facilement des
+    liens vers des fichiers JS et CSS situés dans des modules. (Eric D.)
+  * Les objets jEvent ont maintenant des setters/getters: il est possible de faire @@$event->something@@ plutôt que @@$event->getParam('something')@@.
+  * @@jDateTime::toString()@@ accepte maintenant une chaine de formatage en paramètre, compatible avec @@mktime()@@.
   * Mise à jour de TCPDF
 
 Le développement n'est pas terminé. D'autres améliorations sont à venir ;-)
 
 
-Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers
+Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D.
