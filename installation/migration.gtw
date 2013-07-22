@@ -28,11 +28,24 @@ Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers d
 
 Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votreapp/@@.
 
-==== Suppression de fichiers ====
+==== Suppression ou renommage de fichiers ====
 
+* Renommez votre fichier @@F@var/config/defaultconfig.ini.php@@ en @@F@var/config/mainconfig.ini.php@@.
 
 ==== Modifications générales ====
 
+
+=== à propos de jForms ===
+
+Si vous avez développé un plugin "widget" ou "builder" pour jForms, vous devez vérifier
+que votre implémentation contiennent ces modifications:
+
+* Nouveau paramètre de boolean sur @@\jelix\forms\Builder\BuilderBase::outputControlLabel()@@
+* Nouveau paramètre de boolean sur @@\jelix\forms\HtmlWidget\WidgetInterface::outputLabel()@@
+
+Des améliorations ont été faites sur l'affichage des données de formulaires (avec les plugins @@ctrl_value@@ ou @@formdatafull@@).
+Vérifiez que vos formulaires s'affichent comme vous le souhaitez, et corrigez vos templates ou css le cas échéant.
+Notament, les contrôles de type @@group@@ ou @@choice@@ affichent maintenant correctement leur contenu.
 
 ==== Mise à jour des modules ====
 
