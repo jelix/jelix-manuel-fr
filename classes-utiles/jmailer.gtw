@@ -167,5 +167,5 @@ $mail->Send();
 
 jMailer utilise comme base PHPMailer, si vous voulez avoir d'avantage de
 documentation, consultez
-l'[[http://phpmailer.worxware.com/index.php?pg=methods|aide en ligne de
+[[http://phpmailer.worxware.com/index.php?pg=methods|l'aide en ligne de
 PHPMailer]].
