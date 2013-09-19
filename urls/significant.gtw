@@ -344,7 +344,7 @@ class myHandlerUrlsHandler implements jIUrlSignificantHandler {
 Le nom de la classe doit commencer par un préfixe que vous voulez et se terminer
 par ''UrlsHandler''. La classe sera stockée dans le répertoire @@F@classes/@@ du
 module indiqué dans la balise @@E@url@@, sous le nom ''prefixe''.urlhandler.php.
-Pour notre exemple, cela sera @@myhandler.urlhandler.php@@.
+Pour notre exemple, cela sera @@myHandler.urlhandler.php@@.
 
 La méthode @@M@parse()@@ est chargée d'analyser une URL (objet @@C@jUrl@@ que
 vous recevez en paramètre), en l'occurence, l'URL demandée dans l'application.
