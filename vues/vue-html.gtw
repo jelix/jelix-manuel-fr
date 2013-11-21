@@ -233,7 +233,7 @@ Le contenu généré par le moteur de template sera intégré entre les balises
 @@E@<body>@@ et @@E@</body>@@.
 
 Pour en savoir plus sur l'utilisation des templates, consultez le
-[[templates|chapitre sur les templates]].
+[[/templates|chapitre sur les templates]].
 
 Il se peut que vous ayez besoin d'ajouter du contenu en plus de celui produit
 par le template. Pour cela vous utiliserez la méthode @@M@addContent()@@. Elle
@@ -380,7 +380,7 @@ Et vous pouvez appliquer les mêmes principes dans un template :
   <img src="{jurl 'jelix~www:getfile', array('targetmodule=>'mymodule', 'file'=>'img/mypicture.png')}" />
 </code>
 
-Voyez le chapitre sur les templates pour en savoir plus.
+Voyez le [[/templates|chapitre sur les templates]] pour en savoir plus.
 
 ===== Autres paramètres pour les réponses html et basichtml =====
 
