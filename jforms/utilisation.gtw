@@ -208,9 +208,13 @@ des choix dans votre contrôleur, des manières suivantes.
 <code php>
    // récupérez vos données dans un tableau associatif,
    $data = array(...);
-
+   
+   // on crée un objet implémenté via l'interface jIFormsDatasource2
+   $datasource = new jFormsStaticDatasource();
+   $datasource->data = $data
+   
    // on récupère le contrôle et on lui indique les données
-   $form->getControl('nom_du_control')->datasource->data = $data;
+   $form->getControl('nom_du_control')->datasource = $datasource;
 </code>
 
 @@V@$data@@ est un tableau dont les clés sont les valeurs des choix, et les
