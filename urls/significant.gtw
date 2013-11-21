@@ -237,7 +237,7 @@ par ''UrlsHandler''. La classe sera stockée dans le répertoire @@F@classes/@@ 
 module indiqué dans la balise @@E@url@@, sous le nom ''prefixe''.urlhandler.php.
 Pour notre exemple :
 
-  myhandler.urlhandler.php
+  myHandler.urlhandler.php
 
 La méthode @@M@parse()@@ est chargée d'analyser une URL (objet @@C@jUrl@@ que
 vous recevez en paramètre), en l'occurence, l'URL demandée dans l'application.
