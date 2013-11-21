@@ -10,8 +10,7 @@ d'une table, etc. Elle s'accompagne des classes @@C@jDbtable@@ et
 Ces classes sont pour le moment assez expérimentales, et tous les drivers ne
 sont pas supportés.
 
-Vous pouvez récupérer un objet @@C@jDbSchema@@ en appelant la méthode @@M@schema
-()@@ d'un objet @@C@jDbConnection@@.
+Vous pouvez récupérer un objet @@C@jDbSchema@@ en appelant la méthode @@M@schema()@@ d'un objet @@C@jDbConnection@@.
 
 Voir la documentation de réference.
 
