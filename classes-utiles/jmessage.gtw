@@ -51,11 +51,11 @@ Exemple :
 
 le template ci-dessus donnera le fragment de html suivant :
 
-<html>
+<code html>
   <ul class="jelix-msg">
    <li class="jelix-msg-item-default">identification échouée : mot de passe incorrect</li>
   </ul>
-</html>
+</code>
 
 À noter que Jelix fournit des styles par défaut pour les types de messages prédéfinis @@error@@, @@warning@@, @@notice@@ et @@ok@@ dans le module @@master_admin@@.
 
