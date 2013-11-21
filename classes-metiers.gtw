@@ -71,7 +71,7 @@ Exemple :
 
 @@C@jClasses@@ fournit la méthode statique @@M@incIFace@@ pour inclure des interfaces PHP définies dans le dossier @@F@classes@@ d'un module.
 
-Une interface doit être définie avec la syntaxe PHP (mot clé @@interface@@) dans un fichier à son nom suivi du suffixe @@.iface.php@@. Par exemple, on peut déclarer l'interface @@C@@IStockUtil@@ dans un fichier @@F@IStockUtil.iface.php@@ dans un sous dossier @@F@interfaces/@@ du dossier @@F@classes/@@ :
+Une interface doit être définie avec la syntaxe PHP (mot clé @@interface@@) dans un fichier à son nom suivi du suffixe @@.iface.php@@. Par exemple, on peut déclarer l'interface @@C@IStockUtil@@ dans un fichier @@F@IStockUtil.iface.php@@ dans un sous dossier @@F@interfaces/@@ du dossier @@F@classes/@@ :
 
 <code php><?php
 interface IStockUtil {

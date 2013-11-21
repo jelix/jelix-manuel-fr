@@ -41,11 +41,11 @@ Exemple :
 </code>
 
 le template ci-dessus donnera le fragment de html suivant :
-<html>
+<code html>
   <ul class="jelix-msg">
    <li class="jelix-msg-item-default">identification échouée : mot de passe incorrect</li>
   </ul>
-</html>
+</code>
 
 Une autre option est d'utiliser la méthode statique @@M@jMessage::get@@ pour récupérer les messages dans un contrôleur.
 
