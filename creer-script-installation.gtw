@@ -92,7 +92,7 @@ class newsModuleInstaller extends jInstallerModule {
     function install() {
     }
 
-    function preInstall() {
+    function postInstall() {
 
     }
 
