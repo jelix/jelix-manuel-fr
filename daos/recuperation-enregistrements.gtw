@@ -280,12 +280,11 @@ répertoire @@F@daos/@@ de votre module, et doit être défini de la manière su
 
   * l' enregistrement doit être déclaré via une classe abstraite
   * le nom de cette classe est le nom de l'enregistrement suivi du mot "DaoRecord"
-  * la classe doit hériter de la classe @@C@cDaoUserRecord_mymodule_Jx_mydao_Jx@@ avec module et dao correspondant au dao de l'enregistrement en question
 
 <code php>
 // fichier mymodule/daos/myrecord.daorecord.php
 
-abstract class myrecordDaoRecord extends cDaoUserRecord_mymodule_Jx_mydao_Jx {
+abstract class myrecordDaoRecord {
     function methode1() {
       ...
     }
