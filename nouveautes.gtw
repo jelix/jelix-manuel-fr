@@ -6,20 +6,38 @@ Principales nouveautés apportées par la version 1.6 :
   * @@F@defaultconfig.ini.php@@ a été renommé en @@F@mainconfig.ini.php@@. @@F@defaultconfig.ini.php@@
      est encore pris en charge mais est déprécié. (Olivier Demah)
     **ATTENTION** : la documentation sur le sujet n'a pas été mise à jour
+  * Les plugins fournis par l'application sont maintenant prioritaires sur les plugins de jelix.
+    On peut donc fournir un plugin de même nom pour remplacer un par défaut. (Khena)
   * Nouvelle méthode @@M@jApp::mainConfigFile()@@ pour récupérer le chemin de la configuration principale.
   * jDb/jDao:
       * Support complet de l'API oci dans le plugin oci pour jDb (Philippe Villiers)
       * jDbTools pour Oracle : utilisation des commentaires de colonnes pour générer les labels des formulaires (Philippe Villiers)
       * jDao: ajout d'un paramètre "pattern" dans jDaoConditions, similaire aux attributs "(select|insert|update)pattern" (Philippe Villiers).
+      * nouvelle méthode @@jDbConnection::disconnect()@@
   * Ajout des méthodes @@M@addJSLinkModule()@@ et @@M@addCSSLinkModule@@ sur l'objet réponse html pour ajouter facilement des
     liens vers des fichiers JS et CSS situés dans des modules. (Eric D.)
   * jForms:
-     * amélioration de l'affichage des données seules d'un formulaire
+     * amélioration de l'affichage des données seules d'un formulaire (avec @@ctrl_value@@ ou @@formdatafull@@):
+        * les labels sont affichés comme en mode édition
+        * @@ctrl_label@@ n'affiche plus l'indicateur "required"
+        * amélioration de l'affichage des contrôles @@<choice>@@ et @@<group>@@ 
+        * Ajout d'un booléen en paramètre de @@\jelix\forms\Builder\BuilderBase::outputControlLabel()@@
+          et @@\jelix\forms\HtmlWidget\WidgetInterface::outputLabel()@@
+        * le plugin @@formdatafull@@ accepte maintenant le nom d'un builder jForms et ses options
+     * possibilité d'avoir un label spécifique quand la valeur d'un champs est vide (@@emptyvaluelabel@@)
+     * le plugin @@formdata@@ accepte en paramètre le nom d'un builder jForms et ses options
+     * Il est possible d'indiqué les labels correspondant aux valeurs d'une checkbox
+        ex: @@<oncheckvalue label="yes" />@@ et @@<onuncheckvalue label="no" />@@
+     * plugin @@ctrl_label@@ : on peut indiquer en deuxième paramètre une chaîne de formatage pour sprintf
   * Les objets jEvent ont maintenant des setters/getters: il est possible de faire @@$event->something@@ plutôt que @@$event->getParam('something')@@.
   * @@jDateTime::toString()@@ accepte maintenant une chaine de formatage en paramètre, compatible avec @@mktime()@@.
+  * nouvelle propriété @@jResponseJSON::$options@@ qui contient les options pour @@json_encode@@ (Couac)
+  * Interne: nouvelle méthode @@jFile::parseJelixPath()@@ permettant de traduire les raccourcis jelix en chemin complet (Brice)
+  * Urls significatives : on peut maintenant avoir un caractère ":" dans l'url que l'on définit. 
   * Mise à jour de TCPDF
+  * Mise à jour de jQuery 1.10.2 et jQueryUI 1.9.1
 
-Le développement n'est pas terminé. D'autres améliorations sont à venir ;-)
 
+Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
-Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D.
+Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D., Couac, Brice Tence, Khena.
