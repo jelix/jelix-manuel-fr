@@ -11,12 +11,12 @@ ces étapes à faire :
   * adapter votre code en suivant les instructions indiquées pour chaque
     ancienne version de Jelix. Voir ci-dessous.
 
-===== Mettre à jour depuis Jelix 1.4 et inférieur =====
+===== Mettre à jour depuis Jelix 1.5 et inférieur =====
 
 Suivez les indications de migration de chaque version intermédiaire (voir les
-manuels correspondant), avant de mettre à jour pour jelix 1.6.
+manuels correspondant), avant de mettre à jour pour jelix 1.7.
 
-===== Mettre à jour depuis Jelix 1.5.x =====
+===== Mettre à jour depuis Jelix 1.6.x =====
 
 Voici les instructions à suivre dans l'ordre.
 
@@ -28,36 +28,20 @@ Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers d
 
 Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votreapp/@@.
 
-==== Suppression ou renommage de fichiers ====
-
-* Renommez votre fichier @@F@var/config/defaultconfig.ini.php@@ en @@F@var/config/mainconfig.ini.php@@.
-
 ==== Modifications générales ====
 
 
-=== à propos de jForms ===
-
-Si vous avez développé un plugin "widget" ou "builder" pour jForms, vous devez vérifier
-que votre implémentation contiennent ces modifications:
-
-* Nouveau paramètre de boolean sur @@\jelix\forms\Builder\BuilderBase::outputControlLabel()@@
-* Nouveau paramètre de boolean sur @@\jelix\forms\HtmlWidget\WidgetInterface::outputLabel()@@
-
-Des améliorations ont été faites sur l'affichage des données de formulaires (avec les plugins @@ctrl_value@@ ou @@formdatafull@@).
-Vérifiez que vos formulaires s'affichent comme vous le souhaitez, et corrigez vos templates ou css le cas échéant.
-Notament, les contrôles de type @@group@@ ou @@choice@@ affichent maintenant correctement leur contenu.
-
 ==== Mise à jour des modules ====
 
-Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.6.
+Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.7.
 
 Et pour vos propres modules, vous devez adapter le code source en faisant les modifications suivantes :
 
   * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible
-    avec Jelix 1.6 (changer l'attribut @@A@maxversion@@). Exemple :
+    avec Jelix 1.7 (changer l'attribut @@A@maxversion@@). Exemple :
 
 <code xml>
-        <jelix minversion="1.5" maxversion="1.6.*"/>
+        <jelix minversion="1.5" maxversion="1.7.*"/>
 </code>
 
 
