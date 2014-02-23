@@ -65,6 +65,16 @@ On peut indiquer une [[/locales|locale]] plutôt qu'une chaine "en dur" :
   </input>
 </code>
 
+Il est aussi possible d'indiquer un libellé alternatif quand la valeur du champs
+est vide (surtout utile quand il s'agit d'afficher uniquement les données d'un formulaire)
+
+<code xml>
+  <input ref="nom">
+    <label>Votre nom</label>
+    <emptyvaluelabel>Pas de nom<emptyvaluelabel>
+  </input>
+</code>
+
 ==== Saisie obligatoire ====
 
 Pour rendre la saisie obligatoire sur un champ de saisie, il faut mettre
@@ -389,6 +399,21 @@ donc par défaut, respectivement 1 et 0). Exemple :
 Notez que lorsque vous afficherez un formulaire pré-rempli, la case sera cochée
 ou non en fonction de la valeur initiale, selon que celle-ci corresponde à la
 valeur de @@A@valueoncheck@@ ou de @@A@valueonuncheck@@.
+
+Pour afficher la valeur d'une case à cocher lors de l'affichage des données seules d'un
+formulaire, il est souvent préférable d'afficher un libellé corrspondant. Utilisez alors
+les elements @@E@<oncheckvalue>@@ et @@E@<onuncheckvalue>@@.
+
+<code xml>
+  <checkbox ref="souvenir" valueoncheck="O" valueonuncheck="N">
+     <label>Se souvenir de moi</label>
+     <help>Cochez cette case si vous voulez être identifier automatiquement la prochaine fois</help>
+     <oncheckvalue label="Oui" />
+     <onuncheckvalue label="Non" />
+  </checkbox>
+</code>
+
+
 
 ==== Liste de cases à cocher ====
 

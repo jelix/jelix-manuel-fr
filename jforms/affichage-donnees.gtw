@@ -41,8 +41,8 @@ Comme pour [[/jforms/affichage|l'affichage du formulaire]], il est possible de
 mieux contrôler l'affichage, en particulier les balises générées, et donc de
 pouvoir définir les endroits où les champs seront placés.
 
-Vous pouvez utiliser les plugins {formcontrols} et {ctrl_label} que vous
-connaissez déjà, ainsi que {ctrl_value} :
+Vous pouvez utiliser les plugins @@{formcontrols}@@ et @@{ctrl_label}@@ que vous
+connaissez déjà, ainsi que @@{ctrl_value}@@ à utiliser à la place de @@{ctrl_control}@@ :
 
 <code html>
    <h1>Le formulaire</h1>
@@ -58,14 +58,13 @@ connaissez déjà, ainsi que {ctrl_value} :
     </table>
 </code>
 
-Notez que vous n'avez pas besoin d'utiliser le plugin //{form}//.
+Notez que vous n'avez pas besoin d'utiliser le plugin @@{form}@@.
 
-Il est possible aussi de ne pas utiliser la boucle {formcontrols}, afin
+Il est possible aussi de ne pas utiliser la boucle @@{formcontrols}@@, afin
 d'afficher les valeurs où on veut et dans l'ordre que l'on souhaite, avec
-toujours les plugins //{ctrl_label}// et //{ctrl_value}// en leur indiquant le
+toujours les plugins @@{ctrl_label}@@ et @@{ctrl_value}@@ en leur indiquant le
 nom du contrôle à afficher. Mais il faut alors les utiliser à l'intérieur d'un
-plugin {formdata} (disponible depuis la 1.0.1, sinon utilisez le plugin form
-dans les versions précédentes, même si c'est moins adapté).
+plugin @@{formdata}@@.
 
 
 <code html>
@@ -85,3 +84,6 @@ dans les versions précédentes, même si c'est moins adapté).
     {/formdata}
     </table>
 </code>
+
+@@{ctrl_value}@@ peut accepter un paramètre additionnel, qui doit être un chaîne permettant
+de formater la valeur. Le formattage est fait par la fonction @@sprintf@@.
