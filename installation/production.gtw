@@ -52,7 +52,7 @@ performances de votre application.
 
 Voici quelques conseils au niveau de la configuration de l'application, donc les
 modifications à faire au niveau du fichier
-@@F@var/config/defaultconfig.ini.php@@ .
+@@F@var/config/mainconfig.ini.php@@ .
 
 === section jResponseHtml ===
 

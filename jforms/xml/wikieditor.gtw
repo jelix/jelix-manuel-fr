@@ -6,7 +6,9 @@ mise en forme de son texte.
 pour cela [[http://markitup.jaysalvat.com/home/|MarkItUp]] a été intégré.
 
 ===== Configuration de l'éditeur =====
-dans defaultconfig.ini.php on ajoutera :
+
+Dans @@F@mainconfig.ini.php@@ on ajoutera :
+
 <code>
 [wikieditors]
 default.engine.name = wr3
@@ -29,10 +31,10 @@ où :
   * **default.image.path** est le chemin vers les images des boutons
   * **default.skin** est le chemin vers la CSS habillant le textarea
 
-**default.config.path** pourrait avoir pour valeur tout type de //sets//
-supporté par MarkitUp, tel bbcode, dotclear etc... et pour les utiliser on les
+@@default.config.path@@ pourrait avoir pour valeur tout type de //sets//
+supporté par MarkitUp, tel bbcode, dotclear etc. Et pour les utiliser on les
 ajouterait dans le path de son choix et indiquerait ce path dans
-defaultconfig.ini.php.
+@@F@mainconfig.ini.php@@.
 
 Voici un exemple (un peu farfelue car la régles de transformation
 bbcode_to_xhtml n'existe pas, mais vous pourriez vous le créer.) :
@@ -56,13 +58,13 @@ vous téléchargez le "set" bbcode depuis le site markitup et l'installez et le 
 ===== Configuration jForms =====
 
 
-Donc pour ajouter un éditeur wiki à son formulaire on notera dans son fichier .form.xml :
+Donc pour ajouter un éditeur wiki à son formulaire on notera dans son fichier @@F@*.form.xml@@ :
 
 <code xml>
 <wikieditor ref="message" config="default" required="true">
 </code>
 où : 
   * **ref** est le nom du champ ici //message//
-  * **config** est le nom de la configuration utilisée dans defaultconfig.ini.php
+  * **config** est le nom de la configuration utilisée dans @@F@mainconfig.ini.php@@
   * **required** dans le cas où l'on souhaite obliger la saisie du champ "message"
 

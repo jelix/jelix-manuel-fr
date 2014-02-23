@@ -2,10 +2,8 @@
 
 Principales nouveautés apportées par la version 1.6 :
 
-
   * @@F@defaultconfig.ini.php@@ a été renommé en @@F@mainconfig.ini.php@@. @@F@defaultconfig.ini.php@@
      est encore pris en charge mais est déprécié. (Olivier Demah)
-    **ATTENTION** : la documentation sur le sujet n'a pas été mise à jour
   * Les plugins fournis par l'application sont maintenant prioritaires sur les plugins de jelix.
     On peut donc fournir un plugin de même nom pour remplacer un par défaut. (Khena)
   * Nouvelle méthode @@M@jApp::mainConfigFile()@@ pour récupérer le chemin de la configuration principale.

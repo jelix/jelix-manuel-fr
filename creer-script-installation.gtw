@@ -139,7 +139,7 @@ est appelé pour chaque point d'entrée (voir plus haut).
 Vous avez aussi la méthode @@M@firstConfExec@@ pour savoir si il y a déjà des
 changements dans le fichier de configuration courant (certains points d'entrée
 peuvent partager le même fichier de configuration, autre que
-@@defaultconfig.ini.php@@). Si elle retourne vrai, vous avez alors accès au
+@@mainconfig.ini.php@@). Si elle retourne vrai, vous avez alors accès au
 fichier de configuration en récupérant la propriété @@P@config@@ , qui est un
 objet @@C@jIniMultifilesModifier@@.
 

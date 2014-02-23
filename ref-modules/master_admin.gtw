@@ -19,8 +19,8 @@ Si l'administration a un point d'entrée spécifique, comme admin.php par défau
 vous devez indiquer dans la configuration que ce module est accessible
 uniquement via ce point d'entrée.
 
-Pour ce faire, dans la configuration (à la fois dans defaultconfig.ini.php et
-dans admin/config.ini.php), dans la section @@simple_urlengine_entrypoints@@, au
+Pour ce faire, dans la configuration (à la fois dans @@F@mainconfig.ini.php@@ et
+dans @@F@admin/config.ini.php@@), dans la section @@simple_urlengine_entrypoints@@, au
 niveau de la clé admin, vous devez ajouter votre module. Si il s'appelle
 adminactu par exemple, ça donne ça :
 

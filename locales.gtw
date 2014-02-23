@@ -26,7 +26,7 @@ syntaxe dédiée aux chaînes localisées (voir [[templates|la page sur les temp
 
 ===== Configuration =====
 
-Dans le fichier de configuration de l'application (@@F@defaultconfig.ini.php@@),
+Dans le fichier de configuration de l'application (@@F@mainconfig.ini.php@@),
 vous avez plusieurs paramètres pour configurer le langage et l'encodage, utilisés
 dans votre application :
 

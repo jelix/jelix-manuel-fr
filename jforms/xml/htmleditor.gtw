@@ -175,7 +175,7 @@ jelix. Téléchargez CKEditor, décompressez-le dans lib/jelix-www/, et indiquez
 Bien sûr, si vous voulez avoir un éditeur personnalisé, voici ce que vous devez
 faire.
  
-Dans le fichier @@F@defaultconfig.ini.php@@ :
+Dans le fichier @@F@mainconfig.ini.php@@ :
 <code ini>
 [htmleditors]
 ckmyconf.engine.name = ckeditor

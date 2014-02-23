@@ -137,11 +137,11 @@ ces balises. voici un exemple:
 </code>
 
 
-===== Les fichiers defaultconfig.ini et config.ini =====
+===== Les fichiers mainconfig.ini et config.ini =====
 
 Pour avoir la liste complète des options, voir le fichier commenté
-@@F@lib/jelix/core/defaultconfig.ini.php@@, qui est "l'original" de la copie que
-vous devez avoir dans @@F@var/config/@@.
+@@F@lib/jelix/core/defaultconfig.ini.php@@, qui est "l'original" du fichier
+@@F@var/config/mainconfig.ini.php@@.
 
 Voici cependant quelques explications sur les différentes sections.
 

@@ -17,7 +17,7 @@ modules partagé par plusieurs applications, et vous ne voulez pas forcément qu
 certains de ses modules soient utilisables par votre application.
 
 Pour ce faire, il y a une section "modules" dans le fichier
-@@F@defaultconfig.ini.php@@, qui doit contenir le niveau d'accès de chaque
+@@F@mainconfig.ini.php@@, qui doit contenir le niveau d'accès de chaque
 module. Il suffit donc d'indiquer le nom d'un module, suivit de ".access", et de
 lui attribuer un chiffre. La signification de ce chiffre :
 
@@ -53,7 +53,7 @@ Bien sûr, si vous avez plusieurs points d'entrée, vous avez alors forcément d
 modules utilisables par certains points d'entrées et pas par d'autres. Il faut
 alors définir la section modules dans les configurations de chaque point
 d'entrée, sachant que les valeurs définies dans le fichier
-@@F@defaultconfig.ini.php@@ sont les valeurs "par défaut". Il ne faudra pas
+@@F@mainconfig.ini.php@@ sont les valeurs "par défaut". Il ne faudra pas
 oublier aussi de [[/urls|configurer correctement le moteur d'url]], afin que les
 urls générées par Jelix utilisent bien le point d'entrée associé à chacun des
 modules.

@@ -278,7 +278,7 @@ Paramètres de configuration:
 === confmail ===
 
 Cette page permet de configurer le mailer. Il modifie donc le fichier
-@@F@defaultconfig.ini.php@@ de votre application.
+@@F@mainconfig.ini.php@@ de votre application.
 
 Aucun paramètres de configuration.
 

@@ -89,7 +89,7 @@ Vous devez indiquer aussi un alias vers le répertoire @@F@lib/jelix-www/@@, en 
 
 Note : vous pouvez indiquer un autre nom que "jelix" pour l'alias. Vous devez
 alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
-configuration de l'application @@F@myapp/var/config/defaultconfig.ini.php@@,
+configuration de l'application @@F@myapp/var/config/mainconfig.ini.php@@,
 section @@urlengine@@.
 
 Et enfin dans ce même fichier vous ajusterez l'option @@V@basePath@@, en
@@ -167,7 +167,7 @@ renommer en "jelix". Vous obtiendrez :
 
 Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous
 devez alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
-configuration de l'application, @@F@myapp/var/config/defaultconfig.ini.php@@,
+configuration de l'application, @@F@myapp/var/config/mainconfig.ini.php@@,
 section @@urlengine@@.
 
 **Attention :  il est fortement recommandé de ne pas mettre vos propres scripts et css dans ce répertoire jelix copié.**

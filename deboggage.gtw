@@ -26,7 +26,7 @@ un ou plusieurs loggeurs.
 
 Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez
 remplir la section @@[logger]@@ dans la configuration (pour rappel, dans le
-fichier @@F@var/config/defaultconfig.ini.php@@ ). Par défaut :
+fichier @@F@var/config/mainconfig.ini.php@@ ). Par défaut :
 
 <code ini>
 [logger]
@@ -140,7 +140,7 @@ faire pour l'activer :
      la debugbar (par défaut: "sqllog, sessiondata, defaultlog"
 
 Voici un exemple typique (dans le fichier de configuration
-@@F@var/config/defaultconfig.ini.php@@) :
+@@F@var/config/mainconfig.ini.php@@) :
 
 <code ini>
 [jResponseHtml]
