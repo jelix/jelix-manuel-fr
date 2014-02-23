@@ -7,6 +7,7 @@ drivers fournis sont ceux pour :
   * mysql
   * postgresql
   * sqlite
+  * oracle (oci)
   * mssql (experimental)
 
 Il y a aussi un autre driver, pdo, permettant d'indiquer à jDb d'utiliser pdo

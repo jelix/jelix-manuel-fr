@@ -30,9 +30,24 @@ $chemin = jApp::tempPath();
 ===== Autres méthodes =====
 
 <code>
-$path = jApp::varPath(); // équivalent à l'ancienne JELIX_APP_VAR_PATH
-$path = jApp::logPath(); // équivalent à l'ancienne JELIX_APP_LOG_PATH
-$path = jApp::configPath(); // équivalent à l'ancienne JELIX_APP_CONFIG_PATH
-$path = jApp::wwwPath(); // équivalent à l'ancienne JELIX_APP_WWW_PATH
+// chemin du répertoire var/ de l'application
+// (équivalent à l'ancienne constante JELIX_APP_VAR_PATH)
+$path = jApp::varPath();
+
+// chemin du répertoire var/log de l'application
+// (équivalent à l'ancienne constante JELIX_APP_LOG_PATH)
+$path = jApp::logPath();
+
+// chemin du répertoire var/config/ de l'application
+// (équivalent à l'ancienne constante JELIX_APP_CONFIG_PATH)
+$path = jApp::configPath();
+
+// chemin du répertoire www/ de l'application
+// (équivalent à l'ancienne constante JELIX_APP_WWW_PATH)
+$path = jApp::wwwPath();
+
+// chemin du fichier de configuration principal de l'application
+// (mainconfig.ini.php ou defaultconfig.ini.php pour jelix <= 1.5)
+$path = jApp::mainConfigFile();
 
 </code>

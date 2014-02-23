@@ -25,7 +25,9 @@ Vous aurez un point d'entrée pour chaque type de requête que vous voulez prend
 
 ===== API =====
 
-Durant l'exécution de l'action, l'objet request correspondant à la requête est accessible via la propriété @@P@request@@ du coordinateur. Ce dernier est accessible via l'objet @@jApp@@. 
+Durant l'exécution de l'action, l'objet request correspondant à la requête est accessible
+via la propriété @@P@request@@ du coordinateur. Ce dernier est accessible via l'objet
+@@jApp@@. 
 
 <code php>
   // pour récupérer un paramètre en dehors d'un contrôleur

@@ -334,21 +334,21 @@ pouvez utiliser la propriété @@jelixWWWPath@@ :
 
 Si le fichier CSS/JS se trouve dans un module, alors vous ne pouvez pas indiquer
 le chemin direct, les fichiers d'un module n'étant pas accessibles directement
-à partir d'un navigateur, en temps normal. Vous devez passer par une action spécifique
-fournie par le module Jelix, qui est @@jelix~www:getfile@@.
+à partir d'un navigateur, en temps normal. Vous devez passer par deux méthodes spécifiques
+@@M@addJSLinkModule()@@ et @@M@addCSSLinkModule()@@.
 
-Vous devez donner deux paramètres, @@targetmodule@@ et @@file@@. Le premier
-indique le module où se trouve le fichier, et le deuxième indique le chemin
-dans le répertoire @@F@www/@@. Par exemple, si vous voulez lier le fichier
+Vous devez donner deux paramètres, le nom du module et le chemin du fichier dans le répertoire @@F@www/@@
+du module. Par exemple, si vous voulez lier le fichier
+
 @@F@mymodule/www/css/mystyles.css@@ :
 
 <code php>
-  $resp->addCSSLink(jUrl::get('jelix~www:getfile', array('targetmodule=>'mymodule', 'file'=>'css/mystyles.css')));
+  $resp->addCSSLinkModule('mymodule', 'css/mystyles.css');
 </code>
 
-Notez que pour les méthodes @@M@addCSSLink@@ et @@M@addJSLink@@, vous pouvez
-indiquer un paramètre supplémentaire qui doit être un tableau associatif,
-décrivant les attributs supplémentaires à mettre.
+Notez que pour les méthodes @@M@addCSSLink@@, @@M@addJSLink@@, @@M@addJSLinkModule()@@ et @@M@addCSSLinkModule()@@
+vous pouvez indiquer un paramètre supplémentaire qui doit être un tableau associatif,
+décrivant les attributs supplémentaires à mettre dans la balise HTML générée.
 
 <code php>
 $rep->addCSSLink('maFeuille.css', 
@@ -376,7 +376,7 @@ Et vous pouvez appliquer les mêmes principes dans un template :
   {* dans le www/ d'un module *}
   {meta_htmlmodule css 'mymodule', 'css/mystyles.css'}
 
-  {* lien vers une image *}  
+  {* lien vers une image mymodule/www/img/mypicture.png *}  
   <img src="{jurl 'jelix~www:getfile', array('targetmodule=>'mymodule', 'file'=>'img/mypicture.png')}" />
 </code>
 

@@ -14,7 +14,7 @@ activée dans php.ini. Certains paquets WAMP activent l'extension DOM-XML en mê
 temps que DOM, ce qui conduit à des erreurs PHP.
 
 Vous pouvez installer aussi un connecteur de base de données. Jelix prend en
-charge MySQL 4.1+, PostgreSQL 8.0+, SQLite et PDO.
+charge MySQL 4.1+, PostgreSQL 8.0+, SQLite, Oracle et PDO.
 
 **Pour tester la compatibilité de votre serveur** avec Jelix, installez sur
 votre site le fichier @@F@lib/jelix_check_server.php@@ livré avec jelix (sans
