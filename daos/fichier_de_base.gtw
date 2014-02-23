@@ -231,7 +231,7 @@ table principale par des clés étrangères, il faut utiliser :
     normale.
   * @@E@<optionalforeigntable>@@ pour indiquer une table étrangère liée par une jointure externe.
 
-==== Exemple ====
+Exemple :
 
 <code xml>
    <primarytable name="p" realname="products" primarykey="id_product" />
@@ -330,7 +330,7 @@ dans la balise @@E@dao@@.
   
 Notez que l'import n'est **pas** un héritage au sens objet PHP.
 
-==== Exemple ====
+Exemple :
 
 Un bon exemple avec jauthdb : si vous avez besoin de définir votre propre dao,
 [[../authentification/drivers#db|il est noté dans la documentation]]
