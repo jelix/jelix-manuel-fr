@@ -355,7 +355,7 @@ paramètre, ici "legacy.htmllight" :
 
 Comme indiqué plus haut, ces plugins acceptent un cinquième paramètre, un
 tableau, contenant des options pour le générateur. Ces options dépendent du
-générateur utilisé (//errorDecorator// et //method// par exemple pour 'html').
+générateur utilisé (//errorDecorator//, //method// et //plugins// par exemple pour 'html').
 
 Remarque : si vous souhaitez passer la même option dans tous vos formulaires,
 créez le générateur de votre choix en dérivant un générateur existant et
