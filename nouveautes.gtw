@@ -4,10 +4,12 @@ Principales nouveautés apportées par la version 1.6 :
 
   * @@F@defaultconfig.ini.php@@ a été renommé en @@F@mainconfig.ini.php@@. @@F@defaultconfig.ini.php@@
      est encore pris en charge mais est déprécié. (Olivier Demah)
+  * un fichier @@F@localconfig.ini.php@@ peut contenir des paramètres de configuration
+    spécifiques à un environnement (dev, prod...)
+  * Nouvelle méthode @@M@jApp::mainConfigFile()@@ pour récupérer le chemin de la configuration principale.
   * Les plugins de template fournis par l'application sont maintenant prioritaires sur les
     plugins de template de jelix. On peut donc fournir un plugin de même nom pour
     remplacer un par défaut.
-  * Nouvelle méthode @@M@jApp::mainConfigFile()@@ pour récupérer le chemin de la configuration principale.
   * jDb/jDao:
       * Support complet de l'API oci dans le plugin oci pour jDb (Philippe Villiers)
       * jDbTools pour Oracle : utilisation des commentaires de colonnes pour générer les labels des formulaires (Philippe Villiers)
@@ -32,6 +34,7 @@ Principales nouveautés apportées par la version 1.6 :
   * @@jDateTime::toString()@@ accepte maintenant une chaine de formatage en paramètre, compatible avec @@mktime()@@.
   * nouvelle propriété @@jResponseJSON::$options@@ qui contient les options pour @@json_encode@@ (Couac)
   * Interne: nouvelle méthode @@jFile::parseJelixPath()@@ permettant de traduire les raccourcis jelix en chemin complet (Brice)
+  * Nouvelle classe @@jSoapObject@@  
   * Urls significatives : on peut maintenant avoir un caractère ":" dans l'url que l'on définit. 
   * Mise à jour de TCPDF
   * Mise à jour de jQuery 1.10.2 et jQueryUI 1.9.1
