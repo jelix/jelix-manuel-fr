@@ -165,6 +165,10 @@ caractères.
 saisie : la longueur minimale et maximale de la chaine de caractère saisie. Ces
 deux attributs ne sont utilisables que pour le @@A@type="string"@@.
 
+@@A@minvalue@@ et @@A@maxvalue@@ permet d'ajouter une contrainte sur la valeur
+saisie : la valeur minimale et maximale du nombre saisie. Ces
+deux attributs ne sont utilisables que pour @@A@type="integer"@@ et @@A@type="decimal"@@.
+
 @@A@pattern@@: Il doit contenir une expression rationnelle compatible avec PHP
 et JS. Il n'est utilisatble que pour @@A@type="string"@@.
 
