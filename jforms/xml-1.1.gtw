@@ -405,7 +405,7 @@ ou non en fonction de la valeur initiale, selon que celle-ci corresponde à la
 valeur de @@A@valueoncheck@@ ou de @@A@valueonuncheck@@.
 
 Pour afficher la valeur d'une case à cocher lors de l'affichage des données seules d'un
-formulaire, il est souvent préférable d'afficher un libellé corrspondant. Utilisez alors
+formulaire, il est souvent préférable d'afficher un libellé correspondant. Utilisez alors
 les elements @@E@<oncheckvalue>@@ et @@E@<onuncheckvalue>@@.
 
 <code xml>
@@ -417,6 +417,9 @@ les elements @@E@<oncheckvalue>@@ et @@E@<onuncheckvalue>@@.
   </checkbox>
 </code>
 
+@@E@<oncheckvalue>@@ et @@E@<onuncheckvalue>@@ supportent également l'attribut @@locale@@
+au lieu de @@label@@, ainsi que l'attribut @@value@@ (à utiliser à la place de @@valueoncheck@@
+et @@valueonuncheck@@).
 
 
 ==== Liste de cases à cocher ====
@@ -603,6 +606,36 @@ Exemple de groupe :
      <input ref="prenom"><label>prénom</label></input>
   </group>
 </code>
+
+Depuis Jelix 1.6.2, il est possible d'avoir une case à cocher qui sera affichée
+au niveau du label, pour permettre à l'utilisateur d'activer ou désactiver tout
+les champs de saisie du groupe. Utilisez l'attribut @@withcheckbox@@.
+
+<code xml>
+  <group ref="un_groupe" withcheckbox="true">
+     <label>identité</label>
+     <input ref="nom"><label>nom</label></input>
+     <input ref="prenom"><label>prénom</label></input>
+  </group>
+</code>
+
+Il peut être alors nécessaire, comme pour une @@<checkbox>@@ de :
+
+  - spécifier la valeur du contrôle quand la case est cochée ou décochée
+  - spécifier la valeur par défaut
+
+<code xml>
+  <group ref="identity" withcheckbox="true" defaultvalue="ok">
+     <oncheckvalue label="" value="ok"/>
+     <onuncheckvalue label="Pas d'identité" value="no" />
+     <label>identité</label>
+     <input ref="nom"><label>nom</label></input>
+     <input ref="prenom"><label>prénom</label></input>
+  </group>
+</code>
+
+@@E@<oncheckvalue>@@ et @@E@<onuncheckvalue>@@ supportent également l'attribut @@locale@@
+au lieu de @@label@@.
 
 ==== Choix amélioré ====
 

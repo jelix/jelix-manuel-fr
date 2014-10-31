@@ -40,6 +40,9 @@ Principales nouveautés apportées par la version 1.6 :
   * Mise à jour de TCPDF
   * Mise à jour de jQuery 1.10.2 et jQueryUI 1.9.1
 
+Nouveautés sur la version 1.6.2:
+
+  * jForms: un groupe peut maintenant avoir une case à cocher pour le désactiver.
 
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
