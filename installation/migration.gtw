@@ -64,9 +64,69 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
 classes et méthodes que vous pouvez utiliser.
 
+Si vous avez des tests unitaires dans vos modules utilisant Simpletest, migrez les en utilisant PHPUnit.
+Simpletest ne sera plus fourni dans les prochaines versions de Jelix.
 
 ==== Mise à jour de Jelix ====
 
 Après toutes les modifications effectuées, vous devez lancer le script
 installer.php de votre application. Le module jelix fera le reste des
 modifications.
+
+
+===== Mise à jour  vers Jelix 1.6.2 =====
+
+Jusqu'à Jelix 1.6.1, le wrapper PHPUnit pour jelix (lib/jelix-tests) necessitait l'installation de PHPUnit via Pear.
+Depuis Jelix 1.6.2, ce n'est plus le cas, vous pouvez utiliser Composer.
+
+==== Si vous voulez garder votre version PHPUnit installée par Pear ====
+
+Vous devez modifier votre fichier tests/runtests.php, en ajoutant cette ligne : @@require_once 'PHPUnit/Autoload.php';@@
+
+<code php>
+require(__DIR__.'/../application.init.php');
+
+require_once 'PHPUnit/Autoload.php';
+
+require(LIB_PATH.'jelix-tests/phpunit.inc.php');
+</code>
+
+==== Si vous voulez installer PHPUnit à partir de Composer ====
+
+Installez [Composer](http://getcomposer.org). Créez ensuite un fichier
+composer.json dans votre appli, au même niveau que votre project.xml.
+
+<code json>
+{
+    "name": "mycompany/myapp",
+    "type": "application",
+    "description": "",
+    "keywords": [],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev" : {
+        "phpunit/phpunit": "4.3.*"
+    },
+    "autoload": {
+        "files": [ "../lib/jelix/init.php"  ]
+    },
+    "minimum-stability": "stable"
+}
+</code>
+
+Lancez ensuite l'installation via Composer
+
+<code>
+composer install
+</code>
+
+Dans le fichier tests/runtests.php, vous devez inclure @@../vendor/autoload.php@@ :
+
+<code>
+require(__DIR__.'/../application.init.php');
+
+require(__DIR__.'/../vendor/autoload.php';
+
+require(LIB_PATH.'jelix-tests/phpunit.inc.php');
+</code>

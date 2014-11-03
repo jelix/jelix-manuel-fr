@@ -40,9 +40,14 @@ Principales nouveautés apportées par la version 1.6 :
   * Mise à jour de TCPDF
   * Mise à jour de jQuery 1.10.2 et jQueryUI 1.9.1
 
-Nouveautés sur la version 1.6.2:
+Nouveautés sur la version 1.6.1 et 1.6.2:
 
-  * jForms: un groupe peut maintenant avoir une case à cocher pour le désactiver.
+  * Support de 'busytimeout' et des extensions sqlite dans le plugin sqlite3 pour jDb
+  * jForms : les items de choice (éléments li) ont maintenant un id et une classe (jforms-selected et jforms-notselected)
+  * jForms : un groupe peut maintenant avoir une case à cocher pour l'activer/désactiver
+  * Possibilité d'utiliser la dernière version de PHPUnit disponible via Composer
+  * Pour les contributeurs : une configuration vagrant est fournie dans le dépôt sur github, permettant de lancer les tests sans configurer sa machine.
+
 
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 

@@ -17,7 +17,7 @@ l'application.
 L'utilisation du [[https://github.com/sebastianbergmann/phpunit/|framework de tests PHPUnit]]
 est la solution "officielle" depuis Jelix 1.3. Lire son manuel pour en savoir
 plus sur son fonctionnement. De plus, il n'est pas fourni avec Jelix, vous devez
-donc l'installer.
+donc l'installer (via Composer si possible).
 
 Cependant, Jelix fourni de quoi l'intégrer au mieux dans votre application. La
 commande @@createapp@@ a créé un script @@F@tests/runtests.php@@ dans votre
@@ -45,13 +45,12 @@ Pour créer des tests :
 Vous pouvez aussi ajouter les options usuelles de PHPUnit.
 
 
-
-
 =====  Créer des tests avec Simpletest =====
 
 Simpletest était le framework de tests unitaires utilisé jusqu'à la version 1.2
 incluse. Il est maintenant obsolète dans le projet Jelix, mais est toujours
-présent pour encore une ou deux versions, pour des raisons de compatibilité.
+présent jusqu'à la version 1.6, pour des raisons de compatibilité. Il ne sera plus présent
+dans les version suivantes.
 
 Le module jUnitTest doit être installé. Pour cela il vous suffit d'exécuter la commande
 
