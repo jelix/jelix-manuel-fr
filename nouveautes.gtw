@@ -2,7 +2,19 @@
 
 Principales nouveautés apportées par la version 1.7 :
 
-  * aucune pour le moment
+  * La bibliothèque Jelix est installable maintenant par Composer
+  * Un projet basé sur Jelix peut-être crée avec le paquet jelix/jelix-skeleton-app
+    installable via Composer
+  * Il n'y a plus besoin de faire un "build" des sources de Jelix pour executer et
+    contribuer à Jelix
+  * Dans les applications crées par createapp, le repertoire temp est maintenant par defaut
+    dans le repertoire de l'application
+  * La configuration Vagrant est maintenant situé dans testapp
 
+  * nouvelle méthode @@M@jApp::version()@@
+  * nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le framework
+    (version...)
+  * Jelix-scripts createapp: nouvelle option -modulename pour indiquer le nom du
+    module principal
 
 Contributeurs à Jelix 1.7 : ...
