@@ -2,19 +2,27 @@
 
 Principales nouveautés apportées par la version 1.7 :
 
-  * La bibliothèque Jelix est installable maintenant par Composer
-  * Un projet basé sur Jelix peut-être crée avec le paquet jelix/jelix-skeleton-app
+  * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
+  * Un projet basé sur Jelix peut-être crée avec le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
     installable via Composer
-  * Il n'y a plus besoin de faire un "build" des sources de Jelix pour executer et
-    contribuer à Jelix
+  * Il n'y a plus besoin de faire un "build" des sources de Jelix pour contribuer à Jelix
+    et lancer les tests.
   * Dans les applications crées par createapp, le repertoire temp est maintenant par defaut
     dans le repertoire de l'application
-  * La configuration Vagrant est maintenant situé dans testapp
+  * La configuration Vagrant pour les contributeurs est maintenant située dans testapp
 
   * nouvelle méthode @@M@jApp::version()@@
   * nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le framework
     (version...)
   * Jelix-scripts createapp: nouvelle option -modulename pour indiquer le nom du
     module principal
+  * contrôleur CRUD : la liste des enregistrements peut être triée par colonne
+  * jauthdb_admin: la liste des utilisateurs peut être filtrée et triée
+  * jacl2db_admin: la liste des utilisateurs peut être filtrée
+
+  * Le module junittests et Simpletests ont été supprimé. Ils sont disponible
+    séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
+  * FakeServerConf est maintenant installé via Composer
+
 
 Contributeurs à Jelix 1.7 : ...
