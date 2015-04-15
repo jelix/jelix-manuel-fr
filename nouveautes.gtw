@@ -28,7 +28,7 @@ Principales nouveautés apportées par la version 1.6 :
      * possibilité d'avoir un label spécifique quand la valeur d'un champs est vide (@@emptyvaluelabel@@)
      * nouveaux attributs @@minvalue@@ et @@maxvalue@@ pour les @@<input>@@ de type "integer" ou "decimal"
      * le plugin @@formdata@@ accepte en paramètre le nom d'un builder jForms et ses options
-     * Il est possible d'indiqué les labels correspondant aux valeurs d'une checkbox
+     * Il est possible d'indiquer les labels correspondant aux valeurs d'une checkbox
         ex: @@<oncheckvalue label="yes" />@@ et @@<onuncheckvalue label="no" />@@
      * plugin @@ctrl_label@@ : on peut indiquer en deuxième paramètre une chaîne de formatage pour sprintf
   * Les objets jEvent ont maintenant des setters/getters: il est possible de faire @@$event->something@@ plutôt que @@$event->getParam('something')@@.
