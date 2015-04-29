@@ -2,14 +2,17 @@
 
 Principales nouveautés apportées par la version 1.7 :
 
-  * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
-  * Un projet basé sur Jelix peut-être crée avec le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
-    installable via Composer
-  * Il n'y a plus besoin de faire un "build" des sources de Jelix pour contribuer à Jelix
-    et lancer les tests.
-  * Dans les applications crées par createapp, le repertoire temp est maintenant par defaut
-    dans le repertoire de l'application
-  * La configuration Vagrant pour les contributeurs est maintenant située dans testapp
+  * Intégration avec Composer :
+    * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
+    * Un projet basé sur Jelix peut-être crée avec le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
+      installable via Composer
+    * Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont plus pris en charge, et remplacés par une nouvelle API à appeler
+      dans le fichier @@application.init.php@@ : @@jApp::declareModulesDir()@@, @@jApp::declarePluginsDir()@@, @@jApp::declareModuleDir()@@.
+      Il est aussi possible de déclarer les chemins de repertoire de modules et plugins, via le fichier composer.json de l'application
+      et des paquets contenant des modules.
+
+  * Dans les applications crées par createapp, le répertoire temp est maintenant par défaut
+    dans le répertoire de l'application
 
   * nouvelle méthode @@M@jApp::version()@@
   * nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le framework
@@ -20,9 +23,39 @@ Principales nouveautés apportées par la version 1.7 :
   * jauthdb_admin: la liste des utilisateurs peut être filtrée et triée
   * jacl2db_admin: la liste des utilisateurs peut être filtrée
 
-  * Le module junittests et Simpletests ont été supprimé. Ils sont disponible
+  * jIniFileModifier : il n'y a plus de ligne ajoutée à la fin du fichier à chaque sauvegarde
+  * @@jFile::getMimeTypeFromFilename()@@ : support d'une liste de type mime définie par le développeur, dans
+    une section @@[mimeTypes]@@ de la configuration.
+  * Nouvelles méthodes : @@jFile::shortestPath()@@ et @@jFile::normalizePath()@@.
+  * jProfiles :
+     * le contenu du fichier profiles.ini.php est optimisé et stocké en cache
+     * est extensible par des plugins : ceux-ci peuvent traiter les profiles qu'ils prennent en charge
+       avant la mise en cache du fichier profiles.ini.php. (plugin : @@profiles/<type>/<type>.profiles.php@@
+       classe: @@<type>ProfilesCompiler@@).
+     * un plugin pour jdb est fourni, permettant à jDb de traiter plus rapidement l'ouverture d'une
+       connexion.
+
+
+Les modules, plugins et fonctionnalités dépréciés
+
+  * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
+  * idem pour les plugins mysql et sqlite. Ils sont disponibles séparément. Il est toutefois préférable
+   d'utiliser respectivement les plugins mysqli et sqlite3, toujours disponibles dans la distribution
+   standard.
+  * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre application pour utiliser
+   en_US ou en_GB.
+  * le plugin memcache22 pour jCache a été supprimé
+  * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
+
+Pour les contributeurs:
+
+  * La configuration Vagrant pour les contributeurs est maintenant située dans testapp
+  * Il n'y a plus besoin de faire un "build" des sources de Jelix pour contribuer à Jelix
+    et lancer les tests.
   * FakeServerConf est maintenant installé via Composer
+  * Dans testapp, une application "adminapp" est disponible pour tester les modules d'admin.
+
 
 
 Contributeurs à Jelix 1.7 : ...
