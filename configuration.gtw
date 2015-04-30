@@ -6,7 +6,9 @@ Une application Jelix possède quelques fichiers de configuration :
     l'application
   * un fichier @@F@module.xml@@ dans chaque module
   * un fichier @@F@mainconfig.ini.php@@ pour la configuration globale (qui s'appelait @@F@defaultconfig.ini.php@@
-    dans Jelix 1.5 et inférieur), et un fichier config.ini.php pour chaque point d'entrée.
+    dans Jelix 1.5 et inférieur)
+  * un fichier @@F@localconfig.ini.php@@ pour les paramètres propres à l'environnement (dev, prod..)
+  * un fichier @@F@config.ini.php@@ pour chaque point d'entrée.
   * un fichier @@F@profiles.ini.php@@ pour les profils de connexion.
 
 Ils sont tous générés automatiquement lorsque vous créez une application ou un
@@ -85,13 +87,26 @@ du fichier.
 
 Les fichiers de configuration sont situés dans @@F@var/config/@@.
 
-Chaque point d'entrée peut avoir son fichier de configuration spécifique. Mais
-la plupart du temps ils ont beaucoup de valeurs de paramètres identiques entre
-eux. Pour éviter de répéter ces paramètres identiques dans chaque fichier, il y
-a un fichier de configuration commun, qui a pour nom
-@@F@mainconfig.ini.php@@. Il est automatiquement lu, en plus du fichier
-spécifique au point d'entrée, et il n'est pas besoin de l'indiquer dans les
-points d'entrée.
+
+=== mainconfig.ini.php ===
+
+Chaque point d'entrée peut avoir son fichier de configuration spécifique. Mais la plupart
+du temps ils ont beaucoup de valeurs de paramètres identiques entre eux. Pour éviter de
+répéter ces paramètres identiques dans chaque fichier, il y a un fichier de configuration
+commun, qui a pour nom @@F@mainconfig.ini.php@@. Il est automatiquement lu, en plus du
+fichier spécifique au point d'entrée, et il n'est pas besoin de l'indiquer dans les points
+d'entrée.
+
+=== localconfig.ini.php ===
+
+Depuis Jelix 1.6, un fichier @@F@localconfig.ini.php@@ est pris en charge. Il est censé
+contenir la configuration propre à la machine locale, donc différent en fonction
+de l'environnement : developpement, production, tests...It can be
+different in different environment (development, integration, production...). Les paramètres
+de ce fichier "écrasent" ceux de @@F@mainconfig.ini.php@@. Bien entendu, en général
+ce fichier n'est pas dans votre dépot de code source.
+
+=== <entrypoint>/config.ini.php ===
 
 Un fichier de configuration spécifique ne contiendra donc que les valeurs
 spécifiques pour le point d'entrée, et peut bien sûr redéfinir des paramètres
@@ -151,11 +166,22 @@ Pour le fichier de configuration de xmlrpc.php, on pourrait avoir par exemple :
 
 etc.
 
+
+=== Comment sont-ils lu ===
+
 Il faut savoir qu'il existe un fichier @@F@defaultconfig.ini.php@@,
 situé dans le répertoire @@F@lib/jelix/core/@@. Il contient une liste exhaustive
-de tous les paramètres possibles. Jelix le lit en premier, puis le fichier
-@@F@mainconfig.ini.php@@ de votre application, et ensuite celui du point
-d'entrée. Les valeurs d'un fichier écrasant celles du fichier lu précédemment.
+de tous les paramètres possibles.
+
+Ainsi, pour connaître la valeur de tous les paramètres de configuration, Jelix lit les fichiers
+dans l'ordre suivant et les fusionne :
+
+  - @@F@lib/jelix/core/defaultconfig.ini.php@@,
+  - @@F@mainconfig.ini.php@@
+  - @@F@localconfig.ini.php@@
+  - @@F<entrypoint>/config.ini.php@@
+
+Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent.
 
 
 ===== Le fichier profiles.ini.php =====

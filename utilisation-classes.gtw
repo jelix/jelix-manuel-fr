@@ -9,7 +9,14 @@ issues de daos ou autre, effectuerez donc des traitements autres que de
 l'affichage. Aussi les méthodes de vos contrôleurs s'en trouveront allégées et
 les traitements réutilisables dans d'autres actions.
 
-===== Création d'une classe =====
+Elles peuvent être instanciée par jClasses (un "loader" de classes, plus ou
+moin obsolète), ou instanciée normalement, le chargement de la classe utilisant
+le mécanisme d'autoload de Jelix.
+
+
+===== Utilisation des classes avec jClasses =====
+
+==== Création d'une classe utilisable par jClasses ====
 
 Les classes métiers et services dans Jelix sont des classes PHP classiques qui
 n'ont rien de spécifique. La seule chose à respecter est de les stocker dans un
@@ -42,7 +49,7 @@ de données, est une classe service. Par contre une classe représentant un
 produit, qui possède donc des champs identifiants, est une classe non service.
 
 
-===== Instanciation d'une classe avec jClasses =====
+==== Instanciation d'une classe avec jClasses ====
 
 Jelix propose la classe @@C@jClasses@@, qui vous évite d'avoir à faire un
 include et une instanciation par vous même.
@@ -74,7 +81,7 @@ Notez que vous pouvez mettre des classes dans des sous-répertoires de
 </code>
 
 
-===== Inclure simplement une classe =====
+==== Inclure une classe avec jClasses ====
 
 Dans certains cas, comme celui où le constructeur de la classe métier demande un
 paramètre, il faut inclure la classe métier puis l'instancier "manuellement".
@@ -84,6 +91,7 @@ Dans ce cas la classe jClasses propose la méthode statique
 effectue un require_once) la classe spécifiée par le sélecteur.
 
 Exemple :
+
 <code php>
     jClasses::inc('shop~shoesProduct');
     $shoe = new shoesProduct('43', 'black');
@@ -91,7 +99,7 @@ Exemple :
 
 Vous pouvez aussi profiter du système autoload de PHP. Voir plus bas.
 
-===== Inclure une interfaces définies dans un module =====
+==== Inclure une interface avec jClasses ====
 
 @@C@jClasses@@ fournit la méthode statique @@M@incIFace@@ pour inclure des
 interfaces PHP définies dans le dossier @@F@classes@@ d'un module.
@@ -112,65 +120,16 @@ interface IStockUtil {
 On utilisera ensuite la méthode @@M@jClasses::incIface()@@ dans les fichiers qui
 en ont besoin :
 
-<code php><?php
+<code php>
 jClasses::incIface('commons~interfaces/IStockUtil');
 
 class StockUtil implements IStockUtil {
     […]
 }
-?></code>
-
-
-===== Installer et Utiliser des classes tierces =====
-
-Il se peut que vous vouliez réutiliser des classes développées en dehors du
-projet. Il est bien entendu tout à fait possible de le faire dans Jelix.
-
-Bien que vous puissiez mettre ces classes où bon vous semble et faire un include
-classique, il y a toutefois deux emplacements préconisés :
-
-  * le répertoire @@F@lib/@@
-  * le répertoire @@F@classes/@@ d'un module
-
-Faire un répertoire spécifique dans @@F@lib/@@ et y placer les fichiers de
-classes, est intéressant quand il s'agit de partager ces classes entre plusieurs
-modules, voir entre plusieurs projets. Pour faire les includes, vous pouvez
-utiliser la constante @@LIB_PATH@@. Par exemple si vous voulez inclure une
-classe que vous avez dans @@F@lib/foo/bar.php@@, vous ferez alors ceci :
-
-<code php>
-   require(LIB_PATH.'foo/bar.php');
-   $maclasse = new bar();
-</code>
-
-Placer les classes tierces dans le répertoire @@F@classes/@@ est utile si les
-classes en question ne sont utilisées que par ce module. Cela permet aussi une
-réutilisation plus facile : tout est dans le module.
-
-Pour utiliser ces classes, en admettant que vous voulez inclure le fichier
-@@F@bar.php@@ que vous avez placé dans le répertoire @@F@classes/@@ du module
-main, vous pouvez faire :
-
-<code php>
-   require(jApp::getModulePath('main') . 'classes/bar.php');
-   $maclasse = new bar();
-</code>
-
-Si le nom du fichier de la classe respecte la norme des fichiers de classes pour
-jelix (@@F@bar.class.php@@), et que la classe s'appelle effectivement "bar",
-vous pouvez bien entendu utiliser jClasses :
-
-<code php>
-   $maclasse = jClasses::create('bar');
-
-   // ou si le constructeur attend des arguments
-   jClasses::inc('bar');
-   $maclasse = new bar('bla');
-
 </code>
 
 
-===== Charger des classes avant le session_start =====
+==== Charger des classes jClasses avant le session_start ====
 
 Parfois, vous voulez stockez en session des objets basés sur vos classes
 métiers. Mais pour cela, il faut inclure ces classes avant que jelix fasse un
@@ -195,11 +154,17 @@ Le nom du module est obligatoire.
 **déclarer les classes dans le fichier module.xml pour qu'elles soient autochargées.**
 Voir la suite.
 
-===== Autoload =====
+===== Auto-chargement de classes =====
 
-Depuis Jelix 1.4, il est possible de profiter d'un système d'auto-chargement des classes reposant sur la fonction autoload de PHP (le fichier de la classe étant chargé automatiquement au moment de l'instanciation). Cela évite d'utiliser @@C@jClasses@@. Le système d'autoload de Jelix supporte la [[https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md|spécification PSR0]].
+Depuis Jelix 1.4, il est possible de profiter d'un système d'auto-chargement des
+classes reposant sur la fonction autoload de PHP (le fichier de la classe étant
+chargé automatiquement au moment de l'instanciation). Cela évite d'utiliser
+@@C@jClasses@@. Le système d'autoload de Jelix supporte la
+[[http://www.php-fig.org/psr/psr-0/|spécification PSR0]] et la 
+[[http://www.php-fig.org/psr/psr-4/|spécification PSR-4]].
 
-Il suffit de déclarer dans le fichier @@F@module.xml@@ les classes à charger automatiquement, avec des balises spécifiques dans une balise @@E@<autoload>@@.
+Il suffit de déclarer dans le fichier @@F@module.xml@@ les classes à charger
+automatiquement, avec des balises spécifiques dans une balise @@E@<autoload>@@.
 
 Voici un exemple :
 
@@ -218,7 +183,9 @@ Voici un exemple :
 </module>
 </code>
 
-Comme vous le voyez, il y a plusieurs façon de déclarer une classe. Les chemins des fichiers ou répertoires à indiquer dans les balises doivent être relatif au répertoire du module.
+Comme vous le voyez, il y a plusieurs façon de déclarer une classe. Les chemins
+des fichiers ou répertoires à indiquer dans les balises doivent être relatif au
+répertoire du module.
 
 Pour charger une classe spécifique, en indiquant son nom et son fichier :
 
@@ -226,30 +193,53 @@ Pour charger une classe spécifique, en indiquant son nom et son fichier :
    <class name="myautoloadedclass" file="autoloadtest/autoloadtestclass.php" />
 </code>
 
-Pour déclarer plusieurs classes à la fois qui ont des noms ressemblant, on peut utiliser une expression régulière, et indiquer le répertoire où les fichiers se trouvent ainsi qu'un suffixe de fichier :
+Pour déclarer plusieurs classes à la fois qui ont des noms ressemblant, on peut
+utiliser une expression régulière, et indiquer le répertoire où les fichiers se
+trouvent ainsi qu'un suffixe de fichier :
+
 <code xml>
    <!-- chargement automatique des classes dont le nom commençent par myalclasse -->
   <classPattern pattern="/^myalclass/" dir="autoloadtest/withpattern/" suffix=".cl.php" />
 </code>
 
-Pour déclarer un ensemble de classes qui sont dans un namespace particulier, on indique le namespace et le répertoire.
+Pour déclarer un ensemble de classes qui sont dans un namespace particulier, on
+indique le namespace et le répertoire.
+
 <code xml>
   <namespace name="jelixTests\foo" dir="autoloadtest" />
 </code>
-Cette déclaration suit la spécification PSR0. Aussi le namespace de la classe doit correspondre à un chemin dans le répertoire indiqué. Par exemple, si Jelix doit charger la classe @@C@jelixTests\foo\bar\baz@@, il incluera le fichier @@F@autoloadtest/jelixTests/foo/bar/baz.php@@.
 
-Jelix possède un autre moyen de prendre en charge les namespaces, différent de PSR0.
+Cette déclaration suit la spécification PSR0. Aussi le namespace de la classe
+doit correspondre à un chemin dans le répertoire indiqué. Par exemple, si Jelix
+doit charger la classe @@C@jelixTests\foo\bar\baz@@, il incluera le fichier
+@@F@autoloadtest/jelixTests/foo/bar/baz.php@@.
+
+Jelix possède un autre moyen de prendre en charge les namespaces, qui suit la spécification PSR-4. (implémenté
+antérieurement à la sortie de la spécification PSR-4, d'où le nom
+"namespacePathMap" moins parlant).
+
 <code xml>
    <namespacePathMap name="jelixTests\bar" dir="autoloadtest/barns" suffix=".class.php" />
 </code>
-Le chemin du fichier de la classe n'est pas un chemin reprenant le nom du namespace. Mais ici toute classes correspondant au namespace se trouvent dans des fichiers directement dans le répertoire indiqué. Ainsi, la classe @@C@jelixTests\foo\bar\baz@@ n'est pas situé dans @@F@autoloadtest/jelixTests/foo/bar/baz.class.php@@ mais dans @@F@autoloadtest/bar/baz.class.php@@.
 
-Il est possible d'indiquer aussi un répertoire d'include classique : Jelix cherchera un fichier du même nom que la classe dans ce répertoire.
+Le chemin du fichier de la classe n'est pas un chemin reprenant le nom du
+namespace. Mais ici toute classes correspondant au namespace se trouvent dans
+des fichiers directement dans le répertoire indiqué. Ainsi, la classe
+@@C@jelixTests\foo\bar\baz@@ n'est pas situé dans
+@@F@autoloadtest/jelixTests/foo/bar/baz.class.php@@ mais dans
+@@F@autoloadtest/bar/baz.class.php@@.
+
+Il est possible d'indiquer aussi un répertoire d'include classique : Jelix
+cherchera un fichier du même nom que la classe dans ce répertoire.
+
 <code xml>
    <includePath dir="autoloadtest/incpath" suffix=".php" />
 </code>
 
-Enfin, on peut indiquer un fichier qui déclarera un autre autoloader. Cela peut être utile quand on utilise une bibliothèque externe qui possède son autoloader. Cet autoloader doit utiliser la fonction [[phpapi:spl_autoload_register|spl_autoload_register]] et ses amis.
+Enfin, on peut indiquer un fichier qui déclarera un autre autoloader. Cela peut
+être utile quand on utilise une bibliothèque externe qui possède son autoloader.
+Cet autoloader doit utiliser la fonction
+[[phpapi:spl_autoload_register|spl_autoload_register]] et ses amis.
 
 <code xml>
    <autoloader file="autoloadtest/myautoloader.php" />
@@ -257,5 +247,103 @@ Enfin, on peut indiquer un fichier qui déclarera un autre autoloader. Cela peut
 
 ==== Remarque ====
 
-N'utilisez le système autoload que pour les classes souvent utilisées. Déclarer toutes les classes n'a pas trop de sens, et ralentira le système autoload (si tout les modules déclarent des dizaines de classes, cela fait au final beaucoup de chemin à vérifier...). Préférez donc l'utilisation de jClasses, surtout pour les classes peu utilisées ou utilisées uniquement par le module.
+N'utilisez le système autoload que pour les classes souvent utilisées. Déclarer
+une multitude de classes qui ne partagent pas le même namespace n'a pas trop de
+sens, et ralentira le système autoload de PHP (si tout les modules déclarent des
+dizaines de classes, cela fait au final beaucoup de chemin à vérifier...).
+Préférez donc l'utilisation de namespaces commun, ou encore de jClasses (surtout
+pour les classes peu utilisées ou utilisées uniquement par le module).
+
+
+===== Installer et Utiliser des classes tierces =====
+
+Il se peut que vous vouliez réutiliser des classes développées en dehors du
+projet. Il est bien entendu tout à fait possible de le faire dans Jelix.
+
+
+==== Avec Composer ====
+
+[[http://getcomposer.org|Composer]] est un gestionnaire de paquets et de
+dépendance pour PHP, de plus en plus utilisé. Il vous permet d'installer et de
+mettre à jour facilement des bibliothèques tierces. Nous vous recommandons de
+l'utiliser si les bibliothèques tierces que vous voulez utiliser peuvent être
+installées avec Composer. (Les prochaines versions de Jelix > 1.6 seront
+disponibles par Composer ;-) ).
+
+Pour une intégration de paquets Composer, c'est très simple :
+
+  * Créez votre fichier composer.json dans le répertoire de votre application
+    (voir la documentation de Composer)
+  * installez les paquets indiqués dans composer.json : @@php composer.phar install@@.
+    Cela génère un répertoire @@F@vendor/@@ dans votre application
+  * Incluez le fichier @@F@vendor/autoload.php@@ dans @@F@application.init.php@@
+
+<code php>
+require (__DIR__.'/vendor/autoload.php');
+require (__DIR__.'/../lib/jelix/init.php');
+jApp::initPaths( /* ... */ );
+jApp::setTempBasePath( /* ... */ );
+</code>
+
+
+==== Ancienne pratique ====
+
+Si vous ne voulez pas utiliser Composer, voici une autre manière d'intégrer des
+bibliothèques tierces dans votre application.
+
+Bien que vous puissiez mettre ces classes où bon vous semble et faire un include
+classique, il y a toutefois trois emplacements préconisés :
+
+  * le répertoire @@F@lib/@@ de Jelix
+  * le répertoire @@F@classes/@@ d'un module
+  * le répertoire @@F@lib/@@ d'un module
+
+=== installation globale ===
+
+Faire un répertoire spécifique dans @@F@lib/@@ et y placer les fichiers de
+classes, est intéressant quand il s'agit de partager ces classes entre plusieurs
+modules, voir entre plusieurs projets. Pour faire les includes, vous pouvez
+utiliser la constante @@LIB_PATH@@. Par exemple si vous voulez inclure une
+classe que vous avez dans @@F@lib/foo/bar.php@@, vous ferez alors ceci :
+
+<code php>
+   require(LIB_PATH.'foo/bar.php');
+   $maclasse = new bar();
+</code>
+
+Dans le cas où la bibliothèque que vous installez comporte un fichier d'autoload,
+vous pouvez faire l'initialisation (inclusion, appelle d'une fonction spécifique etc,
+selon la documentation de cette bibliothèque) dans le fichier @@F@application.init.php@@
+de l'application.
+
+=== installation dans un module ===
+
+Placer les classes tierces dans le répertoire @@F@classes/@@ ou @@F@lib/@@ du
+module est utile si les classes en question ne sont utilisées que par ce module.
+Cela permet aussi une réutilisation plus facile : tout est dans le module.
+
+Pour utiliser ces classes, en admettant que vous voulez inclure le fichier
+@@F@bar.php@@ que vous avez placé dans le répertoire @@F@classes/@@ du module
+main, vous pouvez faire :
+
+<code php>
+   require(jApp::getModulePath('main') . 'classes/bar.php');
+   $maclasse = new bar();
+</code>
+
+Si la bibliothèque propose un autoloader, déclarez-le dans le
+fichier module.xml (voir plus haut). Cela évitera de faire le @@require@@.
+
+
+Si le nom du fichier de la classe respecte la norme des fichiers de classes pour
+jelix (@@F@bar.class.php@@), et que la classe s'appelle effectivement "bar",
+vous pouvez bien entendu utiliser jClasses :
+
+<code php>
+   $maclasse = jClasses::create('bar');
+
+   // ou si le constructeur attend des arguments
+   jClasses::inc('bar');
+   $maclasse = new bar('bla');
+</code>
 
