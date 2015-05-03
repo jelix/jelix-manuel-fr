@@ -92,7 +92,7 @@ l'application. Toutes les balises de l'exemple suivant sont obligatoires :
         <log>var/log</log>
         <var>var</var>
         <www>www</www>
-        <temp>../temp/testapp</temp>
+        <temp>temp/</temp>
     </directories>
 </code>
 

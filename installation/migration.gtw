@@ -6,7 +6,7 @@ ces étapes à faire :
   * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
     jelix, ou changer la version dans votre fichier composer.json si vous utilisez
     Composer.
-  * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@
+  * **supprimer** tous les fichiers dans le répertoire @@F@votre_appli/temp/@@
   * adapter votre code en suivant les instructions indiquées pour chaque
     ancienne version de Jelix. Voir ci-dessous.
 
@@ -27,7 +27,7 @@ configuration etc.
 ==== Répertoires temporaires ====
 
 Comme d'habitude, vous devez vider le contenu de votre répertoire
-@@F@temp/votreapp/@@.
+@@F@votreapp/temp/@@.
 
 ==== Installation des fichiers de Jelix ====
 

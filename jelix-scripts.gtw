@@ -41,13 +41,13 @@ Voici comment faire pour mettre le PHP-Cli de MAMP par défaut dans le terminal 
      répertoire personnel (@@F@/Users/votre_login/@@)
    * Modifiez la ligne où est défini la variable PATH, ou ajoutez la, le but
      étant d'ajouter les chemins
-     @@/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.3/bin@@ dans
+     @@/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.4/bin@@ dans
      cette variable PATH. Cela doit ressembler à quelque chose comme ceci
      (d'autres chemins peuvent être déjà défini, et il faut dans tout les cas
      mettre le $PATH à la fin)
 
 <code bash>
-export PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.3/bin:$PATH
+export PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.4/bin:$PATH
 </code>
 
 Si vous souhaitez mettre de nouveau le PHP-Cli de base par défaut, remettez la

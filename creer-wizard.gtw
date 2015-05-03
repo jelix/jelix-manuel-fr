@@ -97,7 +97,7 @@ Voici un exemple d'assistant basique pour installer une application Jelix :
 <code ini>
 pagesPath = "../../lib/installwizard/pages/,pages/"
 customPath = "custom/"
-tempPath = "../../temp/myapp/"
+tempPath = "../temp/"
 
 start = welcome
 supportedLang = en

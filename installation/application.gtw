@@ -24,6 +24,7 @@ gestionnaire de sources, vous obtenez les répertoires suivants :
       modules/      modules de l'application
       plugins/      plugins de l'application
       responses/    les réponses personnalisées
+      temp/
       var/          répertoire qui contient tout les fichiers créés ou susceptibles d'être modifiés par Jelix, pendant l'exécution
          config/    fichiers de configuration de l'application
          log/       fichiers journaux de l'application et de Jelix
@@ -38,7 +39,6 @@ adéquate, qu'on appellera ici @@F@monsite/@@. Vous avez donc :
 
   monsite/
       lib/
-      temp/
       testapp/
 
 Par défaut, l'arborescence des sources est organisée de façon à installer
@@ -61,14 +61,6 @@ Dans @@F@testapp/var/config/@@ vous avez probablement des fichiers @@F@*.dist@@.
 Renommez-les en enlevant cette particule '.dist'. Il y a certainement des choses
 à modifier dans ces nouveaux fichiers, comme les paramètres d'accès à la base de
 donnée (@@F@profiles.ini.php@@) etc. Nous allons voir comment plus loin.
-
-===== Créer le répertoire temporaire =====
-
-Dans @@F@monsite/temp/@@ vous devez créer le dossier @@F@testapp@@. Peut-être
-votre application contient-elle plusieurs fichiers @@F@*.init.php@@, similaires
-au fichier @@F@application.init.php@@. Il se peut que chacun de ces fichiers
-déclare un répertoire temporaire différent. Créez donc ces répertoires
-temporaires.
 
 ===== Configurer le serveur =====
 
