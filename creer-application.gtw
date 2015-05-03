@@ -1,11 +1,54 @@
 ~~LANG:EN@enman:create-application~~
 
 La première chose à faire pour utiliser Jelix, c'est de créer une application.
-Vous pouvez en créer une "à la main", mais il y a une manière plus simple :
-utiliser le script @@createapp@@ fourni avec Jelix.
 
-Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et exécutez
-:
+Les deux façons les plus rapide pour le faire sont :
+
+    - soit en installant le squelette d'application @@jelix-skeleton-app@@ avec Composer
+    - soit en utilisant la commande @@createapp@@ fournie avec Jelix
+
+
+===== Utilisation du paquet jelix-skeleton-app =====
+
+La manière la plus rapide de créer une nouvelle application basée sur Jelix est
+d'utiliser le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]].
+Ce paquet contient une arborescence et les fichiers nécessaires pour réaliser
+une application avec une page.
+
+Pour ce faire, si vous voulez créer une application "myapp", utilisant la
+version de développement de Jelix 1.7 :
+
+<code bash>
+composer create-project jelix/jelix-skeleton-app myapp dev-jelix-1.7
+<code>
+
+Composer vous demandera si vous voulez garder le repertoire @@F@.git@@. Répondez non.
+
+Quelques fichiers ensuite à copier avant d'initialiser l'application :
+
+<code bash>
+ln -s ../vendor/jelix/jelix/lib/jelix-www www/jelix
+cp var/config/profiles.ini.php.dist var/config/profiles.ini.php
+cp var/config/localconfig.ini.php.dist var/config/localconfig.ini.php
+
+php install/installer.php
+</code>
+
+
+===== Avec la commande createapp =====
+
+L'autre façon de créer une application Jelix, est l'utilisation de la commande
+@@createapp@@, qui est présente depuis les premières versions de Jelix. Elle permet
+de créer un squelette d'application. C'est une alternative encore crédible au
+paquet jelix-skeleton-app car elle permet de personnaliser la création du
+squelette.
+
+Vous trouverez cette commande @@createapp@@ dans le répertoire
+@@F@lib/jelix-scripts@@ (@@F@vendor/jelix/jelix/lib/jelix-scripts@@ si vous
+avez installé Jelix avec Composer).
+
+
+Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et exécutez :
 
 <code bash>
 php createapp.php /chemin/vers/le/nouveau/répertoire/de/myapp
@@ -18,18 +61,44 @@ librement).
 @@createapp@@ crée un répertoire @@F@myapp/@@ avec le chemin indiqué. Son
 contenu est :
 
+<code>
   myapp/
      modules/      modules de l'application
      plugins/      plugins de l'application
      responses/    classes pour les objets réponses HTML
+     temp/         tous les fichiers temporaires et de cache créés à l'execution de l'application
      var/config/   fichiers de configuration
      var/log/      fichier de log
      var/themes/   les thèmes disponibles pour votre application
      var/overloads/ contiendra les différents fichiers qui redéfinissent des fichiers de modules que vous aurez récupéré
      www/          racine du répertoire public de votre application
+</code>
 
-Vous avez aussi un nouveau répertoire @@F@temp/myapp@@, où seront stockés tout
-les fichiers de caches créés par Jelix.
 
-Maintenant vous devez configurer votre serveur avant de lancer votre application
-une première fois.
+si vous avez installé Jelix avec Composer, il faut modifier le fichier
+application.init.php pour charger @@F@vendor/autoload.php@@ au lieu du
+classique @@F@lib/jelix/init.php@@, ainsi que @@F@vendor/jelix_app_path.php@@.
+
+<code php>
+// require(__DIR__.'/vendor/jelix/jelix/lib/jelix/init.php'),
+require(__DIR__.'/vendor/autoload.php');
+require(__DIR__.'/vendor/jelix_app_path.php');
+</code>
+
+
+===== Premier lancement de votre application =====
+
+Une fois votre application créée, vous pouvez la tester en lançant le serveur web
+de PHP (à n'utiliser qu'en phase de développement, pas en production !).
+
+Tapez donc en ligne de commande :
+
+<code bash>
+cd myapp
+php -S localhost:8080 -t www 
+</code>
+
+Et vous pouvez visiter http://localhost:8080 avec votre navigateur.
+
+Si vous voulez utiliser un autre serveur web, comme Apache ou Nginx, il vous faut
+faire quelques réglages supplémentaires. Voir le chapitre suivant.

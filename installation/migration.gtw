@@ -4,9 +4,8 @@ Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins
 ces étapes à faire :
 
   * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
-    jelix.
-  * Ne pas oublier de remettre dans le nouveau répertoire @@F@lib/@@ vos
-    éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
+    jelix, ou changer la version dans votre fichier composer.json si vous utilisez
+    Composer.
   * **supprimer** tous les fichiers dans le répertoire @@F@temp/votre_appli@@
   * adapter votre code en suivant les instructions indiquées pour chaque
     ancienne version de Jelix. Voir ci-dessous.
@@ -22,16 +21,182 @@ Voici les instructions à suivre dans l'ordre.
 
 ==== Sauvegarde ====
 
-Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers de configuration etc.
+Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers de
+configuration etc.
 
 ==== Répertoires temporaires ====
 
-Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votreapp/@@.
+Comme d'habitude, vous devez vider le contenu de votre répertoire
+@@F@temp/votreapp/@@.
 
-==== Modifications générales ====
+==== Installation des fichiers de Jelix ====
+
+Jelix 1.7 et certains modules "standards" sont désormais disponibles via
+Composer (ce qui n'est pas le cas de Jelix 1.6 et inférieur).
+
+Pour la migration, vous pouvez donc mettre à jour via Composer, ou télécharger
+l'archive comme pour les versions précédentes.
+
+Composer est un gestionnaire de paquet, utilisable en ligne de commande,
+qui est maintenant très utilisé dans de nombreux projets.
+
+=== Vous voulez utiliser Composer ===
+
+Installez Composer en suivant [[https://getcomposer.org|les instructions de son manuel]].
+
+Dans le répertoire de votre application, créer un fichier @@F@composer.json@@.
+Celui-ci doit indiquer le paquet @@jelix/jelix@@ comme dépendance dans la
+section @@require@@, avec la version voulue (pour le moment il n'y a pas de
+version stable disponible, indiquez donc "dev-jelix-1.7").
+
+Exemple :
+
+<code>
+{
+    "name": "mycompany/myapp",
+    "type": "application",
+    "require": {
+        "jelix/jelix": "dev-jelix-1.7.x"
+    }
+}
+</code>
+
+Vous devez remplacer @@"mycompany/myapp"@@ par un identifiant propre à votre
+projet. Un fichier @@F@composer.json@@ peut contenir bien d'autres informations.
+Voir le manuel de Composer.
+
+Supprimez le contenu du répertoire lib, sauf bien sûr les bibliothèques non
+fournies par Jelix, si vous en aviez ajouté dans ce répertoire lib.
+
+Executez ensuite en ligne de commande :
+
+<code bash>
+composer install
+</code>
+
+Vous verrez alors un nouveau répertoire @@F@vendor/@@ et un fichier composer.lock.
+Il n'est pas recommandé d'inclure ce répertoire @@F@vendor/@@ dans votre gestionnaire
+de version (git, subversion...). Donc indiquez-le dans un fichier @@F@.gitignore@@,
+@@F@.hgignore@@ ou une propriété @@snv:ignore@@, selon l'outil que vous utilisez.
+
+Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer :
+
+<code php>
+require (__DIR__.'/../lib/jelix/init.php');
+</code>
+
+par
+
+<code php>
+require (__DIR__.'/vendor/autoload.php');
+require (__DIR__.'/vendor/jelix_app_path.php');
+
+</code>
 
 
-==== Mise à jour des modules ====
+=== Vous ne voulez pas utiliser Composer ===
+
+Téléchargez le paquet jelix sur le site de téléchargement de jelix.org, comme
+vous avez l'habitude de faire.
+
+Remplacez le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
+jelix, en n'oubliant pas de remettre dans le nouveau répertoire @@F@lib/@@ vos
+éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
+
+
+==== Changement de la déclaration des modules et plugins ====
+
+Dans les versions précédentes de Jelix, il fallait déclarer les répertoires
+contenant des modules ou de plugins, dans des paramètres @@modulesPath@@ ou
+@@pluginsPath@@ de la configuration (dans @@var/config/mainconfig.ini.php@@ le fichier
+de configuration du point d'entrée).
+
+Ces paramètres ne sont plus reconnus. Les répertoires de modules et de plugins
+doivent maintenant être déclaré dans le fichier @@F@application.init.php@@ ou
+le fichier @@composer.json@@ si vous utilisez Composer.
+
+Supprimez donc ces paramètres des fichiers de configuration.
+
+Dans le fichier @@F@application.init.php@@, vous devez appeler
+@@jApp::declareModulesDir@@ et/ou @@jApp::declarePluginsDir@@, avec la liste
+des repertoires.
+
+<code php>
+jApp::declareModulesDir(array(
+                        __DIR__.'/../lib/jelix-modules/',
+                        __DIR__.'/../lib/jelix-admin-modules/',
+                        __DIR__.'/modules/'
+                    ));
+jApp::declarePluginsDir(array(
+                        __DIR__.'/../lib/jelix-plugins/',
+                        __DIR__.'/plugins'
+                    ));
+</code>
+
+Dans cet exemple, les répertoires @@jelix-modules@@, @@jelix-admin-modules@@
+et @@jelix-plugins@@ fournis avec Jelix sont déclarés (parce que votre
+appication utiliserait des modules et plugins de ces répertoires).
+Ces instructions déclarent aussi le répertoire @@modules/@@ et @@plugins/@@ de
+l'application.
+
+
+=== Si vous installez Jelix avec Composer ===
+
+Il est inutile de déclarer les répertoires de modules et plugins de Jelix, ils
+sont automatiquement reconnus. Vous n'avez donc que ceux de votre application
+(ou d'autres) à déclarer.
+
+<code php>
+jApp::declareModulesDir(array(
+                        __DIR__.'/modules/'
+                    ));
+jApp::declarePluginsDir(array(
+                        __DIR__.'/plugins'
+                    ));
+</code>
+
+Vous avez un autre moyen quand vous installez Jelix avec Composer : ces répertoires
+peuvent être déclarer directement dans le fichier @@F@composer.json@@ au lieu
+du fichier @@application.init.php@@, comme ceci:
+
+<code json>
+{
+   ...
+    "extra" : {
+        "jelix": {
+            "modules-dir" : [
+                "modules/",
+            ],
+            "plugins-dir" : [
+                "plugins/",
+            ]
+        }
+    }
+}
+</code>
+
+N'oubliez pas de faire un @@composer update@@ à chaque fois que vous modifiez
+le fichier @@F@composer.json@@.
+
+==== à propos de Simpletest ====
+
+Simpletest (et le module junittests) n'est plus fourni avec Jelix. Si vous
+n'avez pas migré vos tests vers PHPUnit, vous pouvez encore installer
+[[https://github.com/jelix/simpletest-module|le module junittests]] en le
+téléchargeant ou en le déclarant ("jelix/simpletest-module") dans votre fichier
+composer.json.
+
+==== changements dans profiles.ini.php ====
+
+Les drivers jDb "sqlite" et "mysql" ne sont plus fournis (le premier utilisant
+une API PHP pour le vieux sqlite 2, et le deuxième utilisant l'API php
+mysql qui est déprécié). Utilisez donc à la place respectivement "sqlite3" et
+"mysqli". Ou installez les drivers sqlite et mysql séparément,
+[[https://github.com/jelix/legacy-db-plugins|en les téléchargeant]] ou en
+déclarant le paquet "jelix/legacy-db-plugins" dans votre fichier
+@@composer.json@@.
+
+==== Mise à jour des modules ====  
 
 Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.7.
 
@@ -48,9 +213,6 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
 classes et méthodes que vous pouvez utiliser.
 
-Si vous avez des tests unitaires dans vos modules utilisant Simpletest, migrez les en utilisant PHPUnit.
-Simpletest ne sera plus fourni dans les prochaines versions de Jelix.
-
 ==== Mise à jour de Jelix ====
 
 Après toutes les modifications effectuées, vous devez lancer le script
@@ -58,59 +220,3 @@ installer.php de votre application. Le module jelix fera le reste des
 modifications.
 
 
-===== Mise à jour  vers Jelix 1.6.2 =====
-
-Jusqu'à Jelix 1.6.1, le wrapper PHPUnit pour jelix (lib/jelix-tests) necessitait l'installation de PHPUnit via Pear.
-Depuis Jelix 1.6.2, ce n'est plus le cas, vous pouvez utiliser Composer.
-
-==== Si vous voulez garder votre version PHPUnit installée par Pear ====
-
-Vous devez modifier votre fichier tests/runtests.php, en ajoutant cette ligne : @@require_once 'PHPUnit/Autoload.php';@@
-
-<code php>
-require(__DIR__.'/../application.init.php');
-
-require_once 'PHPUnit/Autoload.php';
-
-require(LIB_PATH.'jelix-tests/phpunit.inc.php');
-</code>
-
-==== Si vous voulez installer PHPUnit à partir de Composer ====
-
-Installez [Composer](http://getcomposer.org). Créez ensuite un fichier
-composer.json dans votre appli, au même niveau que votre project.xml.
-
-<code json>
-{
-    "name": "mycompany/myapp",
-    "type": "application",
-    "description": "",
-    "keywords": [],
-    "require": {
-        "php": ">=5.3.3"
-    },
-    "require-dev" : {
-        "phpunit/phpunit": "4.3.*"
-    },
-    "autoload": {
-        "files": [ "../lib/jelix/init.php"  ]
-    },
-    "minimum-stability": "stable"
-}
-</code>
-
-Lancez ensuite l'installation via Composer
-
-<code>
-composer install
-</code>
-
-Dans le fichier tests/runtests.php, vous devez inclure @@../vendor/autoload.php@@ :
-
-<code>
-require(__DIR__.'/../application.init.php');
-
-require(__DIR__.'/../vendor/autoload.php';
-
-require(LIB_PATH.'jelix-tests/phpunit.inc.php');
-</code>

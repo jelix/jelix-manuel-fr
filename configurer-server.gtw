@@ -2,34 +2,7 @@
 
 ===== Configuration de PHP =====
 
-   * @@V@magic_quotes_gpc@@ et @@V@magic_quotes_runtime@@ doivent être à
-     @@L@Off@@. Si ce n'est pas le cas, [[plugins/coord|il faut activer le plugin magicquotes]] livré avec jelix.
-   * @@V@session.auto_start@@ doit être à 0
-   * @@V@safe_mode@@ doit être à @@L@Off@@ (À cause des nombreux fichiers
-     temporaires créés par jelix, il peut être difficile de configurer une
-     installation avec Jelix avec le safe_mode activé)
-  
-Il est également recommandé de mettre ces valeurs :
-
-   * @@V@register_globals = off@@
-   * @@V@asp_tags = off@@
-   * @@V@short_open_tag = off@@
-
-Un [[phpapi:phpinfo|phpinfo()]] peut vous permettre de vérifier votre
-configuration. Par défaut la configuration se trouve dans un fichier nommé
-@@F@php.ini@@.
-
-==== Sur un serveur OVH mutualisé ====
-
-Si votre serveur de production est chez OVH, vous devez spécifier que vous
-utilisez PHP 5 (par défaut c'est PHP 4), sinon il y a des parse error. Ça se
-fait via le fichier ".htaccess" qui sera à la racine publique du site (www/) et
-vous devez indiquer :
-
-    SetEnv PHP_VER 5
-    SetEnv SESSION_USE_TRANS_SID 0
-
-La seconde ligne indique qu'il ne faut pas passer le cookie de session dans l'URL.
+La version minimal de PHP supportée par Jelix est la version 5.4.
 
 ===== Configuration du serveur =====
 
@@ -37,13 +10,17 @@ Voici ce qu'il faut configurer au niveau du serveur.
 
 Note : À chaque fois que vous modifiez la configuration du serveur web pour
 votre site, il faut supprimer les fichiers temporaires de jelix (dans
-@@F@temp/myapp@@ etc par ex), afin que Jelix prenne en compte la nouvelle
+@@F@myapp/temp/@@ etc par ex), afin que Jelix prenne en compte la nouvelle
 configuration.
 
 Exemple :
 <code bash>
-sudo rm -rf temp/myapp/*
+sudo rm -rf myapp/temp/*
 </code>
+
+
+Note : Il n'est pas indiqué ici comment configurer PHP dans le serveur
+web. Voyez la documentation de PHP pour cela.
 
 ==== Si vous pouvez spécifier le document root ====
 
@@ -52,39 +29,44 @@ configuration du serveur web ou via une interface d'administration comme le
 proposent certains hébergeurs, indiquez alors le répertoire @@F@myapp/www/@@
 comme étant la racine du site.
 
-Par exemple, avec apache, vous indiquerez dans le fichier @@F@httpd.conf@@,
+Par exemple, avec apache, vous indiquerez dans un fichier @@F@monsite.com.conf@@,
 quelque chose comme :
 
 <code htaccess>
    <VirtualHost *>
       ServerName www.monsite.com
       DocumentRoot /home/monsite/myapp/www/ 
+      <Directory "/home/monsite/myapp/www/">
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+      </Directory>
    </VirtualHost>
-   <Directory "/home/monsite/myapp/www/">
-     AllowOverride None
-     Order allow,deny
-     Allow from all
-   </Directory>
 </code>
 
-Vous devez indiquer aussi un alias vers le répertoire @@F@lib/jelix-www/@@, en le nommant jelix :
+Vous devez indiquer aussi un alias vers le répertoire @@F@lib/jelix-www/@@, en
+le nommant jelix :
 
 <code htaccess>
    <VirtualHost *>
       ServerName www.monsite.com
       DocumentRoot /home/monsite/myapp/www/ 
       Alias /jelix/ "/home/monsite/lib/jelix-www/"
+      # ou avec Composer: Alias /jelix/ "/home/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/"
+
+      <Directory "/home/monsite/myapp/www/">
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+      </Directory>
+   
+      <Directory "/home/monsite/lib/jelix-www/">
+      # ou avec Composer: <Directory "/home/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/">
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+      </Directory>
    </VirtualHost>
-   <Directory "/home/monsite/myapp/www/">
-     AllowOverride None
-     Order allow,deny
-     Allow from all
-   </Directory>
-   <Directory "/home/monsite/lib/jelix-www/">
-     AllowOverride None
-     Order allow,deny
-     Allow from all
-   </Directory>
 </code>
 
 Note : vous pouvez indiquer un autre nom que "jelix" pour l'alias. Vous devez
@@ -112,11 +94,12 @@ Dans ce cas, il est préférable de déplacer le contenu du répertoire
 @@F@monsite/myapp/www@@ à la racine de votre site, @@F@monsite/@@. Vous devriez
 donc obtenir une arborescence comme ceci :
 
+<code>
   monsite/  
     myapp/
     lib/
-    temp/
     index.php
+</code>
 
 Ici dans notre exemple, @@F@index.php@@ est un point d'entrée jelix de
 l'application. Il faut le modifier pour changer les chemins relatifs qu'il
@@ -146,7 +129,7 @@ du fichier @@F@project.xml@@) :
 
         <var>./var/</var>
         <www>../</www>
-        <temp>../temp/myapp/</temp>
+        <temp>./temp/</temp>
     </directories>
     <entrypoints>
         <!-- ... -->
@@ -162,7 +145,6 @@ renommer en "jelix". Vous obtiendrez :
     myapp/
     jelix/
     lib/
-    temp/
     index.php
 
 Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous
@@ -170,11 +152,13 @@ devez alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
 configuration de l'application, @@F@myapp/var/config/mainconfig.ini.php@@,
 section @@urlengine@@.
 
-**Attention :  il est fortement recommandé de ne pas mettre vos propres scripts et css dans ce répertoire jelix copié.**
-Sinon les futures mises à jour risquent d'être plus compliquées, et vos successeurs ou collègues risquent d'être un peu
-perdu, en ne sachant pas ce qui vient de jelix et ce qui vient de votre appli. Bref, ne touchez pas au contenu de
-jelix-www ou du répertoire qui est la copie de jelix-www. Mettez vos propres scripts dans un autre répertoire, par
-exemple dans @@F@monsite/js/@@.
+**Attention : il est fortement recommandé de ne pas mettre vos propres scripts
+et css dans ce répertoire jelix copié.** Sinon les futures mises à jour risquent
+d'être plus compliquées, et vos successeurs ou collègues risquent d'être un peu
+perdu, en ne sachant pas ce qui vient de jelix et ce qui vient de votre appli.
+Bref, ne touchez pas au contenu de jelix-www ou du répertoire qui est la copie
+de jelix-www. Mettez vos propres scripts dans un autre répertoire, par exemple
+dans @@F@monsite/js/@@.
 
 Dans le fichier @@F@myapp/application.init.php@@, vous devez modifier le chemin
 indiqué à @@C@jApp@@ pour le répertoire www (deuxième argument) :
@@ -201,11 +185,6 @@ il faut activer dans apache (au niveau de la configuration serveur ou dans le
 
 <code htaccess>
    Options +Multiviews
-</code>
-
-Et pour Apache 2, rajouter :
-
-<code htaccess>
    AcceptPathInfo on
 </code>
 
@@ -219,13 +198,13 @@ l'affichage de phpinfo).
 
 Vous devez donner le droit en écriture à l'utilisateur exécutant votre serveur
 web (apache ou autre) au moins sur le répertoire @@F@myapp/var/log/@@, ainsi que
-tous les répertoires dans le répertoire @@F@temp/@@.
+le répertoire @@F@myapp/temp/@@.
 
 Exemple, sur un serveur debian/ubuntu :
 
 <code bash>
-   sudo chown www-data:www-data temp/myapp*  myapp/var/log
-   sudo chmod g+w temp/myapp* myapp/var/log
+   sudo chown www-data:www-data myapp/temp/  myapp/var/log
+   sudo chmod g+w myapp/temp myapp/var/log
 </code>
 
 Peut être que pour certaines applications, il y a d'autres répertoires à

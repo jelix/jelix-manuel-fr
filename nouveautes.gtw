@@ -20,10 +20,10 @@ Principales nouveautés apportées par la version 1.7 :
   * Jelix-scripts createapp: nouvelle option -modulename pour indiquer le nom du
     module principal
   * contrôleur CRUD : la liste des enregistrements peut être triée par colonne
-  * jauthdb_admin: la liste des utilisateurs peut être filtrée et triée
-  * jacl2db_admin: la liste des utilisateurs peut être filtrée
+  * jauthdb_admin : la liste des utilisateurs peut être filtrée et triée
+  * jacl2db_admin : la liste des utilisateurs peut être filtrée
 
-  * jIniFileModifier : il n'y a plus de ligne ajoutée à la fin du fichier à chaque sauvegarde
+  * jIniFileModifier : il n'y a plus de ligne vide ajoutée à la fin du fichier à chaque sauvegarde
   * @@jFile::getMimeTypeFromFilename()@@ : support d'une liste de type mime définie par le développeur, dans
     une section @@[mimeTypes]@@ de la configuration.
   * Nouvelles méthodes : @@jFile::shortestPath()@@ et @@jFile::normalizePath()@@.
