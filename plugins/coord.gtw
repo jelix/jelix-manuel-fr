@@ -16,21 +16,19 @@ jargon Jelix.
 
 ==== Déclaration ====
 
-Pour activer un plugin coord, vous avez deux choses à faire dans le fichier de
-configuration d'un point d'entrée :
+Pour activer un plugin coord, vous avez deux choses à faire :
 
   * bien sûr, [[/plugins#declaration-d-un-depot-de-plugins|déclarer le dépôt]]
-    contenant le répertoire de votre plugin, dans l'option //pluginsPath// de la
-    configuration
-  * indiquer le plugin dans la section @@[coordplugins]@@, avec comme valeur "1"
-    ou le nom de son fichier de configuration si il en a un (chemin relatif
-    au répertoire de configuration).
+    contenant le répertoire de votre plugin
+  * dans le fichier de configuration d'un point d'entrée indiquer le plugin dans
+    la section @@[coordplugins]@@, avec comme valeur "1" ou le nom de son
+    fichier de configuration si il en a un (chemin relatif au répertoire de
+    configuration).
 
 Si vous placez votre plugin //foo// dans @@F@votreApplication/plugins/coord/@@ alors
 vous devez déclarer comme ceci :
 
 <code ini>
-pluginsPath = app:plugins/
 
 [coordplugins]
 foo = foo.coord.ini.php
@@ -45,19 +43,19 @@ configuration, vous devez mettre //1// au lieu d'un nom de fichier, comme ceci :
 foo = 1
 </code>
 
-Depuis Jelix 1.3, @@"1"@@ indique aussi que la configuration du plugin peut être
+La valeur @@"1"@@ indique aussi que la configuration du plugin peut être
 dans la configuration du point d'entrée. Cette configuration doit alors être
 placée dans une section @@[coordplugin_XXX]@@ (où XXX est le nom du plugin,
 comme par exemple @@[coordplugin_foo]@@).
 
 **Important** : Si vous utilisez plusieurs plugins de coordinateur,
-l'ordre de déclaration des plugins dans le fichier de configuration a une importance. Ainsi le premier
-plugin déclaré à la priorité sur les autres. C'est à dire que si ce premier
-plugin renvoie une action, les autres plugins ne seront pas exécutés. Il
-convient donc de choisir l'ordre de déclaration des plugins en fonction de la
-priorité que l'on veut pour chaque plugin. Par exemple si vous considérez que le
-plugin //bar// ne peut être exécuté que si le plugin //foo// n'a pas renvoyé
-d'action, alors il faudrait les déclarer comme ceci :
+l'ordre de déclaration des plugins dans le fichier de configuration a une
+importance. Ainsi le premier plugin déclaré à la priorité sur les autres. C'est
+à dire que si ce premier plugin renvoie une action, les autres plugins ne seront
+pas exécutés. Il convient donc de choisir l'ordre de déclaration des plugins en
+fonction de la priorité que l'on veut pour chaque plugin. Par exemple si vous
+considérez que le plugin //bar// ne peut être exécuté que si le plugin //foo//
+n'a pas renvoyé d'action, alors il faudrait les déclarer comme ceci :
 
 <code ini>
 [coordplugins]

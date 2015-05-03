@@ -159,9 +159,6 @@ locale = "fr_FR"
 charset = "UTF-8"
 timeZone = "Europe/Paris"
 
-pluginsPath = lib:jelix-plugins/,app:plugins/
-modulesPath = lib:jelix-modules/,app:modules/
-
 theme = default
 use_error_handler = on
 
@@ -174,7 +171,6 @@ Détails des paramètres :
   * **locale, charset** : langue et encodage par défaut des réponses
   * **timeZone** : définit le décalage horaire pour toutes les fonctions de
     dates et heures
-  * **pluginsPath** : liste des chemins d'accès aux plugins
   * **theme** : nom du thème sélectionné par défaut. Voir la description du
     système des [[themes|thèmes]] de Jelix
   * **use_error_handler** : cette option devrait rester à //on// pour que Jelix
@@ -195,7 +191,7 @@ Elle indique, pour chaque module, leur niveau d'accés.
 ==== section coordplugins ====
 
 Doit contenir les noms des plugins à activer. Ils seront chargés à partir des
-chemins définis dans le paramètre général pluginsPath.
+chemins définis avec jApp::declarePluginsDir() dans le fichier @@F@application.init.php@@.
 
 Par exemple, ci-dessous la configuration active le plugin de coordinateur gérant
 l'authentification et dont les paramètres se trouve dans le fichier

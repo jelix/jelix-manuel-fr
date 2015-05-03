@@ -27,7 +27,9 @@ configuration etc.
 ==== Répertoires temporaires ====
 
 Comme d'habitude, vous devez vider le contenu de votre répertoire
-@@F@votreapp/temp/@@.
+@@F@temp/votreapp/@@. Notez que depuis Jelix 1.7, le répertoire temporaire d'une
+application est par défaut dans le répertoire de l'application, et non
+plus en dehors. Mais le garder hors de l'application.
 
 ==== Installation des fichiers de Jelix ====
 

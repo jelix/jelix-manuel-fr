@@ -6,39 +6,48 @@ de modules, ou aussi dépôt de modules.
 
 ===== Déclarer un dépôt de module =====
 
-Pour avoir accès aux modules, il faut déclarer ces dépôts de modules dans la
-configuration, par la propriété @@V@modulesPath@@. On peut y indiquer plusieurs
-chemins en les séparant par des virgules. On peut indiquer soit des chemins
-complets, soit des chemins relatifs à un répertoire spécifique de l'arborescence
-Jelix. Ces chemins relatifs ont une notation spéciale :
+Pour avoir accès aux modules, il faut déclarer ces dépôts de modules avec
+@@C@jApp@@ ou dans le fichier composer.json si vous avez installé
+Jelix avec Composer. (dans les versions 1.6 et inférieurs, c'était dans la
+configuration, avec la propriété @@V@modulesPath@@).
 
-<code>
-   coderepertoire:chemin/relatif/
+Un exemple avec @@C@jApp@@ :
+
+<code php>
+   jApp::declareModulesDir(__DIR__.'/../lib/jelix-modules/');
+   jApp::declareModulesDir(__DIR__.'/modules/');
 </code>
-
-@@coderepertoire@@ est un de ces codes :
-
-; @@lib@@ : répertoire lib/ de jelix
-; @@app@@ : répertoire de l'application
-
-Cela évite d'avoir à indiquer un véritable chemin relatif. Et donc d'avoir à
-changer à la fois le fichier @@F@application.init.php@@ et le fichier de
-configuration quand on fait une modification dans l'arborescence, quand on migre
-l'application d'un serveur à un autre (entre le développement et la production
-par exemple). 
-
-Exemple :
-
-<code ini>
-   modulesPath = lib:jelix-modules/,app:modules/
-</code>
-
+  
 On déclare ici qu'il y a deux dépôts de modules : le premier, @@F@jelix-modules/@@,
 se trouvant dans le répertoire @@F@lib/@@ de jelix; le deuxième, le répertoire
 @@F@modules/@@ de l'application.
 
 Tous les modules se trouvant dans ces deux répertoires pourront être activés
 dans l'application.
+
+Si vous avez installé Jelix avec Composer, vous avez une autre alternative :
+déclarer ces répertoires dans le fichier composer.json de l'application, ou
+même dans le fichier composer.json d'un paquet composer contenant des modules.
+
+<code json>
+{
+   ...
+   "extra" : {
+      "jelix": {
+         "modules-dir" : [
+            "modules/",
+         ]
+      }
+   }
+}
+</code>
+
+Ici on déclare le répertoire @@F@modules/@@ qui est situé dans le même répertoire que
+le @@F@composer.json@@.
+
+Notez que dans le cas d'une installation de Jelix avec Composer, les répertoires
+de modules fournis avec le paquet Jelix sont automatiquement déclarés.
+
 
 ===== Arborescence d'un module =====
 
@@ -90,14 +99,13 @@ accentuées, les chiffres et le caractère @@_@@.
 
 Par défaut, le module est créé dans le répertoire @@F@modules/@@ de
 l'application, mais si vous voulez le créer dans un autre dépôt de module
-déclaré dans @@V@modulesPath@@, vous pouvez l'indiquer après le nom du module,
-en utilisant la même syntaxe que pour @@V@modulesPath@@, à savoir un chemin
-absolu ou un chemin relatif précédé de "lib:" ou "app:".
+déclaré avec jApp, vous pouvez indiquer son chemin (relatif ou absolu) après le
+nom du module.
 
 Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/ 
 
 <code bash>
-   php cmd.php createmodule supermodule lib:shared-modules/
+   php cmd.php createmodule supermodule ../lib/shared-modules/
 </code>
 
 Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres

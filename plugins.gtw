@@ -10,31 +10,51 @@ Tous les plugins sont regroupés dans des "dépôts" de plugins.
 ===== Déclaration d'un dépôt de plugins =====
 
 Vous pouvez déclarer un ou plusieurs dépôts de plugins. Un dépôt est un
-répertoire ayant une structure précise (voir plus loin). Il faut déclarer chacun
-de ces dépôt dans le paramètre @@pluginsPath@@ de la
-[[configuration|configuration]] de l'application. Par défaut, ce paramètre vaut :
+répertoire ayant une structure précise (voir plus loin).
 
-<code ini>
-pluginsPath = lib:jelix-plugins/,app:plugins/
+Il faut déclarer ces dépôts de plugins avec @@C@jApp@@ ou dans le fichier
+composer.json si vous avez installé Jelix avec Composer. (dans les versions 1.6
+et inférieurs, c'était dans la configuration, avec la propriété
+@@V@pluginsPath@@).
+
+Un exemple avec @@C@jApp@@ :
+
+<code php>
+   jApp::declarePluginsDir(__DIR__.'/../lib/jelix-plugins/');
+   jApp::declarePluginsDir(__DIR__.'/plugins/');
 </code>
-
-Vous remarquez que vous pouvez indiquer plusieurs dépôts, séparés par une
-virgule. Ici il est indiqué qu'il y a deux dépôts : le répertoire
-@@F@jelix-plugins@@ dans le répertoire @@F@lib/@@, et un répertoire plugins dans
-votre application.
+  
+Ici il est indiqué qu'il y a deux dépôts : le répertoire
+@@F@jelix-plugins@@ dans le répertoire @@F@lib/@@, et un répertoire @@F@plugins@@
+dans votre application.
 
 D'autres répertoires sont déclarés implicitement et automatiquement : celui de Jelix
 qui est le répertoire @@F@lib/jelix/plugins/@@ et contenant les plugins
-livrés en standard, et aussi tous les répertoires @@F@plugins/@@ présents dans les modules
-activés.
+livrés en standard, et aussi tous les répertoires @@F@plugins/@@ présents dans
+les modules activés.
 
-Rappel : @@lib:@@ est un raccourci indiquant le répertoire de base @@F@lib/@@,
-et @@app:@@ un raccourci pour le répertoire de votre application. Vous pouvez
-aussi indiquer un chemin absolu. Attention toutefois si vous migrez votre
-application d'une machine à une autre. Il est aussi possible d'utiliser un
-chemin relatif, mais celui-ci doit être relatif au script de point d'entrée
-(@@F@index.php@@ par ex).
+Si vous avez installé Jelix avec Composer, vous avez une autre alternative :
+déclarer ces répertoires dans le fichier composer.json de l'application, ou
+même dans le fichier composer.json d'un paquet composer contenant des modules.
 
+<code json>
+{
+   ...
+   "extra" : {
+      "jelix": {
+         "plugins-dir" : [
+            "plugins/",
+         ]
+      }
+   }
+}
+</code>
+
+Ici on déclare le répertoire @@F@plugins/@@ qui est situé dans le même
+répertoire que le @@F@composer.json@@.
+
+Notez que dans le cas d'une installation de Jelix avec Composer, les répertoires
+de plugins fournis avec le paquet Jelix sont automatiquement déclarés.
 
 ===== Structure d'un dépôt et création de plugins =====
 
