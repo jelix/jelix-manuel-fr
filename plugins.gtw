@@ -20,13 +20,10 @@ et inférieurs, c'était dans la configuration, avec la propriété
 Un exemple avec @@C@jApp@@ :
 
 <code php>
-   jApp::declarePluginsDir(__DIR__.'/../lib/jelix-plugins/');
    jApp::declarePluginsDir(__DIR__.'/plugins/');
 </code>
-  
-Ici il est indiqué qu'il y a deux dépôts : le répertoire
-@@F@jelix-plugins@@ dans le répertoire @@F@lib/@@, et un répertoire @@F@plugins@@
-dans votre application.
+
+Ici il est indiqué le répertoire @@F@plugins@@ dans votre application.
 
 D'autres répertoires sont déclarés implicitement et automatiquement : celui de Jelix
 qui est le répertoire @@F@lib/jelix/plugins/@@ et contenant les plugins
@@ -52,9 +49,6 @@ même dans le fichier composer.json d'un paquet composer contenant des modules.
 
 Ici on déclare le répertoire @@F@plugins/@@ qui est situé dans le même
 répertoire que le @@F@composer.json@@.
-
-Notez que dans le cas d'une installation de Jelix avec Composer, les répertoires
-de plugins fournis avec le paquet Jelix sont automatiquement déclarés.
 
 ===== Structure d'un dépôt et création de plugins =====
 

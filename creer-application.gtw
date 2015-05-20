@@ -39,14 +39,13 @@ php install/installer.php
 
 L'autre façon de créer une application Jelix, est l'utilisation de la commande
 @@createapp@@, qui est présente depuis les premières versions de Jelix. Elle permet
-de créer un squelette d'application. C'est une alternative encore crédible au
+de créer un squelette d'application. C'est une alternative encore valable par rapport au
 paquet jelix-skeleton-app car elle permet de personnaliser la création du
 squelette.
 
 Vous trouverez cette commande @@createapp@@ dans le répertoire
 @@F@lib/jelix-scripts@@ (@@F@vendor/jelix/jelix/lib/jelix-scripts@@ si vous
 avez installé Jelix avec Composer).
-
 
 Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et exécutez :
 
@@ -72,17 +71,6 @@ contenu est :
      var/themes/   les thèmes disponibles pour votre application
      var/overloads/ contiendra les différents fichiers qui redéfinissent des fichiers de modules que vous aurez récupéré
      www/          racine du répertoire public de votre application
-</code>
-
-
-si vous avez installé Jelix avec Composer, il faut modifier le fichier
-application.init.php pour charger @@F@vendor/autoload.php@@ au lieu du
-classique @@F@lib/jelix/init.php@@, ainsi que @@F@vendor/jelix_app_path.php@@.
-
-<code php>
-// require(__DIR__.'/vendor/jelix/jelix/lib/jelix/init.php'),
-require(__DIR__.'/vendor/autoload.php');
-require(__DIR__.'/vendor/jelix_app_path.php');
 </code>
 
 

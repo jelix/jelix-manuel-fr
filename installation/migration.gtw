@@ -29,7 +29,7 @@ configuration etc.
 Comme d'habitude, vous devez vider le contenu de votre répertoire
 @@F@temp/votreapp/@@. Notez que depuis Jelix 1.7, le répertoire temporaire d'une
 application est par défaut dans le répertoire de l'application, et non
-plus en dehors. Mais le garder hors de l'application.
+plus en dehors. Mais vous pouvez le garder hors de l'application.
 
 ==== Installation des fichiers de Jelix ====
 
@@ -92,7 +92,6 @@ par
 <code php>
 require (__DIR__.'/vendor/autoload.php');
 require (__DIR__.'/vendor/jelix_app_path.php');
-
 </code>
 
 
@@ -105,6 +104,19 @@ Remplacez le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
 jelix, en n'oubliant pas de remettre dans le nouveau répertoire @@F@lib/@@ vos
 éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
 
+Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer :
+
+<code php>
+require (__DIR__.'/../lib/jelix/init.php');
+</code>
+
+par
+
+<code php>
+require (__DIR__.'/../lib/vendor/autoload.php');
+require (__DIR__.'/../lib/vendor/jelix_app_path.php');
+</code>
+
 
 ==== Changement de la déclaration des modules et plugins ====
 
@@ -114,7 +126,7 @@ contenant des modules ou de plugins, dans des paramètres @@modulesPath@@ ou
 de configuration du point d'entrée).
 
 Ces paramètres ne sont plus reconnus. Les répertoires de modules et de plugins
-doivent maintenant être déclaré dans le fichier @@F@application.init.php@@ ou
+doivent maintenant être déclarés dans le fichier @@F@application.init.php@@ ou
 le fichier @@composer.json@@ si vous utilisez Composer.
 
 Supprimez donc ces paramètres des fichiers de configuration.
@@ -125,40 +137,23 @@ des repertoires.
 
 <code php>
 jApp::declareModulesDir(array(
-                        __DIR__.'/../lib/jelix-modules/',
-                        __DIR__.'/../lib/jelix-admin-modules/',
                         __DIR__.'/modules/'
                     ));
 jApp::declarePluginsDir(array(
-                        __DIR__.'/../lib/jelix-plugins/',
                         __DIR__.'/plugins'
                     ));
 </code>
 
-Dans cet exemple, les répertoires @@jelix-modules@@, @@jelix-admin-modules@@
-et @@jelix-plugins@@ fournis avec Jelix sont déclarés (parce que votre
-appication utiliserait des modules et plugins de ces répertoires).
-Ces instructions déclarent aussi le répertoire @@modules/@@ et @@plugins/@@ de
-l'application.
+Dans cet exemple, les répertoires @@modules/@@ et @@plugins/@@ de l'application sont
+déclarés. Notez que les répertoires @@jelix-modules@@, @@jelix-admin-modules@@ et
+@@jelix-plugins@@ fournis avec Jelix sont déclarés automatiquement (via l'inclusion du
+fichier @@F@vendor/jelix_app_path.php@@).
 
 
 === Si vous installez Jelix avec Composer ===
 
-Il est inutile de déclarer les répertoires de modules et plugins de Jelix, ils
-sont automatiquement reconnus. Vous n'avez donc que ceux de votre application
-(ou d'autres) à déclarer.
-
-<code php>
-jApp::declareModulesDir(array(
-                        __DIR__.'/modules/'
-                    ));
-jApp::declarePluginsDir(array(
-                        __DIR__.'/plugins'
-                    ));
-</code>
-
 Vous avez un autre moyen quand vous installez Jelix avec Composer : ces répertoires
-peuvent être déclarer directement dans le fichier @@F@composer.json@@ au lieu
+peuvent être déclaré directement dans le fichier @@F@composer.json@@ au lieu
 du fichier @@application.init.php@@, comme ceci:
 
 <code json>
@@ -215,9 +210,9 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
 classes et méthodes que vous pouvez utiliser.
 
-Le module jtcpdf, utilisé pour générer une réponse PDF, est toujours livré séparément, mais aussi
-disponible via Composer. Si vous l'utilisiez, installez donc sa nouvelle version :
-[[https://packagist.org/packages/jelix/tcpdf-module|paquet jelix/tcpdf-module]].
+Le module jtcpdf, utilisé pour générer une réponse PDF, est toujours livré séparément, mais
+aussi dorénavant disponible via Composer. Si vous l'utilisiez, installez donc sa nouvelle
+version : [[https://packagist.org/packages/jelix/tcpdf-module|paquet jelix/tcpdf-module]].
 
 ==== Mise à jour de Jelix ====
 

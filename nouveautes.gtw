@@ -43,7 +43,7 @@ Les modules, plugins et fonctionnalités dépréciés :
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
-  * idem pour les plugins mysql et sqlite : en effet, les API PHp qu'ils utilisent sont dépréciées
+  * idem pour les plugins mysql et sqlite : en effet, les API PHP qu'ils utilisent sont dépréciées
     dans PHP. Ils sont disponibles séparément. Il est toutefois préférable d'utiliser
     respectivement les plugins mysqli et sqlite3, toujours disponibles dans la
     distribution standard.
