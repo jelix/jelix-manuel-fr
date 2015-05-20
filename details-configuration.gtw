@@ -229,7 +229,6 @@ zip = jResponseZip
 rss2.0 = jResponseRss20
 atom1.0 = jResponseAtom10
 css= jResponseCss
-tcpdf = jResponseTcpdf
 </code>
 
 ==== section error_handling ====

@@ -215,6 +215,10 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
 classes et méthodes que vous pouvez utiliser.
 
+Le module jtcpdf, utilisé pour générer une réponse PDF, est toujours livré séparément, mais aussi
+disponible via Composer. Si vous l'utilisiez, installez donc sa nouvelle version :
+[[https://packagist.org/packages/jelix/tcpdf-module|paquet jelix/tcpdf-module]].
+
 ==== Mise à jour de Jelix ====
 
 Après toutes les modifications effectuées, vous devez lancer le script

@@ -35,16 +35,20 @@ Principales nouveautés apportées par la version 1.7 :
      * un plugin pour jdb est fourni, permettant à jDb de traiter plus rapidement l'ouverture d'une
        connexion.
 
+Les modules et plugins externalisés :
 
-Les modules, plugins et fonctionnalités dépréciés
+  * Le module jtcpdf est maintenant disponible en tant que paquet Composer : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
+
+Les modules, plugins et fonctionnalités dépréciés :
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
-  * idem pour les plugins mysql et sqlite. Ils sont disponibles séparément. Il est toutefois préférable
-   d'utiliser respectivement les plugins mysqli et sqlite3, toujours disponibles dans la distribution
-   standard.
+  * idem pour les plugins mysql et sqlite : en effet, les API PHp qu'ils utilisent sont dépréciées
+    dans PHP. Ils sont disponibles séparément. Il est toutefois préférable d'utiliser
+    respectivement les plugins mysqli et sqlite3, toujours disponibles dans la
+    distribution standard.
   * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre application pour utiliser
-   en_US ou en_GB.
+    en_US ou en_GB.
   * le plugin memcache22 pour jCache a été supprimé
   * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
 
@@ -53,7 +57,7 @@ Pour les contributeurs:
   * La configuration Vagrant pour les contributeurs est maintenant située dans testapp
   * Il n'y a plus besoin de faire un "build" des sources de Jelix pour contribuer à Jelix
     et lancer les tests.
-  * FakeServerConf est maintenant installé via Composer
+  * FakeServerConf, Minify, PHPMailer sont maintenant installés via Composer
   * Dans testapp, une application "adminapp" est disponible pour tester les modules d'admin.
 
 
