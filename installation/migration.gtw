@@ -214,6 +214,15 @@ Le module jtcpdf, utilisé pour générer une réponse PDF, est toujours livré 
 aussi dorénavant disponible via Composer. Si vous l'utilisiez, installez donc sa nouvelle
 version : [[https://packagist.org/packages/jelix/tcpdf-module|paquet jelix/tcpdf-module]].
 
+Le plugin Minify pour les réponses HTML est maintenant livré séparément, et disponible
+via Composer (ou directement en zip). Si vous l'utilisez, installez-le :
+[[https://packagist.org/packages/jelix/minify-module|paquet jelix/minify-module]].
+
+Le plugin redis pour jKVDb est maintenant livré séparément, et disponible
+via Composer (ou directement en zip). Si vous l'utilisez, installez-le :
+[[https://packagist.org/packages/jelix/php-redis-plugin|paquet jelix/php-redis-plugin]].
+
+
 ==== Mise à jour de Jelix ====
 
 Après toutes les modifications effectuées, vous devez lancer le script

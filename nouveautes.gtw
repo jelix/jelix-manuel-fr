@@ -1,9 +1,11 @@
 ~~LANG:EN@enman:new-features~~
 
-Principales nouveautés apportées par la version 1.7 :
+===== Principales nouveautés apportées par la version 1.7 =====
 
   * Intégration avec Composer :
     * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
+    * Des modules et plugins ont été externalisés et disponibles séparément via Composer. Certains restent
+      toutefois inclus dans le paquet standard de Jelix.
     * Un projet basé sur Jelix peut-être crée avec le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
       installable via Composer
     * Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont plus pris en charge, et remplacés par une nouvelle API à appeler
@@ -35,11 +37,19 @@ Principales nouveautés apportées par la version 1.7 :
      * un plugin pour jdb est fourni, permettant à jDb de traiter plus rapidement l'ouverture d'une
        connexion.
 
-Les modules et plugins externalisés :
+===== Les modules et plugins externalisés =====
 
-  * Le module jtcpdf est maintenant disponible en tant que paquet Composer : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
+À l'instar du module jtcpdf dans les versions précédentes, des modules et plugins ne sont
+plus fournis avec Jelix, mais fourni séparément, en tant que paquets Composer et archives
+téléchargeables classiquement.
 
-Les modules, plugins et fonctionnalités dépréciés :
+Voici la liste de ces modules et plugins :
+
+  * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
+  * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
+  * Le plugin redis pour jKVDb  : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+
+===== Les modules, plugins et fonctionnalités dépréciés =====
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
@@ -52,7 +62,7 @@ Les modules, plugins et fonctionnalités dépréciés :
   * le plugin memcache22 pour jCache a été supprimé
   * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
 
-Pour les contributeurs:
+===== Pour les contributeurs =====
 
   * La configuration Vagrant pour les contributeurs est maintenant située dans testapp
   * Il n'y a plus besoin de faire un "build" des sources de Jelix pour contribuer à Jelix
@@ -60,6 +70,6 @@ Pour les contributeurs:
   * FakeServerConf, Minify, PHPMailer sont maintenant installés via Composer
   * Dans testapp, une application "adminapp" est disponible pour tester les modules d'admin.
 
+===== Contributeurs à Jelix 1.7 =====
 
-
-Contributeurs à Jelix 1.7 : ...
+Liste à établir...
