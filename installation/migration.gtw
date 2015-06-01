@@ -210,18 +210,18 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
 classes et méthodes que vous pouvez utiliser.
 
-Le module jtcpdf, utilisé pour générer une réponse PDF, est toujours livré séparément, mais
-aussi dorénavant disponible via Composer. Si vous l'utilisiez, installez donc sa nouvelle
-version : [[https://packagist.org/packages/jelix/tcpdf-module|paquet jelix/tcpdf-module]].
+Certaines classes, certains modules et plugins sont maintenant livrés séparément, soit
+installable avec Composer, soit via un zip. Si vous les utilisiez, il faudra donc les
+récupérer en plus de Jelix. Il s'agit de :
 
-Le plugin Minify pour les réponses HTML est maintenant livré séparément, et disponible
-via Composer (ou directement en zip). Si vous l'utilisez, installez-le :
-[[https://packagist.org/packages/jelix/minify-module|paquet jelix/minify-module]].
-
-Le plugin redis pour jKVDb est maintenant livré séparément, et disponible
-via Composer (ou directement en zip). Si vous l'utilisez, installez-le :
-[[https://packagist.org/packages/jelix/php-redis-plugin|paquet jelix/php-redis-plugin]].
-
+  * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
+  * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
+  * Le plugin redis pour jKVDb  : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+  * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
+    l'objet réponse pour générer un sitemap.
+  * la classe jHttp : [[https://packagist.org/packages/jelix/jhttp|jelix/jhttp]]. Il est
+    préconisé d'utiliser d'autres composants plus modernes
+    comme [[https://packagist.org/packages/guzzlehttp/guzzle|GuzzleHttp]].
 
 ==== Mise à jour de Jelix ====
 

@@ -40,7 +40,7 @@
 ===== Les modules et plugins externalisés =====
 
 À l'instar du module jtcpdf dans les versions précédentes, des modules et plugins ne sont
-plus fournis avec Jelix, mais fourni séparément, en tant que paquets Composer et archives
+plus fournis avec Jelix, mais disponibles séparément, en tant que paquets Composer et archives
 téléchargeables classiquement.
 
 Voici la liste de ces modules et plugins :
@@ -48,6 +48,19 @@ Voici la liste de ces modules et plugins :
   * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
   * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
   * Le plugin redis pour jKVDb  : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+  * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
+    l'objet réponse pour générer un sitemap.
+
+À noter que d'autres composants, modules et plugins sont aussi maintenant chacun dans
+leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
+
+  * [[https://packagist.org/packages/jelix/fakeserverconf|FakeServerConf]]
+  * [[https://packagist.org/packages/jelix/soap-server-module|le module jSoap]]
+  * [[https://packagist.org/packages/jelix/feeds-module|un nouveau module jFeeds]] comportant les classes
+    et réponse pour générer des fils RSS et ATOM
+  * [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]
+  * [[https://packagist.org/packages/jelix/inifile|IniModifier et MultiIniModifier]], classes de
+    modification de fichiers ini (anciennement jIniFileModifier et jIniMultiFilesModifier)
 
 ===== Les modules, plugins et fonctionnalités dépréciés =====
 
@@ -61,6 +74,10 @@ Voici la liste de ces modules et plugins :
     en_US ou en_GB.
   * le plugin memcache22 pour jCache a été supprimé
   * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
+  * la classe jHttp est dépréciée et installable séparément.
+  * les classes jIniFile, jIniFileModifier, jIniMultiFilesModifier ont changés de nom en
+    respectivement Jelix\IniFile\Util, Jelix\IniFile\IniModifier, Jelix\IniFile\MultiIniModifier.
+    Mais il est encore possible d'utiliser les anciens noms (jusqu'à la prochaine version).
 
 ===== Pour les contributeurs =====
 
