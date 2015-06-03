@@ -38,10 +38,11 @@ sont utilisables pour tous les drivers :
     @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre
     le nom de la table à préfixer.
 
-===== Profil mysql =====
+===== Profil mysql et mysqli =====
 
 Paramètres possibles :
-   * **driver** : doit valoir "mysql"  (utilisant l'antique API PHP mysql_*) ou "mysqli" (utilisant la nouvelle API PHP mysqli). Préférez "mysqli".
+   * **driver** : doit valoir "mysqli" (utilisant la nouvelle API PHP mysqli) ou "mysql"
+     (utilisant l'antique API PHP mysql_*, non recommendé)
    * **database** : le nom de la base de données à utiliser
    * **host** : le nom du serveur mysql sur lequel se connecter
    * **user** et **password** : le login/mot de passe pour la connexion
@@ -84,21 +85,27 @@ Paramètres possibles :
      chercher les tables, si le schéma par défaut pour la connexion ne
      correspond pas à celui dans lequel l'application va chercher.
 
-===== Profil sqlite =====
+===== Profil sqlite et sqlite3 =====
 
 Paramètres possibles :
 
-   * **driver** : doit valoir "sqlite"
-   * **database** : le nom du fichier de base de données à utiliser. Vous pouvez
-     utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à
-     partir de celui de l'application, de lib/ ou du répertoire var de
-     l'application
+   * **driver** : doit valoir "sqlite3" (ou "sqlite" pour les vieilles bases en sqlite2)
+   * **database** : le nom du fichier de base de données à utiliser. voir plus base
    * **persistent** : indique si la connexion est persistante (**on**) ou pas
      (**off**)
 
-A noter que les fichiers de base de données sqlite doivent être dans le dossier @@F@var/db/sqlite/@@
-(pour sqlite2) ou @@F@var/db/sqlite3/@@ (pour sqlite3) de votre application et qu'à la fois ce
-dossier et le fichier de base de données sqlite doivent avoir les droits de
+Pour le fichier de base de données, vous avez plusieurs syntaxe
+
+   * un simple nom de fichier (ex: mybase.sqlite). Le fichier se trouvera alors dans le
+     dossier @@F@var/db/sqlite/@@ (pour sqlite2) ou @@F@var/db/sqlite3/@@ (pour sqlite3)
+     de votre application
+   * Un nom de fichier (avec éventuellement un chemin de sous répertoire), avec en prefix
+     un raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à
+     partir de celui de l'application, de lib/ ou du répertoire var de
+     l'application. Ex: "app:../db/mybase.sqlite".
+   * un chemin complet sur le disque. Ex: /opt/foo/bar.sqlite. (Jelix 1.6.4+)
+
+Notez que le dossier et le fichier de base de données sqlite doivent avoir les droits de
 lecture/écriture adéquats (ceux du serveur web).
 
 ===== Profil pdo =====
