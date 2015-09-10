@@ -50,6 +50,8 @@ Voici la liste de ces modules et plugins :
   * Le plugin redis pour jKVDb  : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
   * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
     l'objet réponse pour générer un sitemap.
+  * [[https://packagist.org/packages/jelix/diff-plugin|Le plugin diff pour jTpl]]
+
 
 À noter que d'autres composants, modules et plugins sont aussi maintenant chacun dans
 leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
@@ -61,6 +63,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
   * [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]
   * [[https://packagist.org/packages/jelix/inifile|IniModifier et MultiIniModifier]], classes de
     modification de fichiers ini (anciennement jIniFileModifier et jIniMultiFilesModifier)
+  * [[https://packagist.org/packages/jelix/wikirenderer-plugin|La class jWiki et WikiRenderer]]
 
 ===== Les modules, plugins et fonctionnalités dépréciés =====
 
@@ -78,6 +81,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
   * les classes jIniFile, jIniFileModifier, jIniMultiFilesModifier ont changés de nom en
     respectivement Jelix\IniFile\Util, Jelix\IniFile\IniModifier, Jelix\IniFile\MultiIniModifier.
     Mais il est encore possible d'utiliser les anciens noms (jusqu'à la prochaine version).
+  * les quelques fichiers de la bibliothèque clearbricks ont été retirés
 
 ===== Pour les contributeurs =====
 
