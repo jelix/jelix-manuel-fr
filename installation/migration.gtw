@@ -57,6 +57,23 @@ l'activer si vous utilisez jPref :
 
 N'hésitez pas à déclarer la dépendance à ce module dans vos modules qui l'utilisent.
 
+==== À propos de jForms ====
+
+Le constructeur de formulaire (builder) de jForms a été remplacé par un nouveau
+système plus extensible. Les plugins implémentant les builders doivent donc
+implémenter la nouvelle API. Aussi, Jelix s'attend à ce que le plugin que l'on indique dans la
+configuration au niveau de @@defaultJformsBuilder@@ ou en paramètre aux tags
+@@{form}@@ dans les templates, correspond au nouveau type de plugin.
+
+cependant, les plugins anciennes générations (héritant donc de jFormsBuilderBase)
+sont toujours utilisable. Il suffit de prefix le nom du plugin par "legacy."
+dans @@defaultJformsBuilder@@ ou @@{form}@@. Bien sûr, cela ne peut être qu'une
+solution de transition. Le mieux est de réécrire le plugin en suivant la nouvelle
+API. Voir [[/plugins/jforms|le chapitre correspondant]].
+
+Notez aussi que jFormsBuilderBase n'est plus une classe autochargée. Il faut
+donc faire un require si vous l'utilisez en dehors de jForms.
+
 
 ==== Support de PDF avec TCPDF ====
 
