@@ -312,7 +312,7 @@ class news extends jDaoRecordBase {
 
 ===== Importation de dao =====
 
-Dans vos projet, vous aurez parfois besoin de vous calquer sur un dao déjà
+Dans vos projets, vous aurez parfois besoin de vous calquer sur un dao déjà
 existant afin de créer votre propre dao. Afin de vous éviter de retranscrire
 tout le contenu du dao initial avec des propriétés et méthodes qui resteront
 inchangés, vous avez la possibilité de l'importer via l'attribut @@A@import@@
@@ -320,7 +320,7 @@ dans la balise @@E@dao@@.
 
 ==== Fonctionnement ====
 
-  * le dao à importé est lu en premier : votre Dao possède ainsi toutes ses propriétés,
+  * le dao à importer est lu en premier : votre Dao possède ainsi toutes ses propriétés,
     définitions de tables et méthodes. 
   * les tables, propriétés et methodes de votre dao sont ensuite lues. Celles
     qui ont le même nom que celles qui viennent d'être importées, écrasent ces
