@@ -71,6 +71,8 @@ Paramètres possibles :
      mettez pas ces paramètres si vous voulez utiliser le login/mot de passe par
      défaut (indiqués par exemple dans les variables d'environnement du
      système).
+   * **service** : nom du service Postgresql. Les paramètres **database**, **host**,
+       **port**, **user** et **password** sont alors ignorés. (Jelix 1.6.6+)
    * **persistent** : indique si la connexion est persistante (**on**) ou pas
      (**off**)
    * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
