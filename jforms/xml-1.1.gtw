@@ -857,35 +857,6 @@ Si ce paramètre est une valeur statique, ajoutez l'attribut @@A@criteria@@ :
 
 La méthode @@M@findByCat()@@ sera appelée avec la valeur @@L@"admin"@@ en paramètre.
 
-
-== Dépendance avec un autre champs de saisie ==
-
-Bien souvent, on veut pouvoir indiquer cette valeur de manière dynamique, et
-souvent, provenant d'un autre champs de saisie. Un exemple : une liste de ville
-qui dépend du choix dans une liste de département.
-
-Plutôt que d'utiliser @@A@criteria@@, vous utiliserez l'attribut
-@@A@criteriafrom@@, où vous indiquerez l'identifiant (attribut @@A@ref@@) de ce
-champ de saisie pour lequel il faut récupérer la valeur :
-
-<code xml>
-  <menulist ref="catlist">
-     ...
-  </menulist>
-
-  <menulist ref="conf">
-      <datasource dao="testapp~config" method="findByCat" criteriafrom="catlist"
-                  labelproperty="cvalue" valueproperty="ckey"/>
-  </menulist>
-</code>
-
-Dans cet exemple, on a une liste dont les valeurs sont en fonction d'une autre
-liste.
-
-Note : depuis Jelix 1.2, la liste est mise à jour quand l'utilisateur change la
-valeur du contrôle dont dépend la liste. Ce n'était pas le cas dans Jelix 1.1.
-
-
 === Pour l'affichage des valeurs ===
 
 Lorsque le formulaire est affiché via les plugins @@{formdata}@@ et
@@ -988,6 +959,50 @@ Et dans le fichier jforms
   </menulist>
 </code>
 
+==== Dépendance d'une liste avec un autre champs de saisie ====
+
+Pour un champs qui a une source de donnée dynamique, on veut bien souvent faire
+en sorte que les valeurs de cette source de donnée soient selectionnées
+en fonction de la valeur d'un autre champs de saisie. Un exemple : une liste de
+ville qui dépend du choix dans une liste de département.
+
+
+Vous utiliserez l'attribut @@A@criteriafrom@@ (à la place de @@A@criteria@@ pour
+un DAO), où vous indiquerez l'identifiant (attribut @@A@ref@@) de ce champ de
+saisie pour lequel il faut récupérer la valeur :
+
+<code xml>
+  <menulist ref="catlist">
+     ...
+  </menulist>
+
+  <menulist ref="conf">
+      <datasource dao="testapp~config" method="findByCat" criteriafrom="catlist"
+                  labelproperty="cvalue" valueproperty="ckey"/>
+  </menulist>
+</code>
+
+Dans cet exemple, on a une liste dont les valeurs sont en fonction d'une autre
+liste.
+
+Dans la page web, la liste est mise à jour automatiquement quand l'utilisateur
+change la valeur du contrôle dont dépend la liste.
+
+Avant Jelix 1.6.6, cet attribut @@A@criteriafrom@@ n'était utilisable
+que sur une source de donnée de type dao. Depuis Jelix 1.6.6, on peut aussi
+l'utiliser sur une source de donnée de type "class". 
+
+Il faut alors que la classe implémente l'interface @@C@jIFormsDynamicDatasource@@
+qui hérite de l'interface @@C@jIFormsDatasource2@@. Elle ajoute deux méthodes
+@@M@setCriteriaControls($list)@@, qui accepte en paramètre une liste
+d'identifiant de controles, et @@M@getCriteriaControls()@@ qui retourne cette
+liste.
+
+Pour faciliter l'implémentation, il y a une classe @@C@jFormsDynamicDatasource@@
+qui implémente l'interface @@C@jIFormsDynamicDatasource@@, dont vous pouvez
+hériter pour votre classe.
+
+
 ==== Autre source de données ====
 
 Si l'utilisation d'un DAO, d'une classe ou de données statiques n'est pas
@@ -995,8 +1010,8 @@ suffisante pour vous, regardez la section "Définir les choix d'un champ à
 multiple choix" dans la page [[utilisation|Utilisation de jforms]].
 
 Dans ce cas là, vous ne devez pas indiquer de balises @@E@<item>@@ ou de balises
-@@E@<datasource>@@.
-
+@@E@<datasource>@@, mais définir l'objet sur la propriété @@P@datasource@@
+de l'objet du contrôle.
 
 
 ==== Données groupées ====
