@@ -57,7 +57,8 @@ mettre ce répertoire lib dans le dossier de votre projet.
 Dans le dosssier de Jelix, vous obtenez les répertoires suivants : 
 
 <code>
-    lib/              
+    lib/
+      installwizard/
       jelix/                sources de Jelix
       jelix-admin-modules/  modules livrés en standard avec Jelix pour une interface d'administration
       jelix-modules/        modules livrés en standard avec Jelix
@@ -65,10 +66,6 @@ Dans le dosssier de Jelix, vous obtenez les répertoires suivants :
       jelix-scripts/        scripts en ligne de commande d'aide pour le développeur
       jelix-www/            ressources javascript, css...
 </code>
-
-Il y a aussi d'autres répertoires dans @@F@lib/@@ (non listés ici), qui
-sont des bibliothèques additionnelles externes au projet Jelix, et utilisées par
-Jelix. Il y a par exemple wikirenderer, JSON, difflib, phpMailer etc.
 
 Il est recommandé d'installer ces répertoires en-dehors du répertoire de votre
 site web (le repertoire accessible depuis un navigateur), pour deux raisons :
