@@ -53,6 +53,17 @@ Nouveautés sur la version 1.6.6 :
   * jForms: support des sources de données personnalisées ("class") pour les chargements dynamiques des champs de type menulist et listbox (attribut criteriafrom)
   * jDb : possibilité pour une connexion postgresql d'utiliser un service postgresql plutôt que host/login/password 
 
+Nouveautés sur la version 1.6.7 :
+
+  * En raison de l'obsolescence de l'extension mcrypt de PHP, la classe jCrypt est dépréciée
+    et disparaitra dans Jelix 1.7 et+. Préférez l'utilisation des fonctions openssl ou
+    de la bibliothèque https://github.com/defuse/php-encryption
+  * L'ancien builder de jForms (jFormsBuilderHtml) est également déprécié.
+    Il disparaitra aussi dans Jelix 1.7.
+  * jLog : le plugin syslog utilise maintenant la fonction syslog et non plus
+    error_log. L'ancien comportement est disponible dans un nouveau plugin legacysyslog
+  * jCache : nouveau plugin pour Redis
+
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
 Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D., JulienI, Couac, Brice Tence, Khena.
