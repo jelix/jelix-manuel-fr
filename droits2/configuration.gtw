@@ -2,13 +2,14 @@
 
 
 Avant de pouvoir utiliser l'API de jAcl2 dans vos modules et le driver db de
-jAcl2, il faut d'abord initialiser la base de données, et mémoriser les
-différents éléments utilisés pour les droits.
+jAcl2 (ou le driver "dbcache"), il faut d'abord initialiser la base de données,
+et mémoriser les différents éléments utilisés pour les droits.
 
 ===== Installation =====
 
-Le driver jAcl2.db ne fonctionne qu'avec une base de données. Il vous faut donc
-configurer une connexion de base de données, et créer les tables nécessaires.
+Le driver jAcl2.db (ou jAcl2.dbcache) ne fonctionne qu'avec une base de données.
+Il vous faut donc configurer une connexion de base de données, et créer les
+tables nécessaires.
 
 === Configuration de la connexion ===
 
@@ -275,9 +276,7 @@ group	subject		resource
 		-
 </code>
 
-Depuis Jelix 1.4, la valeur "-" en dessous des sujets specifie un droit sur
-aucune ressource. Auparavant c'etait la valeur vide (null) qui indiquait ce type
-de droit.
+La valeur "-" en dessous des sujets specifie un droit sur aucune ressource.
 
 Passons maintenant au groupe rédacteur. On va leur donner tous les droits sur le
 sujet cms.articles.

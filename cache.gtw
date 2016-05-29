@@ -1,9 +1,10 @@
 ~~LANG:EN@enman:cache~~
 
 Mettre en cache des données ou des portions de page HTML générées permet d'améliorer
-les performances du site web, voir même d'éviter de transférer des données au niveau navigateur.
+les performances du site web, voir même d'éviter de transférer des données au
+niveau navigateur.
 
-Jelix propose plusieurs système de cache. Vous avez probablement vu
+Jelix propose plusieurs systèmes de cache. Vous avez probablement vu
 [[/zones#utilisation-du-cache|la mise en cache des zones]]. Vous allez voir ici
 la mise en cache de données quelconques, et l'utilisation du cache HTTP.
 
@@ -12,8 +13,8 @@ la mise en cache de données quelconques, et l'utilisation du cache HTTP.
 
 jCache est une classe permettant de stocker des données dans un système de
 cache. Le système repose sur des pilotes pour les accès aux données. Il est donc
-possible d’utiliser memcache, ou encore une base de données voir même le système
-de fichier. Et vous pouvez développer votre propre pilote.
+possible d’utiliser memcache, redis, ou encore une base de données, voire même
+le système de fichier. Et vous pouvez développer votre propre pilote.
 
 ==== Configuration ====
 
@@ -39,7 +40,6 @@ Chaque profil doit indiquer au moins ces trois paramètres :
    * @@automatic_cleaning_factor@@ : indice de nettoyage automatique du système
      de cache. 
 
-
 Un profil peut contenir d'autres paramètres, en fonction du pilote utilisé.
 
 Voici un exemple dans le fichier @@F@profiles.ini.php@@ :
@@ -57,7 +57,7 @@ driver = file
 
 === Pilote memcache ===
 
-Il utilise l'API memcache de PHP (et non pas memcached).
+Il utilise l'API memcache de PHP (et non pas l'API memcached).
 
 Paramètres possibles :
    * @@driver=memcache@@
@@ -72,6 +72,32 @@ servers = memcache_host1:11211,memcache_host2:11211,memcache_host3:11211
 </code>
 
 
+=== Pilote Redis ===
+
+Les données sont stockées dans une base Redis, et utilise une classe pure
+PHP (Php5Redis) pour communiquer avec la base Redis.
+
+Paramètres possibles :
+
+   * @@host@@ : nom ou ip du serveur redis
+   * @@port@@ : le port réseau sur lequel se connecter
+   * @@key_prefix@@ : un prefix qui sera ajouté sur chaque clé indiquée
+   * @@db@@ : le numéro de base de donnée redis (0 par défaut)
+
+Exemple :
+
+<code>
+[jcache:myredis]
+driver=redis
+ttl=360
+enabled=1
+host=192.168.0.1
+port=6379
+db=0
+key_prefix=
+</code>
+
+Note : ce pilote a été introduit dans Jelix 1.6.7.
 
 === Pilote file ===
 
@@ -84,7 +110,7 @@ Paramètres possibles :
    * @@file_locking@@ : indique s’il y a verrouillage des fichiers (1) ou non (0).
    * @@directory_level@@ : niveau d’arborescence des répertoires du système de cache.
    * @@directory_umask@@ : attributs utilisés pour les  répertoires.
-   * @@file_name_prefix@@ : préfixe des noms de fichiers du système de cache.
+   * @@file_name_prefix@@ : préfixe des noms de fichiers du système de cache. Depuis Jelix 1.6.8, c'est le préfixe du répertoire du cache.
    * @@cache_file_umask@@ : attributs utilisés pour les fichiers.
 
 === Pilote db ===
@@ -103,7 +129,6 @@ Paramètres possibles :
    * @@dbprofile@@ : profil de connexion jDb à utiliser .
 
 
-
 ==== Utilisation ====
 
 @@C@jCache@@ est la classe principale du système de cache. Toutes ses méthodes
@@ -111,7 +136,7 @@ sont statiques. Elle effectue un bon nombre d’opérations comme stockage,
 suppression, récupération de données. Vous appellerez ces méthodes quand bon
 vous semble.
 
-   * @@M@jCache::get($key)@@: Pour récupérer une valeur.
+   * @@M@jCache::get($key)@@: Pour récupérer une valeur. Retourne false si la clé n'existe pas
    * @@M@jCache::set($key, $value, $ttl)@@: pour stocker ou modifier une valeur.
      $ttl est optionnel
    * @@M@jCache::delete($key)@@: pour effacer une valeur
@@ -133,6 +158,9 @@ vous semble.
      stocke la valeur retournée dans le cache.
 
 Toutes ces méthodes statiques acceptent un nom de profile jcache en dernier argument.
+
+Les noms des clés sont restreints aux caractères suivants : lettres alphabets,
+chiffres, @@/@@, @@_@@, @@-@@, @@:@@, @@.@@.
 
 
 ===== jResponse et le cache HTTP =====

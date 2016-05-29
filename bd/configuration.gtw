@@ -95,7 +95,9 @@ Paramètres possibles :
    * **database** : le nom du fichier de base de données à utiliser. voir plus base
    * **persistent** : indique si la connexion est persistante (**on**) ou pas
      (**off**)
-
+   * **extensions**: liste des extensions sqlite à charger, séparé par des virgules
+   * **busytimeout**: un entier pour le paramètre busytimeout de Sqlite
+  
 Pour le fichier de base de données, vous avez plusieurs syntaxe
 
    * un simple nom de fichier (ex: mybase.sqlite). Le fichier se trouvera alors dans le

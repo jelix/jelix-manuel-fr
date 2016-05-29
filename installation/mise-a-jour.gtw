@@ -25,16 +25,20 @@ document root.
 
 Une autre solution est d'utiliser un mécanisme Jelix qui permet de fermer
 l'application. Cela fonctionne seulement si vous appelez @@checkAppOpened()@@
-dans le point d'entrée, juste avant l'appel à @@C@jCoordinator@@. Pour
-effectivement fermer l'application, vous devez créer un fichier,
-@@F@var/config/CLOSED@@, vide ou avec un message à l'intérieur. Ensuite,Jelix
-afficher la page @@F@lib/jelix/installer/closed.html@@. Vous pouvez bien sûr
-proposer votre propre page html, en la plaçant dans votre application en tant
-que @@F@install/closed.html@@. Pour ré-ouvrir l'application, supprimez
-simplement le fichier @@F@var/config/CLOSED@@. Vous pouvez manipuler ce fichier
-manuellement (si vous avez seulement un accès FTP à votre site web, c'est la
-solution), ou, si vous avez un accès en ligne de commande, vous pouvez appeler
-les commandes jelix: @@openapp@@ and @@closeapp@@
+dans le point d'entrée, juste avant l'appel à @@C@jCoordinator@@.
+
+Pour effectivement fermer l'application, vous devez créer un fichier,
+@@F@var/config/CLOSED@@, vide ou avec un message à l'intérieur.
+
+Ensuite, Jelix affiche la page @@F@lib/jelix/installer/closed.html@@. Vous
+pouvez bien sûr proposer votre propre page html, en la plaçant dans votre
+application en tant que @@F@install/closed.html@@.
+
+Pour ré-ouvrir l'application, supprimez simplement le fichier
+@@F@var/config/CLOSED@@. Vous pouvez manipuler ce fichier manuellement (si vous
+avez seulement un accès FTP à votre site web, c'est la solution), ou, si vous
+avez un accès en ligne de commande, vous pouvez appeler les commandes jelix:
+@@openapp@@ and @@closeapp@@
 
 <code bash>
 $ php cmd.php closeapp

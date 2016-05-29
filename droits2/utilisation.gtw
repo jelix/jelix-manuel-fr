@@ -47,6 +47,11 @@ driver=db
 
 Au niveau de l'option @@driver@@, vous devez y mettre le nom du driver utilisé.
 
+Depuis Jelix 1.6.8, il y a aussi un driver "dbcache", similaire à "db",
+mais qui stocke les résultats de calculs de droits dans un cache avec
+jCache.
+
+
 ===== Interrogation du système de droit =====
 
 Comme jAcl2 se charge de découvrir l'utilisateur actuel, vous n'avez qu'une

@@ -1,8 +1,26 @@
 ~~LANG:EN@enman:class-utilities/jApp~~
 
-jApp est une classe permettant de spécifier (dans le application.init.php) et de
-récupérer les différents chemins de l'application. Depuis la version 1.3, elle
-remplace les constantes JELIX_APP_*.
+jApp est une classe comportant des informations sur l'environnement Jelix.
+
+Elle permet ainsi de spécifier (dans le application.init.php) et de
+récupérer les différents chemins de l'application. (Depuis la version 1.3, elle
+remplace les constantes JELIX_APP_*).
+
+Elle propose également des méthodes permettant de récupérer les
+objets les plus courant de l'environnment Jelix, et aussi de manipuler l'environnement
+(mais à usage plutôt interne à Jelix)
+
+
+===== Accéder aux objets principaux =====
+
+<code>
+// La configuration :
+$config = jApp::config();
+
+// le routeur (coordinateur)
+$coord = jApp::coord();
+</code>
+
 
 
 ===== Récupérer du répertoire de l'application =====
@@ -27,7 +45,7 @@ $chemin = jApp::tempPath();
 
 </code>
 
-===== Autres méthodes =====
+===== Autres méthodes de chemins =====
 
 <code>
 // chemin du répertoire var/ de l'application
@@ -46,8 +64,19 @@ $path = jApp::configPath();
 // (équivalent à l'ancienne constante JELIX_APP_WWW_PATH)
 $path = jApp::wwwPath();
 
+//chemin base path (de la section urlengine de la configuration )
+$path = jApp::urlBasePath();
+
 // chemin du fichier de configuration principal de l'application
 // (mainconfig.ini.php ou defaultconfig.ini.php pour jelix <= 1.5)
 $path = jApp::mainConfigFile();
 
+
+// Récupérer le chemin d'un module
+$path = jApp::getModulePath($nom_module);
+
+
 </code>
+
+
+
