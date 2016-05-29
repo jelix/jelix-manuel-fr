@@ -50,8 +50,11 @@ Nouveautés sur la version 1.6.1 et 1.6.2 :
 
 Nouveautés sur la version 1.6.6 :
 
-  * jForms: support des sources de données personnalisées ("class") pour les chargements dynamiques des champs de type menulist et listbox (attribut criteriafrom)
-  * jDb : possibilité pour une connexion postgresql d'utiliser un service postgresql plutôt que host/login/password 
+  * jForms: support des sources de données personnalisées ("class") pour les
+    chargements dynamiques des champs de type menulist et listbox (attribut
+    criteriafrom)
+  * jDb : possibilité pour une connexion postgresql d'utiliser un service
+    postgresql plutôt que host/login/password 
 
 Nouveautés sur la version 1.6.7 :
 

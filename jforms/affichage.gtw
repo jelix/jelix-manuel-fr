@@ -335,7 +335,8 @@ encore possible d'utiliser les anciens types de générateurs proposés par les 
 précédentes, y compris vos propres générateurs reposant sur cette ancienne architecture.
 Pour les utiliser, préfixez leur nom par "legacy.". Par exemple, pour utiliser
 l'ancien builder 'htmllight', utilisez le nom "legacy.htmllight". Pour une documentation
-sur ces anciens générateurs, voyez le manuel des versions précédentes.
+sur ces anciens générateurs, voyez le manuel des versions précédentes. Notez
+que ces anciens générateurs sont obsolètes et seront retirés dans Jelix 1.7.
 
 Pour spécifier son propre choix de générateur pour l'ensemble d'une application,
 il vous suffit de modifier cette variable dans le fichier de configuration:
