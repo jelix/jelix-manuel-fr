@@ -25,14 +25,6 @@ améliorations de performance avec l'édition "Optimized" ;-).
 Si vous choisissez de rester avec l'édition "developer" sur le serveur de
 production, cela ne posera aucun problème.
 
-Une **édition "Gold"** est disponible en téléchargement, pour les développeurs
-qui peuvent modifier la configuration de php, en particulier, installer des
-extensions PHP. En effet, cette édition repose sur certaines extensions PHP qui
-ne sont pas disponibles chez tous les hébergeurs, mais aussi sur une extension
-PHP spécialement dédiée à Jelix, qui prend en charge certains traitements du
-framework. L'utilisation de l'édition GOLD améliore ainsi sensiblement les
-performances de votre application.
-
 ===== Configuration =====
 
 ==== Au niveau du serveur ====

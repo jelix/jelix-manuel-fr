@@ -1,15 +1,15 @@
 ~~LANG:EN@enman:create-install-scripts~~
 
-Depuis sa version 1.2, Jelix fournit un système d'installation automatique qui
-permet d'exécuter des scripts lorsque vous installez un module dans une
-application ou à l'installation de l'application complète.
+Jelix fournit un système d'installation automatique qui permet d'exécuter des
+scripts lorsque vous installez un module dans une application ou à
+l'installation de l'application complète.
 
 ===== Comment un module est installé =====
 
 Quand vous installez un module via la commande @@installmodule@@ ou
 @@installapp@@ :
 
-   * jelix regarde la section @@modules@@ située dans la configuration de chaque
+   * Jelix regarde la section @@modules@@ située dans la configuration de chaque
      point d'entrée, et cherche la valeur d'accès du module
    * Il lancera l'installation du module **pour chaque point d'entrée** si la
      valeur d'accès du module est supérieur à 0
@@ -73,14 +73,12 @@ class newsModuleInstaller extends jInstallerModule {
 
 </code>
 
-@@C@jInstallerModule@@ contient un certain nombre de propriétés et de méthodes
-qui vous aideront à accéder à la base de données, aux fichiers de configuration
-etc..
-
 Vous pouvez surcharger les fonctions @@M@preInstall@@ et @@M@postInstall@@ qui
-sont exécutées respectivement avant et après que tout les modules sont
-installés. Cela vous permet de préparer par exemple certains fichiers.
-
+sont exécutées respectivement avant et après que tout les modules soient
+installés. La méthode @@preInstall()@@, vous permet par exemple de préparer 
+certains fichiers ou données, ou de vérifier les conditions requises
+pour l'installation. Si les conditions ne sont pas requises, vous pouvez alors
+émettre une exception qui stoppera alors le processus d'installation.
 
 <code php>
 <?php
@@ -99,6 +97,11 @@ class newsModuleInstaller extends jInstallerModule {
 } 
 
 </code>
+
+
+@@C@jInstallerModule@@ contient un certain nombre de propriétés et de méthodes
+qui vous aideront à accéder à la base de données, aux fichiers de configuration
+etc..
 
 ==== Méthodes ou propriétés principales ====
 
@@ -122,6 +125,11 @@ Voici quelques propriétés ou méthodes que vous pouvez utiliser :
   * @@$this->config@@: l'objet @@C@jIniMultifilesModifier@@ correspond au
     fichier de configuration du point d'entrée courant. Avec cet objet, vous
     pouvez récupérer le contenu du fichier de configuration et/ou le modifier.
+
+**attention** : avec @@$this->config@@, vous n'avez que les valeurs du fichier
+mainconfig.ini.php et celui du point d'entrée. Probablement est-il mieux de
+récupérer @@$this->entrypoint->localConfigIni@@ qui est une combinaison entre
+mainconfig.ini.php, localconfig.ini.php et la configuration du point d'entrée.
 
 N'hésitez pas à lire l'API de référence de @@C@jInstallerModule@@ et de
 @@C@jInstallerBase@@, et de regarder le script d'installation des modules
@@ -211,13 +219,13 @@ Pour lire les paramètres depuis le script d'installation, vous avez la méthode
 
 ===== Scripts de mise à jour d'un module =====
 
-Ces scripts ont des noms de fichiers spécifiques. Depuis Jelix 1.2.6 et 1.3RC3,
-ils doivent avoir pour nom @@F@upgrade_{label}.php@@ où @@{label}@@ doit être
-remplacé par un nom qui sera une partie du nom de la classe. Jusqu'à Jelix
-1.2.5, les noms des fichiers devaient être
+Ces scripts ont des noms de fichiers spécifiques. Ils doivent avoir pour nom
+@@F@upgrade_{label}.php@@ où @@{label}@@ doit être remplacé par un nom qui sera
+une partie du nom de la classe.
+
+Note: Jusqu'à Jelix 1.2.5, les noms des fichiers devaient être
 @@F@upgrade_to_{version}_{label}.php@@, où @@{version}@@ était un numéro de
-version. Ces noms restent compatibles avec les versions 1.2.6/1.3RC3 et
-suivantes, mais ils sont obsolètes.
+version. Ces noms restent compatibles mais ils sont obsolètes.
 
 Ces scripts doivent être stockés dans le répertoire @@F@install/@@ du module. Il
 seront exécutés en ordre ascendant de version indiquée dans la classe
@@ -226,21 +234,21 @@ inférieur). Et seuls ceux dont la version est plus grande que la version
 actuelle installée du module, et plus petite ou égale à la nouvelle version du
 module, seront exécutés. Imaginez que vous ayez ces scripts :
 
-    * @@F@upgrade_to_1.0_aaa.php@@
-    * @@F@upgrade_to_1.1pre.1234_bbb.php@@
-    * @@F@upgrade_to_1.1pre.1350_ccc.php@@
-    * @@F@upgrade_to_1.1_ddd.php@@
-    * @@F@upgrade_to_1.2a1_eee.php@@
-    * @@F@upgrade_fff.php@@ (avec un numéro de version 1.2 indiqué dans la classe)
-    * @@F@upgrade_to_1.3_ggg.php@@
+    * @@F@upgrade_to_1.0_aaa.php@@ (ancien nomage)
+    * @@F@upgrade_zzz.php@@ (déclarant la version 1.1pre.1234 dans la classe)
+    * @@F@upgrade_foo.php@@ (déclarant la version 1.1pre.1350)
+    * @@F@upgrade_bar.php@@ (déclarant la version 1.1)
+    * @@F@upgrade_fff.php@@ (déclarant la version 1.2a1)
+    * @@F@upgrade_eee.php@@ (déclarant la version 1.2)
+    * @@F@upgrade_hello.php@@ (déclarant la version 1.3)
 
 
 Si la version courant du module est 1.1 et que la nouvelle version du module
 (indiquée par le nouveau fichier @@F@module.xml@@) est 1.2, alors seuls les
 scripts suivants seront lancés, dans cet ordre:
 
-    * @@F@upgrade_to_1.2a1_eee.php@@
     * @@F@upgrade_fff.php@@
+    * @@F@upgrade_eee.php@@
 
 
 Un script de mise à jour contient un classe, appelée
@@ -259,11 +267,11 @@ exactement les mêmes comportements et méthodes que le script d'installation.
 Vous devez donc implémenter la méthode @@M@install@@, vous pouvez appeler
 @@M@firstDbExec@@, @@M@getParameter@@ etc..
 
-Pour les scripts de mise à jour sans numéro de version dans le nom de fichier
-(jelix 1.2.6/1.3RC3 et supérieur), vous devez indiquer le numéro de version dans
-la propriété @@P@$targetVersions@@ (qui est un tableau), et une date au format
-'yyyy-mm-dd' ou 'yyyy-mm-dd HH:ii' dans la propriété @@P@$date@@.
 
+Comme on l'a vu, une classe fait une mise à jour pour une version particulière.
+Il faut indiquer ce numéro de version dans la propriété @@P@$targetVersions@@
+(qui est un tableau), et une date au format 'yyyy-mm-dd' ou 'yyyy-mm-dd HH:ii'
+dans la propriété @@P@$date@@.
 
 <code php>
 <?php

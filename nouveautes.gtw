@@ -64,6 +64,17 @@ Nouveautés sur la version 1.6.7 :
     error_log. L'ancien comportement est disponible dans un nouveau plugin legacysyslog
   * jCache : nouveau plugin pour Redis
 
+Nouveautés sur la version 1.6.8 :
+
+  * jAcl2: nouveau driver dbcache. Il fonctionne comme le driver "db" existant, mais stocke les droits qu'il a calculé dans un cache avec jCache, pour améliorer les performances.
+  * jCache: les clés peuvent maintenant contenir les caractères '/.-:'. 
+* plugin file de jCache: la structure des fichiers générés par le plugin a été modifié afin d'avoir des chemins plus petit. Le paramètre file_name_prefix est maintenant utilisé comme nom de répertoire, non comme prefix de fichier.
+  * plugin Redis de jCache : nouveau paramètre key_prefix pour ajouter automatiquement un prefix aux clés.
+  * plugin Redis de jCache : nouveau paramètre db pour selectionner la base redis à utiliser
+  * plugin Redis pour jKvDb: prise en charge également des paramètre db et key_prefix.
+  * jInstaller : nouvelle méthode new method jInstallerEntryPoint::getEpConfigIni()
+
+
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
-Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D., JulienI, Couac, Brice Tence, Khena.
+Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D., JulienI, Couac, Brice Tence, Khena, René-luc D'hont.

@@ -32,7 +32,7 @@ hérite de @@C@jKVDriver@@.
 Avec cet objet, vous pouvez accéder au contenu de la base clé-valeur, et aussi
 le modifier. Voici des méthodes que vous pouvez appeler:
 
-   * @@M@get($key)@@: pour récupérer un valeur correspondant à une clé donnée.
+   * @@M@get($key)@@: pour récupérer un valeur correspondant à une clé donnée. Renvoi null si la clé n'existe pas.
    * @@M@set($key, $value)@@: pour stocker un nouvelle valeur ou modifier une valeur existante.
    * @@M@insert($key, $value)@@: pour stocker une nouvelle valeur. Retourne false si clé existe déjà.
    * @@M@replace($key,$value)@@: pour changer la valeur correspondant à une clé. Si la clé n'existe pas, false est retourné.
@@ -102,6 +102,12 @@ port = 6379
 </code>
 
 Ce driver supporte l'interface @@I@jIKVttl@@.
+
+Depuis Jelix 1.6.8, il prend également en charge les paramètres suivants :
+
+   * @@key_prefix@@ : un prefix qui sera ajouté sur chaque clé indiquée
+   * @@db@@ : le numéro de base de donnée redis (0 par défaut)
+
 
 ==== db ====
 
