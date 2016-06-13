@@ -1,7 +1,6 @@
 ~~LANG:EN@enman:locales~~
 
 Jelix possède son propre mécanisme de localisation/internationalisation. Les
-
 fonctions @@M@setlocale@@ et @@M@gettext@@ de PHP ne sont pas utilisées car
 trop contraignantes à mettre en place, et leur configuration est aléatoire
 sur les serveurs.
@@ -35,7 +34,9 @@ dans votre application :
      un tag primaire + "_" + un sous-tag. Le tag primaire est le code langue, le
      sous-tag est le code pays. Par défautl, la locale vaut @@en_US@@.
    * @@charset@@: indique l'encodage utilisé. Par défaut il vaut @@UTF-8@@.
-   * @@availableLocales@@: indique la liste des locales pris en charge par l'application.
+   * @@availableLocales@@ : indique la liste des locales pris en charge par l'application.
+   * @@fallbackLocale@@ : indique la locale à utiliser si jLocale ne trouve pas
+     la clé dans la locale courante ou similaire.
    * Il y a aussi une section @@[langToLocale]@@. Voyez la fin du chapitre.
 
 
@@ -297,7 +298,7 @@ sur votre site qui permettent à l'utilisateur de changer la langue. Exemple :
   <a href="index.php?lang=en_US">english</a>
 </code>
 
-Depuis Jelix 1.4, vous pouvez utiliser les codes langues sans le code pays :
+Vous pouvez aussi utiliser les codes langues sans le code pays :
 
 <code html>
   <a href="index.php?lang=fr">français</a>
@@ -354,9 +355,7 @@ nécessaire pour chaque langue (Exemple : @@F@templates/en_US/@@, @@F@templates/
 À partir d'un code de langue simple (comme "en", "fr"..), Jelix peut donner le
 code language associé défini par défaut : "en_US" pour "en", "fr_FR" pour "fr" etc.
 Cependant, ce n'est pas forcément le code que vous voulez obtenir. Vous voudriez
-par exemple "en_GB" pour "en" et "fr_CA" pour "fr". Ou encore indiquer un code
-langue non standard qui n'est plus pris en charge par Jelix 1.4 mais qui
-l'était dans les versions précédentes, comme "en_EN". Ou peut être encore vous
+par exemple "en_GB" pour "en" et "fr_CA" pour "fr". Ou peut être encore vous
 voudriez prendre en charge une langue non reconnue (la liste par défaut se
 trouve dans le fichier @@F@lib/jelix/core/lang_to_locale.ini.php@@).
 
@@ -370,4 +369,18 @@ en = en_GB
 ; ou pour garder une compatibilité avec d'anciens modules :
 en = en_EN
 </code>
+
+===== En cas de clé inexistante =====
+
+Quand jLocale ne trouve pas la clé dans un fichier properties correspondant
+à la langue, il va essayer de la trouver dans une locale similaire, en se
+basant sur le fichier de correspondance entre le code langue, et la
+qui y est associé par défaut (voir paragraphe précédent).
+
+Si il échoue à nouveau, il va essayer de chercher avec la locale indiquée
+dans @@fallbackLocale@@.
+
+Si il échoue encore, @@jLocale::get()@@ génère une exception.
+
+
 

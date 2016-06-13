@@ -6,9 +6,10 @@ l'installation de l'application complète.
 
 ===== Comment un module est installé =====
 
-Quand vous installez un module via la commande @@installmodule@@ ou
-@@installapp@@ :
+Quand vous installez un module via la commande @@module:install@@ ou
+@@app:install@@ :
 
+   * Jelix va d'abord sauvegarder le fichier @@F@var/config/installer.ini.php@@
    * Jelix regarde la section @@modules@@ située dans la configuration de chaque
      point d'entrée, et cherche la valeur d'accès du module
    * Il lancera l'installation du module **pour chaque point d'entrée** si la
@@ -292,6 +293,7 @@ Vous devinerez que vous pouvez indiquer plusieurs versions dans
 projet, et qu'un script de mise à jour, faisant la même chose, est nécessaire
 dans chaque branche. Avec la date de la version, Jelix peut déterminer si, lors
 d'une mise à jour, quel que soit la branche, il peut exécuter le script ou non.
+
 Exemple : vous avez un script de mise à jour pour la version 1.2.4 et 1.3.5. Si
 l'utilisateur met à jour depuis la version 1.2.3, ou depuis la version 1.3.4, le
 script sera appelé. Par contre si il met à jour depuis une version 1.2.5 vers

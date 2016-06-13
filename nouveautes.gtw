@@ -51,8 +51,8 @@
     changé.
 
   * jForms ne stocke plus les instances dans la session mais dans un cache avec jCache.
-  * **NODOC** jLocale peut maintenant chercher une clé manquante dans une locale similaire à la locale courante
-  * **NODOC** L'installateur fait maintenant une sauvegarde du fichier installer.ini.php
+  * jLocale peut maintenant chercher une clé manquante dans une locale similaire à la locale courante
+  * L'installateur fait maintenant une sauvegarde du fichier installer.ini.php
   * **NODOC** jAuth: persistant_crypt_key a été renommé en persistant_encryption_key
     et utilise une fonction de création de clé plus forte.
   * **NODOC** Les assets des modules récupérés par le contrôleur www de Jelix
