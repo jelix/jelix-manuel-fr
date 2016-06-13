@@ -92,8 +92,7 @@ valeurs ont été modifiées.
 
 Pour cela, vous devez d'abord appeler la méthode //initModifiedControlsList()//
 après avoir initialisé votre formulaire, de manière à indiquer que vous voulez
-connaitre les différences. N'appelez pas cette méthode inutilement, car cela
-occupe plus de mémoire dans la session (les valeurs sont dupliquées).
+connaitre les différences.
 
 Ensuite, après un submit par exemple, vous pouvez appeler la méthode
 //getModifiedControls//, qui renvoie un tableau dont les clés sont les noms des
@@ -225,8 +224,8 @@ Exemple :
 ===== Détruire une instance d'un formulaire =====
 
 Quand un formulaire n'est plus utilisé (la saisie est finie, les données
-sauvegardées), il est préférable de faire le ménage pour ne pas encombrer la
-session de données inutiles. Il faut donc détruire le formulaire. Pour cela on
+sauvegardées), il est préférable de faire le ménage pour ne pas encombrer inutilement
+les données de session de jForms. Il faut donc détruire le formulaire. Pour cela on
 utilise //jForms::destroy//, à laquelle on indique le sélecteur du formulaire,
 et éventuellement l'identifiant du formulaire concerné.
 

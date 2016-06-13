@@ -50,7 +50,7 @@
     composant Symfony Console. Les noms et paramètres des commandes ont donc
     changé.
 
-  * **NODOC** jForms ne stocke plus les instances dans la session mais dans un cache avec jCache.
+  * jForms ne stocke plus les instances dans la session mais dans un cache avec jCache.
   * **NODOC** jLocale peut maintenant chercher une clé manquante dans une locale similaire à la locale courante
   * **NODOC** L'installateur fait maintenant une sauvegarde du fichier installer.ini.php
   * **NODOC** jAuth: persistant_crypt_key a été renommé en persistant_encryption_key

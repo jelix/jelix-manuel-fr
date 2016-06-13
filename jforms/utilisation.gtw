@@ -1,7 +1,8 @@
 ~~LANG:EN@enman:jforms/usage~~
 
-Les données d'un formulaire jforms sont stockées en sessions. On manipule ces
-données au travers d'un //objet formulaire//, instance d'une classe héritant de
+Les données d'un formulaire jforms sont stockées automatiquement par jForms
+dans des fichiers de cache. On manipule ces données au travers d'un
+//objet formulaire//, instance d'une classe héritant de
 @@C@jFormsBase@@. Cette classe est générée automatiquement à partir du fichier
 XML que vous fournissez. Comme pour les DAOs, elle est stockée dans un cache
 évitant de la recréer à chaque utilisation.
@@ -32,7 +33,7 @@ d'exemple, vous utilisez les noms que vous voulez bien sûr):
      pourra traiter les données (sauvegarde en base de données par exemple) et
      ensuite rediriger vers "end"
    * une action "end", qui détruira l'instance du formulaire jforms (ce qui
-     effacera les données correspondantes en session), et affichera
+     effacera les données correspondantes dans son cache), et affichera
      éventuellement une page de confirmation, ou alors redirigera vers une autre
      action quelconque...
 
@@ -71,7 +72,7 @@ plusieurs pages à la fois. Il a donc la possibilité d'afficher plusieurs fois 
 même page qui afficherait par exemple ce formulaire d'édition de produit, mais
 avec à chaque fois un produit différent. Pour éviter qu'à chaque fois que l'on
 ouvre cette page, donc qu'à chaque fois que l'on créé une instance du formulaire
-jForms, on aille écraser les données en sessions du même formulaire d'un autre
+jForms, on aille écraser les données du même formulaire d'un autre
 produit ouvert en même temps, on donne un identifiant de formulaire. Ainsi il
 n'y a pas de collision des données de chaque instance de formulaire. On peut
 donner ce que l'on veut comme identifiant (une chaine, un nombre), et en général
