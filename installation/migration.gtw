@@ -19,6 +19,11 @@ manuels correspondant), avant de mettre à jour pour jelix 1.7.
 
 Voici les instructions à suivre dans l'ordre.
 
+==== Prérequis ====
+
+Jelix 1.7 nécessite php 5.6 minimum. Vérifiez que votre serveur a bien cette
+version.
+
 ==== Sauvegarde ====
 
 Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers de
@@ -187,17 +192,72 @@ composer.json.
 
 Les drivers jDb "sqlite" et "mysql" ne sont plus fournis (le premier utilisant
 une API PHP pour le vieux sqlite 2, et le deuxième utilisant l'API php
-mysql qui est déprécié). Utilisez donc à la place respectivement "sqlite3" et
+mysql qui est déprécieé). Utilisez donc à la place respectivement "sqlite3" et
 "mysqli". Ou installez les drivers sqlite et mysql séparément,
 [[https://github.com/jelix/legacy-db-plugins|en les téléchargeant]] ou en
 déclarant le paquet "jelix/legacy-db-plugins" dans votre fichier
 @@composer.json@@.
 
+==== Changements dans les urls ====
+
+Il n'y a plus le choix dans le moteur d'URL. Il s'agit maintenant uniquement
+du moteur anciennement nommé "significant" et amélioré pour prendre en charge
+les urls de "basic_significant". Cependant, les paramètres "module" et
+"action" des urls ne sont plus pris en charge. Si vous avez des urls en dur
+dans votre code (contrôleurs, configurations ou templates par exemple) qui
+contiennent ces paramètres (parce que vous utilisiez le moteur "simple"),
+changeait les sous la forme @@/module/controleur/method@@.
+
+Exemple : @@/index.php?module=foo&action=ctrl:act@@ devient
+@@/index.php/foo/ctrl/act@@.
+
+Si ces urls ne fonctionnent pas après la migration, vérifiez que votre serveur
+web est bien configuré pour prendre en charge le "pathinfo".
+
+==== Utilisation du script cmd.php ====
+
+Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
+
+Si vous les utilisez dans des scripts ou ailleurs, il vous faut changer les
+paramètres, en particulier le nom de la commande. Faire un @@php cmd.php help@@
+pour avoir l'aide.
+
+==== Plugins custom pour jDb et jDao ====
+
+Les classes @@*daobuilder*@@ des plugins de jDb ne sont plus pris en charge. Si
+vous avez fait votre propre plugin pour jDb, il faut migrer la classe de type
+daobuilder vers un plugin spécifique pour jDao. Voir la doc de jDao.
+
+==== Session et cookie ====
+
+Les données des instances des formulaires ne sont plus stockés en session, mais
+dans un cache géré par jCache. Il faut donc savoir que certains de vos
+utilisateurs qui utilisaient des formulaires au moment de la migration de votre
+application perdront donc les données de leurs formulaires (si elles n'ont pas
+été sauvées par ailleurs).
+
+Idem pour la persistance de l'authentification : la clé de chiffrement de cookie
+étant changée, les utilisateurs devront obligatoirement se ré-authentifier si
+ils avaient choisie d'être "reconnu" par votre application.
+
+==== Changements dans les scripts d'installation de vos modules ====
+
+Vos scripts d'installation n'ont plus accés aux propriétés @@$config@@
+@@$configFile@@, @@$configIni@@ et @@$localConfig@@ de la classe
+@@jInstallerEntryPoint@@.
+
+Vous devez remplacer ces appels par les nouvelles méthodes @@M@getConfigObj()@@,
+@@M@getConfigFile()@@, @@M@getMainConfigIni()@@, @@M@getLocalConfigIni()@@ et
+@@M@getConfigIni()@@.
+
+
 ==== Mise à jour des modules ====  
 
-Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.7.
+Mettez à jour les sources des modules tiers que vous avez installés, et qui sont
+compatibles avec Jelix 1.7.
 
-Et pour vos propres modules, vous devez adapter le code source en faisant les modifications suivantes :
+Et pour vos propres modules, vous devez adapter le code source en faisant les
+modifications suivantes :
 
   * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible
     avec Jelix 1.7 (changer l'attribut @@A@maxversion@@). Exemple :
@@ -208,7 +268,8 @@ Et pour vos propres modules, vous devez adapter le code source en faisant les mo
 
 
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
-classes et méthodes que vous pouvez utiliser.
+classes et méthodes que vous pouvez utiliser. Mais surtout et aussi celles
+qui n'existent plus et que vous devez remplacer.
 
 Certaines classes, certains modules et plugins sont maintenant livrés séparément, soit
 installable avec Composer, soit via un zip. Si vous les utilisiez, il faudra donc les
@@ -216,7 +277,7 @@ récupérer en plus de Jelix. Il s'agit de :
 
   * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
   * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
-  * Le plugin redis pour jKVDb  : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+  * Le plugin redis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
   * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
     l'objet réponse pour générer un sitemap.
   * la classe jHttp : [[https://packagist.org/packages/jelix/jhttp|jelix/jhttp]]. Il est

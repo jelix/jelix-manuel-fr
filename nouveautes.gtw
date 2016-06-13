@@ -1,41 +1,100 @@
 ~~LANG:EN@enman:new-features~~
 
-===== Principales nouveautés apportées par la version 1.7 =====
+===== Nouveautés apportées par la version 1.7 =====
 
-  * Intégration avec Composer :
+==== Fonctionnement général ====
+
+  * Jelix 1.7 nécessite dorénavant PHP 5.6 minimum.
+
+  * **NODOC** Intégration avec Composer :
     * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
-    * Des modules et plugins ont été externalisés et disponibles séparément via Composer. Certains restent
-      toutefois inclus dans le paquet standard de Jelix.
-    * Un projet basé sur Jelix peut-être crée avec le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
+    * Des modules et plugins ont été externalisés et disponibles séparément via
+      Composer. Certains restent toutefois inclus dans le paquet standard de
+      Jelix.
+    * Un projet basé sur Jelix peut-être crée avec le paquet
+      [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
       installable via Composer
-    * Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont plus pris en charge, et remplacés par une nouvelle API à appeler
-      dans le fichier @@application.init.php@@ : @@jApp::declareModulesDir()@@, @@jApp::declarePluginsDir()@@, @@jApp::declareModuleDir()@@.
-      Il est aussi possible de déclarer les chemins de repertoire de modules et plugins, via le fichier composer.json de l'application
-      et des paquets contenant des modules.
+    * Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont
+      plus pris en charge, et remplacés par une nouvelle API à appeler dans le
+      fichier @@application.init.php@@ : @@jApp::declareModulesDir()@@,
+      @@jApp::declarePluginsDir()@@, @@jApp::declareModuleDir()@@. Il est aussi
+      possible de déclarer les chemins de repertoire de modules et plugins, via
+      le fichier composer.json de l'application et des paquets contenant des
+      modules.
 
-  * Dans les applications crées par createapp, le répertoire temp est maintenant par défaut
-    dans le répertoire de l'application
+  * **NODOC** Dans les applications crées par createapp, le répertoire temp est maintenant
+    par défaut dans le répertoire de l'application
 
-  * nouvelle méthode @@M@jApp::version()@@
-  * nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le framework
-    (version...)
-  * Jelix-scripts createapp: nouvelle option -modulename pour indiquer le nom du
+  * **NODOC** Refonte du moteur d'URL :
+    * il n'y a plus de système de plugins ('simple', 'basic_significant', 'significant' n'existent plus).
+    * Le nouveau moteur est en quelque sorte une fusion entre les anciens
+      plugins 'basic_significant' et 'significant', avec des améliorations
+      faciliter la configuration des urls
+    * Une API permet aux scripts d'installation de déclarer facilement les urls
+      (et donc de modifier urls.xml)
+    * Les paramètres d'url "module" et "action" ne sont plus pris en compte (mais
+      peuvent toujours être récupérés à partir de vos contrôleurs, même si cet
+      usage est obsolète)
+
+  * **NODOC** jProfiles :
+     * le contenu du fichier profiles.ini.php est optimisé et stocké en cache
+     * jProfiles est extensible par des plugins : ceux-ci peuvent traiter les
+       profiles qu'ils prennent en charge avant la mise en cache du fichier
+       profiles.ini.php. (plugin : @@profiles/<type>/<type>.profiles.php@@
+       classe: @@<type>ProfilesCompiler@@).
+     * un plugin pour jdb est fourni, permettant à jDb de traiter plus
+       rapidement l'ouverture d'une connexion.
+
+  * **NODOC** scripts Jelix-scripts (cmd.php) : toutes les commandes d'aides à la génération
+    d'une application et de ses composants sont maintenant basées sur le
+    composant Symfony Console. Les noms et paramètres des commandes ont donc
+    changé.
+
+  * **NODOC** jForms ne stocke plus les instances dans la session mais dans un cache avec jCache.
+  * **NODOC** jLocale peut maintenant chercher une clé manquante dans une locale similaire à la locale courante
+  * **NODOC** L'installateur fait maintenant une sauvegarde du fichier installer.ini.php
+  * **NODOC** jAuth: persistant_crypt_key a été renommé en persistant_encryption_key
+    et utilise une fonction de création de clé plus forte.
+  * **NODOC** Les assets des modules récupérés par le contrôleur www de Jelix
+    sont maintenant mis en cache dans le navigateur
+  * **NODOC** jDb schema: amélioration de la prise en charge de sqlite3: ajout de colonne, creation d'index, de clé primaire 
+  * **NODOC** jDao : a maintenant son propre système de plugin "daobuilder". Les classes des plugins de jDb qui lui étaient dédiés sont maintenant des plugins
+  * **NODOC** jDb : amélioration de la prise en charge des requêtes préparées
+    * **NODOC** jDb : bindValue() et bindParam() a maintenant la même signature que PDO
+    * **NODOC** sqlite3 : support des requêtes préparées
+    * **NODOC** pgsql : support des paramètres nommés pour les requêtes préparées
+    * **NODOC** mysqli : correction sur la prise en charge des requêtes préparées et support des paramètres nommés
+  * **NODOC** Zones : organisation du cache en sous-répertoires
+
+==== Changements dans les API ====
+
+  * **NODOC** nouvelle méthode @@M@jApp::version()@@
+  * **NODOC** nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le
+    framework (version...)
+  * **NODOC** Jelix-scripts createapp: createapp.php a été déplacé dans un répertoire bin et est basé sur Symfony Console.
+  * **NODOC** Jelix-scripts createapp: nouvelle option -modulename pour indiquer le nom du
     module principal
   * contrôleur CRUD : la liste des enregistrements peut être triée par colonne
   * jauthdb_admin : la liste des utilisateurs peut être filtrée et triée
   * jacl2db_admin : la liste des utilisateurs peut être filtrée
 
-  * jIniFileModifier : il n'y a plus de ligne vide ajoutée à la fin du fichier à chaque sauvegarde
-  * @@jFile::getMimeTypeFromFilename()@@ : support d'une liste de type mime définie par le développeur, dans
-    une section @@[mimeTypes]@@ de la configuration.
-  * Nouvelles méthodes : @@jFile::shortestPath()@@ et @@jFile::normalizePath()@@.
-  * jProfiles :
-     * le contenu du fichier profiles.ini.php est optimisé et stocké en cache
-     * est extensible par des plugins : ceux-ci peuvent traiter les profiles qu'ils prennent en charge
-       avant la mise en cache du fichier profiles.ini.php. (plugin : @@profiles/<type>/<type>.profiles.php@@
-       classe: @@<type>ProfilesCompiler@@).
-     * un plugin pour jdb est fourni, permettant à jDb de traiter plus rapidement l'ouverture d'une
-       connexion.
+  * **NODOC** nouvelle méthode @@M@jAppInstance::includePlugin()@@ pour charger un plugin sans l'instancier
+
+  * **NODOC** correction @@jIniFileModifier : il n'y a plus de ligne vide ajoutée à la fin du fichier à
+    chaque sauvegarde
+  * **NODOC** @@jFile::getMimeTypeFromFilename()@@ : support d'une liste de type mime
+    définie par le développeur, dans une section @@[mimeTypes]@@ de la
+    configuration.
+  * **NODOC** jLocale a été remanié afin d'avoir une classe pour lire un fichier properties
+
+  * **NODOC** Les classes @@jInstallerBase@@ et @@jInstallerEntryPoint@@ pour les
+    scripts d'installation/mise à jour, ont de nouvelles méthodes pour accéder
+    aux différents fichiers de configurations
+  * **NODOC** Correction dans jDatetime sur le format RCF822 et les timezones
+  * **NODOC** jDao : l'attribut "driver" sur les balises de conditions est déprécié et remplacé par un attribut "dbtype"
+  * **NODOC** jDb/mysql : correction sur le démarrage d'une transaction, pour ne plus utiliser l'ancien mot-clé SQL pour cette fonctionnalité
+  * **NODOC** Nouvelle méthode @@M@jCoordinator::execOriginalAction()@@ pour savoir si l'action courante est une redirection interne ou pas
+  * **NODOC** jApp utilise maintenant en interne une nouvelle classe jAppInstance pour faciliter le changement de contexte.
 
 ===== Les modules et plugins externalisés =====
 
@@ -45,43 +104,52 @@ téléchargeables classiquement.
 
 Voici la liste de ces modules et plugins :
 
-  * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
-  * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
-  * Le plugin redis pour jKVDb  : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
-  * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
+  * **NODOC** Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
+  * **NODOC** Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
+  * **NODOC** Le plugin redis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+  * **NODOC** Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
     l'objet réponse pour générer un sitemap.
-  * [[https://packagist.org/packages/jelix/diff-plugin|Le plugin diff pour jTpl]]
+  * **NODOC** [[https://packagist.org/packages/jelix/diff-plugin|Le plugin diff pour jTpl]]
 
 
 À noter que d'autres composants, modules et plugins sont aussi maintenant chacun dans
 leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
 
-  * [[https://packagist.org/packages/jelix/fakeserverconf|FakeServerConf]]
-  * [[https://packagist.org/packages/jelix/soap-server-module|le module jSoap]]
-  * [[https://packagist.org/packages/jelix/feeds-module|un nouveau module jFeeds]] comportant les classes
+  * **NODOC** [[https://packagist.org/packages/jelix/fakeserverconf|FakeServerConf]]
+  * **NODOC** [[https://packagist.org/packages/jelix/soap-server-module|le module jSoap]]
+  * **NODOC** [[https://packagist.org/packages/jelix/feeds-module|un nouveau module jFeeds]] comportant les classes
     et réponse pour générer des fils RSS et ATOM
-  * [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]
-  * [[https://packagist.org/packages/jelix/inifile|IniModifier et MultiIniModifier]], classes de
+  * **NODOC** [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]
+  * **NODOC** [[https://packagist.org/packages/jelix/inifile|IniModifier et MultiIniModifier]], classes de
     modification de fichiers ini (anciennement jIniFileModifier et jIniMultiFilesModifier)
-  * [[https://packagist.org/packages/jelix/wikirenderer-plugin|La class jWiki et WikiRenderer]]
+  * **NODOC** [[https://packagist.org/packages/jelix/wikirenderer-plugin|La class jWiki et WikiRenderer]]
 
 ===== Les modules, plugins et fonctionnalités dépréciés =====
 
-  * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
+  * **NODOC** @@jFile@@ repose maintenant sur le paquet Composer "jelix/file-utilities"
+    qui propose des méthodes supplémentaires. jFile est déprécié.
+  * **NODOC** Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
-  * idem pour les plugins mysql et sqlite : en effet, les API PHP qu'ils utilisent sont dépréciées
+  * **NODOC** idem pour les plugins mysql et sqlite : en effet, les API PHP qu'ils utilisent sont dépréciées
     dans PHP. Ils sont disponibles séparément. Il est toutefois préférable d'utiliser
     respectivement les plugins mysqli et sqlite3, toujours disponibles dans la
     distribution standard.
-  * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre application pour utiliser
+  * **NODOC** il n'y a plus les fichiers de locales en_EN. configurez plutôt votre application pour utiliser
     en_US ou en_GB.
-  * le plugin memcache22 pour jCache a été supprimé
-  * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
-  * la classe jHttp est dépréciée et installable séparément.
-  * les classes jIniFile, jIniFileModifier, jIniMultiFilesModifier ont changés de nom en
+  * **NODOC** le plugin memcache22 pour jCache a été supprimé
+  * **NODOC** La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
+  * **NODOC** la classe jHttp est dépréciée et installable séparément.
+  * **NODOC** les classes jIniFile, jIniFileModifier, jIniMultiFilesModifier ont changés de nom en
     respectivement Jelix\IniFile\Util, Jelix\IniFile\IniModifier, Jelix\IniFile\MultiIniModifier.
     Mais il est encore possible d'utiliser les anciens noms (jusqu'à la prochaine version).
-  * les quelques fichiers de la bibliothèque clearbricks ont été retirés
+  * **NODOC** La classe @@jJson@@ a été supprimée. Utilisez les fonctions json de PHP directement.
+  * **NODOC** La classe @@jCrypt@@ a été supprimée, l'API mcrypt étant dépréciée par PHP
+    et n'était plus maintenue depuis longtemps. Utilisez d'autres bibliothèques
+    de chiffrements (le paquet defuse/php-encryption par exemple).
+  * **NODOC**  les quelques fichiers de la bibliothèque clearbricks ont été retirés
+  * **NODOC** La classe @@jVersionComparator@@ a été remplacée par la classe
+    Jelix\Version\VersionComparator d'un nouveau paquet "jelix/version"
+  * **NODOC** project.xml : @@<directories>@@ n'est plus pris en charge
 
 ===== Pour les contributeurs =====
 
@@ -93,4 +161,4 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
 
 ===== Contributeurs à Jelix 1.7 =====
 
-Liste à établir...
+  * Brunto (crud controller)
