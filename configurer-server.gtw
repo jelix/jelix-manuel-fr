@@ -2,7 +2,7 @@
 
 ===== Configuration de PHP =====
 
-La version minimal de PHP supportée par Jelix est la version 5.4.
+La version minimal de PHP supportée par Jelix est la version 5.6.
 
 ===== Configuration du serveur =====
 
@@ -114,27 +114,6 @@ require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
 $config_file = 'index/config.ini.php';
 $jelix = new jCoordinator($config_file);
 $jelix->process(new jClassicRequest());
-</code>
-
-Il faut aussi modifier le fichier @@F@myapp/project.xml@@ pour modifier le
-chemin de chaque répertoire déplacé (les chemins doivent être relatifs au chemin
-du fichier @@F@project.xml@@) :
-
-<code xml>
-<project xmlns="http://jelix.org/ns/project/1.0">
-    <!-- ...  -->
-    <directories>
-        <config>./var/config/</config>
-        <log>./var/log/</log>
-
-        <var>./var/</var>
-        <www>../</www>
-        <temp>./temp/</temp>
-    </directories>
-    <entrypoints>
-        <!-- ... -->
-    </entrypoints>
-</project>
 </code>
 
 

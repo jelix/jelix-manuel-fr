@@ -44,7 +44,7 @@ production, cela ne posera aucun problème.
 
 Voici quelques conseils au niveau de la configuration de l'application, donc les
 modifications à faire au niveau du fichier
-@@F@var/config/mainconfig.ini.php@@ .
+@@F@var/config/localconfig.ini.php@@ .
 
 === section jResponseHtml ===
 

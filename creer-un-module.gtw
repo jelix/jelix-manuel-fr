@@ -78,7 +78,7 @@ Le principe : il suffit de créer un répertoire dans un dépôt, avec un nom
 précis, et d'y mettre les contrôleurs, les daos et tout ce qu'il faut dans leurs
 sous-répertoires respectifs.
 
-Le plus simple est encore d'utiliser la commande @@c@createmodule@@. Dans votre
+Le plus simple est encore d'utiliser la commande @@c@module:create@@. Dans votre
 application :
 
 <code bash>
@@ -115,8 +115,8 @@ initial est bon pour vous. Par défaut, c'est 0.1pre. Vous devez aussi
 éventuellement indiquer les dépendances. Ces deux choses sont très importantes
 pour le système d'installation de jelix.
 
-Vous pouvez indiquer le numéro de version à la commande @@createmodule@@, grâce
-à l'option @@-ver@@ :
+Vous pouvez indiquer le numéro de version à la commande @@module:create@@, grâce
+à l'option @@--ver@@ :
 
 <code bash>
 php cmd.php module:create --ver 1.0 supermodule

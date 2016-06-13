@@ -1,9 +1,9 @@
 ~~LANG:EN@enman:create-application/administration-app~~
 
-===== La commande initadmin =====
+===== La commande app:initadmin =====
 
 
-La commande @@initadmin@@ permet d'ajouter facilement une interface
+La commande @@app:initadmin@@ permet d'ajouter facilement une interface
 d'administration à votre application. Elle active le
 [[/ref-modules/master_admin|module master_admin]], et peut configurer
 automatiquement l'authentification ([[/authentification|jAuth]]) et/ou le
@@ -34,8 +34,8 @@ l'interface générale.
 Notez qu'avant d'exécuter cette commande, vous devez avoir configuré
 correctement l'accès à la base de donnée dans le fichier @@F@profiles.ini.php@@,
 car les tables pour jAuth et jAcl2 seront créés. Si vous préférez configurer
-jAuth et/ou jAcl2 par vous même, indiquez les options @@-noauthdb@@ et
-@@-noacl2db@@ à la commande.
+jAuth et/ou jAcl2 par vous même, indiquez les options @@--noauthdb@@ et
+@@--noacl2db@@ à la commande.
 
 Après avoir créé l'interface (et configuré jAuth et jAcl2 si vous avez choisi de
 le faire vous-même), vous pouvez démarrer l'application en appelant le point

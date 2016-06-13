@@ -38,10 +38,9 @@ php install/installer.php
 ===== Avec la commande createapp =====
 
 L'autre façon de créer une application Jelix, est l'utilisation de la commande
-@@createapp@@, qui est présente depuis les premières versions de Jelix. Elle permet
-de créer un squelette d'application. C'est une alternative encore valable par rapport au
-paquet jelix-skeleton-app car elle permet de personnaliser la création du
-squelette.
+@@bin/createapp.php@@. Elle permet de créer un squelette d'application.
+C'est une alternative par rapport au paquet jelix-skeleton-app
+car elle permet de personnaliser la création du squelette.
 
 Vous trouverez cette commande @@createapp@@ dans le répertoire
 @@F@bin/@@ de Jelix (@@F@vendor/bin/@@ si vous avez installé Jelix avec Composer).

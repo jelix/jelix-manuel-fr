@@ -7,14 +7,14 @@
   * Jelix 1.7 nécessite dorénavant PHP 5.6 minimum.
 
   * Intégration avec Composer :
-    * **NODOC** La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
-    * **NODOC** Des modules et plugins ont été externalisés et disponibles séparément via
+    * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
+    * Des modules et plugins ont été externalisés et disponibles séparément via
       Composer. Certains restent toutefois inclus dans le paquet standard de
       Jelix.
-    * **NODOC** Un projet basé sur Jelix peut-être crée avec le paquet
+    * Un projet basé sur Jelix peut-être crée avec le paquet
       [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
       installable via Composer
-    * **NODOC** Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont
+    * Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont
       plus pris en charge, et remplacés par une nouvelle API à appeler dans le
       fichier @@application.init.php@@ : @@jApp::declareModulesDir()@@,
       @@jApp::declarePluginsDir()@@, @@jApp::declareModuleDir()@@. Il est aussi
@@ -22,7 +22,7 @@
       le fichier composer.json de l'application et des paquets contenant des
       modules.
 
-  * **NODOC** Dans les applications crées par createapp, le répertoire temp est maintenant
+  * Dans les applications crées par createapp, le répertoire temp est maintenant
     par défaut dans le répertoire de l'application
 
   * **NODOC** Refonte du moteur d'URL :

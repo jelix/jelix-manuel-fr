@@ -38,14 +38,14 @@ Pour ré-ouvrir l'application, supprimez simplement le fichier
 @@F@var/config/CLOSED@@. Vous pouvez manipuler ce fichier manuellement (si vous
 avez seulement un accès FTP à votre site web, c'est la solution), ou, si vous
 avez un accès en ligne de commande, vous pouvez appeler les commandes jelix:
-@@openapp@@ and @@closeapp@@
+@@app:open@@ and @@app:close@@
 
 <code bash>
 $ php cmd.php app:close
 $ php cmd.php app:open
 </code>
 
-Vous pouvez donner un message à la commande @@closeapp@@. Cela va remplacer le
+Vous pouvez donner un message à la commande @@app:close@@. Cela va remplacer le
 tag @@%message%@@ dans le fichier closed.html.
 
 <code bash>
