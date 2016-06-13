@@ -19,8 +19,6 @@ Un driver pour jDb est constitué de trois classes :
      Elles héritent de @@C@jDbSchema@@ et @@C@jDbTable@@.
    * une classe utilitaire héritant de @@C@jDbTools@@, permettant de faire les
      conversions de type SQL en type unifié jDb, d'exécuter des scripts SQL..
-   * une classe pour construire des requêtes, pour jDao, héritant de
-     @@C@jDaoGenerator@@.
 
 ==== Fichiers et nommages ====
 
@@ -35,7 +33,6 @@ Les noms des fichiers doivent suivre ce nommage :
    * @@F@exemple.dbresultset.php@@ pour la classe de resultset
    * @@F@exemple.dbschema.php@@ pour les classes de manipulation de schemas
    * @@F@exemple.dbtools.php@@ pour la classe utilitaire
-   * @@F@exemple.daobuilder.php@@ pour la classe pou jdao
 
 Et dans chacun de ces fichiers, les classes doivent respectivement avoir le nommage suivant :
 
@@ -43,7 +40,6 @@ Et dans chacun de ces fichiers, les classes doivent respectivement avoir le nomm
    * @@C@exempleDbResultSet@@
    * @@C@exempleDbSchema@@ et @@C@exempleTableSchema@@
    * @@C@exempleDbTools@@
-   * @@C@exempleDaoBuilder@@
 
 ==== Classe de connexion ====
 
@@ -120,25 +116,6 @@ Vous redéfinirez en particulier les méthodes et propriétés suivantes :
      exécuté un ensemble de requêtes SQL présentes dans un script.
 
 Voir [[refclass:db/jDbTools|la référence de jDbTools]] pour plus de détails.
-
-==== Classe génératrice de requêtes SQL ====
-
-Cette classe est utilisée par jDao. En effet, jDao génère des classes PHP avec
-des requêtes "en dur" dans leurs méthodes. Ces requêtes pouvant être différentes
-d'une base à une autre (au niveau de la syntaxe), il est possible de les définir
-dans le driver.
-
-La classe doit hériter de @@C@jDaoGenerator@@ et redéfinir une ou plusieurs de
-ces méthodes :
-
-  * @@M@genSelectPattern()@@
-  * @@M@_encloseName()@@
-  * @@M@genUpdateAutoIncrementPK()@@
-  * @@P@$propertiesListForInsert@@
-  * @@P@$trueValue@@, @@P@$falseValue@@
-  * @@M@_getAutoIncrementPKField()@@
-
-Voir [[refclass:dao/jDaoGenerator|la référence de jDaoGenerator]] pour plus de détails.
 
 ==== Exemples ====
 

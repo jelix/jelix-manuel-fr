@@ -62,6 +62,7 @@ Voici les types de plugins et les répertoires correspondant :
     * drivers pour jAuth : @@F@auth/@@
     * drivers pour jAcl2 : @@F@acl2/@@
     * drivers pour jDb : @@F@db/@@
+    * drivers pour jDao : @@F@daobuilder/@@
     * plugins de templates : @@F@tpl/@@
     * moteurs d'URLs : @@F@urls/@@
     * générateurs pour jForms : @@F@jforms/@@

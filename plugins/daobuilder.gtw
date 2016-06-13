@@ -1,0 +1,39 @@
+~~LANG:EN@enman:plugins/daobuilder~~
+
+Les plugins pour jDao servent à aider à générer les fichiers PHP issues
+de la "compilation" des fichiers xml de jDAo, en fonction d'un type de base de
+donnée. En effet, jDao génère des classes PHP avec des requêtes "en dur" dans leurs méthodes.
+Ces requêtes pouvant être différentes d'une base à une autre (au niveau de la
+syntaxe), les plugins sont donc chargés de générer les bonnes requêtes et méthodes.
+
+Note : avant Jelix 1.7, les classes de ce type de plugin étaient dans les
+plugins de jDb.
+
+===== Création d'un plugin =====
+
+Un plugin pour jDao est une classe héritant de @@C@jDaoGenerator@@.
+
+==== Fichiers et nommages ====
+
+Le nom du plugin doit être le nom d'un type de base de donnée. En l'occurence,
+un plugin pour jDao est spécifique à un langage SQL (Même si il y a un
+standard pour le langage SQL, vous savez certainement que chaque base
+de donnée a ses propres extensions au langage).
+
+Il doit se trouver dans un répertoire @@F@daobuilder/@@ dans un dépôt de plugins.
+Le fichier suit ce nommage : @@F@daobuilder/<type>/<type>.daobuilder.php@@.
+
+Et la classe doit se nommer : @@<type>DaoBuilder@@.
+
+La classe doit hériter de @@C@jDaoGenerator@@ et redéfinir une ou plusieurs de
+ces méthodes :
+
+  * @@M@genSelectPattern()@@
+  * @@M@_encloseName()@@
+  * @@M@genUpdateAutoIncrementPK()@@
+  * @@P@$propertiesListForInsert@@
+  * @@P@$trueValue@@, @@P@$falseValue@@
+  * @@M@_getAutoIncrementPKField()@@
+
+Voir [[refclass:dao/jDaoGenerator|la référence de jDaoGenerator]] pour plus de détails.
+

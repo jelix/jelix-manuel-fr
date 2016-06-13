@@ -53,12 +53,12 @@
   * jForms ne stocke plus les instances dans la session mais dans un cache avec jCache.
   * jLocale peut maintenant chercher une clé manquante dans une locale similaire à la locale courante
   * L'installateur fait maintenant une sauvegarde du fichier installer.ini.php
-  * **NODOC** jAuth: persistant_crypt_key a été renommé en persistant_encryption_key
+  * jAuth: persistant_crypt_key a été renommé en persistant_encryption_key
     et utilise une fonction de création de clé plus forte.
-  * **NODOC** Les assets des modules récupérés par le contrôleur www de Jelix
+  * Les assets des modules récupérés par le contrôleur www de Jelix
     sont maintenant mis en cache dans le navigateur
   * **NODOC** jDb schema: amélioration de la prise en charge de sqlite3: ajout de colonne, creation d'index, de clé primaire 
-  * **NODOC** jDao : a maintenant son propre système de plugin "daobuilder". Les classes des plugins de jDb qui lui étaient dédiés sont maintenant des plugins
+  * jDao : a maintenant son propre système de plugin "daobuilder". Les classes des plugins de jDb qui lui étaient dédiés sont maintenant des plugins
   * **NODOC** jDb : amélioration de la prise en charge des requêtes préparées
     * **NODOC** jDb : bindValue() et bindParam() a maintenant la même signature que PDO
     * **NODOC** sqlite3 : support des requêtes préparées

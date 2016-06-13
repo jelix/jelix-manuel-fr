@@ -118,6 +118,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[plugins/logger|plugins pour jLog]]
       - section: [[plugins/auth|drivers pour jAuth]]
       - section: [[plugins/db|drivers pour jDb]]
+      - section: [[plugins/daobuilder|plugins pour jDao]]
       - section: [[plugins/tpl|plugins de templates]]
       - section: [[plugins/urls_engine|moteurs d'urls]]
       - section: [[plugins/jforms|générateurs jforms]]
