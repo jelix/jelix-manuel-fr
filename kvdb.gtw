@@ -105,8 +105,44 @@ Ce driver supporte l'interface @@I@jIKVttl@@.
 
 Depuis Jelix 1.6.8, il prend également en charge les paramètres suivants :
 
-   * @@key_prefix@@ : un prefix qui sera ajouté sur chaque clé indiquée
    * @@db@@ : le numéro de base de donnée redis (0 par défaut)
+   * @@key_prefix@@ : un prefix qui sera ajouté sur chaque clé indiquée
+   * @@key_prefix_flush_method@@ : méthode de suppression des clés quand on indique un prefixe.
+
+
+Si vous indiquez un préfixe pour les clés, alors toutes les clés que vous indiquez
+seront préfixées par le préfixe en question dans la base Redis.
+
+De même, le vidage du cache ne concernera que les clés commençant par ce
+préfixe. Cependant, à cause de l'implementation d'une telle fonction dans Redis,
+cela peut être très gourmand en temps, et rendre votre application trop lente.
+Diverses méthodes sont implémentées dans le plugin pour supprimer les clés, et
+sont indiquées dans le paramètre key_prefix_flush_method :
+
+   * @@direct@@ : les clés sont supprimées directement. Comportement par défaut.
+     Mais à n'utiliser que si vous savez que votre base Redis ne contient pas beaucoup de clés.
+   * @@jkvdbredisworker@@ : la suppression des clés sera faite de manière asynchrone
+     par un worker ou un cron. 
+   * @@event@@ : si les deux autres méthodes ne vous conviennent pas, il est
+     alors de votre responsabilité d'implémenter le processus (asynchrone de préférence !)
+     qui vous convient. Un évènement @@jKvDbRedisFlushKeyPrefix@@ est émis
+     par le plugin, avec le nom du profile et le prefixe des clés à supprimer.
+     à vous d'implémenter un listener sur cet évènement qui appellera votre
+     processus de suppression.
+
+Fonctionnement de la suppression asynchrone des clés à prefixes :
+
+Le plugin stocke les prefixes des clés à supprimer dans une liste qui a pour clé
+@@jkvdbredisdelkeys@@ dans Redis. Un worker ou un cron doit alors dépiler
+régulièrement cette liste de préfix et supprimer les clés correspondantes.
+
+Vous avez un exemple de worker dans @@F@lib/jelix/core-modules/jelix/controller/redisworker.cmdline.php@@.
+Vous pouvez le lancer au moyen de systemd/sysinit/supervisord par exemple. La commande
+sera alors @@php monappli/scripts/script.php jelix~redisworker:deljkvdb <profile>@@
+à laquelle donc il faut remplacer @@<profile>@@ par le nom du profile jkvdb
+concerné. Il scrute en permanence la liste @@jkvdbredisdelkeys@@ dans Redis
+et efface les clés correspondantes aux prefixes de cette liste. Pour l'arrêter,
+un @@<CTRL+C>@@ (sur linux) suffira si vous le lançez vous même en ligne de commande.
 
 
 ==== db ====
