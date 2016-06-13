@@ -69,6 +69,7 @@ Voici les types de plugins et les répertoires correspondant :
     * drivers pour jCache : @@F@cache/@@
     * plugins pour la debugbar : @@F@debugbar/@@
     * plugins pour jResponseHtml : @@F@htmlresponse/@@
+    * plugins pour jProfiles : @@F@profiles/@@
 
 ===== Création de plugins =====
 

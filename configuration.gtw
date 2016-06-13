@@ -39,13 +39,6 @@ Voici un exemple :
     <dependencies>
        <jelix minversion="1.3" maxversion="1.3.*" />
     </dependencies>
-    <directories>
-        <config>var/config</config>
-        <log>var/log</log>
-        <var>var</var>
-        <www>www</www>
-        <temp>temp/</temp>
-    </directories>
     <entrypoints>
         <entry file="index.php" config="index/config.ini.php" />
         <entry file="soap.php" config="soap/config.ini.php" type="soap"/>
@@ -179,13 +172,14 @@ dans l'ordre suivant et les fusionne :
 
 Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent.
 
+Pour chaque point d'entrée, le contenu résulant de cette fusion est mis en
+cache.
+
 
 ===== Le fichier profiles.ini.php =====
 
 Ce fichier contient tous les paramètres de connexions de certains composants de
-Jelix : base de données SQL, NOSQL, services web, cache etc. Dans Jelix 1.2, ces
-données étaient dans plusieurs fichiers (dbprofils.ini.php, cache.ini.php etc).
-Depuis la version 1.3, tout est rassemblé dans cet unique fichier.
+Jelix : base de données SQL, NOSQL, services web, cache etc.
 
 C'est un fichier au format ini. Chaque section correspond à un profil, un profil
 étant les paramètres d'une connexion. Les noms des sections sont composés de
@@ -211,11 +205,14 @@ password=
 </code>
 
 
+Note: le contenu du fichier profiles.ini.php est analysé et complété par
+des plugins, et le résultat est mis en cache pour améliorer les performances.
+
 === Alias de profil ===
 
 Vous pouvez définir des alias de profils. C'est à dire donner plusieurs noms à
 un profil. C'est utile par exemple si un module utilise un nom de profil
-particulier. Il est alors possible d'indiquer que ce nom de profil sera rattaché
+particulier. Il est alors possible d'indiquer que ce nom de profil soit rattaché
 à un profil existant.
 
 Les alias sont définis dans une section dont le nom contient uniquement le nom

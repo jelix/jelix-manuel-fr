@@ -1,0 +1,18 @@
+~~LANG:EN@enman:plugins/profiles~~
+
+Les plugins pour jProfiles doivent être stockés dans un répertoire dedié aux
+plugins, dans un fichier @@profiles/<type>/<type>.profiles.php@@. Et ce fichier
+doit déclarer une classe @@<type>ProfilesCompiler@@.
+
+@@<type>@@ correspond au type de profile. Ainsi il existe un plugin
+@@profiles/jdb/jdb.profiles.php@@ pour les profiles de type @@jdb:@@.
+
+Un plugin pour jProfiles est appelé pour chaque profil du type dont il a la charge
+et doit en général analyser les paramètres du profil, afin de détecter
+des paramètres manquants, invalides etc, et de créer des paramètres avec des valeurs
+par défaut etc. En fait, il doit faire tout le travail de vérification,
+qu'il n'y aura ainsi pas à faire  dans la classe qui utilise ce type
+de profil. Le résultat est mis en cache pour éviter d'avoir à faire cette
+vérification à chaque requête.
+
+La classe du plugin doit hériter de @@jProfilesCompilerPlugin@@.

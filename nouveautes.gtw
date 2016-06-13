@@ -36,7 +36,7 @@
       peuvent toujours être récupérés à partir de vos contrôleurs, même si cet
       usage est obsolète)
 
-  * **NODOC** jProfiles :
+  * jProfiles :
      * le contenu du fichier profiles.ini.php est optimisé et stocké en cache
      * jProfiles est extensible par des plugins : ceux-ci peuvent traiter les
        profiles qu'ils prennent en charge avant la mise en cache du fichier
@@ -149,7 +149,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
   * **NODOC**  les quelques fichiers de la bibliothèque clearbricks ont été retirés
   * **NODOC** La classe @@jVersionComparator@@ a été remplacée par la classe
     Jelix\Version\VersionComparator d'un nouveau paquet "jelix/version"
-  * **NODOC** project.xml : @@<directories>@@ n'est plus pris en charge
+  * project.xml : @@<directories>@@ n'est plus pris en charge
 
 ===== Pour les contributeurs =====
 

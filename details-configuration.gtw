@@ -17,15 +17,14 @@ autres balises.
     <dependencies>
      ...
     </dependencies>
-    <directories>
-     ...
-    </directories>
     <entrypoints>
      ...
     </entrypoints>
 </project>
 </code>
 
+Note : dans Jelix 1.6 et inférieur, il y avait une section @@<directories>@@
+qui n'existe plus.
 
 ==== info ====
 
@@ -79,21 +78,6 @@ correctement.
   <module name="testurls" minversion="2.2" maxversion="2.3" />
   <module name="jauthdb" />
   <module name="jacl2db" />
-</code>
-
-==== directories ====
-
-Cet élément indique le chemin de certains répertoires, relatifs au répertoire de
-l'application. Toutes les balises de l'exemple suivant sont obligatoires :
-
-<code xml>
-    <directories>
-        <config>var/config</config>
-        <log>var/log</log>
-        <var>var</var>
-        <www>www</www>
-        <temp>temp/</temp>
-    </directories>
 </code>
 
 ==== entrypoints ====

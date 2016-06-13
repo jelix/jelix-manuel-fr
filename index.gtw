@@ -125,6 +125,7 @@ Téléchargez [[http://download.jelix.org/jelix/nightly/1.7.x/jelix-manuel-1.7.p
       - section: [[plugins/jforms|générateurs jforms]]
       - section: [[plugins/debugbar|plugins pour la debugbar]]
       - section: [[plugins/htmlresponse|plugins pour jResponseHtml]]
+      - section: [[plugins/profiles|plugins pour jProfiles]]
    - chapter: [[details-configuration|La configuration en détails]]
    - chapter: [[objets_globaux|les objets globaux utiles]]
    - chapter: [[cache|Utiliser le cache]]
