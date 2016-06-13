@@ -66,10 +66,10 @@ permet de créer à la fois le contrôleur, le dao et le formulaire, en indiquan
 la table que l'on veut gérer.
 
 <code bash>
-php cmd.php createdaocrud le_module la_table le_nom_du_controleur
+php cmd.php module:create-dao-crud <le_module> <la_table> <le_nom_du_controleur>
 </code>
 
-Voir l'aide de cette commande (@@php cmd.php help createdaocrud@@) pour les options.
+Voir l'aide de cette commande (@@php cmd.php help module:create-dao-crud@@) pour les options.
 
 ===== Personnalisation du contrôleur =====
 

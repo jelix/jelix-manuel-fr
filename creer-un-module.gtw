@@ -82,7 +82,7 @@ Le plus simple est encore d'utiliser la commande @@c@createmodule@@. Dans votre
 application :
 
 <code bash>
-   php cmd.php createmodule monmodule
+   php cmd.php module:create monmodule
 </code>
 
 Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de
@@ -102,7 +102,7 @@ nom du module.
 Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/ 
 
 <code bash>
-   php cmd.php createmodule supermodule ../lib/shared-modules/
+   php cmd.php module:create supermodule ../lib/shared-modules/
 </code>
 
 Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres
@@ -119,7 +119,7 @@ Vous pouvez indiquer le numéro de version à la commande @@createmodule@@, grâ
 à l'option @@-ver@@ :
 
 <code bash>
-php cmd.php createmodule -ver 1.0 supermodule
+php cmd.php module:create --ver 1.0 supermodule
 </code>
 
 Vous pouvez aussi le modifier directement dans le fichier @@F@module.xml@@ de

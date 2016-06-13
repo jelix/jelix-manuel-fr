@@ -12,10 +12,10 @@ Jelix fournis un module, jauthdb, qui contient un dao par défaut, et installe
 une table en base de donnée. Pour l'utiliser, installez le :
 
 <code bash>
-php cmd.php installmodule jauthdb
+php cmd.php module:install jauthdb
 
 # ou si vous voulez aussi créer un utilisateur par défaut, "admin" (mot de passe : admin)
-php cmd.php installmodule -p defaultuser jauthdb
+php cmd.php module:install -p defaultuser jauthdb
 </code>
 
 Une table jlx_users sera créée dans votre base de données. Vous pouvez ajouter

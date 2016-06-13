@@ -12,14 +12,14 @@ Le fichier d'un DAO peut être généré par le script //cmd// en ligne de comma
 à partir d'une table de base de données existante.
 
 <code bash>
- php cmd.php createdao nom_module nom_dao nom_table nom_sequence
+ php cmd.php module:create-dao <nom_module> <nom_dao> [<nom_table> [<nom_sequence>]]
 </code>
 
 Par exemple, si vous voulez créer dans le module "myshop", un DAO "product" qui
 sera basé sur la table "shop_product", vous taperez donc :
 
 <code bash>
- php cmd.php createdao myshop product shop_product
+ php cmd.php module:create-dao myshop product shop_product
 </code>
 
 Dans le répertoire @@F@daos@@ du module //myshop// vous allez donc avoir un

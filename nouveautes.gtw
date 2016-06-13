@@ -6,15 +6,15 @@
 
   * Jelix 1.7 nécessite dorénavant PHP 5.6 minimum.
 
-  * **NODOC** Intégration avec Composer :
-    * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
-    * Des modules et plugins ont été externalisés et disponibles séparément via
+  * Intégration avec Composer :
+    * **NODOC** La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
+    * **NODOC** Des modules et plugins ont été externalisés et disponibles séparément via
       Composer. Certains restent toutefois inclus dans le paquet standard de
       Jelix.
-    * Un projet basé sur Jelix peut-être crée avec le paquet
+    * **NODOC** Un projet basé sur Jelix peut-être crée avec le paquet
       [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
       installable via Composer
-    * Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont
+    * **NODOC** Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont
       plus pris en charge, et remplacés par une nouvelle API à appeler dans le
       fichier @@application.init.php@@ : @@jApp::declareModulesDir()@@,
       @@jApp::declarePluginsDir()@@, @@jApp::declareModuleDir()@@. Il est aussi
@@ -45,7 +45,7 @@
      * un plugin pour jdb est fourni, permettant à jDb de traiter plus
        rapidement l'ouverture d'une connexion.
 
-  * **NODOC** scripts Jelix-scripts (cmd.php) : toutes les commandes d'aides à la génération
+  * scripts Jelix-scripts (cmd.php) : toutes les commandes d'aides à la génération
     d'une application et de ses composants sont maintenant basées sur le
     composant Symfony Console. Les noms et paramètres des commandes ont donc
     changé.
@@ -71,8 +71,8 @@
   * **NODOC** nouvelle méthode @@M@jApp::version()@@
   * **NODOC** nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le
     framework (version...)
-  * **NODOC** Jelix-scripts createapp: createapp.php a été déplacé dans un répertoire bin et est basé sur Symfony Console.
-  * **NODOC** Jelix-scripts createapp: nouvelle option -modulename pour indiquer le nom du
+  * Jelix-scripts createapp: createapp.php a été déplacé dans un répertoire bin et est basé sur Symfony Console.
+  * Jelix-scripts createapp: nouvelle option @@--modulename@@ pour indiquer le nom du
     module principal
   * contrôleur CRUD : la liste des enregistrements peut être triée par colonne
   * jauthdb_admin : la liste des utilisateurs peut être filtrée et triée

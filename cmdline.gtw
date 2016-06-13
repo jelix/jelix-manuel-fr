@@ -22,7 +22,7 @@ Le point d'entrée se crée lors de la création de l'application avec le script
 @@c@createapp@@ ou n'importe quand avec la commande @@c@createentrypoint@@.
 
 <code bash>
-$ php createapp.php -withcmdline myapp
+$ php bin/createapp.php -withcmdline myapp
 </code>
 
 Avec ce script, vous allez créer la structure d'une nouvelle application qui
@@ -33,7 +33,7 @@ Si vous avez déjà créé votre application, vous pouvez utiliser la commande
 @@F@createentrypoint@@ :
 
 <code bash>
-$ php cmd.php createentrypoint -type cmdline myscript
+$ php cmd.php app:createentrypoint --type cmdline myscript
 </code>
 
 Cela créera un point d'entrée pour un script en ligne de commande sous le nom
@@ -83,14 +83,14 @@ Vous pouvez créer votre contrôleur en utilisant les jelix-scripts :
 
 <code bash>
 # création du module foo avec un controller cmdline
-$ php cmd.php createmodule -cmdline foo  
+$ php cmd.php module:create --cmdline foo  
 </code>
 
 ou
 
 <code bash>
 # création du controller bar dans le module foo
-$ php cmd.php createctrl -cmdline foo bar 
+$ php cmd.php module:create-ctrl --cmdline foo bar 
 </code>
 
 === Manuellement ===

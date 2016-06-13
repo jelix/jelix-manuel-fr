@@ -44,10 +44,9 @@ paquet jelix-skeleton-app car elle permet de personnaliser la création du
 squelette.
 
 Vous trouverez cette commande @@createapp@@ dans le répertoire
-@@F@lib/jelix-scripts@@ (@@F@vendor/jelix/jelix/lib/jelix-scripts@@ si vous
-avez installé Jelix avec Composer).
+@@F@bin/@@ de Jelix (@@F@vendor/bin/@@ si vous avez installé Jelix avec Composer).
 
-Dans une console, allez dans le répertoire @@F@lib/jelix-scripts@@, et exécutez :
+Dans une console, allez dans le répertoire @@F@bin@@, et exécutez :
 
 <code bash>
 php createapp.php /chemin/vers/le/nouveau/répertoire/de/myapp

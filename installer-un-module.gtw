@@ -106,7 +106,7 @@ Par exemple, pour utiliser le module jauth fourni avec jelix, après lui avoir
 déclaré son niveau d'accès dans la configuration, il faut faire ceci :
 
 <code bash>
-php cmd.php installmodule jauth
+php cmd.php module:install jauth
 </code>
 
 Notez que la commande @@c@createmodule@@ active automatiquement le module

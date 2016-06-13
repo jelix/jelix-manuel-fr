@@ -41,15 +41,15 @@ avez un accès en ligne de commande, vous pouvez appeler les commandes jelix:
 @@openapp@@ and @@closeapp@@
 
 <code bash>
-$ php cmd.php closeapp
-$ php cmd.php openapp
+$ php cmd.php app:close
+$ php cmd.php app:open
 </code>
 
 Vous pouvez donner un message à la commande @@closeapp@@. Cela va remplacer le
 tag @@%message%@@ dans le fichier closed.html.
 
 <code bash>
-$ php cmd.php closeapp "Sorry, we are closed for the moment, a new version is comming."
+$ php cmd.php app:close "Sorry, we are closed for the moment, a new version is comming."
 </code>
 
 ===== Mettre à jour les fichiers =====
