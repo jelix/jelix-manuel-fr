@@ -42,7 +42,8 @@ sont utilisables pour tous les drivers :
 
 Paramètres possibles :
    * **driver** : doit valoir "mysqli" (utilisant la nouvelle API PHP mysqli) ou "mysql"
-     (utilisant l'antique API PHP mysql_*, non recommendé)
+     (utilisant l'antique API PHP mysql_*, non recommendé, et dont le driver
+     n'est plus fourni en standard dans Jelix)
    * **database** : le nom de la base de données à utiliser
    * **host** : le nom du serveur mysql sur lequel se connecter
    * **user** et **password** : le login/mot de passe pour la connexion
@@ -87,11 +88,12 @@ Paramètres possibles :
      chercher les tables, si le schéma par défaut pour la connexion ne
      correspond pas à celui dans lequel l'application va chercher.
 
-===== Profil sqlite et sqlite3 =====
+===== Profil sqlite3 =====
 
 Paramètres possibles :
 
-   * **driver** : doit valoir "sqlite3" (ou "sqlite" pour les vieilles bases en sqlite2)
+   * **driver** : doit valoir "sqlite3" (ou "sqlite" pour les vieilles bases en
+     sqlite2, mais le driver n'est plus fourni en standard dans Jelix)
    * **database** : le nom du fichier de base de données à utiliser. voir plus base
    * **persistent** : indique si la connexion est persistante (**on**) ou pas
      (**off**)

@@ -36,14 +36,13 @@ Un exemple :
 <code ini>
 [modules]
 testapp.access = 2
-junittests.access = 2
 jacldb.access = 0
 jacl2db.access = 1
 jauthdb.access = 1
 jauth.access = 2
 </code>
 
-Dans cet exemple, les modules testapp, junittests et jauth sont activés normalement. Les
+Dans cet exemple, les modules testapp et jauth sont activés normalement. Les
 modules jacl2db et jauthdb ne sont activés que pour un usage "interne", donc ne
 sont pas accessibles depuis le web, et seuls d'autres modules peuvent appeler
 leurs daos, templates etc. Le module jacldb n'est pas du tout activé. Il n'est

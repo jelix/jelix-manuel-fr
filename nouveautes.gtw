@@ -57,13 +57,13 @@
     et utilise une fonction de création de clé plus forte.
   * Les assets des modules récupérés par le contrôleur www de Jelix
     sont maintenant mis en cache dans le navigateur
-  * **NODOC** jDb schema: amélioration de la prise en charge de sqlite3: ajout de colonne, creation d'index, de clé primaire 
+  * jDb schema: amélioration de la prise en charge de sqlite3: ajout de colonne, creation d'index, de clé primaire 
   * jDao : a maintenant son propre système de plugin "daobuilder". Les classes des plugins de jDb qui lui étaient dédiés sont maintenant des plugins
-  * **NODOC** jDb : amélioration de la prise en charge des requêtes préparées
-    * **NODOC** jDb : bindValue() et bindParam() a maintenant la même signature que PDO
-    * **NODOC** sqlite3 : support des requêtes préparées
-    * **NODOC** pgsql : support des paramètres nommés pour les requêtes préparées
-    * **NODOC** mysqli : correction sur la prise en charge des requêtes préparées et support des paramètres nommés
+  * jDb : amélioration de la prise en charge des requêtes préparées
+    * bindValue() et bindParam() a maintenant la même signature que PDO
+    * sqlite3 : support des requêtes préparées
+    * pgsql : support des paramètres nommés pour les requêtes préparées
+    * mysqli : correction sur la prise en charge des requêtes préparées et support des paramètres nommés
   * **NODOC** Zones : organisation du cache en sous-répertoires
 
 ==== Changements dans les API ====
@@ -92,7 +92,7 @@
     aux différents fichiers de configurations
   * **NODOC** Correction dans jDatetime sur le format RCF822 et les timezones
   * **NODOC** jDao : l'attribut "driver" sur les balises de conditions est déprécié et remplacé par un attribut "dbtype"
-  * **NODOC** jDb/mysql : correction sur le démarrage d'une transaction, pour ne plus utiliser l'ancien mot-clé SQL pour cette fonctionnalité
+  * jDb/mysql : correction sur le démarrage d'une transaction, pour ne plus utiliser l'ancien mot-clé SQL pour cette fonctionnalité
   * **NODOC** Nouvelle méthode @@M@jCoordinator::execOriginalAction()@@ pour savoir si l'action courante est une redirection interne ou pas
   * **NODOC** jApp utilise maintenant en interne une nouvelle classe jAppInstance pour faciliter le changement de contexte.
 
@@ -128,13 +128,13 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
 
   * **NODOC** @@jFile@@ repose maintenant sur le paquet Composer "jelix/file-utilities"
     qui propose des méthodes supplémentaires. jFile est déprécié.
-  * **NODOC** Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
+  * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
-  * **NODOC** idem pour les plugins mysql et sqlite : en effet, les API PHP qu'ils utilisent sont dépréciées
+  * idem pour les plugins mysql et sqlite : en effet, les API PHP qu'ils utilisent sont dépréciées
     dans PHP. Ils sont disponibles séparément. Il est toutefois préférable d'utiliser
     respectivement les plugins mysqli et sqlite3, toujours disponibles dans la
     distribution standard.
-  * **NODOC** il n'y a plus les fichiers de locales en_EN. configurez plutôt votre application pour utiliser
+  * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre application pour utiliser
     en_US ou en_GB.
   * **NODOC** le plugin memcache22 pour jCache a été supprimé
   * **NODOC** La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.

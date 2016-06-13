@@ -86,7 +86,41 @@ Le premier paramètre est la requête. Le deuxième est le numéro, dans la list
 des résultats, du premier enregistrement à récupérer. Le troisième paramètre est
 le nombre d'enregistrements à récupérer.
 
+==== requêtes préparées ====
 
+vous pouvez utiliser des requêtes préparées. C'est d'ailleurs plus sécurisé
+dans il faut injecter des paramètres dans la requete SQL.
+
+L'API est similaire à PDO : une méthode @@M@prepare@@ permet d'indiquer
+la requête. Celle-ci peut avoir des paramètres nommés, commençant par ":".
+La méthode renvoi un objet de type jDbResultSet.
+
+<code>
+    $stmt = $cnx->prepare('INSERT INTO `labels_test` (`key`,`lang` ,`label`) VALUES (:k, :lg, :lb)');
+</code>
+
+Sur cet objet jDbResultSet, on peut indiquer la valeur de chaque paramètre
+avec la méthode bindParam:
+
+<code>
+    $bind = $stmt->bindParam('lg', $lang, 's');
+    $bind = $stmt->bindParam('k', $key, 'i');
+    $bind = $stmt->bindParam('lb', $label, 's');
+</code>
+
+Et ensuite, on lance l'execution de la requête :
+
+<code>
+    $stmt->execute();
+</code>
+
+Et il est possible de relancer l'execution avec d'autres valeurs pour les
+paramètres, autant de fois que l'on veut, sans avoir à rééxecuter @@prepare()@@.
+
+Si la requête est un select, on peut se servir de @@$stmt@@ comme un
+ResultSet classique, voir la section suivante.
+
+Note: le driver mssql ne prend pas en charge les requêtes préparées.
 
 ===== ResultSet =====
 
