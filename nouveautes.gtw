@@ -115,14 +115,14 @@ Voici la liste de ces modules et plugins :
 À noter que d'autres composants, modules et plugins sont aussi maintenant chacun dans
 leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
 
-  * **NODOC** [[https://packagist.org/packages/jelix/fakeserverconf|FakeServerConf]]
+  * [[https://packagist.org/packages/jelix/fakeserverconf|FakeServerConf]]
   * **NODOC** [[https://packagist.org/packages/jelix/soap-server-module|le module jSoap]]
   * **NODOC** [[https://packagist.org/packages/jelix/feeds-module|un nouveau module jFeeds]] comportant les classes
     et réponse pour générer des fils RSS et ATOM
   * **NODOC** [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]
-  * **NODOC** [[https://packagist.org/packages/jelix/inifile|IniModifier et MultiIniModifier]], classes de
+  * [[https://packagist.org/packages/jelix/inifile|IniModifier et MultiIniModifier]], classes de
     modification de fichiers ini (anciennement jIniFileModifier et jIniMultiFilesModifier)
-  * **NODOC** [[https://packagist.org/packages/jelix/wikirenderer-plugin|La class jWiki et WikiRenderer]]
+  * [[https://packagist.org/packages/jelix/wikirenderer-plugin|La class jWiki et WikiRenderer]]
 
 ===== Les modules, plugins et fonctionnalités dépréciés =====
 
@@ -137,17 +137,18 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
   * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre application pour utiliser
     en_US ou en_GB.
   * **NODOC** le plugin memcache22 pour jCache a été supprimé
-  * **NODOC** La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
-  * **NODOC** la classe jHttp est dépréciée et installable séparément.
-  * **NODOC** les classes jIniFile, jIniFileModifier, jIniMultiFilesModifier ont changés de nom en
+  * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
+  * La classe jHttp est dépréciée et installable séparément, ainsi que les
+    quelques fichiers de la bibliothèque clearbricks qui l'accompagnait.
+  * les classes jIniFile, jIniFileModifier, jIniMultiFilesModifier ont changés de nom en
     respectivement Jelix\IniFile\Util, Jelix\IniFile\IniModifier, Jelix\IniFile\MultiIniModifier.
     Mais il est encore possible d'utiliser les anciens noms (jusqu'à la prochaine version).
-  * **NODOC** La classe @@jJson@@ a été supprimée. Utilisez les fonctions json de PHP directement.
-  * **NODOC** La classe @@jCrypt@@ a été supprimée, l'API mcrypt étant dépréciée par PHP
+  * La classe @@jJson@@ a été supprimée. Utilisez les fonctions json de PHP directement.
+  * La classe @@jCrypt@@ a été supprimée, l'API mcrypt étant dépréciée par PHP
     et n'était plus maintenue depuis longtemps. Utilisez d'autres bibliothèques
     de chiffrements (le paquet defuse/php-encryption par exemple).
-  * **NODOC**  les quelques fichiers de la bibliothèque clearbricks ont été retirés
-  * **NODOC** La classe @@jVersionComparator@@ a été remplacée par la classe
+  * Les quelques fichiers de la bibliothèque clearbricks ont été retirés
+  * La classe @@jVersionComparator@@ a été remplacée par la classe
     Jelix\Version\VersionComparator d'un nouveau paquet "jelix/version"
   * project.xml : @@<directories>@@ n'est plus pris en charge
 
