@@ -2,12 +2,12 @@
 
 
 Le coordinateur est le coeur du framework. C'est en quelque sorte le chef
-d'orchestre de l'exécution d'une action.
+d'orchestre de l'exécution d'une action. On peut l'appeler aussi le routeur.
 
 À partir des paramètres donnés par un objet jRequest, le coordinateur en déduit
 les informations suivantes :
 
-  * le nom du module et le nom de l'action à exécuter
+  * le contrôleur à utiliser, à partir du nom du module et de l'action à exécuter
   * les données en entrée
   * la liste des types de réponses possibles et le type de la réponse par défaut
 

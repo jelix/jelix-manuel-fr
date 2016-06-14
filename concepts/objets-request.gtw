@@ -51,7 +51,12 @@ Les autres propriétés de @@C@jRequest@@ qui peuvent être utiles :
 
 Quelques méthodes utiles :
 
-  * @@M@getIp()@@: pour récupérer la vraie IP de l'utilisateur (tient compte des proxy, firewall etc.)
-  * @@M@isAjax()@@: pour savoir si la requête est une requête ajax ou pas.
+  * @@M@getIp()@@ : pour récupérer la vraie IP de l'utilisateur (tient compte des proxy, firewall etc.)
+  * @@M@getProtocol()@@ : savoir si c'est du http ou https
+  * @@M@getPort()@@ : pour connaitre le port (80, 443..)
+  * @@M@getDomainName()@@ : pour récupérer le nom de domaine de l'application
+  * @@M@getServerURI()@@ : pour récupérer URL de l'application @@<protocol><domain>[:<port>]@@
+  * @@M@isAjax()@@ : pour savoir si la requête est une requête ajax ou pas.
+  * @@M@header()@@ et @@M@headers()@@ : pour récupérer des en-têtes.
 
 

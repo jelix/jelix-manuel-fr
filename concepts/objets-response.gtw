@@ -14,9 +14,10 @@ utiles pour vous sont celles-ci :
    * @@M@addHttpHeader ()@@ : pour ajouter un entête HTTP, qui sera envoyé au
      moment opportun.
    * @@M@setHttpStatus ()@@ : pour indiquer le code "status" HTTP (200, 404...)
+   * @@M@isValidCache()@@, @@M@setExpire()@@ et @@M@setLifeTime()@@ pour gérer la mise en cache coté
+     navigateur
 
 Ces méthodes sont disponibles pour tout type de réponse.
-
 
 Pour connaître les spécificités des différents objets réponses, voir le
 [[/vues/index|chapitre sur les réponses]].

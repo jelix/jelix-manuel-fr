@@ -121,7 +121,7 @@ un profil mysql, postgresql, etc. Il faut alors ajouter le paramètre
 @@usepdo=on@@. Vous devez avoir alors au moins les paramètres suivants, qui sont
 quasiement identiques pour les drivers jDb :
 
-   * **driver**: le nom du driver PDO à utiliser ("mysql", "pgsql"...)
+   * **driver**: le nom du driver PDO à utiliser ("mysqli", "pgsql"...)
    * **host**, **user**, **password** (sauf pour sqlite bien entendu)
    * **database** : le nom de la base de donnée. Pour sqlite, vous pouvez
      utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à

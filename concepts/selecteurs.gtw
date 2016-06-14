@@ -7,8 +7,8 @@ Les sélecteurs sont très utilisés dans Jelix. Ils permettent d'indiquer une
 ressource, un fichier, sans avoir à connaître son chemin. En effet,
 l'arborescence d'une application Jelix n'est pas figée et peut être modifiée
 selon les normes en vigueur sur le serveur (le répertoire var de l'application
-myapp allant dans le répertoire /var/myapp/var par exemple, sur un serveur
-unix).
+myapp pouvant être dans le répertoire /var/myapp/var par exemple, sur un serveur
+linux).
 
 De plus les bibliothèques de Jelix peuvent être installées dans une arborescence
 différente de celle de l'application.
@@ -46,11 +46,11 @@ En règle générale, vous aurez à donner un sélecteur en paramètre de certai
 méthodes sans avoir à indiquer son type. Très souvent en effet ces méthodes
 savent qu'il s'agira d'un sélecteur sur une ressource d'un type précis.
 
+<code>
   jDao::create("myModule~myDao");
+</code>
 
 Ici jDao cherchera un fichier DAO de nom myDAO.dao.xml dans le module myModule.
-
-
 
 
 
