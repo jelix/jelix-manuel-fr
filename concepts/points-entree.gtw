@@ -48,23 +48,27 @@ la même base de données, partager des modules, partager le même répertoire w
 
 ===== jApp =====
 
-Comme vous l'avez certainement remarqué, un point d'entrée fait appel à une classe, @@C@jApp@@,
-qui est initialisée dans le fichier @@F@application.init.php@@. Elle ne contient que des méthodes
-statiques.
+Comme vous l'avez certainement remarqué, un point d'entrée fait appel à une
+classe, @@C@jApp@@, qui est initialisée dans le fichier
+@@F@application.init.php@@. Elle ne contient que des méthodes statiques.
 
-C'est un élément central d'une application Jelix, parce qu'elle contient des informations pour l'exécution
-de l'application. Vous l'utiliserez souvent, au moins pour accéder à la configuration
-(qui est définie avec la méthode  @@M@loadConfig()@@). @@C@jApp@@ contient également une référence vers
-le coordinateur (définit avec la méthode @@M@setCoord()@@). 
+Tout ce qui est défini dans @@C@jApp@@ est déclaré dans le fichier
+application.init.php votre application, ou le point d'entrée.
+
+C'est un élément central d'une application Jelix, parce que cette classe
+contient des informations pour l'exécution de l'application. Vous l'utiliserez
+souvent, au moins pour accéder à la configuration (qui est définie avec la
+méthode @@M@loadConfig()@@). @@C@jApp@@ contient également une référence vers le
+coordinateur (définit avec la méthode @@M@setCoord()@@).
 
 <code php>
  $config = jApp::config(); // Pour récupérer l'objet contenant la configuration
  $coord = jApp::coord(); // pour récupérer le coordinateur
 </code>
 
-@@C@jApp@@ contient aussi les différents chemins des répertoires les plus importants d'une application.
-Il est fortement recommandé d'utiliser les méthodes suivantes plutôt que de mettre des chemins en dur
-dans votre code.
+@@C@jApp@@ contient aussi les différents chemins des répertoires les plus
+importants d'une application. Il est fortement recommandé d'utiliser les
+méthodes suivantes plutôt que de mettre des chemins en dur dans votre code.
 
 <code php>
   $path = jApp::appPath();      // chemin complet du répertoire de l'application
@@ -78,5 +82,8 @@ dans votre code.
   $modulePath = jApp::getModulePath('myModule'); // chemin complet du répertoire d'un module.
 </code>
 
-Vous pouvez donner un nom de fichier (ou sous-chemin) en paramètre à ces méthodes (excepté @@M@getModulePath@@),
-il sera ajouté au chemin demandé.
+Vous pouvez donner un nom de fichier (ou sous-chemin) en paramètre à ces
+méthodes (excepté @@M@getModulePath@@), il sera ajouté au chemin demandé.
+
+Pour en savoir plus, allez voir [[../classes-utiles/japp|le chapitre dédié à jApp]].
+

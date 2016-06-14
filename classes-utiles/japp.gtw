@@ -3,12 +3,11 @@
 jApp est une classe comportant des informations sur l'environnement Jelix.
 
 Elle permet ainsi de spécifier (dans le application.init.php) et de
-récupérer les différents chemins de l'application. (Depuis la version 1.3, elle
-remplace les constantes JELIX_APP_*).
+récupérer les différents chemins de l'application.
 
-Elle propose également des méthodes permettant de récupérer les
-objets les plus courant de l'environnment Jelix, et aussi de manipuler l'environnement
-(mais à usage plutôt interne à Jelix)
+Elle propose également des méthodes permettant de récupérer les objets les plus
+courant de l'environnment Jelix, et aussi de manipuler l'environnement (mais à
+usage plutôt interne à Jelix)
 
 
 ===== Accéder aux objets principaux =====
@@ -21,12 +20,29 @@ $config = jApp::config();
 $coord = jApp::coord();
 </code>
 
+Il y a aussi @@jApp::version()@@ qui permet de connaître la version de
+l'application, si un fichier @@F@VERSION@@ est présent dans le répertoire de
+l'application.
+
+===== Récupérer le chemin URL de base de l'application =====
+
+Pour former des URLs, vous aurez souvent besoin de la valeur "basePath"
+situé dans la configuration, et généré automatiquement quand elle n'est pas
+configuré à la main. Cette méthode permet de récupérer ce chemin facilement :
+
+<code>
+$path = jApp::urlBasePath();
+</code>
 
 
-===== Récupérer du répertoire de l'application =====
+===== Récupérer les chemins de différents répertoires de l'application =====
+
+En général, jApp est configuré dés le démarrage de l'application, dans le
+fichier application.init.php. En particulier, les divers chemins des composants
+de l'application y sont indiqués, comme vous pourrez le voir plus bas.
+Divers méthodes permettent alors de les récupérer.
 
 La méthode @@M@appPath()@@ permet de retourner le chemin absolu de votre application.
-La correspondance avec les anciennes versions de jelix : JELIX_APP_PATH
 
 <code>
 
@@ -34,49 +50,108 @@ $chemin = jApp::appPath();
 
 </code>
 
-===== Récupérer du répertoire temporaire =====
 
 La méthode @@M@tempPath()@@ permet de retourner le chemin absolu du temporaire.
-La correspondance avec les anciennes versions de jelix : JELIX_APP_TEMP_PATH
 
 <code>
-
 $chemin = jApp::tempPath();
-
 </code>
 
-===== Autres méthodes de chemins =====
+
+D'autres chemins sont aussi disponibles :
 
 <code>
 // chemin du répertoire var/ de l'application
-// (équivalent à l'ancienne constante JELIX_APP_VAR_PATH)
 $path = jApp::varPath();
 
 // chemin du répertoire var/log de l'application
-// (équivalent à l'ancienne constante JELIX_APP_LOG_PATH)
 $path = jApp::logPath();
 
 // chemin du répertoire var/config/ de l'application
-// (équivalent à l'ancienne constante JELIX_APP_CONFIG_PATH)
 $path = jApp::configPath();
 
 // chemin du répertoire www/ de l'application
-// (équivalent à l'ancienne constante JELIX_APP_WWW_PATH)
 $path = jApp::wwwPath();
 
-//chemin base path (de la section urlengine de la configuration )
-$path = jApp::urlBasePath();
+// chemin du répertoire scripts/ de l'application
+$path = jApp::scriptsPath();
+</code>
 
-// chemin du fichier de configuration principal de l'application
-// (mainconfig.ini.php ou defaultconfig.ini.php pour jelix <= 1.5)
+Vous pouvez donner un nom de fichier (ou sous-chemin) en paramètre à ces
+méthodes, il sera ajouté au chemin demandé.
+
+Vous pouvez également récupérer le chemin du fichier de configuration principal :
+
+<code>
+// chemin de mainconfig.ini.php
 $path = jApp::mainConfigFile();
+</code>
 
+Vous pouvez aussi récupérer le chemin d'un module particulier :
 
-// Récupérer le chemin d'un module
-$path = jApp::getModulePath($nom_module);
-
-
+<code>
+$path = jApp::getModulePath('nom_module');
 </code>
 
 
+==== Configurer jApp =====
+
+Dans le fichier application.init.php, vous déclarer les différents chemin des
+composants de l'application, que ce soit les chemins des répertoires de configuration,
+ou les chemins des répertoires de modules.
+
+Avec @@initPaths()@@ et @@setTempBasePath()@@ vous définissez les chemins principaux :
+
+<code>
+jApp::initPaths(
+    __DIR__.'/'
+    //__DIR__.'/www/',
+    //__DIR__.'/var/',
+    //__DIR__.'/var/log/',
+    //__DIR__.'/var/config/',
+    //__DIR__.'/scripts/'
+);
+jApp::setTempBasePath(realpath(__DIR__.'/temp').'/');
+</code>
+
+Cette classe contient également les méthodes pour indiquer les répertoires
+de modules, de plugins etc :
+
+Exemple :
+
+<code>
+// déclarer une liste de répertoires contenant des modules
+jApp::declareModulesDir(array(
+                        __DIR__.'/../lib/jelix-modules/',
+                        __DIR__.'/../lib/jelix-admin-modules/',
+                        __DIR__.'/modules/'
+                    ));
+// déclarer une liste de répertoires contenant des plugins
+jApp::declarePluginsDir(array(
+                        __DIR__.'/../lib/jelix-plugins/',
+                        __DIR__.'/plugins'
+                    ));
+
+// déclarer un répertoire correspondant à un module
+jApp::declareModule(__DIR__.'/mon-module/');
+
+</code>
+
+Notez que si vous installez Jelix et des modules via Composer, ces méthodes
+sont appelées automatiquement avec les bons chemins. Ainsi, dans l'exemple
+ci-dessus, il déclare les répertoires jelix-modules et jelix-admin-modules
+qui sont fournis avec Jelix, mais cela n'est valable que si on a installé
+Jelix à la main, à partir d'un archive.
+
+Cependant ces méthodes restent utiles quand vous avez des répertoires de modules
+propres à votre application.
+
+
+Dans le point d'entrée, vous définissez également le fichier de configuration
+et le coordinateur à utiliser :
+
+<code>
+jApp::loadConfig('index/config.ini.php');
+jApp::setCoord(new jCoordinator());
+</code>
 
