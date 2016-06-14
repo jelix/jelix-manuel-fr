@@ -46,9 +46,7 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 </code>
 
 Et c'est tout ! En imaginant que ce contrôleur se trouve dans le module main,
-affichez alors la page (url pour une appli en mode basic_significant)
-
-  index.php/main/samplecrud/index
+affichez alors la page @@index.php/main/samplecrud/index@@.
 
 Vous avez alors toutes les pages qu'il faut pour gérer les enregistrements de la
 table.
@@ -220,8 +218,6 @@ class sampleCrudCtrl extends jControllerDaoCrud {
 </code>
 
 
-
-
 ==== Page liste des enregistrements ====
 
 Elle est affichée par l'action //index//. Des propriétés du contrôleur CRUD
@@ -316,10 +312,9 @@ Elle est affichée par l'action //delete//. Vous pouvez redéfinir la méthode
 
 ===== Configurer les URLS =====
 
-Si vous avez activé les urls significatives, voici le contenu que vous pouvez
-mettre dans le fichier @@F@urls.xml@@ du module, dans l’hypothèse ici où le
-contrôleur s'appelle "mycrud" et que l'on veut avoir des urls vers ce contrôleur
-qui commencent par "thedata" :
+Voici le contenu que vous pouvez mettre dans le fichier @@F@urls.xml@@ du module,
+dans l’hypothèse ici où le contrôleur s'appelle "mycrud" et que l'on veut
+avoir des urls vers ce contrôleur qui commencent par "thedata" :
 
 <code xml>
 <url pathinfo="/thedata/" action="mycrud:index" />

@@ -25,7 +25,9 @@ Exécutez ensuite dans votre application :
 
 Si vous tenez absolument à créer cette interface dans une application existante
 utilisant déjà index.php, indiquez un autre point d'entrée, "admin" par exemple,
-ou un autre nom. La commande crée le point d'entrée s'il n'existe pas déjà. La
+ou un autre nom.
+
+La commande crée le point d'entrée s'il n'existe pas déjà. La
 configuration du point d'entrée sera modifiée afin d'avoir une interface
 totalement fonctionnelle. Par exemple, deux nouvelles réponses sont ajoutées
 dans le répertoire @@F@myapp/responses/@@. Vous pouvez ainsi personnaliser
@@ -56,39 +58,43 @@ contrôleurs et formulaires de jauth sur deux points d'entrées, il vous faut
 séparer l'application en deux.
 
 
-===== Interface d'administration et moteur d'url significatives =====
+===== Interface d'administration et les urls =====
 
-A cause de certaines contraintes (hébergement notamment) ou de certains besoins,
-vous voudriez peut-être utiliser la même configuration que le reste de
-l'application, et donc peut-être utiliser le [[/urls/significant|moteur d'urls significatives]]
-si celui ci est activé dans votre application (ce qui n'est pas
-le cas par défaut).
+Les modules d'administration ne devraient être accessible que par le point
+d'entrée dédié à l'administration. Il faut donc déclarer ces modules dans le
+fichier @@F@var/config/urls.xml@@, au niveau du point d'entrée correspondant.
 
-Dans ce cas, il faudra effectuer quelques modifications dans votre fichier
-@@F@urls.xml@@. En effet sans cela, votre interface d'administration sera
-inaccessible puisque les urls ne seront pas connues.
-
-Tout d'abord il faut ajouter le nouveau point d'entrée pour l'admin :
+Par exemple :
 
 <code xml>
- <classicentrypoint name="admin">
-     <url pathinfo="" module="master_admin" action="default:index" />
- </classicentrypoint>
+ <entrypoint name="admin">
+     <url pathinfo="/" module="master_admin" action="default:index" />
+     <url module="jauth"/>
+     <url module="jauthdb_admin"/>
+     <url module="jacl2db_admin"/>
+     <!-- etc... -->
+ </entrypoint>
 </code>
 
+Sans cela, votre interface d'administration sera inaccessible puisque les urls
+ne seront pas connues, ou alors ne seront accessibles que depuis un autre point
+d'entrée ce qui peut poser des soucis.
+
+L'exemple ci-dessus permet de configurer rapidement les urls, mais peut-être
+voudriez vous avoir des urls plus sympas : chacun des modules d'administration
+propose un fichier d'urls préconfiguré.
+
 L'administration utilise le système d'authentification de jelix
-[[/authentification|jAuth]]. Il faut donc définir pour votre point d'entrée, les
-urls permettant l'affichage du formulaire de connexion, celle de la validation
-de ce formulaire et celle de déconnexion. Pour cela, inclure le fichier
+[[/authentification|jAuth]]. On peut donc inclure le fichier
 @@F@urls.xml@@ fourni avec le module jauth.
 
 <code xml>
- <classicentrypoint name="admin">
-     <url pathinfo="" module="master_admin" action="default:index" />
+ <entrypoint name="admin">
+     <url pathinfo="/" module="master_admin" action="default:index" />
 
      <url pathinfo="/login/" module="jauth" include="urls.xml" />
 
- </classicentrypoint>
+ </entrypoint>
 </code>
 
 Si vous n'avez pas désactivé l'authentification via jAuthDb et la gestion des
@@ -97,7 +103,7 @@ définir les urls pour les modules respectifs, jauthdb_admin et jacl2db_admin. I
 faut alors inclure leurs fichiers @@F@urls.xml@@.
 
 <code xml>
- <classicentrypoint name="admin">
+ <entrypoint name="admin">
      <url pathinfo="" module="master_admin" action="default:index" />
 
      <url pathinfo="/login/" module="jauth" include="urls.xml" />
@@ -105,7 +111,7 @@ faut alors inclure leurs fichiers @@F@urls.xml@@.
      <url pathinfo="/auth/" module="jauthdb_admin"  include="urls.xml"/>
      <url pathinfo="/pref/" module="jpref_admin"  include="urls.xml"/>
 
- </classicentrypoint>
+ </entrypoint>
 </code>
 
 Votre interface d'administration est alors opérationnelle.

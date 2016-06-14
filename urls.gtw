@@ -1,26 +1,14 @@
 ~~LANG:EN@enman:urls~~
 
-
-
 Jelix comporte un mécanisme qui permet de ne pas avoir à mettre les URLs
 concernant les actions en dur dans les templates (ou ailleurs). Pour faire
 simple, il suffit de fournir le module, l'action, le type de requête et
 éventuellement d'autres paramètres et jUrl se charge de générer l'URL
 correspondante. À l'inverse, lors d'une requête, jUrl analyse l'URL pour en
 déduire le module, l'action et les paramètres, et ceci, indépendamment du type
-de requête. Il n'est pas utile alors d'utiliser le mod_rewrite d'apache.
+de requête. Il n'est pas utile alors d'utiliser le mod_rewrite d'apache par exemple.
 
-Pour cette tâche jUrl se repose sur un moteur d'URL. Il y en a trois fournis
-dans Jelix :
-
-   * un moteur d'URL "simple" (obsolète, à ne plus utiliser)
-   * un moteur d'URL significatives basique (utilisé par défaut)
-   * un moteur d'URL significatives
-
-
-Sachez que vous pouvez [[plugins/urls_engine|créer votre propre moteur d'URLs]]
-pour des besoins plus spécifiques.
-
+Pour cette tâche jUrl se repose sur un "moteur d'URL".
 
 ===== Petit rappel sur les URLs =====
 
@@ -35,8 +23,8 @@ Une URL est composée de différentes parties :
 ; @@/path/info@@ : le pathinfo, partie complémentaire du chemin, ne correspondant pas à un chemin physique sur le disque.
 ; @@?param1=value1@@ : les paramètres.
 
-Les moteurs d'URLs analysent le pathinfo et les paramètres pour déterminer le
-module/action.
+Le moteur d'URLs analyse le pathinfo et les paramètres pour déterminer les noms
+des module et action.
 
 Note : il peut y avoir certaines options à activer dans apache. Voir la section
 [[/configurer-server#configuration-pour-les-urls-cools|sur la configuration serveur]].
@@ -47,27 +35,23 @@ Note : il peut y avoir certaines options à activer dans apache. Voir la section
 La configuration de jUrl se fait dans la section ''urlengine'' du fichier de
 configuration dont voici les paramètres :
 
-; @@engine@@ : Indique le type de moteur à utiliser. Les trois valeurs
-    disponibles sont ''simple'', ''basic_significant'' et ''significant''.
 ; @@enableParser@@ : Active l'analyse d'URL par le moteur d'URL. Si vous préférez l'utilisation du
     module mod_rewrite d'apache, vous pouvez alors mettre off.
 ; @@multiview@@ : Indique si le multiview est activé ou non dans apache. Cela indique alors au
     moteur d'URL de ne pas générer l'extension des points d'entrées (.php) lors de
     la création des URLs. On a ainsi des URLs un peu plus "propres".
 ; @@basePath@@ : Chemin jusqu'au répertoire www, ou plutôt, la partie commune des chemins de tous
-    les points d'entrée. Ainsi, si vous accédez à index.php avec l'URL @@http://localhost/jelix/myapp/www/index.php@@,
-    alors vous indiquez : 
+    les points d'entrée. Il est déviné automatiquement par Jelix, mais pour
+    certains cas, il vous faut l'indiquer vous même. Ainsi, si vous accédez à
+    index.php avec l'URL @@http://localhost/jelix/myapp/www/index.php@@, alors
+    le basePath sera : 
 
 <code>
   basePath= /jelix/myapp/www/
 </code>
 
 Si par contre vous avez spécifié le documentRoot dans apache, pointant sur
-@@jelix/myapp/www@@, alors vous indiquerez :
-
-<code>
-  basePath= /
-</code>
+@@jelix/myapp/www@@, alors il sera égale à "/".
 
 Attention, la valeur de basePath doit toujours commencer par un @@/@@. Si vous
 n'indiquez aucune valeur, Jelix essaiera de deviner le chemin de base par lui
@@ -75,9 +59,6 @@ même.
 
 ; @@defaultEntrypoint@@ : Point d'entrée par défaut de l'application. ''index''
     par défaut. Vous ne devez pas indiquer le suffixe (.php).
-; @@entrypointExtension@@ : Extensions des points d'entrées. Par défaut, c'est
-    @@.php@@, mais il est possible que sur votre serveur, pour utiliser PHP5 il vous
-    faille utiliser l'extension @@.php5@@ par exemple. Auquel cas vous indiquerez @@.php5@@.
 ; @@notfoundAct@@ : L'action à effectuer quand une URL ne correspond à rien.
     Indiquez-la sous forme de [[/concepts/appel-action|sélecteur d'action]]:
     @@module~action@@. L'action indiquée devra correspondre à l'affichage d'une page
@@ -88,24 +69,18 @@ des erreurs dans un fichier de log, de manière à savoir si la page de cette ac
 est affichée suite à une erreur ou non.
 
 
-===== Configuration des moteur d'URLs =====
+===== Configuration du moteur d'URLs =====
 
-En standard Jelix fournis trois moteurs d'URLs :
+Il faut indiquer au moteur d'URL, quelles URLs correspondent à quel contrôleur
+et méthode. En fait, il s'agit plus précisement de faire la correspondance
+entre un pathinfo et un contrôleur.
 
-  * Le moteur "simple", qui est performant mais qui ne permet pas d'avoir des
-    URLs "cools". Il sera supprimé dans les versions suivantes.
-  * Le moteur "basic_significant", qui permet d'avoir des urls un peu plus
-    propre, et qui reprennent automatiquement le module et l'action :
-    "index.php/module/controleur/method?param=1..."
-  * Le moteur "significant", qui permet d'associer **n'importe quelle URL** à
-    chacune de vos actions, bien qu'il soit un peu moins performant et qu'il
-    soit un peu plus compliqué à configurer.
+Il y a au moins une URL à spécifier : celle de la page d'accueil, donc avec
+un pathinfo="/".
 
-Aller donc lire les pages qui leurs sont dédiées pour les configurer correctement : 
+Ceci se fait dans le fichier @@F@var/config/urls.xml@@.
 
-  * [[urls/simple|Moteur "simple"]]
-  * [[urls/basic_significant|Moteur "basic_significant"]]
-  * [[urls/significant|Moteur "significant"]]
+Voir [[urls/mapping|la page concernant la configuration de ce fichier urls.xml]].
 
 ===== Utilisation =====
 
@@ -116,9 +91,8 @@ applications en même temps car les URLs peuvent être différentes en fonction 
 la configuration des applications. Et si le module est réutilisé ailleurs, il
 faudrait alors modifier les templates etc...
 
-De plus, faire générer les URLs par Jelix vous permet de changer à loisir le
-moteur d'URLs ou sa configuration, sans avoir à changer quoi que ce soit dans
-vos templates et vos contrôleurs.
+De plus, faire générer les URLs par Jelix vous permet de changer à loisir les
+URLs, sans avoir à changer quoi que ce soit dans vos templates et vos contrôleurs.
 
 Les URLs doivent donc être construites par Jelix. Pour cela, vous avez deux
 outils à votre disposition.
@@ -134,13 +108,9 @@ d'autres paramètres, renvoie l'URL correspondante pour l'application courante :
 
 Le premier paramètre de la fonction est donc un sélecteur d'action. Ici on
 demande l'URL qui correspond à l'action view du module news, pour le type de
-requête classic avec un paramètre id_news. Avec le moteur d'URL simple, l'URL
-correspondante sera probablement : @@index.php?module=news&action=view&id_news=54@@.
-
-Si le [[urls/significant|moteur d'URL significant]] est utilisé, cela peut être
-n'importe quoi d'autre, en fonction de ce qui est configuré dans le fichier
-urls.xml.
-
+requête classic avec un paramètre id_news. Par défaut, si rien n'est
+définie pour ce selecteur d'action dans le fichier urls.xml, l'URL
+correspondante ressemblera à cela : @@index.php/news/default/view?id_news=54@@.
 
 ==== Plugin de template jurl ====
 
@@ -151,11 +121,12 @@ Dans les templates vous pouvez utiliser le plugin jurl. Sa syntaxe est identique
   <p><a href="{jurl 'news~view@classic', array('id_news'=>'54')}">Détails de la news</a></p>
 </code>
 
-Le résultat avec le moteur d'URL simple sera alors :
+Le résultat sera alors :
 
 <code html>
-  <p><a href="index.php?module=news&amp;action=view&amp;id_news=54">Détails de la news</a></p>
+  <p><a href="index.php/news/default/view?id_news=54">Détails de la news</a></p>
 </code>
 
 Vous pouvez utiliser @@{jfullurl}@@ au lieu de @@{jurl}@@ pour avoir une url
-complète avec le nom de domaine (utile par exemple dans les templates de mail).
+complète avec le nom de domaine. Cela est utile par exemple dans les templates
+de mail.

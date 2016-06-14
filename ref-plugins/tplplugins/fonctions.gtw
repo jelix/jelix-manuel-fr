@@ -215,9 +215,12 @@ Exemple de feuille de style minimaliste pour une utilisation de ''Pagelinks'' av
 
 ===== html : urljsstring =====
 
-Le plugin de template urljsstring permet de générer une chaîne pour du javascript, qui contient une url généré par le moteur d'url de Jelix, et qui contient aussi des paramètres dynamiques en javascript. Par exemple, imaginons que l'on veuille ça en javascript :
+Le plugin de template urljsstring permet de générer une chaîne pour du
+javascript, qui contient une url généré par le moteur d'url de Jelix, et qui
+contient aussi des paramètres dynamiques en javascript. Par exemple, imaginons
+que l'on veuille ça en javascript :
 
-  "/index.php?module=foo&action=bar&t=1547&param1=" + uneValeur + "&param2=" + (val*5)
+  "/index.php/foo/default/bar?t=1547&param1=" + uneValeur + "&param2=" + (val*5)
 
 On pourrait bien évidement écrire cela directement dans le script javascript. Mais si la forme d'url change ? On est alors obligé de modifier le template. 
 

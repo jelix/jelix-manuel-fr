@@ -40,10 +40,8 @@ Vous utiliserez en général un template, dans lequel vous y mettrez vos balises
 html de formulaires. Par exemple :
 
 <code html>
-  <form action="index.php" method="POST">
+  <form action="index.php/monmodule/default/save" method="POST">
   <fieldset> <legend>Indiquez votre identité</legend>
-     <input type="hidden" name="module" value="monmodule" />
-     <input type="hidden" name="action" value="default_save" />
      <table>
       <tr>
         <td><label for="champs-nom">Votre nom</label></td>
@@ -63,10 +61,9 @@ Vous pouvez bien sûr y ajouter du javascript pour vérifier les données saisie
 coté client et utiliser tous les types de champs de saisies HTML.
 
 Par contre, l'exemple n'est pas totalement bon, dans la mesure où l'url est en
-dur dans le formulaire. Cela est problématique par exemple quand on utilise des
-urls significatives, qu'on les change, ou qu'on veuille réutiliser dans un autre
-projet. En effet, suivant l'url choisie, le contenu de l'attribut action peut
-être différent, le nombre de champs cachés aussi.
+dur dans le formulaire. Cela est problématique par exemple quand on spécifie
+l'url dans la configuration des urls, et surtout lorsqu'on veut réutiliser
+le module dans d'autres projets.
 
 Il est donc préférable d'utiliser les plugins de templates @@formurl@@ et
 @@formurlparam@@, auxquels vous indiquez le sélecteur de l'action de traitement
@@ -88,26 +85,7 @@ deux ensembles. Le formulaire devient alors :
   </form>
 </code>
 
-Le formulaire résultant sera le même que le premier exemple si le moteur d'url
-est celui par défaut, mais pourrait devenir le formulaire suivant si le moteur
-d'url significant est activé et que l'url correpondante à l'action indiquée est
-@@/user/save@@ (sans paramètres supplémentaires, d'où l'absence ici de champs
-cachés) :
-
-<code html>
-  <form action="/user/save" method="POST">
-  <fieldset> <legend>Indiquez votre identité</legend>
-     <table>
-      ...
-      </table>
-  </fieldset>
-  <p><input type="submit" value="Valider" />
-  </form>
-</code>
-
-Notez que pour les versions de Jelix antérieures à 1.2, il fallait spécifier les
-paramètres dans les appels aux deux plugins de templates @@formurl@@ et
-@@formurlparam@@. Depuis 1.2, les paramètres à formurlparam sont facultatifs.
+Le formulaire résultant sera le même que le premier, mais il sera plus portable.
 
 ===== Traitement des données en retour =====
 

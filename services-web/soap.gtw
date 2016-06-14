@@ -47,26 +47,14 @@ $jelix->request->initService();
 $jelix->processSoap();
 </code>
 
-Il ne faut pas oublier de déclarer ce point d'entrée au niveau de la
-configuration des moteurs d'urls simple ou significant. Si vous utilisez
-[[/urls/simple|le moteur d'url simple]], vous devez mettre dans la section
-//simple_urlengine_entrypoints// de la configuration de jelix la déclaration
-suivante : 
-
-<code ini>
-soap = "@soap"
-</code>
-//soap// étant le nom du point d'entrée, et //@soap// indiquant le type de point d'entrée.
-
-Si vous utilisez [[/urls/significant|le moteur d'url significant]], vous devez
-ajouter la balise suivante :
+Il ne faut pas oublier de déclarer ce point d'entrée dans la configuration
+des urls @@var/config/urls.xml@@. Vous devez ajouter la balise suivante :
 
 <code xml>
 <entrypoint type="soap" name="soap" default="true" />
 </code>
 
-Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action
-pour soap comme ceci :
+Vous pouvez alors récupérer l'url d'une action pour soap comme ceci :
 
 <code php>
   $url = jUrl::get("module~action@soap");
@@ -242,12 +230,9 @@ application. Pour cela, le module jsoap inclus tout ce qu'il faut. Il contient
 un contrôleur nommé WSDL et possède une méthode @@M@wsdl()@@. Aussi, pour
 interroger le WSDL, il suffit d'indiquer à votre client SOAP une URL du genre 
 
+<code>
    http://monsite.com/index.php/jsoap/WSDL/wsdl?service=unModule~unControleur
-
-ou avec le moteur d'url simple:
-
-   http://monsite.com/index.php?module=jsoap&action=WSDL:wsdl&service=unModule~unControleur
-
+</code>
 
 Notez qu'il faut donner un paramètre de nom "service", dans lequel on met le nom
 du module et le nom du contrôleur qui implémente les services SOAP (on n'indique
@@ -258,14 +243,14 @@ de moyen pour renvoyer automatiquement un fichier WSDL qui déclarerait les
 services SOAP de toute votre application.
 
 Remarque : ce type d'url est disgracieux, et vous pouvez parfaitement configurer
-les urls significatives pour avoir des choses plus simple comme
+les urls pour avoir des choses plus simple comme
 
    http://monsite.com/index/jsoap/unModule/unControleur
 
 Notez que vous pouvez afficher une version HTML de la liste des services SOAP,
 en appelant la méthode "index" du contrôleur WSDL.
 
-  http://monsite.com/index.php/jsoap/WSDL?service=unModule~unControleur
+  http://monsite.com/index.php/jsoap/WSDL/index?service=unModule~unControleur
 
 
 ===== Appel depuis un client SOAP =====

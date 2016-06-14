@@ -1,15 +1,23 @@
-~~LANG:EN@enman:urls/significant~~
+~~LANG:EN@enman:urls/mapping~~
 
-Le moteur d'url “significant” permet d'attribuer à chaque action une URL
+FIX: url "/"
+FIX: pour un module : sil y a  des urls definies  pour un module,
+ uniquement celles-ci sont accessibles. si fonctionnement basic pour les autres
+ actions, -> <url module="">
+
+
+Le moteur d'url permet d'attribuer à chaque action une URL
 spécifique de la forme que l'on veut.
 
-Le principe de configuration pour ce moteur est d'indiquer dans un fichier
+Le principe de configuration est d'indiquer dans un fichier
 @@F@var/config/urls.xml@@ toutes les formes d'URLs possibles de l'application et
 les actions qui leur sont associées. Voici un exemple de fichier :
 
 <code xml>
 <urls xmlns="http://jelix.org/ns/urls/1.0">
     <entrypoint name="index" default="true">
+        <url pathinfo="/" module="main" action="default:index" />
+        <url module="main" />
 
         <url pathinfo="/news/:annee/:mois/:id-:title" module="news" action="view">
            <param name="annee" type="year"/>
@@ -29,9 +37,9 @@ les actions qui leur sont associées. Voici un exemple de fichier :
           <static name="mystatic" value="valeur statique" />
         </url>
     </entrypoint>
-    <classicentrypoint name="foo/bar">
+    <entrypoint name="foo/bar">
        <url handler="urlsig" module="unittest" action="url4" />
-    </classicentrypoint>
+    </entrypoint>
 
     <entrypoint name="news">
         <url module="news" />
@@ -72,6 +80,92 @@ Chaque point d'entrée définit une ou plusieurs formes d'URLs possibles, sachan
 que celles qui ne sont pas définies seront acceptées lors d'une requête sur un
 point d'entrée spécifié "default". 
 
+==== Spécifier l'action par défaut, la page d'accueil ====
+
+Toute application a une page par défaut qui s'affiche quand il n'y a pas de
+pathinfo.
+
+Il y a donc au moins une url à définir pour chaque point d'entrée de type
+"classic" :
+
+<code xml>
+<urls xmlns="http://jelix.org/ns/urls/1.0">
+    <entrypoint name="index" default="true">
+        <url pathinfo="/" module="main" action="default:index" />
+    </entrypoint>
+</url>
+
+Ici donc, l'url @@index.php/@@ correspond à la méthode index du contrôleur
+default du module main.
+
+Note : avant Jelix 1.7, il fallait l'action par défaut au moyen des paramètres
+startModule et startAction dans le fichier de configuration ini du point d'entrée.
+
+==== des URLs basiques pour les modules ====
+
+Comme vous le verrez un peu plus loin, vous pouvez définir des urls pour
+chaque action. Mais ce n'est pas une obligation.
+
+Par défaut, si il n'y a pas d'url définit pour un module, on accédera à ce
+module par le point d'entrée par défaut. Il est toutefois possible de l'indiquer
+(et c'est recommandé pour plus de clarté).
+
+Ici un exemple avec le module news :
+
+<code xml>
+    <entrypoint name="index" default="true">
+        <url pathinfo="/" module="main" action="default:index" />
+        <url module="news" />
+    </entrypoint>
+</code>
+
+On indique donc juste le nom du module dans la balise @@<url>@@. Et toutes les
+urls du module seront de la forme @@index.php/news/<controleur>/<action>@@.
+
+À contrario, il y a une url définie pour le module main, et alors toutes
+les autres actions de ce contrôleur ne sont plus accessibles. Cela peut
+être voulu, mais ce n'est pas forcément non plus ce qu'on veut. Soit alors
+on définit l'url de chaque action, soit on déclare le module :
+
+<code xml>
+    <entrypoint name="index" default="true">
+        <url pathinfo="/" module="main" action="default:index" />
+        <url module="main" />
+        <url module="news" />
+    </entrypoint>
+</code>
+
+Si vous avez plusieurs points d'entrée, vous devez désigner quel module est
+assigné à quel point d'entrée. Là encore, vous utilisez le même type de
+balise @@<url>@@ :
+
+<code xml>
+    <entrypoint name="index" default="true">
+        <url pathinfo="/" module="main" action="default:index" />
+        <url module="main" />
+    </entrypoint>
+    <entrypoint name="news">
+        <url module="news" />
+    </entrypoint>
+</code>
+
+Vous pouvez indiquer plusieurs modules de cette façon pour un même point
+d'entrée.
+
+Vous pouvez aussi indiquer un pathinfo : il remplacera le nom du module.
+
+Avec cet exemple :
+
+<code xml>
+    <entrypoint name="index" default="true">
+        <url pathinfo="/" module="main" action="default:index" />
+        <url pathinfo="/super/actu/" module="news" />
+    </entrypoint>
+</code>
+
+les urls du module news seront de la forme
+@@index.php/super/actu/<controleur>/<action>@@.
+
 ==== Spécifier une forme d'URL complète ====
 
 === Selon un pathinfo ===
@@ -111,7 +205,7 @@ et ''id_art'' seront crées et auront pour valeurs respectives "aviation" et
 "544".
 
 Attention : pour éviter les ressemblances avec d'autres URLs, il faut au moins
-une partie "statique" (ici "/articles/") dans l'URL pour la distinguer des
+une partie fixe (ici "/articles/") dans l'URL pour la distinguer des
 autres.
 
 === Des parties indéfinies typées ou formatées ===
@@ -155,7 +249,8 @@ balise @@E@param@@. Les types disponibles sont :
 | lang | un code langue (2 ou 3 lettres), voir section plus bas sur les paramètres automatiques de langue |
 | locale | un code de locale (code langue + code pays), voir section plus bas sur les paramètres automatiques de langue |
 
-Note : vous devrez bien entendu indiquer les valeurs de ces paramètres lors de l'appel à jUrl.
+Note : vous devrez bien entendu indiquer les valeurs de ces paramètres lors de
+l'appel à jUrl, afin de générer la bonne URL
 
 === Des paramètres statiques ===
 
@@ -180,7 +275,7 @@ différera en partie selon le paramètre ''details'', qu'il ne faut donc pas
 oublier de donner à @@M@jUrl::get()@@. Dans un cas on afficherait le produit
 d'un catalogue avec ses caractéristiques générales, et dans l'autre avec ses
 caractéristiques générales **et** détaillées. Cela évite donc de créer deux
-actions différentes pour si peu de différence.
+actions différentes pour si peu de différences.
 
 On peut aussi utiliser ce mécanisme pour supporter plusieurs langues :
 
@@ -212,7 +307,7 @@ jUrl::get('cms~page:view', array('page'=>'foo', 'lang'=>"en"));
 
 ==== Paramètres automatiques de langues ====
 
-=== avec les paramètres statiques ===
+=== Avec les paramètres statiques ===
 
 Nous avons vu que l'on pouvait déclarer des paramètres statiques contenant le code
 d'une langue, pour différencier deux URLS pointant vers une même action. Cependant,
@@ -222,7 +317,7 @@ cette solution, telle que décrite, a deux inconvénients :
    - Dans l'action, il faut tenir compte de ce paramètre, et en général, il s'agit
      de changer la configuration à la volée (le plugin autolocale n'étant pas forcément utilisé)
 
-Jelix 1.4 apporte des améliorations en ce sens. Il suffit d'ajouter l'attribut @@A@type="locale"@@
+Le moteru d'URL apporte une solution : il suffit d'ajouter l'attribut @@A@type="locale"@@
 sur la balise @@E@<static>@@, pour que tout soit automatique. Vous définissez par exemple :
 
 <code xml>
@@ -256,7 +351,10 @@ le code langue ('en', 'fr'...), que ce soit dans l'attribut @@A@value@@, ou à @
 
 === Avec les paramètres dynamiques ===
 
-Depuis Jelix 1.4, vous pouvez avoir des paramètres dynamiques de type "locale" ou "lang".
+Si il y a plus de 2-3 langues, l'utilisation des paramètres statiques peut devenir
+fastidieuses : il faut autant d'URL que de langues.
+
+Heureusement, vous pouvez avoir des paramètres dynamiques de type "locale" ou "lang".
 
 <code>
    <param name="lg" type="lang"/>
@@ -264,11 +362,15 @@ Depuis Jelix 1.4, vous pouvez avoir des paramètres dynamiques de type "locale" 
    <param name="lg" type="locale"/>
 </code>
 
-Cela permet d'avoir dans le "pathinfo" de l'url l'information de la langue, sans même avoir à
-l'indiquer à @@jUrl::get()@@, mais aussi de configurer la langue courante automatiquement pendant
-l'éxecution de l'action lors de l'appel de l'URL en question.
+Notez qu'il s'agit d'une balise @@<param>@@ et non plus @@<static>@@.
 
-Ainsi, l'exemple utilisé plus haut : 
+Cela permet d'avoir dans le "pathinfo" de l'url l'information de la langue, sans même avoir à
+l'indiquer à @@jUrl::get()@@. Cela permet aussi de configurer la langue courante
+automatiquement pendant l'éxecution de l'action lors de l'appel de l'URL en
+question.
+
+Ainsi, l'exemple utilisé plus haut :
+
 <code xml>
    <url pathinfo="/articles/en/:page" module="cms" action="page:view">
       <param name="page"/>
@@ -296,21 +398,20 @@ ou @@/articles/fr/foo@@ si la langue courante est "fr_FR".
 Et si un navigateur appelle l'url @@/articles/en/foo@@, la langue courante
 deviendra automatiquement "en_US".
 
-Contrairement à Jelix 1.3 et inférieur, vous n'avez donc plus à dupliquer
-vos déclarations d'URL pour chaque langue.
-
-Même principe avec @@A@type="locale"@@, sauf que jUrl générera @@/articles/en_US/foo@@.
+Même principe avec @@A@type="locale"@@, sauf que jUrl générera un code
+de locale, c'est à dire code langue + code pays : @@/articles/en_US/foo@@.
 
 
 ==== Utiliser un handler spécifique ====
 
-Nous avons vu précédemment comment utiliser, en fin de compte, un système par
-défaut d'analyse et de génération d'URL avec ses pathinfos et paramètres. Il se
-peut que ce système ne soit pas suffisant. Imaginons par exemple que vous
-vouliez transformer une partie de l'information contenue dans le pathinfo, comme
-par exemple chercher dans une base de données un id correspondant à un titre
-contenu dans le pathinfo, et fournir ainsi aux actions, non pas un titre, mais
-un id (qui n'est pas contenu dans cette URL).
+Jusqu'ici, nous avons vu un système d'analyse et de génération d'URL
+avec ses pathinfos et paramètres, assez générique. Cependant, pour certains
+usages, il peut être insuffisant en terme de flexibilité.
+
+Imaginons par exemple que vous vouliez transformer une partie de l'information
+contenue dans le pathinfo, comme par exemple chercher dans une base de données
+un id correspondant à un titre contenu dans le pathinfo, et fournir ainsi aux
+actions, non pas un titre, mais un id (qui n'est pas contenu dans cette URL).
 
 Ou encore que la partie pathinfo puisse être variable.
 
@@ -322,18 +423,21 @@ exécuter. Vous le ferez dans une classe spécialisée :
 class myHandlerUrlsHandler implements jIUrlSignificantHandler {
 
     function parse($url){
-        
-        if(preg_match("/^\/(.*)$/",$url->pathInfo,$match)){
+        if (preg_match("/^\/(.*)$/",$url->pathInfo,$match)) {
+            // le pathinfo correspond, on traite
             $urlact = new jUrlAction($url->params);
             $urlact->setParam('page',jUrl::unescape($match[1]));
             return $urlact;
-        }else
+        }
+        else {
+            // le pathinfo ne correspond pas, on ne traite pas l'url
             return false;
+        }
     }
 
     function create($urlact, $url){
 
-        $p=jUrl::escape($url->getParam('page'));
+        $p = jUrl::escape($url->getParam('page'));
 
         $url->pathInfo = "/$p";
         $url->delParam('page');
@@ -366,23 +470,24 @@ les chaînes à inclure dans un pathinfo (accents enlevés par ex).
 
 Enfin dans le fichier @@F@urls.xml@@, vous devez indiquer l'utilisation de ce
 handler :
+
 <code xml>
-   <classicentrypoint name="wiki">
+   <entrypoint name="wiki">
        <url handler="myHandler" module="unittest" action="url4" />
-    </classicentrypoint>
+    </entrypoint>
 </code>
 
 Vous pouvez bien sûr indiquer un handler d'un autre module. Exemple :
 
 <code xml>
-   <classicentrypoint name="wiki">
+   <entrypoint name="wiki">
        <url handler="autremodule~myHandler" module="unittest" action="url4" />
-    </classicentrypoint>
+    </entrypoint>
 </code>
 
 ==== Une même URL pour plusieurs actions possibles ====
 
-Imaginons que nous avons une URL de ce type @@/article/54-titre@@ et par défaut,
+Imaginons que nous ayons une URL de ce type @@/article/54-titre@@ et par défaut,
 cela affiche l'article 54 avec une action nommée view, par exemple :
 
 <code xml>
@@ -409,30 +514,13 @@ une virgule :
 </code>
 
 
-==== Indiquer qu'un point d'entrée est dédié à un module particulier ====
-
-Vous n'avez pas forcément envie d'indiquer une URL significative pour les
-actions d'un module particulier. Par contre vous avez créé un point d'entrée
-dédié à un module. Toutes ces actions passeront par ce point d'entrée. Vous avez
-juste alors à faire comme ceci :
-
-<code xml>
-    <classicentrypoint name="news">
-        <url module="news" />
-    </classicentrypoint>
-</code>
-
-Vous pouvez indiquer plusieurs modules de cette façon pour un même point
-d'entrée.
-
-
 ==== Spécifier des URLs en https à certaines actions ====
 
-Pour certaines actions vous voulez que l'accès soit en mode sécurisé de http
-(SSL). Vous indiquez alors un attribut @@A@https@@ sur les balises @@E@<url>@@
-en question avec la valeur true. Si cela concerne toutes les actions/URLs d'un
-point d'entrée, alors vous mettrez cet attribut sur la balise @@E@<entrypoint>@@
-correspondante.
+Pour certaines actions vous voulez que l'accès soit uniquement en mode sécurisé
+de http (SSL). Vous indiquez alors un attribut @@A@https@@ sur les balises
+@@E@<url>@@ en question avec la valeur true. Si cela concerne toutes les
+actions/URLs d'un point d'entrée, alors vous mettrez cet attribut sur la balise
+@@E@<entrypoint>@@ correspondante.
 
 Attention : pour le moment, Jelix ne vérifie pas lors de l'exécution d'une
 action que la requête a été faite en https ou non.
@@ -448,7 +536,7 @@ module réalisé par un tiers.
 Pour ce faire, vous devez créer un fichier @@F@urls.xml@@ dans le répertoire du
 module (vous pouvez choisir un autre nom que urls.xml). Ce fichier ne contient
 pas une balise racine @@E@urls@@ mais @@E@suburls@@, et contient uniquement des
-balises @@E@url@@ (pas @@E@entrypoint@@). Voici celui du module jauth comme
+balises @@E@url@@, et donc pas @@E@entrypoint@@. Voici celui du module jauth comme
 exemple :
 
 <code xml>
@@ -525,7 +613,6 @@ vous devez alors indiquer sur les balises @@E@<url>@@ l'attribut
 URLs de ce point d'entrée sont concernées). Ainsi Jelix n'ajoutera pas le nom du
 point d'entrée (index.php) dans l'URL.
 
-
 === Suppression du nom du point d'entrée dans l'URL ===
 
 Un exemple d'utilisation du mod_rewrite n'est pas forcément de transformer
@@ -534,21 +621,23 @@ fichier index.php dans les URLs dans lesquelles on l'aurait supprimé pour faire
 "joli".
 
 Par exemple nos URLs sont de la forme :
+
 <code>
  http://monsite.com/index.php/news/2007-02-08-il-neige-a-lille.html
 </code>
+
 Et on souhaite qu'elles deviennent :
+
 <code>
  http://monsite.com/news/2007-02-08-il-neige-a-lille.html
 </code>
 
 Voyons comment faire.
 
-Tout d'abord, il faut bien sûr utiliser le moteur d'URL "significant" et définir
-un fichier @@F@urls.xml@@. Comme pour la réécriture complète vous devez indiquer
-sur les balises @@E@<url>@@ ou @@E@<entrypoint>@@ l'attribut
-@@A@noentrypoint="true"@@. Ainsi Jelix n'ajoutera pas le nom du point d'entrée
-(index.php) dans les URLs concernées.
+Comme pour la réécriture complète vous devez indiquer sur les balises
+@@E@<url>@@ ou @@E@<entrypoint>@@ l'attribut @@A@noentrypoint="true"@@. Ainsi
+Jelix n'ajoutera pas le nom du point d'entrée (index.php) dans les URLs
+concernées.
 
 Par contre, contrairement à la réécriture complète, vous devez laisser @@enableParser@@ à @@on@@:
 <code ini>

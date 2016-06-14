@@ -156,10 +156,13 @@ jApp::initPaths(
 Vous pouvez alors taper l'adresse de votre site (http://www.monsite.com par
 exemple, ou http://localhost/)
 
-==== Configuration pour les urls "cools" ====
+==== Configuration pour les urls ====
 
-Pour pouvoir utiliser des urls significatives avec le [[urls|système d'url automatique de jelix]],
-il faut activer dans apache (au niveau de la configuration serveur ou dans le
+Jelix nécessite de pouvoir indiquer une partie "pathinfo" dans l'url, c'est à dire
+un chemin après le index.php.
+
+Il faut donc activer dans votre serveur web la prise en charge du pathinfo.
+Dans apache (au niveau de la configuration serveur ou dans le
 @@F@.htaccess@@ si cela est permis) :
 
 <code htaccess>
@@ -170,8 +173,8 @@ il faut activer dans apache (au niveau de la configuration serveur ou dans le
 Pour vérifier que cela fonctionne, créez sur votre site web un fichier
 @@F@test.php@@ qui affiche @@f@phpinfo()@@ et essayez l'url :
 @@monsite.com/test/foo/bar@@ . Le phpinfo devrait s'afficher, et vous devriez
-avoir dans @@V@$_SERVER['PATH_INFO']@@ la chaine "/foo/bar" (voir tout en bas de
-l'affichage de phpinfo).
+avoir dans @@V@$_SERVER['PATH_INFO']@@ la chaine "/foo/bar".
+
 
 ===== Droits sur les répertoires =====
 

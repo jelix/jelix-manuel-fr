@@ -305,17 +305,18 @@ Vous pouvez aussi utiliser les codes langues sans le code pays :
   <a href="index.php?lang=en">english</a>
 </code>
 
-Bien sûr, si vous utilisez le moteur d'url //[[urls/significant|significant]]//,
-il est possible de définir des urls significatives spécifiques pour chaque langue,
-et même d'indiquer les paramètres de langues, qui seront renseignés automatiquement ou
-détectés automatiquement, sans avoir à l'indiquer à @@jUrl::get()@@ entre autre
-(voir [[urls/significant|la documentation correspondante]]). Vous n'avez alors
-probablement pas besoin du plugin autolocale.
+Bien sûr, il est possible de définir des urls significatives spécifiques pour
+chaque langue, et même d'indiquer les paramètres de langues, qui seront
+renseignés automatiquement ou détectés automatiquement, sans avoir à l'indiquer
+à @@jUrl::get()@@ entre autre (voir [[urls/mapping|la documentation
+correspondante]]). Vous n'avez alors probablement pas besoin du plugin
+autolocale.
 
 Notez aussi que si le code de language donné n'est pas listé dans le paramètre
 @@availableLocales@@ de la configuration principale, jLocale essaiera d'abord
 d'utiliser la locale la plus approchante (même langue mais d'un autre pays),
-et si il ne trouve pas, il utilisera la langue par défaut de l'application.
+et si il ne trouve pas, il utilisera la langue par défaut de l'application,
+celle indiquée dans @@fallbackLocale@@.
 
 Enfin, il faut activer le plugin. Pour cela, dans la configuration de jelix,
 mettez dans la section @@[coordplugins]@@ :

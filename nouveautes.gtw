@@ -25,12 +25,12 @@
   * Dans les applications crées par createapp, le répertoire temp est maintenant
     par défaut dans le répertoire de l'application
 
-  * **NODOC** Refonte du moteur d'URL :
+  * Refonte du moteur d'URL :
     * il n'y a plus de système de plugins ('simple', 'basic_significant', 'significant' n'existent plus).
     * Le nouveau moteur est en quelque sorte une fusion entre les anciens
       plugins 'basic_significant' et 'significant', avec des améliorations
       faciliter la configuration des urls
-    * Une API permet aux scripts d'installation de déclarer facilement les urls
+    * **NODOC** Une API permet aux scripts d'installation de déclarer facilement les urls
       (et donc de modifier urls.xml)
     * Les paramètres d'url "module" et "action" ne sont plus pris en compte (mais
       peuvent toujours être récupérés à partir de vos contrôleurs, même si cet

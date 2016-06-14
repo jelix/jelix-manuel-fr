@@ -46,7 +46,8 @@ $rep->addUrl(jUrl::get('module~contact:index'), null, 'weekly', 1);
 
 ===== Génération automatique à partir de urls.xml =====
 
-**L'automatisation du sitemap est possible uniquement en utilisant le moteur d'url significatives de jUrl.**
+L'automatisation (partielle) du sitemap est possible à partir des urls fournies
+dans le fichier @@var/config/urls.xml@@.
 
 Une fois la réponse instanciée, il suffit d'appeler une seule méthode :
 
@@ -54,6 +55,9 @@ Une fois la réponse instanciée, il suffit d'appeler une seule méthode :
 $rep->importFromUrlsXml();
 return $rep;
 </code>
+
+Notez que cela importe uniquement les urls des actions individuelles, et parmi
+celles-ci, uniquement celle qui n'ont pas un pathinfo dynamique.
 
 ===== Génération d'un index de sitemap =====
 

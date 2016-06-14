@@ -100,10 +100,10 @@ limité pour par exemple modifier le label en fonction des paramètres.
 Exemple : 
 
 On veut que ce couple porte le label '**Page Foo**'
-  myapp.com/index.php?var=foo&module=myapp&action=default:index
+  myapp.com/index.php/myapp/default/index?var=foo
 
 et que ce couple porte le label '**Page Bar**'
-  myapp.com/index.php?var=bar&module=myapp&action=default:index
+  myapp.com/index.php/myapp/default/index?var=bar
 
 Si l'on utilise la déclaration de base
 

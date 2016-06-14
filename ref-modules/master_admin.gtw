@@ -19,16 +19,21 @@ Si l'administration a un point d'entrée spécifique, comme admin.php par défau
 vous devez indiquer dans la configuration que ce module est accessible
 uniquement via ce point d'entrée.
 
-Pour ce faire, dans la configuration (à la fois dans @@F@mainconfig.ini.php@@ et
-dans @@F@admin/config.ini.php@@), dans la section @@simple_urlengine_entrypoints@@, au
-niveau de la clé admin, vous devez ajouter votre module. Si il s'appelle
-adminactu par exemple, ça donne ça :
+Pour ce faire, dans le fichier @@var/config/urls.xml@@, vous devez déclarer ces modules.
 
-<code ini>
- [simple_urlengine_entrypoints]
- admin="jacl2db~*@classic, jauth~*@classic, jacl2db_admin~*@classic, jauthdb_admin~*@classic, master_admin~*@classic, adminactu~*@classic"
+<code xml>
+ <entrypoint name="admin">
+     <url pathinfo="/" module="master_admin" action="default:index" />
+     <url module="master_admin"/>
+     <url module="jauth"/>
+     <url module="jacl2db"/>
+     <url module="jauthdb_admin"/>
+     <url module="jacl2db_admin"/>
+
+     <!-- ainsi que vos propres modules d'admin: -->
+     <url module="adminactu" />
+ </entrypoint>
 </code>
-
 
 Note : vous devriez avoir toujours des modules uniquement dédiés à l'admin, et
 des modules dédiés uniquement à la partie publique du site. Il est déconseillé

@@ -293,37 +293,32 @@ disableCache = on  // off par defaut
 
 ==== section urlengine ====
 
-définition du moteur d'url utilisé.
+Configuration du moteur d'urls
 
 <code ini>
-[urlengine] 	
-engine        = significant
+[urlengine]
 
 enableParser = on
-multiview = off 	
+multiview = off
 
-scriptNameServerVariable = 		
-pathInfoInQueryParameter = 	
+scriptNameServerVariable =
+pathInfoInQueryParameter =
 
-basePath = "" 	
-jelixWWWPath = "jelix/" 	
+basePath = ""
+jelixWWWPath = "jelix/"
 
-defaultEntrypoint= index 	
+defaultEntrypoint= index
 
-simple_urlengine_https = 	
 </code>
 
 Détails des paramètres :
 
-  * **engine** : les moteurs existants sont : simple, basic_significant ou
-    significant
   * **enableParser** : active la lecture de l'URL. Désactivez le paramètre si
     l'URL est déjà gérée par un autre programme ( comme le mod_rewrite
-    d'apache), si la réécriture de l'URL correspond à une URL simple et que vous
-    utilisez le moteur "significant". Si vous utilisez le moteur d'URL "simple"
-    désactivez ce paramètre.
-  * **multiView** : si le paramètre est activé dans Apache, vous ne devez pas
-    indiquez le suffix ".php", alors activez ce paramètre
+    d'apache) (paramètre obsolète).
+  * **multiView** : si le paramètre multiview ou acceptpathinfo est activé dans
+    Apache, vous ne devez pas indiquez le suffix ".php", alors activez ce
+    paramètre
   * **scriptNameServerVariable** : le nom de la variable $_SERVER qui contient
     le nom du script exemple : si vous appelez http://mysite.com/foo/index.php,
     c'est la variable qui contient "/foo/index.php". Ce nom peut être
@@ -342,15 +337,13 @@ Détails des paramètres :
   * **jelixWWWPath** : contient le chemin vers les CSS de Jelix, si vous le
        modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
   * **defaultEntrypoint** : contient le nom du pont d'entrée de l'application
-  * **simple_urlengine_https** : contient la liste des actions requérant le
-    protocole HTTPS
 
 === notfound ===
 
 Gestion des redirections vers une page 404 quand l'url n'est pas trouvée
 
 <code ini>
-notfoundAct = 	
+notfoundAct = 
 </code>
 
   * **notfoundAct** : contient le nom de l'action qui affichera l'erreur 404. Si le
@@ -366,15 +359,19 @@ notfoundAct = "monModule~monControleur:monAction"
 
 ===  urls.xml ===
 
-Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et
-Module/action/parametres, voir la documentation du le [[/urls/significant|moteur significant]] 
+  * **significantFile** : Nom du fichier contenant le mapping entre l'URL tappée
+    dans le navigateur et Module/action/parametres, voir la documentation du
+    [[/urls/mapping|moteur d'url]].
 
 <code ini>
 significantFile = "urls.xml" 
 </code> 
 
-  * **significantFile** : nom du fichier contenant les regles de réécritures de
-l'application
+**Attention** : vous ne devez pas définir un fichier d'url pour chaque point
+d'entrée !
+
+De plus, évitez de modifier ce paramètre, pour des raisons de confort et de
+maintenance.
 
 ==== section logfiles ====
 

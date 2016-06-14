@@ -2,8 +2,7 @@
 
 Il existe toutes sortes de plugins pour ajouter des fonctionnalités à diverses
 parties de Jelix. On peut ainsi ajouter des plugins pour le coordinateur, des
-drivers pour jDb, des drivers pour jAuth, des plugins pour jTpl ou encore des
-nouveaux moteurs d'URLs.
+drivers pour jDb, des drivers pour jAuth, des plugins pour jTpl...
 
 Tous les plugins sont regroupés dans des "dépôts" de plugins.
 
@@ -64,7 +63,6 @@ Voici les types de plugins et les répertoires correspondant :
     * drivers pour jDb : @@F@db/@@
     * drivers pour jDao : @@F@daobuilder/@@
     * plugins de templates : @@F@tpl/@@
-    * moteurs d'URLs : @@F@urls/@@
     * générateurs pour jForms : @@F@jforms/@@
     * drivers pour jKVdb : @@F@kvdb/@@
     * drivers pour jCache : @@F@cache/@@

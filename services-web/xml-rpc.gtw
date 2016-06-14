@@ -27,27 +27,14 @@ $jelix->process(new jXmlRpcRequest());
 
 </code>
 
-Il ne faut oublier de déclarer ce point d'entrée au niveau de la configuration
-des moteurs d'urls simple ou significant. Si vous utilisez [[/urls/simple|le
-moteur d'url simple]], vous devez mettre dans la section
-//simple_urlengine_entrypoints// de la configuration de jelix la déclaration
-suivante : 
-
-<code ini>
-xmlrpc = "@xmlrpc"
-</code>
-
-//xmlrpc// étant le nom du point d'entrée, et //@xmlrpc// indiquant le type de point d'entrée.
-
-Si vous utilisez [[/urls/significant|le moteur d'url significant]], vous devez
-ajouter la balise suivante :
+Il ne faut oublier de déclarer ce point d'entrée au niveau du @@var/config/urls.xml@@.
+Vous devez ajouter la balise suivante :
 
 <code xml>
 <entrypoint type="xmlrpc" name="xmlrpc" default="true" />
 </code>
 
-Dans un cas comme dans l'autre, vous pouvez alors récupérer l'url d'une action
-pour xmlrpc comme ceci :
+Vous pouvez alors récupérer l'url d'une action pour xmlrpc comme ceci :
 
 <code php>
   $url = jUrl::get("module~action@xmlrpc");

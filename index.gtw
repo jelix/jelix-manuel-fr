@@ -95,9 +95,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[bd/outils|Schémas et autres outils]].
    - chapter: [[kvdb|jKvDb : accéder à une base de type key/value]]
    - chapter: [[urls|jUrl : des URLs automatiques]]
-      - section: [[urls/simple|Moteur d'urls 'simple']]
-      - section: [[urls/basic_significant|Moteur d'urls 'basic_significant']]
-      - section:[[urls/significant|Moteur d'urls significatives]]
+      - section:[[urls/mapping|fichier urls.xml]]
    - chapter: [[authentification|jAuth : système d'authentification]]
       - section:[[authentification/drivers|Les drivers pour jAuth]]
    - chapter: [[droits2|jAcl2 : système de droits]]
@@ -120,7 +118,6 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[plugins/db|drivers pour jDb]]
       - section: [[plugins/daobuilder|plugins pour jDao]]
       - section: [[plugins/tpl|plugins de templates]]
-      - section: [[plugins/urls_engine|moteurs d'urls]]
       - section: [[plugins/jforms|générateurs jforms]]
       - section: [[plugins/debugbar|plugins pour la debugbar]]
       - section: [[plugins/htmlresponse|plugins pour jResponseHtml]]

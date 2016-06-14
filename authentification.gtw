@@ -355,11 +355,12 @@ devez mettre les paramètres de configuration @@enable_after_login_override@@
 et/ou @@enable_after_logout_override@@ à @@L@on@@.
 
 
-==== Configuration des URLS significants ====
+==== Configuration des URLS ====
 
-si vous utilisez le moteur d'urls significant, il vous faudra également ajouté
-dans votre fichier @@F@var/config/urls.xml@@ la ligne @@<url pathinfo="/auth" module="jauth" include="urls.xml"/>@@
-afin d'obtenir des urls propres au module.
+Le module jauth fourni un fichier d'urls. Si vous le souhaitez, vous pouvez
+l'utiliser pour le mapping de vos urls, en le déclarant
+dans votre fichier @@F@var/config/urls.xml@@ la ligne
+@@<url pathinfo="/auth" module="jauth" include="urls.xml"/>@@.
 
 ===== Utiliser son propre contrôleur =====
 
@@ -367,7 +368,6 @@ Vous pouvez utiliser vos propres contrôleurs pour gérer l'authentification :
 formulaire d'identification, connexion, déconnexion. Vous ferez appel alors à la
 classe jAuth et ses méthodes statiques pour vérifier les identifiants/mots de
 passe, connecter et déconnecter un utilisateur.
-
 
 ===== Classe jAuth =====
 
