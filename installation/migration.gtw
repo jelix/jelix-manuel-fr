@@ -222,6 +222,14 @@ Si vous les utilisez dans des scripts ou ailleurs, il vous faut changer les
 paramètres, en particulier le nom de la commande. Faire un @@php cmd.php help@@
 pour avoir l'aide.
 
+==== Vos scripts utilisant jCmdLineRequest ====
+
+Si le script est dédié à une action particulière, il ne faut plus seulement
+indiqué @@true@@ au constructeur de jCmdLineRequest, mais aussi le module
+et l'action. Vous y mettrez donc les valeurs des paramètres de configuration
+@@startModule@@ et @@startAction@@ du script. Ces derniers ne sont en effet
+plus utilisés.
+
 ==== Plugins custom pour jDb et jDao ====
 
 Les classes @@*daobuilder*@@ des plugins de jDb ne sont plus pris en charge. Si
@@ -289,5 +297,13 @@ récupérer en plus de Jelix. Il s'agit de :
 Après toutes les modifications effectuées, vous devez lancer le script
 installer.php de votre application. Le module jelix fera le reste des
 modifications.
+
+En particulier :
+
+- Migration de la configuration des moteurs d'url "simple" et "basic_significant"
+  vers le fichier urls.xml
+- Migration des paramètres startModule et startAction vers urls.xml
+- Suppression des paramètres et section obsolètes liés au moteur d'url
+
 
 

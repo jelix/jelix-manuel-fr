@@ -57,8 +57,6 @@ Attention, la valeur de basePath doit toujours commencer par un @@/@@. Si vous
 n'indiquez aucune valeur, Jelix essaiera de deviner le chemin de base par lui
 même.
 
-; @@defaultEntrypoint@@ : Point d'entrée par défaut de l'application. ''index''
-    par défaut. Vous ne devez pas indiquer le suffixe (.php).
 ; @@notfoundAct@@ : L'action à effectuer quand une URL ne correspond à rien.
     Indiquez-la sous forme de [[/concepts/appel-action|sélecteur d'action]]:
     @@module~action@@. L'action indiquée devra correspondre à l'affichage d'une page

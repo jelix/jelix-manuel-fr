@@ -137,8 +137,6 @@ par défaut ou génériques à l'application.
 
 
 <code ini>
-startModule = "jelix"
-startAction = "default:index"
 locale = "fr_FR"
 charset = "UTF-8"
 timeZone = "Europe/Paris"
@@ -149,9 +147,6 @@ use_error_handler = on
 </code>
 
 Détails des paramètres :
-  * **startModule, startAction** : module et action par défaut (redéfinis en
-    général pour chaque type de réponse. Voir la section
-    [[configuration#organisation|précédente]])
   * **locale, charset** : langue et encodage par défaut des réponses
   * **timeZone** : définit le décalage horaire pour toutes les fonctions de
     dates et heures
@@ -307,8 +302,6 @@ pathInfoInQueryParameter =
 basePath = ""
 jelixWWWPath = "jelix/"
 
-defaultEntrypoint= index
-
 </code>
 
 Détails des paramètres :
@@ -336,7 +329,6 @@ Détails des paramètres :
     via http://foo.com/index.php
   * **jelixWWWPath** : contient le chemin vers les CSS de Jelix, si vous le
        modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
-  * **defaultEntrypoint** : contient le nom du pont d'entrée de l'application
 
 === notfound ===
 

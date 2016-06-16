@@ -148,8 +148,6 @@ peut donc vite devenir peu lisible dans @@F@var/config/@@).
 Dans ce fichier, on ne va redéfinir que certaines choses :
 
 <code ini>
-startModule = "testapp"
-startAction = "main:index"
 
 [coordplugins]
 autolocale = index/autolocale.ini.php
@@ -158,14 +156,7 @@ autolocale = index/autolocale.ini.php
 html=myHtmlResponse
 </code>
 
-Pour le fichier de configuration de xmlrpc.php, on pourrait avoir par exemple :
-
-<code ini>
-
-  startModule = "testapp"
-  startAction = "xmlrpc:index"
-
-</code>
+Pour le fichier de configuration de xmlrpc.php, on pourrait ne rien avoir par exemple.
 
 etc.
 

@@ -35,6 +35,21 @@
     * Les paramètres d'url "module" et "action" ne sont plus pris en compte (mais
       peuvent toujours être récupérés à partir de vos contrôleurs, même si cet
       usage est obsolète)
+    * les paramètres @@startModule@@ et @@startAction@@ dans la configuration
+      du point d'entrée n'existent plus
+    * Les paramètres de configuration suivant de la section urlengine n'existent plus :
+      @@engine@@, @@defaultEntrypoint@@, @@simple_urlengine_https@@
+    * Les sections de configurations suivantes n'existent plus :
+      @@simple_urlengine_entrypoints@@, @@basic_significant_urlengine_entrypoints@@
+    * Dans le fichier urls.xml
+       * Il est possible d'indiquer un pathinfo sur un @@<url module="..">@@
+       * Il est obligatoire d'indiquer une action pour l'url "/", ce qui remplace
+         la disparition de @@startModule@@ et @@startAction@@
+       * Un pahtinfo absent ou vide dans un @@<url>@@ équivaut à "/"
+       * Une meilleure vérification des mauvaises utilisations du XML. Par exemple
+         une erreur est levée si il n'y a pas d'attribut "module".
+       * Il est possible de déclarer une url pour un contrôleur, sans avoir
+         à le faire pour chacune de ses méthodes
 
   * jProfiles :
      * le contenu du fichier profiles.ini.php est optimisé et stocké en cache
@@ -65,6 +80,8 @@
     * pgsql : support des paramètres nommés pour les requêtes préparées
     * mysqli : correction sur la prise en charge des requêtes préparées et support des paramètres nommés
   * **NODOC** Zones : organisation du cache en sous-répertoires
+  * **NODOC** jCmdLineRequest : il faut maintenant donner le module et l'action
+    au constructeur quand le script est dédié à une action précise
 
 ==== Changements dans les API ====
 

@@ -166,6 +166,29 @@ Avec cet exemple :
 les urls du module news seront de la forme
 @@index.php/super/actu/<controleur>/<action>@@.
 
+
+
+==== des URLs basiques pour les contrôleurs ====
+
+Il est possible de définir un pathinfo pour un contrôleur en particulier,
+tout en laissant ajouter le nom de l'action dans l'url.
+
+Pour cela, il faut indiquer le module, le pathinfo et le contrôleur dans un
+attribut @@controller@@.
+
+Exemple :
+
+<code xml>
+    <entrypoint name="index" default="true">
+        <!-- ... -->
+        <url pathinfo="/cool" module="main" controller="system" />
+    </entrypoint>
+</code>
+
+Les urls des actions du contrôleur system dans l'exemple, seront de la forme
+@@index.php/cool/<methode>@@. 
+
+
 ==== Spécifier une forme d'URL complète ====
 
 === Selon un pathinfo ===
