@@ -313,6 +313,7 @@ En particulier :
   vers le fichier urls.xml
 - Migration des paramètres startModule et startAction vers urls.xml
 - Suppression des paramètres et section obsolètes liés au moteur d'url
-
-
+- Déplacement du répertoire responses/ vers app/responses
+- Déplacement des fichiers de configuration mainconfig.ini.php, urls.xml et
+  ceux des points d'entrées vers app/config/
 

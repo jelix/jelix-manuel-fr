@@ -120,9 +120,17 @@ Voici quelques propriétés ou méthodes que vous pouvez utiliser :
     @@F@sql/install.mysql.sql@@ sera chargé. Il est possible d'indiquer le nom
     complet du script, mais cela doit être compatible avec toutes les bases de
     données supportées par votre application.
+  * @@$this->copyFile()@@ pour copier un fichier particulier, du répertoire
+    install vers un autre endroit ou la configuration. Le premier argument
+    est le chemin du fichier à copier, relatif au répertoire install/, le
+    deuxième est le chemin de destination. Par défaut, cela doit être
+    un chemin complet, mais il est possible d'utiliser des prefixes, qui indiquent
+    un des répertoires de l'appli. Ainsi @@www:@@ indique le répertoire www,
+    @@appconfig:@@ indique app/config, ou encore @@config@@ indique var/config.
   * @@$this->copyDirectoryContent()@@ pour copier des fichiers, du répertoire
-    install vers un autre endroit, typiquement vers le répertoire @@F@www/@@ de
-    l'application.
+    install/ vers un autre endroit, typiquement vers le répertoire @@F@www/@@ de
+    l'application ou la configuration. Les préfixes utilisables pour @@getFile()@@
+    le sont aussi pour cette méthode.
   * @@$this->config@@: l'objet @@C@jIniMultifilesModifier@@ correspond au
     fichier de configuration du point d'entrée courant. Avec cet objet, vous
     pouvez récupérer le contenu du fichier de configuration et/ou le modifier.
