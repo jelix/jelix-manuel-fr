@@ -259,6 +259,15 @@ Vous devez remplacer ces appels par les nouvelles méthodes @@M@getConfigObj()@@
 @@M@getConfigIni()@@.
 
 
+==== Disparition de json.js et json2.js ====
+
+Si vos scripts javascript utilisaient la fonction @@toJSONString()@@ ou @@parseJSON()@@,
+il faut remplacer ces appels par l'utilisation de l'objet JSON standard en
+javascript.
+
+Il faut aussi retirer tout chargement des scripts jelix/js/json.js, jelix/js/json2.js
+et jelix/xul/jsonrpc.js.
+
 ==== Mise à jour des modules ====  
 
 Mettez à jour les sources des modules tiers que vous avez installés, et qui sont

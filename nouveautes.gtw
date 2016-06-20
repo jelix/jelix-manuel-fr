@@ -82,6 +82,8 @@
   * **NODOC** Zones : organisation du cache en sous-répertoires
   * **NODOC** jCmdLineRequest : il faut maintenant donner le module et l'action
     au constructeur quand le script est dédié à une action précise
+  * les fichiers json.js, json2.js et xul/jsonrpc.js ont été supprimé, les
+    navigateurs récents supportant JSON.
 
 ==== Changements dans les API ====
 

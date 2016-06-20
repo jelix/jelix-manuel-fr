@@ -78,7 +78,8 @@ vous pouvez le lire dans [[http://json-rpc.org/|la spécification de jsonrpc]],
 il faut envoyer une chaîne de ce type :
 
 <code>
-{ method : "",
+{
+  method : "",
   id:"",
   params: {}
 }
@@ -102,26 +103,30 @@ Bien entendu, ce que vous avez dans $parametres sera des données "php" (chaine,
 array ou autre), la transformation de la chaine json étant réalisée par
 @@C@jJsonRpcRequest@@..
 
-Notez qu'un script javascript est fourni dans @@F@lib/jelix-www/js/json.js@@. Il
-vous permet, dans vos pages HTML de transformer vos données javascript en chaine
-json. Pour cela, sur les objets, tableaux et autre type de donnée javascript, il
-suffit d'appeler la méthode javascript @@M@toJSONString()@@ qui renvoie une
-chaîne. Il suffit ensuite de passer cette chaîne à xmlHttpRequest pour envoyer
-la requête JSONRPC à jelix. Exemple, dans votre page HTML :
+Dans vos pages HTML, il faut transformer vos données javascript en chaine
+json. Pour cela, vous devez utiliser l'objet @@JSON@@ présent dans tout bon
+navigateur, et appeler sa méthode @@stringify@@, qui renvoi la chaîne au format JSON.
+Il suffit ensuite de passer cette chaîne à xmlHttpRequest pour envoyer
+la requête JSONRPC à jelix. Et inversement, pour utiliser la réponse RPC en
+javascript, il faut utiliser @@JSON.parse()@@.
+
+Exemple, dans votre page HTML :
 
 <code javascript>
+ // le message JSONRPC
  var jsonrpc = { method : "monModule~default:index",
     id:"1",
     params: null
  };
 
- var toSend = jsonrpc.toJSONString();
+ var toSend = JSON.stringify(jsonrpc);
  var p = new XMLHttpRequest();
  p.onload = null;
  p.open("POST", "http://monsite.tld/jsonrpc.php", false);
  p.send(toSend);
 
- var reponse = p.responseText.parseJSON();
+ // récupération de la réponse
+ var reponse = JSON.parse(p.responseText);
  var resultat = reponse.result;
 </code>
 
