@@ -6,7 +6,7 @@ principalement jQuery pour gérer le comportement de certains champs de saisie.
 Le générateur "html" est celui utilisé par défaut par jForms, et son nom à
 indiquer aux plugins {form} ou {formfull} est "html".
 
-===== Options =====
+===== Options du générateur =====
 
 Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et
 @@E@{formfull}@@ :
@@ -16,15 +16,33 @@ Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et
   * @@L@plugins@@ : la liste des plugins à utiliser pour afficher tel ou tel contrôle. C'est un tableau
     associatif dont les clés sont les identifiants des contrôles, et les valeurs les noms de plugins
     de type formwidget.
+  * @@L@attributes@@ : liste d'attributs html et leurs valeurs,  à ajouter sur
+    la balise @@<form>@@. Ex : @@array('attributes'=>array('class'=>'myclass'))@@
 
 ===== Personnaliser l'affichage des contrôles =====
+
+=== Styler avec les classes CSS existantes ===
 
 Chaque type de contrôle est généré par un plugin dédié, de type formwidget.
 
 Les balises HTML générées par ces plugins possèdent des classes CSS (voir plus bas).
-Vous pouvez donc les styler à votre convenance.
+Vous pouvez donc les styler à votre convenance dans une feuille de style
+que vous ajouterez à votre page.
 
-Cependant, il est possible que le HTML généré ne vous convienne pas. La solution est
+=== Ajout d'attributs html ===
+
+Vous pouvez ajouter des attributs HTML sur les elements HTML générés par
+@@ctrl_control@@. Pour ce faire, ajouter un deuxième paramètre à
+@@ctrl_control@@. Cela doit être un tableau @@('nom attribut'=>'valeur attribute')@@.
+Donnez @@L@""@@ comme premier paramètre quand @@ctrl_control@@
+est utilisé à l'intérieur d'une boucle @@formcontrols@@.
+
+Note : pour les générateurs autre que HTML, ce tableau d'attribut peut être
+d'autres options.
+
+=== Créer et/ou utiliser un plugin de widget ===
+
+Il est possible que le HTML généré ne vous convienne pas. La solution est
 alors d'utiliser un plugin formwidget différent, que vous développerez vous même ou
 que vous aurez récupéré. Vous indiquerez son nom dans l'option //plugins// de @@{form}@@.
 
@@ -38,7 +56,9 @@ sera utilisé.
 Un plugin formwidget implémente l'interface @@C@jelix\forms\HtmlWidget\WidgetInterface@@
 et peut hériter de la classe @@C@jelix\forms\HtmlWidget\WidgetBase@@.
 
-Voyez les plugins existants et cet interface pour comprendre la création de ce type de plugins.
+Voyez les plugins existants et cet interface pour comprendre la création de ce
+type de plugins.
+
 
 ===== Personnalisation de l'affichage des messages =====
 
@@ -103,7 +123,8 @@ Ensuite vous l'indiquez au plugin //form// ou //formfull//, dans la liste des
 options pour le builder html :
 
 <code html>
-  {form $formulaire, 'monmodule~default:sauver', array(), 'html', array("errorDecorator"=>"MyErrorDecorator")}
+  {form $formulaire, 'monmodule~default:sauver', array(), 'html',
+        array("errorDecorator"=>"MyErrorDecorator")}
    ...
   {/form}
 </code>
@@ -123,13 +144,31 @@ En ce qui concerne l'objet jFormsControl que addError reçoit en paramètre (ici
 
 ==== Affichage des messages d'aides ====
 
-Dans les versions précédentes, les messages d'aides étaient affichés par un
-mécanisme similaire à celui des messages d'erreurs. Ce n'est plus le cas depuis
-la version 1.2, où ils sont directement en dur en HTML, et par défaut affichés
+Les messages d'aides sont directement en dur en HTML, et par défaut affichés
 dans des info bulles au survol du picto du point interrogation. Vous pouvez bien
 sûr changer cela en modifiant les CSS, en ajoutant du javascript etc.
 
-==== Manipulation Javascript ====
+===== Ajouter du code javascript =====
+
+Vous pouvez ajouter des comportements sur n'importe quel contrôle avec
+javascript, avec votre bibliothèque JS préférée (jQuery étant celle utilisée par
+jForms par défaut), et en incluant ce code dans un fichier js que vous lierez
+à la page contenant le formulaire.
+
+Tout les champs générés par jForms ont un id. Les id sont des noms composés :
+"jforms_module_nomform_refcontrole". Par exemple, pour un contrôle qui a un
+ref="adresse", déclaré par le formulaire "identite" fournis dans le module
+"utilisateurs", l'id du champs sera : "jforms_utilisateurs_identite_adresse".
+
+L'élément html <form> est aussi généré avec un id, composé du nom du module et
+de celui du formulaire : "jforms_module_nomform". Dans notre exemple, il vaudra
+"jforms_utilisateurs_identite".
+
+Sachant ces ids, vous pouvez récupérer tout les champs de formulaire ou
+l'élément form, avec la fonction @@document.getElementById()@@. Vous pouvez
+aussi utiliser l'objet @@jFormsJQ@@ comme expliqué ci-dessous.
+
+==== Objet JS jFormsJQ ====
 
 Le code Javascript généré par jForms dans votre page web repose sur principalement
 sur un objet @@jFormsJQ@@, à partir duquel vous pouvez récupérer les objets JS
