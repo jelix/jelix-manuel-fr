@@ -89,6 +89,16 @@ l'ordre :
       * le nom du générateur à utiliser (entre autre 'html')
       * un tableau contenant des options pour le générateur
 
+<code php>
+ {form $formulaire, 'monmodule~default:sauver', 
+  array('paramètre1' => 'toto', 'paramètre2' => 'tata}, 
+  'html',
+  array('attributes' => array('class' => 'classeDeMonForm', 'autreAttribut' => 'attribut'), 
+   'errorDecorator' => 'monErrorDecorator',
+   'plugins' => array('champTexte' => 'pluginPourChampTexte, 'champDate' => 'pluginPourChampDate')
+  )}
+</code>
+
 
 Note : n'utilisez pas ce plugin dans une boucle avec une variable générée par
 cette boucle (typiquement dans un foreach). À cause d'une limitation du moteur
