@@ -62,7 +62,7 @@ celles-ci, uniquement celle qui n'ont pas un pathinfo dynamique.
 ===== Génération d'un index de sitemap =====
 
 Si vous avez vraiment un très gros site et qu'un seul fichier sitemap ne suffit
-pas, vous pouvez en créer plusieurs via les 2 méthodes ci dessus et ensuite les
+pas, vous pouvez en créer plusieurs via les 2 méthodes ci-dessus et ensuite les
 lier dans un index de sitemap :
 
 <code php>
@@ -74,7 +74,7 @@ $rep->addSitemap($loc, $lastmod);
 Seul le paramètre @@V@$loc@@ est obligatoire.
 
 
-Ainsi vous écrivez plusieurs actions qui génère un sitemap, et une autre action
+Ainsi, vous écrivez plusieurs actions qui génèrent un sitemap, et une autre action
 qui va générer l'index. Pour donner l'url des sitemaps à @@M@addSitemap@@, vous
 pouvez utiliser @@jUrl::get()@@.
 
