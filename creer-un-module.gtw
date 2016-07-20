@@ -85,7 +85,7 @@ application :
    php cmd.php module:create monmodule
 </code>
 
-Cela vous créé un module de nom "monmodule" dans le répertoire @@F@modules/@@ de
+Cela vous crée un module de nom "monmodule" dans le répertoire @@F@modules/@@ de
 l'application, ainsi que l'arborescence classique d'un module et un contrôleur
 par défaut.
 
