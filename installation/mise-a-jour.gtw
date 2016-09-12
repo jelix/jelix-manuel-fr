@@ -36,8 +36,9 @@ application en tant que @@F@install/closed.html@@.
 
 Pour ré-ouvrir l'application, supprimez simplement le fichier
 @@F@var/config/CLOSED@@. Vous pouvez manipuler ce fichier manuellement (si vous
-avez seulement un accès FTP à votre site web, c'est la solution), ou, si vous
-avez un accès en ligne de commande, vous pouvez appeler les commandes jelix:
+avez seulement un accès FTP à votre site web, c'est la solution).
+
+Si vous avez un accès en ligne de commande, vous pouvez appeler les commandes jelix:
 @@app:open@@ and @@app:close@@
 
 <code bash>
@@ -65,12 +66,13 @@ fichiers obsolètes.
 ===== Lancer la mise à jour =====
 
 Maintenant que les fichiers sources sont OK, vous devez mettre à jour
-l'application elle-même (base de données, configuration...)
+l'application elle-même (base de données, configuration...).
 
 La seule chose que vous avez à faire est de lancer l'installateur, comme vous
 l'avez fait lorsque vous avez installé votre application pour la première fois.
 L'installateur Jelix (utiliser par un assistant ou un script d'installation
 d'application), peut installer **et** mettre à jour les modules.
+
 
 ==== Avec un assistant ====
 

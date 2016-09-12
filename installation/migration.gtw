@@ -3,17 +3,21 @@
 Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins
 ces étapes à faire :
 
-  * Remplacer le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
-    jelix, ou changer la version dans votre fichier composer.json si vous utilisez
-    Composer.
+  * Récupérer les sources de la nouvelle version de Jelix et les installer.
+    Depuis Jelix 1.7, la procédure standard est de changer la version de Jelix
+    dans le fichier composer.json, ou de créer un fichier composer.json si vous
+    migrez vers Jelix 1.7.
   * **supprimer** tous les fichiers dans le répertoire @@F@votre_appli/temp/@@
   * adapter votre code en suivant les instructions indiquées pour chaque
     ancienne version de Jelix. Voir ci-dessous.
+  * lancer l'installateur de Jelix.
 
-===== Mettre à jour depuis Jelix 1.5 et inférieur =====
+===== Mettre à jour depuis Jelix 1.5 et inférieur, jusqu'à Jelix 1.6 =====
 
-Suivez les indications de migration de chaque version intermédiaire (voir les
-manuels correspondant), avant de mettre à jour pour jelix 1.7.
+Suivez les indications de migration de chaque version intermédiaire, avant de
+mettre à jour pour jelix 1.7. Voir les instructions de migration des manuels
+de chacune de ces versions. Vous devrez en particulier remplacer le répertoire
+lib/ de Jelix.
 
 ===== Mettre à jour depuis Jelix 1.6.x =====
 
@@ -38,14 +42,19 @@ plus en dehors. Mais vous pouvez le garder hors de l'application.
 
 ==== Installation des fichiers de Jelix ====
 
-Jelix 1.7 et certains modules "standards" sont désormais disponibles via
-Composer (ce qui n'est pas le cas de Jelix 1.6 et inférieur).
+Depuis la version 1.7, Jelix peut s'installer avec Composer. Composer est un
+gestionnaire de paquet, utilisable en ligne de commande, qui est maintenant
+très utilisé dans de nombreux projets.
 
-Pour la migration, vous pouvez donc mettre à jour via Composer, ou télécharger
-l'archive comme pour les versions précédentes.
+De plus certains modules "standards" ne sont plus inclus directement dans
+les sources de Jelix, mais désormais installables via Composer.
 
-Composer est un gestionnaire de paquet, utilisable en ligne de commande,
-qui est maintenant très utilisé dans de nombreux projets.
+Cependant, il est encore possible de télécharger les sources de Jelix et
+de l'installer à la main. L'archive contient déjà toutes les dépendances
+aux paquets Composer utilsés par Jelix.
+
+Pour la migration, vous pouvez donc mettre à jour, soit via Composer, soit
+en téléchargeant l'archive comme pour les versions précédentes.
 
 === Vous voulez utiliser Composer ===
 
@@ -73,7 +82,7 @@ projet. Un fichier @@F@composer.json@@ peut contenir bien d'autres informations.
 Voir le manuel de Composer.
 
 Supprimez le contenu du répertoire lib, sauf bien sûr les bibliothèques non
-fournies par Jelix, si vous en aviez ajouté dans ce répertoire lib.
+fournies par Jelix, si vous en aviez ajouté dans ce répertoire.
 
 Executez ensuite en ligne de commande :
 
@@ -82,9 +91,9 @@ composer install
 </code>
 
 Vous verrez alors un nouveau répertoire @@F@vendor/@@ et un fichier composer.lock.
-Il n'est pas recommandé d'inclure ce répertoire @@F@vendor/@@ dans votre gestionnaire
+Il n'est pas recommandé d'inclure le répertoire @@F@vendor/@@ dans votre gestionnaire
 de version (git, subversion...). Donc indiquez-le dans un fichier @@F@.gitignore@@,
-@@F@.hgignore@@ ou une propriété @@snv:ignore@@, selon l'outil que vous utilisez.
+@@F@.hgignore@@ ou une propriété @@snv:ignore@@, selon l'outils que vous utilisez.
 
 Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer :
 
@@ -127,8 +136,8 @@ require (__DIR__.'/../lib/vendor/jelix_app_path.php');
 
 Dans les versions précédentes de Jelix, il fallait déclarer les répertoires
 contenant des modules ou de plugins, dans des paramètres @@modulesPath@@ ou
-@@pluginsPath@@ de la configuration (dans @@var/config/mainconfig.ini.php@@ le fichier
-de configuration du point d'entrée).
+@@pluginsPath@@ de la configuration (indiqués dans @@var/config/mainconfig.ini.php@@
+ou le fichier de configuration du point d'entrée).
 
 Ces paramètres ne sont plus reconnus. Les répertoires de modules et de plugins
 doivent maintenant être déclarés dans le fichier @@F@application.init.php@@ ou
@@ -180,7 +189,7 @@ du fichier @@application.init.php@@, comme ceci:
 N'oubliez pas de faire un @@composer update@@ à chaque fois que vous modifiez
 le fichier @@F@composer.json@@.
 
-==== à propos de Simpletest ====
+==== À propos de Simpletest ====
 
 Simpletest (et le module junittests) n'est plus fourni avec Jelix. Si vous
 n'avez pas migré vos tests vers PHPUnit, vous pouvez encore installer
@@ -188,7 +197,7 @@ n'avez pas migré vos tests vers PHPUnit, vous pouvez encore installer
 téléchargeant ou en le déclarant ("jelix/simpletest-module") dans votre fichier
 composer.json.
 
-==== changements dans profiles.ini.php ====
+==== Changements dans profiles.ini.php ====
 
 Les drivers jDb "sqlite" et "mysql" ne sont plus fournis (le premier utilisant
 une API PHP pour le vieux sqlite 2, et le deuxième utilisant l'API php
@@ -309,11 +318,11 @@ modifications.
 
 En particulier :
 
-- Migration de la configuration des moteurs d'url "simple" et "basic_significant"
-  vers le fichier urls.xml
-- Migration des paramètres startModule et startAction vers urls.xml
-- Suppression des paramètres et section obsolètes liés au moteur d'url
-- Déplacement du répertoire responses/ vers app/responses
-- Déplacement des fichiers de configuration mainconfig.ini.php, urls.xml et
-  ceux des points d'entrées vers app/config/
+  * Migration de la configuration des moteurs d'url "simple" et "basic_significant"
+    vers le fichier urls.xml
+  * Migration des paramètres startModule et startAction vers urls.xml
+  * Suppression des paramètres et section obsolètes liés au moteur d'url
+  * **Déplacement du répertoire responses/** vers app/responses
+  * **Déplacement des fichiers de configuration** mainconfig.ini.php, urls.xml et
+    ceux des points d'entrées vers app/config/
 

@@ -65,16 +65,8 @@ Dans le dosssier de Jelix, vous obtenez les répertoires suivants :
       jelix-plugins/        plugins livrés en standard avec Jelix
       jelix-scripts/        scripts en ligne de commande d'aide pour le développeur
       jelix-www/            ressources javascript, css...
+      vendor/               bibliothèques dependantes (présent dans la version téléchargeable)
 </code>
-
-Il est recommandé d'installer ces répertoires en-dehors du répertoire de votre
-site web (le repertoire accessible depuis un navigateur), pour deux raisons :
-
-   - plus de sécurité
-   - permettre de partager une même distribution de Jelix avec plusieurs
-     applications.
-
-Mais ce n'est pas une obligation, en tout cas, sur une machine de développement.
 
 Nous admettrons par la suite que vous avez copié ces répertoires dans un
 répertoire @@F@monsite/@@.

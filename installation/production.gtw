@@ -8,23 +8,6 @@ votre application.
 Il y a certaines choses différentes à prendre compte dans le cas du serveur de
 production, afin d'optimiser l'exécution de votre application basée sur Jelix.
 
-
-===== Choisir la bonne édition de Jelix =====
-
-Pour développer, vous utilisez bien sûr **l'édition "developer"** de Jelix. Le
-code source de cette édition contient des instructions aidant au déboggage, pour
-la debugbar par exemple.
-
-Cependant, pour l'installation sur un serveur de production, il est préférable
-d'installer **l'édition "optimized"** de Jelix. Comme son nom l'indique, elle
-est optimisée, et débarrassée des choses inutiles en production. Notez toutefois
-que votre application fonctionnera à l'identique avec l'une ou l'autre des
-éditions de Jelix, à un détail près : on pourra observer de légères
-améliorations de performance avec l'édition "Optimized" ;-).
-
-Si vous choisissez de rester avec l'édition "developer" sur le serveur de
-production, cela ne posera aucun problème.
-
 ===== Configuration =====
 
 ==== Au niveau du serveur ====
@@ -33,8 +16,8 @@ production, cela ne posera aucun problème.
     être en dehors du "document root" du site web. Voir
     [[/configurer-server|le chapitre sur la configuration d'un serveur]] pour des exemples.
   - Bien spécifier les droits sur le répertoire @@F@temp/@@, en particulier, que
-    le propriétaire soit l'utilisateur qui exécute apache (ou celui de votre
-    compte, chez certains hébergeurs) et qu'il ait les droits en écriture. Par
+    le propriétaire soit l'utilisateur qui exécute apache ou php-fpm (ou celui
+    de votre compte, chez certains hébergeurs) et qu'il ait les droits en écriture. Par
     exemple, sur linux, il n'est pas recommandé de mettre les droits 0777 sur le
     répertoire @@F@temp/@@ ;-)
   - Idem pour les répertoires @@F@var/log/@@, @@F@var/mails/@@ etc de votre
@@ -52,10 +35,11 @@ Désactivez le plugin debugbar.
 
 === configuration du logger ===
 
-Si vous gardez l'édition "dev" en production, mettez en commentaire la ligne
-@@sql=...@@ et peut être aussi @@soap=..@@ et autre type de log qui ne vous
-semble pas pertinent. Et supprimez "memory" pour chaque type de log, cela
-économisera de la mémoire (n'est utile que pour la debugbar).
+À moins que vous ne vouliez avoir toute la liste des requêtes SQL et SOAP,
+mettez en commentaire la ligne @@sql=...@@ et @@soap=..@@. Idem pour les
+autres types de log qui ne vous semblent pas pertinent. Supprimez également
+"memory" pour chaque type de log, cela économisera de la mémoire (n'est utile
+que pour la debugbar).
 
 === Section compilation ===
 
@@ -121,5 +105,3 @@ faut désactiver la vérification HTTPS de jelix
 [urlengine]
 checkHttpsOnParsing = off
 </code>
-
-

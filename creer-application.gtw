@@ -20,9 +20,10 @@ version de développement de Jelix 1.7 :
 
 <code bash>
 composer create-project jelix/jelix-skeleton-app myapp dev-jelix-1.7
-<code>
+</code>
 
-Composer vous demandera si vous voulez garder le repertoire @@F@.git@@. Répondez non.
+Composer vous demandera si vous voulez garder le repertoire @@F@.git@@.
+Répondez non de préférence.
 
 Quelques fichiers ensuite à copier avant d'initialiser l'application :
 
@@ -60,14 +61,22 @@ contenu est :
 
 <code>
   myapp/
+     app/
+        config/    fichiers de configuration généraux
+        responses/ classes pour les objets réponses HTML
+        themes/    les thèmes disponibles pour votre application
+        overloads/ contiendra les différents fichiers qui redéfinissent des
+                   fichiers de modules
      modules/      modules de l'application
      plugins/      plugins de l'application
-     responses/    classes pour les objets réponses HTML
+
      temp/         tous les fichiers temporaires et de cache créés à l'execution de l'application
-     var/config/   fichiers de configuration
-     var/log/      fichier de log
-     var/themes/   les thèmes disponibles pour votre application
-     var/overloads/ contiendra les différents fichiers qui redéfinissent des fichiers de modules que vous aurez récupéré
+     var/
+        config/    fichiers de configuration propres à l'installation
+        log/       fichiers de log
+        themes/    thèmes installés durant la vie de l'application
+        overloads/ idem que app/overloads, mais pour les fichiers créés à la volé
+                   durant la vie de l'application
      www/          racine du répertoire public de votre application
 </code>
 

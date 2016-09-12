@@ -4,7 +4,7 @@
 
 ==== Fonctionnement général ====
 
-  * Jelix 1.7 nécessite dorénavant PHP 5.6 minimum.
+  * Jelix 1.7 nécessite dorénavant PHP 5.6 minimum et est compatible avec PHP 7.
 
   * Intégration avec Composer :
     * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]] avec Composer
@@ -25,19 +25,22 @@
   * Dans les applications crées par createapp, le répertoire temp est maintenant
     par défaut dans le répertoire de l'application
 
-  * **NODOC** Nouveau répertoire app/config dans les applications, et déplacement des fichiers
-    non lié à l'environnement, de var/config vers app/config : mainconfig.ini.php,
-    config.ini.php, urls.xml... On a ainsi d'une part les fichiers qui ne
-    dépendent pas de l'environnement d'execution dans app/config, et ceux qui
-    dépendent du serveur dans var/config (localconfig.ini.php,
-    profiles.ini.php...).
+  * **NODOC** Nouveau répertoire @@F@app/@@ dans le répertoire de l'application
+    dans lequel des fichiers ont migré :
 
-  * **NODOC** Il est possible de mettre les overloads, themes et locales
-    dans le répertoire app/. Les répertoires var/overloads, var/themes et
-    var/locales étant dorénavant déstiné uniquement à leurs ressources
-    qui seraient créés dynamiquement pendant la vie de l'application.
+    * **NODOC** Nouveau répertoire app/config dans les applications, et déplacement des fichiers
+      non lié à l'environnement, de var/config vers app/config : mainconfig.ini.php,
+      config.ini.php, urls.xml... On a ainsi d'une part les fichiers qui ne
+      dépendent pas de l'environnement d'execution dans app/config, et ceux qui
+      dépendent du serveur dans var/config (localconfig.ini.php,
+      profiles.ini.php...).
 
-  * **NODOC** Déplacement du répertoire responses/ vers app/responses
+    * **NODOC** Il est possible de mettre les overloads, themes et locales
+      dans le répertoire app/. Les répertoires var/overloads, var/themes et
+      var/locales étant dorénavant déstiné uniquement à leurs ressources
+      qui seraient créés dynamiquement pendant la vie de l'application.
+
+    * **NODOC** Déplacement du répertoire responses/ vers app/responses
 
   * Refonte du moteur d'URL :
     * il n'y a plus de système de plugins ('simple', 'basic_significant', 'significant' n'existent plus).
