@@ -14,7 +14,7 @@ production, afin d'optimiser l'exécution de votre application basée sur Jelix.
 
   - Tous les répertoires autre que le @@F@www@@ de votre application devraient
     être en dehors du "document root" du site web. Voir
-    [[/configurer-server|le chapitre sur la configuration d'un serveur]] pour des exemples.
+    [[configurer-server|le chapitre sur la configuration d'un serveur]] pour des exemples.
   - Bien spécifier les droits sur le répertoire @@F@temp/@@, en particulier, que
     le propriétaire soit l'utilisateur qui exécute apache ou php-fpm (ou celui
     de votre compte, chez certains hébergeurs) et qu'il ait les droits en écriture. Par

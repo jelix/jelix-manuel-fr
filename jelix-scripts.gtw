@@ -14,16 +14,16 @@ profiter pleinement de Jelix.
 
 ==== Pour Ubuntu/Debian/autre linux ====
 
-Vous devez installer le paquet **php5-cli** afin d'avoir la version ligne de
-commande de PHP.
+Vous devez installer le paquet @@php5-cli@@ ou @@php7.0-cli@@ afin d'avoir la
+version ligne de commande de PHP.
 
 Attention, dans bien des distributions linux, en particulier debian/ubuntu, le
-fichier de configuration de PHP @@F@php.ini@@ n'est pas le même pour le PHP
-d'apache que pour la version CLI de PHP. Veillez donc à activer les extensions
-nécessaires à l’exécution de Jelix, à la fois dans le fichier
-@@F@/etc/php5/apache2/php.ini@@, ou @@F@/etc/php5/fpm/php.ini@@, et dans le
-fichier @@F@/etc/php5/cli/php.ini@@ (les chemins sont valables pour
-debian/ubuntu).
+fichier de configuration @@F@php.ini@@ pour la version CLI de PHP, n'est pas le
+même que celui utiliser par le module PHP d'Apache ou que celui de PHP-FPM.
+Veillez donc à activer les extensions nécessaires à l’exécution de Jelix, à la
+fois dans le fichier @@F@/etc/php5/apache2/php.ini@@, ou @@F@/etc/php5/fpm/php.ini@@,
+et dans le fichier @@F@/etc/php5/cli/php.ini@@. Avec PHP 7, ils peuvent se
+trouver dans /etc/php/php7.0/.
 
 Notez que sous Debian et Ubuntu, la configuration de la plupart des extensions
 sont dans des fichiers ini séparés, et stockés dans un répertoire conf.d commun
@@ -54,7 +54,7 @@ export PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.4/bin:$PA
 </code>
 
 Si vous souhaitez mettre de nouveau le PHP-Cli de base par défaut, remettez la
-ligne comme avant ou supprimez la.
+ligne comme avant ou supprimez-la.
 
 
 ==== Sous windows ====
@@ -88,32 +88,24 @@ quel répertoire notamment pour pouvoir créer des applications en ligne de
 commande avec Jelix.
 
 
-==== Notes pour les utilisateurs d'un hébergement OVH mutualisé ====
+==== Notes pour les utilisateurs d'un hébergement mutualisé ====
 
-Ce paragraphe concerne les utilisateurs hébergeant leur site web sur serveur mutualisé d'OVH.
-Attention, les informations suivantes ne sont pas forcément à jour. Consultez
-la documentation d'OVH.
+Pour utiliser jelix-scripts sur un hebergement mutualisé, il faut que votre
+hébergeur propose un accés SSH.
 
 Deux particularités sont à prendre en compte :
 
    * en ligne de commande, la version de PHP par défaut n'est pas forcément la plus
      récente. Il faut donc veiller à ce que la version compatible
-     avec Jelix soit appelée (e.g. @@F@php.ORIG.5.6.0@@)
-     soit manuellement, soit par un alias du BASH, soit par un script
-   * la variable superglobale @@$_SERVER['SCRIPT_NAME']@@ ne semble pas être
-     diffusée ce qui gêne à l'exécution du script pour la création des modules
+     avec Jelix soit appelée
+   * chez certains hebergeurs, parfois certaines variables superglobales ne sont
+     pas bien mise. Par exemple @@$_SERVER['SCRIPT_NAME']@@ peut être absent.
+     Il faut alors créer la variable d'environnment qui correspond. Ex:
+     @@export SCRIPT_NAME=cmd.php@@?
 
-Une solution simple répondant aux deux problématiques est la suivante. Il faut
-juste créer un script BASH @@F@jelix.sh@@ auquel on donne les droits d'exécution
-et avec le contenu suivant :
+Consultez la documentation de votre hébergeur pour avoir un accés SSH et utiliser
+la bonne version de PHP. Exemple pour OVH : [[https://docs.ovh.com/fr/fr/web/hosting/mutualise-le-ssh-sur-les-hebergements-mutualises/|Guide d'accés SSH]].
 
-<code bash>
-  #!/bin/bash
-  export SCRIPT_NAME=cmd.php
-  php.ORIG.5.6.0 cmd.php $*
-</code>
-
-Ensuite on appelle ce script à la place de la commande habituelle @@F@php cmd.php ...@@.
 
 ===== Lancer cmd.php =====
 
@@ -121,10 +113,13 @@ Ouvrez donc une console (cmd.exe sous windows), allez dans le répertoire de
 votre application, par exemple @@F@myapp/@@ :
 
 Sous linux/mac :
+
 <code bash>
    cd myapp/
 </code>
+
 Sous windows :
+
 <code bash>
    cd myapp\
 </code>

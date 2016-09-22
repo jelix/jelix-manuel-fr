@@ -1,8 +1,8 @@
 ~~LANG:EN@enman:installation/requirements~~
 
 
-Vous devez installer au minimum la version **5.6** de PHP. Les extensions
-**dom**, **simplexml**, **pcre**, **session**, **spl**, **json** et
+Jelix est compatible avec PHP 7, et PHP 5.6 minimum.
+Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl**, **json** et
 **tokenizer** sont requises (elles sont actives en général dans une installation
 standard de PHP 5.6). Si une de ces extensions n'était pas livrée avec le paquet
 PHP5, veillez à installer le paquet correspondant.

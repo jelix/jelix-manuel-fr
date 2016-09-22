@@ -1,11 +1,10 @@
 ~~LANG:EN@enman:create-application~~
 
-La première chose à faire pour utiliser Jelix, c'est de créer une application.
+Il y a plusieurs moyens de créer une application avec Jelix.
 
-Les deux façons les plus rapide pour le faire sont :
-
-    - soit en installant le squelette d'application @@jelix-skeleton-app@@ avec Composer
-    - soit en utilisant la commande @@createapp@@ fournie avec Jelix
+   - en installant le squelette d'application @@jelix-skeleton-app@@ avec Composer
+   - en utilisant la commande @@createapp@@ fournie avec Jelix, après avoir
+     installé les sources du framework
 
 
 ===== Utilisation du paquet jelix-skeleton-app =====
@@ -42,6 +41,57 @@ L'autre façon de créer une application Jelix, est l'utilisation de la commande
 @@bin/createapp.php@@. Elle permet de créer un squelette d'application.
 C'est une alternative par rapport au paquet jelix-skeleton-app
 car elle permet de personnaliser la création du squelette.
+
+Il faut d'abord installer les sources.
+
+==== Installer les sources avec Composer ====
+
+Si vous n'avez pas encore de projet avec un fichier @@F@composer.json@@, créer
+un répertoire pour votre application (prenons myapp comme nom) et y
+mettre un fichier @@F@composer.json@@ dont voici un exemple de contenu :
+
+<code json>
+{
+    "name": "myorganisation/myapp",
+    "type": "application",
+    "require": {
+        "jelix/jelix": "dev-jelix-1.7"
+    },
+    "minimum-stability": "dev"
+}
+</code>
+
+Dans ce répertoire, on y exécute Composer pour installer les paquets indiqués
+dans le @@F@composer.json@@ :
+
+<code bash>
+cd myapp
+composer install
+</code>
+
+Un répertoire @@F@vendor@@ est alors créé, dans lequel Jelix (et éventuellement d'autres
+paquets) sont installés. Vous trouverez celui de Jelix dans @@F@vendor/jelix/jelix/@@.
+
+Dans la suite du manuel, quand il est signalé le répertoire @@F@lib/@@, il s'agit
+de @@F@vendor/jelix/jelix/lib/@@.
+
+==== Installer les sources avec l'archive téléchargeable ====
+
+Vous pouvez télécharger une archive tar.gz ou zip de Jelix. Cette archive
+contient un répertoire @@F@jelix/lib/@@ qui comprend tous les fichiers du
+framework et les bibliothèques dépendantes.
+
+Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
+
+<code bash>
+  tar xvzf jelix-1.7.0.tar.gz
+</code>
+
+Un repertoire jelix-1.7.0 est créé contenant un répertoire @@lib/@@. Vous devez
+mettre ce répertoire @@lib/@@ dans le dossier de votre projet.
+
+
+==== Lancer createapp ====
 
 Vous trouverez cette commande @@createapp@@ dans le répertoire
 @@F@bin/@@ de Jelix (@@F@vendor/bin/@@ si vous avez installé Jelix avec Composer).
@@ -95,5 +145,5 @@ php -S localhost:8080 -t www
 
 Et vous pouvez visiter http://localhost:8080 avec votre navigateur.
 
-Si vous voulez utiliser un autre serveur web, comme Apache ou Nginx, il vous faut
+Si vous voulez utiliser un autre serveur web, comme Apache ou Nginx, il vous faudra
 faire quelques réglages supplémentaires. Voir le chapitre suivant.

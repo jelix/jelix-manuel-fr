@@ -73,7 +73,7 @@ donnée (@@F@profiles.ini.php@@) etc. Nous allons voir comment plus loin.
 
 Vous devez configurer le serveur web correctement (virtual host, document
 root..) ainsi qu'une éventuelle base de donnée. Reportez vous
-[[/configurer-server|au chapitre correspondant]], et continuez à la section
+[[configurer-server|au chapitre correspondant]], et continuez à la section
 suivante.
 
 ===== Installer l'application =====

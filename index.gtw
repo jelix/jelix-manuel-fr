@@ -20,10 +20,9 @@ copyright_holder=Les contributeurs au wiki de jelix.org
 
 - part:  [[mise-en-route|Mise en route]]
   - chapter: [[installation/prerequis|Pré-requis sur le serveur]]
-  - chapter: [[installation/sources|Installation de l'archive de jelix]]
+  - chapter: [[installation/creer-application|Créer une application]]
+  - chapter: [[installation/configurer-server|Configurer le serveur]]
   - chapter: [[jelix-scripts|Utiliser jelix-scripts]]
-  - chapter: [[creer-application|Créer une application]]
-  - chapter: [[configurer-server|Configurer le serveur]]
 
 
 - part: [[fondamentaux|Fondamentaux]]
@@ -137,6 +136,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
   - chapter: [[installation/production|Configurer un serveur de production]]
   - chapter: [[installation/application|Installation d'une application]] pour jelix
   - chapter: [[installation/mise-a-jour|Mettre à jour une application]] pour jelix
+  - chapter: [[installation/sans-configuration-serveur|Installer sur un serveur que l'on ne peut pas configurer]]
 
 - part: [[astuces|Astuces]]
 

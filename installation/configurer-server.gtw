@@ -1,0 +1,203 @@
+~~LANG:EN@enman:installation/server-configuration~~
+
+Dans ce chapitre nous allons voir comment configurer le serveur web.
+
+Si vous installez votre application sur une machine sur laquelle vous n'avez pas
+la possibilité de configurer le serveur web, vous voudriez probablement
+modifier l'organisation des répertoires de l'application afin de ne pas
+avoir à indiquer le répertoire www de l'application dans l'url de l'application.
+Voyez alors le [[sans-configuration-serveur|chapitre sur le déplacement de index.php]].
+
+
+===== À propos de PHP =====
+
+La version minimale de PHP supportée par Jelix est la version 5.6 ou la version
+7 et suivantes.
+
+Il n'est pas indiqué ici comment installer et configurer PHP dans le serveur
+web. Voyez la documentation de PHP pour cela.
+
+===== À propos des fichiers temporaires de Jelix =====
+
+À chaque fois que vous modifiez la configuration du serveur web pour
+votre site, ou que vous mettez à jour votre appli, il faut supprimer les
+fichiers temporaires de jelix (dans @@F@myapp/temp/@@ etc par ex), afin que
+Jelix prenne en compte la nouvelle configuration.
+
+Exemple :
+<code bash>
+sudo rm -rf myapp/temp/*
+</code>
+
+===== Configuration du serveur web =====
+
+Le principe de base de la configuration d'un serveur web, et d'indiquer
+le répertoire @@F@myapp/www/@@ comme étant la racine du site. Cela peut se faire
+soit en modifiant les fichiers de configuration du serveur web (un "virtual host")
+soit via une interface d'administration comme le proposent certains hébergeurs,
+
+Il faut aussi que le contenu de @@F@lib/jelix-www/@@ fournit avec Jelix soit
+accessible depuis le web, via par exemple le chemin d'URL @@jelix/@@.
+
+Jelix nécessite également de pouvoir indiquer une partie "pathinfo" dans l'url,
+c'est à dire un chemin après le index.php. Il faut donc activer dans votre serveur
+web la prise en charge du pathinfo.
+
+Dans Apache (au niveau de la configuration serveur ou dans le
+@@F@.htaccess@@ si cela est permis), il peut s'agir de l'option @@Multiview@@,
+@@AcceptPathInfo@@ ou encore @@MultiviewsMatch@@ selon la version d'Apache.
+
+Avec Nginx, il faut utiliser les directives @@fastcgi_split_path_info@@,
+@@fastcgi_param PATH_INFO@@ et @@fastcgi_param PATH_TRANSLATED@@.
+
+Dans la suite, on posera l'hypothèse que vous installez les sources de votre
+application @@myapp/@@ dans @@F@/srv/monsite/@@.
+
+==== Configuration avec Apache ====
+
+Vous indiquerez dans un fichier @@F@monsite.com.conf@@, une configuration
+qui ressemble à cela, avec la spécification du document root, et celle
+de l'alias jelix :
+
+<code htaccess>
+   <VirtualHost *>
+      ServerName www.monsite.com
+
+      # ----- Racine du site web
+
+      DocumentRoot /srv/monsite/myapp/www/
+
+      <Directory "/srv/monsite/myapp/www/">
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+
+        # pour le PathInfo
+        Options +Multiviews
+        AcceptPathInfo on
+      </Directory>
+
+      # ----- Alias jelix vers jelix-wwww avec Composer
+      Alias /jelix/ "/srv/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/"
+      <Directory "/srv/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/">
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+      </Directory>
+
+      # ------ ou alias jelix vers jelix-wwww si vous n'utilisez pas Composer
+      #Alias /jelix/ "/srv/monsite/lib/jelix-www/"
+      #<Directory "/srv/monsite/lib/jelix-www/">
+      #  AllowOverride None
+      #  Order allow,deny
+      #  Allow from all
+      #</Directory>
+   </VirtualHost>
+</code>
+
+En ce qui concerne le PathInfo, pour Apache 2.4 et suivant, il faut
+également rajouter dans la configuration générale (dans un fichier dans
+conf.d/ ou conf-enabled/), la configuration suivante :
+
+<code htaccess>
+RemoveType .php
+<Files "*.php">
+    MultiviewsMatch Any
+</Files>
+</code>
+
+==== Configuration avec Nginx ====
+
+En général on utilise Nginx avec PHP-FPM (fastcgi). Et on définiera la racine
+du site, ainsi qu'un alias pour le chemin d'url "/jelix".
+
+
+<code nginx>
+server {
+    listen 80;
+    server_name www.monsite.com;
+    index index.html index.php;
+    root /srv/monsite/myapp/www;
+
+    location / {
+        root /srv/monsite/myapp/www;
+        try_files $uri $uri/ =404;
+    }
+
+    location /jelix/ {
+        alias /srv/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/;
+
+        #ou pour une installation Sans composer:
+        #alias /srv/monsite/lib/jelix-www/;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+
+        # because of bug http://trac.nginx.org/nginx/ticket/321
+        set $path_info $fastcgi_path_info;
+
+        try_files $fastcgi_script_name =404;
+
+        fastcgi_index index.php;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_param PATH_INFO $path_info;
+        fastcgi_param PATH_TRANSLATED $document_root$path_info;
+        include fastcgi.conf;
+    }
+}
+</code>
+
+==== Vérification de la configuration ====
+
+En tapant http://www.monsite.com vous accédez à votre site, et
+http://www.monsite.com/jelix/, à @@F@jelix-www/@@, qui contient un certain
+nombre de scripts javascript utiles etc..
+
+Pour vérifier que la configuration du PathInfo fonctionne, créez sur votre site
+web un fichier @@F@myapp/www/test.php@@ qui affiche @@f@phpinfo()@@ et essayez l'url :
+@@monsite.com/test/foo/bar@@. Le phpinfo devrait s'afficher, et vous devriez
+avoir dans @@V@$_SERVER['PATH_INFO']@@ la chaine "/foo/bar".
+
+===== Ajustement dans la configuration de Jelix =====
+
+==== Changement du nom de l'alias vers jelix-www ====
+
+Vous pouvez indiquer un autre nom que "jelix" pour l'alias. Vous devez
+alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
+configuration de l'application @@F@myapp/var/config/localconfig.ini.php@@, ou
+@@F@myapp/app/config/mainconfig.ini.php@@, section @@urlengine@@.
+
+==== Spécifier le basePath ====
+
+Il y a une option @@V@basePath@@ dans la configuration de Jelix. Elle indique
+le chemin d'url jusqu'au index.php. En général, vous pouvez laisser cette option
+vide, Jelix la devinera tout seul. Sauf dans quelques cas :
+
+   - vous avez plusieurs points d'entrée dans des répertoires différents.
+   - vous spécifiez un alias vers le répertoire myapp/www,
+
+Exemple avec un alias @@/superappli/@@ vers myapp/www.
+
+<code ini>
+basePath="/superappli/"
+</code>
+
+
+
+===== Droits sur les répertoires =====
+
+Vous devez donner le droit en écriture à l'utilisateur exécutant votre serveur
+web au moins sur le répertoire @@F@myapp/var/log/@@, ainsi que le répertoire
+@@F@myapp/temp/@@.
+
+Exemple, sur un serveur debian/ubuntu :
+
+<code bash>
+   sudo chown www-data:www-data myapp/temp/  myapp/var/log
+   sudo chmod g+w myapp/temp myapp/var/log
+</code>
+
+Peut être que pour certaines applications, il y a d'autres répertoires à
+configurer de la sorte dans @@F@myapp/var/@@. Renseignez-vous dans la procédure
+d'installation spécifique à cette application si il y en a une.

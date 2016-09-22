@@ -27,7 +27,7 @@ Le moteur d'URLs analyse le pathinfo et les paramètres pour déterminer les nom
 des module et action.
 
 Note : il peut y avoir certaines options à activer dans apache. Voir la section
-[[/configurer-server#configuration-pour-les-urls-cools|sur la configuration serveur]].
+[[/installation/configurer-server#configuration-du-pathinfo-pour-les-urls|sur la configuration serveur]].
 
 
 ===== Configuration générale =====

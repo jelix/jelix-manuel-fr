@@ -1,0 +1,96 @@
+~~LANG:EN@enman:installation/no-server-configuration~~
+
+Cette section vous explique la procédure à suivre pour installer
+l'application sur un serveur web dont on ne peut pas changer la configuration
+du serveur web, en particulier, quand on ne peut pas faire en sorte que le
+répertoire www soit le répertoire racine du site web.
+
+==== Déplacement du contenu de www/ ====
+
+Imaginons que vous devez installer votre application myapp dans un répertoire
+@@F@monsite@@ dont le contenu est accessible depuis le web.
+
+Dans ce cas, il est préférable de déplacer le contenu du répertoire
+@@F@myapp/www@@ vers la racine de votre site, @@F@monsite/@@. Vous devriez
+donc obtenir une arborescence comme ceci :
+
+<code>
+  monsite/
+     myapp/
+        app/
+        modules/
+        var/
+        vendor/
+        application.init.php
+     index.php
+</code>
+
+Ici dans notre exemple, @@F@index.php@@ est un point d'entrée jelix de
+l'application. Il faut le modifier pour changer les chemins relatifs qu'il
+contient, et faire de même pour le fichier @@F@myapp/application.init.php@@. Par
+exemple, après modification, le fichier @@F@index.php@@ devrait ressembler à
+ceci dans notre exemple :
+
+<code php>
+require_once ('myapp/application.init.php');
+
+require_once (JELIX_LIB_CORE_PATH.'request/jClassicRequest.class.php');
+$config_file = 'index/config.ini.php';
+$jelix = new jCoordinator($config_file);
+$jelix->process(new jClassicRequest());
+</code>
+
+==== Déplacement du contenu de jelix-www/ ====
+
+Il faut ensuite déplacer le répertoire @@F@jelix-www/@@ à la racine et le
+renommer en "jelix". Vous trouverez ce répertoire dans @@F@vendor/jelix/jelix/lib@@
+ou directement @@F@lib/@@ si vous avez installé les sources de Jelix à la main.
+
+Vous obtiendrez :
+
+
+<code>
+  monsite/
+     myapp/
+        app/
+        modules/
+        var/
+        vendor/
+        application.init.php
+     index.php
+     jelix/
+</code>
+
+
+Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous
+devez alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
+configuration de l'application, @@F@myapp/var/config/localconfig.ini.php@@
+ou @@F@myapp/app/config/mainconfig.ini.php@@,
+section @@urlengine@@.
+
+**Attention : il est fortement recommandé de ne pas mettre vos propres scripts
+et css dans ce répertoire jelix copié.** Sinon les futures mises à jour risquent
+d'être plus compliquées, et vos successeurs ou collègues risquent d'être un peu
+perdu, en ne sachant pas ce qui vient de jelix et ce qui vient de votre appli.
+Bref, ne touchez pas au contenu de jelix-www ou du répertoire qui est la copie
+de jelix-www. Mettez vos propres scripts dans un autre répertoire, par exemple
+dans @@F@monsite/js/@@.
+
+
+
+Dans le fichier @@F@myapp/application.init.php@@, vous devez modifier le chemin
+indiqué à @@C@jApp@@ pour le répertoire www (deuxième argument) :
+
+<code php>
+jApp::initPaths(
+    $appPath
+    $appPath.'../',
+    //$appPath.'var/',
+    //$appPath.'var/log/',
+    //$appPath.'var/config/',
+    //$appPath.'scripts/'
+);
+</code>
+
+Vous pouvez alors taper l'adresse de votre site dans votre navigateur
+(http://www.monsite.com par exemple, ou http://localhost/)
