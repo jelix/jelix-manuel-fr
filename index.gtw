@@ -2,17 +2,15 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.6.9
+subtitle= Jelix 1.6.10
 title_short= Guide du développeur
-edition = Jelix 1.6.9
+edition = Jelix 1.6.10
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
 copyright_years=2006-2016
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
-
-Téléchargez [[http://download.jelix.org/jelix/releases/1.6.x/1.6.2/jelix-manuel-1.6.2.pdf|le manuel au format PDF]] (obsolète).
 
 <bookcontents>
 

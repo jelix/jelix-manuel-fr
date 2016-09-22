@@ -209,6 +209,16 @@ Et pour Apache 2, rajouter :
    AcceptPathInfo on
 </code>
 
+Pour Apache 2.4, avec php-fpm, il faut ajouter également dans la configuration
+php-fpm  (situé dans par exemple dans /etc/apache2/conf-enabled/php-fpm.conf)
+
+<code htaccess>
+RemoveType .php
+<Files "*.php">
+    MultiviewsMatch Any
+</Files>
+</code>
+
 Pour vérifier que cela fonctionne, créez sur votre site web un fichier
 @@F@test.php@@ qui affiche @@f@phpinfo()@@ et essayez l'url :
 @@monsite.com/test/foo/bar@@ . Le phpinfo devrait s'afficher, et vous devriez
