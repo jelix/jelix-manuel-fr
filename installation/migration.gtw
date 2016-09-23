@@ -136,7 +136,7 @@ require (__DIR__.'/../lib/vendor/jelix_app_path.php');
 
 Dans les versions précédentes de Jelix, il fallait déclarer les répertoires
 contenant des modules ou de plugins, dans des paramètres @@modulesPath@@ ou
-@@pluginsPath@@ de la configuration (indiqués dans @@var/config/mainconfig.ini.php@@
+@@pluginsPath@@ de la configuration (indiqués dans @@mainconfig.ini.php@@
 ou le fichier de configuration du point d'entrée).
 
 Ces paramètres ne sont plus reconnus. Les répertoires de modules et de plugins

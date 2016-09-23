@@ -26,8 +26,7 @@ production, afin d'optimiser l'exécution de votre application basée sur Jelix.
 ==== Au niveau de l'application ====
 
 Voici quelques conseils au niveau de la configuration de l'application, donc les
-modifications à faire au niveau du fichier
-@@F@var/config/localconfig.ini.php@@ .
+modifications à faire au niveau du fichier @@F@var/config/localconfig.ini.php@@ .
 
 === section jResponseHtml ===
 

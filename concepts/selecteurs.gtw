@@ -41,7 +41,6 @@ types de sélecteurs :
 | fichier dans lib/ | lib | jSelectorLib |
 
 
-
 En règle générale, vous aurez à donner un sélecteur en paramètre de certaines
 méthodes sans avoir à indiquer son type. Très souvent en effet ces méthodes
 savent qu'il s'agira d'un sélecteur sur une ressource d'un type précis.
@@ -51,8 +50,6 @@ savent qu'il s'agira d'un sélecteur sur une ressource d'un type précis.
 </code>
 
 Ici jDao cherchera un fichier DAO de nom myDAO.dao.xml dans le module myModule.
-
-
 
 ===== Définir un sélecteur d'un type précis =====
 

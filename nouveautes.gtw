@@ -28,12 +28,15 @@
   * **NODOC** Nouveau répertoire @@F@app/@@ dans le répertoire de l'application
     dans lequel des fichiers ont migré :
 
-    * **NODOC** Nouveau répertoire app/config dans les applications, et déplacement des fichiers
+    * Nouveau répertoire app/config dans les applications, et déplacement des fichiers
       non lié à l'environnement, de var/config vers app/config : mainconfig.ini.php,
       config.ini.php, urls.xml... On a ainsi d'une part les fichiers qui ne
       dépendent pas de l'environnement d'execution dans app/config, et ceux qui
       dépendent du serveur dans var/config (localconfig.ini.php,
       profiles.ini.php...).
+
+    * Les fichiers de configuration dédiés à un point d'entrée peuvent
+      être à la fois dans @@app/config/@@ et @@var/config/@@.
 
     * **NODOC** Il est possible de mettre les overloads, themes et locales
       dans le répertoire app/. Les répertoires var/overloads, var/themes et
@@ -62,7 +65,7 @@
        * Il est possible d'indiquer un pathinfo sur un @@<url module="..">@@
        * Il est obligatoire d'indiquer une action pour l'url "/", ce qui remplace
          la disparition de @@startModule@@ et @@startAction@@
-       * Un pahtinfo absent ou vide dans un @@<url>@@ équivaut à "/"
+       * Un pathinfo absent ou vide dans un @@<url>@@ équivaut à "/"
        * Une meilleure vérification des mauvaises utilisations du XML. Par exemple
          une erreur est levée si il n'y a pas d'attribut "module".
        * Il est possible de déclarer une url pour un contrôleur, sans avoir

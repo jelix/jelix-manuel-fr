@@ -6,7 +6,7 @@ jPref est une classe très simple qui va vous permettre de récuperer et
 d'enregistrer des préférences pour votre application (on parle ici de
 préférences qui peuvent évoluer dans la vie de l'application et non de
 préférences de configuration fixes qui elles se trouvent dans le
-@@mainconfig.ini.php@@).
+@@mainconfig.ini.php@@ ou autre).
 
 ==== Configuration ====
 

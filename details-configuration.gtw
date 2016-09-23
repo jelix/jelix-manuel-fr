@@ -121,14 +121,19 @@ ces balises. voici un exemple:
 </code>
 
 
-===== Les fichiers mainconfig.ini et config.ini =====
+===== Les fichiers ini de configuration =====
 
-Pour avoir la liste complète des options, voir le fichier commenté
-@@F@lib/jelix/core/defaultconfig.ini.php@@, qui est "l'original" du fichier
-@@F@var/config/mainconfig.ini.php@@.
+Il s'agit des fichiers @@F@mainconfig.ini.php@@, @@F@<entrypoint>/config.ini.php@@
+et @@F@localconfig.ini.php@@.
 
-Voici cependant quelques explications sur les différentes sections.
+On peut y mettre toutes les options qui sont présentes dans le fichier commenté
+@@F@lib/jelix/core/defaultconfig.ini.php@@, qui contient toutes les valeurs par
+défaut.
 
+Il peut aussi y avoir dans ces fichiers des options propres à certains modules,
+indiqués dans des sections spécifiques.
+
+Voici des explications sur quelques unes des options standards.
 
 ==== section générale ====
 
