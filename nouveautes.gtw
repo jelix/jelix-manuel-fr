@@ -119,7 +119,7 @@
 
   * **NODOC** nouvelle méthode @@M@jAppInstance::includePlugin()@@ pour charger un plugin sans l'instancier
 
-  * **NODOC** correction @@jIniFileModifier : il n'y a plus de ligne vide ajoutée à la fin du fichier à
+  * **NODOC** correction @@jIniFileModifier@@ : il n'y a plus de ligne vide ajoutée à la fin du fichier à
     chaque sauvegarde
   * **NODOC** @@jFile::getMimeTypeFromFilename()@@ : support d'une liste de type mime
     définie par le développeur, dans une section @@[mimeTypes]@@ de la

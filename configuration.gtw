@@ -168,7 +168,7 @@ de l'environnement : developpement, production, tests... Les paramètres
 de ce fichier "écrasent" ceux de @@F@mainconfig.ini.php@@. Bien entendu, en général
 ce fichier n'est pas dans votre dépôt de code source.
 
-=== Comment sont-ils lu ===
+=== Comment sont-ils lu ? ===
 
 Il faut savoir qu'il existe un fichier @@F@defaultconfig.ini.php@@,
 situé dans les sources de Jelix (dans @@F@lib/jelix/core/@@). Il contient une
@@ -179,8 +179,8 @@ dans l'ordre suivant et les fusionne :
 
   - @@F@lib/jelix/core/defaultconfig.ini.php@@,
   - @@F@app/config/mainconfig.ini.php@@
-  - @@F@app/config/<entrypoint>/config.ini.php@@
   - @@F@var/config/localconfig.ini.php@@
+  - @@F@app/config/<entrypoint>/config.ini.php@@
   - @@F@var/config/<entrypoint>/config.ini.php@@
 
 Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent.
