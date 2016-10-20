@@ -25,7 +25,7 @@
   * Dans les applications crées par createapp, le répertoire temp est maintenant
     par défaut dans le répertoire de l'application
 
-  * **NODOC** Nouveau répertoire @@F@app/@@ dans le répertoire de l'application
+  * Nouveau répertoire @@F@app/@@ dans le répertoire de l'application
     dans lequel des fichiers ont migré :
 
     * Nouveau répertoire app/config dans les applications, et déplacement des fichiers
@@ -38,12 +38,12 @@
     * Les fichiers de configuration dédiés à un point d'entrée peuvent
       être à la fois dans @@app/config/@@ et @@var/config/@@.
 
-    * **NODOC** Il est possible de mettre les overloads, themes et locales
+    * Il faut maintenant mettre les overloads, themes et locales
       dans le répertoire app/. Les répertoires var/overloads, var/themes et
-      var/locales étant dorénavant déstiné uniquement à leurs ressources
+      var/locales étant dorénavant déstinés uniquement à leurs ressources
       qui seraient créés dynamiquement pendant la vie de l'application.
 
-    * **NODOC** Déplacement du répertoire responses/ vers app/responses
+    * Déplacement du répertoire responses/ vers app/responses
 
   * Refonte du moteur d'URL :
     * il n'y a plus de système de plugins ('simple', 'basic_significant', 'significant' n'existent plus).
@@ -85,6 +85,8 @@
     composant Symfony Console. Les noms et paramètres des commandes ont donc
     changé.
 
+  * nouvelle méthode @@jApp::urlBasePath()@@ qui permet de récupérer le basePath,
+    donc un équivalent de @@jApp::config()->urlengine['basePath']@@.
   * jForms ne stocke plus les instances dans la session mais dans un cache avec jCache.
   * jLocale peut maintenant chercher une clé manquante dans une locale similaire à la locale courante
   * L'installateur fait maintenant une sauvegarde du fichier installer.ini.php
@@ -93,7 +95,8 @@
   * Les assets des modules récupérés par le contrôleur www de Jelix
     sont maintenant mis en cache dans le navigateur
   * jDb schema: amélioration de la prise en charge de sqlite3: ajout de colonne, creation d'index, de clé primaire 
-  * jDao : a maintenant son propre système de plugin "daobuilder". Les classes des plugins de jDb qui lui étaient dédiés sont maintenant des plugins
+  * jDao : a maintenant son propre système de plugin "daobuilder". Les classes
+    des plugins de jDb qui lui étaient dédiés sont maintenant des plugins.
   * jDb : amélioration de la prise en charge des requêtes préparées
     * bindValue() et bindParam() a maintenant la même signature que PDO
     * sqlite3 : support des requêtes préparées

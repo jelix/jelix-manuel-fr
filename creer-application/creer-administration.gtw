@@ -30,7 +30,7 @@ ou un autre nom.
 La commande crée le point d'entrée s'il n'existe pas déjà. La
 configuration du point d'entrée sera modifiée afin d'avoir une interface
 totalement fonctionnelle. Par exemple, deux nouvelles réponses sont ajoutées
-dans le répertoire @@F@myapp/responses/@@. Vous pouvez ainsi personnaliser
+dans le répertoire @@F@app/responses/@@. Vous pouvez ainsi personnaliser
 l'interface générale.
 
 Notez qu'avant d'exécuter cette commande, vous devez avoir configuré

@@ -28,7 +28,7 @@ Chacun des élements sont faculatifs. Les URLs suivantes sont valides :
   * Si le nom du contrôleur est absent, il s'agira du contrôleur @@default@@
   * Si le nom du module est absent, Jelix éxecutera le module et l'action
     correspondant à "/", indiqué dans le fichier de configuation des URLs,
-    var/config/urls.xml.
+    app/config/urls.xml.
 
 ===== Sélecteurs d'action =====
 

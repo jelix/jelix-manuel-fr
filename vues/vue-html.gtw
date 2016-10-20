@@ -309,7 +309,7 @@ ou le répertoire @@F@www/@@ d'un module.
 
 Si c'est stocké dans le répertoire @@F@www/@@ de l'application, et si ce répertoire
 est le "documentRoot" de l'application, vous pouvez indiquer simplement son chemin
-absolue. Par exemple, si vous voulez le lien vers le fichier @@F@yourapp/www/css/mystyles.css@@,
+absolue. Par exemple, si vous voulez le lien vers le fichier @@F@www/css/mystyles.css@@,
 alors vous feriez :
 
 <code php>

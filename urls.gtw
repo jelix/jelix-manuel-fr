@@ -76,7 +76,7 @@ entre un pathinfo et un contrôleur.
 Il y a au moins une URL à spécifier : celle de la page d'accueil, donc avec
 un pathinfo="/".
 
-Ceci se fait dans le fichier @@F@var/config/urls.xml@@.
+Ceci se fait dans le fichier @@F@app/config/urls.xml@@.
 
 Voir [[urls/mapping|la page concernant la configuration de ce fichier urls.xml]].
 

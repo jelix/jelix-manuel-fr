@@ -19,16 +19,16 @@ nommant "default", il suffit de mettre les nouveaux templates dans le répertoir
 de ce thème.
 
 Pour les autres types de fichiers, il faut mettre les nouveaux fichiers dans le
-répertoire @@F@var/overloads/@@. Ce répertoire contient des sous-répertoires
+répertoire @@F@app/overloads/@@. Ce répertoire contient des sous-répertoires
 ayant les noms des modules. Ces sous-répertoires sont alors organisés comme les
 modules.
 
 Par exemple, imaginons que vous vouliez redéfinir des fichiers du module
 //exemple//.
 
-  * vous placerez les daos dans @@F@var/overloads/exemple/daos/@@
-  * vous placerez les forms dans @@F@var/overloads/exemple/forms/@@
-  * vous placerez les locales dans @@F@var/overloads/exemple/locales/@@
+  * vous placerez les daos dans @@F@app/overloads/exemple/daos/@@
+  * vous placerez les forms dans @@F@app/overloads/exemple/forms/@@
+  * vous placerez les locales dans @@F@app/overloads/exemple/locales/@@
 
 Les noms des fichiers doivent être les mêmes que les originaux. Pour les daos,
 n'oubliez pas de respecter l'api du dao original. C'est à dire que si des
@@ -37,6 +37,15 @@ nouveau fichier, sinon vous risquez d'avoir des erreurs PHP parce que les
 classes du module ne pourront appeler lesdites méthodes.
 
 Ensuite c'est tout. Le fait de mettre un fichier dans le répertoire
-@@F@var/overloads/@@ redéfinit automatiquement le fichier original
+@@F@app/overloads/@@ redéfinit automatiquement le fichier original
 correspondant. Ce sera ce nouveau fichier qui sera utilisé et non pas
 l'original.
+
+Note : dans Jelix 1.6 et inférieur, le répertoire @@F@overloads/@@ était dans
+@@F@var/@@ et non dans @@F@app/@@. Dans Jelix 1.7 et suivant, cela est toujours
+possible, mais reservez @@F@var/overloads/@@ pour les fichiers qui sont générés
+à la volée par votre application (comme des formulaires construits par
+l'utilisateur par exemple), ou qui sont spécifiques à l'environnement dans lequel
+est installé l'application. Ceux que vous créez durant le développement sont
+donc dorénavant à mettre dans @@F@app/overloads/@@.
+

@@ -52,15 +52,15 @@ chaînes mais pour des encodage différents.
 
 Les fichiers d'une même langue peuvent aussi être regroupé dans un même répertoire,
 en dehors des modules, afin de faciliter la traduction par des tiers. Le
-répertoire @@F@<yourapp>/var/locales/@@ doit contenir un répertoire par langue,
+répertoire @@F@<yourapp>/app/locales/@@ doit contenir un répertoire par langue,
 et dans chacun de ces répertoires, un répertoire par module, c'est à dire
-@@F@<yourapp>/var/locales/<lang>/<modules>/locales/<fichier.properties>@@. Par exemple :
-@@F@myapp/var/locales/fr_FR/mon_module/locales/exemple.properties@@.
-On peut ainsi copier facilement un répertoire @@F@<yourapp>/var/locales/<lang>/@@
+@@F@<yourapp>/app/locales/<lang>/<modules>/locales/<fichier.properties>@@. Par exemple :
+@@F@myapp/app/locales/fr_FR/mon_module/locales/exemple.properties@@.
+On peut ainsi copier facilement un répertoire @@F@<yourapp>/app/locales/<lang>/@@
 d'une application à une autre, ou pour une autre langue.
 
 Il y a aussi la possibilité de redéfinir les fichiers properties en mettant une
-copie dans le répertoire @@F@<yourapp>/var/overloads/@@. Voir
+copie dans le répertoire @@F@<yourapp>/app/overloads/@@. Voir
 [surcharge-de-fichiers|le chapitre correspondant].
 
 ==== Noms des fichiers ====
@@ -279,7 +279,7 @@ moment, il suffit de faire comme d'habitude :
 
 
 Pour utiliser le plugin, copiez le fichier @@F@lib/jelix/plugins/coord/autolocale/autolocale.coord.ini.php.dist@@
-dans @@F@var/config/@@ en le renommant @@F@autolocale.coord.ini.php@@.
+dans @@F@app/config/@@ en le renommant @@F@autolocale.coord.ini.php@@.
 
 Les deux paramètres dans ce fichier sont :
 
@@ -356,7 +356,7 @@ nécessaire pour chaque langue (Exemple : @@F@templates/en_US/@@, @@F@templates/
 À partir d'un code de langue simple (comme "en", "fr"..), Jelix peut donner le
 code language associé défini par défaut : "en_US" pour "en", "fr_FR" pour "fr" etc.
 Cependant, ce n'est pas forcément le code que vous voulez obtenir. Vous voudriez
-par exemple "en_GB" pour "en" et "fr_CA" pour "fr". Ou peut être encore vous
+par exemple "en_GB" pour "en" et "fr_CA" pour "fr". Ou peut-être encore vous
 voudriez prendre en charge une langue non reconnue (la liste par défaut se
 trouve dans le fichier @@F@lib/jelix/core/lang_to_locale.ini.php@@).
 

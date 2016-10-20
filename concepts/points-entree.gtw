@@ -73,11 +73,11 @@ méthodes suivantes plutôt que de mettre des chemins en dur dans votre code.
 <code php>
   $path = jApp::appPath();      // chemin complet du répertoire de l'application
   $path = jApp::varPath();      // chemin complet du répertoire var de l'application
-  $path = jApp::logPath();      // chemin complet du répertoire log de l'application (app/var/log)
-  $path = jApp::configPath();   // chemin complet du répertoire config de l'applicationn (app/var/config)
-  $path = jApp::wwwPath();      // chemin complet du répertoire www de l'application (app/www)
-  $path = jApp::scriptsPath();  // chemin complet du répertoire scripts de l'application (app/scripts)
-  $path = jApp::tempPath();     // chemin complet du répertoire temporaire correspondant au point d'entrée (temp/app/www/)
+  $path = jApp::logPath();      // chemin complet du répertoire log de l'application (var/log)
+  $path = jApp::configPath();   // chemin complet du répertoire config de l'applicationn (var/config)
+  $path = jApp::wwwPath();      // chemin complet du répertoire www de l'application (www)
+  $path = jApp::scriptsPath();  // chemin complet du répertoire scripts de l'application (scripts)
+  $path = jApp::tempPath();     // chemin complet du répertoire temporaire correspondant au point d'entrée (temp/www/)
   
   $modulePath = jApp::getModulePath('myModule'); // chemin complet du répertoire d'un module.
 </code>

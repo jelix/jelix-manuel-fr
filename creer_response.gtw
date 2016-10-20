@@ -10,8 +10,8 @@ Cela consiste à :
     - créer une classe héritant de @@C@jResponse@@ (ou d'une autre réponse
       existante), et qui doit implémenter les méthodes adéquates pour manipuler
       le format en question
-    - stocker cette classe dans le répertoire @@F@responses/@@ de votre
-      application ou aussi de vos modules.
+    - stocker cette classe dans le répertoire @@F@app/responses/@@ de votre
+      application ou @@F@responses/@@ de vos modules.
     - déclarer ce type de réponse dans le fichier de configuration
 
 ===== Créer la classe =====
@@ -73,8 +73,8 @@ Le nom de la classe importe peu, mais il doit être utilisé dans le nom du
 fichier, et précéder le suffixe '.class.php'. Dans notre exemple, la classe sera
 alors stockée dans le fichier @@F@myFooResponse.class.php@@.
 
-Le fichier doit être enregistré dans le répertoire @@F@responses/@@ de votre
-application ou de votre module.
+Le fichier doit être enregistré dans le répertoire @@F@app/responses/@@ de votre
+application ou @@F@responses/@@ de votre module.
 
 
 ===== Déclarer la réponse =====

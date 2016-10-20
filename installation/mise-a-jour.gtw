@@ -97,5 +97,5 @@ pour que l'application fonctionne.
 
 ===== Nettoyer le répertoire temp =====
 
-**Vous devez toujours supprimer tous les fichier stockés dans le répertoire temp/yourapp/.**,
+**Vous devez toujours supprimer tous les fichier stockés dans le répertoire temp/.**,
 après une installation ou une mise à jour, et avant de lancer l'application application.

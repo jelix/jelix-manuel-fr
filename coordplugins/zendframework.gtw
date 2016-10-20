@@ -16,7 +16,7 @@ zendframework = zendframework.coord.ini.php
 </code>
 
 Copier le fichier de configuration //zendframework.coord.ini.php// dans le
-répertoire de ''var/config/'' de votre application, depuis
+répertoire de ''app/config/'' de votre application, depuis
 ''lib/jelix/plugins/coord/zendframework/zendframework.coord.ini.php.dist''.
 
 Éditez ensuite le fichier ''zendframework.coord.ini.php'' et remplissez la

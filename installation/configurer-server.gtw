@@ -165,8 +165,8 @@ avoir dans @@V@$_SERVER['PATH_INFO']@@ la chaine "/foo/bar".
 
 Vous pouvez indiquer un autre nom que "jelix" pour l'alias. Vous devez
 alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
-configuration de l'application @@F@myapp/var/config/localconfig.ini.php@@, ou
-@@F@myapp/app/config/mainconfig.ini.php@@, section @@urlengine@@.
+configuration de l'application @@F@var/config/localconfig.ini.php@@, ou
+@@F@app/config/mainconfig.ini.php@@, section @@urlengine@@.
 
 ==== Spécifier le basePath ====
 
@@ -188,8 +188,8 @@ basePath="/superappli/"
 ===== Droits sur les répertoires =====
 
 Vous devez donner le droit en écriture à l'utilisateur exécutant votre serveur
-web au moins sur le répertoire @@F@myapp/var/log/@@, ainsi que le répertoire
-@@F@myapp/temp/@@.
+web au moins sur le répertoire @@F@var/log/@@, ainsi que le répertoire
+@@F@temp/@@.
 
 Exemple, sur un serveur debian/ubuntu :
 
@@ -199,5 +199,5 @@ Exemple, sur un serveur debian/ubuntu :
 </code>
 
 Peut être que pour certaines applications, il y a d'autres répertoires à
-configurer de la sorte dans @@F@myapp/var/@@. Renseignez-vous dans la procédure
+configurer de la sorte dans @@F@var/@@. Renseignez-vous dans la procédure
 d'installation spécifique à cette application si il y en a une.

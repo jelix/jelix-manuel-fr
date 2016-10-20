@@ -67,6 +67,9 @@ $path = jApp::varPath();
 // chemin du répertoire var/log de l'application
 $path = jApp::logPath();
 
+// chemin du répertoire app/config/ de l'application
+$path = jApp::appConfigPath();
+
 // chemin du répertoire var/config/ de l'application
 $path = jApp::configPath();
 

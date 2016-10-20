@@ -20,8 +20,8 @@ Notez que "InstallWizard" n'est pas une application Jelix.
 
 En premier lieu, copier ces fichiers: 
 
-   * Le lanceur, à appeler depuis le navigateur: @@F@lib/installwizard/install.php.dist@@ en @@F@votreapp/www/install.php@@
-   * Le fichier de configuration: @@F@lib/installwizard/wizard.ini.php.dist@@ en @@F@votreapp/install/wizard.ini.php@@
+   * Le lanceur, à appeler depuis le navigateur: @@F@lib/installwizard/install.php.dist@@ en @@F@www/install.php@@
+   * Le fichier de configuration: @@F@lib/installwizard/wizard.ini.php.dist@@ en @@F@install/wizard.ini.php@@
 
 Le wizard est en théorie utilisable pour les applis non Jelix, et dans ce cas,
 vous n'avez rien à changer dans le @@F@install.php@@. Pour installer une
@@ -35,7 +35,7 @@ Dans la configuration, vous devez définir ces propriétés globales:
      trouvera les pages. Le chemin doit être relatif au fichier ini. Par défaut,
      c'est @@"../../lib/installwizard/pages/,pages/"@@, donc le répertoire
      @@F@pages/@@ dans installwizard, et le répertoire @@F@pages/@@ dans votre
-     application (donc @@F@votreapp/install/pages/@@, si vous fournissez vos
+     application (donc @@F@install/pages/@@, si vous fournissez vos
      propres pages d'assistant.
    * @@tempPath@@: le chemin vers le répertoire où sont stockés les fichiers
      temporaires.
@@ -304,7 +304,7 @@ par installWizard.
 Pour cela, vous devrez créer un répertoire où sont stockées vos propres versions
 des templates de pages. Déclarer le répertoire dans @@customPath@@ dans la
 section option du fichier ini. Pour une application Jelix, ce chemin est
-typiquement @@F@myapp/install/wizard/custom@@, donc vous indiquerez
+typiquement @@F@install/wizard/custom@@, donc vous indiquerez
 @@customPath= "custom/"@@.
 
 Copier les fichiers originaux dans ce répertoire, et modifier les comme voulu.

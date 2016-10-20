@@ -55,7 +55,7 @@ survient, Jelix affiche une page d'erreur générique avec le code HTTP 500.
 
 Par défaut, il affiche la page @@F@lib/jelix/core/response/error.en_US.php@@.
 Vous pouvez fournir votre propre page d'erreur en copiant ce fichier dans
-@@F@yourapp/responses/@@, et en le modifiant en adaptant le design à votre goût.
+@@F@app/responses/@@, et en le modifiant en adaptant le design à votre goût.
 
 Notez que @@error.en_US.php@@ est un simple script PHP. Vous pouvez donc écrire
 n'importe quel instruction PHP, "à l'ancienne". Cependant, ne faites pas appel

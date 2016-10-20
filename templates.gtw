@@ -516,11 +516,11 @@ est réutilisé dans une autre application, il est possible d'appliquer d'autres
 templates afin de produire un nouvel affichage, sans toucher au contrôleur.
 
 Pour cela Jelix utilise un système de thème, le thème par défaut étant stocké
-dans @@F@var/themes/default/@@, il est possible d'ajouter d'autres thèmes en
-ajoutant simplement des répertoires dans @@F@var/themes@@, par exemple
-@@F@var/themes/mon_theme@@.
+dans @@F@app/themes/default/@@, il est possible d'ajouter d'autres thèmes en
+ajoutant simplement des répertoires dans @@F@app/themes@@, par exemple
+@@F@app/themes/mon_theme@@.
 
-Ainsi @@F@var/themes/mon_theme/mon_module/mon_template.tpl@@ redéfini le
+Ainsi @@F@app/themes/mon_theme/mon_module/mon_template.tpl@@ redéfini le
 template @@mon_template@@ du module @@mon_module@@ pour le thème @@mon_theme@@.
 
 Pour plus de détails, voir la page sur les [[themes|thèmes]].
@@ -533,7 +533,7 @@ dans un cache pour améliorer les performances. Vous pouvez donc voir
 l'équivalence d'un de vos fichiers templates dans
 @@F@temp/compiled/templates/modules/nom_module~nom_template.php@@
 ou pour les templates redefinis dans les themes :
-@@F@temp/compiled/templates/themes/nom_theme/nom_module~nom_template.php@@.
+@@F@temp/compiled/templates/app/themes/nom_theme/nom_module~nom_template.php@@.
 
 Vous pouvez créer aussi des plugins de templates, pour ajouter vos propres
 "tags" dans la syntaxe jtpl. Voir [[plugins/tpl]].

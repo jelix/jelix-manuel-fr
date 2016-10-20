@@ -182,6 +182,6 @@ Vous devez utiliser ce template dans votre objet réponse.
    
 La commande jelix @@c@initadmin@@ crée par défaut deux objets réponse,
 @@C@adminHtmlResponse@@ et @@C@adminLoginHtmlResponse@@ dans votre répertoire
-@@F@responses/@@. Ces réponses utilisent le template master_admin, et vous
+@@F@app/responses/@@. Ces réponses utilisent le template master_admin, et vous
 pouvez évidemment modifier ces objets pour les personnaliser.
 

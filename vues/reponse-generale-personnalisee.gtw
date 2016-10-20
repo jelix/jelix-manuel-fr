@@ -23,7 +23,7 @@ Vos propres classes de réponses peuvent hériter de @@C@jResponseHtml@@ par
 exemple (mais ça pourrait bien sûr être une autre classe @@jResponse*@@ fournie
 par Jelix). D'ailleurs, par défaut, quand vous créez une application avec
 jelix-scripts, un tel objet est déjà créé, @@C@myHtmlResponse@@, qui hérite de
-@@C@jResponseHtml@@ et est stocké dans le répertoire @@F@responses/@@ de l'application.
+@@C@jResponseHtml@@ et est stocké dans le répertoire @@F@app/responses/@@ de l'application.
 
 Dans cette classe, vous pouvez alors :
 
@@ -40,7 +40,7 @@ HTML, qui contiennent la partie @@E@<head>@@ et la partie @@E@<body>@@ :
 
 Vous aurez un template principal qui s'occupe de générer l'ensemble du contenu
 de @@E@<body>@@, et ce template va être déclaré au niveau de votre propre objet
-réponse. Voici par exemple votre objet @@F@responses/myHtmlResponse.class.php@@ :
+réponse. Voici par exemple votre objet @@F@app/responses/myHtmlResponse.class.php@@ :
 
 <code php>
 require_once (JELIX_LIB_CORE_PATH.'response/jResponseHtml.class.php');
@@ -184,7 +184,7 @@ Cet objet réponse est déclaré comme ceci dans la configuration :
 html=myHtmlResponse
 </code>
 
-Jelix cherchera la classe indiquée dans le répertoire @@F@responses/@@ de l'application.
+Jelix cherchera la classe indiquée dans le répertoire @@F@app/responses/@@ de l'application.
 Si cette classe se trouve dans le répertoire @@F@responses/@@ d'un module ("main"
 par exemple), il faut l'indiquer comme un sélecteur :
 
@@ -214,7 +214,7 @@ Ci-dessous un exemple :
    public function __construct() {
         parent::__construct();
 
-        $theme = jApp::config()->urlengine['basePath'].'themes/'.jApp::config()->theme.'/' ;
+        $theme = jApp::urlBasePath().'themes/'.jApp::config()->theme.'/' ;
         $this->addCSSLink($theme.'css/screen.css');
    }
 
