@@ -109,7 +109,7 @@ finale. Exemple :
         // si les fichiers sont dans le répertoire jelix
         $www = jApp::config()->urlengine['jelixWWWPath'];
         // ou si les fichiers sont dans un répertoire à vous dans www
-        $www = jApp::config()->urlengine['basePath'];
+        $www = jApp::urlBasePath();
 
         $resp->addJSLink($www.'js/fichier.js');
         $resp->addCSSLink($www.'design/fichier.css');

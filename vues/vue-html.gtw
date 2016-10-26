@@ -322,7 +322,7 @@ avec une configuration différente, il est préférable d'ajoute le "basePath" d
 site web :
 
 <code php>
-  $resp->addCSSLink(jApp::config()->urlengine['basepath'].'css/mystyles.css');
+  $resp->addCSSLink(jApp::urlBasePath().'css/mystyles.css');
 </code>
 
 Si vous voulez lier un fichier CSS/JS du répertoire @@F@lib/jelix-www/@@, vous

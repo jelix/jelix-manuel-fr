@@ -51,7 +51,7 @@
       plugins 'basic_significant' et 'significant', avec des améliorations
       faciliter la configuration des urls
     * **NODOC** Une API permet aux scripts d'installation de déclarer facilement les urls
-      (et donc de modifier urls.xml)
+      (et donc de modifier urls.xml) : @@jInstallerBase::declareNewEntryPoint()@@
     * Les paramètres d'url "module" et "action" ne sont plus pris en compte (mais
       peuvent toujours être récupérés à partir de vos contrôleurs, même si cet
       usage est obsolète)
