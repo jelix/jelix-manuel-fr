@@ -48,7 +48,7 @@ d'un groupe de module (par exemple dans un paquet Composer). On peut alors
 indiquer directement son chemin dans la configuration de Jelix.
 
 Cela se fera dans la section @@modules@@, et non pas dans @@modulesPath@@,
-de cette manière, avec un paramètre en @@.path@@ :
+de cette manière, avec un paramètre en @@.path@@.
 
 Exemple :
 

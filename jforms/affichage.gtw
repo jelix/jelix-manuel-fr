@@ -91,11 +91,16 @@ l'ordre :
 
 <code php>
  {form $formulaire, 'monmodule~default:sauver', 
-  array('paramètre1' => 'toto', 'paramètre2' => 'tata}, 
+  array('parametre1' => 'foo', 'parametre2' => 'bar'},
   'html',
-  array('attributes' => array('class' => 'classeDeMonForm', 'autreAttribut' => 'attribut'), 
-   'errorDecorator' => 'monErrorDecorator',
-   'plugins' => array('champTexte' => 'pluginPourChampTexte, 'champDate' => 'pluginPourChampDate')
+  array(
+     'attributes' =>
+         array('class' => 'classeCSSDeMonForm',
+               'autreAttributHTML' => 'attribut'),
+     'errorDecorator' => 'monErrorDecorator',
+     'plugins' => array(
+         'champTexte' => 'pluginPourChampTexte',
+         'champDate' => 'pluginPourChampDate')
   )}
 </code>
 

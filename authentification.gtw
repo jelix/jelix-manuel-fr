@@ -57,7 +57,7 @@ $ cd myapp/
 $ php cmd.php installmodule jauth
 </code>
 
-Cela activera le module et le plugin, et creera un nouveau fichier
+Cela activera le module et le plugin, et créera un nouveau fichier
 @@F@var/config/index/auth.coord.ini.php@@, qui est la configuration du plugin et
 du système d'authentification.
 
