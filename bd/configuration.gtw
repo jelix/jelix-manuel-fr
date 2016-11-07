@@ -55,7 +55,12 @@ Paramètres possibles :
      à true si vous voyez que vous n'arrivez pas à afficher les données
      correctement.
 
+Pour mysqli, depuis Jelix 1.6.11, il est possible de configurer l'accés SSL :
 
+   * **ssl** : 0 ou 1. Active ou pas la connexion en SSL
+   * **ssl_key_pem** : chemin vers la clé privée SSL
+   * **ssl_cert_pem** : chemin vers le certificat SSL
+   * **ssl_cacert_pem** : chemin vers le certificat de l'autorité de certification
 
 ===== Profil postgresql =====
 

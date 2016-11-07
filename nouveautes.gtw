@@ -77,6 +77,21 @@ Nouveautés sur la version 1.6.8 :
   * plugin Redis pour jKvDb: prise en charge également des paramètre db et key_prefix.
   * jInstaller : nouvelle méthode new method jInstallerEntryPoint::getEpConfigIni()
 
+Nouveautés sur la version 1.6.9 :
+
+  * jForms, HtmlBuilder : possibilité de redéfinir l'affichage des erreurs
+    avec la méthode @@ouputError()@@ dans les classes enfants
+  * Possibilité de déclarer un module qui ne soit pas dans un répertoire de modules,
+    via le paramètre de configuration @@<module>.path@@ dans la section @@modules@@,
+    en indiquant le chemin de son répertoire (expérimental)
+
+Nouveautés sur la version 1.6.11 :
+
+  * jAuth : support d'une action pour les erreurs ajax, via le paramètre de
+    configuration @@on_ajax_error_action@@ (voir la configuration par défaut
+    du plugin jauth).
+  * jDb, mysqli : support des connections en SSL
+
 
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
