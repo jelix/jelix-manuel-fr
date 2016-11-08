@@ -55,9 +55,9 @@ mettre un fichier @@F@composer.json@@ dont voici un exemple de contenu :
     "name": "myorganisation/myapp",
     "type": "application",
     "require": {
-        "jelix/jelix": "dev-jelix-1.7"
+        "jelix/jelix": "dev-jelix-1.7.x"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }
 </code>
 
@@ -75,6 +75,8 @@ paquets) sont installés. Vous trouverez celui de Jelix dans @@F@vendor/jelix/je
 Dans la suite du manuel, quand il est signalé le répertoire @@F@lib/@@, il s'agit
 de @@F@vendor/jelix/jelix/lib/@@.
 
+La commande createapp.php se trouve dans @@F@vendor/bin/createapp.php@@
+
 ==== Installer les sources avec l'archive téléchargeable ====
 
 Vous pouvez télécharger une archive tar.gz ou zip de Jelix. Cette archive
@@ -90,13 +92,12 @@ Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
 Un repertoire jelix-1.7.0 est créé contenant un répertoire @@lib/@@. Vous devez
 mettre ce répertoire @@lib/@@ dans le dossier de votre projet.
 
+La commande createapp.php se trouve dans @@F@lib/jelix-scripts/createapp.php@@.
 
 ==== Lancer createapp ====
 
-Vous trouverez cette commande @@createapp@@ dans le répertoire
-@@F@bin/@@ de Jelix (@@F@vendor/bin/@@ si vous avez installé Jelix avec Composer).
-
-Dans une console, allez dans le répertoire @@F@bin@@, et exécutez :
+Allez dans le répertoire où est installé la commande createapp.php (voir
+précédement), et lancez la de la manière suivante :
 
 <code bash>
 php createapp.php /chemin/vers/le/nouveau/répertoire/de/myapp
