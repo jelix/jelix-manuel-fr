@@ -201,11 +201,23 @@ composer.json.
 
 Les drivers jDb "sqlite" et "mysql" ne sont plus fournis (le premier utilisant
 une API PHP pour le vieux sqlite 2, et le deuxième utilisant l'API php
-mysql qui est déprécieé). Utilisez donc à la place respectivement "sqlite3" et
-"mysqli". Ou installez les drivers sqlite et mysql séparément,
+mysql qui est dépréciée). Utilisez donc à la place respectivement "sqlite3" et
+"mysqli".
+
+Pour mysqli, c'est modifié automatiquement par le script de migration
+de Jelix.
+
+Mais pour sqlite3, il faut le faire à la main. Attention : pour passer de
+sqlite 2 à sqlite 3, il faut d'abord convertir votre base au format sqlite3
+(en ayant donc installé sqlite 2 et sqlite 3 sur votre système),
+par exemple en tapant dans votre console :
+@@sqlite OLD.db .dump | sqlite3 NEW.db@@.
+
+Une alternative est d'installer les drivers sqlite et mysql séparément,
 [[https://github.com/jelix/legacy-db-plugins|en les téléchargeant]] ou en
 déclarant le paquet "jelix/legacy-db-plugins" dans votre fichier
-@@composer.json@@.
+@@composer.json@@. Et en installant l'extension PECL de sqlite 2 et la vieille
+extension de mysql.
 
 ==== Changements dans les urls ====
 
@@ -215,7 +227,7 @@ les urls de "basic_significant". Cependant, les paramètres "module" et
 "action" des urls ne sont plus pris en charge. Si vous avez des urls en dur
 dans votre code (contrôleurs, configurations ou templates par exemple) qui
 contiennent ces paramètres (parce que vous utilisiez le moteur "simple"),
-changeait les sous la forme @@/module/controleur/method@@.
+changez-les sous la forme @@/module/controleur/method@@.
 
 Exemple : @@/index.php?module=foo&action=ctrl:act@@ devient
 @@/index.php/foo/ctrl/act@@.
@@ -234,7 +246,7 @@ pour avoir l'aide.
 ==== Vos scripts utilisant jCmdLineRequest ====
 
 Si le script est dédié à une action particulière, il ne faut plus seulement
-indiqué @@true@@ au constructeur de jCmdLineRequest, mais aussi le module
+indiquer @@true@@ au constructeur de jCmdLineRequest, mais aussi le module
 et l'action. Vous y mettrez donc les valeurs des paramètres de configuration
 @@startModule@@ et @@startAction@@ du script. Ces derniers ne sont en effet
 plus utilisés.
@@ -267,6 +279,14 @@ Vous devez remplacer ces appels par les nouvelles méthodes @@M@getConfigObj()@@
 @@M@getConfigFile()@@, @@M@getMainConfigIni()@@, @@M@getLocalConfigIni()@@ et
 @@M@getConfigIni()@@.
 
+==== Déplacement des fichiers overloads, themes... ====
+
+Il faut déplacer les contenus qui ne sont pas dynamiques (donc ceux d'origine, pas
+ceux créés par l'application) de var/overloads,
+var/themes/ et var/locales vers app/overloads, app/themes/ et app/locales/.
+
+Ce n'est pas fait automatiquement par le script de migration, car il ne serait
+pas possible pour lui de déterminer ce qui est statique ou dynamique.
 
 ==== Disparition de json.js et json2.js ====
 
@@ -323,6 +343,12 @@ En particulier :
   * Migration des paramètres startModule et startAction vers urls.xml
   * Suppression des paramètres et section obsolètes liés au moteur d'url
   * **Déplacement du répertoire responses/** vers app/responses
-  * **Déplacement des fichiers de configuration** mainconfig.ini.php, urls.xml et
-    ceux des points d'entrées vers app/config/
+  * **Déplacement des fichiers de configuration** suivants vers app/config :
+     * mainconfig.ini.php, urls.xml, preferences.ini.php
+     * ceux des points d'entrées
+     * fichiers de configuration des plugins du coordinateur
+     * fichier de classmap pour soap
+
+
+
 
