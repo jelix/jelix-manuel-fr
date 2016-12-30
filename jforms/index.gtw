@@ -30,7 +30,7 @@ s'occupe automatiquement :
 jForms est composé de trois parties distinctes, chacune étant utilisée dans les
 trois composants du pattern MVC :
 
-   * [[jforms/xml|des fichiers XML]] qui permettent de décrire vos formulaires ;
+   * [[/jforms/xml|des fichiers XML]] qui permettent de décrire vos formulaires ;
    * des plugins de templates pour [[/jforms/affichage|afficher une instance d'un formulaire]] ;
    * l'API côté serveur qui permet de [[/jforms/utilisation|créer une instance d'un formulaire et de gérer les données qu'il contient]].
 

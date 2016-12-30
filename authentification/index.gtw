@@ -11,7 +11,7 @@ un annuaire supportant LDAP et un pilote pouvant utiliser une classe quelconque.
 
 Le système d'authentification repose sur plusieurs choses :
 
-   * Un [[plugins/coord|plugin pour le coordinateur]], nommé **auth** et livré
+   * Un [[/plugins/coord|plugin pour le coordinateur]], nommé **auth** et livré
      en standard avec Jelix, vérifiant si l'authentification est effectuée pour
      les actions où elle est nécessaire.
    * Une classe @@C@jAuth@@, permettant d'effectuer les différentes opérations
@@ -83,7 +83,7 @@ cas où le plugin //auth// demande une redirection (par exemple la page
 d'identification). En général, il convient donc de placer ce plugin après les
 plugins ne nécessitant pas d'authentification.
 
-Pour en savoir plus sur les plugins : [[plugins]]
+Pour en savoir plus sur les plugins : [[/plugins]]
 
 
 ===== Configurer le système d'authentification =====
@@ -97,7 +97,7 @@ Vous devez indiquer le nom du driver utilisé au niveau de l'option @@driver@@.
 Vous devez ensuite avoir une section portant ce même nom, pour les options
 propres au driver.
 
-Les options dépendants des drivers, consultez [[authentification/drivers|la documentation sur les pilotes jauth]]
+Les options dépendants des drivers, consultez [[/authentification/drivers|la documentation sur les pilotes jauth]]
 pour activer l'un deux.
 
 ==== Fonction de hachage des mots de passe ====
@@ -253,7 +253,7 @@ class xxxCtrl extends jController {
 }
 </code>
 
-Voir la page sur [[plugins/coord|les plugins de coordinateurs]] pour mieux
+Voir la page sur [[/plugins/coord|les plugins de coordinateurs]] pour mieux
 comprendre l'usage de @@V@$pluginParams@@.
 
 ==== Spécifier le comportement en cas d'echec d'authentification ====
@@ -309,7 +309,7 @@ Il propose aussi des zones et des templates.
 
 Si vous voulez avoir des fonctionnalités de gestion de compte comme sur un
 portail, utilisez le module jCommunity, disponible en dehors de Jelix
-([[http://bitbucket.org/laurentj/jcommunity/]]). Il propose des formulaires de
+([[https://github.com/jelix/jcommunity-module]]). Il propose des formulaires de
 changement de mot de passe, des formulaires de destruction de compte, de
 création de compte et de récupération de mot de passe. 
 
@@ -331,7 +331,7 @@ l'utilisateur a donné un mauvais mot de passe ou login. Pour @@after_login@@ et
 @@after_logout@@, voir plus bas.
 
 À noter que vous pouvez surcharger les templates du module en créant vos propres
-templates dans le dossier @@F@app/themes/default/jauth/@@. Voir [[themes|le système de thème]].
+templates dans le dossier @@F@app/themes/default/jauth/@@. Voir [[/themes|le système de thème]].
 
 ==== Configuration de la redirection ====
 

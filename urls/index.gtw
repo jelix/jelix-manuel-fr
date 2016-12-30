@@ -78,7 +78,7 @@ un pathinfo="/".
 
 Ceci se fait dans le fichier @@F@app/config/urls.xml@@.
 
-Voir [[urls/mapping|la page concernant la configuration de ce fichier urls.xml]].
+Voir [[/urls/mapping|la page concernant la configuration de ce fichier urls.xml]].
 
 ===== Utilisation =====
 
