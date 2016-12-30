@@ -165,7 +165,6 @@ copyright_holder=Les contributeurs au wiki de jelix.org
         - section: [[ref-plugins/tplplugins/metas|Meta]]
    - chapter: [[ref-plugins/coordplugins|Plugins pour le coordinateur]]
       - section: [[coordplugins/history|history]]
-      - section: [[coordplugins/zendframework|zendframework]]
 
    - chapter: [[ref-modules|Les modules de Jelix]]
       - section: [[ref-modules/master_admin|master_admin]]
