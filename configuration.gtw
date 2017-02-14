@@ -18,9 +18,10 @@ renseignements supplémentaires ou changer des paramètres.
 
 Excepté @@F@project.xml@@ et les fichiers @@F@module.xml@@, les fichiers de
 configuration sont situés dans @@F@app/config/@@ pour les paramètres généraux
-(@@F@mainconfig.ini.php@@, @@F@config.ini.php@@, @@F@urls.xml@@),
+(@@F@mainconfig.ini.php@@, @@F@config.ini.php@@, @@F@urls.xml@@...),
 ou @@F@var/config/@@ pour les paramètres qui dépendent de l'environnement
-serveur (@@F@localconfig.ini.php@@, @@F@profiles.ini.php@@ et également d'autres @@F@config.ini.php@@).
+serveur (@@F@localconfig.ini.php@@, @@F@profiles.ini.php@@...).
+
 Note : avant Jelix 1.7, ils étaient tous dans @@F@var/config/@@).
 
 Ce chapitre présente ces fichiers. Voyez [[details-configuration|le chapitre sur les details de la configuration]]
@@ -103,14 +104,16 @@ Chacune de ces sections contenant une série de paramètres "nom=valeur". Il y a
 une section "générale", qui n'a pas de nom, et dont les paramètres sont en début
 du fichier.
 
+Le fichier de configuration du framework est le fichier @@F@app/config/mainconfig.ini.php@@.
+Cependant, on peut vouloir des paramètres différents pour chaque point
+d'entrée, et aussi selon l'environnement. D'où des fichiers ini additionnels
+qui sont fusionnés par Jelix au fichier mainconfig.ini.php à l'execution.
+
+
 === app/config/mainconfig.ini.php ===
 
-Chaque point d'entrée peut avoir son fichier de configuration spécifique. Mais la plupart
-du temps ils ont beaucoup de valeurs de paramètres identiques entre eux. Pour éviter de
-répéter ces paramètres identiques dans chaque fichier, il y a un fichier de configuration
-commun, qui a pour nom @@F@mainconfig.ini.php@@. Il est automatiquement lu, en plus du
-fichier spécifique au point d'entrée, et il n'est pas besoin de l'indiquer dans les points
-d'entrée.
+Ce fichier contient les paramètres de configuration communs à tous les points
+d'entrée ou environnements, et également les valeurs par défaut.
 
 === @@<entrypoint>/config.ini.php@@  ===
 
@@ -145,9 +148,9 @@ jauth = 2
 
 Pour les requêtes classiques, passant par @@F@index.php@@, on pourrait avoir le
 fichier @@F@app/config/index/config.ini.php@@. On le met ici dans un
-sous-répertoire index pour une meilleure organisation (il peut en effet y avoir
+sous-répertoire index pour une meilleure organisation. Il peut en effet y avoir
 des fichiers de configuration de plugins propres à chaque point d'entrée, ça
-peut donc vite devenir peu lisible dans @@F@app/config/@@).
+peut donc vite devenir peu lisible dans @@F@app/config/@@.
 
 Dans ce fichier, on ne va redéfinir que certaines choses, comme par exemple :
 
