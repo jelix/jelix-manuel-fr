@@ -1,5 +1,6 @@
 ~~LANG:EN@enman:new-features~~
 
+<<<<<<< HEAD
 ===== Nouveautés apportées par la version 1.7 =====
 
 Jelix 1.7 apporte beaucoup de nouveautés. Consultez les [[installation/migration|instructions de migrations]]
@@ -209,3 +210,4 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
 ===== Contributeurs à Jelix 1.7 =====
 
   * Brunto (crud controller)
+

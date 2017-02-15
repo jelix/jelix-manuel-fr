@@ -59,7 +59,7 @@ Exemple :
 <code php>
   $dt = new jDateTime();
 
-  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+  $dt->setFromString("2017-04-10",jDateTime::DB_DFORMAT);
 
   echo "la date est ", $dt->year, ",", $dt->month, ",", $dt->day, ",", $dt->hour, ",", $dt->minute, ",", $dt->second;
 
@@ -75,7 +75,7 @@ par défaut via la propriété defaultFormat.
   $dt = new jDateTime();
   $dt->defaultFormat = jDateTime::DB_DFORMAT;
 
-  $dt->setFromString("2006-04-10");
+  $dt->setFromString("2017-04-10");
 </code>
 
 ===== Conversion vers une chaîne =====
@@ -95,17 +95,17 @@ durées à une date. Ces durées sont à indiquer via un objet jDuration.
 
 <code php>
   $dt = new jDateTime();
-  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+  $dt->setFromString("2017-04-10",jDateTime::DB_DFORMAT);
 
   // on veut retirer deux jours
   $duration = new jDuration(array('day'=>2));
   $dt->sub($duration);
-  echo $dt->toString(jDateTime::DB_DFORMAT); // affiche 2006-04-08
+  echo $dt->toString(jDateTime::DB_DFORMAT); // affiche 2017-04-08
 
   // on veut ajouter 27h15 heures
   $duration = new jDuration(array('hour'=>27,'minute'=>15));
   $dt->add($duration);
-  echo $dt->toString(jDateTime::DB_DTFORMAT); // affiche 2006-04-09 03:15:00
+  echo $dt->toString(jDateTime::DB_DTFORMAT); // affiche 2017-04-09 03:15:00
 
 </code>
 
@@ -113,10 +113,10 @@ Si on veut savoir la durée entre deux dates, on utilise alors la méthode durat
 
 <code php>
   $dt = new jDateTime();
-  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+  $dt->setFromString("2017-04-10",jDateTime::DB_DFORMAT);
 
   $dt2 = new jDateTime();
-  $dt2->setFromString("2006-04-12",jDateTime::DB_DFORMAT);
+  $dt2->setFromString("2017-04-12",jDateTime::DB_DFORMAT);
 
   // calcul la durée entre $dt jusqu'à $dt2
   $duration = $dt->durationTo($dt2);
@@ -133,10 +133,10 @@ Pour comparer deux dates, il y a la méthode compareTo()
 
 <code php>
   $dt = new jDateTime();
-  $dt->setFromString("2006-04-10",jDateTime::DB_DFORMAT);
+  $dt->setFromString("2017-04-10",jDateTime::DB_DFORMAT);
 
   $dt2 = new jDateTime();
-  $dt2->setFromString("2006-04-12",jDateTime::DB_DFORMAT);
+  $dt2->setFromString("2017-04-12",jDateTime::DB_DFORMAT);
 
   $result = $dt->compareTo($dt2);
 </code>

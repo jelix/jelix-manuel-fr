@@ -327,8 +327,9 @@ fichier @@F@auth.coord.ini.php@@ peut être celle-ci :
 </code>
 
 Le paramètre @@on_error_sleep@@ est le nombre de secondes d'attente quand
-l'utilisateur a donné un mauvais mot de passe ou login. Pour @@after_login@@ et
-@@after_logout@@, voir plus bas.
+l'utilisateur a donné un mauvais mot de passe ou login (il n'est pas recommandé
+de l'activer, car cela facilite les attaques de type DDOS). Pour
+@@after_login@@ et @@after_logout@@, voir plus bas.
 
 À noter que vous pouvez surcharger les templates du module en créant vos propres
 templates dans le dossier @@F@app/themes/default/jauth/@@. Voir [[/themes|le système de thème]].
@@ -361,6 +362,7 @@ Le module jauth fourni un fichier d'urls. Si vous le souhaitez, vous pouvez
 l'utiliser pour le mapping de vos urls, en le déclarant
 dans votre fichier @@F@app/config/urls.xml@@ la ligne
 @@<url pathinfo="/auth" module="jauth" include="urls.xml"/>@@.
+
 
 ===== Utiliser son propre contrôleur =====
 

@@ -646,13 +646,13 @@ fichier index.php dans les URLs dans lesquelles on l'aurait supprimé pour faire
 Par exemple nos URLs sont de la forme :
 
 <code>
- http://monsite.com/index.php/news/2007-02-08-il-neige-a-lille.html
+ http://monsite.com/index.php/news/2017-02-08-il-neige-a-lille.html
 </code>
 
 Et on souhaite qu'elles deviennent :
 
 <code>
- http://monsite.com/news/2007-02-08-il-neige-a-lille.html
+ http://monsite.com/news/2017-02-08-il-neige-a-lille.html
 </code>
 
 Voyons comment faire.

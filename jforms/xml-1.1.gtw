@@ -308,7 +308,7 @@ Il y aussi les attributs spécifiques @@A@mindate@@, @@A@maxdate@@ et
 [[xml/datepicker|la page dediée]].
 
 Pour les attributs @@A@mindate@@ et @@A@maxdate@@, vous pouvez utiliser soit une
-date absolue au format DB comme '2009-01-01', soit une chaine qui contient une
+date absolue au format DB comme '2017-01-01', soit une chaine qui contient une
 valeur qui sera analysée par la fonction PHP strtotime. Cette dernière solution
 reste la plus pratique. Par exemple pour une date de naissance si l'on veut que
 des dates de naissance des personnes de 18 à 70 ans :
@@ -682,10 +682,7 @@ formulaire (par des robots spammeurs par exemple).
 
 JForms fourni la balise @@E@<captcha>@@ pour inclure automatiquement un champs
 de saisie qui permettra de vérifier que le formulaire est bien saisie par un
-humain. Pour le moment, ce champs de saisie n'est pas une image à déchiffrer
-comme on le voit sur certain site, mais une simple champs texte dans lequel il
-faut indiquer la réponse à une question posée, affichée automatiquement par
-jForms.
+humain.
 
 <code xml>
  <captcha ref="antispam">
@@ -695,14 +692,8 @@ jForms.
 
 La balise accepte les attributs communs et les balises d'aide.
 
-Les questions posées sont stockées dans un fichier de locales, dans le module
-jelix. Exemple pour le français :
-@@F@lib/jelix/core-modules/jelix/locales/fr_FR/captcha.UTF-8.properties@@. Ce
-fichier contient une première locale, @@number@@, qui indique le nombre de
-question, et ensuite les questions et réponses numérotées. Vous pouvez redéfinir
-ce fichier pour ajouter ou modifier les questions et réponses. Voir
-[[/surcharge-de-fichiers|le chapitre sur la redéfinition des fichiers]].
-
+Pour en savoir plus sur cette fonctionnalité, et pouvoir choisir le type
+de captcha, voir [[xml/captcha|la section sur les captchas]].
 
 ==== Boutons de validation ====
 

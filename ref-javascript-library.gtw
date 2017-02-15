@@ -6,15 +6,18 @@ Jelix utilise [[http://jquery.com/|jQuery]] au sein du framework, notamment avec
 
 Les versions utilisées sont les suivantes
 
-  * [[http://jquery.com/|jQuery 1.4.2]]
-  * [[http://jqueryui.com/|jQueryUi 1.8.1]]
+  * [[http://jquery.com/|jQuery 1.8.3]]
+  * [[http://jqueryui.com/|jQueryUi 1.9.2]]
 
+====== Wymeditor ======
+
+L'éditeur HTML fourni dans Jelix est [[http://wymeditor.github.io/|Wymeditor]] 1.0.0beta9.
 
 ====== Markitup ======
 
 
-Jelix utilise [[http://markitup.jaysalvat.com/home/|MarkitUp]] au sein du framework, notamment pour [[jforms/xml/wikieditor|wikieditor]].
+Jelix utilise [[http://markitup.jaysalvat.com/home/|MarkitUp]]
+au sein du framework, notamment pour
+[[jforms/xml/wikieditor|wikieditor]].
 
-La version utilisée est la suivante :
-
-  * [[http://markitup.jaysalvat.com/home/|MarkitUp 1.1.7]]
+La version utilisée est 1.1.14.

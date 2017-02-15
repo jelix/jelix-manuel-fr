@@ -2,12 +2,12 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.7.0b2pre
+subtitle= Jelix 1.7.0-beta.2
 title_short= Guide du développeur
-edition = Jelix 1.7.0b2pre
+edition = Jelix 1.7.0-beta.2
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
-copyright_years=2006-2016
+copyright_years=2006-2017
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
@@ -79,6 +79,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter:[[jforms|jForms : des formulaires automatiques]]
       - section: [[jforms/xml|Introduction sur le format des fichiers jForms]]
       - section: [[jforms/xml-1.1|Créer un fichier jforms 1.1]]
+        -section: [[jforms/xml/captcha|Captcha]]
         -section: [[jforms/xml/htmleditor|Éditeur HTML]]
         -section: [[jforms/xml/datepicker|Datepicker]]
         -section: [[jforms/xml/wikieditor|Éditeur wiki]]

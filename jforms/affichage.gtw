@@ -37,7 +37,7 @@ Vous devez passer à ce plugin, les paramètres suivant, dans l'ordre :
    * facultatif :
       * un tableau des paramètres de l'url de cette action (autre que les champs
         de saisie)
-      * le nom du générateur à utiliser ('html', le seul fourni)
+      * le nom du générateur à utiliser ('html', le seul fourni en standard)
       * un tableau contenant des options pour le générateur
 
 Voici un exemple dans le contrôleur :
@@ -91,11 +91,16 @@ l'ordre :
 
 <code php>
  {form $formulaire, 'monmodule~default:sauver', 
-  array('paramètre1' => 'toto', 'paramètre2' => 'tata}, 
+  array('parametre1' => 'foo', 'parametre2' => 'bar'},
   'html',
-  array('attributes' => array('class' => 'classeDeMonForm', 'autreAttribut' => 'attribut'), 
-   'errorDecorator' => 'monErrorDecorator',
-   'plugins' => array('champTexte' => 'pluginPourChampTexte, 'champDate' => 'pluginPourChampDate')
+  array(
+     'attributes' =>
+         array('class' => 'classeCSSDeMonForm',
+               'autreAttributHTML' => 'attribut'),
+     'errorDecorator' => 'monErrorDecorator',
+     'plugins' => array(
+         'champTexte' => 'pluginPourChampTexte',
+         'champDate' => 'pluginPourChampDate')
   )}
 </code>
 
@@ -216,18 +221,6 @@ boucle @@formcontrols@@. Vous devez alors leur indiquer un nom de champs.
 Ici on affiche les champs noms et prenoms à des endroits précis, et le reste
 sera affiché par le plugin formcontrols qui suit.
 
-
-=== Ajout d'attributs personnalisés ===
-
-Vous pouvez ajouter des attributs HTML sur les elements HTML générés par
-@@ctrl_control@@. Pour ce faire, ajouter un deuxième paramètre à
-@@ctrl_control@@. Cela doit être un tableau @@('nom attribut'=>'valeur attribute')@@.
-Donnez @@L@""@@ comme premier paramètre quand @@ctrl_control@@
-est utilisé à l'intérieur d'une boucle @@formcontrols@@
-
-Note : pour les générateurs autre que HTML, ce tableau d'attribut peut être
-d'autres options.
-
 ==== Contrôle de l'affichage des champs de type password ====
 
 Pour les champs de saisie de mot de passe pour lesquels il y a un champ de
@@ -298,29 +291,6 @@ Ou encore, vous pouvez utiliser plusieurs plugins @@formsubmit@@, sans
 @@E@<submit>@@, pas sur les item d'un submit ! Il n'est pas possible pour le
 moment de boucler sur les items d'un submit (voir [[ticket:429|ticket #429]]).
 
-
-===== Ajouter du code javascript =====
-
-Vous pouvez ajouter des comportements sur n'importe quel contrôle avec
-javascript, avec votre bibliothèque JS préférée (jQuery étant celle utilisée par
-jForms par défaut).
-
-Tout les champs générés par jForms ont un id. Les id sont des noms composés :
-"jforms_module_nomform_refcontrole". Par exemple, pour un contrôle qui a un
-ref="adresse", déclaré par le formulaire "identite" fournis dans le module
-"utilisateurs", l'id du champs sera : "jforms_utilisateurs_identite_adresse".
-
-L'élément html <form> est aussi généré avec un id, composé du nom du module et
-de celui du formulaire : "jforms_module_nomform". Dans notre exemple, il vaudra
-"jforms_utilisateurs_identite".
-
-Sachant ces ids, vous pouvez récupérer tout les champs de formulaire ou
-l'élément form, avec la fonction @@document.getElementById()@@.
-
-Pour en savoir plus, voyez les possibilités JS du générateur que vous choisissez,
-notamment [[affichage/generateur-html#verification-js-sur-le-submit|les possibilités JS du générateur par défaut de jforms]],
-comme par exemple sur les traitements du submit.
-
 ===== Choisir un générateur =====
 
 Pour générer le code HTML, les plugins de templates font appel à un générateur (ou builder)
@@ -367,14 +337,15 @@ paramètre, ici "legacy.htmllight" :
 Comme indiqué plus haut, ces plugins acceptent un cinquième paramètre, un
 tableau, contenant des options pour le générateur. Ces options dépendent du
 générateur utilisé (//errorDecorator// et //method// par exemple pour 'html').
+Une de ces options, "plugins", permet de lister les plugins à utiliser pour
+tel ou tel contrôle.
 
-Remarque : si vous souhaitez passer la même option dans tous vos formulaires,
+Pour en savoir plus sur le générateur HTML et ses options, voir la page
+dédiée : [[affichage/generateur-html|le générateur "html"]].
+
+Astuce : si vous souhaitez passer la même option dans tous vos formulaires,
 créez le générateur de votre choix en dérivant un générateur existant et
 affectez-lui directement ces options dans son code...
-
-Pour en savoir plus sur le générateur HTML
-   * [[affichage/generateur-html|le générateur "html"]]
-
 
 ===== Utilisation de jforms dans des réponses Ajax =====
 

@@ -1,0 +1,208 @@
+~~LANG:EN@enman:jforms/xml-1.1/captcha~~
+
+Pour inclure un captcha dans un formulaire jForms, vous devez utiliser
+la balise @@E@<captcha>@@.
+
+
+<code xml>
+ <captcha ref="antispam">
+    <label>Vérification anti-spam</label>
+ </captcha>
+</code>
+
+
+==== Choisir le type de captcha ====
+
+Jusqu'à Jelix 1.6.13, ce contrôle n'affichait qu'un simple champs de saisie
+dans lequel l'utilisateur doit répondre. Voir plus bas le "captcha simple", pour
+savoir comment le configurer.
+
+Depuis Jelix 1.6.14, il est possible de créer et spécifier d'autre type de
+captcha (mais le captcha "simple" reste celui affiché par défaut).
+
+Pour indiquer le type de validateur qu'il faut utiliser, vous devez indiquer
+le nom de ce type :
+
+  * soit dans un attribut @@A@validator@@ sur la balise @@E@<captcha>@@ pour
+    configuer un captcha spécifique
+  * soit dans une option @@captcha@@ de la section @@[forms]@@ de la configuration
+    de jelix, si vous souhaitez que tous les captchas de votre site aient soit
+    du type en question
+
+<code xml>
+ <captcha ref="antispam" validator="simple">
+    <label>Vérification anti-spam</label>
+ </captcha>
+</code>
+
+ou
+
+<code ini>
+[forms]
+captcha=simple
+</code>
+
+Pour le moment, seuls deux types de captcha sont fournis: "simple" et "recaptcha".
+
+
+==== captcha Simple ====
+
+Il affiche un simple champs texte dans lequel il faut indiquer la réponse à
+une question posée, affichée automatiquement par jForms.
+
+Les questions posées sont stockées dans un fichier de locales, dans le module
+jelix. Exemple pour le français :
+@@F@lib/jelix/core-modules/jelix/locales/fr_FR/captcha.UTF-8.properties@@. Ce
+fichier contient une première locale, @@number@@, qui indique le nombre de
+questions, et ensuite les questions et réponses numérotées. Vous pouvez redéfinir
+ce fichier pour ajouter ou modifier les questions et réponses. Voir
+[[/surcharge-de-fichiers|le chapitre sur la redéfinition des fichiers]].
+
+Pour l'utiliser :
+
+<code xml>
+ <captcha ref="antispam" validator="simple">
+    <label>Vérification anti-spam</label>
+ </captcha>
+</code>
+
+ou
+
+<code ini>
+[forms]
+captcha=simple
+</code>
+
+
+==== ReCatpcha ====
+
+Ce type de captcha affiche le captcha "ReCaptcha" de Google.
+Vous devez donc avoir un compte google et y activer Recaptcha.
+Voir [[https://www.google.com/recaptcha/|le site de ReCaptcha]].
+
+En activant un compte Recaptcha, Google vous fourni une clé et un "secret"
+(tous deux étant une suite de chiffres et de lettres).
+
+Il faut les renseigner dans la section @@[recaptcha]@@ de la configuration de jelix :
+
+<code ini>
+[recaptcha]
+; sitekey and secret should be set only into localconfig.ini.php!
+sitekey= ici_votre_clé_publique
+secret= ici_votre_clé_privée
+</code>
+
+**Attention** : comme le "secret" est une information privée, il ne faut pas mettre
+ces informations dans le fichier mainconfig.ini.php, mais dans localconfig.ini.php,
+ce dernier n'étant en principe pas enregistré dans votre dépôt de sources (git ou autre).
+
+D'autres paramètres sont possibles, pour configurer ReCaptcha, comme le theme,
+la taille, le type...
+
+<code ini>
+[recaptcha]
+; sitekey and secret should be set only into localconfig.ini.php!
+sitekey= ici_votre_clé_publique
+secret= ici_votre_clé_privée
+
+; see https://developers.google.com/recaptcha/docs/display to know the meaning
+; of these configuration parameters.
+theme=
+type=
+size=
+tabindex=
+</code>
+
+Une fois la configuration effectuée, vous pouvez utiliser ReCaptcha, en renseignant
+l'attribut @@A@validator@@ ou en le spécifiant dans la section @@[forms]@@
+
+Pour l'utiliser :
+
+<code xml>
+ <captcha ref="antispam" validator="recaptcha">
+    <label>Vérification anti-spam</label>
+ </captcha>
+</code>
+
+ou
+
+<code ini>
+[forms]
+captcha=recaptcha
+</code>
+
+==== Configurer un autre type de captcha ====
+
+Vous pouvez utiliser d'autres types de captcha, mais il vous faut alors développer
+deux choses :
+
+  # un widget pour jForms, pour afficher le captcha
+  # une classe pour valider, coté serveur, ce qu'a saisi l'utilisateur
+
+La première chose à faire est de choisir un nom pour le type de validateur. Prenons
+par exemple "moncap".
+
+=== créér le widget ===
+
+Créer un widget dans @@F@plugins/formwidget/moncap_html/moncap_html.formwidget.php@@.
+
+Dans la classe du widget, vous implémenterez :
+
+  * la méthode @@M@outputMetaContent()@@ pour faire charger les ressources JS et CSS nécessaire à l'affichage du captcha.
+  * la méthode @@M@outputJs()@@ pour générer en ligne un éventuel code JS qui initialisera le captcha
+  * la méthode @@M@outputControl()@@ pour générer le HTML
+
+Voir comme exemple ceux pour [[https://github.com/jelix/jelix/blob/jelix-1.6.x/lib/jelix/plugins/formwidget/captcha_html/captcha_html.formwidget.php|simple]]
+et [[https://github.com/jelix/jelix/blob/jelix-1.6.x/lib/jelix/plugins/formwidget/recaptcha_html/recaptcha_html.formwidget.php|recaptcha]].
+
+=== créer la classe de validation ===
+
+Vous devez créer une classe dans un de vos modules, par exemple @@\MyApp\MonCapValidator@@.
+
+Notez qu'elle doit être auto-chargeable (voir la doc sur module.xml).
+
+Elle doit implémenter l'interface @@jelix\forms\Captcha\CaptchaValidatorInterface@@,
+et donc deux méthodes :
+
+  * @@initOnDisplay()@@: méthode qui sera appelé lors de l'affichage du widget,
+   si vous faites un @@$this->ctrl->initCaptcha()@@ dans @@M@outputControl()@@ du widget.
+   Cette méthode peut renvoyer des données si le widget en a besoin pour l'affichage.
+   Ces données sont stockées en session.
+  * @@validate($value, $internalData)@@, qui sera appelé par jForms pour valider
+    la réponse de l'utilisateur. @@$value@@ est la valeur saisie par l'utilisateur
+    (ou généré par le captcha lors du submit), et @@$internalData@@ sont les
+    données qui avaient été renvoyé par @@initOnDisplay()@@.
+
+Voir pour exemple [[https://github.com/jelix/jelix/blob/jelix-1.6.x/lib/jelix/forms/Captcha/SimpleCaptchaValidator.php|le validateur pour "simple"]]
+et [[https://github.com/jelix/jelix/blob/jelix-1.6.x/lib/jelix/forms/Captcha/ReCaptchaValidator.php|le validateur pour recaptcha]].
+
+=== déclarer le nouveau type de captcha ===
+
+Une fois les classes créés, il faut les déclarer dans la configuration, via
+deux paramètres dans la section @@[forms]@@ :
+
+  * @@captcha.<typecaptcha>.validator@@ pour y indiquer la classe de validation
+  * @@captcha.<typecaptcha>.widgettype@@ pour y indiquer le nom du widget (sans le "_html")
+
+Pour notre exemple du dessus, cela donnera :
+
+<code ini>
+captcha.moncap.validator = "\MyApp\MonCapValidator"
+captcha.moncap.widgettype = moncap
+</code>
+
+Enfin, vous pouvez utiliser votre captcha dans vos formulaires :
+
+<code xml>
+ <captcha ref="antispam" validator="moncap">
+    <label>Vérification anti-spam</label>
+ </captcha>
+</code>
+
+ou
+
+<code ini>
+[forms]
+captcha=moncap
+</code>
+
