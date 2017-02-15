@@ -308,7 +308,7 @@ Il y aussi les attributs spécifiques @@A@mindate@@, @@A@maxdate@@ et
 [[xml/datepicker|la page dediée]].
 
 Pour les attributs @@A@mindate@@ et @@A@maxdate@@, vous pouvez utiliser soit une
-date absolue au format DB comme '2009-01-01', soit une chaine qui contient une
+date absolue au format DB comme '2017-01-01', soit une chaine qui contient une
 valeur qui sera analysée par la fonction PHP strtotime. Cette dernière solution
 reste la plus pratique. Par exemple pour une date de naissance si l'on veut que
 des dates de naissance des personnes de 18 à 70 ans :

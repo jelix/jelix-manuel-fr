@@ -20,9 +20,9 @@ est un objet permettant de spécifier les propriétés du fil Atom. Exemple :
 <code php>
    $rep->infos->title = 'Actualité de Jelix';
    $rep->infos->webSiteUrl= 'http://jelix.org/fr/';
-   $rep->infos->copyright = 'Copyright 2006-2007 jelix.org';
+   $rep->infos->copyright = 'Copyright 2017 jelix.org';
    $rep->infos->description = 'Actualité sur le framework PHP5 Jelix';
-   $rep->infos->updated = '2007-06-08 12:00:00';
+   $rep->infos->updated = '2017-06-08 12:00:00';
    $rep->infos->selfLink=jUrl::get();
 </code>
 

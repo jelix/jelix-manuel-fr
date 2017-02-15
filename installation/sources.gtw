@@ -8,7 +8,7 @@ les bibliothèques dépendantes, ainsi qu'un répertoire @@F@jelix/temp/@@.
 Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
 
 <code bash>
-  tar xvzf jelix-1.3.tar.gz
+  tar xvzf jelix-1.6.14-opt.tar.gz
 </code>
 
 Vous obtenez les répertoires suivants : 

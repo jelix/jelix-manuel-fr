@@ -1,4 +1,4 @@
-~~LANG:EN@enman:jforms/xml/captcha~~
+~~LANG:EN@enman:jforms/xml-1.1/captcha~~
 
 Pour inclure un captcha dans un formulaire jForms, vous devez utiliser
 la balise @@E@<captcha>@@.

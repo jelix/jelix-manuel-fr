@@ -289,10 +289,10 @@ Par défaut, le modificateur attend une chaîne au format base de données (jDat
   <p>la date est {$myDate|jdatetime}.</p>
 </code>
 
-Si @@$myDate='2006-04-12 01:05:26'@@ et si la langue est fr, alors cela affiche :
+Si @@$myDate='2017-04-12 01:05:26'@@ et si la langue est fr, alors cela affiche :
 
 <code>
- la date est 12/04/2006 01h05mn26s.
+ la date est 12/04/2017 01h05mn26s.
 </code>
 
 Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en paramètre au modificateur :
