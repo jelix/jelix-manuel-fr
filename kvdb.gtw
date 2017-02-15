@@ -90,13 +90,22 @@ Ce driver supporte l'interface @@I@jIKVttl@@.
 
 ==== redis ====
 
-Ce driver permet d'accéder à une base de données Redis. Il utilise la librairie
-php5redis. Pour le configurer, il suffit d'indiquer un @@host@@ et un paramètre
-@@port@@.
+Ce driver permet d'accéder à une base de données Redis.
+
+Deux plugins sont fournis:
+
+- "redis_php", utilise une classe pure PHP (PhpRedis) pour communiquer avec la base Redis.
+  (ce plugin était nommé "redis" avant Jelix 1.6.14)
+- "redis_ext" se base sur l'API de l'extension PHP redis (plugin introduit dans Jelix 1.6.14)
+
+Paramètres possibles :
+
+Pour les configurer, il suffit d'indiquer un @@host@@ et un paramètre @@port@@.
+Exemple :
 
 <code ini>
 [jkvdb:myredis]
-driver=redis
+driver=redis_php
 host = localhost
 port = 6379
 </code>
@@ -108,7 +117,6 @@ Depuis Jelix 1.6.8, il prend également en charge les paramètres suivants :
    * @@db@@ : le numéro de base de donnée redis (0 par défaut)
    * @@key_prefix@@ : un prefix qui sera ajouté sur chaque clé indiquée
    * @@key_prefix_flush_method@@ : méthode de suppression des clés quand on indique un prefixe.
-
 
 Si vous indiquez un préfixe pour les clés, alors toutes les clés que vous indiquez
 seront préfixées par le préfixe en question dans la base Redis.

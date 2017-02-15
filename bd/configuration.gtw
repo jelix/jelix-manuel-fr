@@ -157,3 +157,41 @@ user=
 password=
 </code>
 
+
+===== Profil mssql/sqlsrv =====
+
+Le plugin mssql est déprécié et n'est plus maintenu. Utilisez sqlsrv.
+
+Paramètres possibles :
+
+   * **driver** : doit valoir "sqlsrv"
+   * **database** : le nom de la base de données à utiliser
+   * **host** : le nom du serveur sur lequel se connecter.
+   * **port** : indique le port de connexion.
+   * **user** et **password** : le login/mot de passe pour la connexion.
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+     l'application, de manière à récupérer les données avec le bon charset. même
+     explication que pour mysql.
+
+
+===== Profil oci =====
+
+Paramètres possibles :
+
+   * **driver** : doit valoir "oci"
+   * **persistent** : indique si la connexion est persistante (**on**) ou pas
+     (**off**)
+   * **user** et **password** : le login/mot de passe pour la connexion.
+   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+     l'application, de manière à récupérer les données avec le bon charset. même
+     explication que pour mysql.
+
+Pour indiquer le serveur et la base, soit vous indiquez une chaine de connexion :
+
+   * **dsn** : la chaine de connexion reconnu par oracle
+
+Soit vous indiquez les paramètres séparément :
+
+   * **database** : le nom de la base de données à utiliser
+   * **host** : le nom du serveur sur lequel se connecter.
+   * **port** : indique le port de connexion.

@@ -1,11 +1,14 @@
 ~~LANG:EN@enman:installation/requirements~~
 
 
-Vous devez installer au minimum la version **5.3** de PHP. Les extensions
-**dom**, **simplexml**, **pcre**, **session**, **spl** et **tokenizer** sont
-requises (elles sont actives en général dans une installation standard de PHP
-5.3). Si une de ces extensions n'était pas livrée avec le paquet PHP5, veillez à
-installer le paquet correspondant.
+Vous devez installer au minimum la version **5.3** de PHP. Jelix est compatible
+avec PHP 7.0 à partir de la version 1.6.9, et compatible avec PHP 7.1 à partir
+de la version 1.6.14.
+
+Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl** et
+**tokenizer** sont requises (elles sont actives en général dans une installation
+standard de PHP 5.3). Si une de ces extensions n'était pas livrée avec le paquet
+PHP5, veillez à installer le paquet correspondant.
 
 Note concernant DOM et XML : vérifiez que c'est bien
 [[http://fr2.php.net/manual/fr/intro.dom.php|l'extension DOM]] et non pas

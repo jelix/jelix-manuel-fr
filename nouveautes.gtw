@@ -71,7 +71,7 @@ Nouveautés sur la version 1.6.8 :
 
   * jAcl2: nouveau driver dbcache. Il fonctionne comme le driver "db" existant, mais stocke les droits qu'il a calculé dans un cache avec jCache, pour améliorer les performances.
   * jCache: les clés peuvent maintenant contenir les caractères '/.-:'. 
-* plugin file de jCache: la structure des fichiers générés par le plugin a été modifié afin d'avoir des chemins plus petit. Le paramètre file_name_prefix est maintenant utilisé comme nom de répertoire, non comme prefix de fichier.
+  * plugin file de jCache: la structure des fichiers générés par le plugin a été modifié afin d'avoir des chemins plus petit. Le paramètre file_name_prefix est maintenant utilisé comme nom de répertoire, non comme prefix de fichier.
   * plugin Redis de jCache : nouveau paramètre key_prefix pour ajouter automatiquement un prefix aux clés.
   * plugin Redis de jCache : nouveau paramètre db pour selectionner la base redis à utiliser
   * plugin Redis pour jKvDb: prise en charge également des paramètre db et key_prefix.
@@ -92,6 +92,17 @@ Nouveautés sur la version 1.6.11 :
     du plugin jauth).
   * jDb, mysqli : support des connections en SSL
 
+
+Nouveautés sur la version 1.6.14 :
+
+  * Les plugins "redis" pour jCache et jKvDb, apparu dans 1.6.8, ont été renommé en "redis_php"
+  * Nouveaux plugins pour Redis, nommés “redis_ext”, pour jCache et jKvDb,
+    utilisant l'API de l'extension php redis
+  * Nouveau driver expérimental de jDb pour SQL Server, “sqlsrv” utilisant
+    l'API sqlsrv de PHP.
+  * jForms : le champs de captcha est maintenant configurable, de telle manière
+    que vous pouvez dorénavant implémenter son comportement. Voir [[jforms/xml/captcha|la page sur les Captcha]].
+  * Plugin “recaptcha” pour le captcha de jForms
 
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 

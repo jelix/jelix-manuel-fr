@@ -74,8 +74,14 @@ servers = memcache_host1:11211,memcache_host2:11211,memcache_host3:11211
 
 === Pilote Redis ===
 
-Les données sont stockées dans une base Redis, et utilise une classe pure
-PHP (Php5Redis) pour communiquer avec la base Redis.
+Les données sont stockées dans une base Redis.
+
+Deux plugins sont fournis:
+
+   * "redis_php", utilise une classe pure PHP (PhpRedis) pour communiquer avec la base Redis.
+     (plugin introduit dans Jelix 1.6.8 sous le nom "redis" et renommé en "redis_php"
+     dans la version 1.6.14)
+   * "redis_ext" se base sur l'API de l'extension PHP redis (plugin introduit dans Jelix 1.6.14)
 
 Paramètres possibles :
 
@@ -89,7 +95,7 @@ Exemple :
 
 <code>
 [jcache:myredis]
-driver=redis
+driver=redis_php
 ttl=360
 enabled=1
 host=192.168.0.1
@@ -99,7 +105,6 @@ key_prefix=
 key_prefix_flush_method=
 </code>
 
-Note : ce pilote a été introduit dans Jelix 1.6.7.
 
 Si vous indiquez un prefix pour les clés, alors toutes les clés que vous indiquez
 seront préfixées par le prefix en question dans la base Redis.
