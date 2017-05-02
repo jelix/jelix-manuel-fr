@@ -223,7 +223,7 @@ extension de mysql.
 
 Il n'y a plus le choix dans le moteur d'URL. Il s'agit maintenant uniquement
 du moteur anciennement nommé "significant" et amélioré pour prendre en charge
-les urls de "basic_significant". Cependant, les paramètres "module" et
+les urls de "basic_significant". Les paramètres "module" et
 "action" des urls ne sont plus pris en charge. Si vous avez des urls en dur
 dans votre code (contrôleurs, configurations ou templates par exemple) qui
 contiennent ces paramètres (parce que vous utilisiez le moteur "simple"),
@@ -254,7 +254,7 @@ plus utilisés.
 ==== Plugins custom pour jDb et jDao ====
 
 Les classes @@*daobuilder*@@ des plugins de jDb ne sont plus pris en charge. Si
-vous avez fait votre propre plugin pour jDb, il faut migrer la classe de type
+vous aviez fait votre propre plugin pour jDb, il faut migrer la classe de type
 daobuilder vers un plugin spécifique pour jDao. Voir la doc de jDao.
 
 ==== Session et cookie ====
@@ -271,13 +271,11 @@ ils avaient choisie d'être "reconnu" par votre application.
 
 ==== Changements dans les scripts d'installation de vos modules ====
 
-Vos scripts d'installation n'ont plus accés aux propriétés @@$config@@
-@@$configFile@@, @@$configIni@@ et @@$localConfig@@ de la classe
-@@jInstallerEntryPoint@@.
-
-Vous devez remplacer ces appels par les nouvelles méthodes @@M@getConfigObj()@@,
-@@M@getConfigFile()@@, @@M@getMainConfigIni()@@, @@M@getLocalConfigIni()@@ et
-@@M@getConfigIni()@@.
+Étant donné les changements dans l'organisation des fichiers de configuration,
+et étant donné que la classe @@jInstallerModule@@ est dépréciée, vous
+devriez mettre à jour vos scripts d'installation et de mise à jour
+en utilisant la classe @@jInstallerModule2@@ et ses nouveaux objets et méthodes
+qui permettent d'accéder aux différentes configuration de manière plus simple.
 
 ==== Déplacement des fichiers overloads, themes... ====
 

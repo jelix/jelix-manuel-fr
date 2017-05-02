@@ -51,20 +51,24 @@ de points d'entrée ou de profils de configuration.
 C'est un script, @@F@install.php@@, que vous placez dans le dossier
 @@F@install/@@ de votre module.
 
-Il devrait contenir une classe, héritant de @@C@jInstallerModule@@, et nommée
+Il devrait contenir une classe, héritant de @@C@jInstallerModule2@@, et nommée
 @@C@{module}ModuleInstaller@@, où @@{module}@@ est le nom de votre module. Ex:
-@@C@mainModuleInstaller@@ pour le module @@main@@.
+@@C@mainModuleInstaller@@ pour le module @@main@@. (Note: la classe @@C@jInstallerModule@@
+est dépréciée au profit de @@C@jInstallerModule@@ et ne possède pas les mêmes
+méthodes que celles décrites ci-après).
 
-Dans cette classe, vous devez créer une méthode @@M@install@@ dans laquelle vous
+Dans cette classe, vous devez créer une méthode @@M@installEntryPoint@@ dans laquelle vous
 ferez toutes les choses nécessaires à l'installation du module : modifications
 de la base de données, copies de fichiers, changements de configuration etc..
+Elle reçoit en paramètre un objet @@C@jInstallerEntryPoint2@@ qui contient
+des méthodes dédiées à la modification de la configuration d'un point d'entrée.
 
 
 <code php>
 <?php
-class newsModuleInstaller extends jInstallerModule {
+class newsModuleInstaller extends jInstallerModule2 {
 
-    function install() {
+    function installEntryPoint(jInstallerEntryPoint2 $entryPoint) {
        if ($this->firstDbExec()) {
            $db = $this->dbConnection();
            $db->exec('CREATE TABLE...');
@@ -74,9 +78,9 @@ class newsModuleInstaller extends jInstallerModule {
 
 </code>
 
-Vous pouvez surcharger les fonctions @@M@preInstall@@ et @@M@postInstall@@ qui
-sont exécutées respectivement avant et après que tout les modules soient
-installés. La méthode @@preInstall()@@, vous permet par exemple de préparer 
+Vous pouvez surcharger les fonctions @@M@preInstallEntryPoint@@ et @@M@postInstallEntryPoint@@ qui
+sont exécutées respectivement avant et après que tous les modules soient
+installés. La méthode @@preInstallEntryPoint()@@, vous permet par exemple de préparer
 certains fichiers ou données, ou de vérifier les conditions requises
 pour l'installation. Si les conditions ne sont pas requises, vous pouvez alors
 émettre une exception qui stoppera alors le processus d'installation.
@@ -85,13 +89,13 @@ pour l'installation. Si les conditions ne sont pas requises, vous pouvez alors
 <?php
 class newsModuleInstaller extends jInstallerModule {
 
-    function preInstall() {
+    function preInstallEntryPoint(jInstallerEntryPoint2 $entryPoint) {
     }
 
-    function install() {
+    function installEntryPoint(jInstallerEntryPoint2 $entryPoint) {
     }
 
-    function postInstall() {
+    function postInstallEntryPoint(jInstallerEntryPoint2 $entryPoint) {
 
     }
 
@@ -100,15 +104,86 @@ class newsModuleInstaller extends jInstallerModule {
 </code>
 
 
-@@C@jInstallerModule@@ contient un certain nombre de propriétés et de méthodes
+@@C@jInstallerModule2@@ contient un certain nombre de propriétés et de méthodes
 qui vous aideront à accéder à la base de données, aux fichiers de configuration
 etc..
 
+==== Modifier les fichiers de configurations ini ====
+
+Une application Jelix [[configuration|a plusieurs fichiers de configuration ini]].
+Vous ne devriez pas modifier vous même ces fichiers, mais vous devez utiliser
+les objets de type @@\Jelix\IniFile\IniModifierArray@@ que vous a déjà
+instancié le composant d'installation.
+
+Un objet @@IniModifierArray@@ contient des objets @@\Jelix\IniFile\IniModifier@@, chacun correspondant
+à un fichier ini. @@IniModifierArray@@ est un aggregateur de fichier ini qui
+vous permet de voir les valeurs comme Jelix les voit quand il fusionne les
+différent fichiers de configuration.
+
+   * @@$this->globalSetup->getConfigIni()@@ agrège @@defaultconfig.ini.php@@ (livré par jelix)
+     avec votre @@app/config/mainconfig.ini.php@@.
+   * @@$this->globalSetup->getLocalConfigIni()@@, idem avec en plus @@var/config/localconfig.ini.php@@
+   * @@$entryPoint->getConfigIni()@@ : agrège @@defaultconfig.ini.php@@, @@mainconfig.ini.php@@
+     et le fichier de configuration dédié au point d'entrée (un fichier @@app/config/index/config.ini.php@@
+     par exemple).
+   * @@$entryPoint->getLocalConfigIni()@@ : idem que  @@$entryPoint->getConfigIni()@@,
+     avec en plus @@localconfig.ini.php@@ et le fichier local dédié au point
+     d'entrée, par exemple @@var/config/index/config.ini.php@@.
+
+Avec l'objet que vous retourne ces méthodes, vous pouvez lire et modifier
+des valeurs :
+
+<code>
+    $this->globalSetup->getConfigIni()->getValue('disableCache', 'zones');
+
+    $this->globalSetup->getConfigIni()->setValue('disableCache', false, 'zones');
+</code>
+
+Quand vous modifiez une valeur, cela modifie le dernier fichier de l'aggregateur.
+pour @@$this->globalSetup->getConfigIni()@@, ça sera @@mainconfig.ini.php@@;
+pour @@$entryPoint->getConfigIni()@@ ça sera  @@app/config/index/config.ini.php@@ etc..
+
+Si vous voulez lire ou modifier un fichier précis de la liste, vous pouvez y accéder
+en indiquant une clé, comme si l'aggrégateur était un tableau (en lecture, cela
+peut être utile par exemple pour savoir si le paramètre de configuration
+est présent ou non dans un fichier précis).
+
+   * @@$this->globalSetup->getConfigIni()['default']@@ pour @@lib/jelix/core/defaultconfig.ini.php@@
+   * @@$this->globalSetup->getConfigIni()['main']@@ pour @@mainconfig.ini.php@@
+   * @@$this->globalSetup->getLocalConfigIni()['local']@@ pour @@var/config/localconfig.ini.php@@
+     (ainsi que @@['default']@@, @@['main']@@)
+   * @@$entryPoint->getConfigIni()['entrypoint']@@ pour @@app/config/index/config.ini.php@@
+     (ainsi que @@['default']@@, @@['main']@@)
+   * @@$entryPoint->getLocalConfigIni()['localentrypoint']@@ pour @@var/config/index/config.ini.php@@
+     (ainsi que @@['default']@@, @@['main']@@, @@['entrypoint']@@ et @@['local']@@)
+
+Cela vous renvoi un objet de type @@\Jelix\IniFile\IniModifier@@ qui possède
+les mêmes méthodes @@getValue()@@, @@setValue()@@ et d'autres.
+
+Voir la documentation de cette [[https://github.com/jelix/inifile|bibliothèque jelix/Inifile]]
+pour en savoir plus.
+
 ==== Méthodes ou propriétés principales ====
 
-Voici quelques propriétés ou méthodes que vous pouvez utiliser :
+Voici quelques méthodes que vous pouvez utiliser sur le paramètre
+@@jInstallerEntryPoint2@@ :
 
+  * @@$entryPoint->declareWebAssets()@@ : déclare des assets web dans la configuration du point d'entrée
+  * @@$entryPoint->execSQLScript()@@ : pour executer un script SQL qui est dans
+    un des modules du point d'entrée (voir la méthode similaire sur @@jInstallerModule2@@.
+  * @@$entryPoint->getUrlMap()@@ pour pouvoir lire/modifier la configuration
+    des urls propres au point d'entrée.
+  * @@$entryPoint->getType()@@, @@$entryPoint->getScriptName()@@, @@$entryPoint->getFileName()@@ pour
+    savoir de quel point d'entrée il s'agit
 
+Votre classe d'installation a quant à elle accés aux propriétés et méthodes suivantes :
+
+  * @@$this->globalSetup@@ est un objet @@jInstallerGlobalSetup@@ qui permet
+    d'accéder à la configuration globale, à la configuration des URLs et
+    quelques autres données globales.
+    * @@$this->globalSetup->getUrlModifier()@@ qui est un objet @@XmlMapModifier@@ pour lire/modifier
+      la configuration des urls
+    * @@$this->globalSetup->declareNewEntryPoint()@@ pour déclarer un nouveau point d'entrée.
   * @@$this->dbConnection()@@: retourne un objet @@C@jDbConnection@@. Ne pas
     appeler @@jDb::getConnection()@@, car vous ne savez pas vraiment quel est le
     profil par défaut.
@@ -120,6 +195,9 @@ Voici quelques propriétés ou méthodes que vous pouvez utiliser :
     @@F@sql/install.mysql.sql@@ sera chargé. Il est possible d'indiquer le nom
     complet du script, mais cela doit être compatible avec toutes les bases de
     données supportées par votre application.
+  * @@$this->declareDbProfile()@@ pour déclarer un nouveau profile de connexion pour jDb
+  * @@$this->getCoordPluginConf()@@ pour avoir la configuration d'un plugin du coordinateur
+  * @@$this->declareGlobalWebAssets()@@ pour déclarer des assets web
   * @@$this->copyFile()@@ pour copier un fichier particulier, du répertoire
     install vers un autre endroit ou la configuration. Le premier argument
     est le chemin du fichier à copier, relatif au répertoire install/, le
@@ -131,36 +209,27 @@ Voici quelques propriétés ou méthodes que vous pouvez utiliser :
     install/ vers un autre endroit, typiquement vers le répertoire @@F@www/@@ de
     l'application ou la configuration. Les préfixes utilisables pour @@getFile()@@
     le sont aussi pour cette méthode.
-  * @@$this->config@@: l'objet @@C@jIniMultifilesModifier@@ correspond au
-    fichier de configuration du point d'entrée courant. Avec cet objet, vous
-    pouvez récupérer le contenu du fichier de configuration et/ou le modifier.
 
-**attention** : avec @@$this->config@@, vous n'avez que les valeurs du fichier
-mainconfig.ini.php et celui du point d'entrée. Probablement est-il mieux de
-récupérer @@$this->entrypoint->localConfigIni@@ qui est une combinaison entre
-mainconfig.ini.php, localconfig.ini.php et la configuration du point d'entrée.
-
-N'hésitez pas à lire l'API de référence de @@C@jInstallerModule@@ et de
-@@C@jInstallerBase@@, et de regarder le script d'installation des modules
-fournis par Jelix. Vous apprendrez certainement beaucoup de choses.
-
+N'hésitez pas à lire l'API de référence de @@C@jInstallerModule2@@ et de regarder
+le script d'installation des modules fournis par Jelix. Vous apprendrez
+certainement beaucoup de choses.
 
 ==== Pour ne pas exécuter une partie de votre script ====
 
-Vous remarquerez que dans l'exemple, on appelle la méthode @@M@firstDbExec@@.
+Vous remarquerez que dans l'exemple, on appelle la méthode @@M@firstDbExec()@@.
 Celle-ci vous dit si c'est la première fois que vous essayez d'accéder à la base
 données, pour le profil de base de données courant (certains points d'entrées
 peuvent partager le même profil). Souvenez-vous que votre script d'installation
 est appelé pour chaque point d'entrée (voir plus haut).
 
-Vous avez aussi la méthode @@M@firstConfExec@@ pour savoir si il y a déjà des
-changements dans le fichier de configuration courant (certains points d'entrée
+Vous avez aussi la méthode @@M@firstConfExec()@@ sur l'objet @@$entrypoint@@ donné
+en paramètre, pour savoir si il y a déjà des changements dans le fichier de
+configuration du point d'entrée (certains points d'entrée
 peuvent partager le même fichier de configuration, autre que
 @@mainconfig.ini.php@@). Si elle retourne vrai, vous avez alors accès au
-fichier de configuration en récupérant la propriété @@P@config@@ , qui est un
-objet @@C@jIniMultifilesModifier@@.
+fichier de configuration en récupérant l'objet de modification via @@$entrypoint->getConfigIni()@@.
 
-Vous avez alors la méthode @@M@firstExec@@. Vous passez un mot-clé à cette
+Vous avez enfin la méthode @@M@firstExec()@@. Vous passez un mot-clé à cette
 méthode. Et elle vous dit si vous avez déjà appelé cette méthode avec ce mot clé
 (false) ou pas (true). Vous pouvez appeler cette méthode pour déterminer
 vous-même si, dans certaines conditions, vous voulez exécuter plusieurs fois
@@ -176,7 +245,7 @@ divers endroits (listés ici par ordre de priorité, le premier étant le plus
 prioritaire) :
 
     * Dans votre classe d'installation, vous appelez la méthode
-      @@M@useDbProfile@@, en lui donnant le nom du profil à utiliser.
+      @@M@useDbProfile()@@, en lui donnant le nom du profil à utiliser.
     * Dans la propriété @@P@defaultDbProfile@@ de votre classe d'installation,
       vous pouvez indiquer le profil à utiliser pour l'installation du module
 
@@ -211,7 +280,7 @@ Pour lire les paramètres depuis le script d'installation, vous avez la méthode
 , elle retourne @@null@@. Exemple :
 
 <code php>
-  function install() {
+  function installEntryPoint(jInstallerEntryPoint2 $entryPoint) {
      if ($this->getParameter('enablecategories')) {
         // ici du code pour créer la table des catégories par exemple...
         // ...
@@ -251,7 +320,6 @@ module, seront exécutés. Imaginez que vous ayez ces scripts :
     * @@F@upgrade_eee.php@@ (déclarant la version 1.2)
     * @@F@upgrade_hello.php@@ (déclarant la version 1.3)
 
-
 Si la version courant du module est 1.1 et que la nouvelle version du module
 (indiquée par le nouveau fichier @@F@module.xml@@) est 1.2, alors seuls les
 scripts suivants seront lancés, dans cet ordre:
@@ -271,9 +339,9 @@ pourquoi nous utilisons un label, qui **doit être différent pour chaque script
 lieu d'un label, mais malheureusement, PHP n'aime pas les caractères comme "."
 ou "-" dans un nom de classe).
 
-La classe devra hériter de @@M@jInstallerModule@@, pour que vous puissiez avoir
+La classe devra hériter de @@M@jInstallerModule2@@, pour que vous puissiez avoir
 exactement les mêmes comportements et méthodes que le script d'installation.
-Vous devez donc implémenter la méthode @@M@install@@, vous pouvez appeler
+Vous devez donc implémenter la méthode @@M@installEntryPoint()@@, vous pouvez appeler
 @@M@firstDbExec@@, @@M@getParameter@@ etc..
 
 
@@ -284,12 +352,12 @@ dans la propriété @@P@$date@@.
 
 <code php>
 <?php
-class newsModuleUpgrader_fff extends jInstallerModule {
+class newsModuleUpgrader_fff extends jInstallerModule2 {
 
     public $targetVersions = array('1.2');
     public $date = '2001-06-21';
 
-    function install() {
+    function installEntryPoint(jInstallerEntryPoint2 $entryPoint)  {
        // ....
     }
 

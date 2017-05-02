@@ -1,6 +1,5 @@
 ~~LANG:EN@enman:new-features~~
 
-<<<<<<< HEAD
 ===== Nouveautés apportées par la version 1.7 =====
 
 Jelix 1.7 apporte beaucoup de nouveautés. Consultez les [[installation/migration|instructions de migrations]]
@@ -53,7 +52,7 @@ de mises à jour s'occupent de pas mal de choses.
       plugins 'basic_significant' et 'significant', avec des améliorations
       faciliter la configuration des urls
     * **NODOC** Une API permet aux scripts d'installation de déclarer facilement les urls
-      (et donc de modifier urls.xml) : @@jInstallerBase::declareNewEntryPoint()@@
+      (et donc de modifier urls.xml) : @@jInstallerGlobalSetup::declareNewEntryPoint()@@
     * Les paramètres d'url "module" et "action" ne sont plus pris en compte (mais
       peuvent toujours être récupérés à partir de vos contrôleurs, même si cet
       usage est obsolète)
@@ -112,6 +111,13 @@ de mises à jour s'occupent de pas mal de choses.
 
 ==== Changements dans les API ====
 
+  * Les classes d'installation et de mis à jour doivent être modifier
+    de manière à hériter de @@jInstallerModule2@@ au lieu de @@jInstallerModule@@.
+    Cette dernière permet de manipuler les fichiers de configuration globaux et
+    ceux des points d'entrées plus facilement (avec en partie la nouvelle classe
+    @@jInstallerEntryPoint2@@).
+    Les classes @@jInstallerModule@@ et @@jInstallerEntryPoint@@ sont dépréciées.
+
   * nouvelle méthode @@M@jApp::version()@@
   * **NODOC** nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le
     framework (version...)
@@ -131,9 +137,6 @@ de mises à jour s'occupent de pas mal de choses.
     configuration.
   * **NODOC** jLocale a été remanié afin d'avoir une classe pour lire un fichier properties
 
-  * **NODOC** Les classes @@jInstallerBase@@ et @@jInstallerEntryPoint@@ pour les
-    scripts d'installation/mise à jour, ont de nouvelles méthodes pour accéder
-    aux différents fichiers de configurations
   * **NODOC** Correction dans jDatetime sur le format RCF822 et les timezones
   * **NODOC** jDao : l'attribut "driver" sur les balises de conditions est déprécié et remplacé par un attribut "dbtype"
   * jDb/mysql : correction sur le démarrage d'une transaction, pour ne plus utiliser l'ancien mot-clé SQL pour cette fonctionnalité
