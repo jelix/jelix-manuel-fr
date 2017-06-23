@@ -376,3 +376,25 @@ Vous pouvez aussi avoir une section @@__common__@@ qui déclare un mapping pour 
 Le mapping pour un profil donné, contiendra le mapping de @@__common__@@, celui de la section correspondante
 dans le fichier de mapping, et éventuellement celui déclaré dans la propriété classmap
 du profil.
+
+Autre options de configurations :
+
+- @@trace=on@@ : pour activer le deboggage. Dans un fichier de log de type "soap",
+  vous aurez les requetes et réponses soap. Configurez correctement le logger,
+  par exemple :
+
+<code ini>
+[logger]
+soap=file
+
+[fileLogger]
+soap=soap.log
+</code>
+
+- @@exceptions@@ : c'est un booléen définissant si les erreurs SOAP doivent
+  lancer des exceptions du type SoapFault.
+- @@connection_timeout@@ : temps d'attentes d'une réponse avant d'émettre une erreur
+- @@ssl_self_signed@@ (depuis 1.6.15) : si à "on", il n'y a pas de vérification
+  du certificat SSL pour les serveurs SOAP en https. À ne pas activer pour
+  les serveurs non locaux.
+
