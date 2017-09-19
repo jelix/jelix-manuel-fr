@@ -280,7 +280,7 @@ faire cela, voyez plutôt les "méthodes XML/PHP" de la factory. Les méthodes f
 par votre classe seront plutôt des méthodes qui calculent par exemple des valeurs de champs,
 qui vérifient des rêgles de gestion etc...
 
-Votre classe aura le nom que vous voudrez, et stockée dans le répertoire @@F@daos/@@ d'un module,
+Votre classe aura le nom que vous voudrez, avec le suffixe @@DaoRecord@@, et stockée dans le répertoire @@F@daos/@@ d'un module,
 sous le nom @@<nomclasse>.daorecord.php@@.
 
 Vous indiquerez alors le sélecteur de cette classe @@<nommodule>~<nomclasse>@@ dans un attribut
@@ -296,11 +296,11 @@ Exemple, dans le fichier dao :
    </record>
 </code>
 
-Les enregistrements seront donc de la classe @@C@news@@ situées dans le fichier @@F@daos/news.daorecord.php@@
-du module @@news@@.
+Les enregistrements seront donc de la classe @@C@newsDaoRecord@@ située dans le
+fichier @@F@daos/news.daorecord.php@@ du module @@news@@.
 
 <code php>
-class news extends jDaoRecordBase {
+class newsDaoRecord extends jDaoRecordBase {
 
    function methodeDeCalcul() {
         $this->champs = $this->champs2 * 1.196;
