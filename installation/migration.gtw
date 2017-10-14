@@ -25,7 +25,7 @@ Voici les instructions à suivre dans l'ordre.
 
 ==== Prérequis ====
 
-Jelix 1.7 nécessite php 5.6 minimum. Vérifiez que votre serveur a bien cette
+Jelix 1.7 nécessite PHP 5.6 minimum. Vérifiez que votre serveur a bien cette
 version.
 
 ==== Sauvegarde ====
@@ -93,7 +93,8 @@ composer install
 Vous verrez alors un nouveau répertoire @@F@vendor/@@ et un fichier composer.lock.
 Il n'est pas recommandé d'inclure le répertoire @@F@vendor/@@ dans votre gestionnaire
 de version (git, subversion...). Donc indiquez-le dans un fichier @@F@.gitignore@@,
-@@F@.hgignore@@ ou une propriété @@snv:ignore@@, selon l'outils que vous utilisez.
+@@F@.hgignore@@ ou une propriété @@snv:ignore@@, selon l'outils de gestion de version
+que vous utilisez.
 
 Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer :
 
@@ -145,6 +146,8 @@ le fichier @@composer.json@@ si vous utilisez Composer.
 
 Supprimez donc ces paramètres des fichiers de configuration.
 
+=== Déclarer les modules et plugins dans @@F@application.init.php@@ ===
+
 Dans le fichier @@F@application.init.php@@, vous devez appeler
 @@jApp::declareModulesDir@@ et/ou @@jApp::declarePluginsDir@@, avec la liste
 des repertoires.
@@ -164,10 +167,10 @@ déclarés. Notez que les répertoires @@jelix-modules@@, @@jelix-admin-modules@
 fichier @@F@vendor/jelix_app_path.php@@).
 
 
-=== Si vous installez Jelix avec Composer ===
+=== Déclarer les modules et plugins dans composer.json ===
 
-Vous avez un autre moyen quand vous installez Jelix avec Composer : ces répertoires
-peuvent être déclaré directement dans le fichier @@F@composer.json@@ au lieu
+Si vous installez Jelix avec Composer, les répertoires de modules et de plugins
+peuvent être déclarés directement dans le fichier @@F@composer.json@@ au lieu
 du fichier @@application.init.php@@, comme ceci:
 
 <code json>
@@ -210,8 +213,7 @@ de Jelix.
 Mais pour sqlite3, il faut le faire à la main. Attention : pour passer de
 sqlite 2 à sqlite 3, il faut d'abord convertir votre base au format sqlite3
 (en ayant donc installé sqlite 2 et sqlite 3 sur votre système),
-par exemple en tapant dans votre console :
-@@sqlite OLD.db .dump | sqlite3 NEW.db@@.
+par exemple en tapant dans votre console : @@sqlite OLD.db .dump | sqlite3 NEW.db@@.
 
 Une alternative est d'installer les drivers sqlite et mysql séparément,
 [[https://github.com/jelix/legacy-db-plugins|en les téléchargeant]] ou en
@@ -238,10 +240,14 @@ web est bien configuré pour prendre en charge le "pathinfo".
 ==== Utilisation du script cmd.php ====
 
 Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
+De ce fait, tous les paramètres et options ont changé.
 
-Si vous les utilisez dans des scripts ou ailleurs, il vous faut changer les
+Si vous utilisez ces commandes dans des scripts, cron ou autre, il vous faut changer les
 paramètres, en particulier le nom de la commande. Faire un @@php cmd.php help@@
 pour avoir l'aide.
+
+De plus le script createapp.php a été déplacé dans un répertoire bin, et disponible
+dans @@vendor/bin@@ de votre application si vous installez Jelix avec Composer.
 
 ==== Vos scripts utilisant jCmdLineRequest ====
 
@@ -272,10 +278,21 @@ ils avaient choisie d'être "reconnu" par votre application.
 ==== Changements dans les scripts d'installation de vos modules ====
 
 Étant donné les changements dans l'organisation des fichiers de configuration,
-et étant donné que la classe @@jInstallerModule@@ est dépréciée, vous
-devriez mettre à jour vos scripts d'installation et de mise à jour
-en utilisant la classe @@jInstallerModule2@@ et ses nouveaux objets et méthodes
-qui permettent d'accéder aux différentes configuration de manière plus simple.
+et afin de faire une meilleure distinction au niveau des API, entre ce qui concerne
+l'application en général, et ce qui concerne un point d'entrée, des nouvelles
+classes @@jInstallerModuleé@@ et @@jInstallerEntryPoint2@@ ont fait leur apparition.
+
+Bien que cela ne soit pas obligatoire pour Jelix 1.7 (mais cela le deviendra
+pour les futures versions, @@jInstallerModule@@ disparaitra), vous devriez
+modifier vos scripts d'installation et de mise à jour en utilisant la classe
+@@jInstallerModule2@@.
+
+La principale différence réside en un renommage des méthodes @@install()@@,
+@@preInstall()@@ etc, en @@installEntryPoint()@@, @@preInstallEntryPoint()@@
+etc. Ces nouvelles méthodes acceptent en paramètre un objet @@jInstallerEntryPoint2@@.
+Vous avec donc depuis ces nouvelles méthodes, accés à des fonctions qui sont
+soit liées à un point d'entrée (sur cet objet  @@jInstallerEntryPoint2@@), soit
+liées à l'application en général (sur @@jInstallerModule2@@).
 
 ==== Déplacement des fichiers overloads, themes... ====
 
@@ -310,11 +327,6 @@ modifications suivantes :
         <jelix minversion="1.5" maxversion="1.7.*"/>
 </code>
 
-
-Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
-classes et méthodes que vous pouvez utiliser. Mais surtout et aussi celles
-qui n'existent plus et que vous devez remplacer.
-
 Certaines classes, certains modules et plugins sont maintenant livrés séparément, soit
 installable avec Composer, soit via un zip. Si vous les utilisiez, il faudra donc les
 récupérer en plus de Jelix. Il s'agit de :
@@ -327,6 +339,33 @@ récupérer en plus de Jelix. Il s'agit de :
   * la classe jHttp : [[https://packagist.org/packages/jelix/jhttp|jelix/jhttp]]. Il est
     préconisé d'utiliser d'autres composants plus modernes
     comme [[https://packagist.org/packages/guzzlehttp/guzzle|GuzzleHttp]].
+
+==== Changements d'API ====
+
+Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
+classes et méthodes que vous pouvez utiliser.
+
+Il y a eu aussi des changements dans certaines API, que vous devriez donc
+modifier dans votre code si vous les utilisez :
+
+  * @@jQueryPath@@ dans la configuration est obsolète. Préférez l'utilisation des webassets.
+
+  * si vous traitez des requêtes avec du contenu JSON (type application/json)
+    le JSON est maintenant automatiquement désérialisé avec json_decode. Vous
+    devez donc changer vos contrôleurs pour ne plus faire vous même la
+    déserialisation.
+
+  * jDb : si vous utilisiez bindValue() et bindParam() (mais il y a peu de chance,
+    vu que cela ne fonctionnait pas très bien) il faut modifier ces appels, en
+    utilisant les bons arguments.
+
+  * **NODOC** jDao : l'attribut "driver" sur les balises de conditions est déprécié et remplacé par un attribut "dbtype"
+
+Des fonctionnalités, API et modules ont été supprimés. Voir la liste
+complète dane [[/nouveautes|les nouveautés]]. Veillez donc à modifier votre
+code pour ne plus les utiliser et éventuellement les remplacer par des
+alternatives.
+
 
 ==== Mise à jour de Jelix ====
 
@@ -346,7 +385,9 @@ En particulier :
      * ceux des points d'entrées
      * fichiers de configuration des plugins du coordinateur
      * fichier de classmap pour soap
-
+  * migration de @@persistant_crypt_key@@ vers @@persistant_encryption_key@@
+  * migration de la declaration des assets des widgets wikieditor et htmleditor
+    vers le nouveau système d'assets
 
 
 
