@@ -6,12 +6,9 @@ Jelix 1.7 apporte beaucoup de nouveautés. Consultez les [[installation/migratio
 qui sont bien moins impressionnantes que la liste des nouveautés : les scripts
 de mises à jour s'occupent de pas mal de choses.
 
-
-==== Fonctionnement général ====
-
 Jelix 1.7 nécessite dorénavant PHP 5.6 minimum et est compatible avec PHP 7.
 
-=== Intégration avec Composer ===
+==== Intégration avec Composer ====
 
     * La bibliothèque Jelix [[https://packagist.org/packages/jelix/jelix|est maintenant installable]]
       avec Composer.
@@ -29,7 +26,7 @@ Jelix 1.7 nécessite dorénavant PHP 5.6 minimum et est compatible avec PHP 7.
       le fichier composer.json de l'application et des paquets contenant des
       modules.
 
-=== Nouveau répertoire @@F@app/@@ ===
+==== Nouveau répertoire @@F@app/@@ ====
 
 Une application contient un nouveau repertoire @@F@app/@@ dans lequel ont été
 déplacé certains fichiers de @@F@var/@@ ainsi que @@F@responses/@@.
@@ -48,7 +45,7 @@ déplacé certains fichiers de @@F@var/@@ ainsi que @@F@responses/@@.
       qui seraient créés dynamiquement pendant la vie de l'application.
     * Déplacement du répertoire @@F@responses/@@ vers @@F@app/responses@@
 
-=== Refonte du moteur d'URL ===
+==== Refonte du moteur d'URL ====
 
 Le nouveau moteur est en quelque sorte une fusion des anciens
 plugins 'basic_significant' et 'significant', avec des améliorations pour
@@ -78,7 +75,7 @@ faciliter la configuration des urls. Il n'y a plus de système de plugins
 
 L'outil de migration s'occupe d'effectuer la plupart de ces changements.
 
-=== Amélioration de l'installateur ===
+==== Amélioration de l'installateur ====
 
 **NODOC**Les API pour les scripts d'installation ont été retravaillé, de manière
 à séparer ce qui est spécifique à un point d'entrée, et ce qui est spécifique
@@ -98,9 +95,8 @@ des fichiers qui auraient été créé par le module etc.
 installer.ini.php. Si l'installation bug, cela permet de restaurer plus facilement
 l'installation d'origine.
 
-=== Nouveau Système d'assets : webassets ===
+==== Nouveau Système d'assets : webassets ====
 
-**NODOC**
 Une nouvelle manière de déclarer les assets (js et css) dans le HTML fait son apparition.
 Dans la configuration, vous pouvez indiquer des listes de scripts js et css,
 regroupés en groupe.
@@ -113,7 +109,7 @@ les assets des composants Jelix !), ou pour mettre à jour des bibliothèques JS
 Ou encore pour spécifier des listes de fichiers JS/CSS en fonction de
 l'environnement (debug vs production).
 
-=== jDb et jDao ===
+==== jDb et jDao ====
 
   * **Amélioration de la prise en charge des requêtes préparées**
     * bindValue() et bindParam() a maintenant la même signature que PDO
@@ -135,7 +131,7 @@ l'environnement (debug vs production).
      * un plugin pour jdb est fourni, permettant à jDb de traiter plus
        rapidement l'ouverture d'une connexion.
 
-=== jForms ===
+==== jForms ====
 
     * **NODOC** jForms ne stocke plus les données des instances dans la session
       mais dans un cache avec jCache, permettant de charger les sessions
@@ -151,8 +147,11 @@ l'environnement (debug vs production).
     * **NODOC** En js, vous pouvez forcer le rechargement d'une listbox dynamique
      avec la méthode @@updateDynamicList()@@ de l'objet JS jforms.
 
-=== Autres nouveautés ===
+==== Autres nouveautés ====
 
+  * **NODOC** La propriété @@_lang@@ de @@jResponseHtml@@ ne contient maintenant
+    que le code langue (XX), et non la locale complète (XX_YY), que l'on retrouve
+    dans une nouvelle propriété @@_locale@@.
   * **NODOC** jRequest parse maintenant automatiquement les contenus JSON indiqués dans
     les requêtes HTTP (c'était une fonctionnalité introduite dans Jelix 1.6.12
     mais désactivé par défaut).
@@ -201,8 +200,7 @@ l'environnement (debug vs production).
     configuration.
   * **NODOC** Correction dans jDatetime sur le format RCF822 et les timezones
 
-
-===== Les modules et plugins externalisés =====
+==== Les modules et plugins externalisés ====
 
 À l'instar du module jtcpdf dans les versions précédentes, des modules et plugins ne sont
 plus fournis avec Jelix, mais disponibles séparément, en tant que paquets Composer et archives
@@ -230,7 +228,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
     modification de fichiers ini (anciennement jIniFileModifier et jIniMultiFilesModifier)
   * [[https://packagist.org/packages/jelix/wikirenderer-plugin|La class jWiki et WikiRenderer]]
 
-===== Les modules, plugins et fonctionnalités supprimés ou dépréciés =====
+==== Les modules, plugins et fonctionnalités supprimés ou dépréciés ====
 
   * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre
     application pour utiliser en_US ou en_GB.
@@ -263,7 +261,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
     navigateurs récents supportant JSON.
 
 
-===== Pour les contributeurs =====
+==== Pour les contributeurs ====
 
   * La configuration Vagrant pour les contributeurs est maintenant située dans testapp
   * Il n'y a plus besoin de faire un "build" des sources de Jelix pour contribuer à Jelix
@@ -271,7 +269,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
   * FakeServerConf, Minify, PHPMailer sont maintenant installés via Composer
   * Dans testapp, une application "adminapp" est disponible pour tester les modules d'admin.
 
-===== Contributeurs à Jelix 1.7 =====
+==== Contributeurs à Jelix 1.7 ====
 
   * Laurent Jouanneau (la plupart des évolutions)
   * Brunto (crud controller)

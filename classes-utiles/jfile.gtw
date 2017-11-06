@@ -46,3 +46,18 @@ jFile::removeDir('/le/chemin/du/dossier', false);
 jFile::removeDir('/le/chemin/du/dossier');
 // le contenu du dossier, et le dossier lui même sera supprimé.
 </code>
+
+===== Fonction getMimeTypeFromFilename =====
+
+Permet d'avoir le type mime d'un fichier à partir de son nom. Il y a un
+certain nombre d'extension de nom de fichier reconnu. Mais vous pouvez rajouter
+les vôtres dans la section @@mimeTypes@@ de la configuration.
+
+
+===== Autres fonctions =====
+
+jFile possède d'autres méthodes statiques, mais en fait celles-ci
+ne font qu'appeler des objets et methodes du paquet @@jelix/file-utilities@@
+@@\Jelix\FileUtilities\File@@, @@\Jelix\FileUtilities\Path@@,
+@@\Jelix\FileUtilities\Directory@@... Voir leur documentation pour en savoir
+plus.
