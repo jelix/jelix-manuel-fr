@@ -91,34 +91,10 @@ méthode @@M@param()@@ en indiquant le nom du paramètre, en particulier pour le
 méthodes POST et GET, comme à l'habitude.
 
 Bien sûr, pour POST ou PUT, @@M@param()@@ ne fonctionne que si les paramètres
-sont envoyés sous les types de format "multipart/form-data" ou
+sont envoyés sous les types de format "multipart/form-data", "application/json" ou
 "application/x-www-url-encoded" (ce qui est le cas dans la majorité des cas avec
 POST).
 
-==== Cas du PUT ====
+Voir la [[/controleurs/recuperation-parametres-http|section sur la récupération des paramètres]]
+pour connaître toutes les possibilités.
 
-PHP ne supporte pas correctement la méthode HTTP PUT. En effet, il ne récupère
-pas les paramètres qui pourraient être éventuellement dans le corps de la
-requête http, comme il le fait avec la méthode POST (il n'y a pas de @@$_PUT@@).
-
-Jelix pallie ce défaut, en extrayant lui-même ces paramètres (via
-@@php://input@@), à condition que le type de contenu soit
-@@application/x-www-url-encoded@@ ou @@multipart/form-data@@, comme pour POST.
-Vous appellerez donc la méthode @@M@param()@@ comme dans n'importe quel
-contrôleur, en indiquant le paramètre voulu.
-
-Par contre, les fichiers éventuellement transmis dans un contenu
-@@multipart/form-data@@, ne sont pas mis dans $_FILE, il vous faudra donc les
-traiter vous-même, en les récupérant comme les autres paramètres
-(@@$this->param('foo')@@).
-
-Si les données ne sont pas de type "multipart/form-data" ou
-"application/x-www-url-encoded", vous pourrez quand même récupérer le contenu de
-la requête en indiquant le nom de paramètre @@__httpbody@@. 
-
-<code php>
-  $data = $this->param('__httpbody');
-</code>
-
-À vous ensuite d'analyser le contenu en fonction du type des données (que vous
-trouverez dans @@$_SERVER["CONTENT_TYPE"]@@).

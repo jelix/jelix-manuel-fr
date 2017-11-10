@@ -149,18 +149,19 @@ l'environnement (debug vs production).
 
 ==== Autres nouveautés ====
 
-  * **NODOC** La propriété @@_lang@@ de @@jResponseHtml@@ ne contient maintenant
+  * La propriété @@_lang@@ de @@jResponseHtml@@ ne contient maintenant
     que le code langue (XX), et non la locale complète (XX_YY), que l'on retrouve
     dans une nouvelle propriété @@_locale@@.
-  * **NODOC** jRequest parse maintenant automatiquement les contenus JSON indiqués dans
+  * jRequest parse maintenant automatiquement les contenus JSON indiqués dans
     les requêtes HTTP (c'était une fonctionnalité introduite dans Jelix 1.6.12
     mais désactivé par défaut).
-  * **NODOC** Nouvelle méthode @@M@jCoordinator::execOriginalAction()@@ pour savoir si l'action courante est une redirection interne ou pas
+  * **NODOC** Nouvelle méthode @@M@jCoordinator::execOriginalAction()@@ pour
+    savoir si l'action courante est une redirection interne ou pas.
   * contrôleur CRUD : la liste des enregistrements peut être triée par colonne
   * **NODOC** jCmdLineRequest : il faut maintenant donner le module et l'action
-    au constructeur quand le script est dédié à une action précise
+    au constructeur quand le script est dédié à une action précise.
   * Dans les applications nouvellement créés, le répertoire temp est maintenant
-    par défaut dans le répertoire de l'application
+    par défaut dans le répertoire de l'application.
 
   * @@jApp@@ :
     * nouvelle méthode @@jApp::urlBasePath()@@ qui permet de récupérer le basePath,
