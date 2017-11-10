@@ -105,28 +105,6 @@ public $pluginParams = array(
 Indique que toutes les actions du contrôleur ont un paramètre nommé
 "auth.required" et valant false.
 
-==== Exemples de plugins ====
-
-== magicquotes ==
-
-Il sert à traiter les magicquotes sur les serveurs où ces magic quotes sont
-activés. Pas de configuration pour ce plugin.
-
-<code ini>
-[coordplugins]
-magicquotes = 1
-</code>
-
-**NB : ** ce plugin n'a pas pour effet de désactiver magic_quotes dans votre
-configuration php. A l'installation de votre application jelix, dans la page de
-contrôle de votre installation, vous verrez donc toujours l'option magic_quotes
-active.
-
-Ce plugin permet simplement de gérer la suppression des antislashes \ venant
-échapper les apostrophes ' quand cela est nécessaire.
-
-Note : avec PHP 5.4 est suivant, ce plugin n'est pas nécessaire.
-
 ===== Développement d'un plugin coord =====
 
 Un plugin est en fait une classe qui implémente l'interface @@I@jICoordPlugin@@.
