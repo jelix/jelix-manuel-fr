@@ -188,7 +188,8 @@ var f = jFormsJQ.getForm("jforms_utilisateurs_identite");
 <code javascript>
   f.setErrorDecorator(new MyErrorDecorator); // voir plus haut
   f.addSubmitHandler(function(event){...}); // voir ci dessous
-
+  f.updateDynamicList("ref_d_un_control"); // pour rafraichir une listbox
+                                           // générée dynamiquement par jForms
   var c = f.getControl("ref_d_un_control"); // récupérer l'objet js d'un control
 </code>
 

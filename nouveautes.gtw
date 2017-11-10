@@ -133,7 +133,7 @@ l'environnement (debug vs production).
 
 ==== jForms ====
 
-    * **NODOC** jForms ne stocke plus les données des instances dans la session
+    * jForms ne stocke plus les données des instances dans la session
       mais dans un cache avec jCache, permettant de charger les sessions
       beaucoup plus rapidement. Par défaut le cache se fait dans des fichiers,
       mais vous pouvez utiliser Redis ou autre.
@@ -144,7 +144,7 @@ l'environnement (debug vs production).
       [[rêgles CSP|https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP]].
     * Tous les composants de jForms, comme les widgets wikieditor et htmleditor,
       utilisent le nouveau système d'assets de Jelix.
-    * **NODOC** En js, vous pouvez forcer le rechargement d'une listbox dynamique
+    * En js, vous pouvez forcer le rechargement d'une listbox dynamique
      avec la méthode @@updateDynamicList()@@ de l'objet JS jforms.
 
 ==== Autres nouveautés ====

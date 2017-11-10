@@ -89,6 +89,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[jforms/apres-submit|Gérer un formulaire après soumission]]
       - section: [[jforms/affichage-donnees|Affichage simple des données]].
       - section: [[jforms/security|Sécurité dans les formulaires]].
+      - section: [[jforms/cache|Configurer le cache des données]].
    - chapter: [[bd|jDb : accéder à une base de données SQL]]
       - section: [[bd/configuration|Profils et configuration]].
       - section: [[bd/requetes|Exécuter des requêtes]].

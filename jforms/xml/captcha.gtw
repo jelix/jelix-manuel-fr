@@ -167,7 +167,7 @@ et donc deux méthodes :
   * @@initOnDisplay()@@: méthode qui sera appelé lors de l'affichage du widget,
    si vous faites un @@$this->ctrl->initCaptcha()@@ dans @@M@outputControl()@@ du widget.
    Cette méthode peut renvoyer des données si le widget en a besoin pour l'affichage.
-   Ces données sont stockées en session.
+   Ces données sont stockées dans le cache des données du formulaire.
   * @@validate($value, $internalData)@@, qui sera appelé par jForms pour valider
     la réponse de l'utilisateur. @@$value@@ est la valeur saisie par l'utilisateur
     (ou généré par le captcha lors du submit), et @@$internalData@@ sont les
