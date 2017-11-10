@@ -87,7 +87,7 @@ pour l'installation. Si les conditions ne sont pas requises, vous pouvez alors
 
 <code php>
 <?php
-class newsModuleInstaller extends jInstallerModule {
+class newsModuleInstaller extends jInstallerModule2 {
 
     function preInstallEntryPoint(jInstallerEntryPoint2 $entryPoint) {
     }
@@ -103,8 +103,28 @@ class newsModuleInstaller extends jInstallerModule {
 
 </code>
 
+Vous avez également la possibilité d'écrire des méthodes pour désinstaller
+un module :
 
-@@C@jInstallerModule2@@ contient un certain nombre de propriétés et de méthodes
+<code php>
+<?php
+class newsModuleInstaller extends jInstallerModule2 {
+
+    function preUninstallEntryPoint(jInstallerEntryPoint2 $entryPoint) {
+    }
+
+    function uninstallEntryPoint(jInstallerEntryPoint2 $entryPoint) {
+    }
+
+    function postuninstallEntryPoint(jInstallerEntryPoint2 $entryPoint) {
+    }
+}
+</code>
+
+Elles seront appellées lorsque la commande @@php cmd.php module:uninstall <module>@@
+sera executée.
+
+Enfin, @@C@jInstallerModule2@@ contient un certain nombre de propriétés et de méthodes
 qui vous aideront à accéder à la base de données, aux fichiers de configuration
 etc..
 

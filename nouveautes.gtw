@@ -61,8 +61,8 @@ faciliter la configuration des urls. Il n'y a plus de système de plugins
       @@engine@@, @@defaultEntrypoint@@, @@simple_urlengine_https@@
     * Les sections de configurations suivantes n'existent plus :
       @@simple_urlengine_entrypoints@@, @@basic_significant_urlengine_entrypoints@@
-    * **NODOC** Une API permet aux scripts d'installation de déclarer facilement les urls
-      (et donc de modifier urls.xml) : @@jInstallerGlobalSetup::declareNewEntryPoint()@@
+    * Une API permet aux scripts d'installation de déclarer facilement les urls
+      (et donc de modifier urls.xml) : @@jInstallerGlobalSetup::getUrlModifier()@@, @@jInstallerGlobalSetup::declareNewEntryPoint()@@
     * Dans le fichier urls.xml
        * Il est possible d'indiquer un pathinfo sur un @@<url module="..">@@
        * Il est obligatoire d'indiquer une action pour l'url "/", ce qui remplace
@@ -77,7 +77,7 @@ L'outil de migration s'occupe d'effectuer la plupart de ces changements.
 
 ==== Amélioration de l'installateur ====
 
-**NODOC**Les API pour les scripts d'installation ont été retravaillé, de manière
+Les API pour les scripts d'installation ont été retravaillé, de manière
 à séparer ce qui est spécifique à un point d'entrée, et ce qui est spécifique
 à l'application en général. En particulier ce qui concerne les fichiers de
 configuration. Pour cela, des nouvelles classes @@jInstallerModuleé@@ et
@@ -85,13 +85,13 @@ configuration. Pour cela, des nouvelles classes @@jInstallerModuleé@@ et
 et @@jInstallerEntryPoint@@ sont dépréciées (bien qu'encore utilisable
 pour cette version).
 
-**NODOC** Il est possible aussi de désinstaller un module avec une nouvelle
-commande @@php cmd.php module:uninstall@@.
-L'objet d'installation du module peut implémenter la méthode @@uninstallEntrypoint()@@
-pour supprimer proprement des paramètres de la configuration, supprimer
-des fichiers qui auraient été créé par le module etc.
+Il est possible aussi de désinstaller un module avec une nouvelle
+commande @@php cmd.php module:uninstall@@. L'objet d'installation du module peut
+implémenter la méthode @@uninstallEntrypoint()@@ pour supprimer proprement des
+paramètres de la configuration, supprimer des fichiers qui auraient été créé par
+le module etc.
 
-**NODOC** Autre nouveauté : l'installateur fait maintenant une sauvegarde du fichier
+Autre nouveauté : l'installateur fait maintenant une sauvegarde du fichier
 installer.ini.php. Si l'installation bug, cela permet de restaurer plus facilement
 l'installation d'origine.
 

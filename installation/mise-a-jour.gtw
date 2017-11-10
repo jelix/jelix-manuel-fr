@@ -4,6 +4,7 @@ Votre application tourne déjà sur votre serveur en production. Et maintenant,
 vous voulez mettre à jour votre application. Les principales étapes sont:
 
     - Fermer l'application
+    - Sauvegarder les données et fichiers
     - Mettre à jour les fichiers
     - Lancer la mise à jour système de Jelix
     - Supprimer tous les fichiers de /temp
@@ -53,6 +54,20 @@ tag @@%message%@@ dans le fichier closed.html.
 $ php cmd.php app:close "Sorry, we are closed for the moment, a new version is comming."
 </code>
 
+===== Sauvegarder les données =====
+
+Avant de procéder à une mise à jour, il est fortement recommandé de faire une
+sauvegarde. Cette sauvegarde doit concerner :
+
+   - toute base de donnée utilisée par l'application
+   - le contenu du dossier var de l'application, en particulier les fichiers
+     de configuration.
+   - les sources de l'application, avant de les remplacer par une version plus récente
+
+Il se peut qu'il y ait d'autres sauvegardes à faire, en fonction de l'application.
+Il faut lire la documentation correspondante, si elle existe, fournie avec
+l'application.
+
 ===== Mettre à jour les fichiers =====
 
 La deuxième étape est de mettre à jour les fichiers de votre application. Vous
@@ -99,3 +114,4 @@ pour que l'application fonctionne.
 
 **Vous devez toujours supprimer tous les fichier stockés dans le répertoire temp/.**,
 après une installation ou une mise à jour, et avant de lancer l'application application.
+
