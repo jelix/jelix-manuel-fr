@@ -124,7 +124,6 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[plugins/htmlresponse|plugins pour jResponseHtml]]
       - section: [[plugins/profiles|plugins pour jProfiles]]
    - chapter: [[details-configuration|La configuration en détails]]
-   - chapter: [[objets_globaux|les objets globaux utiles]]
    - chapter: [[cache|Utiliser le cache]]
    - chapter: [[creer-script-installation|Créer des scripts d'installation automatiques]]
    - chapter: [[creer-wizard|Créer un wizard d'installation]]
