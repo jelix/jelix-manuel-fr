@@ -227,15 +227,15 @@ Pour afficher l'aide, il suffit de faire :
 $ php cmdline.php help module~controller:action
 </code>
 
-Si vous voulez qu'un script soit dédié à l'action par défaut indiquée dans la
-configuration, vous devez alors indiquer le paramètre true au constructeur de
-jCmdlineRequest dans le point d'entrée :
+Si vous voulez qu'un script soit dédié à une action précise, vous devez alors
+indiquer le paramètre true au constructeur de jCmdlineRequest, ainsi que le
+module et l'action :
 
 
 <code php>
 <?php
 ...
-$jelix->process(new jCmdLineRequest(true));
+$jelix->process(new jCmdLineRequest(true, "module", "controller:action"));
 ...
 ?>
 </code>

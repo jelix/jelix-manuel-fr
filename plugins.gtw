@@ -70,6 +70,32 @@ Voici les types de plugins et les répertoires correspondant :
     * plugins pour jResponseHtml : @@F@htmlresponse/@@
     * plugins pour jProfiles : @@F@profiles/@@
 
+===== Chargement d'un plugin =====
+
+Les composants qui utilisent des plugins les instancient grâce à la méthode
+@@jApp::loadPlugin()@@. Vous pourriez aussi en avoir besoin pour par exemple
+récupérer des informations fournies par le plugin (configuration etc..), ou
+l'utiliser indépendement du composant qui utilise normalement le plugin.
+
+Pour l'instancier, il faut indiquer en paramètre le nom du plugin,
+le type de plugin ('db', 'acl'...), le suffix du nom du fichier ('.dbconnection.php'..),
+le nom de la classe ('mysqliDbConnection') et enfin le paramètre du constructeur si il existe.
+
+<code php>
+$plugin = jApp::loadPlugin('mysqli'', 'db', '.dbconnection.php', 'mysqliDbConnection', 'default');
+</code>
+
+
+Vous remarquerez qu'il n'est pas possible d'indiquer plusieurs paramètres au
+constructeur. Vous pouvez alors simplement inclure le plugin avec @@jApp::includePlugin()@@, et l'instancier
+vous même. Cette méthode prend les même paramètres que @@loadPlugin()@@, sans le
+paramètre pour le constructeur.
+
+<code php>
+jApp::includePlugin('mysqli'', 'db', '.dbconnection.php', 'mysqliDbConnection');
+$plugin = new mysqliDbConnection('default');
+</code>
+
 ===== Création de plugins =====
 
 Jelix fournit en standard un certain nombre de plugins dans le dépôt
