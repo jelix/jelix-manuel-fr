@@ -104,6 +104,13 @@ Nouveautés sur la version 1.6.14 :
     que vous pouvez dorénavant implémenter son comportement. Voir [[jforms/xml/captcha|la page sur les Captcha]].
   * Plugin “recaptcha” pour le captcha de jForms
 
+Nouveautés sur la version 1.6.16 :
+
+  * jDao : l'attribut @@groupby@@ sur la balise @@<method>@@ est déprécié car son
+    implémentation n'est pas compatible avec des versions récentes de mysql, ni
+    avec les autres bases de données. Elle sera supprimée dans la prochaine version.
+    Une erreur de type "E_USER_DEPRECATED" est générée si cet attribut est utilisé.
+
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
 Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D., JulienI, Couac, Brice Tence, Khena, René-luc D'hont.

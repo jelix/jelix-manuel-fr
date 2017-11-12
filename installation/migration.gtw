@@ -47,6 +47,12 @@ Des améliorations ont été faites sur l'affichage des données de formulaires 
 Vérifiez que vos formulaires s'affichent comme vous le souhaitez, et corrigez vos templates ou css le cas échéant.
 Notament, les contrôles de type @@group@@ ou @@choice@@ affichent maintenant correctement leur contenu.
 
+=== à propos de jDao ===
+
+De par la nature non prédictible du SQL générée par l'implémentation de
+l'attribut @@groupby@@ sur les @@<methode>@@, et valable uniquement avec mysql,
+cet attribut ne doit plus être utilisé. Il sera supprimé dans Jelix 1.7.
+
 ==== Mise à jour des modules ====
 
 Mettez à jour les sources des modules tiers que vous avez installés, et qui sont compatibles avec Jelix 1.6.

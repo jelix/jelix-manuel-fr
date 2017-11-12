@@ -74,15 +74,6 @@ distincts.
    ..
 </code>
 
-On peut aussi ajouter un attribut groupby pour ajouter une clause GROUP BY. (à
-n'utiliser qu'avec mysql, le code généré par jDao n'est pas vraiment compatible
-avec d'autres bases de données).
-
-<code xml>
-  <method type="select" name="findThem" groupby="foo"> 
-   ..
-</code>
-
 La balise //<conditions>// (facultative) décrit une condition (la clause
 //WHERE// en SQL). Voir la section correspondante plus loin.
 
