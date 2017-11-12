@@ -110,6 +110,7 @@ Nouveautés sur la version 1.6.16 :
     implémentation n'est pas compatible avec des versions récentes de mysql, ni
     avec les autres bases de données. Elle sera supprimée dans la prochaine version.
     Une erreur de type "E_USER_DEPRECATED" est générée si cet attribut est utilisé.
+  * Une [[deboggage|nouvelle fonctionnalité pour éviter la fuite de données sensibles dans les logs]].
 
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
