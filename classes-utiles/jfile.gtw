@@ -51,8 +51,15 @@ jFile::removeDir('/le/chemin/du/dossier');
 
 Permet d'avoir le type mime d'un fichier à partir de son nom. Il y a un
 certain nombre d'extension de nom de fichier reconnu. Mais vous pouvez rajouter
-les vôtres dans la section @@mimeTypes@@ de la configuration.
+les vôtres dans la section @@mimeTypes@@ de la configuration, comme ceci :
 
+<code ini>
+[mimeTypes]
+foo = "application/foo"
+</code>
+
+Les fichiers qui ont l'extension "foo" sont reconnus comme étant de type mime
+"application/foo".
 
 ===== Autres fonctions =====
 

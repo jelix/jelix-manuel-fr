@@ -17,6 +17,7 @@ de PHP, apparu dans PHP 5.2. jDatetime ayant des limitations (ne travaille pas
 avec des dates inférieures au 01/01/1970).
 
 ===== Récupérer la date courante =====
+
 La méthode ''now'' permet à l'objet jDateTime de récupérer la date courante.
 
 Exemple :
@@ -43,10 +44,13 @@ jDateTime reconnait les formats suivants :
 | jDateTime::LANG_DFORMAT | date au format dans la langue actuelle de l'application (en fr, ce sera jj/mm/aaaa) |
 | jDateTime::LANG_DTFORMAT | date et heure au format dans la langue actuelle de l'application |
 | jDateTime::LANG_TFORMAT | heure au format dans la langue actuelle de l'application |
+| jDateTime::LANG_SHORT_DTFORMAT | date et heure sans les secondes au format dans la langue actuelle de l'application |
+| jDateTime::LANG_SHORT_TFORMAT | heure sans les secondes au format dans la langue actuelle de l'application |
 | jDateTime::DB_DFORMAT | date au format base de données classique : "AAAA-MM-JJ" |
 | jDateTime::DB_DTFORMAT | date et heure au format base de données classique : "AAAA-MM-JJ HH:mm:SS" |
 | jDateTime::DB_TFORMAT | heure au format base de données classique : "HH:mm:SS" |
-| jDateTime::ISO8601_FORMAT | format ISO8601 |
+| jDateTime::ISO8601_FORMAT | format ISO8601 "YYYY-MM-DDTHH:mm:ssZ" |
+| jDateTime::RFC822_FORMAT | format RFC822 "D, d M y H:i:s O" |
 | jDateTime::TIMESTAMP_FORMAT | simple entier, indiquant le nombre de secondes depuis le 1/1/1970 |
 | jDateTime::FULL_LANG_DATE | date au format complet (jour de la semaine et mois en toute lettre) en tenant compte de la langue |
 
