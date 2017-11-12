@@ -107,7 +107,7 @@ Si il n'y a ni wizard, ni script d'installation dédié, il faudra alors utilise
 la commande @@installapp@@ de jelix-scripts. Comme précédemment, renseignez bien
 le contenu des fichiers @@F@profiles.ini.php@@ et @@F@localconfig.ini.php@@,
 et lancez en ligne de commande, dans le répertoire @@F@testapp/@@,
-@@php cmd.php app:install@@. Voir [[/jelix-scripts|le chapitre sur jelix-scripts]]
+@@php cmd.php app:install@@. Voir [[/installation/jelix-scripts|le chapitre sur jelix-scripts]]
 pour plus de détails sur le fonctionnement de @@F@cmd.php@@
 
 Après l'une de ces manipulations, l'application devrait fonctionner

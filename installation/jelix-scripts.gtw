@@ -1,4 +1,4 @@
-~~LANG:EN@enman:jelix-scripts~~
+~~LANG:EN@enman:installation/jelix-scripts~~
 
 Jelix est fourni avec plusieurs scripts, dont
 @@F@bin/create-jelix-app.php@@, qui permet de créer facilement une
@@ -44,27 +44,28 @@ Voici comment faire pour mettre le PHP-Cli de MAMP par défaut dans le terminal 
      répertoire personnel (@@F@/Users/votre_login/@@)
    * Modifiez la ligne où est défini la variable PATH, ou ajoutez la, le but
      étant d'ajouter les chemins
-     @@/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.4/bin@@ dans
-     cette variable PATH. Cela doit ressembler à quelque chose comme ceci
+     @@/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php$VERSIONPHP/bin@@ dans
+     cette variable PATH. Remplacez @@$VERSIONPHP@@ par la version PHP fournie par
+     MAMP. Cela doit ressembler à quelque chose comme ceci
      (d'autres chemins peuvent être déjà défini, et il faut dans tout les cas
      mettre le $PATH à la fin)
 
 <code bash>
-export PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php5.4/bin:$PATH
+export PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php7.0/bin:$PATH
 </code>
 
 Si vous souhaitez mettre de nouveau le PHP-Cli de base par défaut, remettez la
 ligne comme avant ou supprimez-la.
 
 
-==== Sous windows ====
+==== Sous Windows ====
 
 
 Suivant les distributions (WAMP par ex), il est probable que le programme
 php.exe n'utilise pas la même configuration php.ini que le php avec apache. Il
 vous faudra certainement créer un fichier ini dans un répertoire attendu par
 php.exe et/ou activer les même extensions que la version apache de PHP. Vous
-risquez sinon d'avoir des erreurs du genre "fonction mysql_connect inconnu" ou
+risquez sinon d'avoir des erreurs du genre "fonction mysqli_connect inconnu" ou
 "impossible de se connecter".
 
 Il faut de plus configurer votre système de manière à ce que php.exe soit
@@ -78,7 +79,7 @@ accessible de n'importe quel répertoire :
      système" s'il s'agit d'un serveur ou d'une machine avec plusieurs
      utilisateurs (afin que tous puissent bénéficier de cette configuration).
    * Dans la valeur de la variable vous ajoutez le chemin vers le répertoire qui
-     contient @@F@php.exe@@. Ex: @@F@D:\wamp\bin\php\php5.3.13@@ (n'oubliez pas
+     contient @@F@php.exe@@. Ex: @@F@D:\wamp\bin\php\php7.0.0@@ (n'oubliez pas
      d'ajouter le ; à la fin si vous avez plusieurs variables path)
    * Validez en cliquant sur OK
    * Fermez le tout et redémarrez.
@@ -104,7 +105,7 @@ Deux particularités sont à prendre en compte :
      @@export SCRIPT_NAME=cmd.php@@?
 
 Consultez la documentation de votre hébergeur pour avoir un accés SSH et utiliser
-la bonne version de PHP. Exemple pour OVH : [[https://docs.ovh.com/fr/fr/web/hosting/mutualise-le-ssh-sur-les-hebergements-mutualises/|Guide d'accés SSH]].
+la bonne version de PHP. Exemple pour OVH : [[https://docs.ovh.com/fr/hosting/mutualise-le-ssh-sur-les-hebergements-mutualises/|Guide d'accés SSH]].
 
 
 ===== Lancer cmd.php =====
@@ -112,7 +113,7 @@ la bonne version de PHP. Exemple pour OVH : [[https://docs.ovh.com/fr/fr/web/hos
 Ouvrez donc une console (cmd.exe sous windows), allez dans le répertoire de
 votre application, par exemple @@F@myapp/@@ :
 
-Sous linux/mac :
+Sous Linux/MacOS :
 
 <code bash>
    cd myapp/
@@ -126,19 +127,19 @@ Sous windows :
 
 Ensuite, vous pouvez exécuter une commande jelix selon cette syntaxe :
 
+Sous Linux/MacOS :
+<code bash>
+$ php cmd.php  <command_name> [options] [parameters]
+</code>
+
 Sous windows :
 <code bash>
-> php.exe cmd.php command_name [options] [parameters]
+> php.exe cmd.php <command_name> [options] [parameters]
 </code>
 
-Sous linux :
-<code bash>
-$ php cmd.php  command_name [options] [parameters]
-</code>
+Dans la suite du manuel, la syntaxe pour Linux sera utilisée dans les exemples.
 
-Dans la suite du manuel, la syntaxe pour linux sera utilisée dans les exemples.
-
-==== command_name ====
+==== Paramètre nom de commande ====
 
 Vous devez toujours appeler @@F@cmd.php@@ avec un nom de "commande jelix",
 accompagné éventuellement de paramètres et options.

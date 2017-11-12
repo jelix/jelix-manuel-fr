@@ -22,7 +22,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
   - chapter: [[installation/prerequis|Pré-requis sur le serveur]]
   - chapter: [[installation/creer-application|Créer une application]]
   - chapter: [[installation/configurer-server|Configurer le serveur]]
-  - chapter: [[jelix-scripts|Utiliser jelix-scripts]]
+  - chapter: [[installation/jelix-scripts|Utiliser jelix-scripts]]
 
 
 - part: [[fondamentaux|Fondamentaux]]

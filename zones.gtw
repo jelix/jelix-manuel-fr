@@ -82,7 +82,7 @@ Et le template (stocké dans @@F@templates/template_test.tpl@@):
 
 === Création en utilisant jelix-scripts ===
 
-Vous pouvez utiliser [[jelix-scripts|jelix-scripts]] pour créer votre zone
+Vous pouvez utiliser [[/installation/jelix-scripts|jelix-scripts]] pour créer votre zone
 accompagnée ou non d'un template.
 
 Exécutez simplement la commande suivante :
