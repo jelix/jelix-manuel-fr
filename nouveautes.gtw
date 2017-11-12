@@ -256,6 +256,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
   * le plugin zendframework a été supprimé
   * jDao : l'attribut "driver" sur la balise de condition "binary_op" est
     déprécié et remplacé par un attribut "dbtype"
+  * jDao : le support de l'attribut @@groupby@@ sur l'élement @@method@@ a été supprimé
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
