@@ -18,6 +18,6 @@ http://example.com/jelix_check_server.php ). La page qui s'affiche vous
 indiquera les extensions PHP manquantes, si la version PHP est supportée etc.
 
 Il est fourni des scripts à exécuter en ligne de commande, dont
-@@F@createapp.php@@ et @@F@cmd.php@@, et aidant au développement. Il vous faut
+@@F@create-jelix-app.php@@ et @@F@cmd.php@@, et aidant au développement. Il vous faut
 alors aussi installer la version ligne de commande (CLI) de PHP (php.exe sous
 windows).

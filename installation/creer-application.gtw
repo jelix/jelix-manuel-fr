@@ -38,7 +38,7 @@ php install/installer.php
 ===== Avec la commande createapp =====
 
 L'autre façon de créer une application Jelix, est l'utilisation de la commande
-@@bin/createapp.php@@. Elle permet de créer un squelette d'application.
+@@bin/create-jelix-app.php@@. Elle permet de créer un squelette d'application.
 C'est une alternative par rapport au paquet jelix-skeleton-app
 car elle permet de personnaliser la création du squelette.
 
@@ -75,7 +75,7 @@ paquets) sont installés. Vous trouverez celui de Jelix dans @@F@vendor/jelix/je
 Dans la suite du manuel, quand il est signalé le répertoire @@F@lib/@@, il s'agit
 de @@F@vendor/jelix/jelix/lib/@@.
 
-La commande createapp.php se trouve dans @@F@vendor/bin/createapp.php@@
+La commande create-jelix-app.php se trouve dans @@F@vendor/bin/@@
 
 ==== Installer les sources avec l'archive téléchargeable ====
 
@@ -92,15 +92,15 @@ Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
 Un repertoire jelix-1.7.0 est créé contenant un répertoire @@lib/@@. Vous devez
 mettre ce répertoire @@lib/@@ dans le dossier de votre projet.
 
-La commande createapp.php se trouve dans @@F@lib/jelix-scripts/createapp.php@@.
+La commande create-jelix-app.php se trouve dans @@F@lib/jelix-scripts/create-jelix-app.php@@.
 
-==== Lancer createapp ====
+==== Lancer create-jelix-app ====
 
-Allez dans le répertoire où est installé la commande createapp.php (voir
+Allez dans le répertoire où est installé la commande create-jelix-app.php (voir
 précédement), et lancez la de la manière suivante :
 
 <code bash>
-php createapp.php /chemin/vers/le/nouveau/répertoire/de/myapp
+php create-jelix-app.php /chemin/vers/le/nouveau/répertoire/de/myapp
 </code>
 
 @@myapp@@ est le nom de votre application (que vous pouvez bien sûr choisir

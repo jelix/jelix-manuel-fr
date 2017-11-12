@@ -180,7 +180,8 @@ l'environnement (debug vs production).
     composant Symfony Console. Les noms et paramètres des commandes ont donc
     changé.
   * Jelix-scripts createapp:
-     * createapp.php a été déplacé dans un répertoire bin et est basé sur Symfony Console.
+     * createapp.php a été déplacé dans un répertoire bin sous le nom create-jelix-app.php
+       et est basé sur Symfony Console.
      * nouvelle option @@--modulename@@ pour indiquer le nom du
        module principal.
 
