@@ -24,7 +24,10 @@ Il y a aussi @@jApp::version()@@ qui permet de connaître la version de
 l'application, si un fichier @@F@VERSION@@ est présent dans le répertoire de
 l'application.
 
-===== Récupérer le chemin URL de base de l'application =====
+Si vous voulez connaître la version de Jelix, vous utiliserez
+@@jFramework::version()@@.
+
+===== Récupérer des chemins URL de l'application =====
 
 Pour former des URLs, vous aurez souvent besoin de la valeur "basePath"
 situé dans la configuration, et généré automatiquement quand elle n'est pas
@@ -35,7 +38,14 @@ $path = jApp::urlBasePath();
 </code>
 
 
-===== Récupérer les chemins de différents répertoires de l'application =====
+Vous pouvez aussi récupérer le chemin URL vers les assets fournies par Jelix,
+celles qui sont initialement dans le répertoire lib/jelix-www :
+
+<code>
+$path = jApp::urlJelixWWWPath();
+</code>
+
+===== Les chemins des différents répertoires de l'application =====
 
 En général, jApp est configuré dés le démarrage de l'application, dans le
 fichier application.init.php. En particulier, les divers chemins des composants

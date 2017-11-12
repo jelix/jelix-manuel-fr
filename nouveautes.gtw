@@ -169,10 +169,10 @@ l'environnement (debug vs production).
     * nouvelle méthode @@M@jApp::version()@@
     * jApp utilise maintenant en interne une nouvelle classe jAppInstance pour faciliter le changement de contexte.
     * nouvelle méthode @@M@jAppInstance::includePlugin()@@ pour charger un plugin sans l'instancier
-  * **NODOC** nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le
+  * nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le
     framework (version...)
 
-  * Les assets des modules récupérés par le contrôleur www de Jelix
+  * Les assets des modules récupérés par le contrôleur www du module jelix
     sont maintenant mis en cache dans le navigateur
 
   * scripts Jelix-scripts (cmd.php) : toutes les commandes d'aides à la génération
