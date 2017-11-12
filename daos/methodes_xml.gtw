@@ -216,6 +216,7 @@ la plupart des méthodes précédentes.
       <isnotnull  property="foo"/>
       <in         property="foo" value="" />
       <notin      property="foo" value="" />
+      <binary_op property="foo" value="" operator="" dbtype=""/>
    </conditions>
 </code>
 
@@ -227,6 +228,22 @@ L'attribut value doit contenir une valeur. Le type de cette valeur est celui de
 la propriété. Si on préfère utiliser une expression SQL ou indiquer un paramètre
 de méthode, il faut utiliser l'attribut @@A@expr@@.
 
+Si dans la condition, vous voulez la valeur à récupérer pour la comparaison soit
+autre chose que la valeur du champs de l'enregistrement, vous pouvez
+utiliser l'attribut @@A@pattern@@, qui peut contenir la chaine "%s", qui sera
+remplacée par le nom du champ.
+
+Un exemple : on veut faire une comparaison sur l'année d'un champs date :
+
+<code xml>
+     <eq property="create_date" value="2017" pattern="YEAR(%s)" />
+</code>
+
+Cela équivaut en SQL :
+
+<code sql>
+   WHERE YEAR(la_table.create_date) = 2017
+</code>
 
 
 ==== Cas de in/notin ====

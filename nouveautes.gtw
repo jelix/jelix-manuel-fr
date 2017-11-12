@@ -247,7 +247,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
     @@Jelix\Version\VersionComparator@@ d'un nouveau paquet "jelix/version"
   * project.xml : @@<directories>@@ n'est plus pris en charge
   * le plugin zendframework a été supprimé
-  * **NODOC** jDao : l'attribut "driver" sur les balises de conditions est
+  * jDao : l'attribut "driver" sur la balise de condition "binary_op" est
     déprécié et remplacé par un attribut "dbtype"
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles

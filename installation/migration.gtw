@@ -361,7 +361,7 @@ modifier dans votre code si vous les utilisez :
     vu que cela ne fonctionnait pas très bien) il faut modifier ces appels, en
     utilisant les bons arguments.
 
-  * **NODOC** jDao : l'attribut "driver" sur les balises de conditions est déprécié et remplacé par un attribut "dbtype"
+  * jDao : l'attribut "driver" sur la balise de condition "binary_op" est déprécié et remplacé par un attribut "dbtype"
 
 Des fonctionnalités, API et modules ont été supprimés. Voir la liste
 complète dane [[/nouveautes|les nouveautés]]. Veillez donc à modifier votre
