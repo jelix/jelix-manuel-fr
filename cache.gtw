@@ -76,12 +76,13 @@ servers = memcache_host1:11211,memcache_host2:11211,memcache_host3:11211
 
 Les données sont stockées dans une base Redis.
 
-Deux plugins sont fournis:
+Deux plugins sont disponibles :
 
-   * "redis_php", utilise une classe pure PHP (PhpRedis) pour communiquer avec la base Redis.
+   * "redis_ext", fourni avec Jelix, se base sur l'API de l'extension PHP redis (plugin introduit dans Jelix 1.6.14)
+   * "redis_php", disponible séparément via le paquet Composer "jelix/php-redis-plugin",
+     utilise une classe pure PHP (PhpRedis) pour communiquer avec la base Redis.
      (plugin introduit dans Jelix 1.6.8 sous le nom "redis" et renommé en "redis_php"
      dans la version 1.6.14)
-   * "redis_ext" se base sur l'API de l'extension PHP redis (plugin introduit dans Jelix 1.6.14)
 
 Paramètres possibles :
 
@@ -95,7 +96,7 @@ Exemple :
 
 <code>
 [jcache:myredis]
-driver=redis_php
+driver=redis_ext
 ttl=360
 enabled=1
 host=192.168.0.1

@@ -13,7 +13,7 @@ en utilisant une base Redis :
 
 <code>
 [jcache:jforms]
-driver=redis_php
+driver=redis_ext
 ttl=360
 enabled=1
 host=192.168.0.1

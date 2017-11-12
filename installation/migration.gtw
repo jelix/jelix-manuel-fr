@@ -333,7 +333,9 @@ récupérer en plus de Jelix. Il s'agit de :
 
   * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
   * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
-  * Le plugin redis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+  * Le plugin Redis reposant sur la classe PhpRedis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+    (inutile si vous avez installé l'extension redis dans PHP, auquel cas vous
+    pouvez utiliser le plugin redis_ext fourni dans Jelix)
   * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
     l'objet réponse pour générer un sitemap.
   * la classe jHttp : [[https://packagist.org/packages/jelix/jhttp|jelix/jhttp]]. Il est
