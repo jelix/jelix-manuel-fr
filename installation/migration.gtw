@@ -62,8 +62,8 @@ Installez Composer en suivant [[https://getcomposer.org|les instructions de son 
 
 Dans le répertoire de votre application, créer un fichier @@F@composer.json@@.
 Celui-ci doit indiquer le paquet @@jelix/jelix@@ comme dépendance dans la
-section @@require@@, avec la version voulue (pour le moment il n'y a pas de
-version stable disponible, indiquez donc "dev-jelix-1.7").
+section @@require@@, avec la version voulue. Il est recommandé d'indiquer
+"^1.7.0".
 
 Exemple :
 
@@ -72,7 +72,7 @@ Exemple :
     "name": "mycompany/myapp",
     "type": "application",
     "require": {
-        "jelix/jelix": "dev-jelix-1.7.x"
+        "jelix/jelix": "^1.7.0"
     }
 }
 </code>
@@ -195,10 +195,12 @@ le fichier @@F@composer.json@@.
 ==== À propos de Simpletest ====
 
 Simpletest (et le module junittests) n'est plus fourni avec Jelix. Si vous
-n'avez pas migré vos tests vers PHPUnit, vous pouvez encore installer
+n'avez pas encore migré vos tests vers PHPUnit, vous pouvez installer
 [[https://github.com/jelix/simpletest-module|le module junittests]] en le
 téléchargeant ou en le déclarant ("jelix/simpletest-module") dans votre fichier
-composer.json.
+composer.json. Cependant, Simpletest et le module junittests n'étant plus
+maintenue, il est fortement recommandé d'utiliser d'autres outils de tests
+unitaires comme PHPUnit.
 
 ==== Changements dans profiles.ini.php ====
 
@@ -219,7 +221,7 @@ Une alternative est d'installer les drivers sqlite et mysql séparément,
 [[https://github.com/jelix/legacy-db-plugins|en les téléchargeant]] ou en
 déclarant le paquet "jelix/legacy-db-plugins" dans votre fichier
 @@composer.json@@. Et en installant l'extension PECL de sqlite 2 et la vieille
-extension de mysql.
+extension de mysql dans PHP.
 
 ==== Changements dans les urls ====
 
@@ -229,7 +231,7 @@ les urls de "basic_significant". Les paramètres "module" et
 "action" des urls ne sont plus pris en charge. Si vous avez des urls en dur
 dans votre code (contrôleurs, configurations ou templates par exemple) qui
 contiennent ces paramètres (parce que vous utilisiez le moteur "simple"),
-changez-les sous la forme @@/module/controleur/method@@.
+changez-les sous la forme @@/mon_module/mon_controleur/ma_methode@@.
 
 Exemple : @@/index.php?module=foo&action=ctrl:act@@ devient
 @@/index.php/foo/ctrl/act@@.

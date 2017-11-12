@@ -29,25 +29,31 @@ Jelix 1.7 nécessite dorénavant PHP 5.6 minimum et est compatible avec PHP 7.
 ==== Nouveau répertoire @@F@app/@@ ====
 
 Une application contient un nouveau repertoire @@F@app/@@ dans lequel ont été
-déplacé certains fichiers de @@F@var/@@ ainsi que @@F@responses/@@.
+déplacé certains fichiers de @@F@var/@@ ainsi que @@F@responses/@@. Cela permet
+de séparer les fichiers qui ne dépendent pas de l'environnement
+d'execution, (dans @@F@app/@@) de ceux qui en dépendent (dans @@F@var/@@).
 
-    * Nouveau répertoire @@F@app/config@@ dans les applications, et déplacement des fichiers
-      non lié à l'environnement, de   vers  @@F@app/config@@ :  @@F@mainconfig.ini.php@@,
-      @@F@config.ini.php@@,  @@F@urls.xml@@, les fichiers de configuration des plugins, de soap...
-      On a ainsi d'une part les fichiers qui ne  dépendent pas de l'environnement
-      d'execution dans  @@F@app/config@@, et d'autre part ceux qui dépendent du serveur
-      dans  @@F@var/config@@ (localconfig.ini.php, profiles.ini.php...).
-    * Les fichiers de configuration dédiés à un point d'entrée peuvent
-      être à la fois dans @@app/config/@@ et @@var/config/@@.
-    * Il faut maintenant mettre les overloads, themes et locales
-      dans le répertoire app/. Les répertoires var/overloads, var/themes et
-      var/locales étant dorénavant déstinés uniquement à leurs ressources
+C'est le cas pour :
+
+    * La configuration générale, avec un nouveau répertoire @@F@app/config@@ contenant
+      @@F@mainconfig.ini.php@@, les fichiers @@F@config.ini.php@@ des points d'entrées,
+      @@F@urls.xml@@, les fichiers de configuration des plugins, de SOAP etc.
+      Les fichiers qui dépendent du serveur restent dans @@F@var/config@@
+      (localconfig.ini.php, profiles.ini.php...)
+    * Les repertoires overloads, themes et locales. Les répertoires var/overloads, var/themes et
+      var/locales sont dorénavant déstinés uniquement à leurs ressources
       qui seraient créés dynamiquement pendant la vie de l'application.
-    * Déplacement du répertoire @@F@responses/@@ vers @@F@app/responses@@
+    * le répertoire @@F@responses/@@, déplacé dans @@F@app/responses@@
+
+Les fichiers de configuration dédiés à un point d'entrée peuvent
+être à la fois dans @@app/config/@@ et @@var/config/@@. Il en va de même pour
+les répertoires overloads, themes et locales, qui peuvent être à la fois dans
+@@app/@@ et @@var/@@.
+
 
 ==== Refonte du moteur d'URL ====
 
-Le nouveau moteur est en quelque sorte une fusion des anciens
+Le nouveau moteur d'URL est en quelque sorte une fusion des anciens
 plugins 'basic_significant' et 'significant', avec des améliorations pour
 faciliter la configuration des urls. Il n'y a plus de système de plugins
 ('simple', 'basic_significant', 'significant' n'existent plus).
@@ -141,7 +147,7 @@ l'environnement (debug vs production).
     * Un contrôle @@choice@@ peut maintenant être utilisé dans un @@group@@.
     * Le javascript généré pour un formulaire n'est plus intégré en ligne dans le HTML
       généré, mais chargé en tant que script externe. Utile pour les
-      [[rêgles CSP|https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP]].
+      [[https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP|rêgles CSP]].
     * Tous les composants de jForms, comme les widgets wikieditor et htmleditor,
       utilisent le nouveau système d'assets de Jelix.
     * En js, vous pouvez forcer le rechargement d'une listbox dynamique
@@ -273,6 +279,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
 
 ==== Contributeurs à Jelix 1.7 ====
 
+  * Brunto (sur le controller CRUD)
+  * Julien Issler (sur jForms)
   * Laurent Jouanneau (la plupart des évolutions)
-  * Brunto (crud controller)
 

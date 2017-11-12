@@ -75,6 +75,9 @@ de l'alias jelix :
         # pour le PathInfo
         Options +Multiviews
         AcceptPathInfo on
+
+        # commentez cette ligne si vous utilisez Apache 2.2 ou inférieur
+        Require all granted
       </Directory>
 
       # ----- Alias jelix vers jelix-wwww avec Composer
@@ -83,6 +86,9 @@ de l'alias jelix :
         AllowOverride None
         Order allow,deny
         Allow from all
+
+        # commentez cette ligne si vous utilisez Apache 2.2 ou inférieur
+        Require all granted
       </Directory>
 
       # ------ ou alias jelix vers jelix-wwww si vous n'utilisez pas Composer
@@ -91,6 +97,7 @@ de l'alias jelix :
       #  AllowOverride None
       #  Order allow,deny
       #  Allow from all
+      #  Require all granted # pour apache 2.4+ uniquement
       #</Directory>
    </VirtualHost>
 </code>
