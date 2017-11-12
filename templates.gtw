@@ -1,6 +1,7 @@
 ~~LANG:EN@enman:templates~~
 
-Jelix inclut son propre moteur de template jTpl. Les templates sont des fichiers
+Jelix inclut son propre moteur de template jTpl, basé sur le moteur de template
+[[https://github.com/jelix/castor|Castor]]. Les templates sont des fichiers
 portant l'extension ".tpl" et se trouvant dans le répertoire @@F@templates@@ des
 modules.
 

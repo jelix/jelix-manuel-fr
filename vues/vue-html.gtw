@@ -559,7 +559,7 @@ Les classes @@C@jResponseHtml@@, @@C@jResponseHtml4@@ et @@C@jResponseBasicHtml@
 ont un système de plugin. Ces plugins permettent d'enrichir ou agir
 automatiquement sur le contenu de toutes les pages HTML du site. C'est ainsi
 qu'il existe par exemple un plugin pour afficher une barre de debug, ou encore
-un autre pour "minifier" les fichiers CSS et Javascript. 
+un autre pour "minifier" les fichiers CSS et Javascript (disponible séparement).
 
 Ces plugins sont des plugins de type "htmlresponse", ils doivent se trouver dans
 un répertoire @@F@htmlresponse/@@ d'un dépot de plugin. Et pour les activer, il
@@ -573,50 +573,14 @@ plugins = debugbar, minify
 
 ==== Compression des fichiers css et javascript ====
 
-Jelix est fourni avec [[http://code.google.com/p/minify/|Minify]], qui permet de
-compresser et concaténer automatiquement les fichiers CSS et Javascript d'une
-page HTML.
+La concaténation et l'obfuscation des fichiers JS et CSS se fait en général
+avec des outils en ligne de commande comme WebPack, Grunt.. Vous indiquez alors
+les fichiers résultants dans les liste d'assets dans la configuration.
 
-Pour activer le plugin minify, il faut indiquer son nom dans l'option
-@@plugins@@ comme indiqué précédemment. Et vous avez une série d'options qui
-vous permet de contrôler le comportement de Minify. Ce plugin ne fonctionne pas
-avec jResponseBasicHtml.
-
-<code ini>
-[jResponseHtml]
-
-;concatene et compress les fichier CSS
-minifyCSS = on
-
-;concatene et compress les fichier JS
-minifyJS = on
-
-; liste des fichiers CSS qui ne doivent pas être compressé
-minifyExcludeCSS = "file1.css,file2.css"
-
-; liste des fichiers JS qui ne doivent pas être compressé
-minifyExcludeJS = "jelix/wymeditor/jquery.wymeditor.js"
-
-; chemin du point d'entrée de Minify, relatif au basePath
-minifyEntryPoint = minify.php
-</code>
-
-Tout d'abord, vous devez activer la compression en mettant @@minifyCSS@@ et/ou
-@@minifyJS@@ à "on". Vous pouvez indiquer de ne pas compresser certains fichiers
-en les listant dans @@minifyExcludeCSS@@ et/ou @@minifyExcludeJS@@. Gardez
-"jelix/wymeditor/jquery.wymeditor.js" dans @@minifyExcludeJS@@, car Wymeditor n'aime pas être
-concaténé avec d'autres fichiers js.
-
-Les chemins des fichiers indiqués doivent être
-   * soit relatifs au basePath (sans / au début)
-   * soit des chemins absolus par rapport au domaine (démarrant donc par /)
-
-N'indiquez pas d'URLs complètes, elles sont automatiquement exclues.
-
-La dernière chose à faire est d'installer un script @@F@minify.php@@ dans
-@@F@www/@@. Copiez simplement le fichier
-@@F@lib/jelix-scripts/templates/www/minify.php.tpl@@ en
-@@F@votre_appli/www/minify.php@@. Il y a quelques options supplémentaires pour
-Minify que vous pouvez changer dans ce fichier (voyez la documentation de
-Minify), et c'est tout. Si vous voulez nommer ce fichier autrement, indiquez son
-nom dans l'option @@minifyEntryPoint@@.
+Mais il peut encore arriver que l'on préfère faire ces opérations à la volée.
+Pour cela il est proposé un module reposant sur la bibliothèque [[https://github.com/mrclay/minify/|Minify]],
+qu'il faut installer dans votre application. Il s'agit du module
+[[https://github.com/jelix/minify-module|jMinify]] disponible via composer
+sous le nom "jelix/minify-module". Voyez
+[[https://github.com/jelix/minify-module/blob/master/README.md|sa documentation sur Github]]
+pour savoir comment l'installer et l'utiliser.

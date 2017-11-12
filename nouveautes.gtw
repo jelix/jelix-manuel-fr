@@ -209,22 +209,22 @@ téléchargeables classiquement.
 
 Voici la liste de ces modules et plugins :
 
-  * **NODOC** Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
-  * **NODOC** Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
-  * **NODOC** Le plugin redis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
-  * **NODOC** Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
+  * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
+  * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
+  * Le plugin Redis pour jKVDb et jCache reposant sur la classe PhpRedis : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+  * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
     l'objet réponse pour générer un sitemap.
-  * **NODOC** [[https://packagist.org/packages/jelix/diff-plugin|Le plugin diff pour jTpl]]
+  * [[https://packagist.org/packages/jelix/diff-plugin|Le plugin diff pour jTpl]]
 
 
 À noter que d'autres composants, modules et plugins sont aussi maintenant chacun dans
-leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
+leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'agit de :
 
   * [[https://packagist.org/packages/jelix/fakeserverconf|FakeServerConf]]
-  * **NODOC** [[https://packagist.org/packages/jelix/soap-server-module|le module jSoap]]
-  * **NODOC** [[https://packagist.org/packages/jelix/feeds-module|un nouveau module jFeeds]] comportant les classes
+  * [[https://packagist.org/packages/jelix/soap-server-module|le module jSoap]]
+  * [[https://packagist.org/packages/jelix/feeds-module|un nouveau module jFeeds]] comportant les classes
     et réponse pour générer des fils RSS et ATOM
-  * **NODOC** [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]
+  * [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]
   * [[https://packagist.org/packages/jelix/inifile|IniModifier et MultiIniModifier]], classes de
     modification de fichiers ini (anciennement jIniFileModifier et jIniMultiFilesModifier)
   * [[https://packagist.org/packages/jelix/wikirenderer-plugin|La class jWiki et WikiRenderer]]
@@ -233,7 +233,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix. Il s'agit de :
 
   * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre
     application pour utiliser en_US ou en_GB.
-  * **NODOC** le plugin memcache22 pour jCache a été supprimé
+  * le plugin memcache22 pour jCache a été supprimé
   * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
   * les classes @@jIniFile@@, @@jIniFileModifier@@, @@jIniMultiFilesModifier@@ ont changés de nom en
     respectivement Jelix\IniFile\Util, Jelix\IniFile\IniModifier, Jelix\IniFile\MultiIniModifier.

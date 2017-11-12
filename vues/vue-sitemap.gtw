@@ -1,8 +1,33 @@
 ~~LANG:EN@enman:views/view-sitemap~~
 
-
 jResponseSitemap permet de générer un [[http://sitemaps.org/|sitemap]] (utilisé
 par les moteurs de recherche, entre autres Google).
+
+===== Téléchargement et installation =====
+
+Depuis Jelix 1.7, la classe jResponseSitemap et ses dépendances sont dans
+un module séparé, qu'il faut télécharger et installer, soit sous forme
+de zip sur le site de téléchargement de Jelix, soit installable via Composer :
+[[https://packagist.org/packages/jelix/sitemap-module|paquet jelix/sitemap-module]].
+
+<code bash>
+composer require "jelix/sitemap-module"
+</code>
+
+Déclarez ensuite le module dans la configuration de l'application :
+
+<code ini>
+[modules]
+jsitemap.access=1
+</code>
+
+Ensuite lancez l'installation :
+
+<code bash>
+php yourapp/cmd.php install
+</code>
+
+===== Utilisation dans un contrôleur =====
 
 Récupération de la réponse dans le controller :
 
