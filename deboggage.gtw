@@ -64,6 +64,46 @@ aux noms des plugins). Vous indiquerez :
    * et tout autre plugin que vous avez ajouté ou créé.
 
 
+
+
+==== Eviter d'avoir des informations sensibles dans les logs ====
+
+Dans les logs d'erreurs, les paramètres HTTP sont écrits afin de faciliter
+le débuggage. Cependant, certaines de ces données sont sensibles, tels que les
+contenus des champs de saisie de mots de passe.
+
+Depuis Jelix 1.6.16, il est possible d'indiquer dans les contrôleurs et
+dans la configuration quels paramètres contiennent des informations sensibles,
+et donc qu'il ne faut pas mettre dans les logs.
+
+Dans la section @@error_handling@@ de la configuration, vous pouvez ajouter
+le paramètre @@sensitiveParameters@@  indiquant la liste des paramètres
+HTTP sensibles, séparés par une virgule.
+
+Par défault, il a cette valeur :
+
+<code ini>
+[error_handling]
+sensitiveParameters = "password,passwd,pwd"
+</code>
+
+Vous pouvez aussi indiquer les paramètres sensibles dans les contrôleurs, comme
+ceci :
+
+<code php>
+class passwordCtrl extends jController {
+
+    public $sensitiveParameters = array('pwd', 'pwd_confirm');
+
+    // ...
+}
+</code>
+
+Notez que jForms declare automatiquement tous les contrôles de type "secret"
+comme étant des valeurs sensibles, et donc qu'il n'est pas nécessaire de les
+indiquer dans la configuration ou les contrôleurs.
+
+
 ==== Loggeur fichier ====
 
 Quand vous utilisez ce loggeur, vous devez indiquer dans quel fichier vont les
