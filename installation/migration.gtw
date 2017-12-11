@@ -374,9 +374,42 @@ alternatives.
 
 ==== Mise à jour de Jelix ====
 
+Vous devez modifier le fichier @@install/installer.php@@ de votre application,
+de manière à include les instructions pour faire la migration. Il doit ressembler à
+ceci :
+
+<code php>
+require_once (__DIR__.'/../application.init.php');
+jApp::setEnv('install');
+
+jAppManager::close();
+
+// launch the low-level migration
+$migrator = new \jInstallerMigration(new textInstallReporter('notice', 'Low-level migration'));
+$migrator->migrate();
+
+// we can now launch the installer/updater
+$installer = new jInstaller(new textInstallReporter());
+$installer->installApplication();
+
+try {
+    jAppManager::clearTemp();
+}
+catch(Exception $e) {
+    echo "WARNING: temporary files cannot be deleted because of this error: ".$e->getMessage().".\nWARNING: Delete temp files by hand immediately!\n";
+}
+jAppManager::open();
+</code>
+
+
 Après toutes les modifications effectuées, vous devez lancer le script
-installer.php de votre application. Le module jelix fera le reste des
-modifications.
+installer.php de votre application.
+
+<code bash>
+php install/installer.php
+</code>
+
+Le module jelix et le système de migration fera le reste des modifications.
 
 En particulier :
 
