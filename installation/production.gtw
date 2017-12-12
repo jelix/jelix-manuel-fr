@@ -69,18 +69,30 @@ N'oubliez pas de mettre à jour les paramètres de la section @@V@[mailer]@@. En
 effet, les paramètres pour envoyer des mails ne sont pas toujours identiques
 entre le serveur de développement et le serveur de production.
 
-=== Si votre serveur est derrière un proxy ===
+=== Si votre serveur web est derrière un reverse proxy ===
 
-Il va falloir indiquer de forcer les ports aux valeurs standards, quand Jelix
-gènère des urls. Cela se passe dans la section générale :
+Il arrive que sur des infrastructures conséquentes, le serveur web qui
+execute Jelix se trouve derrière un reverse proxy (un load-balancer,
+Nginx, haproxxy etc..).
+Et ainsi le serveur web n'est pas configuré comme un serveur frontal :
+il n'a pas le nom de domaine du site, il n'écoute pas forcément sur les
+même port etc.. Du coup Jelix n'a pas forcément toutes les infos qui permettent
+de générer les urls correctement entre autres (car pour le moment il ne prend pas en charge les entêtes
+'Forwarded' ou 'X-Forwarded-Proto' que peuvent communiquer les reverses
+proxy aux serveurs web).
+
+Si le serveur web n'écoute pas sur les ports standards
+(80 ou 443), il va falloir indiquer de forcer les ports aux valeurs
+standards (sur lesquels écoute le reverse proxy), quand Jelix gènère
+des urls. Cela se passe dans la section générale :
 
 <code ini>
 forceHTTPPort = true
 forceHTTPSPort = true
 </code>
 
-Et indiquer le vrai nom de domaine du site (sinon jelix prend le nom de domaine
-du serveur derrière le proxy)
+Il faut aussi indiquer le vrai nom de domaine du site (celui donc du reverse proxy),
+sinon jelix prend le nom de domaine du serveur derrière le proxy
 
 <code>
 domainName = www.example.com
@@ -98,9 +110,19 @@ backendBasePath = /foo/bar
 </code>
 
 Et si le proxy transforme les requêtes HTTPS en HTTP vers votre serveur web, il
-faut désactiver la vérification HTTPS de jelix
+faut désactiver la vérification HTTPS de jelix :
 
 <code ini>
 [urlengine]
 checkHttpsOnParsing = off
 </code>
+
+Depuis Jelix 1.6.16, vous pouvez aussi indiquer de forcer les URLS générées
+en HTTPS car Jelix ne sait pas détecter le protocol utilisé par les requêtes
+arrivant sur le reverse proxy.
+
+<code ini>
+[urlengine]
+forceProxyProtocol = https
+</code>
+
