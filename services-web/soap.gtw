@@ -391,6 +391,10 @@ soap=file
 soap=soap.log
 </code>
 
+Depuis Jelix 1.6.16, vous pouvez aussi utiliser le logger @@soapfile@@ au lieu
+de @@file@@, qui crée un fichier XML pour chaque requete et réponse XML des
+appels SOAP, permettant un debuggage plus aisé.
+
 - @@exceptions@@ : c'est un booléen définissant si les erreurs SOAP doivent
   lancer des exceptions du type SoapFault.
 - @@connection_timeout@@ : temps d'attentes d'une réponse avant d'émettre une erreur

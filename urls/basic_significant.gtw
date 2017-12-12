@@ -26,3 +26,19 @@ Bien sûr, pour les points d'entrée qui n'apparaissent pas dans les urls les
 concernant, il faut configurer des règles de réécriture au niveau d'apache,
 comme il est indiqué dans la section correspondante
 [[significant#suppression-du-nom-du-point-d-entree-dans-l-url|de la documentation sur les urls significant]]
+
+Depuis Jelix 1.6.16, vous pouvez remplacer le nom du module dans les urls
+par un nom de votre choix. Pour cela il y a une nouvelle section
+@@basic_significant_urlengine_aliases@@ dans la configuration, où vous indiquez
+pour chaque nom dans l'url, le nom du module correspondant.
+
+Exemple, avec cette configuration :
+
+<code ini>
+[basic_significant_urlengine_aliases]
+foo=bar
+</code>
+
+L'url @@index.php/foo/mycontroller/hello@@, correspond à la méthode @@hello@@
+du controleur @@mycontroller@@ du module @@bar@@ (et non du module @@foo@@).
+

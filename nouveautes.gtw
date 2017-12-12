@@ -111,6 +111,14 @@ Nouveautés sur la version 1.6.16 :
     avec les autres bases de données. Elle sera supprimée dans la prochaine version.
     Une erreur de type "E_USER_DEPRECATED" est générée si cet attribut est utilisé.
   * Une [[deboggage|nouvelle fonctionnalité pour éviter la fuite de données sensibles dans les logs]].
+  * Support complet de Postgresql, sqlite3 et Mysql dans jDbSchema
+  * Moteur d'url Basic Significant: possibilité de changer le nom du module dans les
+    urls
+  * Gestion des droits dans l'interface d'administration : il n'est plus
+    possible de supprimer les droits de gestion des droits à un admin si il est
+    le seul à les avoir.
+  * Nouveau logger @@soapfile@@ pour les logs SOAP
+  * Support PHP 7.2
 
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
