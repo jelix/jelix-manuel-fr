@@ -94,6 +94,7 @@ Il y a donc au moins une url à définir pour chaque point d'entrée de type
         <url pathinfo="/" module="main" action="default:index" />
     </entrypoint>
 </url>
+</code>
 
 Ici donc, l'url @@index.php/@@ correspond à la méthode index du contrôleur
 default du module main.
