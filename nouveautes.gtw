@@ -258,6 +258,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
   * jDao : l'attribut "driver" sur la balise de condition "binary_op" est
     déprécié et remplacé par un attribut "dbtype"
   * jDao : le support de l'attribut @@groupby@@ sur l'élement @@method@@ a été supprimé
+  * jDao : la méthode obsolète @@jDaoConditions::addItemGroup()@@ a été supprimée.
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.
