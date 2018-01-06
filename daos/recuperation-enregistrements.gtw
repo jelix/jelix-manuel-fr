@@ -236,16 +236,16 @@ Avec Postgresql, vous utiliserez  @@~@@, @@!~@@, @@~*@@, @@!~*@@.
 
 Pour les autres bases, si elles le supportent, vous utiliserez @@REGEXP@@ ou @@NOT REGEXP@@.
 
-===== Enregistrement personnalisé =====
+===== Classe personnalisée pour un enregistrement =====
 
-Si vous avez besoin d'ajouter des méthodes supplémentaires,
-vous avez la possibilité pour chaque dao de définir des enregistrements personnalisés.
-
+Si vous avez besoin d'ajouter des méthodes supplémentaires sur la classe générée
+d'un record, (pour par exemple calculer des valeurs à partir de champs),
+vous pouvez créer une classe contenant ces méthodes et la déclarer dans le dao.
 
 ==== Déclaration ====
 
-Pour déclarer un enregistrement personnalisé, il vous suffira de renseigner l'attribut
-**extends** du tag **record** votre dao:
+Pour déclarer une classe personnalisée, il vous suffira de renseigner l'attribut
+@@extends@@ du tag @@record@@ votre dao:
 
 <code xml>
  <!-- fichier mymodule/daos/mydao.dao.xml -->
@@ -258,19 +258,33 @@ Pour déclarer un enregistrement personnalisé, il vous suffira de renseigner l'
 
 ==== Creation ====
 
-Un enregistrement doit être stocké dans un fichier @@F@myrecord.daorecord.php@@ dans le
+La classe doit être stockée dans un fichier @@F@myrecord.daorecord.php@@ dans le
 répertoire @@F@daos/@@ de votre module, et doit être défini de la manière suivante:
 
   * l' enregistrement doit être déclaré via une classe abstraite
-  * le nom de cette classe est le nom de l'enregistrement suivi du mot "DaoRecord"
-  * la classe doit hériter de la classe @@C@cDaoUserRecord_mymodule_Jx_mydao_Jx@@ avec module et dao correspondant au dao de l'enregistrement en question
+  * le nom de cette classe est le nom choisi suivi du mot "DaoRecord"
+  * la classe doit hériter de la classe @@C@jDaoRecordBase@@
 
 <code php>
 // fichier mymodule/daos/myrecord.daorecord.php
 
-abstract class myrecordDaoRecord extends cDaoUserRecord_mymodule_Jx_mydao_Jx {
-    function methode1() {
-      ...
+abstract class myrecordDaoRecord extends jDaoRecordBase {
+    function calculateTotal() {
+       return $this->amount + $this->vat;
+       // ...
     }
 }
+</code>
+
+Ainsi, vous pourrez appeler cette methode sur n'importe quel enregistrement:
+
+<code php>
+
+   $maFactory = jDao::get("mymodule~myrecord");
+   $liste = $maFactory->findAll();
+
+   foreach ($liste as $row) {
+        $total = $row->calculateTotal();
+        //...
+   }
 </code>
