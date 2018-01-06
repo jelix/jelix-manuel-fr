@@ -110,6 +110,7 @@ Nouveautés sur la version 1.6.16 :
     implémentation n'est pas compatible avec des versions récentes de mysql, ni
     avec les autres bases de données. Elle sera supprimée dans la prochaine version.
     Une erreur de type "E_USER_DEPRECATED" est générée si cet attribut est utilisé.
+    Idem pour la méthode @@jDaoConditions::addItemGroup()@@.
   * Une [[deboggage|nouvelle fonctionnalité pour éviter la fuite de données sensibles dans les logs]].
   * Support complet de Postgresql, sqlite3 et Mysql dans jDbSchema
   * Moteur d'url Basic Significant: possibilité de changer le nom du module dans les

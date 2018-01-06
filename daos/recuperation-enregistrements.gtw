@@ -236,23 +236,6 @@ Avec Postgresql, vous utiliserez  @@~@@, @@!~@@, @@~*@@, @@!~*@@.
 
 Pour les autres bases, si elles le supportent, vous utiliserez @@REGEXP@@ ou @@NOT REGEXP@@.
 
-
-=== Faire un groupby ===
-
-Avec @@C@jDaoConditions@@, vous pouvez indiquer les propriétés sur lesquelles il
-faut faire un @@groupby@@ en SQL. Pour ce faire, il faut appeler la méthode
-@@M@addItemGroup($field)@@ :
-
-<code php>   
-   $conditions = jDao::createConditions();
-   $conditions->addCondition('libelle','=',$un_nom);
-   $conditions->addItemGroup('status');
-   
-   $liste = $maFactory->findBy($conditions);
-</code>
-
-Ici un groupby sera effectué sur le champs status.
-
 ===== Enregistrement personnalisé =====
 
 Si vous avez besoin d'ajouter des méthodes supplémentaires,

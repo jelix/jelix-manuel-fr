@@ -50,8 +50,10 @@ Notament, les contrôles de type @@group@@ ou @@choice@@ affichent maintenant co
 === à propos de jDao ===
 
 De par la nature non prédictible du SQL générée par l'implémentation de
-l'attribut @@groupby@@ sur les @@<methode>@@, et valable uniquement avec mysql,
+l'attribut @@groupby@@ des élements @@<methode>@@, et valable uniquement avec mysql,
 cet attribut ne doit plus être utilisé. Il sera supprimé dans Jelix 1.7.
+
+Idem pour la méthode @@jDaoConditions::addItemGroup()@@.
 
 ==== Mise à jour des modules ====
 
