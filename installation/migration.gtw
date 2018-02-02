@@ -283,7 +283,7 @@ ils avaient choisie d'être "reconnu" par votre application.
 Étant donné les changements dans l'organisation des fichiers de configuration,
 et afin de faire une meilleure distinction au niveau des API, entre ce qui concerne
 l'application en général, et ce qui concerne un point d'entrée, des nouvelles
-classes @@jInstallerModuleé@@ et @@jInstallerEntryPoint2@@ ont fait leur apparition.
+classes @@jInstallerModule2@@ et @@jInstallerEntryPoint2@@ ont fait leur apparition.
 
 Bien que cela ne soit pas obligatoire pour Jelix 1.7 (mais cela le deviendra
 pour les futures versions, @@jInstallerModule@@ disparaitra), vous devriez
