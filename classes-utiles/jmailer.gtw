@@ -27,7 +27,7 @@ particulière de configurer l'envoi de mail :
 ===== Paramétrage de base =====
 
 Le paramétrage de base utilisé par jMailer s'effectue dans le fichier
-@@F@var/config/mainconfig.ini.php@@ de votre application dans la section
+@@F@var/config/localconfig.ini.php@@ de votre application dans la section
 @@[mailer]@@.
 
 ==== Les différentes options de configuration ====
