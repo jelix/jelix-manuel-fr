@@ -182,6 +182,43 @@ dans l'ordre suivant et les fusionne :
 
 Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent.
 
+=== Utiliser des variables d'environnement ===
+
+Les fichiers ini sont lus par @@parse_ini_file@@, et de ce fait les valeurs
+qui s'y trouvent peuvent prendre différente forme :
+
+- Vous pouvez indiquer des constantes PHP :
+
+<code php>
+# quelque part dans un fichier inclus par votre index.php
+define("SOMETHING", "hello world");
+</code>
+
+Un des fichiers ini de configuration :
+<code ini>
+foo = SOMETHING
+</code>
+
+Et foo vaudra donc @@"hello world"@@.
+
+- Vous pouvez indiquer des variables d'environnement.
+
+<code bash>
+# variables définies dans l'environnement de PHP-FPM, PHP-CLI, ou Apache (avec le module PHP)
+MYAPP_MYSQL_LOGIN=admin
+MYAPP_MYSQL_PASSWORD=Sup3Rp4ssw0rd!
+</code>
+
+Dans votre fichier profiles.ini.php (voir ci-après), il faut
+utiliser cette notation particulière :
+
+<code ini>
+[jdb:default]
+driver=mysqli
+login= ${MYAPP_MYSQL_LOGIN}
+password= ${MYAPP_MYSQL_PASSWORD}
+</code>
+
 
 ===== Le fichier profiles.ini.php =====
 
@@ -212,6 +249,10 @@ driver=mysqli
 login=
 password=
 </code>
+
+
+Notez que vous pouvez indiquer des variables d'environnement pour les valeurs.
+Voir la section précédente.
 
 
 === Alias de profil ===
