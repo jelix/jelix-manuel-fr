@@ -196,6 +196,8 @@ l'environnement (debug vs production).
 
   * jAuth: persistant_crypt_key a été renommé en persistant_encryption_key
     et utilise une fonction de création de clé plus forte.
+  * jAuth, plugin ldap : les informations de connexions (hote, login, password etc.)
+    doivent être maintenant dans le fichier profiles.ini.php
   * jauthdb_admin : la liste des utilisateurs peut être filtrée et triée
   * jacl2db_admin : la liste des utilisateurs peut être filtrée
 
@@ -243,7 +245,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
 
 ==== Les modules, plugins et fonctionnalités supprimés ou dépréciés ====
 
-  * il n'y a plus les fichiers de locales en_EN. configurez plutôt votre
+  * Il n'y a plus les fichiers de locales en_EN. Configurez plutôt votre
     application pour utiliser en_US ou en_GB.
   * le plugin memcache22 pour jCache a été supprimé
   * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
@@ -263,6 +265,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
     déprécié et remplacé par un attribut "dbtype"
   * jDao : le support de l'attribut @@groupby@@ sur l'élement @@method@@ a été supprimé
   * jDao : la méthode obsolète @@jDaoConditions::addItemGroup()@@ a été supprimée.
+  * le plugin @@LDS@@ pour jAuth a été supprimé.
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.

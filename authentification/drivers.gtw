@@ -31,11 +31,11 @@ driver= Db
 
 [Db]
 dao = "jauthdb~jelixuser"
-password_crypt_function = "sha1"
+profile=
 </code>
 
-Ce que vous indiquez au niveau du paramètre @@dao@@, c'est un sélecteur vers le
-fichier dao que vous voulez utiliser.
+Le paramètre @@dao@@ est un sélecteur vers le fichier dao que vous voulez utiliser.
+Le paramètre @@profile@@ contient optionnellement le nom du profile de connexion jDb à utiliser.
 
 Pour le dao que vous indiquez, **il doit avoir au moins les mêmes propriétés et**
 **méthodes que le dao jelixusers**. Vous pouvez rajouter d'autres propriétés,
@@ -73,30 +73,7 @@ driver= Class
 
 [Class]
 class = "monmodule~maclass"
-password_crypt_function = "sha1"
 </code>
-
-===== LDS/MDS =====
-
-C'est un driver qui repose sur un serveur LDS, projet qui a changé de nom depuis : [[http://projects.mandriva.org/projects/mmc/wiki/Start#Mandriva-Directory-Server-Identities-and-network-services-management|MDS]]
-(Mandriva Directory Server). Notez que ce driver LDS n'a pas été testé avec les versions récentes de MDS.
-
-Ce driver appelle l'API xml-rpc d'un serveur MDS. La configuration que vous devez indiquer doit donc être celle-ci :
-
-<code ini>
-
-driver= LDS
-
-[LDS]
-host=foo.com
-port=80
-login= foo
-password= bar
-scheme= https
-</code>
-
-Le driver interrogera donc le serveur **foo.com** sur le port **80**, avec le
-login @@L@foo@@ et le mot de passe @@L@bar@@, via une connexion sécurisée https.
 
 ===== ldap =====
 
@@ -104,10 +81,29 @@ C'est un driver permettant d'authentifier un utilisateur d'un annuaire
 supportant le protocole LDAP. La configuration préconisée :
 
 <code ini>
-
 driver= ldap
 
 [ldap]
+; profile dans profiles.ini.php contenant les informations de connexions ldap
+profile=jauth
+
+; paramètres de recherche LDAP. Ils peuvent être aussi stockés dans le profile
+
+; base d'entrée de la recherche, exemple pour Active Directory de windows : "ou=ADAM users,o=Microsoft,c=US"
+searchBaseDN=
+; filtre de recherche, exemple pour Active Directory de windows : "(objectClass=user)"
+searchFilter=
+; les attributs à renvoyer , exemple pour Active Directory de windows : "cn,distinguishedName,name"
+searchAttributes=
+</code>
+
+Dans le fichier profiles.ini.php, vous devez créer une section pour le profile
+indiqué dans la propriété @@profile@@, avec la catégorie @@authldap@@. Le profile
+doit contenir les informations de connexions au serveur ldap.
+
+<code ini>
+[authldap:jauth]
+
 ; par défaut "localhost"
 hostname=
 ; par défaut 389
@@ -118,19 +114,15 @@ ldapUser=
 ; mot de passe de l'utilisateur
 ldapPassword=
 
-; paramètres de recherche LDAP
-; base d'entrée de la recherche, exemple pour Active Directory de windows : "ou=ADAM users,o=Microsoft,c=US"
-searchBaseDN=
-; filtre de recherche, exemple pour Active Directory de windows : "(objectClass=user)"
-searchFilter=
-; les attributs à renvoyer , exemple pour Active Directory de windows : "cn,distinguishedName,name"
-searchAttributes=
+; ldap protocol version
+protocolVersion=3
 
-; fonction utilisée pour crypter le mot de passe dans la base de données
-password_crypt_function = sha1
-; exemple  : salt avec sha1
-;password_crypt_function = "1:sha1WithSalt"
-;password_salt = "here_your_salt"
+; the name of the ldap property used for the login field
+uidProperty=cn
+
+; the objectclass to use for a user
+ldapUserObjectClass=user
+
 </code>
 
 

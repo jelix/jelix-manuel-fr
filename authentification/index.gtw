@@ -6,8 +6,8 @@ des identifiants/mots de passe et des utilisateurs.
 Il repose sur des pilotes (ou aussi appelés drivers) pour accéder aux données
 d'un utilisateur. C'est ainsi qu'il peut s'appuyer sur une base de données, un
 annuaire LDAP, etc. Pour le moment, il existe un pilote pour une base de
-données, un pilote pour un annuaire géré par un serveur LDS/MDS, un pilote pour
-un annuaire supportant LDAP et un pilote pouvant utiliser une classe quelconque.
+données, un pilote pour un annuaire supportant LDAP et un pilote pouvant utiliser
+une classe quelconque.
 
 Le système d'authentification repose sur plusieurs choses :
 
@@ -50,7 +50,7 @@ Pour l'activer, vous avez deux choix :
 
 ==== En installant le module jauth ====
 
-Utilisez la commande installmodule de jelix pour installer le module :
+Utilisez la commande @@module:install@@ de jelix pour installer le module :
 
 <code bash>
 $ cd myapp/
@@ -68,7 +68,7 @@ Copiez le fichier @@F@lib/jelix-modules/jauth/install/var/config/auth.coord.ini.
 repertoire de configuration du point d'entrée, par exemple, @@F@app/config/index/auth.coord.ini.php@@.
 
 Dans le fichier de configuration du point d'entrée, vous indiquerez alors dans
-la section « coordplugins » :
+la section @@coordplugins@@ :
 
 <code ini>
 [coordplugins]
@@ -97,15 +97,14 @@ Vous devez indiquer le nom du driver utilisé au niveau de l'option @@driver@@.
 Vous devez ensuite avoir une section portant ce même nom, pour les options
 propres au driver.
 
-Les options dépendants des drivers, consultez [[/authentification/drivers|la documentation sur les pilotes jauth]]
+Les options dépendants des drivers, consultez [[drivers|la documentation sur les pilotes jauth]]
 pour activer l'un deux.
 
 ==== Fonction de hachage des mots de passe ====
 
 Depuis Jelix 1.4.1 (et 1.3.4, 1.2.10), il y a deux systèmes de hachage des mots
 de passe pour leur stockage. Jelix 1.4.1 et supérieur propose en effet une
-méthode plus sécurisée, utilisant l'API password de PHP 5.5 (une implémentation
-pure PHP est fournie dans Jelix pour les versions antérieures de PHP). 
+méthode plus sécurisée, utilisant l'API password de PHP 5.5.
 
 === Ancien système de hachage ===
 
@@ -162,12 +161,10 @@ Et dans la configuration de l'authentification :
 Ce système proposé depuis Jelix 1.2.10/1.3.4/1.4.1 repose sur une nouvelle API
 fournie par PHP 5.5, utilisant par défaut la méthode de hashage bcrypt. Un
 équivalent pur PHP pour les versions antérieures existe et est fourni dans Jelix.
-Il utilise la fonction @@crypt@@. Pour utiliser ce nouveau système de
-hachage, il est toutefois nécessaire d'avoir au moins PHP 5.3.7 (ou PHP 5.3.3
-sur les serveurs Debian Squeeze à jour).
+Il utilise la fonction @@crypt@@.
 
 La configuration est relativement simple, il faut deux paramètres dans la section
-globale (en dehors des sections @@[Db]@@ ou autre) :
+globale (en dehors des sections comme @@[Db]@@) :
 
     * @@password_hash_method@@ : indique la méthode à utiliser. Une seule
       possible pour le moment, BCRYPT. Il faut donc mettre 1. Si vide ou 0, le
@@ -184,8 +181,8 @@ d'une centaine de caractères).
 
 === Migration ===
 
-Si vous mettez à jour une application existante vers Jelix 1.2.10/1.3.4/1.4.1 ou
-supérieur, et que vous voulez utiliser le nouve système de hachage, vous devez :
+Si vous mettez à jour une application existante utilisant l'ancien système de
+hachage, et que vous voulez utiliser le nouveau système de hachage (ce qui est fortement recommandé !), vous devez :
 
    * Lire l'avertissement un peu plus bas
    * Agrandir le champs du mot de passe (@@password@@) en base de donnée à 120
@@ -199,7 +196,7 @@ nouveau hash. C'est pourquoi il faut, le temps de la transition, laisser la
 configuration de l'ancien système.
 
 **Attention : ne faites pas cette migration avec une base partagée** par
-différentes instances de votre application (genres dev, integration etc), qui
+différentes instances de votre application, qui
 n'ont pas encore migré vers cette nouvelle version. Les utilisateurs ne pourront
 plus s'identifier ! (le hash en base n'étant pas compréhensible par les versions précédentes).
 De ce fait, **vous ne pourrez pas revenir en arrière à moins d'avoir fait une sauvegarde**
@@ -209,7 +206,8 @@ de la table des users.
 
 L'option @@timeout@@ permet d'indiquer en minutes le temps d'inactivité au bout
 duquel l'authentification ne sera plus valide. Si vous mettez @@L@0@@, il n'y a
-pas de limite de temps. La session expirera à la fermeture du navigateur.
+pas de limite de temps. La session expirera à la fermeture du navigateur ou
+à la limite indiquée dans le fichier php.ini.
 
 
 === Contrôler l'authentification pour chaque action ===
@@ -308,8 +306,8 @@ actions de connexion, de déconnexion, en faisant appel à la classe @@C@jAuth@@
 Il propose aussi des zones et des templates.
 
 Si vous voulez avoir des fonctionnalités de gestion de compte comme sur un
-portail, utilisez le module jCommunity, disponible en dehors de Jelix
-([[https://github.com/jelix/jcommunity-module]]). Il propose des formulaires de
+portail, utilisez le module [[https://github.com/jelix/jcommunity-module|jCommunity]],
+disponible en dehors de Jelix. Il propose des formulaires de
 changement de mot de passe, des formulaires de destruction de compte, de
 création de compte et de récupération de mot de passe. 
 
@@ -377,7 +375,7 @@ C'est la classe principale du système d'authentification. Toutes ses méthodes
 sont statiques. Elle permet de gérer un utilisateur, de « connecter » et «
 déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous
 semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous
-d'une bonne partie du travail. Voir [[refclass:auth/jAuth|son descriptif dans la référence]].
+d'une bonne partie du travail. Voir [[refclass:auth/jAuth|son descriptif dans la doc de référence]].
 
 l'objet "user" que vous passez à certaines méthodes vous est donné par
 @@C@jAuth@@ lui même. C'est un objet contenant les données d'un utilisateur et
@@ -403,7 +401,7 @@ Pour connecter et déconnecter un utilisateur, il faut utiliser les méthodes
    jAuth::logout();
 </code>
 
-À partir du moment où @@M@login()@@ a étéé appelé et a renvoyé @@true@@, jAuth
+À partir du moment où @@M@login()@@ a été appelé et a renvoyé @@true@@, jAuth
 stocke des informations sur l'utilisateur en session, qui peuvent être utilisées
 par d'autres composants. Ces informations sont dans un objet, que vous récupérez
 par @@M@getUserSession()@@ :
@@ -524,9 +522,9 @@ user, ou de gérer les données dépendantes à l'utilisateur etc.
     l'authentification de l'utilisateur
 
 Les tests sont sur les propriétés suivantes :
-  * AuthCanRemoveUser : canremove
-  * AuthCanLogin : canlogin
-  * AuthBeforeLogin : processlogin
+  * AuthCanRemoveUser : @@canremove@@ doit contenir true ou false
+  * AuthCanLogin : @@canlogin@@ doit contenir true ou false
+  * AuthBeforeLogin : @@processlogin@@ doit contenir true ou false (false pour annuler l'authentification)
 
 <code>
 function onAuthCanRemoveUser  ($event)

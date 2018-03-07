@@ -223,6 +223,12 @@ déclarant le paquet "jelix/legacy-db-plugins" dans votre fichier
 @@composer.json@@. Et en installant l'extension PECL de sqlite 2 et la vieille
 extension de mysql dans PHP.
 
+Si vous utilisez le plugin ldap pour jAuth, il faut migrer les informations
+de migration, du fichier auth.coord.ini.php vers le fichier de profiles,
+en y créant une section @@authldap@@ et @@authldap:nom_de_votre_choix@@.
+Et il faut indiquer ce nom de profile dans un attribut @@profile@@ dans la
+section ldap de auth.coord.ini.php.
+
 ==== Changements dans les urls ====
 
 Il n'y a plus le choix dans le moteur d'URL. Il s'agit maintenant uniquement
