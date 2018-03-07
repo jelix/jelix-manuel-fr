@@ -37,20 +37,17 @@ d'execution, (dans @@F@app/@@) de ceux qui en dépendent (dans @@F@var/@@).
 C'est le cas pour :
 
     * La configuration générale, avec un nouveau répertoire @@F@app/config@@ contenant
-      @@F@mainconfig.ini.php@@, les fichiers @@F@config.ini.php@@ des points d'entrées,
-      @@F@urls.xml@@, les fichiers de configuration des plugins, de SOAP etc.
+      @@F@mainconfig.ini.php@@, @@F@urls.xml@@, les fichiers de configuration
+      des plugins, de SOAP etc.
       Les fichiers qui dépendent du serveur restent dans @@F@var/config@@
       (localconfig.ini.php, profiles.ini.php...)
-    * Les repertoires overloads, themes et locales. Les répertoires var/overloads, var/themes et
-      var/locales sont dorénavant déstinés uniquement à leurs ressources
-      qui seraient créés dynamiquement pendant la vie de l'application.
-    * le répertoire @@F@responses/@@, déplacé dans @@F@app/responses@@
-
-Les fichiers de configuration dédiés à un point d'entrée peuvent
-être à la fois dans @@app/config/@@ et @@var/config/@@. Il en va de même pour
-les répertoires overloads, themes et locales, qui peuvent être à la fois dans
-@@app/@@ et @@var/@@.
-
+    * Les fichiers @@F@config.ini.php@@ des points d'entrées. Ils peuvent
+      être à la fois dans @@app/config/@@ et @@var/config/@@.
+    * Les répertoires @@F@overloads@@, @@F@themes@@ et @@F@locales@@. Ils sont
+      maintenant dans @@F@app/@@, mais Les répertoires @@F@var/overloads@@,
+      @@F@var/themes@@ et @@F@var/locales@@ sont dorénavant déstinés uniquement
+      aux ressources qui sont créés dynamiquement par l'application.
+    * le répertoire @@F@responses/@@ est déplacé dans @@F@app/@@
 
 ==== Refonte du moteur d'URL ====
 
@@ -87,7 +84,7 @@ L'outil de migration s'occupe d'effectuer la plupart de ces changements.
 Les API pour les scripts d'installation ont été retravaillé, de manière
 à séparer ce qui est spécifique à un point d'entrée, et ce qui est spécifique
 à l'application en général. En particulier ce qui concerne les fichiers de
-configuration. Pour cela, des nouvelles classes @@jInstallerModuleé@@ et
+configuration. Pour cela, des nouvelles classes @@jInstallerModule2@@ et
 @@jInstallerEntryPoint2@@ ont fait leur apparition, et @@jInstallerModule@@
 et @@jInstallerEntryPoint@@ sont dépréciées (bien qu'encore utilisable
 pour cette version).
@@ -124,14 +121,17 @@ l'environnement (debug vs production).
     * pgsql : support des paramètres nommés pour les requêtes préparées
     * mysqli : correction sur la prise en charge des requêtes préparées et
       support des paramètres nommés
-  * jDb schema: amélioration de la prise en charge de sqlite3: ajout de colonne, creation d'index, de clé primaire
-  * jDb/mysql : correction sur le démarrage d'une transaction, pour ne plus utiliser l'ancien mot-clé SQL pour cette fonctionnalité
+  * jDb/mysqli : correction sur le démarrage d'une transaction, pour ne plus
+    utiliser l'ancien mot-clé SQL pour cette fonctionnalité
   * jDao : a maintenant son propre système de plugin "daobuilder". Les classes
     des plugins de jDb qui lui étaient dédiés sont maintenant des plugins.
+  * jDb schema: toutes les améliorations déjà apportées par Jelix 1.6.16, à savoir
+    la prise en charge totale de la lecture et modification de schema de base
+    de données pour Mysql, Postgresql, Sqlite3, OCI, SqlServer
 
-  * jProfiles est maintenant extensible par des plugins :
+  * jProfiles :
      * le contenu du fichier profiles.ini.php est optimisé et stocké en cache
-     * ces plugins peuvent traiter les
+     * est maintenant extensible par des plugins. Ceux-ci peuvent traiter les
        profiles qu'ils prennent en charge avant la mise en cache du fichier
        profiles.ini.php. (plugin : @@profiles/<type>/<type>.profiles.php@@
        classe: @@<type>ProfilesCompiler@@).
@@ -152,9 +152,9 @@ l'environnement (debug vs production).
     * Tous les composants de jForms, comme les widgets wikieditor et htmleditor,
       utilisent le nouveau système d'assets de Jelix.
     * En js, vous pouvez forcer le rechargement d'une listbox dynamique
-     avec la méthode @@updateDynamicList()@@ de l'objet JS jforms.
+      avec la méthode @@updateDynamicList()@@ de l'objet JS jforms.
 
-==== Autres nouveautés ====
+==== Changements d'API dans le coeur du framework ====
 
   * La propriété @@_lang@@ de @@jResponseHtml@@ ne contient maintenant
     que le code langue (XX), et non la locale complète (XX_YY), que l'on retrouve
@@ -164,11 +164,9 @@ l'environnement (debug vs production).
     mais désactivé par défaut).
   * Nouvelle méthode @@M@jCoordinator::execOriginalAction()@@ pour
     savoir si l'action courante est une redirection interne ou pas.
-  * contrôleur CRUD : la liste des enregistrements peut être triée par colonne
   * jCmdLineRequest : il faut maintenant donner le module et l'action
     au constructeur quand le script est dédié à une action précise.
-  * Dans les applications nouvellement créés, le répertoire temp est maintenant
-    par défaut dans le répertoire de l'application.
+  * contrôleur CRUD : la liste des enregistrements peut être triée par colonne
 
   * @@jApp@@ :
     * nouvelle méthode @@jApp::urlBasePath()@@ qui permet de récupérer le basePath,
@@ -178,15 +176,19 @@ l'environnement (debug vs production).
     * nouvelle méthode @@M@jAppInstance::includePlugin()@@ pour charger un plugin sans l'instancier
   * nouvel objet @@C@jFramework@@ permettant d'accéder à des informations sur le
     framework (version...)
+  * Dans les applications nouvellement créés, le répertoire temp est maintenant
+    par défaut dans le répertoire de l'application.
 
   * Les assets des modules récupérés par le contrôleur www du module jelix
     sont maintenant mis en cache dans le navigateur
+
+==== Autres nouveautés ====
 
   * scripts Jelix-scripts (cmd.php) : toutes les commandes d'aides à la génération
     d'une application et de ses composants sont maintenant basées sur le
     composant Symfony Console. Les noms et paramètres des commandes ont donc
     changé.
-  * Jelix-scripts createapp:
+  * Jelix-scripts createapp :
      * createapp.php a été déplacé dans un répertoire bin sous le nom create-jelix-app.php
        et est basé sur Symfony Console.
      * nouvelle option @@--modulename@@ pour indiquer le nom du
@@ -201,7 +203,9 @@ l'environnement (debug vs production).
 
   * Zones : organisation du cache en sous-répertoires pour éviter un trop grand nombre de fichier
     dans un même répertoire.
-  * correction @@jIniFileModifier@@ : il n'y a plus de ligne vide ajoutée à la fin du fichier à chaque sauvegarde
+
+  * correction @@jIniFileModifier@@ : il n'y a plus de ligne vide ajoutée à la
+    fin du fichier à chaque sauvegarde
   * @@jFile@@ repose maintenant sur le paquet Composer "jelix/file-utilities"
     qui propose des méthodes supplémentaires.
   * @@jFile::getMimeTypeFromFilename()@@ : support d'une liste de type mime
