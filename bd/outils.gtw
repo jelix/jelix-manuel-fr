@@ -7,10 +7,6 @@ Elle possède ainsi des méthodes pour créer une table, récupérer la structur
 d'une table, ajouter/modifier/supprimer des colonnes etc. Elle s'accompagne des
 classes @@C@jDbtable@@ et @@C@jDbColumn@@.
 
-Jusqu'à Jelix 1.6.16, seul Mysql était pris en charge, de manière expérimentale.
-Depuis Jelix 1.6.16, les bases Postgresql, Sqlite3 et Mysql sont pleinement
-supportées.
-
 Vous pouvez récupérer un objet @@C@jDbSchema@@ en appelant la méthode
 @@M@schema()@@ d'un objet @@C@jDbConnection@@.
 

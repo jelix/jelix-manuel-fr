@@ -28,9 +28,9 @@ Le type de connexion à indiquer dans les noms des sections de
 Dans la section, vous voyez un certain nombre de paramètres, dont quelques-un
 sont utilisables pour tous les drivers :
 
-  * **driver** indique le driver à utiliser. Le nombre et le nom des autres
+  * @@driver@@ indique le driver à utiliser. Le nombre et le nom des autres
     paramètres diffèrent en fonction du driver utilisé.
-  * **table_prefix** : permet d'indiquer un préfixe de table. Lors de
+  * @@table_prefix@@ : permet d'indiquer un préfixe de table. Lors de
     l'utilisation d'un [[/daos|DAO]] avec un profil spécifiant ce paramètre, les
     tables indiquées dans le DAO sont préfixées **dynamiquement** par cette
     valeur. Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez
@@ -38,74 +38,72 @@ sont utilisables pour tous les drivers :
     @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre
     le nom de la table à préfixer.
 
-===== Profil mysql et mysqli =====
+===== Profil pour MySQL =====
 
 Paramètres possibles :
-   * **driver** : doit valoir "mysqli" (utilisant la nouvelle API PHP mysqli) ou "mysql"
-     (utilisant l'antique API PHP mysql_*, non recommendé, et dont le driver
-     n'est plus fourni en standard dans Jelix)
-   * **database** : le nom de la base de données à utiliser
-   * **host** : le nom du serveur mysql sur lequel se connecter
-   * **user** et **password** : le login/mot de passe pour la connexion
-   * **persistent** : indique si la connexion est persistante (**on**) ou pas
-     (**off**)
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+
+   * @@driver@@ : doit valoir "mysqli" (l'API PHP mysqli est utilisée)
+   * @@database@@ : le nom de la base de données à utiliser
+   * @@host@@ : le nom du serveur mysql sur lequel se connecter
+   * @@user@@ et @@password@@ : le login/mot de passe pour la connexion
+   * @@persistent@@ : indique si la connexion est persistante (@@on@@) ou pas
+     (@@off@@)
+   * @@force_encoding@@ : indique s'il faut spécifier le charset utilisé dans
      l'application, de manière à récupérer les données avec le bon charset. En
      effet, certains serveurs sont configurés par exemple par défaut avec une
      connexion en iso-8859-1, même si les données stockées sont en utf-8. Mettez
      à true si vous voyez que vous n'arrivez pas à afficher les données
      correctement.
 
-Pour mysqli, depuis Jelix 1.6.11, il est possible de configurer l'accés SSL :
+Il est aussi possible de configurer l'accés en SSL :
 
-   * **ssl** : 0 ou 1. Active ou pas la connexion en SSL
-   * **ssl_key_pem** : chemin vers la clé privée SSL
-   * **ssl_cert_pem** : chemin vers le certificat SSL
-   * **ssl_cacert_pem** : chemin vers le certificat de l'autorité de certification
+   * @@ssl@@ : 0 ou 1. Active ou pas la connexion en SSL
+   * @@ssl_key_pem@@ : chemin vers la clé privée SSL
+   * @@ssl_cert_pem@@ : chemin vers le certificat SSL
+   * @@ssl_cacert_pem@@ : chemin vers le certificat de l'autorité de certification
 
-===== Profil postgresql =====
+===== Profil pour Postgresql =====
 
 Paramètres possibles :
 
-   * **driver** : doit valoir "pgsql"
-   * **database** : le nom de la base de données à utiliser
-   * **host** : le nom du serveur postgresql sur lequel se connecter. Si vous le
+   * @@driver@@ : doit valoir "pgsql"
+   * @@database@@ : le nom de la base de données à utiliser
+   * @@host@@ : le nom du serveur postgresql sur lequel se connecter. Si vous le
      mettez à vide, la connexion se fera via une socket unix.
-   * **port** : indique le port de connexion. N'indiquez pas ce paramètre si
+   * @@port@@ : indique le port de connexion. N'indiquez pas ce paramètre si
      vous voulez utiliser le port par défaut.
-   * **user** et **password** : le login/mot de passe pour la connexion. Ne
+   * @@user@@ et @@password@@ : le login/mot de passe pour la connexion. Ne
      mettez pas ces paramètres si vous voulez utiliser le login/mot de passe par
      défaut (indiqués par exemple dans les variables d'environnement du
      système).
-   * **service** : nom du service Postgresql. Les paramètres **database**, **host**,
-       **port**, **user** et **password** sont alors ignorés. (Jelix 1.6.6+)
-   * **persistent** : indique si la connexion est persistante (**on**) ou pas
-     (**off**)
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+   * @@service@@ : nom du service Postgresql. Les paramètres @@database@@, @@host@@,
+     @@port@@, @@user@@ et @@password@@ sont alors ignorés.
+   * @@persistent@@ : indique si la connexion est persistante (@@on@@) ou pas
+     (@@off@@)
+   * @@force_encoding@@ : indique s'il faut spécifier le charset utilisé dans
      l'application, de manière à récupérer les données avec le bon charset. même
      explication que pour mysql.
-   * **timeout** : Nombre de secondes autorisées pour l'établissement de la
+   * @@timeout@@ : Nombre de secondes autorisées pour l'établissement de la
      connexion au serveur avant de générer un timeout
-   * **single_transaction** : Toutes les requêtes d'une même page seront
+   * @@single_transaction@@ : Toutes les requêtes d'une même page seront
      envoyées au serveur au sein d'un même transaction (entre un BEGIN; et un
-     COMMIT;) (**on**) ou non (**off**). Défaut: **off**
-   * **search_path** : indiquer la liste des schémas dans lequel il faut
+     COMMIT;) (@@on@@) ou non (@@off@@). Défaut: @@off@@
+   * @@search_path@@ : indiquer la liste des schémas dans lequel il faut
      chercher les tables, si le schéma par défaut pour la connexion ne
      correspond pas à celui dans lequel l'application va chercher.
 
-===== Profil sqlite3 =====
+===== Profil pour SQLite =====
 
 Paramètres possibles :
 
-   * **driver** : doit valoir "sqlite3" (ou "sqlite" pour les vieilles bases en
-     sqlite2, mais le driver n'est plus fourni en standard dans Jelix)
-   * **database** : le nom du fichier de base de données à utiliser. voir plus base
-   * **persistent** : indique si la connexion est persistante (**on**) ou pas
-     (**off**)
-   * **extensions**: liste des extensions sqlite à charger, séparé par des virgules
-   * **busytimeout**: un entier pour le paramètre busytimeout de Sqlite
+   * @@driver@@ : doit valoir "sqlite3"
+   * @@database@@ : le nom du fichier de base de données à utiliser.
+   * @@persistent@@ : indique si la connexion est persistante (@@on@@) ou pas
+     (@@off@@)
+   * @@extensions@@: liste des extensions sqlite à charger, séparé par des virgules
+   * @@busytimeout@@: un entier pour le paramètre busytimeout de Sqlite
   
-Pour le fichier de base de données, vous avez plusieurs syntaxe
+Pour le fichier de base de données, vous avez plusieurs syntaxes :
 
    * un simple nom de fichier (ex: mybase.sqlite). Le fichier se trouvera alors dans le
      dossier @@F@var/db/sqlite/@@ (pour sqlite2) ou @@F@var/db/sqlite3/@@ (pour sqlite3)
@@ -114,25 +112,25 @@ Pour le fichier de base de données, vous avez plusieurs syntaxe
      un raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à
      partir de celui de l'application, de lib/ ou du répertoire var de
      l'application. Ex: "app:../db/mybase.sqlite".
-   * un chemin complet sur le disque. Ex: /opt/foo/bar.sqlite. (Jelix 1.6.4+)
+   * un chemin complet sur le disque. Ex: /opt/foo/bar.sqlite.
 
 Notez que le dossier et le fichier de base de données sqlite doivent avoir les droits de
 lecture/écriture adéquats (ceux du serveur web).
 
-===== Profil pdo =====
+===== Profil pour PDO =====
 
 Il est possible de spécifier PDO pour se connecter sur une base de donnée dans
 un profil mysql, postgresql, etc. Il faut alors ajouter le paramètre
 @@usepdo=on@@. Vous devez avoir alors au moins les paramètres suivants, qui sont
 quasiement identiques pour les drivers jDb :
 
-   * **driver**: le nom du driver PDO à utiliser ("mysqli", "pgsql"...)
-   * **host**, **user**, **password** (sauf pour sqlite bien entendu)
-   * **database** : le nom de la base de donnée. Pour sqlite, vous pouvez
+   * @@driver@@: le nom du driver PDO à utiliser ("mysql", "pgsql"...)
+   * @@host@@, @@user@@, @@password@@ (sauf pour sqlite bien entendu)
+   * @@database@@ : le nom de la base de donnée. Pour sqlite, vous pouvez
      utiliser les raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à
      partir de celui de l'application, de @@F@lib/@@ ou du répertoire @@F@var/@@
      de l'application
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+   * @@force_encoding@@ : indique s'il faut spécifier le charset utilisé dans
      l'application, de manière à récupérer les données avec le bon charset. Même
      explication que pour mysql, et ce paramètre n'est pour le moment valable
      que pour mysql et postgresql.
@@ -142,13 +140,13 @@ jDb construira le DSN correspondant.
 Si vous avez besoin de spécifier un DSN avec des paramètres particuliers, il va
 falloir utiliser une autre notation, sans utiliser le paramètre @@usepdo@@ :
 
-   * **driver** : doit valoir "pdo"
-   * **dsn** : contient les informations de connexion (type de base de données,
+   * @@driver@@ : doit valoir "pdo"
+   * @@dsn@@ : contient les informations de connexion (type de base de données,
      serveur, nom de la base..). Le format doit être celui attendu par PDO (voir
      la [[phpapi:pdo|doc de pdo sur php.net]]). 
-   * **user** et **password** : le login/mot de passe pour la connexion. Ne
+   * @@user@@ et @@password@@ : le login/mot de passe pour la connexion. Ne
      mettre ces paramètres que si nécessaire.
-   * **force_encoding**
+   * @@force_encoding@@
 
 Exemple:
 <code ini>
@@ -160,40 +158,38 @@ password=
 </code>
 
 
-===== Profil mssql/sqlsrv =====
-
-Le plugin mssql est déprécié et n'est plus maintenu. Utilisez sqlsrv.
+===== Profil pour SQLServer =====
 
 Paramètres possibles :
 
-   * **driver** : doit valoir "sqlsrv"
-   * **database** : le nom de la base de données à utiliser
-   * **host** : le nom du serveur sur lequel se connecter.
-   * **port** : indique le port de connexion.
-   * **user** et **password** : le login/mot de passe pour la connexion.
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+   * @@driver@@ : doit valoir "sqlsrv" ("mssql" est déprécié et n'est plus maintenu)
+   * @@database@@ : le nom de la base de données à utiliser
+   * @@host@@ : le nom du serveur sur lequel se connecter.
+   * @@port@@ : indique le port de connexion.
+   * @@user@@ et @@password@@ : le login/mot de passe pour la connexion.
+   * @@force_encoding@@ : indique s'il faut spécifier le charset utilisé dans
      l'application, de manière à récupérer les données avec le bon charset. même
      explication que pour mysql.
 
 
-===== Profil oci =====
+===== Profil pour Oracle =====
 
 Paramètres possibles :
 
-   * **driver** : doit valoir "oci"
-   * **persistent** : indique si la connexion est persistante (**on**) ou pas
-     (**off**)
-   * **user** et **password** : le login/mot de passe pour la connexion.
-   * **force_encoding** : indique s'il faut spécifier le charset utilisé dans
+   * @@driver@@ : doit valoir "oci"
+   * @@persistent@@ : indique si la connexion est persistante (@@on@@) ou pas
+     (@@off@@)
+   * @@user@@ et @@password@@ : le login/mot de passe pour la connexion.
+   * @@force_encoding@@ : indique s'il faut spécifier le charset utilisé dans
      l'application, de manière à récupérer les données avec le bon charset. même
      explication que pour mysql.
 
 Pour indiquer le serveur et la base, soit vous indiquez une chaine de connexion :
 
-   * **dsn** : la chaine de connexion reconnu par oracle
+   * @@dsn@@ : la chaine de connexion reconnu par oracle
 
 Soit vous indiquez les paramètres séparément :
 
-   * **database** : le nom de la base de données à utiliser
-   * **host** : le nom du serveur sur lequel se connecter.
-   * **port** : indique le port de connexion.
+   * @@database@@ : le nom de la base de données à utiliser
+   * @@host@@ : le nom du serveur sur lequel se connecter.
+   * @@port@@ : indique le port de connexion.

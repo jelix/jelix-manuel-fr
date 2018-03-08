@@ -13,34 +13,34 @@ La première chose à faire est de récupérer un objet jDbConnection :
   $cnx = jDb::getConnection();
 </code>
 
-La méthode getConnection() permet de récupérer un objet de type jDbConnection
-(ou jDbPDOConnection héritant de PDO, si vous utilisez PDO, ils ont toutefois la
+La méthode @@getConnection()@@ permet de récupérer un objet de type @@jDbConnection@@
+(ou @@jDbPDOConnection@@ héritant de PDO, si vous utilisez PDO, ils ont toutefois la
 même API). Cette méthode accepte un paramètre facultatif : le nom du profil à
-utiliser. s'il n'est pas indiqué, celui déclaré par défaut sera utilisé.
+utiliser. S'il n'est pas indiqué, celui déclaré par défaut sera utilisé.
 
 
-Pour construire les requêtes, vous avez une méthode importante à connaître :
-//quote()//, qui permet d'échapper certains caractères dans les valeurs que vous
-voulez insérer dans vos requêtes. Elle évite dans une certaine mesure les
-problèmes comme l'injection SQL. Un autre ami de //quote()// est //quote2()//
-utilisé sur les colonnes **binaires** et s'utilise de la même façon que
-//quote()//
+Pour construire les requêtes, vous avez une méthode importante à connaître si vous
+n'utilisez pas les requêtes préparées : @@quote()@@, qui permet d'échapper
+certains caractères dans les valeurs que vous voulez insérer dans vos requêtes.
+Elle évite dans une certaine mesure les problèmes comme l'injection SQL.
+Un autre ami de @@quote()@@ est @@quote2()@@ utilisé sur les colonnes **binaires**
+et s'utilise de la même façon que @@quote()@@.
 
 <code php>
   $sql = "INSERT INTO users (nom,prenom) VALUES";
   $sql .=" (". $cnx->quote("de l'ombre") .",".$cnx->quote('robert').")";
 </code>
 
-Notez que la méthode //quote()// encadre la valeur avec des quotes.
+Notez que la méthode @@quote()@@ encadre la valeur avec des quotes.
 
-Pour exécuter des requêtes, il y a principalement deux méthodes, //exec// et //query//.
+Pour exécuter des requêtes, il y a principalement deux méthodes, @@exec()@@ et @@query()@@.
 
 
 ==== exec ====
 
-//exec// doit être utilisé pour les requêtes qui ne renvoient pas de résultat
-//(UPDATE, INSERT, DELETE...). cette méthode renvoie juste le nombre de lignes
-//concernées par la requête. Exemple :
+@@exec@@ doit être utilisé pour les requêtes qui ne renvoient pas de résultat
+@@(UPDATE, INSERT, DELETE...)@@. cette méthode renvoie juste le nombre de lignes
+concernées par la requête. Exemple :
 
 <code php>
   $cnx = jDb::getConnection();
@@ -50,9 +50,9 @@ Pour exécuter des requêtes, il y a principalement deux méthodes, //exec// et 
 
 ==== query ====
 
-//query// est fait pour les requêtes qui renvoient des résultats, vides ou pas
-//(SELECT ou procédures stockées). La méthode renvoie alors un objet
-//jDbResultSet.
+@@query@@ est fait pour les requêtes qui renvoient des résultats, vides ou pas
+(SELECT ou procédures stockées). La méthode renvoie alors un objet
+@@jDbResultSet@@.
 
 Voici un exemple rapide :
 
@@ -70,12 +70,12 @@ Voici un exemple rapide :
 ==== limitQuery ====
 
 Vous pouvez faire des requêtes qui récupèrent un nombre limité
-d'enregistrements. Vous utiliserez alors la méthode //limitQuery// :
+d'enregistrements. Vous utiliserez alors la méthode @@limitQuery@@ :
 
 <code php>
   $cnx = jDb::getConnection();
 
-  $rs = $cnx->limitQuery('SELECT nom, prenom FROM users', 5,10);
+  $rs = $cnx->limitQuery('SELECT nom, prenom FROM users', 5, 10);
   $result='';
   while($record = $rs->fetch()){
      $result.='nom = '.$record->nom.' prenom='.$record->prenom."\n";
@@ -88,24 +88,29 @@ le nombre d'enregistrements à récupérer.
 
 ==== requêtes préparées ====
 
-vous pouvez utiliser des requêtes préparées. C'est d'ailleurs plus sécurisé
-dans il faut injecter des paramètres dans la requete SQL.
+Vous pouvez utiliser des requêtes préparées. C'est d'ailleurs plus sécurisé
+dans il faut injecter des paramètres dans la requete SQL. Tous les drivers
+fournis avec Jelix supportent les requêtes préparées, excepté "mssql".
 
 L'API est similaire à PDO : une méthode @@M@prepare@@ permet d'indiquer
 la requête. Celle-ci peut avoir des paramètres nommés, commençant par ":".
-La méthode renvoi un objet de type jDbResultSet.
+La méthode renvoi un objet de type @@jDbResultSet@@.
 
 <code>
     $stmt = $cnx->prepare('INSERT INTO `labels_test` (`key`,`lang` ,`label`) VALUES (:k, :lg, :lb)');
 </code>
 
 Sur cet objet jDbResultSet, on peut indiquer la valeur de chaque paramètre
-avec la méthode bindParam:
+avec la méthode @@bindParam()@@ ou @@bindValue()@@. @@bindParam()@@ permet de
+donner une valeur de variable, tandis que @@bindValue()@@ permet d'indiquer
+directement une valeur PHP. Vous devez indiquer à ces deux methodes, le type
+de la valeur ou de la variable, avec l'une des constantes @@PDO::PARAM_*@@.
+Par défaut, c'est @@PDO::PARAM_STR@@, donc la valeur doit être une chaîne.
 
 <code>
-    $bind = $stmt->bindParam('lg', $lang, 's');
-    $bind = $stmt->bindParam('k', $key, 'i');
-    $bind = $stmt->bindParam('lb', $label, 's');
+    $bind = $stmt->bindParam('lg', $lang);
+    $bind = $stmt->bindParam('k', $key, PDO::PARAM_INT);
+    $bind = $stmt->bindValue('lb', 'hello', PDO::PARAM_STR);
 </code>
 
 Et ensuite, on lance l'execution de la requête :
@@ -114,26 +119,57 @@ Et ensuite, on lance l'execution de la requête :
     $stmt->execute();
 </code>
 
-Et il est possible de relancer l'execution avec d'autres valeurs pour les
-paramètres, autant de fois que l'on veut, sans avoir à rééxecuter @@prepare()@@.
-
 Si la requête est un select, on peut se servir de @@$stmt@@ comme un
 ResultSet classique, voir la section suivante.
 
-Note: le driver mssql ne prend pas en charge les requêtes préparées.
+Il est possible de relancer l'execution avec d'autres valeurs pour les
+paramètres, autant de fois que l'on veut, sans avoir à rééxecuter @@prepare()@@.
+
+<code>
+    $stmt = $cnx->prepare('INSERT INTO `labels_test` (`key`,`lang` ,`label`) VALUES (:k, :lg, :lb)');
+
+    // on insère un premier enregistrement
+    $bind = $stmt->bindParam('lg', $lang);
+    $bind = $stmt->bindParam('k', $key, PDO::PARAM_INT);
+    $bind = $stmt->bindValue('lb', 'hello', PDO::PARAM_STR);
+    $stmt->execute();
+
+    // on insère un deuxième enregistrement, en modifiant juste les paramètres
+    // qui changent
+    $bind = $stmt->bindValue('k', 'good.bye', PDO::PARAM_INT);
+    $bind = $stmt->bindValue('lb', 'Good Bye', PDO::PARAM_STR);
+    $stmt->execute();
+
+</code>
+
+Une alternative à l'utilisation de @@bindParam()@@ et @@bindValue()@@, est de
+donner les valeurs directement à la méthode @@execute()@@.
+
+<code>
+    $stmt = $cnx->prepare('INSERT INTO `labels_test` (`key`,`lang` ,`label`) VALUES (:k, :lg, :lb)');
+
+    $stmt->execute(array(
+        'lg' => $lang,
+        'k' => $key,
+        'lb' => 'hello'
+    ));
+</code>
+
+Notez que le driver oci ne prend pas en charge les paramètres donnés à @@execute()@@.
 
 ===== ResultSet =====
 
-jDbResultSet est l'objet que vous récupérez après avoir fait un SELECT (query ou
-limitQuery).
+@@jDbResultSet@@ est l'objet que vous récupérez après avoir fait un SELECT
+(via @@query()@@, @@limitQuery()@@ ou @@prepare()@@).
 
-Sa méthode fetch() vous permet de récupérer un à un les enregistrements. À noter
+Sa méthode @@fetch()@@ vous permet de récupérer un à un les enregistrements. À noter
 que jDbResultSet renvoie toujours un enregistrement sous forme d'objet. 
 
-Sa méthode fetchAll() permet de récupérer tout d'un coup dans un tableau PHP.
+Sa méthode @@fetchAll()@@ permet de récupérer tous les résultats en même temps
+dans un tableau PHP.
 
-jDbResultSet implémente l'interface Iterator. De ce fait, vous pouvez utiliser
-cet objet dans certaines boucles, comme les foreach :
+jDbResultSet implémente l'interface @@Iterator@@. De ce fait, vous pouvez utiliser
+cet objet dans certaines boucles, comme les @@foreach@@ :
 
 <code php>
   $cnx = jDb::getConnection();
@@ -147,7 +183,7 @@ cet objet dans certaines boucles, comme les foreach :
 
 Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont
 pas de classe précise). Si vous voulez que ce soient des objets d'une certaine
-classe, vous devez l'indiquer via setFetchMode :
+classe, vous devez l'indiquer via @@setFetchMode()@@ :
 
 
 <code php>
@@ -158,7 +194,7 @@ classe, vous devez l'indiquer via setFetchMode :
   $cnx = jDb::getConnection();
 
   $rs = $cnx->query('SELECT nom, prenom FROM users');
-  $rs->setFetchMode($rs->FETCH_CLASS , 'User');
+  $rs->setFetchMode(jDbConnection::FETCH_CLASS , 'User');
   $result='';
   foreach( $rs as $record){
      // $record est ici un objet de type User
@@ -168,11 +204,12 @@ classe, vous devez l'indiquer via setFetchMode :
 
 Pour le reste des méthodes, voyez [[refapi:|la documentation de référence]].
 
-==== Utilisation dans un template ====
+==== Utilisation des résultats dans un template ====
 
 Il est possible de passer un objet jDbResultSet dans un template.
 
 Dans le contrôleur :
+
 <code php>
   $cnx = jDb::getConnection();
 
@@ -203,21 +240,22 @@ jDb permet de faire des transactions. Bien sûr, il faut que le driver utilisé
 supporte les transactions.
 
 Pour marquer le début d'une transaction, vous appellerez la méthode
-//beginTransaction ()//. Ensuite vous lancerez les requêtes, Puis après avoir
+@@beginTransaction()@@. Ensuite vous lancerez les requêtes, Puis après avoir
 fait vos requêtes, vous pourrez valider la transaction en appelant la méthode
-//commit()//. Pour annuler une transaction, il suffit d'appeler //rollback()//.
+@@commit()@@. Pour annuler une transaction, il suffit d'appeler @@rollback()@@.
 
 <code php>
    $cnx = jDb::getConnection();
 
    $cnx->beginTransaction();
 
-   $cnx->exec(...);
-   $cnx->query(...);
-   //....
-   
-   if($ok)
-     $cnx->commit();
-   else
-     $cnx->rollback();
+   try {
+        $cnx->exec(...);
+        $cnx->query(...);
+        //....
+        $cnx->commit();
+    }
+    catch (Exception $e) {
+        $cnx->rollback();
+    }
 </code>
