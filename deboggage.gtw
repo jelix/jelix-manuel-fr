@@ -25,7 +25,8 @@ un ou plusieurs loggeurs.
 ==== Configurer jLog ====
 
 Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez
-remplir la section @@[logger]@@ dans la configuration. Par défaut :
+remplir la section @@[logger]@@ dans la configuration (pour rappel, dans le
+fichier @@F@var/config/mainconfig.ini.php@@ ou  @@F@var/config/localconfig.ini.php@@). Par défaut :
 
 <code ini>
 [logger]
