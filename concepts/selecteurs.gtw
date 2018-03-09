@@ -6,9 +6,9 @@
 Les sélecteurs sont très utilisés dans Jelix. Ils permettent d'indiquer une
 ressource, un fichier, sans avoir à connaître son chemin. En effet,
 l'arborescence d'une application Jelix n'est pas figée et peut être modifiée
-selon les normes en vigueur sur le serveur (le répertoire var de l'application
-myapp pouvant être dans le répertoire /var/myapp/var par exemple, sur un serveur
-linux).
+selon les normes en vigueur sur le serveur (le répertoire @@var/@@ de l'application
+"myapp" pouvant être dans le répertoire @@/var/lib/myapp/@@ par exemple,
+sur un serveur linux).
 
 De plus les bibliothèques de Jelix peuvent être installées dans une arborescence
 différente de celle de l'application.
@@ -19,9 +19,9 @@ de long chemins de fichiers...
 
 ===== Comment est défini un sélecteur =====
 
-Un sélecteur est une chaîne ayant ce format : "unModule~uneRessource" . On peut
+Un sélecteur est une chaîne ayant ce format : @@"unModule~uneRessource"@@ . On peut
 omettre le module si on se trouve actuellement dans le module en question. Dans
-ce cas on écrit "uneRessource".
+ce cas on écrit @@"uneRessource"@@.
 
 Un sélecteur désigne une ressource d'un type précis. Voici donc les différents
 types de sélecteurs :
@@ -56,9 +56,7 @@ Ici jDao cherchera un fichier DAO de nom myDAO.dao.xml dans le module myModule.
 Il peut arriver (mais c'est en fait très rare dans l'API de Jelix) que la
 méthode attende n'importe quel type de sélecteur. Dans ce cas là il faut ajouter
 un préfixe au sélecteur de manière à indiquer son type. Ce préfixe est indiqué
-dans le tableau du dessus. La notation d'un sélecteur est alors : 
-
-    "type:unModule~uneRessource"
+dans le tableau du dessus. La notation d'un sélecteur est alors : @@"type:unModule~uneRessource"@@.
 
 On appelle cela un "sélecteur complet".
 

@@ -2,13 +2,12 @@
 
 ===== URL : identification d'une action =====
 
-
 Une fois que l'on a fait [[/controleurs|un contrôleur]] on veut bien sûr pouvoir
 appeler l'une de ces méthodes, donc indiquer les informations nécessaires dans
 les URLs.
 
 À chaque URL correspond une action (module/contrôleur/méthode). Si cette
-correspondance n'est pas explicitement faite dans la configuration (fichier urls.xml),
+correspondance n'est pas explicitement faite dans la configuration (fichier @@app/config/urls.xml@@),
 l'URL est composée des élements suivants :
 
 <code>
@@ -69,8 +68,6 @@ module "foo" qui a été appelée dans Jelix :
   * "#~#" représente le module/l'action qui ont été appelés. Équivaut donc à
     "foo~bar:man".
 
-
-
 ===== Indiquer le point d'entrée =====
 
 Par défaut quand on indique un sélecteur d'action, il génère l'URL avec le point
@@ -85,11 +82,11 @@ Dans ce cas on ajoute à la fin du sélecteur d'action, un "@" suivi du nom du
 type du point d'entrée :
 
 <code>
-  foo~bar:man@css
+  foo~bar:man@jsonrpc
 </code>
 
 Ici on demande l'URL de l'action "bar:man" du module "foo", pour les requêtes de
-type "css".
+type "jsonrpc".
 
 Pour la plupart des URLs on indiquera certainement "@classic".
 

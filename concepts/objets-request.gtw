@@ -11,9 +11,11 @@ du type de protocole utilisé. En effet, on ne récupère pas les données en en
 requête GET ou URL-encodées dans son corps pour une requête POST) de la même manière que celles
 d'un appel SOAP (les données étant situées dans le corps de la requête HTTP sous forme XML).
 
-À chaque type d'objet jRequest correspond un ou plusieurs formats de sortie autorisés, donc un ou plusieurs objets jResponse permis.
+À chaque type d'objet jRequest correspond un ou plusieurs formats de sortie
+autorisés, donc un ou plusieurs objets jResponse permis.
 
 Les objets jRequest disponibles sont :
+
   * classic : pour les requêtes HTTP normales dont la réponse peut être n'importe quel contenu (HTML, texte, image...),
   * soap : pour les requêtes de services SOAP. La réponse sera au format SOAP.
   * xmlrpc : pour les requêtes XML-RPC. La réponse sera nécessairement en XML-RPC,

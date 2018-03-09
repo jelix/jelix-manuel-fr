@@ -11,9 +11,9 @@ XML-RPC etc... Mais aussi des réponses particulières comme la redirection.
 Un objet jResponse implémente un certain nombre de méthodes, dont les plus
 utiles pour vous sont celles-ci :
 
-   * @@M@addHttpHeader ()@@ : pour ajouter un entête HTTP, qui sera envoyé au
+   * @@M@addHttpHeader()@@ : pour ajouter un entête HTTP, qui sera envoyé au
      moment opportun.
-   * @@M@setHttpStatus ()@@ : pour indiquer le code "status" HTTP (200, 404...)
+   * @@M@setHttpStatus()@@ : pour indiquer le code "status" HTTP (200, 404...)
    * @@M@isValidCache()@@, @@M@setExpire()@@ et @@M@setLifeTime()@@ pour gérer la mise en cache coté
      navigateur
 
