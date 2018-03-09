@@ -2,7 +2,7 @@
 
 jMailer est une classe permettant l'envoi d'email depuis un contrôleur ou une
 classe métier. Elle est basée sur la classe
-[[http://phpmailer.codeworxtech.com|PHPMailer]]. 
+[[https://github.com/PHPMailer/PHPMailer|PHPMailer]].
 
 Voici ses possibilités :
   * envoi de pièces jointes
@@ -14,7 +14,7 @@ Voici ses possibilités :
 De nombreux exemples d'utilisation sont disponibles sur internet. Aussi nous
 n'allons pas détailler la manière dont on utilise cette classe.
 
-Cependant jMailer apporte quelques fonctionnalités supplémentaires et une façon
+jMailer apporte quelques fonctionnalités supplémentaires et une façon
 particulière de configurer l'envoi de mail :
 
    * la configuration générale d'envoi de mail est indiqué dans le fichier de
@@ -32,34 +32,42 @@ Le paramétrage de base utilisé par jMailer s'effectue dans le fichier
 
 ==== Les différentes options de configuration ====
 
-  * //webmasterEmail// : l'email par defaut utilisé pour l'envoi des mails (expéditeur)
-  * //webmasterName// :  le nom par défaut utilisé pour l'envoi des mails (expéditeur)
-  * //mailerType// : méthode utilisée pour envoyer les emails (par défaut mail)
+  * @@webmasterEmail@@ : l'email par defaut utilisé pour l'envoi des mails (expéditeur)
+  * @@webmasterName@@ :  le nom par défaut utilisé pour l'envoi des mails (expéditeur)
+  * @@mailerType@@ : méthode utilisée pour envoyer les emails (par défaut mail)
     * "mail" : utilise la fonction mail de PHP
     * "sendmail" : utilise directement la fonction mail du serveur
     * "smtp" : utilise une connexion directe à un/plusieurs hôte SMTP
-  * //hostname// : utilisé dans les en-têtes Message-Id et Received, et aussi
-    comme valeur par defaut pour HELO. Si vide, utilisera la valeur renvoyée par
-    //$_SERVER['SERVER_NAME']// ou "localhost.localdomai".
-  * //sendmailPath// : pour l'envoi par sendmail, le chemin de l'executable sendmail.
+  * @@hostname@@ : utilisé dans les en-têtes @@Message-Id@@ et @@Received@@, et aussi
+    comme valeur par defaut pour @@HELO@@. Si vide, utilisera la valeur renvoyée par
+    @@$_SERVER['SERVER_NAME']@@ ou "localhost.localdomai".
+  * @@sendmailPath@@ : pour l'envoi par sendmail, le chemin de l'executable sendmail.
 
 Pour l'envoi par SMTP :
-  * //smtpHost// : le nom du serveur smtp
-  * //smtpPort// : le port SMTP
-  * //smtpSecure// : connection sécurisée ou pas (valeurs possibles: "", "ssl", "tls")
-  * //smtpHelo// : le message HELO de SMTP
-  * //smtpAuth// : on/off. Active ou non l'authentification SMTP
-  * //smtpUsername// : le login pour se connecter sur le serveur
-  * //smtpPassword// : le mot de passe pour se connecter sur le serveur
-  * //smtpTimeout// : la durée maximale de tentative de connection au serveur SMTP.
+  * @@smtpHost@@ : le nom du serveur smtp
+  * @@smtpPort@@ : le port SMTP
+  * @@smtpSecure@@ : connection sécurisée ou pas (valeurs possibles: "", "ssl", "tls")
+  * @@smtpHelo@@ : le message HELO de SMTP
+  * @@smtpAuth@@ : on/off. Active ou non l'authentification SMTP
+  * @@smtpUsername@@ : le login pour se connecter sur le serveur
+  * @@smtpPassword@@ : le mot de passe pour se connecter sur le serveur
+  * @@smtpTimeout@@ : la durée maximale de tentative de connection au serveur SMTP.
 
 
-jMailer utilise aussi les paramètres généraux //locale// et //charset// pour
+jMailer utilise aussi les paramètres généraux @@locale@@ et @@charset@@ pour
 configurer la langue et l'encodage des mails.
 
 Bien sûr, tout ces paramètres sont modifiables pour des besoins ponctuels en
 utilisant les méthodes et propriétés adéquates.
 
+Note à propos de @@webmasterEmail@@ : si vous n'utilisez pas un serveur SMTP
+directement, assurez-vous que le serveur web est autorisé à envoyer des emails
+avec cette adresse. Des serveurs SMTP pourraient les refuser ou les considérer
+comme du spam (voir mettre votre serveur dans une liste noire). Par exemple,
+si votre serveur est publique, vous devez avoir [[https://fr.wikipedia.org/wiki/Sender_Policy_Framework|un enregistrement SPF]]
+dans la configuration DNS du domaine utilisé. Cet enregistrement doit contenir
+entre autre l'IP du serveur web. Il y a aussi la configuration DKIM que vous
+pouvez mettre en place. Mais ceci est hors contexte.
 
 ===== Envoi d'un email basique =====
 
@@ -81,12 +89,8 @@ Envoi d'un email texte avec le paramétrage par défaut.
 Vous pouvez utiliser toutes la puissance de jTpl a l'intérieur de vos mail. Pour
 Cela il vous suffit de créer un fichier .tpl dans l'un de vos module.
 
-ex :
-
-
-
+Exemple dans @@modules/monmodule/templates/supermail.tpl@@ :
 <code html>
- {* fichier modules/monmodule/templates/supermail.tpl *}
     {meta Subject 'Super mail.'}
     {meta Priority 1}
     {meta From 'votre nom<votre@mail.com>'}
@@ -134,7 +138,7 @@ votre template.
 
 ===== Envoi d'un email en HTML =====
 
-Pour envoyer un email en HTML, il suffit d'appeler la méthode isHTML comme dans
+Pour envoyer un email en HTML, il suffit d'appeler la méthode @@isHTML()@@ comme dans
 l'exemple suivant : 
 
 <code php>
@@ -145,11 +149,52 @@ $mail->AddAddress('toto@example.com' , 'Toto');
 $mail->Send();
 </code>
 
-Si vous utilisez un template, indiquer @@true@@ à la méthode @@M@Tpl@@.
+Vous pouvez aussi utiliser un template en HTML, il faut alors indiquer @@true@@
+à la méthode @@M@Tpl@@ en second paramètre.
 
 <code php>
 $tpl = $mail->Tpl('monmodule~supermail', true);
 </code>
+
+PHPMailer incluera dans le mail le contenu HTML que vous donnez, mais aussi une
+version purement textuelle de votre contenu, en enlevant les balises HTML, les rêgles
+css et le code javascript. jMailer améliore la conversion en préservant les
+liens des balises @@<a>@@, c'est à dire en affichant les URLS des liens entre
+parenthèses après l'intitulé du lien, sauf si il y a un attribut ou une classe
+@@notexpandlink@@.
+
+Vous pouvez fournir votre propre convertisseur HTML vers texte, en l'indiquant
+en troisième paramètre à @@Tpl()@@. Cela doit être un paramètre de type @@callable@@.
+
+<code>
+$tpl = $mail->Tpl(
+    'mymodule~supermail',
+    true,
+    function ($html) {
+        // ... convert to text
+        return $text;
+    }
+);
+</code>
+
+Votre HTML peut avoir des images, avec la balise @@<img>@@. Si l'attribut @@src@@
+n'est pas une URL, alors PHPMailer considère que c'est un chemin de fichier
+sur le disque, et inclus l'image dans le mail. Le chemin de l'image indiqué peut
+être un chemin absolu sur le disque. Si c'est un chemin relatif, vous devez
+indiquer en quatrième paramètre de @@Tpl()@@ le chemin de base des images.
+
+Dans cet exemple, les images affichées dans le mail se trouvent dans le
+répertoire @@www/images/@@ de l'application.
+
+<code>
+$tpl = $mail->Tpl(
+    'mymodule~supermail',
+    true,
+    null,
+    jApp::wwwPath('images/')
+);
+</code>
+
 
 ===== Envoi d'un email avec pièce jointe =====
 
@@ -166,4 +211,5 @@ $mail->Send();
 ===== Utiliser les fonctionnalités avancées de jMailer =====
 
 jMailer utilise comme base PHPMailer, si vous voulez avoir d'avantage de
-documentation, consultez [[http://phpmailer.worxware.com/index.php?pg=methods|l'aide en ligne de PHPMailer]].
+documentation, consultez [[http://phpmailer.github.io/PHPMailer/|la documentation de PHPMailer]].
+

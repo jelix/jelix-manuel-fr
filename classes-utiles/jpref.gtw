@@ -3,13 +3,12 @@
 ===== jPref =====
 
 jPref est une classe très simple qui va vous permettre de récuperer et
-d'enregistrer des préférences pour votre application (on parle ici de
+d'enregistrer des préférences pour votre application. On parle ici de
 préférences qui peuvent évoluer dans la vie de l'application et non de
-préférences de configuration fixes qui elles se trouvent dans le
-@@mainconfig.ini.php@@ ou autre).
+préférences de configuration fixes qui, elles, se trouvent dans le
+@@mainconfig.ini.php@@ ou autre.
 
 ==== Configuration ====
-
 
 @@C@jPref@@ est fourni par le module "jpref". Activez-le dans votre
 configuration :
@@ -44,15 +43,11 @@ Pour plus de détails sur la configuration de ce driver, voir la
 Exemple :
 
 <code php>
-
 jPref::set('nb.items.per.page', 20);
 
 $val = jPref::get('nb.items.per.page');
 // $val contient 20
-
 </code>
-
-
 
 ===== Interface d'admin pour jPref =====
 

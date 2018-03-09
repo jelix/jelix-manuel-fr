@@ -38,7 +38,7 @@ Exemple :
 
 ===== Afficher un message =====
 
-Utilisez le plugin de template @@f@jMessage@@ pour afficher le(s) message(s) en
+Utilisez le plugin de template @@jmessage@@ pour afficher le(s) message(s) en
 attente. 
 
 Exemple : 
@@ -49,7 +49,7 @@ Exemple :
     {jmessage} 
 </code>
 
-le template ci-dessus donnera le fragment de html suivant :
+Le template ci-dessus donnera le fragment de html suivant :
 
 <code html>
   <ul class="jelix-msg">
@@ -57,7 +57,8 @@ le template ci-dessus donnera le fragment de html suivant :
   </ul>
 </code>
 
-À noter que Jelix fournit des styles par défaut pour les types de messages prédéfinis @@error@@, @@warning@@, @@notice@@ et @@ok@@ dans le module @@master_admin@@.
+À noter que Jelix fournit des styles par défaut pour les types de messages
+prédéfinis @@error@@, @@warning@@, @@notice@@ et @@ok@@ dans le module @@master_admin@@.
 
 Une autre option est d'utiliser la méthode statique @@M@jMessage::get@@ pour
 récupérer les messages dans un contrôleur.
@@ -85,5 +86,5 @@ sessions, appelez @@M@jMessage::clearAll()@@.
 
 Vous pouvez aussi effacer un seul type de message avec @@M@jMessage::clear()@@.
 cette méthode accepte un argument optionnel décrivant un type. Si le type est
-vide, la méthode effacera les messages du type //default//. 
+vide, la méthode effacera les messages du type @@default@@.
 

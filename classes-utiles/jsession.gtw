@@ -2,7 +2,7 @@
 
 jSession est utilisé par Jelix pour la gestion du stockage des sessions. Cet
 objet n'est pas utilisé pour lire ou écrire des variables en session. Pour faire
-ceci, **utilisez $_SESSION comme d'habitude**.
+ceci, **utilisez @@$_SESSION@@ comme d'habitude**.
 
 Les paramètres du moteur de stockage de la session sont indiqués dans la section
 @@sessions@@ du fichier de configuration
@@ -21,12 +21,11 @@ name = "masession"
 
 NB : seuls les caractères alpha-numériques sont autorisés.
 
-
 ===== Stockage dans un répertoire =====
 
 Il n'est pas toujours prudent de stocker les sessions dans le répertoire par
 défaut prévu par l'hébergeur, car celui-ci peut être accessible de tout le
-monde, comme /tmp/ par exemple.
+monde, comme @@/tmp/@@ par exemple.
 
 Pour utiliser jSession avec un répertoire personnalisé :
 
@@ -35,9 +34,8 @@ Pour utiliser jSession avec un répertoire personnalisé :
   storage = "files"
   files_path = "app:var/sessions/"
 </code>
-NB : les mots clés app: et lib: sont reconnus. 
 
-
+NB : les mots clés app: et lib: sont convertis.
 
 ===== Stockage dans la base de données =====
 
@@ -45,7 +43,7 @@ On peut avoir besoin de stocker les données de session en base de données, par
 exemple pour permettre un partage aisé en cas de répartition de charge entre
 plusieurs serveurs web.
 
-Pour utiliser jSession avec un Dao : 
+Pour utiliser jSession avec un Dao :
 
 <code ini>
   [sessions]

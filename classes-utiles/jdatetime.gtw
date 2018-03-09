@@ -18,7 +18,7 @@ avec des dates inférieures au 01/01/1970).
 
 ===== Récupérer la date courante =====
 
-La méthode ''now'' permet à l'objet jDateTime de récupérer la date courante.
+La méthode @@M@now()@@ permet à l'objet jDateTime de récupérer la date courante.
 
 Exemple :
 
@@ -30,11 +30,11 @@ Exemple :
   $date = $dt->toString(jDateTime::LANG_DFORMAT);
 </code>
 
-''$date'' vaut la date courante formatée dans la langue de l'application.
+@@V@$date@@ vaut la date courante formatée dans la langue de l'application.
 
 ===== Conversion à partir d'une chaîne =====
 
-La méthode setFromString prend en argument la chaîne en question et un
+La méthode @@M@setFromString@@ prend en argument la chaîne en question et un
 indicateur de format. Ces indicateurs sont des valeurs numériques qui sont
 récupérables via des constantes de classe.
 
@@ -73,7 +73,7 @@ Vous aurez remarqué les propriétés qui permettent de connaître chaque élém
 la date.
 
 On peut aussi, plutôt que spécifier à chaque fois le format, définir un format
-par défaut via la propriété defaultFormat.
+par défaut via la propriété @@P@defaultFormat@@.
 
 <code php>
   $dt = new jDateTime();
@@ -84,7 +84,7 @@ par défaut via la propriété defaultFormat.
 
 ===== Conversion vers une chaîne =====
 
-Pour convertir une date en chaîne, il y a la méthode toString qui accepte en
+Pour convertir une date en chaîne, il y a la méthode @@M@toString@@ qui accepte en
 paramètre facultatif l'identifiant de format dans lequel on veut l'avoir.
 
 <code php>
@@ -94,8 +94,8 @@ paramètre facultatif l'identifiant de format dans lequel on veut l'avoir.
 
 ===== Calcul de dates =====
 
-Avec les méthodes sub() et add(), il est possible d'ajouter ou d'enlever des
-durées à une date. Ces durées sont à indiquer via un objet jDuration.
+Avec les méthodes @@M@sub()@@ et @@M@add()@@, il est possible d'ajouter ou d'enlever des
+durées à une date. Ces durées sont à indiquer via un objet @@jDuration@@.
 
 <code php>
   $dt = new jDateTime();
@@ -113,7 +113,8 @@ durées à une date. Ces durées sont à indiquer via un objet jDuration.
 
 </code>
 
-Si on veut savoir la durée entre deux dates, on utilise alors la méthode durationTo(), qui renvoie cette durée dans un objet jDuration :
+Si on veut savoir la durée entre deux dates, on utilise alors la méthode
+@@M@durationTo()@@, qui renvoie cette durée dans un objet jDuration :
 
 <code php>
   $dt = new jDateTime();
@@ -133,7 +134,7 @@ Il est à présent possible de faire des soustractions de dates via la methode s
 
 ===== Comparaison de dates =====
 
-Pour comparer deux dates, il y a la méthode compareTo()
+Pour comparer deux dates, il y a la méthode @@M@compareTo()@@
 
 <code php>
   $dt = new jDateTime();
