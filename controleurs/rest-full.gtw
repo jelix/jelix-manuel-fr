@@ -3,7 +3,7 @@
 
 La technique REST consiste à utiliser les fonctionnalités du protocole HTTP pour
 manipuler une ressource. En effet, il existe les méthodes POST et GET que vous
-connaissez, mais il existe aussi les méthodes PUT et DELETE. Ainsi, pour
+connaissez, mais il existe aussi les méthodes PUT et DELETE par exemple. Ainsi, pour
 effectuer une création, un affichage, un effacement d'une ressource, plutôt que
 d'avoir plusieurs URLs spécifiques pour faire cela, il y a une seule URL, et on
 utilise le champ "method" de HTTP pour indiquer l'action à effectuer.
@@ -20,7 +20,7 @@ HTTP. Il faut implémenter donc 4 méthodes pour chacune d'elles dans un
 contrôleur.
 
 Vous devez réaliser un contrôleur qui va implémenter l'interface
-jIRestController. Ce contrôleur ne pourra être utilisé que pour faire du REST.
+@@jIRestController@@. Ce contrôleur ne pourra être utilisé que pour faire du REST.
 Vous ne pourrez donc pas réaliser des méthodes pour des actions supplémentaires,
 autres que les quatre imposées par l'interface jIRestController :
 

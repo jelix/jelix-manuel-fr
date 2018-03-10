@@ -3,7 +3,6 @@
 
 ===== Oublier les variables $_GET, $_POST... =====
 
-
 Dans une action d'un contrôleur, une des tâches que vous ferez le plus souvent,
 est de récupérer les paramètres de la requête HTTP.
 
@@ -80,7 +79,7 @@ Vous appellerez donc la méthode @@M@param()@@ comme dans n'importe quel
 contrôleur, en indiquant le paramètre voulu.
 
 Par contre, les fichiers éventuellement transmis dans un contenu
-@@multipart/form-data@@, ne sont pas mis dans $_FILE, il vous faudra donc les
+@@multipart/form-data@@, ne sont pas mis dans @@$_FILES@@, il vous faudra donc les
 traiter vous-même, en les récupérant comme les autres paramètres
 (@@$this->param('foo')@@).
 

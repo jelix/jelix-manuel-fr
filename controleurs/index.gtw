@@ -11,32 +11,26 @@ Un contrôleur est toujours dédié à un type de requête particulier.
 
 ===== Convention de nommage =====
 
-
 ==== Fichier ====
 
 
 Les contrôleurs doivent être stockés dans le répertoire @@F@controllers@@ des
 modules. Ils ont chacun un nom qui va servir de suffixe ou préfixe. 
 
-Le fichier d'un contrôleur a un nom bien précis :
-
-   cccc.tttt.php
-
-où
+Le fichier d'un contrôleur a un nom bien précis : @@cccc.tttt.php@@.
 
    * //cccc// est le nom du contrôleur
    * //tttt// est le type de requête auquel il est dédié.
 
-
-Par exemple, si vous l'appelez "foo", et qu'il est dédié au type de requête
+Par exemple, si vous l'appelez "editor", et qu'il est dédié au type de requête
 "classic" (ce qui sera le plus souvent le cas), le nom du fichier sera
-//foo.classic.php//.
+@@editor.classic.php@@.
 
 
 ==== Classe ====
 
-La classe d'un contrôleur doit toujours avoir le suffixe "Ctrl". Dans le cas
-d'un contrôleur nommé "foo", sa classe devra être nommée "fooCtrl".
+La classe d'un contrôleur doit toujours avoir le suffixe @@Ctrl@@. Dans le cas
+d'un contrôleur nommé "editor", sa classe devra être nommée @@editorCtrl@@.
 
 ===== Création d'un contrôleur =====
 
@@ -50,11 +44,9 @@ En suivant les conventions de nommage, on crée donc une classe de nom
 Voici le code source minimal :
 
 <code php>
-
 class defaultCtrl extends jController {
 
 }
-
 </code>
 
 Une classe de contrôleur doit toujours hériter de la classe @@C@jController@@.
@@ -89,8 +81,8 @@ méthode "index" dans chaque contrôleur.
 === Utilisation d'un constructeur de classe ===
 
 Pour utiliser un constructeur de classe dans un contrôleur, il est nécessaire de
-mentionner le constructeur parent ainsi que de le lier à l'argument $request.
-Exemple: 
+mentionner le constructeur parent en lui donnant l'objet @@jRequest@@ reçu
+en argument. Exemple :
 
 <code php>
 class defaultCtrl extends jController {
