@@ -21,7 +21,7 @@ Exécutez ensuite dans votre application :
    php cmd.php app:initadmin index
 </code>
 
-"index" est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à l'interface d'administration.
+@@index@@ est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à l'interface d'administration.
 
 Si vous tenez absolument à créer cette interface dans une application existante
 utilisant déjà index.php, indiquez un autre point d'entrée, "admin" par exemple,
@@ -41,7 +41,7 @@ jAuth et/ou jAcl2 par vous même, indiquez les options @@--noauthdb@@ et
 
 Après avoir créé l'interface (et configuré jAuth et jAcl2 si vous avez choisi de
 le faire vous-même), vous pouvez démarrer l'application en appelant le point
-d'entrée créé.
+d'entrée créé (@@http://example.com/admin.php@@ par exemple).
 
 Vous verrez alors un écran demandant votre login et mot de passe (affiché par le
 module jauth). Par défaut, un utilisateur "admin" avec le mot de passe "admin"
@@ -62,7 +62,7 @@ séparer l'application en deux.
 
 Les modules d'administration ne devraient être accessible que par le point
 d'entrée dédié à l'administration. Il faut donc déclarer ces modules dans le
-fichier @@F@var/config/urls.xml@@, au niveau du point d'entrée correspondant.
+fichier @@F@app/config/urls.xml@@, au niveau du point d'entrée correspondant.
 
 Par exemple :
 
