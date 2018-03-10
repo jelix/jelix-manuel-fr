@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:daos/xml_methods~~
 
 Une factory générée par jDao contient par défaut un certain nombre de méthodes
-(find, findAll, get, insert, etc...) comme décrit sur la page sur
+(@@find@@, @@findAll@@, @@get@@, @@insert@@, etc...) comme décrit sur la page sur
 [[utilisation|l'utilisation des daos]]. Cependant, elles ne sont pas forcément
 suffisantes, et l'on a souvent besoin de faire des sélections, des mises à jour
 ou des suppressions particulières.
@@ -15,13 +15,13 @@ de l'écriture fastidieuse des requêtes SQL, etc...
 
 ===== Balise <method> =====
 
-Les méthodes sont déclarées via la balise //<method>//. Celle-ci doit avoir au
-moins un attribut, //name//, indiquant le nom de la méthode. Il y a différents
-types de méthode. On indique le type via l'attribut //type//.
+Les méthodes sont déclarées via la balise @@<method>@@. Celle-ci doit avoir au
+moins un attribut, @@name@@, indiquant le nom de la méthode. Il y a différents
+types de méthode. On indique le type via l'attribut @@type@@.
 
-Une balise //<method>// peut contenir une ou plusieurs balises //<parameter>//,
-qui définissent des paramètres. Une balise //<parameter>// doit avoir un
-attribut //name// indiquant son nom.
+Une balise @@<method>@@ peut contenir une ou plusieurs balises @@<parameter>@@,
+qui définissent des paramètres. Une balise @@<parameter>@@ doit avoir un
+attribut @@name@@ indiquant son nom.
 
 <code xml>
     <parameter name="foo" />
@@ -35,7 +35,7 @@ Il est possible d'indiquer une valeur par défaut :
     <parameter name="foo" default="20"/>
 </code>
 
-Voici les différents types de méthodes. La balise //<conditions>// est décrite
+Voici les différents types de méthodes. La balise @@<conditions>@@ est décrite
 plus loin.
 
 
@@ -54,9 +54,9 @@ plus loin.
   </method>
 </code>
 
-Une méthode de type ''select'' renvoient une liste d'objets "record", qui ont
+Une méthode de type @@select@@ renvoient une liste d'objets "record", qui ont
 donc comme propriétés celles indiquées dans la section record. Une méthode de
-type ''selectfirst'' renvoi le premier objet correspondant aux critères.
+type @@selectfirst@@ renvoi le premier objet correspondant aux critères.
 
 À noter qu'il n'est pas possible de limiter un select/selectfirst à un nombre
 réduit de propriétés. En effet, cela n'aurait pas vraiment de sens au niveau du
@@ -66,7 +66,7 @@ ensuite un update derrière... Si on veut sélectionner un nombre restreint des
 propriétés définies, la seule possibilité pour le moment est de créer un autre
 DAO.
 
-On peut ajouter un attribut distinct pour récupérer seulement les éléments
+On peut ajouter un attribut @@distinct@@ pour récupérer seulement les éléments
 distincts.
 
 <code xml>
@@ -74,15 +74,15 @@ distincts.
    ..
 </code>
 
-La balise //<conditions>// (facultative) décrit une condition (la clause
-//WHERE// en SQL). Voir la section correspondante plus loin.
+La balise @@<conditions>@@ (facultative) décrit une condition (la clause
+@@WHERE@@ en SQL). Voir la section correspondante plus loin.
 
-On peut aussi ajouter une balise //<order>// qui permet de spécifier l'ordre des
-enregistrements récupérés (clause //ORDER// en SQL). Il faut indiquer une ou
-plusieurs balises //<orderitem>//, qui contiennent un attribut //property//
+On peut aussi ajouter une balise @@<order>@@ qui permet de spécifier l'ordre des
+enregistrements récupérés (clause @@ORDER@@ en SQL). Il faut indiquer une ou
+plusieurs balises @@<orderitem>@@, qui contiennent un attribut @@property@@
 indiquant le nom de la propriété sur lequel l'ordre s'effectue et un attribut
-//way//. L'attribut way doit contenir "asc" ou "desc" ou un nom de paramètre de
-méthode (précédé alors par un $).
+@@way@@. L'attribut way doit contenir "asc" ou "desc" ou un nom de paramètre de
+méthode (précédé alors par un @@$@@).
 
 <code xml>
   <order>
@@ -90,19 +90,27 @@ méthode (précédé alors par un $).
   </order>
 </code>
 
-À noter que //property// peut contenir, soit un nom d'une propriété, soit un nom
-de paramètre de la méthode (précédé d'un $) qui doit alors contenir un nom de
+À noter que @@property@@ peut contenir, soit un nom d'une propriété, soit un nom
+de paramètre de la méthode (précédé d'un @@$@@) qui doit alors contenir un nom de
 propriété.
 
-Enfin, une balise //<limit>// optionnelle permet de restreindre le nombre
+<code xml>
+  <parameter name="bar"/>
+  <parameter name="baz" />
+  <order>
+     <orderitem property="$bar" way="$baz" />
+  </order>
+</code>
+
+Enfin, une balise @@<limit>@@ optionnelle permet de restreindre le nombre
 d'enregistrement retournés.
 
 <code xml>
   <limit offset="5" count="10" />
 </code>
 
-Les attributs //count// et //offset// contiennent soit un nombre, soit un nom de
-paramètre de méthode (précédé alors par un $).
+Les attributs @@count@@ et @@offset@@ contiennent soit un nombre, soit un nom de
+paramètre de méthode (précédé alors par un @@$@@).
 
 <code xml>
   <method type="select" name="getFewRecord" > 
@@ -119,7 +127,7 @@ L'utilisation des méthodes déclarées en XML a été pensée pour être transp
 vis-à-vis du développeur qui n'a pas envie de se soucier de la déclaration du
 DAO.
 
-Reprenons notre méthode //getFewRecord//. On veut normalement récupérer un
+Reprenons notre méthode @@getFewRecord@@. On veut normalement récupérer un
 tableau en PHP afin de manipuler plus facilement les enregistrements. Rien de
 plus simple :
 
@@ -173,7 +181,7 @@ Génère une méthode qui execute une requête DELETE.
 
 Ce type de méthode exécute une requête de type UPDATE. En plus des paramètres et
 des conditions, il faut indiquer les valeurs que l'on met sur telle ou telle
-propriété avec les balises //<value>//.
+propriété avec les balises @@<value>@@.
 
 <code xml>
     <values>
@@ -182,15 +190,15 @@ propriété avec les balises //<value>//.
     </values>
 </code>
 
-L'attribut //property// indique la propriété que l'on va mettre à jour. Comme
-dans les conditions, l'attribut //value// doit contenir une valeur. Mais si on
+L'attribut @@property@@ indique la propriété que l'on va mettre à jour. Comme
+dans les conditions, l'attribut @@value@@ doit contenir une valeur. Mais si on
 veut indiquer une expression SQL ou un paramètre de la méthode, il faut utiliser
-l'attribut //expr//.
+l'attribut @@expr@@.
 
 
 ===== Clause conditions =====
 
-Voici la description de la balise //<conditions>// qui peut être utilisée dans
+Voici la description de la balise @@<conditions>@@ qui peut être utilisée dans
 la plupart des méthodes précédentes.
 
 <code xml>
@@ -211,20 +219,19 @@ la plupart des méthodes précédentes.
    </conditions>
 </code>
 
-On peut mettre plusieurs balises <conditions> imbriquées pour faire des groupes
-or/and. Si l'attribut //logic// n'est pas spécifié, il vaut //AND// par défaut.
+On peut mettre plusieurs balises @@<conditions>@@ imbriquées pour faire des groupes
+or/and. Si l'attribut @@logic@@ n'est pas spécifié, il vaut @@AND@@ par défaut.
 Sinon il doit valoir "OR" ou "AND".
 
-L'attribut value doit contenir une valeur. Le type de cette valeur est celui de
+L'attribut @@value@@ doit contenir une valeur. Le type de cette valeur est celui de
 la propriété. Si on préfère utiliser une expression SQL ou indiquer un paramètre
 de méthode, il faut utiliser l'attribut @@A@expr@@.
 
-Si dans la condition, vous voulez la valeur à récupérer pour la comparaison soit
-autre chose que la valeur du champs de l'enregistrement, vous pouvez
-utiliser l'attribut @@A@pattern@@, qui peut contenir la chaine "%s", qui sera
-remplacée par le nom du champ.
+Si dans la condition, vous voulez comparer la valeur donnée avec une valeur
+calculée du champs, vous pouvez utiliser l'attribut @@A@pattern@@, qui peut
+contenir la chaine "%s". Celle-ci sera remplacée par le nom du champ.
 
-Un exemple : on veut faire une comparaison sur l'année d'un champs date :
+Un exemple : on veut faire une comparaison sur l'année d'un champs date.
 
 <code xml>
      <eq property="create_date" value="2017" pattern="YEAR(%s)" />
@@ -239,9 +246,9 @@ Cela équivaut en SQL :
 
 ==== Cas de in/notin ====
 
-''<in>'' et ''<notin>'' sont les équivalents de ''foo IN (a, b, c)'' et ''foo
-NOT IN (a, b, c)''. L'usage de ''value'' et ''expr'' est différente. Si vous
-avez une liste de valeurs statiques, vous les mettrez dans l'attribut ''value''
+@@<in>@@ et @@<notin>@@ sont les équivalents de @@foo IN (a, b, c)@@ et
+@@foo NOT IN (a, b, c)@@. L'usage de @@value@@ et @@expr@@ est différente. Si vous
+avez une liste de valeurs statiques, vous les mettrez dans l'attribut @@value@@
 comme vous le feriez en SQL :
 
 <code xml>
@@ -254,7 +261,7 @@ ou
  <in property="foo" value="'toto','titi','tata'" />
 </code>
 
-Vous utiliserez ''expr'' quand vous aurez un paramètre de méthode (donc une
+Vous utiliserez @@expr@@ quand vous aurez un paramètre de méthode (donc une
 liste de valeurs dynamiques) :
 
 <code xml>
@@ -262,4 +269,4 @@ liste de valeurs dynamiques) :
 </code>
 
 Ce paramètre doit obligatoirement contenir un tableau PHP de valeurs. Et
-l'attribut ''expr'' ne peut contenir autre chose qu'un nom de paramètre.
+l'attribut @@expr@@ ne peut contenir autre chose qu'un nom de paramètre.

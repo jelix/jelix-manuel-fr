@@ -24,7 +24,7 @@ déclaré dans le fichier dao.
 
    // récupération d'un des champs de l'enregistrement, ici par
    // exemple si un champs id existe.
-   $id = $baz->id
+   $id = $baz->id;
 
 </code>
 
@@ -38,7 +38,9 @@ les valeurs de la clé en même temps, comme ceci :
   // 3 et 4 sont ici les valeurs respectives de cle1 et cle2
   $baz = $maFactory->get(3, 4);
 </code>
+
 ou
+
 <code php>
   $maFactory = jDao::get("foo");
 
@@ -203,7 +205,7 @@ comparaison ainsi que les prédicats suivants :
   * IN, NOT IN,
   * IS, IS NOT,
   * IS NULL, IS NOT NULL,
-  * MATCH, REGEXP, NOT REGEXP, RLIKE, SOUNDS LIKE
+  * MATCH, REGEXP, NOT REGEXP, RLIKE, SOUNDS LIKE, BETWEEN
   * @@~@@, @@!~@@, @@~*@@, @@!~*@@  (operateurs pour les expressions régulières de postgresql)
 
 == Cas spéciaux avec des valeurs NULL ==

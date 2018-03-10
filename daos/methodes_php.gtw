@@ -25,8 +25,8 @@ type "php" :
   </method>
 </code>
 
-Les autres balises autorisées dans les autres types de méthodes (''conditions'',
-''order''...) ne peuvent être utilisées ici, puisque vous êtes censés écrire
+Les autres balises autorisées dans les autres types de méthodes (@@conditions@@,
+@@order@@...) ne peuvent être utilisées ici, puisque vous êtes censés écrire
 vous même la requête SQL !
 
 Vous devez indiquer bien sûr un nom à la méthode, et vous pouvez déclarer des
@@ -41,9 +41,9 @@ Au niveau du code PHP, vous pouvez faire presque ce que vous voulez. Cependant :
    * pour respecter le pattern DAO, et si vous renvoyez des résultats
      d'enregistrement, vous devez renvoyer des objets qui sont des records du
      même type que ceux définis dans la DAO. Le nom de la classe du record
-     correspondant se trouve dans la propriété ''_DaoRecordClassName''
+     correspondant se trouve dans la propriété @@_DaoRecordClassName@@
    * Pour effectuer les requêtes, vous devez utiliser l'objet jDbConnection
-     placé dans la propriété ''_conn''.
+     placé dans la propriété @@_conn@@.
    * Vous avez à votre disposition d'autres propriétés et méthodes qui vous
      facilitent le travail d'écriture.
 
@@ -58,20 +58,20 @@ Vous avez deux manières de réaliser les méthodes PHP :
 La première façon permet d'avoir un fonctionnement un peu plus performant, et
 peut être plus simple à écrire. Mais la deuxième évite d'avoir systématiquement
 à mettre à jour votre méthode quand vous modifiez certaines informations dans la
-section ''datasources'' ou ''properties''. Cependant notez qu'une fois en
+section @@datasources@@ ou @@properties@@. Cependant notez qu'une fois en
 production, c'est la performance qui prime. À vous de choisir.
 
 Avec la deuxième façon de réaliser les méthodes PHP, vous aurez besoin de lire
 les informations sur les tables et les propriétés. Sachez que vous trouverez ces
 informations dans plusieurs propriétés :
 
-   * ''$this->_primaryTable'' : l'alias de la table primaire,
-   * ''$this->_tables'' : une liste d'informations,
-   * ''$this->getProperties()'' pour avoir des informations détaillées sur chaque propriétés d'un record,
-   * ''$this->getPrimaryKeyNames()'' pour avoir la liste des noms des propriétés servant de clés primaires.
+   * @@$this->_primaryTable@@ : l'alias de la table primaire,
+   * @@$this->_tables@@ : une liste d'informations,
+   * @@$this->getProperties()@@ pour avoir des informations détaillées sur chaque propriétés d'un record,
+   * @@$this->getPrimaryKeyNames()@@ pour avoir la liste des noms des propriétés servant de clés primaires.
 
 Et sur un record que vous aurez préalablement instancié, vous aurez aussi les même
-méthodes ''getProperties()'' et ''getPrimaryKeyNames()''.
+méthodes @@getProperties()@@ et @@getPrimaryKeyNames()@@.
 
 Pour les détails, voir [[refclass:dao/jDaoFactoryBase|la documentation de référence de jDaoFactoryBase]]
 
@@ -83,9 +83,9 @@ Toutes les valeurs qu'on vous passe en paramètre, vous devez les "filtrer", les
 préparer, avant de les intégrer dans une requête SQL, ceci pour éviter des
 problèmes de sécurité type SQL injection.
 
-Pour cela, vous avez une méthode, ''_prepareValue()'', qui accepte en paramètre
+Pour cela, vous avez une méthode, @@_prepareValue()@@, qui accepte en paramètre
 une valeur, et un nom de type de donnée (celle que l'on indique à l'attribut
-''datatype'' de la balise ''property'').
+@@datatype@@ de la balise @@property@@).
 
 <code xml>
   <method type="php" name="updateLabel">
@@ -117,16 +117,16 @@ Ou encore
 
 ==== Faire des SELECTs ====
 
-Normalement, quand vous faites des //SELECT// pour renvoyer un ensemble de
+Normalement, quand vous faites des @@SELECT@@ pour renvoyer un ensemble de
 résultats, vous devez retourner tous les champs déclarés dans les balises
-''property'', donc faire aussi les jointures explicitement décrites. Et il faut
+@@property@@, donc faire aussi les jointures explicitement décrites. Et il faut
 aussi retourner les résultats sous la forme des objets correspondants aux
 records. Pour éviter d'avoir à réécrire entièrement les requêtes, il y a une
 série de propriétés indispensables :
 
-   * ''_selectClause'' : comporte la clause //SELECT// avec l'ensemble des champs déclarés
-   * ''_fromClause'' : comporte la clause //FROM// avec la déclaration des tables et des jointures externes
-   * ''_whereClause'' : comporte la clause //WHERE// avec les jointures internes
+   * @@_selectClause@@ : comporte la clause @@SELECT@@ avec l'ensemble des champs déclarés
+   * @@_fromClause@@ : comporte la clause @@FROM@@ avec la déclaration des tables et des jointures externes
+   * @@_whereClause@@ : comporte la clause @@WHERE@@ avec les jointures internes
 
 Une méthode qui renverrait un ensemble de résultats pourrait ressembler à ceci
 (ce type de requête pourrait être très bien réalisé via les méthodes en XML,
@@ -148,13 +148,13 @@ mais la complexité de la requête n'est pas l'objectif ici) :
   </method>
 </code>
 
-   * ''_whereClause'' peut être vide ou pas, c'est pourquoi il faut toujours
+   * @@_whereClause@@ peut être vide ou pas, c'est pourquoi il faut toujours
      tester,
-   * On a préparé la valeur avec ''_prepareValue()'', ainsi on "protège" la
+   * On a préparé la valeur avec @@_prepareValue()@@, ainsi on "protège" la
      requête,
-   * On a utilisé ''$this->_conn'' pour faire la requête, et on récupère donc un
+   * On a utilisé @@$this->_conn@@ pour faire la requête, et on récupère donc un
      jDbRecordSet,
-   * Indispensable : on fait un ''setFetchMode()'', pour indiquer le nom de la
+   * Indispensable : on fait un @@setFetchMode()@@, pour indiquer le nom de la
      classe des objets qui contiendront les enregistrements ! On y indique donc
      la classe des record du DAO,
    * Enfin on retourne directement le recordSet : puisque jDbRecordSet
@@ -183,19 +183,19 @@ C'est un peu le même principe que pour récupérer un ensemble :
   </method>
 </code>
 
-Notez le ''fetch()''.
+Notez le @@fetch()@@.
 
 
 
 ==== Faire d'autres requêtes ====
 
-Pour faire des //UPDATE//, //DELETE//, //INSERT//, rien de spécial à dire. Vous
-ne pouvez bien entendu pas utiliser ''_selectClause'', ''_fromClause'' et
-''_whereClause''.
+Pour faire des @@UPDATE@@, @@DELETE@@, @@INSERT@@, rien de spécial à dire. Vous
+ne pouvez bien entendu pas utiliser @@_selectClause@@, @@_fromClause@@ et
+@@_whereClause@@.
 
-Vous avez par contre une méthode qui peut être utile pour les //UPDATE// et
-//DELETE// : ''_getPkWhereClauseForNonSelect()''. Elle génère une condition pour
-la clause //WHERE// sur les clés primaires.
+Vous avez par contre une méthode qui peut être utile pour les @@UPDATE@@ et
+@@DELETE@@ : @@_getPkWhereClauseForNonSelect()@@. Elle génère une condition pour
+la clause @@WHERE@@ sur les clés primaires.
 
 <code xml>
   <method type="php" name="updateLabel">

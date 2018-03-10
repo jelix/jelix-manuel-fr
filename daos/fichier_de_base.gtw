@@ -8,7 +8,7 @@ les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
 ===== Création automatique =====
 
 
-Le fichier d'un DAO peut être généré par le script //cmd// en ligne de commande,
+Le fichier d'un DAO peut être généré par le script @@cmd.php@@ en ligne de commande,
 à partir d'une table de base de données existante.
 
 <code bash>
@@ -56,8 +56,8 @@ La structure d'un fichier DAO ressemble à cela :
 Il y a trois sections, sachant que la section @@E@<factory>@@ (ou "methodes")
 est facultative et est décrite [[methodes_xml|dans un autre chapitre dédiée]].
 
-  * @@E@datasources@@ : indique les tables sur lequel reposera l'objet.
-  * @@E@record@@ : indique la correspondance entre les propriétés de l'objet et
+  * @@E@<datasources>@@ : indique les tables sur lequel reposera l'objet.
+  * @@E@<record>@@ : indique la correspondance entre les propriétés de l'objet et
     les champs des tables et définit donc les propriétés qu'il y aura sur
     l'objet record.
 
@@ -337,6 +337,7 @@ Un bon exemple avec jauthdb : si vous avez besoin de définir votre propre dao,
 qu' //"il doit avoir au moins les mêmes propriétés et méthodes que le dao jelixusers"//.
 
 Voici donc par exemple votre dao "mymodule~mycustomuser" :
+
 <code xml>
 <dao import="jauthdb~jelixuser">
 	<datasources>

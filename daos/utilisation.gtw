@@ -8,8 +8,8 @@ le nom de votre DAO.
 Souvenez-vous qu'en fait, à partir d'un fichier DAO, vous définissez deux objets
 PHP :
 
-   * un objet DAO qui est une factory, basé sur la classe @@C@jDaoFactoryBase@@
-     : elle permet de récupérer, insérer, modifier, effacer un ou plusieurs
+   * un objet DAO qui est une factory, basé sur la classe @@C@jDaoFactoryBase@@ :
+     elle permet de récupérer, insérer, modifier, effacer un ou plusieurs
      enregistrements. Elle propose des méthodes de base, mais contient aussi les
      méthodes que vous avez définis dans le fichier XML dans la section
      @@E@<factory>@@.
@@ -61,7 +61,8 @@ sont faites pour ça. Aux deux premières, vous indiquez un record. Pour
 
 ==== Création ====
 
-Il faut récupérer un nouvel objet record, le remplir, et ensuite appeler la méthode @@M@insert()@@
+Il faut récupérer un nouvel objet record, le remplir, et ensuite appeler la
+méthode @@M@insert()@@
 
 <code php>
    // instanciation de la factory
