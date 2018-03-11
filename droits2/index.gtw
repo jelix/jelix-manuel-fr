@@ -2,13 +2,11 @@
 
 
 Jelix propose un système de gestion de droits comportant des possibilités
-similaires à ce qui peut exister ailleurs. Dans Jelix 1.3, il y a deux versions :
+similaires à ce qui peut exister ailleurs. Il y a deux versions :
 
-   * jAcl héritée de Jelix 1.0
+   * jAcl héritée de Jelix 1.0, qui n'est plus supporté mais encore présent.
+     Il sera probablement supprimé dans la prochaine version de Jelix.
    * jAcl2, une nouvelle version simplifiée de jAcl
-
-jAcl ne sera probablement plus supporté à l'avenir, il est donc recommandé
-d'utiliser jAcl2.
 
 jAcl2 est basé sur un système de driver. Le driver fourni par défaut est un
 driver "db" (noté dans la documentation "jAcl2.db"), dont la gestion des droits

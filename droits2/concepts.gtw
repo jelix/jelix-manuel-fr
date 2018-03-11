@@ -4,19 +4,18 @@ jAcl2 propose un système qui répond à la plupart des besoins en matière de
 gestion de droits. Il comporte divers éléments qui ensemble définissent des
 droits.
 
-
 ===== Éléments composant un droit =====
 
 Il faut distinguer les différents éléments qui entrent en jeu dans le système de
 droits :
 
-  * un sujet 
+  * un sujet, ou role si vous préférez
   * un utilisateur
   * une ressource (facultatif)
 
-une combinaison de chacun de ces types d'éléments représente un droit.
+Une combinaison de chacun de ces types d'éléments représente un droit.
 
-==== Sujet ====
+==== Sujet/Role ====
 
 C'est un libellé représentant un droit. Par exemple, "**cms.articles.create**"
 pourrait être le droit de rédaction d'un article d'un CMS.
@@ -26,10 +25,12 @@ sujet devrait commencer par le nom du module puis le nom du controleur et enfin
 la valeur de droit. Mais ce n'est pas une obligation.
 
 Exemple :
+<code>
 cms.articles.read
 cms.articles.create
 cms.articles.update
 cms.articles.delete
+</code>
 
 ==== Utilisateur ====
 
@@ -54,11 +55,8 @@ l'article.
 Par exemple, on donnera les valeurs de droits suivants
 
    * "cms.articles.create" pour le groupe "redacteurs"
-   * "cms.articles.update" sur la ressource "monarticle" pour l'utilisateur toto
+   * "cms.articles.update" sur la ressource "monarticle" pour l'utilisateur Robert
      faisant partie du groupe "redacteurs".
-
-
-
 
 ===== Principes de fonctionnement =====
 

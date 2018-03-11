@@ -67,16 +67,16 @@ Remplacez bien entendu ce nom par le nom adéquate.
 
 Notez que le module **jacl2db_admin** vous permet de configurer et gérer les droits
 en quelques clics, vous évitant d'utiliser la ligne de commande. Il vous faudra
-cependant quand même créer les sujets en ligne de commande.
+cependant quand même créer les sujets/rôles en ligne de commande.
 
 
-==== Création des sujets ====
+==== Création des sujets/roles ====
 
-Dans le système de droits, vous devez déterminer des "sujets" représentant une
-valeur de droit.
+Dans le système de droits, vous devez déterminer des sujets, symbolisant des rôles
+ou actions possibles sur des données.
 
 Imaginons que l'on veuille créer des droits sur les articles d'un CMS, les
-différents droits seraient : read, list, create, delete, update. Autrement dit,
+différents roles seraient : read, list, create, delete, update. Autrement dit,
 on pourrait définir les sujets suivants :
 
   * "cms.articles.read",
@@ -86,11 +86,11 @@ on pourrait définir les sujets suivants :
   * "cms.articles.update",
 
 Notez que le nom du sujet commence par un prefixe "cms.articles" précisant exactement
-de quoi il s'agit. Ne mettez pas "read" tout court par exemple, ça peut préter à
-confusion et n'est pas très explicite. Indiquez donc toujours dans l'id des mots
+de quoi il s'agit. Ne mettez pas "read" tout court par exemple, cela peut préter à
+confusion et n'est pas très explicite. Indiquez donc toujours dans le nom du sujet des mots
 permettant d'identifier "à propos de quoi". Votre code n'en sera que plus compréhensible.
 
-On peut lister les sujets déjà existants :
+On peut lister les sujets existants :
 
 <code bash>
 $ php cmd.php acl2:subjects-list
@@ -149,7 +149,7 @@ $ php cmd.php acl2:subject-delete  <nom du sujet>
 
 La déclaration d'un droit nécessite un couple sujet/groupe d'utilisateur. Nous
 devons donc créer un groupe d'utilisateurs. La gestion des groupes
-d'utilisateurs se fait au moyen de la commande acl2group.
+d'utilisateurs se fait au moyen des commandes de type @@acl2group:@@.
 
 Créons par exemple un groupe de rédacteurs en indiquant un identifiant
 alphanumerique et un libellé (pour affichage dans l'interface de gestion). Le
@@ -167,7 +167,7 @@ mis tout nouvel utilisateur.
 $ php cmd.php acl2group:create --default "lecteurs" "Lecteurs"
 </code>
 
-On peut lister les groupes avec la sous-commande list :
+On peut lister les groupes avec la commande @@acl2group:list@@ :
 
 <code bash>
 $ php cmd.php acl2group:list
@@ -213,7 +213,7 @@ $ php cmd.php acl2user:register laurent
 Cela déclare l'utilisateur Laurent, et un groupe privé lui est crée.
 
 Ensuite, vous pouvez l'ajouter à des groupes. Il faut utiliser la commande
-"acl2user:addgroup" avec l'identifiant du groupe.
+@@acl2user:addgroup@@ avec l'identifiant du groupe.
 
 <code bash>
 # php cmd.php acl2user:addgroup <user> <group>
@@ -232,7 +232,7 @@ Enfin, pour avoir la liste des utilisateurs d'un groupe :
 $ php cmd.php acl2user:list lecteurs
 </code>
 
-Ou tout les utilisateurs de tous les groupes :
+Ou tous les utilisateurs de tous les groupes :
 
 <code bash>
 $ php cmd.php acl2user:list
@@ -252,7 +252,7 @@ php cmd.php acl2:add lecteurs "cms.articles.list"
 php cmd.php acl2:add lecteurs "cms.articles.read"
 </code>
 
-Vérifions la liste des droits définis au moyen de la @@acl2:list@@ :
+Vérifions la liste des droits définis au moyen de la commande @@acl2:list@@ :
 
 <code bash>
 $ php cmd.php acl2:list
@@ -268,7 +268,7 @@ La valeur "-" dans la colonne "Resource" specifie un droit sur aucune ressource
 en particulier.
 
 Passons maintenant au groupe des rédacteurs. On va leur donner tous les droits sur le
-sujet cms.articles.
+sujet @@cms.articles@@.
 
 <code bash>
 php cmd.php acl2:add  redacteurs "cms.articles.list"

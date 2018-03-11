@@ -24,7 +24,6 @@ Avant toute chose vous devez installer le module jacl2 :
 php cmd.php module:install jacl2
 </code>
 
-
 Ensuite vous devez indiquer quel driver vous utilisez pour jAcl2.
 
 Les drivers sont des plugins stockés dans un répertoire @@F@acl2@@ d'un dépôt de
@@ -86,7 +85,6 @@ if( jAcl2::check("cms.articles.update", $article_id)){
 </code>
 
 Une valeur vide ou "-" pour l'identifiant de la ressource indique "pour toute ressource".
-Avant Jelix 1.4.1, seule la valeur vide spécifié cet état.
 
 ==== Vérification automatique ====
 
@@ -102,7 +100,7 @@ jacl2 = 1
 </code>
 
 La configuration du plugin se trouve dans une section @@coordplugin_jacl2@@ de la configuration
-principale (Avant Jelix 1.5, c'était dans un fichier séparé).
+principale.
  
 
 <code ini>
@@ -121,6 +119,7 @@ Le plugin essaiera de récupérer les paramètres de plugins suivant dans les co
 des noms de sujets de droits. Le plugin testera donc si l'utilisateur a les droits indiqués.
 
 Pour vérifier un seul droit, utilisez @@jacl2.right@@ :
+
 <code php>
 
    public $pluginParams = array(
