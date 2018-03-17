@@ -8,7 +8,7 @@ répertoire www soit le répertoire racine du site web.
 ==== Déplacement du contenu de www/ ====
 
 Imaginons que vous devez installer votre application myapp dans un répertoire
-@@F@monsite@@ dont le contenu est accessible depuis le web.
+@@F@monsite@@ dont le contenu est accessible depuis un navigateur web.
 
 Dans ce cas, il est préférable de déplacer le contenu du répertoire
 @@F@myapp/www@@ vers la racine de votre site, @@F@monsite/@@. Vous devriez
@@ -16,13 +16,13 @@ donc obtenir une arborescence comme ceci :
 
 <code>
   monsite/
+     index.php
      myapp/
+        application.init.php
         app/
         modules/
         var/
         vendor/
-        application.init.php
-     index.php
 </code>
 
 Ici dans notre exemple, @@F@index.php@@ est un point d'entrée jelix de
@@ -40,6 +40,28 @@ $jelix = new jCoordinator($config_file);
 $jelix->process(new jClassicRequest());
 </code>
 
+Vous devez aussi modifier le fichier @@myapp/project.xml@@ pour mettre à jour les
+chemins, ainsi les commandes de jelix-scripts fonctionneront correctement. Les chemins
+doivent être relatifs au fichier @@project.xml@@. Voyez en particulier le chemin pour @@www@@.
+
+<code xml>
+<project xmlns="http://jelix.org/ns/project/1.0">
+    <!-- ...  -->
+    <directories>
+        <config>./var/config/</config>
+        <log>./var/log/</log>
+
+        <var>./var/</var>
+        <www>../</www>
+        <temp>../temp/myapp/</temp>
+    </directories>
+    <entrypoints>
+        <!-- ... -->
+    </entrypoints>
+</project>
+</code>
+
+
 ==== Déplacement du contenu de jelix-www/ ====
 
 Il faut ensuite déplacer le répertoire @@F@jelix-www/@@ à la racine et le
@@ -51,14 +73,9 @@ Vous obtiendrez :
 
 <code>
   monsite/
-     myapp/
-        app/
-        modules/
-        var/
-        vendor/
-        application.init.php
      index.php
      jelix/
+     myapp/
 </code>
 
 

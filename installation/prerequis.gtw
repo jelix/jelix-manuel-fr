@@ -5,17 +5,16 @@ Jelix est compatible avec PHP 5.6 et fonctionne correctement avec PHP 7.0, 7.1 e
 
 Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl**, **json** et
 **tokenizer** sont requises (elles sont actives en général dans une installation
-standard de PHP 5.6). Si une de ces extensions n'était pas livrée avec le paquet
+standard de PHP). Si une de ces extensions n'était pas livrée avec le paquet
 PHP, veillez à installer le paquet correspondant.
 
 Vous pouvez installer aussi un connecteur de base de données. Jelix prend en
-charge MySQL 5.5+, PostgreSQL 9.0+, SQLite 3, Oracle et PDO.
+charge MySQL 5.5+, PostgreSQL 9.0+, SQLite 3, Oracle, SQL server et PDO.
 
 **Pour tester la compatibilité de votre serveur** avec Jelix, installez sur
 votre site le fichier @@F@lib/jelix_check_server.php@@ livré avec jelix,
-et appelez le via votre navigateur (exemple :
-http://example.com/jelix_check_server.php ). La page qui s'affiche vous
-indiquera les extensions PHP manquantes, si la version PHP est supportée etc.
+et appelez le via votre navigateur (exemple : @@http://example.com/jelix_check_server.php@@ ).
+La page qui s'affiche vous indiquera les extensions PHP manquantes, si la version PHP est supportée etc.
 
 Il est fourni des scripts à exécuter en ligne de commande, dont
 @@F@create-jelix-app.php@@ et @@F@cmd.php@@, et aidant au développement. Il vous faut

@@ -12,12 +12,13 @@ ces étapes à faire :
     ancienne version de Jelix. Voir ci-dessous.
   * lancer l'installateur de Jelix.
 
-===== Mettre à jour depuis Jelix 1.5 et inférieur, jusqu'à Jelix 1.6 =====
+===== Mettre à jour depuis Jelix 1.5 et inférieur =====
 
-Suivez les indications de migration de chaque version intermédiaire, avant de
-mettre à jour pour jelix 1.7. Voir les instructions de migration des manuels
-de chacune de ces versions. Vous devrez en particulier remplacer le répertoire
-lib/ de Jelix.
+Suivez les indications de migration de chaque version intermédiaire pour migrer
+à la dernière version de Jelix 1.6, avant de mettre à jour pour jelix 1.7.
+
+Voir les instructions de migration des manuels de chacune de ces versions. 
+Vous devrez en particulier remplacer le répertoire @@lib/@@ de Jelix.
 
 ===== Mettre à jour depuis Jelix 1.6.x =====
 
@@ -63,7 +64,7 @@ Installez Composer en suivant [[https://getcomposer.org|les instructions de son 
 Dans le répertoire de votre application, créer un fichier @@F@composer.json@@.
 Celui-ci doit indiquer le paquet @@jelix/jelix@@ comme dépendance dans la
 section @@require@@, avec la version voulue. Il est recommandé d'indiquer
-"^1.7.0".
+@@^1.7.0@@.
 
 Exemple :
 
@@ -109,6 +110,7 @@ require (__DIR__.'/vendor/autoload.php');
 require (__DIR__.'/vendor/jelix_app_path.php');
 </code>
 
+Sautez l'étape qui suit.
 
 === Vous ne voulez pas utiliser Composer ===
 
@@ -141,12 +143,11 @@ contenant des modules ou de plugins, dans des paramètres @@modulesPath@@ ou
 ou le fichier de configuration du point d'entrée).
 
 Ces paramètres ne sont plus reconnus. Les répertoires de modules et de plugins
-doivent maintenant être déclarés dans le fichier @@F@application.init.php@@ ou
-le fichier @@composer.json@@ si vous utilisez Composer.
+doivent maintenant être déclarés dans le fichier @@F@application.init.php@@ (ou
+dans le fichier @@composer.json@@ si vous utilisez Composer pour réaliser des paquets
+Composer de modules).
 
 Supprimez donc ces paramètres des fichiers de configuration.
-
-=== Déclarer les modules et plugins dans @@F@application.init.php@@ ===
 
 Dans le fichier @@F@application.init.php@@, vous devez appeler
 @@jApp::declareModulesDir@@ et/ou @@jApp::declarePluginsDir@@, avec la liste
@@ -162,35 +163,9 @@ jApp::declarePluginsDir(array(
 </code>
 
 Dans cet exemple, les répertoires @@modules/@@ et @@plugins/@@ de l'application sont
-déclarés. Notez que les répertoires @@jelix-modules@@, @@jelix-admin-modules@@ et
-@@jelix-plugins@@ fournis avec Jelix sont déclarés automatiquement (via l'inclusion du
+déclarés. Notez que les répertoires @@lib/jelix-modules@@, @@lib/jelix-admin-modules@@ et
+@@lib/jelix-plugins@@ fournis avec Jelix sont déclarés automatiquement (via l'inclusion du
 fichier @@F@vendor/jelix_app_path.php@@).
-
-
-=== Déclarer les modules et plugins dans composer.json ===
-
-Si vous installez Jelix avec Composer, les répertoires de modules et de plugins
-peuvent être déclarés directement dans le fichier @@F@composer.json@@ au lieu
-du fichier @@application.init.php@@, comme ceci:
-
-<code json>
-{
-   ...
-    "extra" : {
-        "jelix": {
-            "modules-dir" : [
-                "modules/",
-            ],
-            "plugins-dir" : [
-                "plugins/",
-            ]
-        }
-    }
-}
-</code>
-
-N'oubliez pas de faire un @@composer update@@ à chaque fois que vous modifiez
-le fichier @@F@composer.json@@.
 
 ==== À propos de Simpletest ====
 
@@ -198,9 +173,10 @@ Simpletest (et le module junittests) n'est plus fourni avec Jelix. Si vous
 n'avez pas encore migré vos tests vers PHPUnit, vous pouvez installer
 [[https://github.com/jelix/simpletest-module|le module junittests]] en le
 téléchargeant ou en le déclarant ("jelix/simpletest-module") dans votre fichier
-composer.json. Cependant, Simpletest et le module junittests n'étant plus
-maintenue, il est fortement recommandé d'utiliser d'autres outils de tests
-unitaires comme PHPUnit.
+composer.json. 
+
+Cependant, Simpletest et le module junittests n'étant plus maintenue, il est fortement 
+recommandé d'utiliser d'autres outils de tests unitaires comme PHPUnit ou Atoum.
 
 ==== Changements dans profiles.ini.php ====
 
@@ -223,11 +199,11 @@ déclarant le paquet "jelix/legacy-db-plugins" dans votre fichier
 @@composer.json@@. Et en installant l'extension PECL de sqlite 2 et la vieille
 extension de mysql dans PHP.
 
-Si vous utilisez le plugin ldap pour jAuth, il faut migrer les informations
-de migration, du fichier auth.coord.ini.php vers le fichier de profiles,
-en y créant une section @@authldap@@ et @@authldap:nom_de_votre_choix@@.
-Et il faut indiquer ce nom de profile dans un attribut @@profile@@ dans la
-section ldap de auth.coord.ini.php.
+==== À propos du plugin ldap pour jAuth ====
+
+Si vous utilisez le plugin ldap pour jAuth, les informations de connexion doivent
+être maintenant dans le fichier @@profiles.ini.php@@ au lieu du fichier 
+@@auth.coord.ini.php@@. Le script de migration fait ce changement pour vous.
 
 ==== Changements dans les urls ====
 
@@ -333,7 +309,7 @@ modifications suivantes :
     avec Jelix 1.7 (changer l'attribut @@A@maxversion@@). Exemple :
 
 <code xml>
-        <jelix minversion="1.5" maxversion="1.7.*"/>
+        <jelix minversion="1.6" maxversion="1.7.*"/>
 </code>
 
 Certaines classes, certains modules et plugins sont maintenant livrés séparément, soit
@@ -366,11 +342,14 @@ modifier dans votre code si vous les utilisez :
     devez donc changer vos contrôleurs pour ne plus faire vous même la
     déserialisation.
 
-  * jDb : si vous utilisiez bindValue() et bindParam() (mais il y a peu de chance,
+  * jDb : si vous utilisiez @@bindValue()@@ et @@bindParam()@@ (mais il y a peu de chance,
     vu que cela ne fonctionnait pas très bien) il faut modifier ces appels, en
     utilisant les bons arguments.
 
-  * jDao : l'attribut "driver" sur la balise de condition "binary_op" est déprécié et remplacé par un attribut "dbtype"
+  * jDao : l'attribut "driver" sur la balise de condition "binary_op" est déprécié et 
+    remplacé par un attribut "dbtype". Vous devez également supprimer l'attribut
+    @@groupby@@ sur les élements @@<method>@@. Il n'est plus pris en charge depuis Jelix 1.6.
+
 
 Des fonctionnalités, API et modules ont été supprimés. Voir la liste
 complète dane [[/nouveautes|les nouveautés]]. Veillez donc à modifier votre
@@ -421,9 +400,9 @@ En particulier :
 
   * Migration de la configuration des moteurs d'url "simple" et "basic_significant"
     vers le fichier urls.xml
-  * Migration des paramètres startModule et startAction vers urls.xml
+  * Migration des paramètres @@startModule@@ et @@startAction@@ vers @@urls.xml@@
   * Suppression des paramètres et section obsolètes liés au moteur d'url
-  * **Déplacement du répertoire responses/** vers app/responses
+  * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
   * **Déplacement des fichiers de configuration** suivants vers app/config :
      * mainconfig.ini.php, urls.xml, preferences.ini.php
      * ceux des points d'entrées
@@ -432,6 +411,9 @@ En particulier :
   * migration de @@persistant_crypt_key@@ vers @@persistant_encryption_key@@
   * migration de la declaration des assets des widgets wikieditor et htmleditor
     vers le nouveau système d'assets
+  * migration des paramètres de connexions ldap dans le fichier profiles.ini.php,
+    si vous utilisez ldap pour l'authentification.
+
 
 
 

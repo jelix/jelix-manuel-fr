@@ -1,10 +1,9 @@
 ~~LANG:EN@enman:installation/jelix-scripts~~
 
-Jelix est fourni avec plusieurs scripts, dont
-@@F@bin/create-jelix-app.php@@, qui permet de créer facilement une
-nouvelle application, et @@F@cmd.php@@ installé dans l'application créé, qui
-permet de modifier facilement des éléments du projet, ou de réaliser des actions
-sur le projet.
+Jelix est fourni avec plusieurs scripts, dont @@F@bin/create-jelix-app.php@@,
+qui permet de créer facilement une nouvelle application, et @@F@cmd.php@@
+installé dans l'application créé, qui permet de modifier facilement des éléments
+du projet, ou de réaliser des actions sur le projet.
 
 Il faut appeler ces scripts à partir d'une console, en ligne de commande, avec
 la version CLI de PHP. Il faut donc installer cet exécutable avant de pouvoir
@@ -23,10 +22,10 @@ même que celui utiliser par le module PHP d'Apache ou que celui de PHP-FPM.
 Veillez donc à activer les extensions nécessaires à l’exécution de Jelix, à la
 fois dans le fichier @@F@/etc/php5/apache2/php.ini@@, ou @@F@/etc/php5/fpm/php.ini@@,
 et dans le fichier @@F@/etc/php5/cli/php.ini@@. Avec PHP 7, ils peuvent se
-trouver dans /etc/php/php7.0/.
+trouver dans @@/etc/php/php7.0/@@.
 
 Notez que sous Debian et Ubuntu, la configuration de la plupart des extensions
-sont dans des fichiers ini séparés, et stockés dans un répertoire conf.d commun
+sont dans des fichiers ini séparés, et stockés dans un répertoire @@conf.d@@ commun
 à apache, fpm, cli etc.
 
 
@@ -102,7 +101,7 @@ Deux particularités sont à prendre en compte :
    * chez certains hebergeurs, parfois certaines variables superglobales ne sont
      pas bien mise. Par exemple @@$_SERVER['SCRIPT_NAME']@@ peut être absent.
      Il faut alors créer la variable d'environnment qui correspond. Ex:
-     @@export SCRIPT_NAME=cmd.php@@?
+     @@export SCRIPT_NAME=cmd.php@@.
 
 Consultez la documentation de votre hébergeur pour avoir un accés SSH et utiliser
 la bonne version de PHP. Exemple pour OVH : [[https://docs.ovh.com/fr/hosting/mutualise-le-ssh-sur-les-hebergements-mutualises/|Guide d'accés SSH]].
@@ -128,13 +127,15 @@ Sous windows :
 Ensuite, vous pouvez exécuter une commande jelix selon cette syntaxe :
 
 Sous Linux/MacOS :
+
 <code bash>
-$ php cmd.php  <command_name> [options] [parameters]
+php cmd.php  <command_name> [options] [parameters]
 </code>
 
 Sous windows :
+
 <code bash>
-> php.exe cmd.php <command_name> [options] [parameters]
+php.exe cmd.php <command_name> [options] [parameters]
 </code>
 
 Dans la suite du manuel, la syntaxe pour Linux sera utilisée dans les exemples.
@@ -153,12 +154,19 @@ des commandes possibles), utilisez la commande @@help@@ :
 
 La commande s'applique à l'application dans laquelle est situé le cmd.php.
 
+Utilisez la commande @@list@@ pour voir la liste de toutes les commandes disponibles :
+
+<code bash>
+   php cmd.php list
+</code>
+
+
 ==== l'option --ep ====
 
 Quand une application a plusieurs points d'entrées (index.php, admin.php etc..),
 il est utile pour certaines commandes d'indiquer pour quel point d'entrée elle
 doit s'appliquer. Il faut alors indiquer le nom de ce point d'entrée avec
-l'option "--ep" :
+l'option @@--ep@@ :
 
 <code bash>
   php cmd.php module:install --ep admin foo
@@ -206,7 +214,7 @@ pour nom celui du répertoire de l'application
 
 <code ini>
 [myapp]
-infoCopyright = 2017 My Company
+infoCopyright = 2018 My Company
 </code>
 
 ===== Liste des commandes disponibles =====
@@ -215,7 +223,7 @@ Voici une liste non exhaustive des commandes jelix-scripts
 
    * Utilisation Générale :
 <code>
-php cmd.php COMMANDE [-v] [-ep ENTRYPOINT] [OPTIONS] [PARAMETRES]
+php cmd.php COMMANDE [-v] [--ep ENTRYPOINT] [OPTIONS] [PARAMETRES]
 </code>
    * Création d'un module
 <code>

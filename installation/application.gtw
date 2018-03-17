@@ -11,62 +11,46 @@ vous pouvez l'installer pour voir des exemples d'utilisation.
 ===== Installation des fichiers =====
 
 L'application peut être fournie sous forme d'une archive zip ou gz. Il est
-également possible que vous ayez accés au code source de l'application au
-travers d'un gestionnaire de code source (subversion, mercurial, git...). Cette
-deuxième solution est à préférer, surtout en milieu professionnel : ça facilite
-les mises à jour.
+également possible que vous installiez les sources directement à partir d'un
+gestionnaire de code source (git, mercurial, subversion...). Ou encore que les
+sources soient copiées et mise à jour sur le serveur par des outils de déploiement.
 
-Quand vous décompressez l'archive, ou récupérerez les sources à partir d'un
-gestionnaire de sources, vous obtenez les répertoires suivants :
+Quelle que soit la méthode utilisée, vous obtenez les répertoires suivants
+dans le répertoire @@srv/@@ par exemple du serveur :
 
 <code>
-  testapp/          répertoire de l'application
+  /srv/testapp/     répertoire de l'application
       install/      scripts d'installation
       modules/      modules de l'application
       plugins/      plugins de l'application
-      app/config/   fichiers de configuration de l'application
+      app/config/   fichiers de configuration statiques de l'application
       app/responses/    les réponses personnalisées
       temp/
       var/          répertoire qui contient tout les fichiers créés ou susceptibles d'être modifiés par Jelix, pendant l'exécution
-         config/    fichiers de configuration de l'application
+         config/    fichiers de configuration de l'application dépendants de l'environnement
          log/       fichiers journaux de l'application et de Jelix
       www/          racine du site de l'application (document root)
 </code>
 
 Peut être aussi est-il fourni le répertoire @@F@lib/@@ de Jelix, ainsi qu'un
-répertoire temp. Si ce n'est pas le cas, vous devez peut etre démarrer Composer
+répertoire temp. Si ce n'est pas le cas, vous devez peut etre lancer Composer
 pour installer les paquets dont dépend l'application, ou tout simplement
 télécharger Jelix.
-
-Vous copierez ensuite tous ces répertoires sur le serveur, dans le répertoire
-adéquate, qu'on appellera ici @@F@monsite/@@. Vous avez donc :
-
-<code>
-  monsite/
-      testapp/
-        install/
-        ...
-        vendor/
-</code>
 
 Par défaut, l'arborescence des sources est organisée de façon à installer
 l'application sur un serveur sur lequel vous pouvez spécifier le répertoire
 racine public du site (document root). Ce répertoire est
-@@F@monsite/testapp/www/@@ .
+@@F@/srv/testapp/www/@@.
 
-Vous pouvez modifier l'emplacement de ces répertoires si par exemple vous ne
-pouvez pas modifier le document root, mais ce n'est pas recommandé, pour des
-raisons de sécurité.
-
-Vous remarquerez que les fichiers propres à l'application et ceux du framework
-sont séparés. Vous pouvez ainsi partager le répertoire lib avec plusieurs
-applications.
+Vous pouvez déplacer le contenu du répertoire @@www/@@ si par exemple vous ne
+pouvez pas modifier le document root, mais attention à ne pas exposer le reste
+des fichiers au reste du monde, pour des raisons de sécurité.
 
 
 ===== Renommer les fichiers de configuration =====
 
 Dans @@F@testapp/var/config/@@ vous avez probablement des fichiers @@F@*.dist@@.
-Renommez-les en enlevant cette particule '.dist'. Il y a certainement des choses
+Renommez-les en enlevant cette particule @@.dist@@. Il y a certainement des choses
 à modifier dans ces nouveaux fichiers, comme les paramètres d'accès à la base de
 donnée (@@F@profiles.ini.php@@) etc. Nous allons voir comment plus loin.
 
@@ -77,7 +61,7 @@ root..) ainsi qu'une éventuelle base de donnée. Reportez vous
 [[configurer-server|au chapitre correspondant]], et continuez à la section
 suivante.
 
-===== Installer l'application =====
+===== Lancer l'installateur de l'application =====
 
 Il y a trois façon d'installer une application Jelix, selon ce qui est fourni
 avec l'application.
@@ -96,9 +80,9 @@ demander les informations nécessaires.
 
 Si il y a un script @@F@testapp/install/installer.php@@, il s'agit alors d'un
 script à lancer en ligne de commande, et qui va installer l'application. Il vous
-faut au préalable renseigner vous même à la main les fichiers
-@@F@var/config/profiles.ini.php@@ et @@F@var/config/localconfig.ini.php@@. Lisez la documentation de
-l'application. Ensuite, en ligne de commande, vous taperez @@php.exe installer.php@@
+faut au préalable que les fichiers de configuration comme @@F@var/config/profiles.ini.php@@
+et @@F@var/config/localconfig.ini.php@@ soient bien renseignés. Lisez la documentation de
+l'application. Ensuite, en ligne de commande, vous taperez @@php installer.php@@
 en étant dans le répertoire @@F@testapp/install/@@.
 
 ==== Avec l'installateur de Jelix ====

@@ -15,8 +15,8 @@ vous voulez mettre à jour votre application. Les principales étapes sont:
 Il est souvent mieux d'avoir une simple page web qui dit que l'application n'est
 pas disponible, pendant le processus de mise à jour. Les utilisateurs ne
 pourront donc plus exécuter l'application, et c'est une bonne chose, pour que
-les modules ne modifient pas une base de données qui ne soient pas encore mises
-à jour ( en effet, un processus de mise à jour n'est jamais instantané).
+les modules ne puissent modifier la base de données ou d'autres fichiers
+(en effet, un processus de mise à jour n'est jamais instantané).
 
 Il y a deux possibilités pour fermer une application.
 
@@ -36,11 +36,12 @@ pouvez bien sûr proposer votre propre page html, en la plaçant dans votre
 application en tant que @@F@install/closed.html@@.
 
 Pour ré-ouvrir l'application, supprimez simplement le fichier
-@@F@var/config/CLOSED@@. Vous pouvez manipuler ce fichier manuellement (si vous
-avez seulement un accès FTP à votre site web, c'est la solution).
+@@F@var/config/CLOSED@@.
 
-Si vous avez un accès en ligne de commande, vous pouvez appeler les commandes jelix:
-@@app:open@@ and @@app:close@@
+Vous pouvez manipuler ce fichier manuellement (si vous
+avez seulement un accès FTP à votre site web, c'est la solution), ou, si vous
+avez un accès à la ligne de commande, vous pouvez appeler les commandes jelix :
+@@app:open@@ and @@app:close@@.
 
 <code bash>
 $ php cmd.php app:close
@@ -51,7 +52,7 @@ Vous pouvez donner un message à la commande @@app:close@@. Cela va remplacer le
 tag @@%message%@@ dans le fichier closed.html.
 
 <code bash>
-$ php cmd.php app:close "Sorry, we are closed for the moment, a new version is comming."
+$ php cmd.php app:close "Sorry, we are closed for the moment, a new version is coming."
 </code>
 
 ===== Sauvegarder les données =====
@@ -72,7 +73,7 @@ l'application.
 
 La deuxième étape est de mettre à jour les fichiers de votre application. Vous
 pourriez uploader les fichiers dans le répertoire, par FTP, SCP ou d'autres
-outils. Vous pourriez aussi faire la mise à jour avec votre gestionnaire de
+outils comme des outils de déploiement automatique. Vous pourriez aussi faire la mise à jour avec votre gestionnaire de
 source favoris (@@svn update@@, @@hg pull -u@@, @@git pull -u@@...).
 
 Si vous faite la mise à jour manuellement, n'oubliez pas de supprimer les
@@ -101,7 +102,7 @@ votre navigateur, et supprimez le fichier après la mise à jour.
 
 Si il y a un script @@F@install/installer.php@@, lancez le simplement: ouvrez
 une console, allez dans le répertoire @@F@install/@@, et ensuite tapez
-@@php.exe installer.php@@.
+@@php installer.php@@.
 
 ==== À la main ====
 

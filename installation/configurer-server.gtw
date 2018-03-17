@@ -6,13 +6,13 @@ Si vous installez votre application sur une machine sur laquelle vous n'avez pas
 la possibilité de configurer le serveur web, vous voudriez probablement
 modifier l'organisation des répertoires de l'application afin de ne pas
 avoir à indiquer le répertoire www de l'application dans l'url de l'application.
-Voyez alors le [[sans-configuration-serveur|chapitre sur le déplacement de index.php]].
+Voyez alors le [[sans-configuration-serveur|chapitre sur le changement des répertoires]].
 
 
 ===== À propos de PHP =====
 
-La version minimale de PHP supportée par Jelix est la version 5.6 ou la version
-7 et suivantes.
+La version minimale de PHP supportée par Jelix est la version 5.6, mais il est
+recommander d'utiliser PHP 7.
 
 Il n'est pas indiqué ici comment installer et configurer PHP dans le serveur
 web. Voyez la documentation de PHP pour cela.
@@ -37,7 +37,9 @@ soit en modifiant les fichiers de configuration du serveur web (un "virtual host
 soit via une interface d'administration comme le proposent certains hébergeurs,
 
 Il faut aussi que le contenu de @@F@lib/jelix-www/@@ fournit avec Jelix soit
-accessible depuis le web, via par exemple le chemin d'URL @@jelix/@@.
+accessible depuis le web, via par exemple le chemin d'URL @@jelix/@@. Cela peut être un
+alias définit dans la configuration serveur ou un lien symbolique dans le répertoire
+@@www/@@.
 
 Jelix nécessite également de pouvoir indiquer une partie "pathinfo" dans l'url,
 c'est à dire un chemin après le index.php. Il faut donc activer dans votre serveur
@@ -80,7 +82,7 @@ de l'alias jelix :
         Require all granted
       </Directory>
 
-      # ----- Alias jelix vers jelix-wwww avec Composer
+      # ----- Alias jelix vers jelix-wwww si Jelix est installé avec Composer
       Alias /jelix/ "/srv/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/"
       <Directory "/srv/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/">
         AllowOverride None
@@ -91,7 +93,7 @@ de l'alias jelix :
         Require all granted
       </Directory>
 
-      # ------ ou alias jelix vers jelix-wwww si vous n'utilisez pas Composer
+      # ------ ou alias jelix vers jelix-wwww si Jelix n'est installé avec Composer
       #Alias /jelix/ "/srv/monsite/lib/jelix-www/"
       #<Directory "/srv/monsite/lib/jelix-www/">
       #  AllowOverride None
@@ -115,8 +117,8 @@ RemoveType .php
 
 ==== Configuration avec Nginx ====
 
-En général on utilise Nginx avec PHP-FPM (fastcgi). Et on définiera la racine
-du site, ainsi qu'un alias pour le chemin d'url "/jelix".
+En général on utilise Nginx avec PHP-FPM, donc des paramètres propres à fastcgi. 
+Et on définiera la racine du site, ainsi qu'un alias pour le chemin d'url "/jelix".
 
 
 <code nginx>
@@ -157,9 +159,10 @@ server {
 
 ==== Vérification de la configuration ====
 
-En tapant http://www.monsite.com vous accédez à votre site, et
-http://www.monsite.com/jelix/, à @@F@jelix-www/@@, qui contient un certain
-nombre de scripts javascript utiles etc..
+Avec votre navigateur, essayez d'accéder à @@http://www.monsite.com@@ 
+mais aussi au contenu de @@jelix-www/@@, par exemple 
+@@http://www.monsite.com/jelix/design/jelix.css@@.
+
 
 Pour vérifier que la configuration du PathInfo fonctionne, créez sur votre site
 web un fichier @@F@myapp/www/test.php@@ qui affiche @@f@phpinfo()@@ et essayez l'url :

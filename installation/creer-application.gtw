@@ -3,8 +3,10 @@
 Il y a plusieurs moyens de créer une application avec Jelix.
 
    - en installant le squelette d'application @@jelix-skeleton-app@@ avec Composer
-   - en utilisant la commande @@createapp@@ fournie avec Jelix, après avoir
+   - en utilisant la commande @@create-jelix-app@@ fournie avec Jelix, après avoir
      installé les sources du framework
+
+Pour installer Composer, voir le site [[https://getcomposer.org]].
 
 
 ===== Utilisation du paquet jelix-skeleton-app =====
@@ -12,7 +14,7 @@ Il y a plusieurs moyens de créer une application avec Jelix.
 La manière la plus rapide de créer une nouvelle application basée sur Jelix est
 d'utiliser le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]].
 Ce paquet contient une arborescence et les fichiers nécessaires pour réaliser
-une application avec une page.
+une application, et contient même une première page.
 
 Pour ce faire, si vous voulez créer une application "myapp", utilisant la
 version de développement de Jelix 1.7 :
@@ -35,14 +37,15 @@ php install/installer.php
 </code>
 
 
-===== Avec la commande createapp =====
+===== Avec la commande create-jelix-app =====
 
 L'autre façon de créer une application Jelix, est l'utilisation de la commande
 @@bin/create-jelix-app.php@@. Elle permet de créer un squelette d'application.
 C'est une alternative par rapport au paquet jelix-skeleton-app
 car elle permet de personnaliser la création du squelette.
 
-Il faut d'abord installer les sources.
+Il faut d'abord installer les sources, soit avec Composer, soit à partir
+du paquet zip de jelix.org.
 
 ==== Installer les sources avec Composer ====
 
@@ -75,12 +78,12 @@ paquets) sont installés. Vous trouverez celui de Jelix dans @@F@vendor/jelix/je
 Dans la suite du manuel, quand il est signalé le répertoire @@F@lib/@@, il s'agit
 de @@F@vendor/jelix/jelix/lib/@@.
 
-La commande create-jelix-app.php se trouve dans @@F@vendor/bin/@@
+La commande @@create-jelix-app.php@@ se trouve dans @@F@vendor/bin/@@
 
-==== Installer les sources avec l'archive téléchargeable ====
+==== Installer les sources à partir du site jelix.org ====
 
 Vous pouvez télécharger une archive tar.gz ou zip de Jelix. Cette archive
-contient un répertoire @@F@jelix/lib/@@ qui comprend tous les fichiers du
+contient un répertoire @@F@jelix-X.Y.Z/lib/@@ qui comprend tous les fichiers du
 framework et les bibliothèques dépendantes.
 
 Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
@@ -89,10 +92,10 @@ Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
   tar xvzf jelix-1.7.0.tar.gz
 </code>
 
-Un repertoire jelix-1.7.0 est créé contenant un répertoire @@lib/@@. Vous devez
-mettre ce répertoire @@lib/@@ dans le dossier de votre projet.
+Un repertoire @@jelix-1.7.0@@ est créé contenant un répertoire @@lib/@@ et @@bin/@@.
+Vous devez mettre ces deux répertoires dans le dossier de votre projet.
 
-La commande create-jelix-app.php se trouve dans @@F@lib/jelix-scripts/create-jelix-app.php@@.
+La commande create-jelix-app.php se trouve dans @@F@bin/create-jelix-app.php@@.
 
 ==== Lancer create-jelix-app ====
 
@@ -107,7 +110,7 @@ php create-jelix-app.php /chemin/vers/le/nouveau/répertoire/de/myapp
 librement).
 
 
-@@createapp@@ crée un répertoire @@F@myapp/@@ avec le chemin indiqué. Son
+@@create-jelix-app@@ crée un répertoire @@F@myapp/@@ avec le chemin indiqué. Son
 contenu est :
 
 <code>
@@ -118,9 +121,9 @@ contenu est :
         themes/    les thèmes disponibles pour votre application
         overloads/ contiendra les différents fichiers qui redéfinissent des
                    fichiers de modules
+     install/      scripts et fichiers pour initialiser l'application.
      modules/      modules de l'application
      plugins/      plugins de l'application
-
      temp/         tous les fichiers temporaires et de cache créés à l'execution de l'application
      var/
         config/    fichiers de configuration propres à l'installation
@@ -144,7 +147,7 @@ cd myapp
 php -S localhost:8080 -t www 
 </code>
 
-Et vous pouvez visiter http://localhost:8080 avec votre navigateur.
+Et vous pouvez visiter @@http://localhost:8080@@ avec votre navigateur.
 
 Si vous voulez utiliser un autre serveur web, comme Apache ou Nginx, il vous faudra
 faire quelques réglages supplémentaires. Voir le chapitre suivant.

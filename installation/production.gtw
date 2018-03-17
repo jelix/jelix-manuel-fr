@@ -16,9 +16,10 @@ production, afin d'optimiser l'exécution de votre application basée sur Jelix.
     être en dehors du "document root" du site web. Voir
     [[configurer-server|le chapitre sur la configuration d'un serveur]] pour des exemples.
   - Bien spécifier les droits sur le répertoire @@F@temp/@@, en particulier, que
-    le propriétaire soit l'utilisateur qui exécute apache ou php-fpm (ou celui
-    de votre compte, chez certains hébergeurs) et qu'il ait les droits en écriture. Par
-    exemple, sur linux, il n'est pas recommandé de mettre les droits 0777 sur le
+    le propriétaire soit l'utilisateur système (ou celui de votre compte, chez
+    certains hébergeurs) qui exécute apache ou php-fpm  et qu'il ait les droits
+    en écriture et personne d'autres.
+    Par exemple, sur linux, il n'est pas recommandé de mettre les droits 0777 sur le
     répertoire @@F@temp/@@ ;-)
   - Idem pour les répertoires @@F@var/log/@@, @@F@var/mails/@@ etc de votre
     application
@@ -30,7 +31,7 @@ modifications à faire au niveau du fichier @@F@var/config/localconfig.ini.php@@
 
 === section jResponseHtml ===
 
-Désactivez le plugin debugbar.
+Désactivez le plugin debugbar si il est activé dans la configuration principale.
 
 === configuration du logger ===
 
@@ -59,9 +60,8 @@ priori, cette vérification est inutile en production, puisque l'application est
 rarement modifiée. Bien sûr, si vous la désactivez, il faudra **impérativement**
 vider le répertoire de cache (@@F@temp/votre_appli/@@)
 **à chaque mise à jour de votre application** ,
-pour que vos modifications soient bien prises en compte !
-(surtout quand il s'agit de modifications dans la configuration, des daos,
-locales, templates..)
+pour que vos modifications soient bien prises en compte ! Surtout quand il
+s'agit de modifications dans la configuration, des daos, locales, templates..
 
 === Section mailer ===
 
@@ -74,9 +74,13 @@ entre le serveur de développement et le serveur de production.
 Il arrive que sur des infrastructures conséquentes, le serveur web qui
 execute Jelix se trouve derrière un reverse proxy (un load-balancer,
 Nginx, haproxxy etc..).
-Et ainsi le serveur web n'est pas configuré comme un serveur frontal :
+
+Et donc le serveur web n'est pas configuré comme un serveur frontal :
 il n'a pas le nom de domaine du site, il n'écoute pas forcément sur les
-même port etc.. Du coup Jelix n'a pas forcément toutes les infos qui permettent
+même port, il reçoit les requêtes http en HTTP alors que le frontal reçoit les
+requêtes en HTTPS etc..
+
+Du coup Jelix n'a pas forcément toutes les infos qui permettent
 de générer les urls correctement entre autres (car pour le moment il ne prend pas en charge les entêtes
 'Forwarded' ou 'X-Forwarded-Proto' que peuvent communiquer les reverses
 proxy aux serveurs web).
@@ -99,9 +103,9 @@ domainName = www.example.com
 </code>
 
 Si le "basePath" du serveur derrière le proxy n'est pas le même que le basePath
-public (ex: le proxy redirige les urls http://example.com/index.php vers
-http://backend.example.com/foo/bar/index.php), il faut indiquer le basePath
-public et le basePath "backend" :
+public, il faut indiquer le basePath "public" et le basePath "backend". Par
+exemple, le proxy redirige les urls @@http://example.com/index.php@@ vers
+@@http://backend.example.com/foo/bar/index.php@@, vous indiquerez alors :
 
 <code ini>
 [urlengine]
