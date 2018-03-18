@@ -16,7 +16,7 @@ composer.json si vous avez installé Jelix avec Composer. (dans les versions 1.6
 et inférieurs, c'était dans la configuration, avec la propriété
 @@V@pluginsPath@@).
 
-Un exemple avec @@C@jApp@@ :
+Un exemple avec @@C@jApp@@ dans @@application.init.php@@ :
 
 <code php>
    jApp::declarePluginsDir(__DIR__.'/plugins/');
@@ -29,9 +29,9 @@ qui est le répertoire @@F@lib/jelix/plugins/@@ et contenant les plugins
 livrés en standard, et aussi tous les répertoires @@F@plugins/@@ présents dans
 les modules activés.
 
-Si vous avez installé Jelix avec Composer, vous avez une autre alternative :
-déclarer ces répertoires dans le fichier composer.json de l'application, ou
-même dans le fichier composer.json d'un paquet composer contenant des modules.
+Si vous avez installé des paquets pour Jelix avec Composer, les répertoires de
+plugins peuvent être déclaré automatiquement en les spécifiant dans le fichier
+composer.json des paquets.
 
 <code json>
 {
@@ -49,7 +49,10 @@ même dans le fichier composer.json d'un paquet composer contenant des modules.
 Ici on déclare le répertoire @@F@plugins/@@ qui est situé dans le même
 répertoire que le @@F@composer.json@@.
 
-===== Structure d'un dépôt et création de plugins =====
+Cela fonctionne aussi avec le fichier composer.json de l'application.
+
+
+===== Structure d'un dépôt =====
 
 Un dépôt de plugins contient un répertoire pour chaque type de plugins et dans
 chacun de ces répertoires, un répertoire pour chaque plugin.

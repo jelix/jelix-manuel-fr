@@ -10,7 +10,7 @@ Pour savoir comment activer un driver pour jDb, voyez le [[/bd|chapitre sur jDb]
 
 ===== Création d'un driver =====
 
-Un driver pour jDb est constitué de trois classes :
+Un driver pour jDb est constitué de plusieurs classes :
 
    * une classe pour la connexion à la base de données et l'exécution des
      requêtes, héritant de @@C@jDbConnection@@
@@ -34,7 +34,8 @@ Les noms des fichiers doivent suivre ce nommage :
    * @@F@exemple.dbschema.php@@ pour les classes de manipulation de schemas
    * @@F@exemple.dbtools.php@@ pour la classe utilitaire
 
-Et dans chacun de ces fichiers, les classes doivent respectivement avoir le nommage suivant :
+Et dans chacun de ces fichiers, les classes doivent respectivement avoir le
+nommage suivant :
 
    * @@C@exempleDbConnection@@
    * @@C@exempleDbResultSet@@
@@ -83,8 +84,8 @@ Voir [[refclass:db/jDbConnection|la référence de jDbConnection]] pour plus de 
 
 Elle doit hériter de @@C@jDbResultSet@@ qui contient quelques méthodes
 abstraites qu'il faut définir. Un objet de cette classe est normalement renvoyé
-par les méthodes @@M@prepare@@, @@M@_doQuery@@ et @@M@_doLimitQuery@@ de la
-classe @@C@exempleDbConnection@@.
+par les méthodes @@M@prepare@@, @@M@_doQuery@@, @@M@_doLimitQuery@@ et @@M@prepare()@@ 
+de la classe @@C@exempleDbConnection@@.
 
 Vous devez notament redéfinir les méthodes suivantes :
 
@@ -101,6 +102,11 @@ Vous devez notament redéfinir les méthodes suivantes :
 
 
 Voir [[refclass:db/jDbResultSet|la référence de jDbResultSet]] pour plus de détails.
+
+==== Classe pour le schema ====
+
+Une classe héritant de jDbSchema doit permettre de récupérer la liste des tables
+et leurs propriétés, champs... Voir l'API de jDbSchema.
 
 ==== Classe utilitaire ====
 
@@ -119,4 +125,5 @@ Voir [[refclass:db/jDbTools|la référence de jDbTools]] pour plus de détails.
 
 ==== Exemples ====
 
-Voir les drivers pour mysql, postgresql etc dans le répertoire @@F@lib/jelix/plugins/db/@@.
+Voir les drivers pour mysql, postgresql etc dans le répertoire
+@@F@lib/jelix/plugins/db/@@.

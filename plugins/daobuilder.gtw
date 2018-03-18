@@ -1,10 +1,11 @@
 ~~LANG:EN@enman:plugins/daobuilder~~
 
-Les plugins pour jDao servent à aider à générer les fichiers PHP issues
-de la "compilation" des fichiers xml de jDAo, en fonction d'un type de base de
-donnée. En effet, jDao génère des classes PHP avec des requêtes "en dur" dans leurs méthodes.
-Ces requêtes pouvant être différentes d'une base à une autre (au niveau de la
-syntaxe), les plugins sont donc chargés de générer les bonnes requêtes et méthodes.
+Les plugins pour jDao servent à aider à générer les fichiers PHP issues de la
+"compilation" des fichiers xml de jDAo, en fonction d'un type de base de donnée.
+En effet, jDao génère des classes PHP avec des requêtes "en dur" dans leurs
+méthodes. Ces requêtes pouvant être différentes d'une base à une autre (au
+niveau de la syntaxe), les plugins sont donc chargés de générer les bonnes
+requêtes et méthodes.
 
 Note : avant Jelix 1.7, les classes de ce type de plugin étaient dans les
 plugins de jDb.

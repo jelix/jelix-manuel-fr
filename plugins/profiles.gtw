@@ -4,7 +4,8 @@ Les plugins pour jProfiles doivent être stockés dans un répertoire dedié aux
 plugins, dans un fichier @@profiles/<type>/<type>.profiles.php@@. Et ce fichier
 doit déclarer une classe @@<type>ProfilesCompiler@@.
 
-@@<type>@@ correspond au type de profile. Ainsi il existe un plugin
+@@<type>@@ correspond au type de profile (les noms des sections dans profiles.ini.php
+commencent tous par un nom de type). Ainsi il existe un plugin
 @@profiles/jdb/jdb.profiles.php@@ pour les profiles de type @@jdb:@@.
 
 Un plugin pour jProfiles est appelé pour chaque profil du type dont il a la charge

@@ -66,11 +66,14 @@ bar = 1
 ==== Configuration ====
 
 
-Un plugin coord peut avoir besoin d'un fichier de configuration. Ce fichier doit
-être alors un fichier de type //ini//, placé dans @@F@@votreApplication/var/config/@@
-et être déclaré dans la configuration comme indiqué précédemment. Le contenu ini
-sera passé au constructeur du plugin sous forme de tableau (résultat de la
-fonction php @@parse_ini_file@@).
+Un plugin coord peut avoir besoin de paramètres de configuration. Ces paramètres
+peuvent être placé dans une section de la configuration principale, ou un fichier 
+spécifique, ou encore dans des propriétés du contrôleur.
+
+Ce fichier doit être alors un fichier de type //ini//, placé dans 
+@@F@@votreApplication/var/config/@@ et être déclaré dans la configuration comme 
+indiqué précédemment. Le contenu ini sera passé au constructeur du plugin sous 
+forme de tableau (résultat de la fonction php @@parse_ini_file@@).
 
 Ou la configuration peut être, comme indiquée plus haut, dans une section
 @@[coordplugin_XXX]@@ de la configuration du point d'entrée. Le plugin
@@ -81,7 +84,9 @@ reçoit alors le contenu de cette section sous forme de tableau associatif.
 
 Certains plugins coord peuvent attendre des paramètres qui sont fournis par les
 contrôleurs. En effet, un plugin peut vouloir tester quelque chose en fonction
-de l'action. Par exemple, le plugin coord d'authentification //auth// va
+de l'action. 
+
+Par exemple, le plugin coord d'authentification //auth// va
 vérifier si l'action demandée nécessite ou non d'être authentifié. Pour cela, on
 va indiquer dans chaque contrôleur un paramètre pour chaque action, destiné au
 plugin auth, qui indique cette information.
@@ -103,7 +108,9 @@ public $pluginParams = array(
 </code>
 
 Indique que toutes les actions du contrôleur ont un paramètre nommé
-"auth.required" et valant false.
+@@auth.required@@ et valant @@false@@.
+
+Voir la documentation du plugin pour savoir quels paramètres vous pouvez utiliser.
 
 ===== Développement d'un plugin coord =====
 

@@ -4,9 +4,6 @@ Comme il est indiqué [[/jforms/affichage|dans le chapitre sur l'affichage des f
 il est possible de choisir un plugin qui s'occupera de générer le code du
 formulaire (en HTML, javascript etc..) renvoyé au navigateur.
 
-Note : Il s'agit ici des nouveaux types de plugins de Jelix 1.5 pour jForms. Voyez
-le manuel de Jelix 1.4 pour savoir comment sont réalisés les anciens plugins.
-
 Vous avez deux types de plugins : ceux qui permettent de générer un formulaire entier,
 et donc qui "pilotent" la génération d'un formulaire et les plugins des widgets
 pour le générateur HTML par défaut, pour générer le code d'un seul contrôle de
@@ -18,7 +15,7 @@ formulaire.
 Le générateur HTML fourni par Jelix est un plugin, lui même extensible, utilisant
 des plugins de type "formwidget" pour générer chaque contrôle. Vous n'avez ainsi
 pas à développer tout un plugin générateur pour simplement rédéfinir le code
-HTML et JS généré d'un contrôle, comme c'était le cas dans Jelix 1.4 et précédent.
+HTML et JS généré d'un contrôle.
 
 Un plugin "formwidget" doit implementer l'interface @@jelix\forms\HtmlWidget\WidgetInterface@@, et
 donc fournir ces methodes :
@@ -32,9 +29,11 @@ donc fournir ces methodes :
    * @@M@outputControl()@@: génère le champs HTML
    * @@M@setAttributes($attributes)@@: définie les attributs qui seront ajoutés sur l'élément HTML, ou des options pour le plugin.
 
-Le plugin peut hériter de la classe @@jelix\forms\HtmlWidget\WidgetBase@@, ainsi il y a moins de méthode à implémenter.
+Le plugin peut hériter de la classe @@jelix\forms\HtmlWidget\WidgetBase@@, ainsi
+il y a moins de méthode à implémenter.
 
-Le plugin doit avoir un nom. Il doit être stocké dans un fichier @@F@plugins/formwidget/{nom}/{nom}.formwidget.php@@.
+Le plugin doit avoir un nom. Il doit être stocké dans un fichier
+@@F@plugins/formwidget/{nom}/{nom}.formwidget.php@@.
 
 Voyez le code des plugins existants dans @@F@lib/jelix/plugins/formwidget/@@ pour en savoir plus sur le
 fonctionnement des plugins "formwidget".
@@ -44,11 +43,11 @@ fonctionnement des plugins "formwidget".
 Il faut d'abord donner un nom à votre générateur. Prenons "monhtml" par exemple.
 Ensuite :
 
-  * Créez un répertoire "monhtml" dans le répertoire "formbuilder" d'un dépôt de plugins.
-  * Créez un fichier @@F@monhtml.formbuilder.php@@
-  * Dans ce fichier, créez une classe @@C@htmlFormBuilder@@ qui hérite de @@C@\jelix\forms\Builder\BuilderBase@@
-    ou de @@C@\jelix\forms\Builder\HtmlBuilder@@ si vous faites un formulaire HTML similaire à
-    ce que génère le générateur HTML par défaut de Jelix.
+  * Créez un répertoire @@formbuilder/monhtml@@ dans le dépôt de plugins de votre application.
+  * Créez un fichier @@F@monhtml.formbuilder.php@@ dedans.
+  * Dans ce fichier, créez une classe @@C@monhtmlFormBuilder@@ qui hérite de
+    @@C@\jelix\forms\Builder\BuilderBase@@  ou de @@C@\jelix\forms\Builder\HtmlBuilder@@ si vous 
+    faites un formulaire HTML similaire à ce que génère le générateur HTML par défaut de Jelix.
 
 Dans cette classe, vous devez implémenter les méthodes qui suivent. Ces méthodes
 doivent afficher les différentes parties du formulaire (en clair, faire des
@@ -61,6 +60,15 @@ Après chaque modification de votre générateur de jforms,
 
 
 <code php>
+
+    /**
+     * called during the meta content processing in templates
+     * This method should set things on the response, like adding
+     * css styles, javascript links etc.
+     * @param \jTpl $tpl the template object
+     */
+    abstract public function outputMetaContent($tpl);
+
     /**
      * output the header content of the form
      */
@@ -71,9 +79,9 @@ Après chaque modification de votre générateur de jforms,
      */
     abstract public function outputFooter();
 
+
     /**
      * displays all the form. outputMetaContent, outputHeader and outputFooters are also called 
-     * @since 1.1
      */
     abstract public function outputAllControls();
 
@@ -89,6 +97,13 @@ Après chaque modification de votre générateur de jforms,
      * @param jFormsControl $ctrl the control to display
      */
     abstract public function outputControlLabel($ctrl);
+
+    /**
+     * displays the value of the control (without the control)
+     * @param \jFormsControl $ctrl the control to display
+     * @param array $attributes  attribute to add on the generated code (html attributes for example)
+     */
+    abstract public function outputControlValue($ctrl, $attributes=array());
 
 </code>
 
@@ -113,6 +128,17 @@ finale. Exemple :
 
         $resp->addJSLink($www.'js/fichier.js');
         $resp->addCSSLink($www.'design/fichier.css');
+
+        $resp->addAssets('my_web_assets');
+
+        //we loop on root control has they fill call the outputMetaContent recursively
+        foreach( $this->_form->getRootControls() as $ctrlref=>$ctrl) {
+            if($ctrl->type == 'hidden') continue;
+            if(!$this->_form->isActivated($ctrlref)) continue;
+
+            $widget = $this->getWidget($ctrl, $this->rootWidget);
+            $widget->outputMetaContent($resp);
+        }
    }
 </code>
 
@@ -135,9 +161,9 @@ fermante de @@E@<form>@@, ainsi que d'autres lignes javascript.
 
 === outputAllControls() ===
 
-Cette méthode est appelée uniquement par le plugin @@formfull@@. Elle doit
-afficher tout les contrôles (en dehors des éléments affichés par outputHeader et
-outputFooter).
+Cette méthode est appelée uniquement par le plugin @@{formfull}@@. Elle doit
+afficher tout les contrôles (en dehors des éléments affichés par @@outputHeader()@@ et
+@@outputFooter()@@).
 
 === outputControlLabel() ===
 
@@ -157,4 +183,11 @@ de saisie.
 Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
 informations du champ de saisie à afficher, et un tableau contenant
 la liste des attributs à rajouter à la balise créé ou d'autres informations.
+
+=== outputControlValue() ===
+
+Appelé par les plugins de template de jforms utilisés dans un plugin @@{formdata}@@,
+pour chaque valeur de champs de saisie. Cette méthode est donc chargée d'afficher
+uniquement une valeur, quand on veut afficher uniquement les valeurs d'un formulaire, et
+non ses champs de saisie.
 
