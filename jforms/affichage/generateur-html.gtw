@@ -4,7 +4,7 @@ Le générateur "html" de jforms génère un formulaire HTML, utilisant
 principalement jQuery pour gérer le comportement de certains champs de saisie.
 
 Le générateur "html" est celui utilisé par défaut par jForms, et son nom à
-indiquer aux plugins {form} ou {formfull} est "html".
+indiquer aux plugins @@{form}@@ ou @@{formfull}@@ est "html".
 
 ===== Options du générateur =====
 
@@ -70,7 +70,7 @@ jForms affiche deux types de messages :
 
 Vous pouvez changer l'apparence avec CSS, mais aussi, pour les messages
 d'erreurs, en indiquant, dans les options du générateur données aux plugins
-//form// ou //formfull//, le noms de l'objet javascript qui s'occupera
+@@form@@ ou @@formfull@@, le noms de l'objet javascript qui s'occupera
 d'afficher ces messages.
 
 Par défaut, les messages d'erreurs sont affichés en haut du formulaire.
@@ -80,13 +80,13 @@ Par défaut, les messages d'erreurs sont affichés en haut du formulaire.
 Pour les messages d'erreurs, il faut créer un objet javascript qui contient
 trois méthodes :
 
-  * **start**, qui est appelé quand le processus de vérification commence
-  * **addError**, qui est appelé quand une erreur est trouvée. Cette méthode
-    reçoit un objet javascript //jFormsControl// qui contient des données
+  * @@start@@, qui est appelé quand le processus de vérification commence
+  * @@addError@@, qui est appelé quand une erreur est trouvée. Cette méthode
+    reçoit un objet javascript @@jFormsControl@@ qui contient des données
     relatifs au champs de saisie en faute, et un code erreur : 1 si le champs
     n'est pas renseigné alors qu'il est obligatoire, et 2 si le contenu saisi
     est invalide.
-  * **end**, qui est appelé quand le processus de vérification est terminé
+  * @@end@@, qui est appelé quand le processus de vérification est terminé
 
 Dans ces méthodes vous faites ce que vous voulez. Par exemple, dans addError,
 vous pouvez insérer dans une liste html le message d'erreur, comme dans
@@ -98,28 +98,30 @@ function MyErrorDecorator(){
 }
 
 MyErrorDecorator.prototype = {
-    start : function(){
+    start : function() {
     },
-    addError : function(control, messageType){
+    addError : function(control, messageType) {
         var message='';
-        if(messageType == 1){
+        if (messageType == 1) {
             message = control.errRequired;
-        }else if(messageType == 2){
+        }
+        else if (messageType == 2) {
             message = control.errInvalid;
-        }else{
+        }
+        else {
             message = "Error on '"+control.label+"' field";
         }
         var item = document.createElement("li");
         item.appendChild(document.createTextNode(message));
         document.getElementById("errors").appendChild(item);
     },
-    end : function(){
+    end : function() {
     }
 }
 </code>
 
 
-Ensuite vous l'indiquez au plugin //form// ou //formfull//, dans la liste des
+Ensuite vous l'indiquez au plugin @@form@@ ou @@formfull@@, dans la liste des
 options pour le builder html :
 
 <code html>
@@ -129,17 +131,17 @@ options pour le builder html :
   {/form}
 </code>
 
-En ce qui concerne l'objet jFormsControl que addError reçoit en paramètre (ici
+En ce qui concerne l'objet jFormsControl que @@addError()@@ reçoit en paramètre (ici
 //control//), voici les propriétés utiles qu'il contient :
 
-   * **name** : le nom du contrôle, du champs de saisie
-   * **label** : son libellé
-   * **datatype** : type de donnée (attribut type pour les input dans le fichier xml)
-   * **required** : booléen indiquant si il est obligatoire
-   * **readonly** : booléen indiquant si il est en lecture seule
-   * **errInvalid** : message d'erreur prédéfini quand son contenu est invalide
-   * **errRequired** : message d'erreur prédéfini quand le champs n'est pas renseigné
-   * **help** : message d'aide
+   * @@name@@ : le nom du contrôle, du champs de saisie
+   * @@label@@ : son libellé
+   * @@datatype@@ : type de donnée (attribut type pour les input dans le fichier xml)
+   * @@required@@ : booléen indiquant si il est obligatoire
+   * @@readonly@@ : booléen indiquant si il est en lecture seule
+   * @@errInvalid@@ : message d'erreur prédéfini quand son contenu est invalide
+   * @@errRequired@@ : message d'erreur prédéfini quand le champs n'est pas renseigné
+   * @@help@@ : message d'aide
 
 
 ==== Affichage des messages d'aides ====
@@ -160,7 +162,7 @@ Tout les champs générés par jForms ont un id. Les id sont des noms composés 
 ref="adresse", déclaré par le formulaire "identite" fournis dans le module
 "utilisateurs", l'id du champs sera : "jforms_utilisateurs_identite_adresse".
 
-L'élément html <form> est aussi généré avec un id, composé du nom du module et
+L'élément html @@<form>@@ est aussi généré avec un id, composé du nom du module et
 de celui du formulaire : "jforms_module_nomform". Dans notre exemple, il vaudra
 "jforms_utilisateurs_identite".
 
@@ -212,7 +214,7 @@ submit du formulaire, vous ne devez pas utiliser un listener sur l'évènement
 submit, mais vous devez utiliser un "submit handler" avec l'objet jforms en
 javascript. Un "submit handler" est une fonction qui accepte en argument un
 objet DOM event, et doit retourner @@true@@ si le formulaire peut être envoyé,
-ou false sinon. Vous ajoutez ce "submit handler" avec la méthode
+ou @@false@@ sinon. Vous ajoutez ce "submit handler" avec la méthode
 @@M@addSubmitHandler@@ de l'objet javascript jforms.
 
 Voici un exemple pour ajouter un message de confirmation:
@@ -255,28 +257,28 @@ Exemple d'inclusion dans votre réponse commune :
 Pour styler les balises générées par le générateur "html", il y a quelques
 classes de style à connaître.
 
-  * **jforms-table** : c'est la classe du tableau principal généré par le plugin //formfull//, et contenant tout les champs de saisie d'un formulaire.
-  * **jforms-hidden** : la div contenant tous les champs cachés.
-  * **jforms-error-list** : classe de la liste (ul) des messages d'erreurs.
-  * **jforms-label** : classe placée sur toutes les balises <label>
-  * **jforms-required** : classe placée sur toutes les balises <label> et les champs de saisie qui sont obligatoires
-  * **jforms-error** : classe placée sur toutes les balises <label> et sur les champs de saisies qui sont en erreur
-  * **jforms-readonly** : classe placée sur les champs de saisies qui sont en lecture seule
-  * **jforms-value** : classe sur les éléments span contenant les valeurs des champs de type output.
-  * **jforms-help** : classe placée sur les éléments span contenant les liens d'aide.
-  * **jforms-chkbox** : classe placée sur le span qui entoure chaque checkbox d'un controle checkboxes.
-  * **jforms-radio** : classe placée sur le span qui entoure boutons radio d'un contrôle radiobuttons.
-  * **jforms-ctl-xxx** : classe placée sur chaque checkbox d'un contrôle
+  * @@jforms-table@@ : c'est la classe du tableau principal généré par le plugin //formfull//, et contenant tout les champs de saisie d'un formulaire.
+  * @@jforms-hidden@@ : la div contenant tous les champs cachés.
+  * @@jforms-error-list@@ : classe de la liste (ul) des messages d'erreurs.
+  * @@jforms-label@@ : classe placée sur toutes les balises <label>
+  * @@jforms-required@@ : classe placée sur toutes les balises <label> et les champs de saisie qui sont obligatoires
+  * @@jforms-error@@ : classe placée sur toutes les balises <label> et sur les champs de saisies qui sont en erreur
+  * @@jforms-readonly@@ : classe placée sur les champs de saisies qui sont en lecture seule
+  * @@jforms-value@@ : classe sur les éléments span contenant les valeurs des champs de type output.
+  * @@jforms-help@@ : classe placée sur les éléments span contenant les liens d'aide.
+  * @@jforms-chkbox@@ : classe placée sur le span qui entoure chaque checkbox d'un controle checkboxes.
+  * @@jforms-radio@@ : classe placée sur le span qui entoure boutons radio d'un contrôle radiobuttons.
+  * @@jforms-ctl-xxx@@ : classe placée sur chaque checkbox d'un contrôle
     checkboxes, ou chaque boutons radio d'un contrôle radiobuttons (xxx étant
     remplacé par le ref du contrôle).
-  * **jforms-captcha-question** : classe placée sur le span qui affiche la question d'un captcha.
-  * **jforms-table-group** : classe placée sur le tableau d'un contrôle <group>
-  * **jforms-choice**  : classe placée sur la liste des items d'un contrôle <choice>
-  * **jforms-item-controls**  : classe placée sur chaque span entourant un contrôle d'un item d'un contrôle <choice>
-  * **jforms-submit-buttons** : c'est la classe de la div générée par le plugin
+  * @@jforms-captcha-question@@ : classe placée sur le span qui affiche la question d'un captcha.
+  * @@jforms-table-group@@ : classe placée sur le tableau d'un contrôle <group>
+  * @@jforms-choice@@  : classe placée sur la liste des items d'un contrôle <choice>
+  * @@jforms-item-controls@@  : classe placée sur chaque span entourant un contrôle d'un item d'un contrôle <choice>
+  * @@jforms-submit-buttons@@ : c'est la classe de la div générée par le plugin
     //formfull//, contenant les boutons d'envois.
-  * **jforms-submit** : classe sur chaque bouton submit
-  * **jforms-reset** : classe sur chaque bouton reset
+  * @@jforms-submit@@ : classe sur chaque bouton submit
+  * @@jforms-reset@@ : classe sur chaque bouton reset
 
 <code css>
 .jforms-table {}

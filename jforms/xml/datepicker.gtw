@@ -1,4 +1,4 @@
-~~LANG:EN@enman:jforms/xml-1.1/datepicker~~
+~~LANG:EN@enman:jforms/xml/datepicker~~
 
 
 Pour avoir une saisie simplifié de date dans vos formulaires, il faut utiliser
@@ -37,47 +37,53 @@ mois.
 
 ===== Utiliser un autre type de datepicker =====
 
-Par défaut, jForms utilise le datepicker de jQuery. Mais vous pouvez en utiliser
-d'autres si vous le souhaitez, ou le même mais configuré différement. Chaque
-type de datepicker doit être déclaré dans la section @@datepickers@@.
+Par défaut, jForms utilise le datepicker de jQuery UI. Mais vous pouvez en utiliser
+d'autres si vous le souhaitez, ou le même mais configuré différement. 
+
+Chaque type de datepicker a ses propres fichiers javascript et CSS.
+
+On utilise pour cela les [[/vues/vue-html|les webassets]]. Le groupe de webassets 
+pour un datepicker doit prendre le nom du datepicker, préfixé
+par @@jforms_datepicker_@@. Le groupe de webassets pour le datepicker nommé @@default@@
+est celui-ci :
 
 <code ini>
+[webassets_common]
 
-[datepickers] 
-type1 = fichier1.js
-type2 = fichier2.js
-type3 = fichier3.js
-...
+;...
+
+jforms_datepicker_default.css=
+jforms_datepicker_default.js[]="$jelix/jquery/ui-datepicker/i18n/datepicker-$lang.js"
+jforms_datepicker_default.js[]="$jelix/js/jforms/datepickers/default/init.js"
+jforms_datepicker_default.require=jquery_ui
+
 </code>
 
-@@type1@@, @@type2@@, @@type3@@ sont les noms des types de datepicker (vous
-pouvez choisir les noms que vous voulez), et les valeurs correspondantes doivent
-être le chemin d'un fichier javascript à partir du basePath (voir plus loin).
-
-Le type par defaut doit être indiqué dans l'option @@datepicker@@ dans la
-section @@forms@@. Voici la configuration par défaut :
+Le datepicker à utiliser par défaut doit être indiqué dans l'option @@datepicker@@
+dans la section @@forms@@. Voici la configuration par défaut :
 
 <code ini>
 [forms]
-...
+;...
 datepicker = default 
 
-[datepickers] 
-default = jelix/js/jforms/datepickers/default/init.js 
 </code>
 
 Dans un formulaire, pour indiquer que vous voulez utiliser un type de datepicker
 particulier, indiquer son nom dans l'attribut @@A@datepicker@@ sur la balise
 @@E@<date>@@.
 
-===== Créer un type de datepicker =====
+===== Créer un datepicker =====
 
-Pour déclarer un nouveau type de datepicker, vous devez créer un fichier
+Pour déclarer un nouveau datepicker, vous devez créer un fichier
 javascript qui contiendra une fonction qui sera chargée d'initialiser le
 datepicker.
 
-Cette fonction doit avoir pour nom @@f@jelix_datepicker_xxx@@ où xxx est le nom
-du type. Cette fonction doit accepter en paramètre :
+Cette fonction doit avoir pour nom @@f@jelix_datepicker_<nom datapicker>@@ où 
+@@<nom datapicker>@@ est le nom du datepicker que l'on utilise dans le nom du
+groupe de webassets, dan l'attribut @@A@datepicker@@ etc.. 
+
+Cette fonction doit accepter en paramètre :
 
    * un objet javascript (@@C@jFormsJQControlDate@@ ou
      @@C@jFormsJQControlDatetime@@ avec le builder jforms basé sur jQuery) qui

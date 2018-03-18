@@ -21,11 +21,10 @@ l'affichage de ces contrôles se feront dans le même ordre que celui de leur
 apparition dans le document.
 
 Notez que le namespace pour cette version du format est
-@@http://jelix.org/ns/forms/1.1@@
+@@http://jelix.org/ns/forms/1.1@@.
+
 
 ===== Propriétés communes aux contrôles =====
-
-
 
 ==== Identifiant ====
 
@@ -34,6 +33,7 @@ avec l'attribut @@A@ref@@. Cet identifiant correspond en fait à ce qu'on appell
 une variable de formulaire et qui contiendra la valeur saisie.
 
 Exemple:
+
 <code xml>
   <input ref="nom">
   </input>
@@ -123,8 +123,9 @@ faut pour cela utiliser la balise @@E@<hint>@@, qui s'utilise comme la balise
 
 Quand le contenu du champ de saisie est invalide (il n'est pas du type attendu
 par exemple), ou que la saisie est manquante lorsqu'elle est requise (attribut
-@@A@required@@), jForms affiche des messages d'erreurs prédéfinis. Cependant
-vous pouvez fournir vous-mêmes ces messages au moyen de la balise @@E@<alert>@@.
+@@A@required@@), jForms affiche des messages d'erreurs prédéfinis.
+
+Cependant vous pouvez fournir vous-mêmes ces messages au moyen de la balise @@E@<alert>@@.
 Un attribut @@A@type@@ permet de définir soit le message pour l'erreur
 d'invalidité, soit le message pour la saisie obligatoire. Et comme les balises
 précédentes, vous pouvez indiquer le message complet, ou indiquer une locale au
@@ -141,8 +142,6 @@ moyen de l'attribut locale.
 
 
 ===== Champs de saisie =====
-
-
 
 ==== Saisie de texte simple ====
 
@@ -319,7 +318,8 @@ des dates de naissance des personnes de 18 à 70 ans :
   </date>
 </code>
 
-On peut aussi faire la même chose si l'on veut une date de début au minimum égale à aujourd'hui et une date maximum à 2 mois 1 jour
+On peut aussi faire la même chose si l'on veut une date de début au minimum
+égale à aujourd'hui et une date maximum à 2 mois 1 jour
 
 <code xml>
   <date ref="date_debut" mindate="now" maxdate="+2 months 1 day">
@@ -386,7 +386,7 @@ y mettre l'attribut @@A@ref@@, et vous pouvez utiliser les balises
 </code>
 
 Par défaut, la valeur de la case à cocher, que vous récupèrerez une fois le
-contenu du formulaire reçu, vaudra **0** si la case n'a pas été cochée, ou **1**
+contenu du formulaire reçu, vaudra @@0@@ si la case n'a pas été cochée, ou @@1@@
 si elle l'a été.
 
 Vous pouvez décider d'autres valeurs pour chacun de ces deux états. Il suffit
@@ -788,6 +788,7 @@ convient donc d'indiquer dans ces contrôles la manière dont jForms va récupé
 les valeurs et libellés de ces choix.
 
 Il y a pour le moment trois façons de faire :
+
   - indiquer ces choix en dur dans le fichier jForms (données statiques)
   - indiquer un DAO qui permettra de les récupérer.
   - indiquer une classe qui fournit ces données.  
@@ -837,7 +838,8 @@ Exemple :
 
 === Indiquer une méthode dao qui attend un argument ===
 
-Si la méthode que vous indiquez demande un paramètre en argument, vous devez indiquer celui-ci. 
+Si la méthode que vous indiquez demande un paramètre en argument, vous devez
+indiquer celui-ci. 
 
 Si ce paramètre est une valeur statique, ajoutez l'attribut @@A@criteria@@ :
 
@@ -909,6 +911,7 @@ d'un module, et vous l'indiquerez via l'élément @@E@<datasource>@@ avec un
 attribut @@A@class@@.
 
 Exemple de classe :
+
 <code php>
 require_once (JELIX_LIB_PATH.'forms/jFormsDatasource.class.php');
 
@@ -942,7 +945,8 @@ class listData implements jIFormsDatasource
 }
 </code>
 
-Et dans le fichier jforms
+Et dans le fichier jforms :
+
 <code xml>
   <menulist ref="icone">
         <label locale="elements.crud.label.icone" />

@@ -3,68 +3,86 @@
 l'éditeur wiki consiste à fournir une barre d'outils permettant de facilité la
 mise en forme de son texte.
 
-pour cela [[http://markitup.jaysalvat.com/home/|MarkItUp]] a été intégré.
+Pour cela [[http://markitup.jaysalvat.com/home/|MarkItUp]] a été intégré.
 
 ===== Configuration de l'éditeur =====
 
-Dans @@F@mainconfig.ini.php@@ on ajoutera :
+La configuration d'un éditeur doit avoir un nom, que l'on indiquera dans la 
+balise @@<wikieditor>@@. Ce nom est utilisé comme prefix dans les paramètres de
+configuration de la section @@wikieditors@@ du fichier de configuration.
 
-<code>
+Voici la configuration par défaut, nommé @@default@@ :
+
+<code ini>
 [wikieditors]
+
 default.engine.name = wr3
 default.wiki.rules = wr3_to_xhtml
-; path to the engine file
-default.engine.file = jelix/markitup/jquery.markitup.js
-; define the path to the "internationalized" file to translate the label of each button
-default.config.path = jelix/markitup/sets/wr3/
-; define the path to the image of buttons of the toolbar
-default.image.path = jelix/markitup/sets/wr3/images/
-default.skin = jelix/markitup/skins/simple/style.css
+</code>
+
+Où : 
+  * "default" est le nom de la configuration de l'éditeur 
+  * @@default.engine.name@@ indique le nom du moteur utiliser pour le rendu
+  * @@default.wiki.rules@@ indique le nom de la règle de transformation
+
+
+Il faut également spécifier les fichiers JS et CSS. On utilise pour cela les
+[[/vues/vue-html|les webassets]]. Le groupe de webassets pour une configuration
+wikieditor doit prendre le nom de la configuration (ici @@default@@), préfixé
+par @@jforms_wikieditor_@@. La configuration par défaut est celle-ci :
+
+<code ini>
+[webassets_common]
+
+; path to markitup files
+jforms_wikieditor_default.js[]="$jelix/markitup/jquery.markitup.js"
+
+; path to translation files
+jforms_wikieditor_default.js[]="$jelix/markitup/sets/wr3/$locale.js"
+
+; path to a skin for MarkitUp
+jforms_wikieditor_default.css[]="$jelix/markitup/skins/simple/style.css"
+jforms_wikieditor_default.css[]="$jelix/markitup/sets/wr3/style.css"
+
+; dependency of markitup: the webassets group named "jquery"
+jforms_wikieditor_default.require=jquery
+
 </code> 
 
-où : 
-  * "default" est le nom de l'éditeur 
-  * **default.engine.name** est le nom du moteur utiliser pour le rendu
-  * **default.wiki.rules** est le nom de la règle de transformation 
-  * **default.engine.file** est le chemin vers le script javascript markitup
-  * **default.config.path** est le chemin vers les traductions des libellés de chaque bouton
-  * **default.image.path** est le chemin vers les images des boutons
-  * **default.skin** est le chemin vers la CSS habillant le textarea
-
-@@default.config.path@@ pourrait avoir pour valeur tout type de //sets//
-supporté par MarkitUp, tel bbcode, dotclear etc. Et pour les utiliser on les
-ajouterait dans le path de son choix et indiquerait ce path dans
-@@F@mainconfig.ini.php@@.
-
-Voici un exemple (un peu farfelue car la régles de transformation
-bbcode_to_xhtml n'existe pas, mais vous pourriez vous le créer.) :
+Vous pourriez aussi utiliser un autre //set// supporté par MarkitUp, tel
+que markdown. Il faudrait alors créer une autre configuration, ou 
+modifier celle par défaut. On peut l'appeler "md", et utiliser donc
+les fichiers js et css du "set" markdown de MarkitUp.
 
 <code>
 [wikieditors]
-default.engine.name = bbcode
-default.wiki.rules = bbcode_to_xhtml
-; path to the engine file
-default.engine.file = jelix/markitup/jquery.markitup.js
-; define the path to the "internationalized" file to translate the label of each button
-default.config.path = jelix/markitup/sets/bbcode/
-; define the path to the image of buttons of the toolbar
-default.image.path = jelix/markitup/sets/bbcode/images/
-default.skin = jelix/markitup/skins/simple/style.css
+md.engine.name = markdown
+md.wiki.rules = md_to_xhtml
+
+[webassets_common]
+
+jforms_wikieditor_md.js[]="$jelix/markitup/jquery.markitup.js"
+jforms_wikieditor_md.js[]="$jelix/markitup/sets/markdown/set.js"
+jforms_wikieditor_md.css[]="$jelix/markitup/skins/simple/style.css"
+jforms_wikieditor_md.css[]="$jelix/markitup/sets/markdown/style.css"
+jforms_wikieditor_md.require=jquery
+
 </code> 
 
-vous téléchargez le "set" bbcode depuis le site markitup et l'installez et le tour est joué.
-
+(les rêgles @@md_to_xhtml@@ n'existent pas vraiment, il faudrait les développer).
 
 ===== Configuration jForms =====
 
-
-Donc pour ajouter un éditeur wiki à son formulaire on notera dans son fichier @@F@*.form.xml@@ :
+Donc pour ajouter un éditeur wiki à son formulaire on notera dans son 
+fichier @@F@*.form.xml@@ :
 
 <code xml>
 <wikieditor ref="message" config="default" required="true">
 </code>
+
 où : 
-  * **ref** est le nom du champ ici //message//
-  * **config** est le nom de la configuration utilisée dans @@F@mainconfig.ini.php@@
-  * **required** dans le cas où l'on souhaite obliger la saisie du champ "message"
+
+  * @@ref@@ est le nom du champ ici @@message@@
+  * @@config@@ est le nom de la configuration utilisée dans @@F@mainconfig.ini.php@@
+  * @@required@@ dans le cas où l'on souhaite obliger la saisie du champ "message"
 

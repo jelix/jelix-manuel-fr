@@ -1,7 +1,5 @@
 ~~LANG:EN@enman:jforms/data-display~~
 
-
-
 Il est possible d'afficher, non pas le formulaire en lui-même, mais seulement
 les données du formulaire. Cela peut être utile pour afficher le récapitulatif
 des données saisies par exemple.
@@ -9,7 +7,7 @@ des données saisies par exemple.
 ===== Affichage sans personnalisation =====
 
 Pour les développeurs pressés, il existe un plugin de template qui affiche tout
-tout seul : **formdatafull**. Vous ne pouvez pas contrôler la façon dont sont
+tout seul : @@formdatafull@@. Vous ne pouvez pas contrôler la façon dont sont
 affichés les libellés et les valeurs. Vous devez passer l'objet formulaire à ce
 plugin.
 
@@ -33,11 +31,9 @@ Et dans le template :
 Les libellés et les valeurs du formulaires s'affichent dans un tableau.
 
 
+===== Affichage personnalisé =====
 
-
-===== Affichage contrôlé =====
-
-Comme pour [[/jforms/affichage|l'affichage du formulaire]], il est possible de
+Comme pour [[affichage|l'affichage du formulaire]], il est possible de
 mieux contrôler l'affichage, en particulier les balises générées, et donc de
 pouvoir définir les endroits où les champs seront placés.
 

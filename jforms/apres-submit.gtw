@@ -10,7 +10,7 @@ enfin traitement (stockage par exemple).
 
 Vous l'avez déjà vu un peu plus haut, pour récupérer l'objet formulaire tout en
 le remplissant à partir des données reçues du navigateur, il suffit d'appeler
-//jForms::fill()//:
+@@jForms::fill()@@:
 
 <code php>
     $form = jForms::fill("main~contact");
@@ -23,7 +23,7 @@ Cela est en fait équivalent à
     $form->initFromRequest();
 </code>
 
-Vous pouvez aussi utiliser la méthode //setData// sur le formulaire pour remplir
+Vous pouvez aussi utiliser la méthode @@setData()@@ sur le formulaire pour remplir
 vous même le contenu du formulaire :
 
 <code php>
@@ -36,9 +36,9 @@ vous même le contenu du formulaire :
 
 Une fois le formulaire récupéré avec les bonnes données, il est souvent
 préférable d'en vérifier exactement le contenu avant de traiter les données.
-Vous avez à votre disposition la méthode //check()// qui vérifie les données en
+Vous avez à votre disposition la méthode @@check()@@ qui vérifie les données en
 fonction de ce que vous avez indiqué dans le fichier xml (l'aspect obligatoire
-de la saisie, le type de donnée pour les inputs etc...). La méthode //check()//
+de la saisie, le type de donnée pour les inputs etc...). La méthode @@check()@@
 renvoi true si la vérification est bonne, ou false si il y a des erreurs dans le
 formulaire.
 
@@ -90,12 +90,12 @@ setErrorOn pour indiquer une erreur sur un champ.
 Quand un formulaire a été initialisé il peut être utile de savoir quelles
 valeurs ont été modifiées.
 
-Pour cela, vous devez d'abord appeler la méthode //initModifiedControlsList()//
+Pour cela, vous devez d'abord appeler la méthode @@initModifiedControlsList()@@
 après avoir initialisé votre formulaire, de manière à indiquer que vous voulez
 connaitre les différences.
 
 Ensuite, après un submit par exemple, vous pouvez appeler la méthode
-//getModifiedControls//, qui renvoie un tableau dont les clés sont les noms des
+@@getModifiedControls()@@, qui renvoie un tableau dont les clés sont les noms des
 contrôles modifiés, et les valeurs étant les anciennes valeurs.
 
 
@@ -152,7 +152,7 @@ enregistrement créé à l'aide de la méthode @@M@saveToDao@@.
 </code>
 
 
-@@M@saveToDao@@ est très pratique, mais on pourrait vouloir juste pré-remplir un
+@@M@saveToDao()@@ est très pratique, mais on pourrait vouloir juste pré-remplir un
 dao avec le contenu du formulaire, manipuler ensuite ce dao pour initialiser
 d'autres de ces propriétés "à la main", et faire les sauvegardes nous-mêmes.
 
@@ -191,17 +191,17 @@ pour le stockage.
 
 Si le formulaire contient des champs de téléchargement de fichiers, il vous faut
 sauver les fichiers quelque part. Vous avez pour cela deux méthodes,
-//saveFile()// et //saveAllFiles//. La première pour sauvegarder un fichier
+@@M@saveFile()@@ et @@M@saveAllFiles()@@. La première pour sauvegarder un fichier
 précis, et l'autre pour copier tous les fichiers reçus dans un répertoire.
 Sachez que dans les données du formulaire, la valeur du champ (que l'on récupère
 via getData) contient le nom du fichier original. Si vous avez besoin de stocker
 un autre nom, faites un setData.
 
-//saveFile()// prend en argument le nom du champ contenant le fichier. Par
-//défaut, le fichier est alors stocké dans le répertoire
-////var/uploads/nommodule~nomform///. Vous pouvez indiquer un autre répertoire
-//en donnant son chemin en deuxième paramètre de saveFile(). Et si vous voulez
-//stocker le fichier sous un nom différent, indiquez le en troisième paramètre.
+@@M@saveFile()@@ prend en argument le nom du champ contenant le fichier. Par
+défaut, le fichier est alors stocké dans le répertoire
+@@/var/uploads/nommodule~nomform/@@. Vous pouvez indiquer un autre répertoire
+en donnant son chemin en deuxième paramètre de @@saveFile()@@. Et si vous voulez
+stocker le fichier sous un nom différent, indiquez le en troisième paramètre.
 
 Exemple :
 <code php>
@@ -211,9 +211,9 @@ Exemple :
     $form->saveFile('photo', '', $id.'.png');
 </code>
 
-//saveAllFiles// sauve tout les fichiers, sans distinction, dans un même
-//répertoire. Le répertoire par défaut est //var/uploads/nommodule~nomform///,
-//mais vous pouvez le changer en l'indiquant en paramètre.
+@@saveAllFiles()@@ sauve tout les fichiers, sans distinction, dans un même
+répertoire. Le répertoire par défaut est @@/var/uploads/nommodule~nomform/@@,
+mais vous pouvez le changer en l'indiquant en paramètre.
 
 <code php>
     $form->saveAllFiles();

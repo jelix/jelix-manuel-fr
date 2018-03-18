@@ -203,7 +203,7 @@ de valeurs statiques, ou un dao qui servira à récupérer les choix.
 
 Il peut cependant arriver que cela soit insuffisant, et que le remplissage
 dépende de critères ou autre. Dans ce cas, vous n'indiquerez pas de balise
-@@E@<item>@@ ni d'attribut dao* dans le fichier xml. Et vous indiquerez la liste
+@@E@<item>@@ ni d'attribut @@dao*@@ dans le fichier xml. Et vous indiquerez la liste
 des choix dans votre contrôleur, des manières suivantes.
 
 <code php>
@@ -347,6 +347,7 @@ remplissage avec les données soumises.
 
 
 1 – Ajout du champ à l'initialisation :
+
 <code php>
   $form = jForms::get('myModule~myForm');
   $ctrl= new jFormsControlinput('identifiant');
@@ -358,6 +359,7 @@ remplissage avec les données soumises.
 </code>
 
 2 – Gestion après soumission :
+
 <code php>
   $form = jForms::get('myModule~myForm');
   $ctrl= new jFormsControlinput('identifiant');
