@@ -175,6 +175,15 @@ $resp->addMetaAuthor('Laurent');
 // modifie le nom du generateur
 $resp->addMetaGenerator('My Super App 1.0');
 
+// indique le mode de compatibilité pour IE (depuis 1.6.17)
+$resp->IECompatibilityMode = 'IE=Edge'; // valeur par défaut dans Jelix 1.7
+
+// spécifie le viewport (depuis 1.6.17)
+$resp->metaViewport = 'width=device-width, initial-scale=1.0';
+
+// ajoute une balise meta (depuis 1.6.17)
+$resp->addMeta(array('name'=>'apple-touch-fullscreen', 'content'=>'yes'));
+
 </code>
 
 Si vous voulez injecter du contenu spécifique dans la balise @@E@<head>@@, vous

@@ -528,6 +528,8 @@ user, ou de gérer les données dépendantes à l'utilisateur etc.
   * AuthErrorLogin : indique une erreur d'authentification de l'utilisateur
   * AuthBeforeLogin : permet d'effectuer des traitements spécifiques avant
     l'authentification de l'utilisateur
+  * AuthChangePassword (depuis Jelix 1.6.17): le mot de passe d'un utilisateur
+    a changé.
 
 Les tests sont sur les propriétés suivantes :
   * AuthCanRemoveUser : canremove

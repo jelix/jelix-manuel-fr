@@ -201,3 +201,10 @@ position dynamiquement.
 @@error@@, @@warning@@, @@notice@@, @@deprecated@@ et @@strict@@ ou plus prosaïquement
 @@*@@ comme raccourci de l'ensemble de ces valeurs.
 
+===== Envoi des mails =====
+
+jMailer a des paramètres de configuration qui permettent de ne pas envoyer
+réèllement les emails, ou alors de les envoyer à des personnes en particulier.
+
+Voir le chapitre sur [[/classes-utiles/jmailer|jMailer]].
+

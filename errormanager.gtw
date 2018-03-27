@@ -43,8 +43,8 @@ contenir le message exactement et de quel manière.
 L'option @@V@messageLogFormat@@ dans la section @@[error_handling]@@ de la
 configuration indique le formatage du message d'erreur. Le formatage supporte
 des mots clés spéciaux : @@L@%date%@@, @@L@%ip%@@, @@L@%typeerror%@@,
-@@L@%code%@@, @@L@%msg%@@, @@L@%url%@@, @@L@%file%@@, @@L@%line%@@, @@L@%params%@@, @@L@\t@@ et
-@@L@\n@@.
+@@L@%code%@@, @@L@%msg%@@, @@L@%url%@@, @@L@%file%@@, @@L@%line%@@, @@L@%params%@@,
+@@L@%http_error%@@, @@L@\t@@ et @@L@\n@@.
 
 @@L@%params%@@ indique d'afficher tous les paramètres de la requête HTTP.
 Cependant cela peut poser des problèmes de confidentialité, voir de sécurité,
