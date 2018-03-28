@@ -37,6 +37,11 @@ Vous pouvez ajouter des attributs HTML sur les elements HTML générés par
 Donnez @@L@""@@ comme premier paramètre quand @@ctrl_control@@
 est utilisé à l'intérieur d'une boucle @@formcontrols@@.
 
+<code html>
+<td>{ctrl_control 'nom', array('class'=>'myclass', 'placeholder'=>'votre nom'}</td>
+</code>
+
+
 Note : pour les générateurs autre que HTML, ce tableau d'attribut peut être
 d'autres options.
 
@@ -142,6 +147,15 @@ En ce qui concerne l'objet jFormsControl que @@addError()@@ reçoit en paramètr
    * @@errInvalid@@ : message d'erreur prédéfini quand son contenu est invalide
    * @@errRequired@@ : message d'erreur prédéfini quand le champs n'est pas renseigné
    * @@help@@ : message d'aide
+
+
+Depuis Jelix 1.6.17, vous pouvez indiquer votre décorateur comme celui par défaut
+pour tous les formulaires. Pour cela déclarez le dans la configuration :
+
+<code ini>
+[tplplugins]
+defaultJformsErrorDecorator = MyErrorDecorator
+</code>
 
 
 ==== Affichage des messages d'aides ====

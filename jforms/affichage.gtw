@@ -221,6 +221,9 @@ boucle @@formcontrols@@. Vous devez alors leur indiquer un nom de champs.
 Ici on affiche les champs noms et prenoms à des endroits précis, et le reste
 sera affiché par le plugin formcontrols qui suit.
 
+Pour savoir plus d'options sur l'affichage des contrôles en HTML, voir
+[[affichage/generateur-html|la page dédiée]].
+
 ==== Contrôle de l'affichage des champs de type password ====
 
 Pour les champs de saisie de mot de passe pour lesquels il y a un champ de

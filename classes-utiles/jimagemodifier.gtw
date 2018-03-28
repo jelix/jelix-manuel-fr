@@ -73,7 +73,7 @@ paramètre de la méthode est @@true@@, vous aurez aussi un attribut spécial,
 <code>
 $maSource = $att['src']; //Chemin accessible en web
 $monStyle = $att['style'];
-$monCache = $att['cache_path']; // si le dernier paramètre est à true (àa permet d'avoir le chemin du fichier en cache), chemin absolu sur le disque
+$monCache = $att['cache_path']; // si le dernier paramètre est à true (cela permet d'avoir le chemin du fichier en cache), chemin absolu sur le disque
 </code>
 
 Jusqu'à Jelix 1.2.2, l'image originale devait se trouver dans le répertoire
@@ -100,3 +100,4 @@ cache_path=
 
 Vous pouvez indiquer ces valeurs dans un tableau en 4ième paramètre de
 @@jImageModifier::get@@ pour spécifier d'autres répertoires.
+
