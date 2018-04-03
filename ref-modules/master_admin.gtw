@@ -1,6 +1,7 @@
 ~~LANG:EN@enman:ref-modules/master_admin~~
 
-@@master_admin@@ est un module fournissant une interface web dediée à l'administration (backend).
+@@master_admin@@ est un module fournissant une interface web dediée à
+l'administration (backend).
 
 Avant de commencer la personnalisation de l'interface d'administration,
 [[/creer-application/creer-administration|vous devez la créer]].
@@ -13,13 +14,20 @@ Le module contient trois zones :
 
 l'action @@default:index@@ affiche le tableau de bord
 
-===== Activer un module pour qu'il soit utilisable via l'interface d'administration =====
+===== Activer un module pour l'interface d'administration =====
+
+Pour activer un module, vous devez bien sûr indiquer qu'il est utilisé dans
+la section @@modules@@ de la configuration, mais vous devez aussi indiquer
+par quel point d'entrée il est accessible.
 
 Si l'administration a un point d'entrée spécifique, comme admin.php par défaut,
+et si votre module est déstiné à être utilisé dans cette interface d'administration,
 vous devez indiquer dans la configuration que ce module est accessible
 uniquement via ce point d'entrée.
 
-Pour ce faire, dans le fichier @@var/config/urls.xml@@, vous devez déclarer ces modules.
+Par exemple, voici une configuration basique dans le fichier @@var/config/urls.xml@@,
+pour une interface d'administration dans laquelle vous voulez gérer les utilisateurs
+et les droits avec les modules jauthdb_admin et jacl2db_admin :
 
 <code xml>
  <entrypoint name="admin">
@@ -41,6 +49,9 @@ donc d'avoir des contrôleurs pour l'admin et des contrôleurs pour la partie
 public du site, dans un même module. Cela facilite la configuration de la
 sécurité.
 
+Si vous voulez utiliser un module à la fois dans l'administration et dans la
+partie publique du site (comme le module jauth), vous devez créer deux applications,
+plutôt que deux points d'entrées.
 
 ===== Utilisation du système de menu =====
 
