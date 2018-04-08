@@ -1,81 +1,128 @@
 ~~LANG:EN@enman:ref-plugins/tplplugins/fct_image~~
 
 
-Si vous avez besoin d’afficher une image, une balise image suffit amplement.
+Si vous avez besoin d’afficher une image, une balise @@<img>@@ suffit amplement.
 
-Mais si vous devez afficher la même image à plusieurs reprises, dans des formats différents, avec des effets spéciaux hollywoodiens ou presque, le plugin image et là pour vous. 
+Mais si vous devez afficher la même image à plusieurs reprises, dans des formats
+différents, avec éventuellement des effets spéciaux, le plugin image
+et là pour vous.
 
-
+Il peut redimenssionner et transformer l'image que vous lui donner, stocke l'image resultat
+dans un cache, et met le lien vers cette nouvelle image dans le html.
 
 ===== Utilisation du plugin dans un template =====
 
-Il faut noter que pour la version 1.1+ le plugin image cherche les images dans le dossier "myapp/www/".
+Le plugin image est un plugin function. Il faut lui donner le chemin vers l'image. Le chemin
+est relatif à @@votreapp/www/@@:
 
-Le plugin image est un plugin function.\\
-L'utilisation la plus simple se présente ainsi :
+<code>
   {image 'toupie.png'}
+</code>
+
 
 {{toupie.png|}}
 
-Ceci crée le code html ci-dessous
+Ceci crée le code html ci-dessous:
+
+<code html>
   <img src="./toupie.png" />
-
-
-
-
+</code>
 
 ===== Des attributs =====
 
 On peut ajouter une classe :
+
+<code>
   {image 'toupie.png', array('class'=>'right cadre')}
+</code>
 
 On peut également ajouter un id :
+
+<code>
   {image 'toupie.png', array('id'=>'image')}
+</code>
 
 Ainsi qu'un texte alternatif :
+
+<code>
   {image 'toupie.png', array('alt'=>'ici l\'image d\'une toupie')}
+</code>
 
 
 ===== Les modifications disponibles =====
 
 On peut si l'on veut ajouter des arguments pour modifier l'image d'origine.
-  {image 'toupie.png', array('width'=>100)}
 
-Cela va générer une image sauvegardéé dans "myapp/www/cache/images/"
+On peut changer par exemple sa largeur :
+
+<code>
+  {image 'toupie.png', array('width'=>100)}
+</code>
+
+Cela va appeler la bibliothèque GD pour changer la largeur, et stockera la nouvelle image
+dans "myapp/www/cache/images/"
 
 {{toupie_width100.png|}}
 
+Le HTML généré contiendra un lien vers cette nouvelle image (ici le vrai lien peut-être différent) :
 
-Si gd n'est pas présent sur le serveur, le plugin ajoute la largeur/hauteur a l'image d'origine sous forme de style.
+<code html>
+  <img src="cache/images/toupie_XXXXXXXXXXXXXXX.png"/>
+</code>
 
+Si gd n'est pas présent sur le serveur, le plugin ajoute la largeur/hauteur a l'image d'origine
+sous forme de style, mais le navigateur chargera quand même l'image originale (si elle est beaucoup
+plus grande que la taille affichée, cela peut être pénalisant en terme de bande passante).
+
+<code>
   {image 'toupie.png', array('width'=>100)}
+</code>
 
+<code html>
   <img src="toupie.png" style="width:100px;height:100px;"/>
+</code>
 
 
 ==== Changer la taille ====
 
 On peut spécifier la largeur, la hauteur s'adaptera automatiquement, même chose pour la hauteur.
+
+<code>
   {image 'toupie.png', array('height'=>50)}
   {image 'toupie.png', array('width'=>100)}
+</code>
 
 {{toupie_height50.png|}}
 
 
-On peut bien sur utiliser les deux ce qui va déformer l'image.
+On peut bien sur utiliser les deux ce qui va probablement déformer l'image si le
+ratio hauteur/largeur est modifié.
+
+<code>
   {image 'toupie.png', array('width'=>150, 'height'=>50)}
+</code>
 
 {{toupie_width150_height50.png|}}
 
-Pour changer la taille de l'image sans la déformer il suffit de demander.
+Pour changer la taille de l'image sans la déformer il suffit de l'indiquer avec l'attribut
+@@omo@@ et le ratio sera respecté. Si la largeur ou hauteur resultante est supérieure 
+à celle attendu, l'image sera découpée aux dimensions indiquées :
+
+<code>
   {image 'toupie.png', array('width'=>150, 'height'=>50, 'omo'=>true)}
+</code>
 
 {{toupie_width150_height50_omo.png|}}
 
-On peut également limiter la taille d'une image en conservant son aspect/ratio, il suffit d'utiliser conjointement les paramètres maxheight et maxwidth.
+
+On peut également limiter la taille d'une image en conservant son aspect/ratio,
+il suffit d'utiliser conjointement les paramètres maxheight et maxwidth.
+
+<code>
   {image 'toupie.png', array('maxwidth'=>100, 'maxheight'=>90,'background'=>'#0000ff')}
   {image 'logo_1.png', array('maxwidth'=>100, 'maxheight'=>90)}
   {image 'logo_2.png', array('maxwidth'=>100, 'maxheight'=>90,'background'=>'#ff0000')}
+</code>
 
 {{toupie_maxwidth100_maxheight90_bg.png|}}
 {{logo1_maxwidth100_maxheight90.png|}}\\
@@ -85,12 +132,16 @@ On peut également limiter la taille d'une image en conservant son aspect/ratio,
 
 ==== Faire un zoom  ====
 
-Changer la taille de l'image de manière homothétique permet de recadrer l'image.\\
+Changer la taille de l'image de manière homothétique permet de recadrer l'image.
+
 Une autre façon de recadrer est de faire un zoom.
+
   * 100 affiche 100% de l'image
   * 10 affiche 10% de l'image
 
+<code>
   {image 'toupie.png', array('width'=>100, 'zoom'=>50)}
+</code>
 
 {{toupie_width100_zoom50.png|}}
 
@@ -98,38 +149,56 @@ Une autre façon de recadrer est de faire un zoom.
 
 ==== Aligner et déplacer ====
 
-Une fois que l'on a recadré notre image, on peut la déplacer, pour visualiser la zone de l'image que l'on veut.
+Une fois que l'on a recadré notre image, on peut la déplacer, pour visualiser la
+zone de l'image que l'on veut.
 
 On peut aligner l'image à gauche,
+
+<code>
   {image 'toupie.png', array('width'=>100, 'zoom'=>60, 'alignh'=>'left')}
+</code>
 
 {{toupie_width100_zoom50_alignh-left.png|}}
 
 ou à droite,
+
+<code>
   {image 'toupie.png', array('width'=>100, 'zoom'=>60, 'alignh'=>'right')}
+</code>
 
 en haut,
+
+<code>
   {image 'toupie.png', array('width'=>100, 'zoom'=>60, 'alignh'=>'top')}*
+</code>
 
 {{toupie_width100_zoom50_alignh-top.png|}}
 
 
 ou en bas.
+
+<code>
   {image 'toupie.png', array('width'=>100, 'zoom'=>60, 'alignh'=>'bottom')}
+</code>
 
 
 
-==== Changer l'extension et la qualité ====
+==== Changer le format et la qualité ====
 
-On peut également changer l'extension pour par exemple transformer un png en jpeg et ainsi alléger l'image.
+On peut également changer l'extension pour par exemple transformer un png en
+jpeg et ainsi alléger l'image.
 
+<code>
   {image 'toupie.png', array('width'=>100, 'ext'=>'jpg')}
+</code>
 
 {{toupie_width100_jpg.jpg|}}
 
 Le jpeg ne prend pas en charge la transparence.
 
+<code>
   {image 'toupie.png', array('width'=>100, 'ext'=>'jpg', 'quality'=>5)}
+</code>
 
 {{toupie_width100_jpg_quality5.jpg|}}
 
@@ -139,45 +208,71 @@ C'est léger !
 ==== Changer la couleur du fond ====
 
 On peut donner une couleur de fond aux images en png transparent.
+
+<code>
   {image 'toupie.png', array('width'=>100, 'background'=>'#ff5533')}
+</code>
 
 {{toupie_width100_bg.png|}}
 
 Ex: sur cette image convertie en jpeg.
+
+<code>
   {image 'toupie.png', array('width'=>100, 'ext'=>'jpg', 'background'=>'#ff5533')}
+</code>
 
 {{toupie_width100_bg_jpg.jpg|}}
 
 
-
 ==== Ajouter une ombre portée ====
 
-On peut très simplement ajouter une ombre portée.
+On peut très simplement ajouter une ombre portée. Notez qu'il sera probablement préférable
+d'utiliser CSS pour ajouter des ombres à votre image plutôt que d'utiliser ce plugin. 
+Cette fonctionnalité a été ajouté à une époque où les navigateurs ne prenaient pas en charge
+les ombres dans CSS.
+
+<code>
   {image 'toupie.png', array('width'=>100, 'shadow'=>true)}
+</code>
 
 {{toupie_width100_shadow.png|}}
 
 Une fois l'ombre affichée on peut la déplacer, en modifiant la distance et l'angle.
+
+<code>
   {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'soffset'=>20)}
+</code>
 
 {{toupie_width100_shadow_soffset.png|}}
 
+<code>
   {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sangle'=>0)}
+</code>
 
 {{toupie_width100_shadow_sangle.png|}}
 
 On peut modifier la netteté de l'ombre (maximum 11),
+
+<code>
   {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sblur'=>0)}
+</code>
 
 {{toupie_width100_shadow_sblur.png|}}
 
 l'opacité de l'ombre en %
+
+<code>
   {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'sopacity'=>100)}
+</code>
 
 {{toupie_width100_shadow_sopacity.png|}}
 
 et même la couleur.
+
+<code>
   {image 'toupie.png', array('width'=>100, 'shadow'=>true, 'scolor'=>'#ffff00')}
+</code>
+
 
 {{toupie_width100_shadow_scolor.png|}}
 

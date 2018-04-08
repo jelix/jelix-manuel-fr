@@ -1,32 +1,44 @@
 ~~LANG:EN@enman:ref-plugins/tplplugins/modifiers~~
 
-Les modificateurs sont des fonctions qui permettent de modifier l'affichage d'une variable de template. Ils ne sont donc utilisés que lors des instructions d'affichage.
+Les modificateurs sont des fonctions qui permettent de modifier l'affichage
+d'une variable de template. Ils ne sont donc utilisés que lors des instructions
+d'affichage.
 
 ===== cat =====
 
-Ce modificateur permet de concaténer une chaîne de caractères à une variable. Exemple :
+Ce modificateur permet de concaténer une chaîne de caractères à une variable.
 
-Soit la variable de template $foo ayant pour valeur 'bar' :
+Soit la variable de template @@$foo@@ ayant pour valeur @@'bar'@@ :
+
 <code php>
 $rep->body->assign('foo', 'bar');
 </code>
 
-Utilisation du modificateur cat dans le template. On concatène la chaîne 'toto' à la variable $foo :
+Utilisation du modificateur @@cat@@ dans le template. On concatène la chaîne
+@@'toto'@@ à la variable @@$foo@@ :
+
 <code html>
 <p>{$foo|cat:'toto'}</p>
 </code>
 
 Ce qui donnera l'affichage :
+
 <code html>
 <p>bartoto</p>
 </code>
 
 
-===== count_characters =====
+===== count_* =====
 
-Ce modificateur de template compte le nombre de caractères contenus dans une variable. Exemple :
+Plusieurs modificateurs permettent de compter des choses dans une variable :
 
-Soit la variable de template $foo ayant pour valeur ‘bar’ :
+* @@count_characters@@ : pour compter des caractères
+* @@count_paragraphs@@ : pour compter des paragraphes
+* @@count_sentences@@ : pour compter des phrases
+* @@count_words@@ : pour compter des mots.
+
+Un exemple. Soit la variable de template $foo ayant pour valeur ‘bar’ :
+
 <code php>
 $rep->body->assign('foo', 'bar');
 </code>
@@ -41,202 +53,26 @@ Ce qui donnera l'affichage :
 <p>$foo contient 3 caractères</p>
 </code>
 
-===== count_paragraphs =====
+Pour les autres modificateurs :
 
-Ce modificateur de template permet de compter le nombre de paragraphes contenus dans une variable. Exemple :
-
-Prenons la variable $foo contenant le texte suivant et qu'on assigne au template :
-
-<code php>
-$foo = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\n
-Vivamus ornare, enim bibendum mollis interdum, magna quam tristique lacus, sed vestibulum urna augue et nisi.';
-
-$rep->body->assign('foo', $foo);
-</code>
-
-On affiche alors le texte ainsi que le nombre de paragraphes qu'il contient :
 <code html>
-<p>{$foo}<br/>Contient : {$foo|count_paragraphs} paragraphes</p>
+<p>{$foo|count_paragraphs} paragraphes</p>
+<p>{$foo|count_sentences} phrases</p>
+<p>{$foo|count_words} mots</p>
 </code>
-
-Ce qui donne :
-<code html>
-<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-Vivamus ornare, enim bibendum mollis interdum, magna quam tristique lacus, sed vestibulum urna augue et nisi.
-Contient : 2 paragraphes</p>
-</code>
-
-
-===== count_sentences =====
-
-Ce modificateur de template permet de compter le nombre de phrases contenues dans une variable. Exemple:
-
-Prenons la variable $foo contenant le texte suivant et qu'on assigne au template :
-<code php>
-$foo = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-Vivamus ornare, enim bibendum mollis interdum, magna quam tristique lacus, sed vestibulum urna augue et nisi.';
-$rep->body->assign('foo', $foo);
-</code>
-
-On affiche alors le texte ainsi que le nombre de phrases qu'il contient :
-<code html>
-<p>{$foo}<br/>Contient : {$foo|count_sentences} phrases</p>
-</code>
-
-Ce qui donne :
-<code html>
-<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-Vivamus ornare, enim bibendum mollis interdum, magna quam tristique lacus, sed vestibulum urna augue et nisi.
-Contient : 2 phrases</p>
-</code>
-
-===== count_words =====
-
-Ce modificateur de template permet de compter le nombre de mots contenus dans une variable. Exemple :
-
-Prenons la variable $foo contenant le texte suivant et qu'on assigne au template :
-<code php>
-$foo = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.';
-$rep->body->assign('foo', $foo);
-</code>
-
-On affiche alors le texte ainsi que le nombre de mots qu'il contient :
-<code php>
-<p>{$foo}<br/>Contient : {$foo|count_words} mots</p>
-</code>
-
-Ce qui donne :
-<code html>
-<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-Contient : 8 mots</p>
-</code>
-
-===== date_format =====
-
-
-===== escxml =====
 
 ===== eschtml =====
 
 Ce modificateur correspond à la fonction htmlspecialchars de PHP.
 
-===== gravatar =====
-
-ce modificateur permet d'afficher un avatar issu du site http://gravatar.com/
-
-Pour ce faire il suffit de fournir le courriel dans le template comme suit :
-
-<code php>
-{gravatar 'foo@bar.com'}
-</code>
-ce qui aura pour effet d'afficher votre gravatar à l'endroit voulu dans le template.
-
-===== hook =====
-
-==== Introduction ====
-
-Ce modificateur, permet d'ajouter toutes les fonctionnalités de votre choix dans vos templates.
-
-Pour exploiter les hooks vous écrirez dans votre template :
-
-<code smarty>
-{hook 'event', $params}
-</code>
-où **event** est le nom de l'évènement déclenchant la récuperation de toutes les fonctionnalités et **$params** est un tableau de paramètres à passer au listener qui répondra à **event**.
-
-Exemple dans le template main.tpl : 
-<code smarty>
-{hook 'SampleBannerAnnouncement'}
-</code>
-
-affichera une bannière d'annonce dans le template de votre choix, en répondant à l'évènement **SampleBannerAnnouncement**.
-
-==== Hook : convention de nommage ====
-
-Ceci vous permettra de comprendre, en lisant le nom d'un évènement, à quel template il est lié. Ceci n'est pas une règle figée dans le marbre mais une façon de vous y retrouver dans vos futurs hooks.
-
-  * Before**TemplateName**
-  * **TemplateName**
-  * After**TemplateName**
-
-où :
-  * **TemplateName** est le nom du template où le hook est utilisé
-  * BeforeTemplateName est le nom du hook appelé au début du template TemplateName
-  * TemplateName est le nom du template où le hook est appelé (en général au beau milieu du template)
-  * AfterTemplateName est le nom du hook appelé à la fin du template TemplateName
-
-==== Comment répondre aux hooks ? ====
-
-Il faut produire un module (ou mettre toute la mécanique suivante dans une module existant) avec :
-
-  * un listener 
-  * une zone 
-  * un template
-
-  * le Listener sera chargé de la réponse à l'évènement appelé dans la zone
-<code php>
-class hookListener extends jEventListener{
-    
-   function onhfbSampleBannerAnnouncement ($event) {
-        $event->add( jZone::get('hook~samplebanner_accouncement') );
-   } 
-}
-</code>
-  * fichier events.xml définissant le listener qui répondra à l'évènement 
-<code xml>
-<?xml version="1.0" encoding="iso-8859-1"?>
-<events xmlns="http://jelix.org/ns/events/1.0">
-   <listener name="hook">
-	<event name="hfbSampleBannerAnnouncement" />
-   </listener>
-</events>
-</code>
-  * la zone qui exploitera les données de votre choix et fournira le template
-<code php>
-class samplebanner_accouncementZone extends jZone {
-    protected $_tplname='zone.samplebanner_accouncement';
-    
-    protected function _prepareTpl(){    
-        $this->_tpl->assign('text',jLocale::get('hook~main.welcome'));
-    }        
-}
-</code>
-  * le template qui affichera les données retournées au template //appelant//
-<code smarty>
-<div class="grid_16">
-    <div class="box">
-    <h2>Banner</h2>
-    {$text}
-    </div>
-</div>
-<div class="clear"></div>
-</code>
-
-tout ceci sera renvoyé automatiquement au template main.tpl (de notre exemple) à l'endroit voulu.
-
-===== image =====
-
-
-Ce modificateur de template affiche une image
-
-<code html>
-{image 'MonImage.gif', array('width'=>50)}
-</code>
-Le code généré :
-
-<code html>
-<img width="50" src="http://localhost/extracom/cache/images/'MonImage.gif" alt=""/>
-</code>
-Cette fonction va mettre en cache l'image dans le répertoire www ce qui permettra de ne pas regénérer les images
+Utilisez-le sur les contenus non sûr, comme des messages d'utilisateurs !
 
 ===== indent =====
 
-
 Ce modificateur de template indente chaque ligne de texte contenu dans une variable.
 
-==== Exemple d'utilisation ====
+Voici un texte que l'on injecte dans un template :
 
-Prenons la variable $foo contenant le texte suivant et qu’on assigne au template :
 <code php>
 $foo = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
 Vivamus ornare, enim bibendum mollis interdum." 
@@ -244,46 +80,61 @@ $rep->body->assign('foo', $foo);
 </code>
 
 On affiche alors le texte contenu dans $foo dans le template :
-<code php>
+
+<code smarty>
+<pre>
 {$foo|indent}
+</pre>
 </code>
 
 Ce qui donne :
-<code>
+
+<code html>
+<pre>
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
     Vivamus ornare, enim bibendum mollis interdum.
+</pre>
 </code>
 
-==== Paramètres ====
-
 Indent accepte 2 paramètres : 
+
   * le nombre de caractères à répéter pour l'indentation. Par défaut vaut 4
   * le caractère à répéter. Par défaut c'est un espace.
 
 <code smarty>
 {$foo|indent:"15"}
 </code>
+
 donne :
+
 <code>
                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
                Vivamus ornare, enim bibendum mollis interdum.
 </code>
 
+Et
+
 <code smarty>
-{$foo|indent:"1":"\t"}
+{$foo|indent:"5":"-"}
 </code>
+
 donne :
+
 <code>
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-    Vivamus ornare, enim bibendum mollis interdum.
+-----Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+-----Vivamus ornare, enim bibendum mollis interdum.
 </code>
 
 
 ===== jdatetime =====
 
-Le modificateur jdatetime permet de convertir une chaîne contenant une date avec un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la [[/classes-utiles/jdatetime|classe jDateTime]].
+Le modificateur jdatetime permet de convertir une chaîne contenant une date avec
+un certain format, vers une chaîne d'un autre format. Ce modificateur utilise la
+[[/classes-utiles/jdatetime|classe jDateTime]].
 
-Par défaut, le modificateur attend une chaîne au format base de données (jDateTime::BD_DTFORMAT) et renvoie la date au format correspondant à la langue sélectionnée (jDateTime::LANG_DTFORMAT).
+Par défaut, le modificateur attend une chaîne au format base de données
+(@@jDateTime::BD_DTFORMAT@@) et renvoie la date au format correspondant à la langue
+sélectionnée (@@jDateTime::LANG_DTFORMAT@@).
 
 <code smarty>
   <p>la date est {$myDate|jdatetime}.</p>
@@ -309,7 +160,9 @@ Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en param�
 | 'full_lang_date' | jDateTime::FULL_LANG_DATE | date au format complet (jour de la semaine et mois en toute lettre) en tenant compte de la langue |
 
 
-Le premier paramètre indique le format de la chaîne que le modificateur reçoit,  le deuxième, le format de la chaîne en résultat.
+Le premier paramètre indique le format de la chaîne que le modificateur reçoit,
+le deuxième, le format de la chaîne en résultat.
+
 <code smarty>
   <p>la date est {$myDate|jdatetime:'db_date':'timestamp'}.</p>
 </code>
@@ -353,16 +206,19 @@ pour cela plusieurs options possibles :
 
 ===== number_format ===== 
 
-Ce modificateur format un nombre à afficher tout comme expliqué dans la doc PHP [[phpapi:number_format]]
+Ce modificateur format un nombre à afficher tout comme expliqué dans la doc PHP
+[[phpapi:number_format]]
 
 exemple : 
+
 <code smarty>
 {$number|number_format:2, ',', ' '}
 </code>
 
 ===== regexp_replace =====
 
-ce modificateur permet de remplacer une chaine par une autre dans le template via les expressions réglulières
+Ce modificateur permet de remplacer une chaine par une autre dans le template
+via les expressions régulières.
 
 <code>
 exemple
@@ -370,13 +226,12 @@ exemple
 {$maVar|regex_replace:'/O/':'ii'}
 </code>
 
-La chaine TOTOO sera remplacée par titii
-
-
-Il y a cependant un bug si on désire mettre des accolades dans l'expression régulière ([[ticket:1257|ticket 1257]])
+La chaine @@TOTOO@@ sera transformée en @@titii@@.
 
 ===== replace =====
-ce modificateur permet de remplacer une chaine par une autre dans le template via la fonction str_replace
+
+Ce modificateur permet de remplacer une chaine par une autre dans le template
+via la fonction @@str_replace@@.
 
 <code>
 exemple
@@ -384,113 +239,103 @@ exemple
 {$maVar|replace:'O':'ii'}
 </code>
 
-La chaine TOTOO sera remplacée par titii
+La chaine @@TOTOO sera remplacée par @@tiitiiii@@.
 
 
 **Attention la fonction str_replace est obsolète en php 5.3x, il est préférable d'utiliser le modification regexp_replace**
 
 ===== spacify =====
+
 Ce modification permet de rajouter un caractère entre chaque lettre
 
-Par exemple
-Cas 1
 <code>
 {assign $mytext = 'Bonjour_tout_le_monde'}
 {$mytext|spacify:}
 </code>
-Résultat : B o n j o u r _ t o u t _ l e _ m o n d e 
 
-**Cas 2**
+Résultat : @@B o n j o u r _ t o u t _ l e _ m o n d e @@
+
 <code>
 {assign $mytext = 'Bonjour_tout_le_monde'}
 {$mytext|spacify:'.'}
 </code>
 
-Résultat : B.o.n.j.o.u.r._.t.o.u.t._.l.e._.m.o.n.d.e 
-
+Résultat : @@B.o.n.j.o.u.r._.t.o.u.t._.l.e._.m.o.n.d.e@@
 
 
 ===== printf =====
+
 Ce modification permet de formater une chaine via la fonction sprintf
 
 <code>
-{assign $mytext = 'Bonjour_tout_le_monde'}
+{assign $mytext = 'Bonjour tout le monde'}
 {$mytext|sprintf:'my format %s'}
 </code>
 
-Résultat : my format Bonjour_tout_le_monde 
+Résultat : @@my format Bonjour tout le monde@@
 
 ===== strip =====
-Ce modification permet de supprimer les espaces qui sont en double dans une chaine et de les remplacer par défaut par un seul espace
 
-exemple :
+Ce modification permet de supprimer les espaces qui sont en double dans une
+chaine et de les remplacer par défaut par un seul espace
+
 <code>
-{assign $mytext = 'Bonjour_tout_le  mmonde'}
+{assign $mytext = 'Bonjour  tout      le   monde'}
 {$mytext|strip}
 </code>
 
-Résultat : Bonjour_tout_le mmonde
-
-PS : pour mieux voir le résultat afficher la source.
+Résultat : @@Bonjour tout le monde@@
 
 <code>
-{assign $mytext = 'Bonjour_tout_le  mmonde'}
+{assign $mytext = 'Bonjour tout le     monde'}
 {$mytext|strip:';'}
 </code>
 
-Résultat : Bonjour_tout_le;mmonde 
+Résultat : @@Bonjour tout le;monde@@
 
 ===== truncate =====
-Ce modificateur permet de couper une chaine à une longueur voulue (si besoin), et peut eventuellement 
-la séparer dans le milieu d'un mot et ajouter la chaine $etc (comme '...')
 
-**Cas 1**
+Ce modificateur permet de couper une chaine à une longueur voulue (si besoin),
+peut eventuellement la séparer dans le milieu d'un mot, et peut ajouter une chaine
+de terminaison (comme @@'...'@@).
+
 <code>
+{assign $mytext = 'Bonjour tout le monde'}
 {$mytext|truncate}
 </code>
 
-exemple : 
-<code>
-{assign $mytext = 'Bonjour_tout_le_monde'}
-{$mytext|truncate}
-</code>
-résultat : Bonjour_tout_le_monde 
+résultat : @@Bonjour tout le monde@@
 
-**Cas 2**
 <code>
+{assign $mytext = 'Bonjour tout le monde'}
 {$mytext|truncate:10}
 </code>
 
-exemple : 
-<code>
-{assign $mytext = 'Bonjour_tout_le_monde'}
-{$mytext|truncate:10}
-</code>
-résultat : Bonjour...
+résultat : @@Bonjour...@@
 
-**Cas 3**
 <code>
-{$mytext|truncate:10}
-</code>
-
-exemple : 
-<code>
-{assign $mytext = 'Bonjour_tout_le_monde'}
+{assign $mytext = 'Bonjour tout le monde'}
 {$mytext|truncate:10:'[...]'}
 </code>
-résultat : Bonjo[...]
 
+résultat : @@Bonjour[...]@@
 
-**Cas 4**
+Si vous voulez autoriser la coupure en plein milieu d'un mot :
+
 <code>
-{$mytext|truncate:60:'...':true}
+{assign $mytext = 'Bonjour tout le monde'}
+{$mytext|truncate:10:'...':true}
 </code>
+
+résultat : @@Bonjour to...@@
 
 ===== truncatehtml ===== 
 
-Ce modificateur permet de couper une chaine formatée en HTML en fermant tous les tags html ouverts, de sortes que le reste de la page n'est pas impacté
+Ce modificateur permet de couper une chaine formatée en HTML en fermant tous les
+tags html ouverts, de sortes que le reste de la page n'est pas impacté
 
-Vous devriez utiliser ce modificateur dans une zone afin que la valeur retournée soit dans la cache.
+Vous devriez utiliser ce modificateur dans une zone afin que la valeur retournée
+soit dans la cache.
 
 Exemple d'utilisation 
 <code smarty>
@@ -501,22 +346,36 @@ Exemple d'utilisation
 
 ===== wiki =====
 
-Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki, vers le format de votre choix. Ce modificateur utilise la [[/classes-utiles/jwiki|classe jWiki]].
+Le modificateur wiki permet de convertir une chaîne contenant une syntaxe wiki,
+vers le format de votre choix. Ce modificateur utilise la
+[[/classes-utiles/jwiki|classe jWiki]].
 
-Par défaut, le modificateur attend une chaine au format wiki (wr3) et la renvoie au format XHTML, exemple :
+Par défaut, le modificateur attend une chaine au format wiki (wr3) et la renvoie
+au format XHTML, exemple :
 
 <code smarty>
   <p>{$message|wiki}</p>
 </code>
 
-Si $message vaut par exemple : 
-<code>
-__mon texte gras__ 
-</code>
-le rendu sera 
-''mon texte gras''
+Si @@$message@@ vaut par exemple : 
 
-Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en paramètre au modificateur :
+<code>
+===== title =====
+
+A word in __bold__.
+</code>
+
+Le rendu sera 
+
+<code html>
+<h1>title</h1>
+
+<p>A word in <strong>bold</strong></p>
+</code>
+
+
+Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en
+paramètre au modificateur :
 
 ^ paramètre ^ Rendu  ^ 
 | 'classicwr_to_text' | affichera du texte au format wiki (v2 du WikiRender) en texte  |
@@ -529,31 +388,33 @@ Pour indiquer d'autres formats, vous devez indiquer l'une des chaînes en param�
 | 'wr3_to_text' | affichera du texte au format wiki (v3 du WikiRender) en texte|
 | 'wr3_to_xhtml' | affichera du texte au format wiki (v3 du WikiRender) en XHTML |
 
-Le paramètre indique le format d'origine ''et'' de transformation (voulu)  que le modificateur reçoit
+Le paramètre indique le format d'origine ''et'' de transformation (voulu)  que
+le modificateur reçoit
+
 <code smarty>
   <p>{$message|wiki:'wr3_to_xhtml'}</p>
 </code>
 
-===== wordwrap =====
-
 ===== html:nl2br =====
 
-Ce modificateur remplace les retours à la ligne en balise html <br/> dans un texte contenu dans une variable de template.
+Ce modificateur remplace les retours à la ligne en balise html @@<br/>@@ dans un
+texte contenu dans une variable de template.
 
-= Exemple =
+Prenons la variable @@$foo@@ contenant le texte suivant et qu’on assigne au template :
 
-Prenons la variable $foo contenant le texte suivant et qu’on assigne au template :
 <code php>
 $foo = "Lorem ipsum dolor sit amet,\nconsectetuer adipiscing elit." 
 $rep->body->assign('foo', $foo);
 </code>
 
-On affiche alors le texte contenu dans $foo dans le template :
+On affiche alors le texte contenu dans @@$foo@@ dans le template :
+
 <code smarty>
 <p>{$foo|nl2br}</p>
 </code>
 
 Ce qui donne :
+
 <code html>
 <p>Lorem ipsum dolor sit amet,<br/>consectetuer adipiscing elit.</p>
 </code>

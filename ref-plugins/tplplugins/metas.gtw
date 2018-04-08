@@ -1,44 +1,67 @@
 ~~LANG:EN@enman:ref-plugins/tplplugins/metas~~
 
 
-Les plugins meta permettent en général de modifier des propriétés dans la réponse.
+Les plugins meta permettent de définir des meta-propriétés sur le template, à déstination du
+code appelant, ou alors de modifier les propriétés d'autres objets.
 
 ====== meta_html ======
  
-===== jQuery =====
- 
-pour ajouter les liens de jQuery dans le header de votre page, il vous suffit de procéder comme suit :
-<code html>
-{meta_html jquery}
-</code>
-ce qui chargera jQuery
+Le plugin meta_html permet de modifier et compléter l'objet réponse courant.
 
-===== jQueryUI =====
-pour ajouter les liens de jQueryUI dans le header de votre page, il vous suffit de procéder comme suit :
-<code html>
-{meta_html jquery_ui 'components', array('widget','dialog','position')}
-{meta_html jquery_ui 'theme'}
-</code>
-ce qui chargera jquery, jqueryUI core et les composants spécifiés + thème 
 
 ===== title =====
  
-pour renseigner la balise @@E@<title>@@ de votre page, il vous suffit de procéder comme suit :
+Pour renseigner la balise @@E@<title>@@ de votre page, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html title 'Mon titre de page'}
 </code>
 
+===== assets =====
+
+Pour utiliser un [[vues/vue-html#utiliser-les-webassets|groupe d'assets]], et donc
+intégrer toutes les CSS et JS qu'il contient, utiliser @@assets@@:
+
+<code html>
+{meta_html assets 'example'}
+</code>
+
+===== jQuery =====
+ 
+Pour ajouter les liens de jQuery dans le header de votre page, il vous suffit de procéder comme suit :
+
+<code html>
+{meta_html jquery}
+</code>
+
+
+===== jQueryUI =====
+
+Pour ajouter les liens de jQueryUI dans le header de votre page, il vous suffit de procéder comme suit :
+
+<code html>
+{meta_html jquery_ui 'components', array('widget','dialog','position')}
+{meta_html jquery_ui 'theme'}
+</code>
+
+Ce qui chargera jquery, jqueryUI core et les composants spécifiés + thème
+
 ===== js =====
  
 pour charger un fichier javascript, il vous suffit de procéder comme suit : 
+
 <code html>
 {meta_html js $j_basepath.'js/global.js', array('charset'=> 'UTF-8')}
 </code>
-le deuxième paramètre doit être un tableau, il est optionnel, et permet de passer des attributs supplémentaires à la balise @@E@<script>@@.
+
+le deuxième paramètre doit être un tableau, il est optionnel, et permet de
+passer des attributs supplémentaires à la balise @@E@<script>@@.
 
 ===== jsie =====
- 
-pour charger un fichier javascript spécifiquement pour Internet Explorer, il vous suffit de procéder comme suit :
+
+Pour charger un fichier javascript spécifiquement pour Internet Explorer, il
+vous suffit de procéder comme suit :
+
 <code html>
 {meta_html jsie $j_basepath.'js/globalie.js', array('charset'=> 'UTF-8')}
 </code>
@@ -46,14 +69,18 @@ pour charger un fichier javascript spécifiquement pour Internet Explorer, il vo
 ===== css =====
  
 pour charger une feuille de style CSS, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html css $j_basepath.'css/screen.css', array('media'=>'screen, projection')}
 </code>
-le deuxième paramètre doit être un tableau, il est optionnel, et permet de passer des attributs supplémentaires à la balise @@E@<link>@@.
+
+le deuxième paramètre doit être un tableau, il est optionnel, et permet de
+passer des attributs supplémentaires à la balise @@E@<link>@@.
 
 ===== cssie =====
  
 pour charger une feuille de style CSS spécifiquement pour Internet Explorer, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html cssie $j_basepath.'css/ie.css', array('media'=>'screen, projection')}
 </code>
@@ -61,6 +88,7 @@ pour charger une feuille de style CSS spécifiquement pour Internet Explorer, il
 ===== cssie7 =====
  
 pour charger une feuille de style CSS spécifiquement pour Internet Explorer 7, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html cssie7 $j_basepath.'css/ie7.css', array('media'=>'screen, projection')}
 </code>
@@ -68,6 +96,7 @@ pour charger une feuille de style CSS spécifiquement pour Internet Explorer 7, 
 ===== cssltie7 =====
  
 pour charger une feuille de style CSS spécifiquement pour Internet Explorer versions < 7, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html cssltie7 $j_basepath.'css/ielt7.css', array('media'=>'screen, projection')}
 </code>
@@ -75,6 +104,7 @@ pour charger une feuille de style CSS spécifiquement pour Internet Explorer ver
 ===== csstheme =====
  
 pour charger un fichier CSS en allant le chercher directement dans le dossier du thème utilisé, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html csstheme 'screen.css', array('media'=>'screen, projection')}
 </code>
@@ -82,6 +112,7 @@ pour charger un fichier CSS en allant le chercher directement dans le dossier du
 ===== cssthemeie =====
  
 pour charger un fichier CSS pour Internet Explorer, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html cssthemeie 'ie.css', array('media'=>'screen, projection')}
 </code>
@@ -89,6 +120,7 @@ pour charger un fichier CSS pour Internet Explorer, il vous suffit de procéder 
 ===== cssthemeie7 =====
  
 pour charger un fichier CSS pour Internet Explorer 7, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html cssthemeie7 'ie7.css', array('media'=>'screen, projection')}
 </code>
@@ -96,6 +128,7 @@ pour charger un fichier CSS pour Internet Explorer 7, il vous suffit de procéde
 ===== cssthemeltie7 =====
  
 pour charger un fichier CSS pour Internet Explorer < 7, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html cssthemeltie7 'ielt7.css', array('media'=>'screen, projection')}
 </code>
@@ -103,6 +136,7 @@ pour charger un fichier CSS pour Internet Explorer < 7, il vous suffit de procé
 ===== style =====
  
 pour ajouter des styles CSS en ligne à votre page, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html style array('body' => 'background-color: #b4d455')}
 </code>
@@ -110,6 +144,7 @@ pour ajouter des styles CSS en ligne à votre page, il vous suffit de procéder 
 ===== bodyattr =====
  
 pour ajouter des attributs à la balise @@E@<body>@@, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html bodyattr array('class' => 'special')}
 </code>
@@ -117,34 +152,43 @@ pour ajouter des attributs à la balise @@E@<body>@@, il vous suffit de procéde
 ===== keywords =====
  
 pour ajouter des mots dans une balise meta keywords, il vous suffit de procéder comme suit :
+
 <code html>
 {meta_html keywords 'foo, bar, foobar, barfoo'}
 </code>
 
 ===== description =====
  
-pour ajouter une description dans une balise meta description, il vous suffit de procéder comme suit :
+pour ajouter une description dans une balise meta description, il vous suffit de
+procéder comme suit :
+
 <code html>
 {meta_html description 'Cette page contient des informations sur blablahblah..'}
 </code>
 
 ===== author =====
  
-pour ajouter un(des) auteur(s) dans une balise meta author, il vous suffit de procéder comme suit :
+pour ajouter un(des) auteur(s) dans une balise meta author, il vous suffit de
+procéder comme suit :
+
 <code html>
 {meta_html author 'Jane Doe'}
 </code>
 
 ===== generator =====
  
-pour indiquer le générateur dans une balise meta generator, il vous suffit de procéder comme suit :
+pour indiquer le générateur dans une balise meta generator, il vous suffit de
+procéder comme suit :
+
 <code html>
 {meta_html generator 'Jelix'}
 </code>
 
 ===== others =====
  
-pour ajouter du contenu supplémentaire dans la balise @@E@<head>@@, il vous suffit de procéder comme suit :
+pour ajouter du contenu supplémentaire dans la balise @@E@<head>@@, il vous
+suffit de procéder comme suit :
+
 <code html>
 {meta_html others '<meta name="robots" content="index, follow" />'}
 </code>
@@ -153,14 +197,15 @@ pour ajouter du contenu supplémentaire dans la balise @@E@<head>@@, il vous suf
 
 ====== meta_htmlmodule ======
 
-Ce meta fourni un racourci pour accéder au CSS, JS et image du module se trouvant dans le dossier www du module
+Ce meta fourni un racourci pour accéder au CSS, JS et image du module se
+trouvant dans le dossier www du module
 
-Comme ci dessus, vous pouvez utiliser toutes combinaisons de meta_htmlmodule avec js, css ou autres,
-
-exemple :
+Comme ci dessus, vous pouvez utiliser toutes combinaisons de meta_htmlmodule
+avec js, css ou autres. Exemple :
 
 <code html>
 {meta_htmlmodule css 'mymodule', 'css/screen.css', array('media'=>'screen, projection')}
 </code>
 
-Ainsi Jelix ira dans le dossier 'mymodule'/www/css ou 'mymodule'/www/themes/'currenttheme'/css pour trouver le fichier screen.css
+Ainsi Jelix ira dans le dossier 'mymodule'/www/css ou 'mymodule'/www/themes/'currenttheme'/css
+ pour trouver le fichier screen.css
