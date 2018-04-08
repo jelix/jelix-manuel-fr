@@ -245,12 +245,16 @@ services SOAP de toute votre application.
 Remarque : ce type d'url est disgracieux, et vous pouvez parfaitement configurer
 les urls pour avoir des choses plus simple comme
 
+<code>
    http://monsite.com/index/jsoap/unModule/unControleur
+</code>
 
 Notez que vous pouvez afficher une version HTML de la liste des services SOAP,
 en appelant la méthode "index" du contrôleur WSDL.
 
+<code>
   http://monsite.com/index.php/jsoap/WSDL/index?service=unModule~unControleur
+</code>
 
 
 ===== Appel depuis un client SOAP =====
@@ -338,7 +342,9 @@ classmap = '{"soaptype":"myclass", "soaptype2":"myclass2"}'
 Les classes que vous indiquez doivent être déjà chargée avec l'appel à @@jSoapClient::get()@@.
 
 Une alternative fournie depuis Jelix 1.5, est de déclarer ce mapping dans un fichier
-ini séparé, et d'indiquer ce fichier dans une propriété @@classmap_file@@.
+ini séparé, et d'indiquer ce fichier dans une propriété @@classmap_file@@. Ce fichier doit
+se trouver dans le répertoire @@votreappli/app/config/@@.
+
 <code ini>
 [jsoapclient:default]
 wsdl= "http://example.com/books.wsdl"

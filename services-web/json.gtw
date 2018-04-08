@@ -2,8 +2,7 @@
 
 [[http://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui
 réutilise des éléments syntaxiques de Javascript. Cela facilite alors grandement
-l'utilisation de contenu en JSON dans une page HTML. C'est de plus en plus
-utilisé pour la technique AJAX.
+l'utilisation de contenu en JSON dans une page HTML. 
 
 Pour envoyer un contenu en JSON au navigateur, vous pouvez employer la réponse
 @@C@jResponseJson@@ dont l'alias est "json". Vous n'avez ensuite qu'à mettre
@@ -24,7 +23,7 @@ L'appel du côté client, se fait de la même façon que la technique AJAX :
    http.open("post", url, true);
 
    http.onreadystatechange = function(){
-	if(http.readyState == 4){
+	    if(http.readyState == 4){
 	    // récupération du contenu renvoyé par votre action
             var json = http.responseText;
             var value;
@@ -36,7 +35,7 @@ L'appel du côté client, se fait de la même façon que la technique AJAX :
             value = JSON.parse(json);
  
             // ici traitement des données.
-	}
+	    }
    };
 
    // la requête http est envoyée
@@ -80,6 +79,7 @@ foreach($countries as $country) {
 </code>
 
 On récupère côté client des objets en notation JSON comme celui-ci :
+
 <code javascript>
    { "id":20, "name":"Europe"}
 </code>

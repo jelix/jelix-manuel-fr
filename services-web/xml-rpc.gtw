@@ -9,7 +9,7 @@ résultat, toujours sous forme de XML (RPC = Remote Procedure Call).
 
 Une requête XML-RPC est spécifique, et pour y répondre, on ne peut pas utiliser
 [[/concepts/objets-request|l'objet request]] "classic". Il vous faut créer un
-point d'entrée spécifique dans le répertoire www, xmlrpc.php par exemple, qui
+point d'entrée spécifique dans le répertoire @@www@@, @@xmlrpc.php@@ par exemple, qui
 utilise jXmlRpcRequest plutôt que jClassicRequest. Le type de requête et du
 point d'entrée est donc "xmlrpc".
 
@@ -50,7 +50,7 @@ exemple).
 
 Ensuite, le contenu du contrôleur est similaire à ce que vous avez l'habitude de
 faire, à la seule différence que vous utiliserez jResponseXmlRpc, qui a pour
-alias "xmlrpc", pour répondre aux requêtes JsonRpc :
+alias "xmlrpc", pour répondre aux requêtes XMLRpc :
 
 <code php>
 class defaultCtrl extends jController {
@@ -87,23 +87,22 @@ il faut envoyer du contenu XML de ce type :
 </methodCall>
 </code>
 
-Dans //methodName//, vous indiquerez, dans le cas d'un appel à une application
-jelix, le sélecteur de l'action à appeler, comme ici "module:default:index".
+Dans @@<methodName>@@, vous indiquerez, dans le cas d'un appel à une application
+jelix, le sélecteur de l'action à appeler, comme ici @@module:default:index@@.
 
 Notez qu'il faut indiquer le caractère ":" plutôt que "~" comme séparateur du
 nom du module et du nom de l'action. En effet, le caractère tilde "~" est
 interdit dans le nom de la méthode en xmlrpc. De ce fait, il faut
 **obligatoirement indiquer le module, le controleur et la méthode**.
 
-Les données que vous mettrez dans params seront mises dans le paramètre "params"
-dans la réponse jelix. Ainsi, dans l'action, pour les récupérer dans l'action,
-vous ferez :
+Les données que vous mettrez dans params seront mises dans le paramètre @@params@@
+dans la réponse jelix. Ainsi, pour les récupérer dans l'action, vous ferez :
 
 <code php>
   $parametres = $this->param('params');
 </code>
 
-Bien entendu, ce que vous avez dans $parametres sera des données "php" (chaine,
+Bien entendu, ce que vous avez dans  @@$parametres@@ sera des données "php" (chaine,
 array ou autre), la transformation du contenu de la balise @@E@<params>@@ étant
-réalisée par jXmlRpcRequest..
+réalisée par @@jXmlRpcRequest@@..
 

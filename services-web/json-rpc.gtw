@@ -85,15 +85,15 @@ il faut envoyer une chaîne de ce type :
 }
 </code>
 
-Dans method, vous indiquerez, dans le cas d'un appel à une application jelix, le
+Dans @@method@@, dans le cas d'un appel à une application jelix, vous indiquerez le
 sélecteur de l'action à appeler :
 
 <code>
 method:"monModule~default:index"
 </code>
 
-Les données que vous mettrez dans params seront mises dans le paramètre "params"
-dans la réponse. Ainsi, pour les récupérer dans l'action vous ferez :
+Les données que vous mettrez dans @@params@@ seront mises dans le paramètre @@params@@
+de la réponse. Ainsi, pour les récupérer dans l'action vous ferez :
 
 <code php>
   $parametres = $this->param('params');
@@ -136,4 +136,4 @@ Enfin si dans l'action jelix, vous avez fait un
   $rep->response = "hello";
 </code>
 
-Vous aurez alors dans la variable //resultat// de l'exemple javascript, une chaîne "hello".
+Vous aurez alors dans la variable @@resultat@@ de l'exemple javascript, une chaîne @@"hello"@@.

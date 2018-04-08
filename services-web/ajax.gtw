@@ -51,7 +51,7 @@ Il y a un souci connu quand on utilise [[/jforms|un formulaire jforms]] dans un
 template pour une réponse autre que html pour faire une réponse ajax.
 
 En effet, pour fonctionner correctement, un formulaire jforms a besoin de la
-présence du fichier @@F@jforms.js@@ dans la page qui appelle la requête ajax. Ce
+présence du fichier @@F@jforms_jquery.js@@ dans la page qui appelle la requête ajax. Ce
 fichier est inclus automatiquement par le plugin form, en appelant entre autre
 la méthode @@M@addJsLink@@ de la réponse.
 
