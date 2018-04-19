@@ -2,7 +2,7 @@
 
 jWiki est une classe permettant de transformer un texte wiki dans un autre
 format, XHTML par exemple. Cette classe repose sur la classe
-[[http://wikirenderer.jelix.org|Wikirenderer]] version 3.1.
+[[https://wikirenderer.jelix.org|Wikirenderer]] version 3.1.
 
 Pour que Wikirenderer puisse réaliser la transformation, il lui faut donner un
 ensemble d'objets précis, qui ensemble vont régir "les rêgles de
@@ -36,5 +36,5 @@ avec dedans une classe nommé superwiki_to_xhtml qui hérite de
 @@C@WikiRendererConfig@@ ou de la classe d'une règle existante.
 
 Pour plus d'informations sur l'utilisation de jWiki, voir la documentation de
-[[http://wikirenderer.jelix.org|Wikirenderer]].
+[[https://wikirenderer.jelix.org|Wikirenderer]].
 

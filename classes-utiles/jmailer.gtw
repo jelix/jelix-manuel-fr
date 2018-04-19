@@ -2,7 +2,7 @@
 
 jMailer est une classe permettant l'envoi d'email depuis un contrôleur ou une
 classe métier. Elle est basée sur la classe
-[[http://phpmailer.codeworxtech.com|PHPMailer]]. 
+[[https://github.com/PHPMailer/PHPMailer|PHPMailer]].
 
 Voici ses possibilités :
   * envoi de pièces jointes

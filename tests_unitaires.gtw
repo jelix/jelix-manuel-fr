@@ -232,7 +232,7 @@ du module junittests.
 
 Le lancement des tests se fait en exécutant un script ''tests.php'' se trouvant
 dans le répertoire scripts de l'application jelix. Vous pouvez utiliser
-l'application [[http://jelix.org/articles/telechargement/stable|testapp]] (voir
+l'application [[https://jelix.org/articles/telechargement/stable|testapp]] (voir
 dans "Application de test") pour en voir un exemple.
 
 Voici une listes des différentes commandes disponibles :

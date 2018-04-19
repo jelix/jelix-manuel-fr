@@ -5,7 +5,7 @@ HTML de jForms échappent les contenus à l'affichage pour éviter les problème
 sécurités comme Cross Site Scripting.
 
 jForms a aussi une protection contre les
-[[http://fr.wikipedia.org/wiki/Cross-Site_Request_Forgeries|CSRF]]. Cette
+[[https://fr.wikipedia.org/wiki/Cross-Site_Request_Forgeries|CSRF]]. Cette
 protection interdit à d'autres sites que votre application de soumettre des
 données à vos formulaires.
 

@@ -11,8 +11,8 @@ standard de PHP 5.3). Si une de ces extensions n'était pas livrée avec le paqu
 PHP5, veillez à installer le paquet correspondant.
 
 Note concernant DOM et XML : vérifiez que c'est bien
-[[http://fr2.php.net/manual/fr/intro.dom.php|l'extension DOM]] et non pas
-[[http://fr2.php.net/manual/fr/intro.domxml.php|l'extension DOM-XML]] qui est
+[[https://fr2.php.net/manual/fr/intro.dom.php|l'extension DOM]] et non pas
+[[https://fr2.php.net/manual/fr/intro.domxml.php|l'extension DOM-XML]] qui est
 activée dans php.ini. Certains paquets WAMP activent l'extension DOM-XML en même
 temps que DOM, ce qui conduit à des erreurs PHP.
 

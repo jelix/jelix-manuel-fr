@@ -434,7 +434,7 @@ plugins = debugbar, minify
 
 ==== Compression des fichiers css et javascript ====
 
-Jelix est fourni avec [[http://code.google.com/p/minify/|Minify]], qui permet de
+Jelix est fourni avec [[https://www.minifier.org/|Minify]], qui permet de
 compresser et concaténer automatiquement les fichiers CSS et Javascript d'une
 page HTML.
 

@@ -315,8 +315,8 @@ actions de connexion, de déconnexion, en faisant appel à la classe @@C@jAuth@@
 Il propose aussi des zones et des templates.
 
 Si vous voulez avoir des fonctionnalités de gestion de compte comme sur un
-portail, utilisez le module jCommunity, disponible en dehors de Jelix
-([[http://bitbucket.org/laurentj/jcommunity/]]). Il propose des formulaires de
+portail, utilisez [[https://github.com/jelix/jcommunity-module/|le module jCommunity]],
+disponible en dehors de Jelix. Il propose des formulaires de
 changement de mot de passe, des formulaires de destruction de compte, de
 création de compte et de récupération de mot de passe. 
 
