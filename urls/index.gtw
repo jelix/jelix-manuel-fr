@@ -6,7 +6,7 @@ simple, il suffit de fournir le module, l'action, le type de requête et
 éventuellement d'autres paramètres et jUrl se charge de générer l'URL
 correspondante. À l'inverse, lors d'une requête, jUrl analyse l'URL pour en
 déduire le module, l'action et les paramètres, et ceci, indépendamment du type
-de requête. Il n'est pas utile alors d'utiliser le mod_rewrite d'apache par exemple.
+de requête.
 
 Pour cette tâche jUrl se repose sur un "moteur d'URL".
 
@@ -32,11 +32,9 @@ Note : il peut y avoir certaines options à activer dans apache. Voir la section
 
 ===== Configuration générale =====
 
-La configuration de jUrl se fait dans la section ''urlengine'' du fichier de
+La configuration de jUrl se fait dans la section @@urlengine@@ du fichier de
 configuration dont voici les paramètres :
 
-; @@enableParser@@ : Active l'analyse d'URL par le moteur d'URL. Si vous préférez l'utilisation du
-    module mod_rewrite d'apache, vous pouvez alors mettre off.
 ; @@multiview@@ : Indique si le multiview est activé ou non dans apache. Cela indique alors au
     moteur d'URL de ne pas générer l'extension des points d'entrées (.php) lors de
     la création des URLs. On a ainsi des URLs un peu plus "propres".
@@ -50,8 +48,8 @@ configuration dont voici les paramètres :
   basePath= /jelix/myapp/www/
 </code>
 
-Si par contre vous avez spécifié le documentRoot dans apache, pointant sur
-@@jelix/myapp/www@@, alors il sera égale à "/".
+Si par contre vous avez spécifié le documentRoot dans Apache/Nginx, pointant sur
+@@jelix/myapp/www@@, alors il sera égale à @@/@@.
 
 Attention, la valeur de basePath doit toujours commencer par un @@/@@. Si vous
 n'indiquez aucune valeur, Jelix essaiera de deviner le chemin de base par lui
@@ -95,9 +93,9 @@ URLs, sans avoir à changer quoi que ce soit dans vos templates et vos contrôle
 Les URLs doivent donc être construites par Jelix. Pour cela, vous avez deux
 outils à votre disposition.
 
-==== jUrl::get ====
+==== jUrl::get() ====
 
-L'objet jUrl a une méthode statique, get(), qui en fonction d'une action et
+L'objet jUrl a une méthode statique, @@get()@@, qui en fonction d'une action et
 d'autres paramètres, renvoie l'URL correspondante pour l'application courante :
 
 <code php>

@@ -298,7 +298,6 @@ Configuration du moteur d'urls
 <code ini>
 [urlengine]
 
-enableParser = on
 multiview = off
 
 scriptNameServerVariable =
