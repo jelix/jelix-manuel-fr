@@ -59,7 +59,7 @@ Pour faire votre dao, vous pouvez aussi faire [[../daos/fichier_de_base#importat
 
 
 C'est un driver qui permet d'utiliser une classe que vous aurez développé et dans laquelle vous faîtes ce que vous voulez.
-Elle doit respecter [[refclass:auth_driver/jIAuthDriverClass|l'interface jIAuthDriverClass]]. Cette interface est un peu moins
+Elle doit respecter [[refclass:jIAuthDriverClass|l'interface jIAuthDriverClass]]. Cette interface est un peu moins
 complexe que l'interface d'un driver pour jauth. Cependant elle pourrait être trop limitative, préférez alors développer un
 driver complet (voir plus bas).
 

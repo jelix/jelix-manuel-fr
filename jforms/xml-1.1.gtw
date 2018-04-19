@@ -730,7 +730,7 @@ niveau du formulaire HTML, cela affichera deux boutons avec leurs libellés
 respectifs "Prévisualiser" et "Sauvegarder".
 
 A noter : le code généré n'est pas compatible avec IE (voir
-[[http://jelix.org/forums/forum/5-jelix-utilisation-et-developpement/posts/1844-1844-resolu-tag-formsubmit]]).
+[[https://jelix.org/forums/forum/5-jelix-utilisation-et-developpement/posts/1844-1844-resolu-tag-formsubmit]]).
 
 ==== Bouton reset ====
 

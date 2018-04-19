@@ -95,5 +95,6 @@ Voici un exemple avec une dao de news :
 ===== Autres informations =====
 
 Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item.
+
 Consultez les sources des classes jAtom10Info et jAtom10Item qui sont
 [[https://github.com/jelix/feeds-module/tree/master/jfeeds/lib|dans le module jfeeds]].

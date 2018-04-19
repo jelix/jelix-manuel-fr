@@ -243,12 +243,12 @@ documentation, consultez [[http://phpmailer.github.io/PHPMailer/|la documentatio
 
 Dans certains environnement de tests, comme votre machine de développement,
 vous ne voudriez pas envoyer de mail. Pour désactiver l'envoi de mail, mettez
-@@mailerType = file@@, et tous les mails seront enregistré dans des fichiers
+@@mailerType = file@@, et tous les mails seront enregistrés dans des fichiers
 dans @@var/mails/@@. Cela vous permet de vérifier le contenu des mails qui
 ont été générés.
 
 Sur un serveur de démo où vous voulez quand même envoyer des mails, vous avez
-des fonctionnalités qui facilite le débuggage.
+des fonctionnalités qui facilitent le débuggage.
 
 Si vous voulez par exemple avoir une copie fichier de tous les emails envoyés,
 mettez @@copyToFiles = on@@ dans la section @@mailer@@.
@@ -259,7 +259,7 @@ dans le mail.
 
 Pour activer cette fonctionnalité, mettez @@debugModeEnabled = on@@, et
 la liste des destinataires dans @@debugReceivers@@. Ici, tous les mails seront
-envoyé à Bob et à Joe, même si d'autres destinataires sont indiqués dans les mails.
+envoyés à Bob et à Joe, même si d'autres destinataires sont indiqués dans les mails.
 
 <code ini>
 debugModeEnabled = on

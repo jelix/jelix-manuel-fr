@@ -2,9 +2,9 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.7.0
+subtitle= Jelix 1.7.0-rc.1
 title_short= Guide du développeur
-edition = Jelix 1.7.0
+edition = Jelix 1.7.0-rc.1
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
 copyright_years=2006-2018
@@ -169,12 +169,12 @@ copyright_holder=Les contributeurs au wiki de jelix.org
 </bookcontents>
 
 <booklegalnotice>
-Ce manuel est distribué selon les termes de la [[http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes :
+Ce manuel est distribué selon les termes de la [[https://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes :
   * **Paternité**. Vous devez citer le nom de l'auteur original de la manière indiquée par l'auteur de l'oeuvre ou le titulaire des droits qui vous confère cette autorisation (mais pas d'une manière qui suggérerait qu'ils vous soutiennent ou approuvent votre utilisation de l'oeuvre).
   * **Pas d'Utilisation Commerciale**. Vous n'avez pas le droit d'utiliser ce manuel à des fins commerciales.
   * **Partage des Conditions Initiales à l'Identique**. Si vous modifiez, transformez ou adaptez ce manuel, vous n'avez le droit de distribuer la création qui en résulte que sous un contrat identique à celui-ci.
 </booklegalnotice>
 
 <bookpagelegalnotice>
-Ce manuel est distribué selon les termes de la [[http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes : **Paternité**, **Pas d'Utilisation Commerciale**, **Partage des Conditions Initiales à l'Identique**.
+Ce manuel est distribué selon les termes de la [[https://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr|licence Creative Commons by-nc-sa 3.0]]. Vous pouvez donc reproduire, modifier, distribuer et communiquer ce manuel au public en respectant les conditions suivantes : **Paternité**, **Pas d'Utilisation Commerciale**, **Partage des Conditions Initiales à l'Identique**.
 </bookpagelegalnotice>

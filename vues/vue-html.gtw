@@ -587,9 +587,11 @@ avec des outils en ligne de commande comme WebPack, Grunt.. Vous indiquez alors
 les fichiers résultants dans les liste d'assets dans la configuration.
 
 Mais il peut encore arriver que l'on préfère faire ces opérations à la volée.
-Pour cela il est proposé un module reposant sur la bibliothèque [[https://github.com/mrclay/minify/|Minify]],
+Pour cela il est proposé un module reposant sur la bibliothèque [[https://www.minifier.org|Minify]],
 qu'il faut installer dans votre application. Il s'agit du module
 [[https://github.com/jelix/minify-module|jMinify]] disponible via composer
 sous le nom "jelix/minify-module". Voyez
 [[https://github.com/jelix/minify-module/blob/master/README.md|sa documentation sur Github]]
 pour savoir comment l'installer et l'utiliser.
+
+

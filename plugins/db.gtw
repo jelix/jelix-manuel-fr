@@ -78,7 +78,7 @@ Pour ce faire, elle doit redéfinir les méthodes suivantes :
 Si le driver ne prend pas en charge certaines fonctionnalités, il doit générer
 une exception.
 
-Voir [[refclass:db/jDbConnection|la référence de jDbConnection]] pour plus de détails.
+Voir [[refclass:jDbConnection|la référence de jDbConnection]] pour plus de détails.
 
 ==== Classe de résultat ====
 
@@ -101,7 +101,7 @@ Vous devez notament redéfinir les méthodes suivantes :
      @@M@execute@@ pour les requêtes préparées.
 
 
-Voir [[refclass:db/jDbResultSet|la référence de jDbResultSet]] pour plus de détails.
+Voir [[refclass:jDbResultSet|la référence de jDbResultSet]] pour plus de détails.
 
 ==== Classe pour le schema ====
 
@@ -121,7 +121,7 @@ Vous redéfinirez en particulier les méthodes et propriétés suivantes :
    * @@M@execSQLScript()@@ si vous voulez redéfinir la manière dont est parsé et
      exécuté un ensemble de requêtes SQL présentes dans un script.
 
-Voir [[refclass:db/jDbTools|la référence de jDbTools]] pour plus de détails.
+Voir [[refclass:jDbTools|la référence de jDbTools]] pour plus de détails.
 
 ==== Exemples ====
 

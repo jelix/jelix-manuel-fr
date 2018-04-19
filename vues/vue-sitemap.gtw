@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:views/view-sitemap~~
 
-jResponseSitemap permet de générer un [[http://sitemaps.org/|sitemap]] (utilisé
+jResponseSitemap permet de générer un [[https://www.sitemaps.org/|sitemap]] (utilisé
 par les moteurs de recherche, entre autres Google).
 
 ===== Téléchargement et installation =====

@@ -73,7 +73,7 @@ informations dans plusieurs propriétés :
 Et sur un record que vous aurez préalablement instancié, vous aurez aussi les même
 méthodes @@getProperties()@@ et @@getPrimaryKeyNames()@@.
 
-Pour les détails, voir [[refclass:dao/jDaoFactoryBase|la documentation de référence de jDaoFactoryBase]]
+Pour les détails, voir [[refclass:jDaoFactoryBase|la documentation de référence de jDaoFactoryBase]]
 
 
 

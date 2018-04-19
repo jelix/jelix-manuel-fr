@@ -8,7 +8,7 @@ un. Voici comment.
 ===== Création =====
 
 
-Un driver est une classe qui respecte [[refclass:auth/jIAuthDriver|l'interface jIAuthDriver]],
+Un driver est une classe qui respecte [[refclass:jIAuthDriver|l'interface jIAuthDriver]],
 qui reprend à peu de chose près l'API de jAuth (**mais ne dérive pas de jAuth**).
 
 Ces drivers sont appelés par jAuth. Ils font les opérations de "bas" niveau

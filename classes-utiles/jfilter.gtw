@@ -5,5 +5,5 @@ caractères : mail, nombre, url etc. Elle est utilisée entre autre par jForms,
 mais vous pouvez l'utiliser pour vos propres besoins. Pour bon nombre de ces
 méthodes, elle fait appel à l'extension filter de PHP.
 
-Pour le moment, voir [[refclass:utils/jFilter|l'API de réference de jFilter]].
+Pour le moment, voir [[refclass:jFilter|l'API de réference de jFilter]].
 

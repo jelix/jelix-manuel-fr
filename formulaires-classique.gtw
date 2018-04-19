@@ -111,5 +111,5 @@ le format des données (utilise l'extension filter de PHP). exemple :
     }
 </code>
 
-Voir la [[refclass:utils/jFilter|documentation de référence de jFilter]].
+Voir la [[refclass:jFilter|documentation de référence de jFilter]].
 

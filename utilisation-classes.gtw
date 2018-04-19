@@ -160,8 +160,8 @@ Depuis Jelix 1.4, il est possible de profiter d'un système d'auto-chargement de
 classes reposant sur la fonction autoload de PHP (le fichier de la classe étant
 chargé automatiquement au moment de l'instanciation). Cela évite d'utiliser
 @@C@jClasses@@. Le système d'autoload de Jelix supporte la
-[[http://www.php-fig.org/psr/psr-0/|spécification PSR0]] et la 
-[[http://www.php-fig.org/psr/psr-4/|spécification PSR-4]].
+[[https://www.php-fig.org/psr/psr-0/|spécification PSR0]] et la
+[[https://www.php-fig.org/psr/psr-4/|spécification PSR-4]].
 
 Il suffit de déclarer dans le fichier @@F@module.xml@@ les classes à charger
 automatiquement, avec des balises spécifiques dans une balise @@E@<autoload>@@.
@@ -263,7 +263,7 @@ projet. Il est bien entendu tout à fait possible de le faire dans Jelix.
 
 ==== Avec Composer ====
 
-[[http://getcomposer.org|Composer]] est un gestionnaire de paquets et de
+[[https://getcomposer.org|Composer]] est un gestionnaire de paquets et de
 dépendance pour PHP, de plus en plus utilisé. Il vous permet d'installer et de
 mettre à jour facilement des bibliothèques tierces. Nous vous recommandons de
 l'utiliser si les bibliothèques tierces que vous voulez utiliser peuvent être
