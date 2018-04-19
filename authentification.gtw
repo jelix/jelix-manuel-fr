@@ -383,7 +383,7 @@ C'est la classe principale du système d'authentification. Toutes ses méthodes
 sont statiques. Elle permet de gérer un utilisateur, de « connecter » et «
 déconnecter » un utilisateur, etc. Vous appellerez ces méthodes quand bon vous
 semble, sachant que les contrôleurs du module jauth peuvent se charger pour vous
-d'une bonne partie du travail. Voir [[refclass:auth/jAuth|son descriptif dans la référence]].
+d'une bonne partie du travail. Voir [[refclass:jAuth|son descriptif dans la référence]].
 
 l'objet "user" que vous passez à certaines méthodes vous est donné par
 @@C@jAuth@@ lui même. C'est un objet contenant les données d'un utilisateur et
