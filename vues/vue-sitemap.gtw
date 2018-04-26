@@ -96,6 +96,7 @@ $rep->addSitemap($loc, $lastmod);
 
   * @@V@$loc@@ : URL d'un sitemap
   * @@V@$lastmod@@ : Date de dernière modification de la page, au format Y-m-d
+
 Seul le paramètre @@V@$loc@@ est obligatoire.
 
 

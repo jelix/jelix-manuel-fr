@@ -25,7 +25,7 @@ Voici un exemple concret:
 
   * Partie client (javascript)
 
-<code java>
+<code javascript>
 var http;
 function AppelText()
 {

@@ -12,7 +12,7 @@ zip sera proposé à l'utilisateur. Ce nom de fichier n'est pas forcément celui
 d'un fichier existant sur le serveur. 
 
 <code php>
-$rep->zipFilename='myCrazyPackage.zip';
+$rep->zipFilename = 'myCrazyPackage.zip';
 </code>
 
 Ensuite, il faut créer le zip. La propriété @@P@$content@@ est un objet @@C@jZipCreator@@,
