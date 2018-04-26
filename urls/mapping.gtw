@@ -189,8 +189,8 @@ pas le cas par défaut). On peut mettre cet attribut sur la balise
 
 Il est possible d'indiquer des parties "dynamiques" dans le pathinfo. Elles sont
 à définir par un deux-points suivi d'un nom. La valeur trouvée sera alors
-stockée dans un paramètre de même nom. Dans l'exemple qui suit, le pathinfo
-contient deux parties dynamiques : @@rubrique@@ et @@id_art@@.
+stockée dans un paramètre de même nom pour le controleur. Dans l'exemple qui suit, 
+le pathinfo contient deux parties dynamiques : @@rubrique@@ et @@id_art@@.
 
 <code xml>
    <url pathinfo="/articles/:rubrique/:id_art" module="cms" action="default:show" />

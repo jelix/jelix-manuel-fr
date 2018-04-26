@@ -10,6 +10,8 @@ jResponseRss20 (alias "rss2.0").
   $rep = $this->getResponse('rss2.0');
 </code>
 
+Note: les objets sont fournis par le module jfeeds fourni en standard.
+
 ===== Informations sur le fil rss =====
 
 jReponseRss20 possède tout d'abord une propriété @@P@infos@@, qui est un objet
@@ -67,9 +69,9 @@ Voici un exemple avec une dao de news :
   // (méthode définie dans la dao)
   $list = $newsdao->findTenFirstNews();
 
-  foreach($list as $news){
+  foreach ($list as $news) {
 
-    if($first){
+    if ($first) {
         // le premier enregistrement permet de connaitre
         // la date du channel
         $rep->infos->updated = $news->date_create;
@@ -88,7 +90,7 @@ Voici un exemple avec une dao de news :
 
     // contenu HTML de la news
     $item->content = $news->content;
-    $item->contentType='html';
+    $item->contentType = 'html';
 
     //dans notre exemple, on dit que l'url de la news est considéré
     // comme étant l'id de la news
@@ -106,6 +108,6 @@ Voici un exemple avec une dao de news :
 
 Il est possible d'indiquer plus d'informations sur le fil rss ou sur chaque item.
 
-Consultez les sources des classes jRSS20Info et jRSSItem qui sont
-[[https://github.com/jelix/feeds-module/tree/master/jfeeds/lib|dans le module jfeeds]].
+Consultez la documentation des API de [[refclass:jRSS20Info|jRSS20Info]]
+et de [[refclass:jRSSItem|jRSSItem]].
 

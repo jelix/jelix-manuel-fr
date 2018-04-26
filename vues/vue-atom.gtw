@@ -12,6 +12,8 @@ Son alias est "atom1.0".
 La manipulation de jResponseAtom10 est identique à jResponseRss20. La différence
 se situe sur quelques propriétés dans les informations du fil ou des items.
 
+Note: les objets sont fournis par le module jfeeds fourni en standard.
+
 ===== Informations sur le fil atom =====
 
 jResponseAtom10, comme jResponseRss20, possède une propriété @@P@infos@@, qui
@@ -62,11 +64,11 @@ Voici un exemple avec une dao de news :
 
   foreach($list as $news){
 
-    if($first){
+    if ($first) {
         // le premier enregistrement permet de connaitre
         // la date du channel
         $rep->infos->updated = $news->date_create;
-        $first=false;
+        $first = false;
     }
 
     // on récupère l'url de l'article de news
@@ -80,11 +82,11 @@ Voici un exemple avec une dao de news :
 
     // résumé de la news en HTML
     $item->summary = $news->summary;
-    $item->summaryType='html';
+    $item->summaryType = 'html';
 
     // contenu HTML de la news
     $item->content = $news->content;
-    $item->contentType='html';
+    $item->contentType = 'html';
 
     // on ajoute l'item dans le fil ATOM
     $rep->addItem($item);
@@ -96,5 +98,5 @@ Voici un exemple avec une dao de news :
 
 Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item.
 
-Consultez les sources des classes jAtom10Info et jAtom10Item qui sont
-[[https://github.com/jelix/feeds-module/tree/master/jfeeds/lib|dans le module jfeeds]].
+Consultez la documentation des API de [[refclass:jAtom10Info|jAtom10Info]] et 
+de [[refclass:jAtom10Item|jAtom10Item]].

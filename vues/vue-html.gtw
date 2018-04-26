@@ -10,8 +10,8 @@ l'objet @@C@jResponseHtml@@ ou @@C@jResponseBasicHtml@@. Voici un exemple :
 
 ===== HTML5 ou HTML4 =====
 
-Depuis Jelix 1.5, @@C@jResponseHtml@@ génère un entête HTML5 plutôt que HTML4.
-Vous pourriez vouloir avoir du HTML4/XHTML1 comme dans les versions précédentes.
+@@C@jResponseHtml@@ génère un entête HTML5 plutôt que HTML4.
+Vous pourriez vouloir avoir du HTML4/XHTML1.
 Pour cela, vous devez utiliser la classe @@C@jResponseHtml4@@.
 
 Aussi, si vous avez [[reponse-generale-personnalisee|une classe de réponse personnalisée]]
@@ -34,8 +34,7 @@ valables pour @@C@jResponseHtml4@@, sauf mention contraire.
 ===== XHTML ou HTML =====
 
 Les classes @@C@jResponseHtml@@ et @@C@jResponseHtml4@@ ont un mode XHTML.
-D'ailleurs, @@C@jResponseHtml4@@ génère du XHTML par défaut, comme le fait
-depuis longtemps Jelix ( <= 1.4).
+D'ailleurs, @@C@jResponseHtml4@@ génère du XHTML par défaut.
 
 La méthode @@M@setXhtmlOutput()@@ de ces deux classes permettent de basculer
 en mode XHTML ou HTML :
@@ -175,13 +174,13 @@ $resp->addMetaAuthor('Laurent');
 // modifie le nom du generateur
 $resp->addMetaGenerator('My Super App 1.0');
 
-// indique le mode de compatibilité pour IE (depuis 1.6.17)
-$resp->IECompatibilityMode = 'IE=Edge'; // valeur par défaut dans Jelix 1.7
+// indique le mode de compatibilité pour IE
+$resp->IECompatibilityMode = 'IE=Edge'; // valeur par défaut
 
-// spécifie le viewport (depuis 1.6.17)
+// spécifie le viewport
 $resp->metaViewport = 'width=device-width, initial-scale=1.0';
 
-// ajoute une balise meta (depuis 1.6.17)
+// ajoute une balise meta
 $resp->addMeta(array('name'=>'apple-touch-fullscreen', 'content'=>'yes'));
 
 </code>
@@ -234,7 +233,6 @@ Exemple :
 
 <code php>
 $rep->bodyTpl = 'myapp~main';
-
 $rep->body->assign('person','Laurent');
 </code>
 
@@ -295,7 +293,7 @@ $rep->addContent('contenu pour mon body');
 
 === Utiliser les webassets ===
 
-Plutôt que d'indiquer dans votre objet réponse, vos contrôleurs ou encore les
+Plutôt que d'indiquer dans votre objet réponse, dans vos contrôleurs ou encore dans les
 templates, la liste des fichiers CSS et JS à utiliser (voir la section plus bas
 sur l'ajout de fichiers JS et CSS spécifiques), vous pouvez les lister
 dans la configuration en les regroupant, et ensuite indiquer dans vos réponses,
@@ -308,13 +306,13 @@ la version de jQuery à utiliser, sans modifier une seule ligne de code dans
 les contrôleurs de module (ce qui serait délicat à faire dans des modules tiers).
 
 Dans la section @@webassets_common@@ (ou d'autres sections @@webassets_*@@, voir
-les ensembles de webassets plus bas), vous allez y définir les groupes d'assets.
+les collections de webassets plus bas), vous allez y définir les groupes d'assets.
 
-Un groupe correspond en général à une liste de JS et de CSS utilisés par un composant précis.
-Ainsi par défaut, il existe les groupes suivants :
+Un groupe correspond en général à une liste de JS et de CSS utilisés par un composant 
+précis. Ainsi par défaut, il existe les groupes suivants :
 
   jquery, jquery_ui, jforms_html, jforms_html_light, jforms_datepicker_default,
-  jforms_datetimepicker_default, jforms_htmleditor_default, jforms_wikieditor_default
+  jforms_datetimepicker_default, jforms_htmleditor_default, jforms_wikieditor_default,
   swjs
 
 Pour déclarer les fichiers js, on utilise le nom du groupe suivit de @@.js@@.
@@ -324,7 +322,7 @@ Par exemple, ici on définit un fichier js et un fichier css pour le groupe @@jf
 
 <code ini>
 jforms_html_light.js= "/jelix/js/jforms_light.js"
-jforms_html_light.css= /jelix/design/jform.css"
+jforms_html_light.css= "/jelix/design/jform.css"
 </code>
 
 Si on en a plusieurs, on peut soit les indiquer séparés par une virgule, soit
@@ -346,8 +344,8 @@ différentes formes :
 - 3) un chemin commençant par @@$theme/@@, où @@$theme@@ sera remplacé par @@<basepath>/themes/<themecourant>/@@
 - 4) un chemin commençant par @@$jelix/@@, où @@$jelix@@ correspond au chemin vers le répertoire
     des assets de Jelix (valeur de @@jelixWWWPath@@)
-- 5) un selecteur d'une action d'un module : "<module>~<controleur:action>". Cette action
-    doit donc renvoyer le contenu d'un fichier js ou css.
+- 5) un selecteur d'une action d'un module : @@<module>~<controleur>:<methode>@@.
+    Cette action doit donc renvoyer le contenu d'un fichier js ou css.
 - 6) un chemin commençant par le nom d'un module suivit par @@:@@ : pour indiquer
     un fichier js/css contenu dans le repertoire www du module en question.
 
@@ -371,12 +369,20 @@ l'utilisation du groupe d'assets "jquery". On peut indiquer cette dépendance
 dans la déclaration du groupe, afin d'éviter à le faire en PHP lorsqu'on indique
 au niveau de la réponse la liste des groupes à utiliser.
 
-Pour cela il y a deux types de déclarations :
+Pour cela il y a deux types de déclarations : @@require@@ et @@include@@. Et vous
+indiquer la dépendance en utilisant le nom du groupe suivi du type de dépendance :
 
 <code ini>
+example1.js = ex1.js
+example2.js = ex2.js
+example2.css = ex2.css
+example3.js = ex3.js
+example3.css = ex3.css
+
 example.require = example1, example2
 example.include = example3
 example.js = foo.js
+example.css = foo.css
 </code>
 
 @@.require@@ permet d'inclure les groupes en question **avant** de déclarer les
@@ -384,6 +390,18 @@ fichiers JS et CSS du groupe, tandis que @@.include@@ fait l'inclusion **après*
 Ainsi dans l'exemple précédent, les fichiers js et css de example1 et example2
 seront inclus dans la page html, suivit de foo.js, puis des fichiers js et css
 de example3.
+
+<code html>
+<link type="text/css" href="/ex2.css" rel="stylesheet" />
+<link type="text/css" href="/foo.css" rel="stylesheet" />
+<link type="text/css" href="/ex3.css" rel="stylesheet" />
+
+<script src="/ex1.js"/>
+<script src="/ex2.js"/>
+<script src="/foo.js"/>
+<script src="/ex3.js"/>
+</code>
+
 
 === API pour ajouter des webassets ===
 
@@ -403,10 +421,12 @@ On peut aussi indiquer un groupe d'assets dans un template :
 </code>
 
 Enfin, dans le script d'installation de votre module, vous pouvez définir
-un groupe d'assets dans la configuration, au moyen des méthodes @@$this->declareGlobalWebAssets()@@
-si vous voulez installer dans la configuration globale, soit  avec
-la méthode @@declareWebAssets()@@ de l'objet du point d'entrée, pour définir
-le groupe d'assets au niveau de la configuration du point d'entrée.
+un groupe d'assets dans la configuration, au moyen des méthodes :
+
+- @@$this->declareGlobalWebAssets()@@ si vous voulez installer dans la 
+  configuration globale
+- @@declareWebAssets()@@ de l'objet du point d'entrée, pour définir
+  le groupe d'assets au niveau de la configuration du point d'entrée.
 
 <code php>
 $this->declareGlobalWebAssets(
@@ -417,34 +437,35 @@ $this->declareGlobalWebAssets(
         'require' => ...
         'include' => ...
     ),
-    'common', // nom de l'ensemble de groupe d'assets
+    'common', // nom de la collection
     false, // true pour toujours écraser les valeurs existantes
 );
 </code>
 
 
-=== Ensemble de webassets ===
+=== Collection de webassets ===
 
-On peut définir des ensembles de groupes d'assets. On pourra définir un ensemble
-en fonction d'un environnement, ou d'un theme. Par exemple,
-si on débug l'application la liste des assets sera différente que la liste des
-assets en prod, parce que les fichiers JS et CSS ne seront pas concaténés, compressés etc..
+Une collection regroupe plusieurs groupes d'assets dédiés à un environnement particulier,
+ou à un thème. Par exemple, si on débug l'application la liste des assets sera probablement
+différente que la liste des assets en prod, parce que les fichiers JS et CSS ne seront pas
+forcément concaténés ou compressés etc.
 
-Il y a un ensemble "common", qui est commun à tous les ensembles d'assets.
-On peut redéfinir les assets et leurs groupes dans chaque ensemble.
+Il y a une collection "common", qui contient les groupes d'assets communs à toutes les
+collections. On peut redéfinir les assets et leurs groupes dans chaque collection. 
 
-Chaque ensemble est défini dans une section @@webassets_<nom>@@. Pour l'ensemble
+Une seule collection est utilisable à la fois, et son nom est indiqué dans le paramètre 
+@@useCollection@@ dans la section @@webassets@@. Sa valeur par défaut est "common".
+
+Chaque collection est définie dans une section @@webassets_<nom>@@. Pour la collection
 "common", ça sera la section @@webassets_common@@.
-
-Le paramètre @@useSet@@ dans la section @@webassets@@ indique l'ensemble à utiliser.
-Sa valeur par défaut est "common".
-
 
 === Ajouter des fichiers JS et CSS spécifiques ===
 
 Vous avez probablement remarqué l'exemple sur l'utilisation de @@M@addJSLink()@@ et
 @@M@addCSSLink()@@. Ces méthodes permettent de lier des feuilles de styles CSS et
-des fichiers javascript à votre page HTML.
+des fichiers javascript à votre page HTML. Même si l'utilisation des webassets est
+fortement recommandée, ces méthodes restent utiles pour les JS/CSS necessaires 
+dans un contexte particulier par exemple. 
 
 @@M@addJSLink()@@ et @@M@addCSSLink()@@ acceptent en premier argument une URL d'un
 fichier Javascript ou d'un fichier CSS. Faites attention cependant à l'URL que vous
@@ -503,9 +524,10 @@ du module. Par exemple, si vous voulez lier le fichier
   $resp->addCSSLinkModule('mymodule', 'css/mystyles.css');
 </code>
 
-Notez que pour les méthodes @@M@addCSSLink@@, @@M@addJSLink@@, @@M@addJSLinkModule()@@ et @@M@addCSSLinkModule()@@
-vous pouvez indiquer un paramètre supplémentaire qui doit être un tableau associatif,
-décrivant les attributs supplémentaires à mettre dans la balise HTML générée.
+Notez que pour les méthodes @@M@addCSSLink@@, @@M@addJSLink@@, @@M@addJSLinkModule()@@ et
+@@M@addCSSLinkModule()@@ vous pouvez indiquer un paramètre supplémentaire qui doit être un
+tableau associatif, décrivant les attributs supplémentaires à mettre dans la balise HTML 
+générée.
 
 <code php>
 $rep->addCSSLink('maFeuille.css', 
