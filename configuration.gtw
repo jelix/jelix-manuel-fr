@@ -110,12 +110,12 @@ d'entrée, et aussi selon l'environnement. D'où des fichiers ini additionnels
 qui sont fusionnés par Jelix au fichier mainconfig.ini.php à l'execution.
 
 
-=== app/config/mainconfig.ini.php ===
+==== @@app/config/mainconfig.ini.php@@ ====
 
 Ce fichier contient les paramètres de configuration communs à tous les points
 d'entrée ou environnements, et également les valeurs par défaut.
 
-=== @@<entrypoint>/config.ini.php@@  ===
+==== @@<entrypoint>/config.ini.php@@  ====
 
 Il s'agit d'un fichier de configuration spécifique à un point d'entrée. Il ne
 contiendra donc que les valeurs spécifiques pour le point d'entrée,
@@ -163,15 +163,16 @@ html=myHtmlResponse
 </code>
 
 
-=== var/config/localconfig.ini.php ===
+==== @@var/config/localconfig.ini.php@@ ====
 
 Un fichier @@F@localconfig.ini.php@@ est pris en charge. Il est censé
 contenir la configuration propre à la machine locale, donc différent en fonction
 de l'environnement : developpement, production, tests... Les paramètres
-de ce fichier "écrasent" ceux de @@F@mainconfig.ini.php@@. Bien entendu, en général
-ce fichier n'est pas dans votre dépôt de code source.
+de ce fichier "écrasent" ceux de @@F@mainconfig.ini.php@@.
 
-=== Comment sont-ils lu ? ===
+Bien entendu, en général, ce fichier n'est pas dans votre dépôt de code source.
+
+==== Comment sont-ils lu ? ====
 
 Il faut savoir qu'il existe un fichier @@F@defaultconfig.ini.php@@,
 situé dans les sources de Jelix (dans @@F@lib/jelix/core/@@). Il contient une
@@ -191,7 +192,7 @@ Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent
 Pour chaque point d'entrée, le contenu résulant de cette fusion est mis en
 cache.
 
-=== Utiliser des variables d'environnement ===
+==== Utiliser des variables d'environnement ====
 
 Les fichiers ini sont lus par @@parse_ini_file@@, et de ce fait les valeurs
 qui s'y trouvent peuvent prendre différente forme :

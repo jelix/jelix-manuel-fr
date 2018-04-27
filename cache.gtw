@@ -113,8 +113,9 @@ seront préfixées par le prefix en question dans la base Redis.
 De même, le vidage du cache ne concernera que les clés commençant par ce
 prefix. Cependant, à cause de l'implementation d'une telle fonction dans Redis,
 cela peut être très gourmand en temps, et rendre votre application trop lente.
+
 Diverses méthodes sont implémentées dans le plugin pour supprimer les clés, et
-sont indiquées dans le paramètre key_prefix_flush_method :
+sont indiquées dans le paramètre @@key_prefix_flush_method@@ :
 
    * @@direct@@ : les clés sont supprimées directement. Comportement par défaut.
      Mais à n'utiliser que si vous savez que votre base Redis ne contient pas beaucoup de clés.
@@ -215,9 +216,8 @@ qu'il a ou pas la page demandée dans son cache, et depuis quand. Coté serveur,
 on peut donc savoir si le contenu demandé est dans le cache du navigateur, et si
 il est périmé ou pas, ce qui permet de générer ou pas le contenu.
 
-Jelix 1.4 intègre des nouvelles méthodes dans la classe @@C@jResponse@@
-afin de gérer facilement le cache HTTP d’une réponse en exploitant les entête
-prévus à cet effet dans le protocole HTTP.
+La classe @@C@jResponse@@ possède des méthodes pour gérer facilement le cache HTTP
+d’une réponse en exploitant les entête prévus à cet effet dans le protocole HTTP.
 
 Ces méthodes sont disponibles dans toutes les réponses pour lesquelles
 l'utilisation du cache HTTP a du sens. N’oubliez pas que ce cache se situe côté

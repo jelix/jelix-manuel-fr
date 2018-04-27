@@ -19,10 +19,10 @@ Les jelix-scripts vont vous permettre de créer ces éléments facilement.
 === À l'aide des jelix-scripts ===
 
 Le point d'entrée se crée lors de la création de l'application avec le script
-@@c@createapp@@ ou n'importe quand avec la commande @@c@createentrypoint@@.
+@@c@create-jelix-app@@ ou n'importe quand avec la commande @@c@app:createentrypoint@@.
 
 <code bash>
-$ php bin/create-jelix-app.php -withcmdline myapp
+php bin/create-jelix-app.php --withcmdline myapp
 </code>
 
 Avec ce script, vous allez créer la structure d'une nouvelle application qui
@@ -30,10 +30,10 @@ contiendra en plus un répertoire @@F@scripts@@ contenant alors le point d'entr�
 cmdline : @@F@cmdline.php@@.
 
 Si vous avez déjà créé votre application, vous pouvez utiliser la commande
-@@F@createentrypoint@@ :
+@@F@app:createentrypoint@@ :
 
 <code bash>
-$ php cmd.php app:createentrypoint --type cmdline myscript
+php cmd.php app:createentrypoint --type cmdline myscript
 </code>
 
 Cela créera un point d'entrée pour un script en ligne de commande sous le nom
@@ -83,14 +83,14 @@ Vous pouvez créer votre contrôleur en utilisant les jelix-scripts :
 
 <code bash>
 # création du module foo avec un controller cmdline
-$ php cmd.php module:create --cmdline foo  
+php cmd.php module:create --cmdline foo  
 </code>
 
 ou
 
 <code bash>
 # création du controller bar dans le module foo
-$ php cmd.php module:create-ctrl --cmdline foo bar 
+php cmd.php module:create-ctrl --cmdline foo bar 
 </code>
 
 === Manuellement ===
@@ -112,13 +112,12 @@ class defaultCtrl extends jControllerCmdLine {
     }
 }
 
-?>
 </code>
 
 
 ==== Création du fichier de configuration ====
 
-Si vous avez créé l'application avec l'option @@-withcmdline@@ le fichier de
+Si vous avez créé l'application avec l'option @@--withcmdline@@ le fichier de
 configuration aura été généré pour vous.
 
 Voici son emplacement : @@F@app/config/cmdline/config.ini.php@@
@@ -147,7 +146,7 @@ protected $allowed_options = array(
     );
 </code>
 
-Si le nom de l'option vaut //true// cela signifie qu'une valeur est attendue après l'option.
+Si le nom de l'option vaut @@true@@ cela signifie qu'une valeur est attendue après l'option.
 
 === Récupération ===
 
@@ -175,13 +174,13 @@ protected $allowed_parameters = array(
     );
 </code>
 
-Ici si le nom du paramètre vaut //true// c'est qu'il est obligatoire, //false// sinon.
+Ici si le nom du paramètre vaut @@true@@ c'est qu'il est obligatoire, @@false@@ sinon.
 
 === Récupération ===
 
 Dans les actions de votre controller cmdline vous allez vouloir récupérer les
 paramètres passés au script. Pour cela il faut utiliser la méthode
-@@M@param('nom_parametre')@@
+@@M@param('nom_parametre')@@.
 
 Exemple :
 <code php>
@@ -202,7 +201,7 @@ public $help = array(
 );
 </code>
 
-Nous allons voir dans la partie suivante comment se servir de ce message d'aide
+Nous allons voir dans la partie suivante comment se servir de ce message d'aide.
 
 
 
@@ -218,39 +217,38 @@ paramètres voulu
 Exemple :
 
 <code bash>
-$ php cmdline.php module~controller:action -nom_option optionval nom_param
+php cmdline.php module~controller:action -nom_option optionval nom_param
 </code>
 
 Pour afficher l'aide, il suffit de faire :
 
 <code bash>
-$ php cmdline.php help module~controller:action
+php cmdline.php help module~controller:action
 </code>
 
 Si vous voulez qu'un script soit dédié à une action précise, vous devez alors
-indiquer le paramètre true au constructeur de jCmdlineRequest, ainsi que le
+indiquer le paramètre true au constructeur de @@C@jCmdlineRequest@@, ainsi que le
 module et l'action :
 
 
 <code php>
 <?php
 ...
-$jelix->process(new jCmdLineRequest(true, "module", "controller:action"));
+$jelix->process(new jCmdLineRequest(true, "module", "controller:method"));
 ...
-?>
 </code>
 
 Ainsi vous n'avez plus à indiquer l'action en paramètre du script. Mais bien
 sûr, vous ne pouvez plus exécuter d'autres actions avec ce script. L'exemple
 précédent devient :
 
-
 <code bash>
-$ php cmdline.php -nom_option optionval nom_param
+php cmdline.php -nom_option optionval nom_param
 </code>
 
 Et pour obtenir l'aide, il y a juste à faire
+
 <code bash>
-$ php cmdline.php help
+php cmdline.php help
 </code>
 
