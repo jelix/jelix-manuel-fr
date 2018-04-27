@@ -2,8 +2,7 @@
 
 Un module est un répertoire dans lequel il y a une arborescence précise. Les
 modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe
-de modules, ou aussi dépôt de modules. Depuis Jelix 1.6.9, il est aussi possible
-d'avoir des modules seuls et de les déclarer.
+de modules, ou aussi dépôt de modules. 
 
 ===== Déclarer un dépôt de module =====
 
@@ -12,7 +11,7 @@ Pour avoir accès aux modules, il faut déclarer ces dépôts de modules avec
 Jelix avec Composer. (dans les versions 1.6 et inférieurs, c'était dans la
 configuration, avec la propriété @@V@modulesPath@@).
 
-Un exemple avec @@C@jApp@@ :
+Un exemple avec @@C@jApp@@ dans le script @@application.init.php@@ :
 
 <code php>
    jApp::declareModulesDir(__DIR__.'/modules/');
@@ -24,8 +23,10 @@ Tous les modules se trouvant dans ce répertoire pourront être activés
 dans l'application.
 
 Si vous avez installé Jelix avec Composer, vous avez une autre alternative :
-déclarer ces répertoires dans le fichier composer.json de l'application, ou
-même dans le fichier composer.json d'un paquet composer contenant des modules.
+déclarer ces répertoires dans le fichier composer.json de l'application. Cette
+solution est fortement recommandée pour les paquets Composer fournissant des modules
+pour Jelix: vous déclarez alors les modules dans le fichier composer.json des paquets
+et seront automatiquement pris en compte.
 
 <code json>
 {
@@ -43,26 +44,35 @@ même dans le fichier composer.json d'un paquet composer contenant des modules.
 Ici on déclare le répertoire @@F@modules/@@ qui est situé dans le même répertoire que
 le @@F@composer.json@@.
 
-Notez que les répertoiresde modules fournis avec le paquet Jelix sont automatiquement
+Notez que les répertoires de modules fournis avec le paquet Jelix sont automatiquement
 déclarés.
 
 
 ===== Déclarer un module seul =====
 
-Depuis Jelix 1.6.9, il est possible d'avoir un module en dehors
-d'un groupe de module (par exemple dans un paquet Composer). On peut alors
-indiquer directement son chemin dans la configuration de Jelix.
+Tout comme les dépots de modules, vous pouvez déclarer directement le répertoire de module
+via @@C@jApp@@ ou dans le fichier composer.json de l'application ou celui du paquet composer
+fournissant le module.
 
-Cela se fera dans la section @@modules@@, et non pas dans @@modulesPath@@,
-de cette manière, avec un paramètre en @@.path@@.
-
-Exemple :
-
-<code ini>
-[modules]
-mon_module.access = 2
-mon_module.path = app:vendor/un_nom/un_paquet/le_module
+<code php>
+   jApp::declareModule(__DIR__.'/mon_module/');
 </code>
+
+ou encore :
+
+<code json>
+{
+   ...
+   "extra" : {
+      "jelix": {
+         "modules" : [
+            "mon_module/",
+         ]
+      }
+   }
+}
+</code>
+
 
 ===== Arborescence d'un module =====
 
@@ -100,7 +110,7 @@ Le plus simple est encore d'utiliser la commande @@c@module:create@@. Dans votre
 application :
 
 <code bash>
-   php cmd.php module:create monmodule
+php cmd.php module:create monmodule
 </code>
 
 Cela vous crée un module de nom "monmodule" dans le répertoire @@F@modules/@@ de
@@ -120,10 +130,10 @@ nom du module.
 Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/ 
 
 <code bash>
-   php cmd.php module:create supermodule ../lib/shared-modules/
+php cmd.php module:create supermodule ../lib/shared-modules/
 </code>
 
-Voir l'aide en ligne de la commande @@c@createmodule@@ pour connaître d'autres
+Voir l'aide en ligne de la commande @@c@module:create@@ pour connaître d'autres
 options.
 
 ===== Indiquer le numéro de version et les dépendances =====
