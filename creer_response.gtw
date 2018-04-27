@@ -16,7 +16,7 @@ Cela consiste à :
 
 ===== Créer la classe =====
 
-Une classe //response// doit posséder au moins deux méthodes : @@M@output()@@ et
+Une classe doit posséder au moins deux méthodes : @@M@output()@@ et
 @@M@outputErrors()@@. Et redéfinir la propriété @@P@$_type@@ avec un identifiant
 propre à votre type de réponse. @@M@output()@@ doit générer le contenu formaté
 correctement (en faisant des print ou echo). @@M@outputErrors()@@ est appelé
@@ -27,6 +27,7 @@ correspondant au type de format.
 
 
 Exemple d'un format (bidon :-) ):
+
 <code php>
 
 class myFooResponse extends jResponse {
@@ -38,14 +39,14 @@ class myFooResponse extends jResponse {
      * génère le contenu et l'envoi au navigateur.
      * @return boolean    true si la génération est ok, false sinon
      */
-    public function output(){
-        $this->_httpHeaders['Content-Type']='text/foo;charset='.jApp::config()->charset;
+    public function output() {
+        $this->_httpHeaders['Content-Type'] = 'text/foo;charset='.jApp::config()->charset;
         $this->sendHttpHeaders();
         echo "content:\n".$this->content."/content;";
         return true;
     }
 
-    public function outputErrors(){
+    public function outputErrors() {
         header('Content-Type: text/foo;charset='.jApp::config()->charset);
         echo "errors\n";
         foreach (jApp::coord()->errorMessages  as $e) {
@@ -85,12 +86,14 @@ les contrôleurs. Pour cela, vous ajouterez dans la section @@responses@@ du
 fichier de configuration, une ligne @@code=classe@@.
 
 Voici un exemple de réponse fournie par votre application :
+
 <code ini>
 [responses]
 foo=myFooResponse
 </code>
 
 Voici un exemple de réponse fournie par votre module :
+
 <code ini>
 [responses]
 foo="mymodule~myFooResponse"

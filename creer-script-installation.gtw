@@ -53,11 +53,13 @@ C'est un script, @@F@install.php@@, que vous placez dans le dossier
 
 Il devrait contenir une classe, héritant de @@C@jInstallerModule2@@, et nommée
 @@C@{module}ModuleInstaller@@, où @@{module}@@ est le nom de votre module. Ex:
-@@C@mainModuleInstaller@@ pour le module @@main@@. (Note: la classe @@C@jInstallerModule@@
-est dépréciée au profit de @@C@jInstallerModule@@ et ne possède pas les mêmes
-méthodes que celles décrites ci-après).
+@@C@mainModuleInstaller@@ pour le module @@main@@.
 
-Dans cette classe, vous devez créer une méthode @@M@installEntryPoint@@ dans laquelle vous
+Note : @@C@jInstallerModule2@@ est une nouvelle classe dans Jelix 1.7, et de ce fait,
+la classe @@C@jInstallerModule@@ est dépréciée. Ces deux classes n'ont pas les mêmes méthodes.
+
+
+Dans votre nouvelle classe, vous devez créer une méthode @@M@installEntryPoint@@ dans laquelle vous
 ferez toutes les choses nécessaires à l'installation du module : modifications
 de la base de données, copies de fichiers, changements de configuration etc..
 Elle reçoit en paramètre un objet @@C@jInstallerEntryPoint2@@ qui contient
@@ -132,8 +134,7 @@ etc..
 
 Une application Jelix [[configuration|a plusieurs fichiers de configuration ini]].
 Vous ne devriez pas modifier vous même ces fichiers, mais vous devez utiliser
-les objets de type @@\Jelix\IniFile\IniModifierArray@@ que vous a déjà
-instancié le composant d'installation.
+les objets de type @@\Jelix\IniFile\IniModifierArray@@ que le composant d'installation vous donne.
 
 Un objet @@IniModifierArray@@ contient des objets @@\Jelix\IniFile\IniModifier@@, chacun correspondant
 à un fichier ini. @@IniModifierArray@@ est un aggregateur de fichier ini qui
@@ -154,7 +155,7 @@ Avec l'objet que vous retourne ces méthodes, vous pouvez lire et modifier
 des valeurs :
 
 <code>
-    $this->globalSetup->getConfigIni()->getValue('disableCache', 'zones');
+    $value = $this->globalSetup->getConfigIni()->getValue('disableCache', 'zones');
 
     $this->globalSetup->getConfigIni()->setValue('disableCache', false, 'zones');
 </code>
