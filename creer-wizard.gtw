@@ -31,25 +31,25 @@ application jelix par contre, il faut dé-commenter certaines lignes.
 
 Dans la configuration, vous devez définir ces propriétés globales:
 
-   * @@pagesPath@@: devrait contenir la liste des répertoires où installWizard
+   * @@pagesPath@@ : devrait contenir la liste des répertoires où installWizard
      trouvera les pages. Le chemin doit être relatif au fichier ini. Par défaut,
      c'est @@"../../lib/installwizard/pages/,pages/"@@, donc le répertoire
      @@F@pages/@@ dans installwizard, et le répertoire @@F@pages/@@ dans votre
      application (donc @@F@install/pages/@@, si vous fournissez vos
-     propres pages d'assistant.
-   * @@tempPath@@: le chemin vers le répertoire où sont stockés les fichiers
+     propres pages d'assistant).
+   * @@tempPath@@ : le chemin vers le répertoire où sont stockés les fichiers
      temporaires.
-   * @@customPath@@: le chemin où les fichiers personnalisés sont stockées,
+   * @@customPath@@ : le chemin où les fichiers personnalisés sont stockées,
      relatifs au fichier du fichier ini.
-   * @@supportedLang@@: la liste des code langue (sans le code pays), supporté
+   * @@supportedLang@@ : la liste des code langue (sans le code pays), supporté
      par votre assistant. Bien sûr, vous devriez fournir tous les fichiers des
      locales pour les langues indiquées. InstallWizard devinera la langue de
      l'utilisateur et utilisera l'une d'elles.
-   * @@start@@: le nom de la première page à afficher.
+   * @@start@@ : le nom de la première page à afficher.
    * @@onalreadydone@@ = le nom de la page à afficher quand l'application est
      déjà installée. Par défaut, c'est la même page que la dernière page de
      l'assistant.
-   * @@appname@@: le nom de votre assistant, pour votre application. Il sera
+   * @@appname@@ : le nom de votre assistant, pour votre application. Il sera
      utilisé dans les templates.
 
 Vous devez aussi créer des sections ini, une par page que vous voulez afficher.
@@ -94,6 +94,7 @@ Vous devriez vous référer à la documentation de la page pour les connaître.
 ==== Exemple d'assistant basique ====
 
 Voici un exemple d'assistant basique pour installer une application Jelix :
+
 <code ini>
 pagesPath = "../../lib/installwizard/pages/,pages/"
 customPath = "custom/"
@@ -287,6 +288,7 @@ Aucun paramètres de configuration.
 il installe un application jelix. Il appelle les modules installers etc..
 
 Paramètre de configuration :
+
     * @@level@@, avec une de ces valeurs: @@error@@, @@notice@@, @@warning@@. Il
       indique l'importance du message affiché. 
 

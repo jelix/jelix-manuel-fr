@@ -11,10 +11,9 @@ jLog a des plugins pour ajouter des supports de log (appelé "loggeur"), et est
 aussi utilisé pour stocker les erreurs. La classe @@C@jLog@@ possède deux
 méthodes statiques :
 
-  * @@jLog::log($message, $logType)@@ pour écrire un message dans le fichier
-    journal
+  * @@jLog::log($message, $logType)@@ pour écrire un message
   * @@jLog::dump($variable, $message, $logType)@@ pour écrire le contenu de la
-    variable dans le fichier journal (il s'agit en fait d'un @@var_export@@)
+    variable (il s'agit en fait d'un @@var_export@@)
 
 Le "loggeur" par défaut est le loggeur fichier. Les messages sont stockés dans
 un fichier @@F@var/log/messages.log@@, ou @@F@var/log/errors.log@@ pour les
@@ -26,7 +25,8 @@ un ou plusieurs loggeurs.
 
 Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez
 remplir la section @@[logger]@@ dans la configuration (pour rappel, dans le
-fichier @@F@var/config/mainconfig.ini.php@@ ou  @@F@var/config/localconfig.ini.php@@). Par défaut :
+fichier @@F@app/config/mainconfig.ini.php@@ ou  @@F@var/config/localconfig.ini.php@@).
+Par défaut :
 
 <code ini>
 [logger]
@@ -56,16 +56,13 @@ aux noms des plugins). Vous indiquerez :
    * @@file@@ pour stocker dans les fichiers. Les noms des fichiers sont
      indiqués dans une section @@[filelogger]@@.
    * @@syslog@@ pour envoyer les messages au syslog
-   * @@firebug@@, pour afficher les messages dans l'extension Firebug pour
-     Firefox (ou tout autre navigateur supportant l'objet javascript
-     @@console@@)
+   * @@firebug@@, pour afficher les messages dans la console javascript du
+     navigateur (Il y a quelques années, cela n'était possible qu'avec l'extension
+     Firebug pour Firefox, d'où son nom)
    * @@mail@@, pour envoyer les messages dans une boite mail
    * @@memory@@, pour stocker les message en mémoire temporairement. Utilisé par
      d'autres composants comme la debug barre.
    * et tout autre plugin que vous avez ajouté ou créé.
-
-
-
 
 ==== Eviter d'avoir des informations sensibles dans les logs ====
 
