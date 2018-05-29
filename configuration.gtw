@@ -9,6 +9,8 @@ Une application Jelix possède quelques fichiers de configuration :
     dans Jelix 1.5 et inférieur)
   * un fichier @@F@localconfig.ini.php@@ pour les paramètres propres à l'environnement (dev, prod..)
   * un fichier @@F@config.ini.php@@ pour chaque point d'entrée.
+  * un fichier @@F@liveconfig.ini.php@@ pour les paramètres propres à l'environnement mais changés
+    à la volé par l'application (jelix 1.6.18+).
   * un fichier @@F@profiles.ini.php@@ pour les profils de connexion.
 
 Ils sont tous générés automatiquement lorsque vous créez une application ou un
@@ -166,6 +168,14 @@ Pour le fichier de configuration de xmlrpc.php, on pourrait avoir par exemple :
 etc.
 
 
+=== liveconfig.ini.php ===
+
+Depuis Jelix 1.6.18, un fichier @@F@liveconfig.ini.php@@ permet de stocker les
+paramètres qui sont modifiés durant la vie de l'application. Il ne doit donc pas
+être stocké dans votre dépôt de code source. Les paramètres de ce fichier
+"écrasent" ceux des autres fichiers @@F@mainconfig.ini.php@@,
+@@F@localconfig.ini.php@@ et celui du point d'entrée.
+
 === Comment sont-ils lu ===
 
 Il faut savoir qu'il existe un fichier @@F@defaultconfig.ini.php@@,
@@ -179,6 +189,7 @@ dans l'ordre suivant et les fusionne :
   - @@F@mainconfig.ini.php@@
   - @@F@localconfig.ini.php@@
   - @@F<entrypoint>/config.ini.php@@
+  - @@F@liveconfig.ini.php@@
 
 Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent.
 

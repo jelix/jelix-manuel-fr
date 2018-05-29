@@ -121,6 +121,31 @@ Nouveautés sur la version 1.6.16 :
   * Nouveau logger @@soapfile@@ pour les logs SOAP
   * Support PHP 7.2
 
+
+Nouveautés sur la version 1.6.17 :
+
+  * Nouvel évènement AuthChangePassword quand jAuth::changePassword() est appelé
+  * jInstaller : messages d'erreurs améliorés à propos des versions mal formatés
+  * jResponseHtml : nouvelles propriétés pour le mode IE, viewport et metas
+  * jResponseHtml : nouvelles méthodes addMeta() et outputMeta()
+  * jRequest : nouvelle méthode isPostMethod()
+  * jDaoConditions: ajout de la prise en charge de l'opérateur BETWEEN
+  * jForms: prise en charge de génération d'un placeholder (avec le label)
+  * jForms: possiblité de redéfinir le code HTML de l'aide des contrôles, au niveau du builder de formulaire
+  * jForms: possibilité de configurer un décorateur d'erreur JS pour tous les formulaires
+  * jForms: erreurs HTTP plus précises lors de la récupération des données de listes dynamiques (action jelix~jforms:getListData)
+  * jMailer: nouveau mode de debug, permettant de forcer l'expéditeur et les destinataires pour tous les mails
+  * jMailer: possibilité de stocker les accés SMTP dans profiles.ini.php
+  * jInstallerBase::insertDaoData(): possiblité d'indiquer des données d'un autre module
+  * Master_admin: avertissement de l'utilisation d'un mots de passes par défaut pour tous les utilisateurs
+  * Ajout de la prise en charge d'une variable http_method dans le format des messages d'erreur
+
+Nouveautés sur la version 1.6.18 :
+
+  * prise en charge d'un nouveau fichier de configuration @@liveconfig.ini.php@@
+    pour stocker les paramètres changeant de l'application.
+
+
 Notez aussi qu'il n'y a plus d'édition Gold du framework.
 
 Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D., JulienI, Couac, Brice Tence, Khena, René-luc D'hont.

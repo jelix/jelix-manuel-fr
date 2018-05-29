@@ -131,6 +131,9 @@ mainconfig.ini.php et celui du point d'entrée. Probablement est-il mieux de
 récupérer @@$this->entrypoint->localConfigIni@@ qui est une combinaison entre
 mainconfig.ini.php, localconfig.ini.php et la configuration du point d'entrée.
 
+Vous avez également @@$this->entrypoint->liveConfigIni@@ pour modifier le
+fichier @@liveconfig.ini.php@@, pris en charge depuis Jelix 1.6.18.
+
 N'hésitez pas à lire l'API de référence de @@C@jInstallerModule@@ et de
 @@C@jInstallerBase@@, et de regarder le script d'installation des modules
 fournis par Jelix. Vous apprendrez certainement beaucoup de choses.

@@ -286,8 +286,9 @@ Vous avez pour cela deux paramètres important :
    * @@persistant_crypt_key@@ : c'est un paramètre à renseigner obligatoirement.
      et qui l'est normalement par défaut depuis 1.6.8, généré de manière
      aléatoire lors de l'installation de l'application. Ce paramètre doit
-     se trouver dans la section @@coordplugin_auth@@ du fichier localconfig.ini.php.
-     La valeur de ce paramètre sert de clé de cryptage pour les données stockées
+     se trouver dans la section @@coordplugin_auth@@ du fichier localconfig.ini.php
+     ou liveconfig.ini.php (1.6.18+).
+     La valeur de ce paramètre sert de clé de chiffrement pour les données stockées
      dans le cookie. Si vous changez de clé en cours de route, les cookies seront
      invalides et les utilisateurs ne sont pas reconnus. Ils devront s'authentifier à
      nouveau.
@@ -296,7 +297,7 @@ Vous avez pour cela deux paramètres important :
 à la main. **Vous devez** remplacer la valeur par défaut ! De plus, il était
 situé dans le fichier de configuration de jAuth. Si vous mettez à jour vers
 Jelix 1.6.8 et supérieur, la mise à jour déplace ce paramètre vers le nouvel
-emplacement (dans localconfig.ini.php) et regénère la clé.
+emplacement (dans localconfig.ini.php ou liveconfig.ini.php) et regénère la clé.
 
 
 D'autres paramètres sont disponibles :
