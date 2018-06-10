@@ -8,6 +8,8 @@ Une application Jelix possède quelques fichiers de configuration :
   * un fichier @@F@mainconfig.ini.php@@ pour la configuration globale
   * un fichier @@F@localconfig.ini.php@@ pour les paramètres propres à l'environnement (dev, prod..)
   * un fichier @@F@config.ini.php@@ pour chaque point d'entrée.
+  * un fichier @@F@liveconfig.ini.php@@ pour les paramètres propres à l'environnement mais changés
+    à la volé par l'application (jelix 1.6.18+).
   * un fichier @@F@profiles.ini.php@@ pour les profils de connexion.
   * un fichier @@F@urls.xml@@ définissant la correspondance entre des URLs
     et des contrôleurs.
@@ -172,7 +174,15 @@ de ce fichier "écrasent" ceux de @@F@mainconfig.ini.php@@.
 
 Bien entendu, en général, ce fichier n'est pas dans votre dépôt de code source.
 
-==== Comment sont-ils lu ? ====
+=== @@var/config/liveconfig.ini.php@@ ===
+
+Depuis Jelix 1.6.18, un fichier @@F@liveconfig.ini.php@@ permet de stocker les
+paramètres qui sont modifiés durant la vie de l'application. Il ne doit donc pas
+être stocké dans votre dépôt de code source. Les paramètres de ce fichier
+"écrasent" ceux des autres fichiers @@F@mainconfig.ini.php@@,
+@@F@localconfig.ini.php@@ et celui du point d'entrée.
+
+=== Comment sont-ils lu ? ===
 
 Il faut savoir qu'il existe un fichier @@F@defaultconfig.ini.php@@,
 situé dans les sources de Jelix (dans @@F@lib/jelix/core/@@). Il contient une
@@ -186,6 +196,7 @@ dans l'ordre suivant et les fusionne :
   - @@F@var/config/localconfig.ini.php@@
   - @@F@app/config/<entrypoint>/config.ini.php@@
   - @@F@var/config/<entrypoint>/config.ini.php@@
+  - @@F@var/config/liveconfig.ini.php@@
 
 Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent.
 

@@ -284,8 +284,9 @@ Vous avez pour cela deux paramètres important :
    * @@persistant_encryption_key@@ : c'est un paramètre à renseigner obligatoirement.
      et qui l'est normalement par défaut depuis 1.6.8, généré de manière
      aléatoire lors de l'installation de l'application. Ce paramètre doit
-     se trouver dans la section @@coordplugin_auth@@ du fichier localconfig.ini.php.
-     La valeur de ce paramètre sert de clé de cryptage pour les données stockées
+     se trouver dans la section @@coordplugin_auth@@ du fichier localconfig.ini.php
+     ou liveconfig.ini.php (1.6.18+).
+     La valeur de ce paramètre sert de clé de chiffrement pour les données stockées
      dans le cookie. Si vous changez de clé en cours de route, les cookies seront
      invalides et les utilisateurs ne sont pas reconnus. Ils devront s'authentifier à
      nouveau.
