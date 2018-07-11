@@ -94,11 +94,18 @@ configuration du système d'authentification. Voici les différents paramètres.
 ==== Indiquer le driver ====
 
 Vous devez indiquer le nom du driver utilisé au niveau de l'option @@driver@@.
-Vous devez ensuite avoir une section portant ce même nom, pour les options
-propres au driver.
 
-Les options dépendants des drivers, consultez [[authentification/drivers|la documentation sur les pilotes jauth]]
-pour activer l'un deux.
+Depuis Jelix 1.6.18, vous pouvez aussi mettre ce nom de driver dans la configuration
+principale (mainconfig ou localconfig), comme ceci :
+
+<code ini>
+[coordplugin_auth]
+driver=Db
+</code>
+
+Vous devez ensuite avoir une section portant ce même nom, pour les options
+propres au driver. consultez [[authentification/drivers|la documentation sur les pilotes jauth]]
+pour activer l'un d'eux.
 
 ==== Fonction de hachage des mots de passe ====
 
