@@ -40,7 +40,7 @@ C'est le cas pour :
       @@F@mainconfig.ini.php@@, @@F@urls.xml@@, les fichiers de configuration
       des plugins, de SOAP etc.
       Les fichiers qui dépendent du serveur restent dans @@F@var/config@@
-      (localconfig.ini.php, profiles.ini.php...)
+      (localconfig.ini.php, liveconfig.ini.php, profiles.ini.php...)
     * Les fichiers @@F@config.ini.php@@ des points d'entrées. Ils peuvent
       être à la fois dans @@app/config/@@ et @@var/config/@@.
     * Les répertoires @@F@overloads@@, @@F@themes@@ et @@F@locales@@. Ils sont
@@ -98,6 +98,10 @@ le module etc.
 Autre nouveauté : l'installateur fait maintenant une sauvegarde du fichier
 installer.ini.php. Si l'installation bug, cela permet de restaurer plus facilement
 l'installation d'origine.
+
+Enfin, il est possible d'indiquer dans le fichier module.xml d'un module,
+des modules alternatifs, ou des modules incompatibles dans la déclaration
+des dépendances.
 
 ==== Nouveau Système d'assets : webassets ====
 

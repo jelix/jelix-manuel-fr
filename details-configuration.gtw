@@ -61,7 +61,7 @@ un nom affichable.
 
 Cet élément @@E@<directories>@@ doit contenir des informations sur les
 dépendances de l'application. Pour le moment, seules des informations sur la
-version de jelix requises sont nécessaires.
+version de jelix requise sont nécessaires.
 
 <code xml>
 <dependencies>
@@ -69,20 +69,10 @@ version de jelix requises sont nécessaires.
 </dependencies>
 </code>
 
-Cet élément peut être utilisé aussi dans un fichier @@F@module.xml@@, et peut
-contenir alors une ou plusieurs balises @@E@<module>@@, indiquant alors que ce
-ou ces modules doivent être installés pour que le module puisse fonctionner
-correctement.
-
-<code xml>
-  <module name="testurls" minversion="2.2" maxversion="2.3" />
-  <module name="jauthdb" />
-  <module name="jacl2db" />
-</code>
 
 ==== entrypoints ====
 
-La balise @@E@entrypoints@@ liste tout les points d'entrée de l'application
+La balise @@E@entrypoints@@ liste tous les points d'entrée de l'application
 (qu'ils soient dans @@F@www/@@ ou @@F@scripts/@@), leur fichier de configuration
 et leur type.
 
@@ -121,10 +111,52 @@ ces balises. voici un exemple:
 </code>
 
 
+Dans un fichier module.xml, l'élement @@E@<dependencies>@@ peut
+contenir une ou plusieurs balises @@E@<module>@@, indiquant alors que ce
+ou ces modules doivent être installés pour que le module puisse fonctionner
+correctement.
+
+Dans l'exemple précédent, l'installation du module jelix_tests provoquera
+l'installation des modules jacl2db, jacldb, jauthdb et testsurls. Sachant que
+seules les versions entre 1.0.2 et 1.1b1 du module testurls sont compatibles.
+
+Parfois il peut y avoir des modules dépendants alternatifs et il suffit que l'un
+d'eux soit installé pour pouvoir installer le module. Par exemple, bien que
+différent, les modules jauthdb et jcommunity remplissent le même rôle et donc
+un module peut accepter que l'un des d'eux soit installés (mais pas les deux en
+même temps). On utilise alors l'element @@E@<choice>@@ contenant la liste
+des modules alternatifs :
+
+
+<code xml>
+  <dependencies>
+      <choice>
+         <module name="jauthdb" />
+         <module name="jcommunity" />
+      </choice>
+  </dependencies>
+</code>
+
+Il est possible aussi d'indiquer les modules qui sont en conflit avec le module.
+Il faut utiliser l'element @@E@<conflict>@@ qui contient une liste d'élement
+@@E@<module>@@.
+
+<code xml>
+  <dependencies>
+      <conflict>
+         <module name="supertest" />
+      </conflict>
+  </dependencies>
+</code>
+
+Ici, si on tente d'installer le module alors que le module supertest est
+installé, cela provoquera une erreur. Inversement, il sera impossible d'installer
+le module supertest quand on aura installer le module.
+
 ===== Les fichiers ini de configuration =====
 
-Il s'agit des fichiers @@F@mainconfig.ini.php@@, @@F@<entrypoint>/config.ini.php@@
-et @@F@localconfig.ini.php@@.
+Il s'agit des fichiers @@F@mainconfig.ini.php@@, @@F@<entrypoint>/config.ini.php@@,
+@@F@localconfig.ini.php@@ et @@F@liveconfig.ini.php@@.
 
 On peut y mettre toutes les options qui sont présentes dans le fichier commenté
 @@F@lib/jelix/core/defaultconfig.ini.php@@, qui contient toutes les valeurs par
@@ -175,7 +207,7 @@ Elle indique, pour chaque module, leur niveau d'accés.
 ==== section coordplugins ====
 
 Doit contenir les noms des plugins à activer. Ils seront chargés à partir des
-chemins définis avec jApp::declarePluginsDir() dans le fichier @@F@application.init.php@@.
+chemins définis avec @@jApp::declarePluginsDir()@@ dans le fichier @@F@application.init.php@@.
 
 Par exemple, ci-dessous la configuration active le plugin de coordinateur gérant
 l'authentification et dont les paramètres se trouve dans le fichier
@@ -215,58 +247,12 @@ atom1.0 = jResponseAtom10
 css= jResponseCss
 </code>
 
-==== section error_handling ====
-
-Les paramètres de cette section permettent de configurer les notifications
-survenant lors de l'exécution d'un script de l'application. Pour plus de
-détails, voir la documentation sur la [[errormanager|gestion d'erreurs]].
-
-Les notifications ont différents niveaux d'importance. Jelix définit les niveaux
-suivants correspondant à ceux de PHP :
-
-  * //default//     = niveau sélectionné si aucun autre niveau ne correspond 
-  * //error//       = signale une erreur nécessitant l'interruption du script 
-  * //warning//     = signale un mauvais traitement sans toutefois nécessiter l'interruption du script 
-  * //notice//      = signale une erreur potentielle 
-  * //deprecated//  = signale une fonction dépréciée (php 5.3)
-  * //strict//      = signale des messages de moteur PHP pour améliorer l'interopérabilité et la compatibilité du script 
-
-Ci-dessous, l'ensemble des paramètres de la section :
-
-<code ini>
-[error_handling]
-messageLogFormat = "%date%\t%ip\t[%code%]\t%msg%\t%file%\t%line%\n"
-logFile = error.log
-email = root@localhost
-emailHeaders = "Content-Type: text/plain; charset=UTF-8\nFrom: webmaster@yoursite.com\nX-Mailer: Jelix\nX-Priority: 1 (Highest)\n"
-quietMessage="A technical error has occured. Sorry for this trouble."
-
-showInFirebug = off
-
-; mots-clés que vous pouvez utiliser : ECHO, ECHOQUIET, EXIT, LOGFILE, SYSLOG, MAIL, TRACE
-default      = ECHO EXIT
-error        = ECHO EXIT
-warning      = ECHO
-notice       = ECHO
-deprecated   = ECHO
-strict       = ECHO
-; pour les exceptions, il y a implicitement un EXIT
-exception    = ECHO
-</code>
-
-  * **messageLogFormat** et **logFile** configurent la sortie en fichier de log (LOGFILE ou SYSLOG)
-  * **email** et **emailHeaders** configurent la sortie sous forme de mail (MAIL)
-  * **quietMessage** définit un message neutre pour l'utilisateur (ECHOQUIET)
-  * **showInFirebug** : si affectée à on, toutes les notifications seront renvoyées vers la console de l'extension Firebug du navigateur Firefox via son api //console.//
-
-les dernières options permettent d'associer un format de sortie à chaque niveau de notification. 
-
-
 ==== section compilation ====
 
-Définit le comportement du moteur de template de Jelix. Et notamment de la phase
-de compilation. Voir la documentation sur les [[templates|templates]] pour plus
-de détails. 
+Définit le comportement de certains composants qui "compilent" des fichiers et
+stockent le résultat en cache dans le répertoire temp. C'est le cas notamment
+du moteur de template de Jelix (Voir la documentation sur les [[templates|templates]]
+pour plus de détails), mais aussi de jDao, de jForms...
 
 <code>
 [compilation]
@@ -274,9 +260,9 @@ checkCacheFiletime  = on
 force  = off
 </code>
 
-  * **checkCacheFiletime ** : si //on// alors un template est recompilé si sa
-    date de modification est plus récente que le fichier PHP résultant de la
-    compilation.
+  * **checkCacheFiletime ** : si //on// alors un fichier source (template, dao, form...)
+    est recompilé si sa date de modification est plus récente que le fichier PHP
+    résultant de la compilation.
   * **force** : si //on//, le template est recompilé systématiquement.
 
 ==== section zones ====
@@ -287,7 +273,7 @@ un paramètre dans la configuration, au niveau de la section "zones"
 
 <code ini>
 [zones]
-disableCache = on  // off par defaut
+disableCache = on  # off par défaut
 </code>
 
 
@@ -310,70 +296,48 @@ jelixWWWPath = "jelix/"
 
 Détails des paramètres :
 
-  * **enableParser** : active la lecture de l'URL. Désactivez le paramètre si
-    l'URL est déjà gérée par un autre programme ( comme le mod_rewrite
-    d'apache) (paramètre obsolète).
   * **multiView** : si le paramètre multiview ou acceptpathinfo est activé dans
-    Apache, vous ne devez pas indiquez le suffix ".php", alors activez ce
-    paramètre
-  * **scriptNameServerVariable** : le nom de la variable $_SERVER qui contient
-    le nom du script exemple : si vous appelez http://mysite.com/foo/index.php,
-    c'est la variable qui contient "/foo/index.php". Ce nom peut être
-    SCRIPT_NAME, ORIG_SCRIPT_NAME, PHP_SELF ou REDIRECT_SCRIPT_URL. Il est
-    automatiquement détecté par jelix mais peut parfois échouer, donc vous
-    pourriez le définir ici.
+    Apache, il est possible alors d'avoir des urls sans le suffixe ".php".
+    Activez alors ce paramètre pour que Jelix génère des urls sans ce suffixe.
+  * **scriptNameServerVariable** : contient le nom de la variable dans
+    @@$_SERVER@@ qui contient le nom du script. Exemple : si vous appelez
+    @@http://mysite.com/foo/index.php@@, c'est la variable qui contient
+    @@/foo/index.php@@. Ce nom peut être SCRIPT_NAME, ORIG_SCRIPT_NAME, PHP_SELF
+    ou REDIRECT_SCRIPT_URL, selon les serveurs. Il est automatiquement détecté
+    par jelix mais peut parfois échouer, donc vous pourriez le définir ici.
   * **pathInQueryParameter** : si vous utilisez des règles de réécriture qui
-    déplacent le pathinfo dans le queryparameter comme @@RewriteRule ^(.*)$ index.php/?jpathinfo=$1 [L,QSA]@@
-    alors vous devriez indiquer dans pathInfoInQueryParameter le nom du
+    déplacent le pathinfo dans un paramètre d'url, comme
+    @@RewriteRule ^(.*)$ index.php/?jpathinfo=$1 [L,QSA]@@, alors vous devriez
+    indiquer dans @@pathInfoInQueryParameter@@ le nom du
     paramètre qui contient la valeur de pathinfo (exemple "jpathinfo"), laissez
-    vide si vous n'utilisez pas de telles règles de réécriture
-  * **basePath** : ce paramètre correspond au répertoire "de base" de votre
-    application, indiquez /aaa/bbb/www si vous accédez à votre application par
-    http://foo.com/aaa/bbb/www/index.php, ou indiquez juste / si l'accès se fait
-    via http://foo.com/index.php
-  * **jelixWWWPath** : contient le chemin vers les CSS de Jelix, si vous le
-       modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
+    vide si vous n'utilisez pas de telles règles de réécriture.
+  * **basePath** : ce paramètre correspond au chemin "de base" de votre
+    application, dans l'url, c'est à dire le chemin jusqu'à votre @@index.php@@.
+    Exemple: si vous accédez à votre application par @@http://foo.com/aaa/bbb/www/index.php@@
+    alors indiquez @@/aaa/bbb/www/@@. Ou si l'accès se fait via @@http://foo.com/index.php@@
+    alors indiquez juste @@/@@. Ou encore laissez le vide
+  * **jelixWWWPath** : contient le chemin web vers les ressources web de Jelix,
+    contenus normalement dans lib/jelix-www. Si vous le modifiez voyez également
+    les chemins du **[[configuration#section-htmleditors|htmleditors]]**.
 
 === notfound ===
 
-Gestion des redirections vers une page 404 quand l'url n'est pas trouvée
-
-<code ini>
-notfoundAct = 
-</code>
-
-  * **notfoundAct** : contient le nom de l'action qui affichera l'erreur 404. Si le
-paramètre est laissé vide alors c'est l'action @@jelix~error:notfound@@ qui sera
-utilisée.
+Vous pouvez indiquer une action qui affichera une page spécifique pour les erreurs
+de type 404, c'est à dire quand Jelix ne trouve pas le contrôleur correspondant
+à l'url demandée. Par défaut il s'agit de l'action @@jelix~error:notfound@@.
 
 Utiliser la syntaxe des sélecteurs (Cf.[[selecteurs|L'utilité des sélecteurs]])
 et placer le sélecteur de votre action entre guillemet :
 
 <code ini>
-notfoundAct = "monModule~monControleur:monAction"	
-</code> 
-
-===  urls.xml ===
-
-  * **significantFile** : Nom du fichier contenant le mapping entre l'URL tappée
-    dans le navigateur et Module/action/parametres, voir la documentation du
-    [[/urls/mapping|moteur d'url]].
-
-<code ini>
-significantFile = "urls.xml" 
-</code> 
-
-**Attention** : vous ne devez pas définir un fichier d'url pour chaque point
-d'entrée !
-
-De plus, évitez de modifier ce paramètre, pour des raisons de confort et de
-maintenance.
+notfoundAct = "mymodule~main:errornotfound"
+</code>
 
 ==== section logfiles ====
 
 Cette section définit comment seront écrits les logs à l'aide de [[deboggage|jLog]].
 
-Les fichiers logs sont stockés dans le dossier /var/log/ de votre application.
+Les fichiers logs sont stockés dans le dossier @@var/log/@@ de votre application.
 Vous pouvez définir un fichier de log par module en associant le nom du module à
 un nom de fichier log et faisant un appel à jLog en passant en dernier argument
 le nom du module.
@@ -409,36 +373,7 @@ Définit les paramètres d'envoi de mail à travers l'application, comme par
 exemple pour une authentification ou encore au plus bas niveau pour les
 notifications.
 
-<code ini>
-[mailer]
-webmasterEmail = root@localhost
-webmasterName =
-
-; How to send mail : "mail" (mail()), "sendmail" (call sendmail), or "smtp" (send directly to a smtp)
-mailerType = mail
-; Sets the hostname to use in Message-Id and Received headers
-; and as default HELO string. If empty, the value returned
-; by SERVER_NAME is used or 'localhost.localdomain'.
-hostname =
-sendmailPath = "/usr/sbin/sendmail"
-
-; if mailer = smtp , fill the following parameters
-
-; SMTP hosts.  All hosts must be separated by a semicolon : "smtp1.example.com:25;smtp2.example.com"
-smtpHost = "localhost"
-; default SMTP server port
-smtpPort = 25
-; SMTP HELO of the message (Default is hostname)
-smtpHelo =
-; SMTP authentication
-smtpAuth = off
-smtpUsername =
-smtpPassword =
-; SMTP server timeout in seconds
-smtpTimeout = 10
-
-</code>
-
+Voir le chapitre sur [[/classes-utiles/jmailer|jMailer]].
 
 
 ==== section acl et acl2 ====
@@ -487,7 +422,7 @@ shared_session = off
 
 ==== section forms ====
 
-définition de la forme du datepicker
+Configure le comportement de certains contrôle de jForms.
 
 <code ini>                                                                                                    
 [forms]
@@ -497,46 +432,6 @@ controls.datetime.input = "menulists"
 controls.datetime.months.labels = "names"
 ; define the default config for datepickers in jforms
 datepicker = default
+
+;...
 </code>
-definition du chemin du javascript vers le datepicker
-<code ini>
-[datepickers]
-default = jelix/js/jforms/datepickers/default/init.js
-</code>
-
-==== section htmleditors ====
-
-définition du chemin de l'editeur html
-
-<code ini>
-[htmleditors]
-default.engine.name = wymeditor
-default.engine.file[] = jelix/jquery/jquery.js
-default.engine.file[] = jelix/wymeditor/jquery.wymeditor.js
-default.config = jelix/wymeditor/config/default.js
-default.skin.default  = jelix/wymeditor/skins/default/screen.css
-</code>
-
-==== section classbindings ====
-
-Rôle : FIXME
-<code ini>
-[classbindings]
-; bindings for class and interfaces : selector_of_class/iface = selector_of_implementation
-</code>
-
-==== section wikieditors ====
-
-définition de la barre d'outils de l'éditeur wiki 
-
-<code ini>
-[wikieditors]
-default.engine.name = wr3
-default.wiki.rules = wr3_to_xhtml
-; path to the engine file
-default.engine.file = jelix/markitup/jquery.markitup.js
-; define the path to the "internationalized" file to translate the label of each button
-default.config.path = jelix/markitup/sets/wr3/
-; define the path to the image of buttons of the toolbar
-default.image.path = jelix/markitup/sets/wr3/images/
-default.skin = jelix/markitup/skins/simple/style.css                                     </code>                                                                                                   

@@ -71,11 +71,11 @@ peut hériter de cet objet, ajouter des méthodes, en redéfinir etc.
 ===== Stockage de la classe =====
 
 Le nom de la classe importe peu, mais il doit être utilisé dans le nom du
-fichier, et précéder le suffixe '.class.php'. Dans notre exemple, la classe sera
+fichier, et précéder le suffixe @@.class.php@@. Dans notre exemple, la classe sera
 alors stockée dans le fichier @@F@myFooResponse.class.php@@.
 
 Le fichier doit être enregistré dans le répertoire @@F@app/responses/@@ de votre
-application ou @@F@responses/@@ de votre module.
+application ou @@F@responses/@@ d'un module.
 
 
 ===== Déclarer la réponse =====
@@ -83,7 +83,7 @@ application ou @@F@responses/@@ de votre module.
 Pour que la réponse soit utilisable par les actions, il faut la déclarer avec un
 code. Et c'est ce code que vous indiquerez à la méthode @@M@getResponse@@ dans
 les contrôleurs. Pour cela, vous ajouterez dans la section @@responses@@ du
-fichier de configuration, une ligne @@code=classe@@.
+fichier de configuration, une ligne @@<alias>=<classe>@@.
 
 Voici un exemple de réponse fournie par votre application :
 
