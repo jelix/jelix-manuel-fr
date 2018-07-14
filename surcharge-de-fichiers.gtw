@@ -1,6 +1,5 @@
 ~~LANG:EN@enman:overloads~~
 
-
 Il peut arriver que vous utilisiez un module fourni par un tiers, et que
 certains fichiers ne vous conviennent pas tout à fait. Plutôt que de les
 modifier directement, Jelix propose un moyen de redéfinir ces fichiers sans les

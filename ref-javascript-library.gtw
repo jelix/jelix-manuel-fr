@@ -6,8 +6,8 @@ Jelix utilise [[https://jquery.com/|jQuery]] au sein du framework, notamment ave
 
 Les versions utilisées sont les suivantes
 
-  * [[https://jquery.com/|jQuery 1.8.3]]
-  * [[https://jqueryui.com/|jQueryUi 1.9.2]]
+  * [[https://jquery.com/|jQuery 2.2.4]]
+  * [[https://jqueryui.com/|jQueryUi 1.12.1]]
 
 ====== Wymeditor ======
 
