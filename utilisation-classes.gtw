@@ -136,9 +136,9 @@ métiers. Mais pour cela, il faut inclure ces classes avant que jelix fasse un
 @@f@session_start()@@, pour que PHP puisse désérialiser correctement l'objet en
 session.
 
-Avant le système d'auto-chargement dans les modules (voir la section suivante)
-Jelix fournissait un moyen d'indiquer les classes à charger avant ce
-@@f@start_session()@@ : il suffisait d'indiquer la liste des sélecteurs de ces
+Avant que le système d'auto-chargement dans les modules existe dans Jelix
+(voir la section suivante), Jelix fournissait un moyen d'indiquer les classes à
+charger avant ce @@f@start_session()@@ : il suffisait d'indiquer la liste des sélecteurs de ces
 classes dans l'option @@V@loadClasses@@ de la section @@sessions@@ dans la
 configuration :
 
@@ -156,7 +156,7 @@ Voir la suite.
 
 ===== Auto-chargement de classes =====
 
-Depuis Jelix 1.4, il est possible de profiter d'un système d'auto-chargement des
+Il est possible de profiter d'un système d'auto-chargement des
 classes reposant sur la fonction autoload de PHP (le fichier de la classe étant
 chargé automatiquement au moment de l'instanciation). Cela évite d'utiliser
 @@C@jClasses@@. Le système d'autoload de Jelix supporte la
@@ -203,10 +203,13 @@ trouvent ainsi qu'un suffixe de fichier :
 </code>
 
 Pour déclarer un ensemble de classes qui sont dans un namespace particulier, on
-indique le namespace et le répertoire.
+indique le namespace et le répertoire. Vous pouvez utiliser l'ancienne balise
+@@<namespace>@@ ou alors @@<psr0>@@, elles sont équivalentes.
 
 <code xml>
   <namespace name="jelixTests\foo" dir="autoloadtest" />
+  <!-- ou -->
+  <psr0 name="jelixTests\foo" dir="autoloadtest" />
 </code>
 
 Cette déclaration suit la spécification PSR0. Aussi le namespace de la classe
@@ -214,12 +217,15 @@ doit correspondre à un chemin dans le répertoire indiqué. Par exemple, si Jel
 doit charger la classe @@C@jelixTests\foo\bar\baz@@, il incluera le fichier
 @@F@autoloadtest/jelixTests/foo/bar/baz.php@@.
 
-Jelix possède un autre moyen de prendre en charge les namespaces, qui suit la spécification PSR-4. (implémenté
-antérieurement à la sortie de la spécification PSR-4, d'où le nom
-"namespacePathMap" moins parlant).
+Jelix possède un autre moyen de prendre en charge les namespaces, qui suit la
+spécification PSR-4. (implémenté antérieurement à la sortie de la spécification
+PSR-4, d'où le nom "namespacePathMap" moins parlant). On peut utiliser
+l'ancienne balise @@<namespacePathMap>@@ ou alors @@<psr4>@@.
 
 <code xml>
    <namespacePathMap name="jelixTests\bar" dir="autoloadtest/barns" suffix=".class.php" />
+   <!-- ou -->
+   <psr4 name="jelixTests\bar" dir="autoloadtest/barns" suffix=".class.php" />
 </code>
 
 Le chemin du fichier de la classe n'est pas un chemin reprenant le nom du
@@ -263,12 +269,11 @@ projet. Il est bien entendu tout à fait possible de le faire dans Jelix.
 
 ==== Avec Composer ====
 
-[[https://getcomposer.org|Composer]] est un gestionnaire de paquets et de
-dépendance pour PHP, de plus en plus utilisé. Il vous permet d'installer et de
+[[https://getcomposer.org|Composer]] est le gestionnaire de paquets et de
+dépendance pour PHP. Il vous permet d'installer et de
 mettre à jour facilement des bibliothèques tierces. Nous vous recommandons de
 l'utiliser si les bibliothèques tierces que vous voulez utiliser peuvent être
-installées avec Composer. (Les prochaines versions de Jelix > 1.6 seront
-disponibles par Composer ;-) ).
+installées avec Composer.
 
 Pour une intégration de paquets Composer, c'est très simple :
 
@@ -276,11 +281,11 @@ Pour une intégration de paquets Composer, c'est très simple :
     (voir la documentation de Composer)
   * installez les paquets indiqués dans composer.json : @@php composer.phar install@@.
     Cela génère un répertoire @@F@vendor/@@ dans votre application
-  * Incluez le fichier @@F@vendor/autoload.php@@ dans @@F@application.init.php@@
+  * Incluez le fichier @@F@vendor/autoload.php@@ dans votre @@F@application.init.php@@
 
 <code php>
 require (__DIR__.'/vendor/autoload.php');
-require (__DIR__.'/../lib/jelix/init.php');
+require_once (__DIR__.'/../lib/jelix/init.php');
 jApp::initPaths( /* ... */ );
 jApp::setTempBasePath( /* ... */ );
 </code>

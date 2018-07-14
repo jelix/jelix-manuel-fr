@@ -54,7 +54,7 @@ class defaultCtrl extends jController {
 
 </code>
 
-Dans cette exemple, les deux actions index et liste font appel à une méthode
+Dans cette exemple, les deux actions @@index@@ et @@liste@@ font appel à une méthode
 commune qui va réaliser le travail commun.
 
 

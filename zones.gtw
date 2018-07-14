@@ -100,7 +100,7 @@ php cmd.php module:create-zone --notpl <MonModule> <MaZone>
 </code>
 
 
-==== Appel ====
+==== Appeler une zone ====
 
 Il y a plusieurs façons de récupérer le contenu d'une zone en fonction de ce que
 l'on veut faire.
@@ -303,7 +303,7 @@ la propriété @@P@$_cancelCache@@ à @@true@@.
 
 Parfois, il peut arriver que l'on veuille désactiver le cache des zones, pour
 voir le résultat de ces zones quand on les modifie. Pour cela, vous pouvez
-modifier un paramètre dans la configuration, au niveau de la section "zones"
+modifier un paramètre dans la configuration, au niveau de la section @@[zones]@@
 
 <code ini>
 [zones]
