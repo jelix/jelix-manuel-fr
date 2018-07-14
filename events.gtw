@@ -70,12 +70,12 @@ exemple, ce fichier devant être dans le dossier @@C@classes@@ du module. La
 classe doit hériter de @@C@jEventListener@@.
 
 Cette classe contient une méthode pour chaque évènement auquel le listener
-répond. Ces noms de méthodes commencent par "on" suivi du nom d'événement. Et
+répond. Ces noms de méthodes commencent par @@on@@ suivi du nom d'événement. Et
 ces méthodes prennent en paramètre l'objet @@C@jEvent@@ correspondant à
 l'événement. Exemple :
 
 <code php>
-class authListener extends jEventListener{
+class authListener extends jEventListener {
 
    function onAuthCanLogin ($event) {
 
@@ -84,7 +84,7 @@ class authListener extends jEventListener{
 
         // traitement
         $ok = true;
-        if(isset($user->actif)){
+        if (isset($user->actif)) {
             $ok = ($user->actif == '1');
         }
 
@@ -104,7 +104,7 @@ paramètres ou aucun, d'autres types de données de réponses ou aucune réponse
 
 Note : vous pouvez changer la façon dont votre listener traite les évènements
 (nom des méthodes correspondantes aux évènements etc), en redéfinissant la
-méthode @@M@performEvent()@@.
+méthode @@M@performEvent()@@ du listener.
 
 ==== Déclarer le listener ====
 
