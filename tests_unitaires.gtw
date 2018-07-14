@@ -7,20 +7,19 @@ Le processus de développement veut, en théorie (et en gros), qu'à chaque fois
 l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont
 permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on
 modifie ou ajoute un bout de code, on lance tous les tests unitaires pour vérifier
-qu'il n'y a pas de régressions. Cela permet ainsi de garantir un minimum, un
-fonctionnement robuste de l'application.
+qu'il n'y a pas de régressions. Cela permet ainsi de garantir un minimum de qualité
+du code, et un fonctionnement relativement robuste de l'application.
 
 ===== Créer des tests avec PHPUnit =====
 
 L'utilisation du [[https://github.com/sebastianbergmann/phpunit/|framework de tests PHPUnit]]
-est la solution "officielle" depuis Jelix 1.3. Lire son manuel pour en savoir
+est la solution "officielle". Lire son manuel pour en savoir
 plus sur son fonctionnement. De plus, il n'est pas fourni avec Jelix, vous devez
 donc l'installer (il l'est automatiquement si vous installez Jelix par Composer).
 
 Cependant, Jelix fourni de quoi l'intégrer au mieux dans votre application. La
-commande @@createapp@@ a créé un script @@F@tests/runtests.php@@ dans votre
-application (ou copier le fichier
-@@F@lib/jelix-scripts/templates/tests/runtests.php@@).
+commande @@create-jelix-app@@ a créé un script @@F@tests/runtests.php@@ dans votre
+application (ou copier le fichier @@F@lib/jelix-scripts/templates/tests/runtests.php@@).
 
 Vous devez exécuter ce fichier en ligne de commande plutot que PHPUnit pour
 lancer les tests. Il vous évite de créer un fichier @@F@phpunit.xml@@, et lance
