@@ -70,8 +70,6 @@ paramètre @@theme@@ :
 theme = web20
 </code>
 
-
-
 ===== Déclarer un thème dynamiquement =====
 
 Pour offrir la possibilité à l'internaute de choisir son thème, vous pouvez lui

@@ -63,7 +63,7 @@ celle-ci n'existe pas.
     $tpl->assignZone($name, $zoneSelector, $params);
 </code>
 
-Le paramètre params est facultatif. Cette méthode est un raccourci de :
+Le paramètre @@V@$params@@ est facultatif. Cette méthode est un raccourci de :
 
 <code php>
    $tpl->assign($name, jZone::get($zoneSelector, $params));
@@ -73,7 +73,6 @@ Le paramètre params est facultatif. Cette méthode est un raccourci de :
 
 Idem que @@M@assignZone@@, mais la valeur est assignée à la variable uniquement
 si celle-ci n'existe pas.
-
 
 ==== get ====
 
@@ -210,7 +209,7 @@ code php :
 Il faut mettre l'expression entre accolades. Elle doit commencer par un nom de
 variable ou par un sélecteur de locale :
 
-<code>
+<code smarty>
   {$mavariable}
   {$mavariable * 3}
   {$mavariable." - ".@mod~message.ok@}
@@ -232,7 +231,7 @@ Ceci est équivalent en php à
 Pour les expressions plus complexes ne commençant pas par un nom de variable ou
 de locale, on peut utiliser le signe "=" :
 
-<code php>
+<code smarty>
   {=$mavariable}
   {=intval($mavariable) * 65}
 </code>
@@ -263,7 +262,7 @@ modificateurs à la suite :
 
 Ceci est en fait équivalent à :
 
-<code>
+<code php>
   <?php echo strtoupper($unevariable);?>
   <?php echo htmlspecialchars(strtoupper($unevariable));?>
   <?php echo rawurlencode($uneUrl);?>
@@ -293,6 +292,7 @@ mettre ceux-ci, séparés par des virgules (,) , après le nom du modificateur e
 deux-points (:).
 
 Exemple : ici le modificateur @@jdatetime@@, prenant deux paramètres de type chaîne : 
+
 <code smarty>
   <p>la date est {$myDate|jdatetime:'db_date','timestamp'}.</p>
 </code>
@@ -306,7 +306,7 @@ conditions n'ont pas besoin d'être encadrés par des parenthèses.
 
 === if, else, elseif ===
 
-
+<code smarty>
   {if condition_1}
      // code ici
   {elseif condition_2}
@@ -314,6 +314,7 @@ conditions n'ont pas besoin d'être encadrés par des parenthèses.
   {else}
      // code ici
   {/if}
+</code>
 
 Notez aussi qu'il y a des plugins pour faire des "if" specifiques comme @@ifacl2
 'un.droit'@@ pour tester un droit. Avec tout ces plugins en "if", vous pouvez
@@ -323,22 +324,29 @@ utiliser un @@else@@.
 
 Boucle conditionnelle:
 
+<code smarty>
   {while condition}
     // code ici
   {/while}
+</code>
 
 === foreach ===
 
 Boucle sur un iterateur ou un tableau:
 
+<code smarty>
   {foreach $iterateur_ou_tableau as $cle => $valeur}
     // code ici
   {/foreach}
+</code>
 
 === for ===
+
+<code smarty>
   {for expression}
     // code ici
   {/for}
+</code>
 
 L'expression est bien sûr semblable à celle du "for" en PHP.
 
@@ -347,7 +355,7 @@ L'expression est bien sûr semblable à celle du "for" en PHP.
 Vous pouvez avoir l'équivalent d'un @@break@@ dans une boucle, en utilisant
 @@{break}@@ :
 
-<code>
+<code smarty>
   {while condition}
     ...
      {if ...}  {break} {/if}
@@ -361,7 +369,9 @@ Ce sont des fonctions classiques mais appelables uniquement dans un template.
 Certaines sont disponibles en standard et vous pouvez en réaliser en créant un
 plugin de template. Leur syntaxe est :
 
+<code smarty>
   {nom_fonction paramètres}
+</code>
 
 Les paramètres sont des expressions jTpl, donc similaires aux expressions PHP.
 Cependant, contrairement en PHP, il ne faut pas entourer les paramètres par des
@@ -396,11 +406,15 @@ exemple ne sert à rien, elle sera interprété quoi qu'il arrive). Cette balise
 permet simplement de fournir des informations sur le template qui pourraient
 être réutilisées par un programme utilisant le template.
 
+<code smarty>
   {meta nom expression}
+</code>
 
 Exemple : 
 
+<code smarty>
   {meta auteur 'laurent'}
+</code>
 
 On peut en mettre plusieurs bien sûr. Ces informations sont récupérables via la
 méthode @@M@meta()@@ de l'objet @@C@jTpl@@ :
@@ -426,13 +440,17 @@ template. Par exemple, il existe un plugin de meta permettant d'indiquer des
 informations pour une réponse HTML (feuille de style CSS, script JS, etc...).
 Leur syntaxe est :
 
+<code smarty>
   {meta_//nom_plugin// nom expression}
+</code>
 
 Exemple :
 
+<code smarty>
   {meta_html css '/styles/my.css'}
   {meta_html js 'fooscript.js'}
   {meta_html bodyattr array('onload'=>'alert("charge")')}
+</code>
 
 Bien sûr vous pouvez réaliser le vôtre.
 
@@ -442,6 +460,7 @@ Vous pouvez utiliser des templates qui ne sont pas dans des fichiers. Ce sont le
 Typiquement, votre template doit être dans une chaîne.
 
 Voici un exemple simple :
+
 <code php>
 $template = ' hello 
  		{$value} 
@@ -453,11 +472,15 @@ $tpl = new jTpl();
 $tpl->assign('value', 'test'); 
 $content = $tpl->fetchFromString($template, 'text');
 </code>
-Vous devez donc utiliser la méthode @@M@fetchFromString@@, à laquelle vous donnez une chaine contenant un template,
-et éventuellement le type de ce contenu (@@text@@, @@html@@...).
+
+Vous devez donc utiliser la méthode @@M@fetchFromString@@, à laquelle vous
+donnez une chaine contenant un template, et éventuellement le type de ce contenu
+(@@text@@, @@html@@...).
 
 
-Cela renverra le contenu généré à partir du template. Dans notre exemple, @@$content@@ contiendra:
+Cela renverra le contenu généré à partir du template. Dans notre exemple,
+@@$content@@ contiendra:
+
 <code html>
  hello 
  test 
@@ -474,8 +497,8 @@ Vous pouvez ensuite utiliser ce contenu pour l'injecter dans un autre template p
 
 ===== Templates localisées =====
 
-Dans un template, nous avons vu que nous pouvons utiliser {@truc.foo@} pour
-inclure des chaînes localisés. Cependant, il peut arriver qu'il y en ai beaucoup
+Dans un template, nous avons vu que nous pouvons utiliser @@{@truc.foo@}@@ pour
+inclure des chaînes localisés. Cependant, il peut arriver qu'il y en ait beaucoup
 dans un même template, pouvant rendre alors celui-ci pas très lisible, et
 surtout plus lent à s'afficher.
 
