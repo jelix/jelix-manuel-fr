@@ -29,10 +29,6 @@ Vous pouvez changer ce comportement [[deboggage|en configurant jLog]]. Vous
 pouvez ainsi logger les notices et autres messages PHP. Vous pouvez envoyer les
 erreurs dans un syslog, par mail etc.
 
-Note : toutes les options dans la section @@[error_handling]@@ (sauf
-@@V@messageLogFormat@@ et @@V@errorMessage@@) existantes dans Jelix 1.2 et
-inférieur, ne sont plus utilisées et sont dépréciées.
-
 ==== Le format des messages ====
 
 Les messages d'erreurs stockés dans des fichiers, syslog, mail ou autre,
@@ -53,7 +49,7 @@ mots de passes.
 
 Pour l'éviter, vous pouvez retirer ce tag @@L@%params%@@ de @@V@messageLogFormat@@.
 
-Ou alors, depuis Jelix 1.6.16, vous pouvez indiquer quels paramètres il ne faut
+Ou alors, vous pouvez indiquer quels paramètres il ne faut
 pas afficher, soit d'une manière général, dans la configuration, soit
 d'une manière particulière dans les contrôleurs.
 
@@ -83,7 +79,7 @@ correspondant aux champs @@<secret>@@.
 
 ==== La page d'erreur ====
 
-Depuis Jelix 1.3, les détails des messages d'erreurs ne sont plus affichés dans
+Les détails des messages d'erreurs ne sont pas affichés dans
 le navigateur (sauf dans la debugbar si vous l'activez). Quand une erreur
 survient, Jelix affiche une page d'erreur générique avec le code HTTP 500.
 
