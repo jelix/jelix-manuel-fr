@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:installing-a-module~~
 
 Cette section ne concerne pas les modules fraîchement créés avec la commande
-@@c@createmodule@@, puisque celle-ci leurs assigne automatiquement un niveau
+@@c@module:create@@, puisque celle-ci leur assigne automatiquement un niveau
 d'accès et les installe. Par contre, pour créer un module "à la main" ou
 utiliser un module existant fourni avec jelix ou provenant d'un autre projet, il
 faut suivre les instructions qui suivent.
@@ -11,21 +11,20 @@ faut suivre les instructions qui suivent.
 
 Dans le chapitre sur la création des modules, nous avons vu que nous
 pouvions déclarer les répertoires (groupes de modules) où se trouvent des
-modules, dans @@modulesPath@@ de la configuration.
+modules, dans le fichier application.init.php.
 
-Depuis Jelix 1.6.9, il est possible d'avoir un module en dehors
-d'un groupe de module (par exemple dans un paquet Composer). On peut alors
-indiquer directement son chemin dans la configuration de Jelix.
+<code php>
+jApp::declareModulesDir(__DIR__.'/vendor-modules/');
+</code>
 
-Cela se fera dans la section @@modules@@, et non pas dans @@modulesPath@@,
-de cette manière, avec un paramètre en @@.path@@ :
 
-Exemple :
+Il est possible d'avoir un module en dehors d'un groupe de module (par exemple
+dans un paquet Composer). On peut alors indiquer directement son chemin dans le
+fichier application.init.php.
 
-<code ini>
-[modules]
-mon_module.access = 2
-mon_module.path = app:vendor/un_nom/un_paquet/le_module
+
+<code php>
+jApp::declareModule(__DIR__.'/somewhere/mymodule/');
 </code>
 
 
@@ -79,11 +78,8 @@ oublier aussi de [[/urls|configurer correctement le moteur d'url]], afin que les
 urls générées par Jelix utilisent bien le point d'entrée associé à chacun des
 modules.
 
-Notez que lorsque vous utilisez la commande @@createmodule@@, le module est par
-défaut activé avec le niveau 2. De plus, les options de configurations
-@@V@checktrustedModules@@, @@V@trustedModules@@ et @@V@unusedModules@@ qui
-existaient dans les versions précédentes de Jelix (1.1 et inférieur), ne sont
-plus supportées et n'ont aucun effet.
+Notez que lorsque vous utilisez la commande @@module:create@@, le module est par
+défaut activé avec le niveau 2.
 
 Note : si vous voulez rendre accessibles tous les modules (access=2), vous pouvez
 mettre dans la section globale l'option @@enableAllModules=on@@. Les valeurs
@@ -107,7 +103,7 @@ Les paramètres, séparés par une virgule, peuvent être de simples mot-clefs, 
 des clés/valeurs.
 
 Si vous ne voulez pas exécuter le script d'installation du module, indiquez le
-avec l'option "skipinstaller" et la valeur "skip":
+avec l'option @@skipinstaller@@ et la valeur @@skip@@:
 
 <code>
 news.skipinstaller=skip
@@ -116,7 +112,7 @@ news.skipinstaller=skip
 ===== Installation d'un module =====
 
 Après avoir défini le niveau d'accès d'un module, il faut ensuite "installer" le
-module. Ceci se fait au moyen de la commande @@c@installmodule@@, qui,
+module. Ceci se fait au moyen de la commande @@c@module:install@@, qui,
 concrètement, exécute les scripts d'installations éventuels fournis dans le
 module (qui se chargeront par exemple de créer les tables nécessaires en base de
 données, voir le chapitre sur la création de tels scripts), puis met à jour un
@@ -130,7 +126,7 @@ déclaré son niveau d'accès dans la configuration, il faut faire ceci :
 php cmd.php module:install jauth
 </code>
 
-Notez que la commande @@c@createmodule@@ active automatiquement le module
+Notez que la commande @@c@module:create@@ active automatiquement le module
 nouvellement créé.
 
 Note : il est possible de désactiver complètement le système d'installation,
@@ -145,14 +141,14 @@ fonctionne (base de données etc..). Cela rend plus difficile également les mis
 
 Pour mettre à jour un module, il suffit d'abord de remplacer les sources du
 module existant par celles de la nouvelle version, puis de lancer la commande
-@@c@installmodule@@. Le système d'installation de Jelix va alors se charger
+@@c@module:install@@. Le système d'installation de Jelix va alors se charger
 d'exécuter les scripts de migration du module si il y en a, et de mettre à jour
 le fichier @@F@var/config/installer.ini.php@@. Bien entendu, cela ne
 fonctionnera que si le fichier @@F@module.xml@@ du module est bien renseigné au
 niveau du numéro de version du module.
 
 Si vous avez plusieurs modules à mettre à jour, vous pouvez exécuter la commande
-@@c@installapp@@, qui migrera tous les modules à jour. Cela est très utile en
+@@c@app:install@@, qui migrera tous les modules à jour. Cela est très utile en
 fait pour mettre à jour une application en production.
 
 Note : si vous avez désactivé le système d'installation avec
