@@ -126,6 +126,7 @@ seront préfixées par le préfixe en question dans la base Redis.
 De même, le vidage du cache ne concernera que les clés commençant par ce
 préfixe. Cependant, à cause de l'implementation d'une telle fonction dans Redis,
 cela peut être très gourmand en temps, et rendre votre application trop lente.
+
 Diverses méthodes sont implémentées dans le plugin pour supprimer les clés, et
 sont indiquées dans le paramètre key_prefix_flush_method :
 

@@ -163,8 +163,9 @@ pas interprétées comme telles par le navigateur. Par exemple, @@&copy;@@ devie
 
 Si vous avez besoin d'utiliser des caractères spécifiques, choisissez l'encodage
 adéquat plutôt que de recourir aux entités HTML. C'est pour cette raison qu'il
-est fortement encouragé d'utiliser l'encodage UTF-8, qui est d'ailleurs en passe
-d'être l'encodage "universel" dans les applications web (en plus d'Unicode/UTF-16).
+est fortement encouragé d'utiliser l'encodage UTF-8, qui contient pratiquement
+tous les caractères utilisés dans toutes les langues, en plus de caractères
+spéciaux, les emoji etc.
 
 Malgré tout si vous souhaitez absolument mettre du html dans une chaîne localisée
 qui doit être utilisée dans un template, la possibilité est de mettre ".html" au
@@ -182,7 +183,7 @@ termine par ".html".
 
 Pour récupérer une chaîne, il faut utiliser la méthode statique @@M@get@@ de
 jLocale. Cette méthode accepte en premier argument un sélecteur de locale, qui a
-cette structure : @@MODULE~NAME.KEY@@. la partie "MODULE~" est facultative s'il
+cette structure : @@<module>~<name>.<key>@@. la partie "<module>~" est facultative s'il
 s'agit d'un fichier se trouvant dans le module courant.
 
 Pour récupérer par exemple la valeur de "buttons.save" dans @@F@foo.UTF-8.properties@@
@@ -250,7 +251,7 @@ Ainsi le premier paramètre ira à l'emplacement de @@%1$s@@, le deuxième à la
 de @@%2$s@@ etc...
 
 
-Par contre, dans un template, vous ne pouvez pas utiliser la notion "@foo@"
+Par contre, dans un template, vous ne pouvez pas utiliser la notion @@{@foo@}@@
 quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
 
 <code html>
@@ -261,7 +262,7 @@ quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
 ===== Changer la langue dynamiquement =====
 
 Jelix fourni un plugin pour le coordinateur  qui permet de changer la langue
-dynamiquement. C'est le plugin autolocale, qui est situé dans @@F@lib/jelix/plugins/coord/@@
+dynamiquement. C'est le plugin //autolocale//, qui est situé dans @@F@lib/jelix/plugins/coord/@@
 (voir [[plugins/coord|la section sur les plugins de coordinateur]]).
 
 Pour cela, le plugin regarde si un paramètre est présent dans l'url, indiquant
@@ -278,12 +279,11 @@ moment, il suffit de faire comme d'habitude :
 </code>
 
 
-Pour utiliser le plugin, copiez le fichier @@F@lib/jelix/plugins/coord/autolocale/autolocale.coord.ini.php.dist@@
-dans @@F@app/config/@@ en le renommant @@F@autolocale.coord.ini.php@@.
-
-Les deux paramètres dans ce fichier sont :
+Pour utiliser le plugin, ajouter cette section dans @@F@app/config/mainconfig.ini.php@@
+ou le fichier de configuration de l'un des points d'entrée :
 
 <code ini>
+[coordplugin_autolocale]
 enableUrlDetection = on
 urlParamNameLanguage = lang
 </code>
@@ -305,7 +305,7 @@ Vous pouvez aussi utiliser les codes langues sans le code pays :
   <a href="index.php?lang=en">english</a>
 </code>
 
-Bien sûr, il est possible de définir des urls significatives spécifiques pour
+Bien sûr, il est possible de définir des urls spécifiques pour
 chaque langue, et même d'indiquer les paramètres de langues, qui seront
 renseignés automatiquement ou détectés automatiquement, sans avoir à l'indiquer
 à @@jUrl::get()@@ entre autre (voir [[urls/mapping|la documentation
@@ -316,14 +316,14 @@ Notez aussi que si le code de language donné n'est pas listé dans le paramètr
 @@availableLocales@@ de la configuration principale, jLocale essaiera d'abord
 d'utiliser la locale la plus approchante (même langue mais d'un autre pays),
 et si il ne trouve pas, il utilisera la langue par défaut de l'application,
-celle indiquée dans @@fallbackLocale@@.
+celle indiquée dans @@locale@@, et en dernier recourd, celle indiquée dans @@fallbackLocale@@.
 
 Enfin, il faut activer le plugin. Pour cela, dans la configuration de jelix,
 mettez dans la section @@[coordplugins]@@ :
 
 <code ini>
 [coordplugins]
-autolocale = autolocale.coord.ini.php
+autolocale = 1
 </code>
 
 
@@ -381,7 +381,9 @@ qui y est associé par défaut (voir paragraphe précédent).
 Si il échoue à nouveau, il va essayer de chercher avec la locale indiquée
 dans @@fallbackLocale@@.
 
-Si il échoue encore, @@jLocale::get()@@ génère une exception.
+Si il échoue encore, @@jLocale::get()@@ génère une exception. C'est pour
+cela qu'il est préférable d'avoir au moins une langue dans laquelle toutes
+les clés existent, et d'indiquer cette langue dans @@fallbackLocale@@.
 
 
 
