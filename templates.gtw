@@ -497,7 +497,7 @@ Vous pouvez ensuite utiliser ce contenu pour l'injecter dans un autre template p
 
 ===== Templates localisées =====
 
-Dans un template, nous avons vu que nous pouvons utiliser @@{\@truc.foo@}@@ pour
+Dans un template, nous avons vu que nous pouvons utiliser @@ {@truc.foo@} @@ pour
 inclure des chaînes localisés. Cependant, il peut arriver qu'il y en ait beaucoup
 dans un même template, pouvant rendre alors celui-ci pas très lisible, et
 surtout plus lent à s'afficher.
