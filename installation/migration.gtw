@@ -27,7 +27,7 @@ Voici les instructions à suivre dans l'ordre.
 ==== Prérequis ====
 
 Jelix 1.7 nécessite PHP 5.6 minimum. Vérifiez que votre serveur a bien cette
-version.
+version ou une version supérieure. PHP 7 est fortement recommandé.
 
 ==== Sauvegarde ====
 
@@ -57,7 +57,7 @@ aux paquets Composer utilsés par Jelix.
 Pour la migration, vous pouvez donc mettre à jour, soit via Composer, soit
 en téléchargeant l'archive comme pour les versions précédentes.
 
-=== Vous voulez utiliser Composer ===
+=== Si vous voulez utiliser Composer ===
 
 Installez Composer en suivant [[https://getcomposer.org|les instructions de son manuel]].
 
@@ -112,7 +112,7 @@ require (__DIR__.'/vendor/jelix_app_path.php');
 
 Sautez l'étape qui suit.
 
-=== Vous ne voulez pas utiliser Composer ===
+=== Si vous ne voulez pas utiliser Composer ===
 
 Téléchargez le paquet jelix sur le site de téléchargement de jelix.org, comme
 vous avez l'habitude de faire.
@@ -205,7 +205,7 @@ Si vous utilisez le plugin ldap pour jAuth, les informations de connexion doiven
 être maintenant dans le fichier @@profiles.ini.php@@ au lieu du fichier 
 @@auth.coord.ini.php@@. Le script de migration fait ce changement pour vous.
 
-==== Changements dans les urls ====
+==== Changements dans la prise en charge des urls ====
 
 Il n'y a plus le choix dans le moteur d'URL. Il s'agit maintenant uniquement
 du moteur anciennement nommé "significant" et amélioré pour prendre en charge
@@ -242,6 +242,11 @@ et l'action. Vous y mettrez donc les valeurs des paramètres de configuration
 @@startModule@@ et @@startAction@@ du script. Ces derniers ne sont en effet
 plus utilisés.
 
+Cependant, nous vous recommandons de migrer vos controlleurs de scripts en ligne
+de commande vers des commandes implementées avec Symfony Console. @@jCmdLineCoordinator@@
+et @@jCmdLineController@@ sont déclarés obsolètes. Voyez le chapitre pour
+développer avec Symfony Console.
+
 ==== Plugins custom pour jDb et jDao ====
 
 Les classes @@*daobuilder*@@ des plugins de jDb ne sont plus pris en charge. Si
@@ -263,30 +268,30 @@ ils avaient choisie d'être "reconnu" par votre application.
 ==== Changements dans les scripts d'installation de vos modules ====
 
 Étant donné les changements dans l'organisation des fichiers de configuration,
-et afin de faire une meilleure distinction au niveau des API, entre ce qui concerne
-l'application en général, et ce qui concerne un point d'entrée, des nouvelles
-classes @@jInstallerModule2@@ et @@jInstallerEntryPoint2@@ ont fait leur apparition.
+et le changement de fonctionnement général de l'installateur, des nouvelles
+classes @@\Jelix\Installer\Module\Installer@@, @@\Jelix\Installer\Module\Uninstaller@@,
+et @@\Jelix\Installer\Module\Configurator@@ ont fait leur apparition.
 
 Bien que cela ne soit pas obligatoire pour Jelix 1.7 (mais cela le deviendra
 pour les futures versions, @@jInstallerModule@@ disparaitra), vous devriez
 modifier vos scripts d'installation et de mise à jour en utilisant la classe
 @@jInstallerModule2@@.
 
-La principale différence réside en un renommage des méthodes @@install()@@,
-@@preInstall()@@ etc, en @@installEntryPoint()@@, @@preInstallEntryPoint()@@
-etc. Ces nouvelles méthodes acceptent en paramètre un objet @@jInstallerEntryPoint2@@.
-Vous avec donc depuis ces nouvelles méthodes, accés à des fonctions qui sont
-soit liées à un point d'entrée (sur cet objet  @@jInstallerEntryPoint2@@), soit
-liées à l'application en général (sur @@jInstallerModule2@@).
+La principale différence réside sur la visibilité de certaines propriétés qui
+passent de @@public@@ à @@protected@@, sur la suppression des méthodes @@first*()@@,
+et sur l'accés aux fichiers de configurations.
 
 ==== Déplacement des fichiers overloads, themes... ====
 
 Il faut déplacer les contenus qui ne sont pas dynamiques (donc ceux d'origine, pas
-ceux créés par l'application) de var/overloads,
-var/themes/ et var/locales vers app/overloads, app/themes/ et app/locales/.
+ceux créés par l'application) :
+
+   - @@var/overloads/*@@ vers @@app/overloads/@@
+   - @@var/themes/*@@ vers @@app/themes/@@
+   - @@var/locales/*@@ vers @@app/locales/@@
 
 Ce n'est pas fait automatiquement par le script de migration, car il ne serait
-pas possible pour lui de déterminer ce qui est statique ou dynamique.
+pas possible pour lui de déterminer ce qui est "statique" ou "dynamique".
 
 ==== Disparition de json.js et json2.js ====
 
@@ -360,7 +365,7 @@ alternatives.
 ==== Mise à jour de Jelix ====
 
 Vous devez modifier le fichier @@install/installer.php@@ de votre application,
-de manière à include les instructions pour faire la migration. Il doit ressembler à
+de manière à inclure les instructions pour faire la migration. Il doit ressembler à
 ceci :
 
 <code php>
@@ -370,20 +375,24 @@ jApp::setEnv('install');
 jAppManager::close();
 
 // launch the low-level migration
-$migrator = new \jInstallerMigration(new textInstallReporter('notice', 'Low-level migration'));
+$migrator = new \Jelix\Installer\Migration(new \Jelix\Installer\Reporter\SimpleConsole('notice', 'Low-level migration'));
 $migrator->migrate();
 
 // we can now launch the installer/updater
-$installer = new jInstaller(new textInstallReporter());
-$installer->installApplication();
-
+$installer = new \Jelix\Installer\Installer(new \Jelix\Installer\Reporter\SimpleConsole());
+if (!$installer->installApplication()) {
+    exit (1);
+}
 try {
     jAppManager::clearTemp();
 }
 catch(Exception $e) {
     echo "WARNING: temporary files cannot be deleted because of this error: ".$e->getMessage().".\nWARNING: Delete temp files by hand immediately!\n";
+    exit (1);
 }
 jAppManager::open();
+exit (0);
+
 </code>
 
 
@@ -402,6 +411,8 @@ En particulier :
     vers le fichier urls.xml
   * Migration des paramètres @@startModule@@ et @@startAction@@ vers @@urls.xml@@
   * Suppression des paramètres et section obsolètes liés au moteur d'url
+  * Deplacement des sections @@[modules]@@ des configurations des points d'entrée
+    vers @@mainconfig.ini.php@@
   * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
   * **Déplacement des fichiers de configuration** suivants vers app/config :
      * mainconfig.ini.php, urls.xml, preferences.ini.php
