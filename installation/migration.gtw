@@ -231,7 +231,7 @@ paramètres, en particulier le nom de la commande. Faire un @@php cmd.php help@@
 pour avoir l'aide.
 
 De plus le script createapp.php a été déplacé dans un répertoire bin,
-et disponible sous le nom create-jelix-app.php dans @@vendor/bin@@ de
+et disponible sous le nom create-jelix-app dans @@vendor/bin@@ de
 votre application si vous installez Jelix avec Composer.
 
 ==== Vos scripts utilisant jCmdLineRequest ====
@@ -321,6 +321,7 @@ Certaines classes, certains modules et plugins sont maintenant livrés séparém
 installable avec Composer, soit via un zip. Si vous les utilisiez, il faudra donc les
 récupérer en plus de Jelix. Il s'agit de :
 
+  * Le module jSoap : [[https://packagist.org/packages/jelix/soap-server-module|jelix/soap-server-module]]
   * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
   * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
   * Le plugin Redis reposant sur la classe PhpRedis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].

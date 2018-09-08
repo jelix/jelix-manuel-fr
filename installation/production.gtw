@@ -77,13 +77,13 @@ Nginx, haproxxy etc..).
 
 Et donc le serveur web n'est pas configuré comme un serveur frontal :
 il n'a pas le nom de domaine du site, il n'écoute pas forcément sur les
-même port, il reçoit les requêtes http en HTTP alors que le frontal reçoit les
+même port, il reçoit les requêtes en HTTP alors que le frontal reçoit les
 requêtes en HTTPS etc..
 
 Du coup Jelix n'a pas forcément toutes les infos qui permettent
-de générer les urls correctement entre autres (car pour le moment il ne prend pas en charge les entêtes
-'Forwarded' ou 'X-Forwarded-Proto' que peuvent communiquer les reverses
-proxy aux serveurs web).
+de générer les urls correctement entre autres (car pour le moment il ne prend
+pas en charge les entêtes 'Forwarded' ou 'X-Forwarded-Proto' que peuvent
+communiquer les reverses proxy aux serveurs web).
 
 Si le serveur web n'écoute pas sur les ports standards
 (80 ou 443), il va falloir indiquer de forcer les ports aux valeurs

@@ -40,36 +40,29 @@ $jelix = new jCoordinator($config_file);
 $jelix->process(new jClassicRequest());
 </code>
 
-Vous devez aussi modifier le fichier @@myapp/project.xml@@ pour mettre à jour les
-chemins, ainsi les commandes de jelix-scripts fonctionneront correctement. Les chemins
-doivent être relatifs au fichier @@project.xml@@. Voyez en particulier le chemin pour @@www@@.
+Dans le fichier @@myapp/application.init.php@@, mettez à jour les
+chemins donnés à @@jApp@@. Les chemins doivent être relatifs au fichier.
+Voyez en particulier le chemin pour @@www@@.
 
-<code xml>
-<project xmlns="http://jelix.org/ns/project/1.0">
-    <!-- ...  -->
-    <directories>
-        <config>./var/config/</config>
-        <log>./var/log/</log>
-
-        <var>./var/</var>
-        <www>../</www>
-        <temp>../temp/myapp/</temp>
-    </directories>
-    <entrypoints>
-        <!-- ... -->
-    </entrypoints>
-</project>
+<code php>
+jApp::initPaths(
+    __DIR__.'/'
+    __DIR__.'/../www/',
+    __DIR__.'/var/',
+    __DIR__.'/var/log/',
+    __DIR__.'/var/config/'
+);
+jApp::setTempBasePath(realpath(__DIR__.'../temp/').'/');
 </code>
 
 
 ==== Déplacement du contenu de jelix-www/ ====
 
-Il faut ensuite déplacer le répertoire @@F@jelix-www/@@ à la racine et le
-renommer en "jelix". Vous trouverez ce répertoire dans @@F@vendor/jelix/jelix/lib@@
+Si le contenu de jelix-www/ n'est pas déjà copié dans un répertoire @@www/jelix@@
+alors vous devez le faire. Vous trouverez ce répertoire dans @@F@vendor/jelix/jelix/lib@@
 ou directement @@F@lib/@@ si vous avez installé les sources de Jelix à la main.
 
 Vous obtiendrez :
-
 
 <code>
   monsite/
@@ -94,20 +87,7 @@ de jelix-www. Mettez vos propres scripts dans un autre répertoire, par exemple
 dans @@F@monsite/js/@@.
 
 
+==== fin ====
 
-Dans le fichier @@F@myapp/application.init.php@@, vous devez modifier le chemin
-indiqué à @@C@jApp@@ pour le répertoire www (deuxième argument) :
-
-<code php>
-jApp::initPaths(
-    $appPath
-    $appPath.'../',
-    //$appPath.'var/',
-    //$appPath.'var/log/',
-    //$appPath.'var/config/',
-    //$appPath.'scripts/'
-);
-</code>
-
-Vous pouvez alors taper l'adresse de votre site dans votre navigateur
+Vous pouvez taper l'adresse de votre site dans votre navigateur
 (http://www.monsite.com par exemple, ou http://localhost/)

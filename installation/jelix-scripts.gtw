@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:installation/jelix-scripts~~
 
-Jelix est fourni avec plusieurs scripts, dont @@F@bin/create-jelix-app.php@@,
+Jelix est fourni avec plusieurs scripts, dont @@F@bin/create-jelix-app@@,
 qui permet de créer facilement une nouvelle application, et @@F@cmd.php@@
 installé dans l'application créé, qui permet de modifier facilement des éléments
 du projet, ou de réaliser des actions sur le projet.
@@ -160,24 +160,6 @@ Utilisez la commande @@list@@ pour voir la liste de toutes les commandes disponi
    php cmd.php list
 </code>
 
-
-==== l'option --ep ====
-
-Quand une application a plusieurs points d'entrées (index.php, admin.php etc..),
-il est utile pour certaines commandes d'indiquer pour quel point d'entrée elle
-doit s'appliquer. Il faut alors indiquer le nom de ce point d'entrée avec
-l'option @@--ep@@ :
-
-<code bash>
-  php cmd.php module:install --ep admin foo
-</code>
-
-Cela installera le module foo, uniquement pour le point d'entrée admin de
-l'application.
-
-Le point d'entrée doit être déclaré dans le fichier project.xml de l'application
-pour que cela fonctionne.
-
 ==== l'option -v ====
 
 Elle vous permet d'afficher les détails de ce qu'à fait la commande après son
@@ -223,7 +205,7 @@ Voici une liste non exhaustive des commandes jelix-scripts
 
    * Utilisation Générale :
 <code>
-php cmd.php COMMANDE [-v] [--ep ENTRYPOINT] [OPTIONS] [PARAMETRES]
+php cmd.php COMMANDE [-v] [OPTIONS] [PARAMETRES]
 </code>
    * Création d'un module
 <code>
@@ -253,4 +235,5 @@ php cmd.php module:create-dao-crud <le_module> <la_table> <le_nom_du_controleur>
 
 Tapez @@php cmd.php help@@ pour avoir l'aide générale ou @@php cmd.php list@@
 pour afficher la liste complète des commandes et le détails de leurs paramètres.
+D'autres chapitres du manuel vous expliqueront l'utilisation de certaines commandes.
 

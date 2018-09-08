@@ -11,12 +11,8 @@ PHP, veillez à installer le paquet correspondant.
 Vous pouvez installer aussi un connecteur de base de données. Jelix prend en
 charge MySQL 5.5+, PostgreSQL 9.0+, SQLite 3, Oracle, SQL server et PDO.
 
-**Pour tester la compatibilité de votre serveur** avec Jelix, installez sur
-votre site le fichier @@F@lib/jelix_check_server.php@@ livré avec jelix,
-et appelez le via votre navigateur (exemple : @@http://example.com/jelix_check_server.php@@ ).
-La page qui s'affiche vous indiquera les extensions PHP manquantes, si la version PHP est supportée etc.
+Jelix a besoin également de la version ligne de commande (CLI) de PHP (php.exe sous
+windows). Cela vous permettra de lancer le script @@F@create-jelix-app@@,
+mais aussi les scripts qu'il dépose dans votre application, @@F@cmd.php@@ et
+@@F@console.php@@.
 
-Il est fourni des scripts à exécuter en ligne de commande, dont
-@@F@create-jelix-app.php@@ et @@F@cmd.php@@, et aidant au développement. Il vous faut
-alors aussi installer la version ligne de commande (CLI) de PHP (php.exe sous
-windows).

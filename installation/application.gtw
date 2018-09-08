@@ -1,12 +1,9 @@
 ~~LANG:EN@enman:installation/applications~~
 
 Ce chapitre explique comment installer une application existante, créée avec
-Jelix. Nous allons prendre l'installation de **testapp** en exemple mais les
-explications sont valables pour n'importe quelle application.
+Jelix.
 
-Testapp est disponible en téléchargement. C'est une application testant divers
-composants de Jelix. Elle sert principalement aux développeurs de Jelix, mais
-vous pouvez l'installer pour voir des exemples d'utilisation.
+Imaginons que l'on veuille installer une application nommée 'testapp'.
 
 ===== Installation des fichiers =====
 
@@ -15,8 +12,9 @@ L'application peut être fournie sous forme d'une archive zip ou gz. Il est
 gestionnaire de code source (git, mercurial, subversion...). Ou encore que les
 sources soient copiées et mise à jour sur le serveur par des outils de déploiement.
 
-Quelle que soit la méthode utilisée, vous obtenez les répertoires suivants
-dans le répertoire @@srv/@@ par exemple du serveur :
+Quelle que soit la méthode utilisée, vous aurez un répertoire, nommé 'testapp'
+par exemple, que vous installez dans le répertoire @@srv/@@ par exemple de votre
+serveur. Vous obtenez les répertoires suivants :
 
 <code>
   /srv/testapp/     répertoire de l'application
@@ -69,8 +67,8 @@ avec l'application.
 ==== Avec un assistant d'installation ====
 
 Un script @@F@testapp/www/install.php@@ peut être fourni. Il s'agit alors très
-probablement d'un script d'installation se lançant via le navigateur (un
-wizard). Ouvrez donc votre navigateur, et taper l'url de votre application, par
+probablement d'un script d'installation se lançant via le navigateur, donc une
+page web. Ouvrez donc votre navigateur, et taper l'url de votre application, par
 exemple @@http://www.monsite.com/install.php@@. Suivez alors les instructions.
 Un wizard bien conçu modifiera pour vous les fichiers de configuration, comme
 pour la connexion à la base de données, et d'autres paramètres, après vous avoir

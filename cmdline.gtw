@@ -22,7 +22,7 @@ Le point d'entrée se crée lors de la création de l'application avec le script
 @@c@create-jelix-app@@ ou n'importe quand avec la commande @@c@app:createentrypoint@@.
 
 <code bash>
-php bin/create-jelix-app.php --withcmdline myapp
+php bin/create-jelix-app --withcmdline myapp
 </code>
 
 Avec ce script, vous allez créer la structure d'une nouvelle application qui

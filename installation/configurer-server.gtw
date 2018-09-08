@@ -36,8 +36,9 @@ le répertoire @@F@myapp/www/@@ comme étant la racine du site. Cela peut se fai
 soit en modifiant les fichiers de configuration du serveur web (un "virtual host")
 soit via une interface d'administration comme le proposent certains hébergeurs,
 
-Il faut aussi que le contenu de @@F@lib/jelix-www/@@ fournit avec Jelix soit
-accessible depuis le web, via par exemple le chemin d'URL @@jelix/@@. Cela peut être un
+Si votre application ne contient pas de répertoire @@www/jelix@@, alors
+il faut aussi que le contenu de @@F@lib/jelix-www/@@ fournit avec Jelix soit
+accessible depuis le web, via le chemin d'URL @@jelix/@@. Cela peut être un
 alias définit dans la configuration serveur ou un lien symbolique dans le répertoire
 @@www/@@.
 
@@ -59,7 +60,7 @@ application @@myapp/@@ dans @@F@/srv/monsite/@@.
 
 Vous indiquerez dans un fichier @@F@monsite.com.conf@@, une configuration
 qui ressemble à cela, avec la spécification du document root, et celle
-de l'alias jelix :
+de l'alias jelix si nécessaire :
 
 <code htaccess>
    <VirtualHost *>
@@ -81,6 +82,8 @@ de l'alias jelix :
         # commentez cette ligne si vous utilisez Apache 2.2 ou inférieur
         Require all granted
       </Directory>
+
+      # définir les alias jelix, si il n'y a pas de répertoire myapp/www/jelix
 
       # ----- Alias jelix vers jelix-wwww si Jelix est installé avec Composer
       Alias /jelix/ "/srv/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/"
@@ -133,6 +136,7 @@ server {
         try_files $uri $uri/ =404;
     }
 
+    # à supprimer si il y a un répertoire myapp/www/jelix
     location /jelix/ {
         alias /srv/monsite/myapp/vendor/jelix/jelix/lib/jelix-www/;
 

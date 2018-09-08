@@ -273,6 +273,7 @@ téléchargeables classiquement.
 
 Voici la liste de ces modules et plugins :
 
+  * Le module jSoap : [[https://packagist.org/packages/jelix/soap-server-module|jelix/soap-server-module]]
   * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
   * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
   * Le plugin Redis pour jKVDb et jCache reposant sur la classe PhpRedis : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
@@ -284,7 +285,6 @@ Voici la liste de ces modules et plugins :
 leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'agit de :
 
   * [[https://packagist.org/packages/jelix/fakeserverconf|FakeServerConf]]
-  * [[https://packagist.org/packages/jelix/soap-server-module|le module jSoap]]
   * [[https://packagist.org/packages/jelix/feeds-module|un nouveau module jFeeds]] comportant les classes
     et réponse pour générer des fils RSS et ATOM
   * [[https://packagist.org/packages/jelix/castor|la version standalone de jTpl, Castor]]

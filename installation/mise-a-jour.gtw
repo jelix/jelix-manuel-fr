@@ -73,8 +73,9 @@ l'application.
 
 La deuxième étape est de mettre à jour les fichiers de votre application. Vous
 pourriez uploader les fichiers dans le répertoire, par FTP, SCP ou d'autres
-outils comme des outils de déploiement automatique. Vous pourriez aussi faire la mise à jour avec votre gestionnaire de
-source favoris (@@svn update@@, @@hg pull -u@@, @@git pull -u@@...).
+outils comme des outils de déploiement automatique. Vous pourriez aussi faire
+la mise à jour avec votre gestionnaire de source favoris (@@svn update@@,
+@@hg pull -u@@, @@git pull -u@@...).
 
 Si vous faite la mise à jour manuellement, n'oubliez pas de supprimer les
 fichiers obsolètes.
