@@ -1,4 +1,4 @@
-~~LANG:EN@enman:create-wizard~~
+~~LANG:EN@enman:configurator-installer/create-wizard~~
 
 Une application, "installWizard", est fournie avec Jelix. Elle permet de créer
 un assistant, pour installer une application Jelix aisément, avec un navigateur.

@@ -20,7 +20,7 @@ le système de fichier. Et vous pouvez développer votre propre pilote.
 
 Pour utiliser jCache, il faut d'abord spécifier les paramètres de configuration
 du système dans le fichier @@F@profiles.ini.php@@ situé dans @@F@var/config/@@.
-Voir [[configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]].
+Voir [[/configuration/fichiers-configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]].
 
 Vous pouvez définir plusieurs configurations du système, que l'on nomme
 “profils”. Ainsi vous pouvez définir des configurations pour le site de

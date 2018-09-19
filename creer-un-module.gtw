@@ -1,113 +1,21 @@
 ~~LANG:EN@enman:creating-a-module~~
 
-Un module est un répertoire dans lequel il y a une arborescence précise. Les
-modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe
-de modules, ou aussi dépôt de modules. 
-
-===== Déclarer un dépôt de module =====
-
-Pour avoir accès aux modules, il faut déclarer ces dépôts de modules avec
-@@C@jApp@@ ou dans le fichier composer.json si vous avez installé
-Jelix avec Composer. (dans les versions 1.6 et inférieurs, c'était dans la
-configuration, avec la propriété @@V@modulesPath@@).
-
-Un exemple avec @@C@jApp@@ dans le script @@application.init.php@@ :
-
-<code php>
-   jApp::declareModulesDir(__DIR__.'/modules/');
-</code>
-  
-On déclare ici un dépôt de modules : le répertoire @@F@modules/@@ de l'application.
-
-Tous les modules se trouvant dans ce répertoire pourront être activés
-dans l'application.
-
-Si vous avez installé Jelix avec Composer, vous avez une autre alternative :
-déclarer ces répertoires dans le fichier composer.json de l'application. Cette
-solution est fortement recommandée pour les paquets Composer fournissant des modules
-pour Jelix: vous déclarez alors les modules dans le fichier composer.json des paquets
-et seront automatiquement pris en compte.
-
-<code json>
-{
-   ...
-   "extra" : {
-      "jelix": {
-         "modules-dir" : [
-            "modules/",
-         ]
-      }
-   }
-}
-</code>
-
-Ici on déclare le répertoire @@F@modules/@@ qui est situé dans le même répertoire que
-le @@F@composer.json@@.
-
-Notez que les répertoires de modules fournis avec le paquet Jelix sont automatiquement
-déclarés.
-
-
-===== Déclarer un module seul =====
-
-Tout comme les dépots de modules, vous pouvez déclarer directement le répertoire de module
-via @@C@jApp@@ ou dans le fichier composer.json de l'application ou celui du paquet composer
-fournissant le module.
-
-<code php>
-   jApp::declareModule(__DIR__.'/mon_module/');
-</code>
-
-ou encore :
-
-<code json>
-{
-   ...
-   "extra" : {
-      "jelix": {
-         "modules" : [
-            "mon_module/",
-         ]
-      }
-   }
-}
-</code>
-
-
-===== Arborescence d'un module =====
-
-Un module est un répertoire contenant au moins un fichier [[configuration#module.xml|module.xml]],
-qui contient certaines informations à propos de ce module : version, dépendances... 
-
-Et vous avez un certain nombre de répertoires, en fonction de ce que fourni le module, et
-contenant chacun des fichiers spécifiques. Voici les répertoires possibles :
-
-; @@F@controllers/@@ : les classes utilisées lorsque les URLs correspondantes sont appellées
-; @@F@classes/@@ : classes métiers, utilitaires, listener pour les évènements...
-; @@F@templates/@@ : fichier des contenus à envoyer au navigateur
-; @@F@responses/@@ : objets réponses que le module peut fournir pour l'application entière
-; @@F@locales/@@ : fichiers "properties", contenant les traductions pour les templates ou controleurs
-; @@F@zones/@@ : classes gérant des parties de pages HTML
-; @@F@daos/@@ : fichiers de mapping avec une base de données
-; @@F@forms/@@ : fichiers déclarant les formulaires
-; @@F@install/@@ : scripts d'installation et de mise à jour pour le module
-; @@F@scripts/@@ : scripts à lancer en ligne de commandes
-; @@F@plugins/@@ : plugins pour les divers composants de Jelix (jDb, jTpl...)
-; @@F@www/@@ : images, CSS, fichiers Javascripts. Ces fichiers peuvent être
-               utilisés par un navigateur, en appelant un contrôleur spécifique du module "jelix"
-               (comme indiqué sur la page [[vues/vue-html#ajouter-des-feuilles-de-styles-fichiers-javascript-images|Générer une page HTML5]])
-; @@F@tests/@@ : tests unitaires pour PHPUnit.
-
-
+Un module est un répertoire dans lequel il y a un certain nombre de classes
+et de fichiers qui concernent en général un domain fonctionnel précis.
+Ces fichiers sont organisés selon un arborescence prédéfinie, comme indiqué
+plus loin.
 
 ===== Créer un module =====
 
-Le principe : il suffit de créer un répertoire dans un dépôt, avec un nom
-précis, et d'y mettre les contrôleurs, les daos et tout ce qu'il faut dans leurs
-sous-répertoires respectifs.
+Le principe : il suffit de créer un répertoire dans un dépôt de module,
+avec un nom précis, et d'y mettre les contrôleurs, autres composants et tout ce
+qu'il faut dans leurs sous-répertoires respectifs.
 
-Le plus simple est encore d'utiliser la commande @@c@module:create@@. Dans votre
-application :
+Le "dépôt" de module doit avoir au préalable été déclaré. Voir la section sur
+[[/configuration/repertoires-de-modules|les répertoires de modules]].
+
+Le plus simple pour créer un module est d'utiliser la commande @@c@module:create@@.
+Dans votre application :
 
 <code bash>
 php cmd.php module:create monmodule
@@ -133,8 +41,8 @@ Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/
 php cmd.php module:create supermodule ../lib/shared-modules/
 </code>
 
-Voir l'aide en ligne de la commande @@c@module:create@@ pour connaître d'autres
-options.
+Voir l'aide de la commande @@c@module:create@@ (avec @@--help@@) pour connaître
+d'autres options.
 
 ===== Indiquer le numéro de version et les dépendances =====
 
@@ -170,5 +78,30 @@ Les attributs @@A@minversion@@ et @@A@maxversion@@ sont facultatifs.
 
 
 Pour plus de détails sur le contenu de module.xml,
-[[configuration#module.xml|lisez le chapitre correspondant]].
+[[/configuration/fichiers-configuration#module.xml|lisez le chapitre correspondant]].
+
+
+===== Arborescence d'un module =====
+
+Un module est un répertoire contenant au moins un fichier [[/configuration/fichiers-configuration#module.xml|module.xml]],
+qui contient certaines informations à propos de ce module : version, dépendances...
+
+Et vous avez un certain nombre de répertoires, en fonction de ce que fourni le module, et
+contenant chacun des fichiers spécifiques. Voici les répertoires possibles :
+
+; @@F@controllers/@@ : les classes utilisées lorsque les URLs correspondantes sont appellées
+; @@F@classes/@@ : classes métiers, utilitaires, listener pour les évènements...
+; @@F@templates/@@ : fichier des contenus à envoyer au navigateur
+; @@F@responses/@@ : objets réponses que le module peut fournir pour l'application entière
+; @@F@locales/@@ : fichiers "properties", contenant les traductions pour les templates ou controleurs
+; @@F@zones/@@ : classes gérant des parties de pages HTML
+; @@F@daos/@@ : fichiers de mapping avec une base de données
+; @@F@forms/@@ : fichiers déclarant les formulaires
+; @@F@install/@@ : scripts d'installation et de mise à jour pour le module
+; @@F@scripts/@@ : scripts à lancer en ligne de commandes
+; @@F@plugins/@@ : plugins pour les divers composants de Jelix (jDb, jTpl...)
+; @@F@www/@@ : images, CSS, fichiers Javascripts. Ces fichiers peuvent être
+               utilisés par un navigateur, en appelant un contrôleur spécifique du module "jelix"
+               (comme indiqué sur la page [[vues/vue-html#ajouter-des-feuilles-de-styles-fichiers-javascript-images|Générer une page HTML5]])
+; @@F@tests/@@ : tests unitaires pour PHPUnit.
 

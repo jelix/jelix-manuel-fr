@@ -71,7 +71,7 @@ sont utilisées. Vous devez donc l'activer.
   php.exe cmd.php module:install jsoap
 </code>
 
-(pour plus d'information : [[/installer-un-module|Installer un module]])
+(Pour plus d'information : [[/configurateur-installateur/installer-un-module|Installer un module]])
 
 Ce module inclus également tout ce qu'il faut pour faire du WSDL (voir plus bas).
 

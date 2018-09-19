@@ -10,7 +10,7 @@ l'affichage. Aussi les méthodes de vos contrôleurs s'en trouveront allégées 
 les traitements réutilisables dans d'autres actions.
 
 Elles peuvent être instanciée par jClasses (un "loader" de classes, plus ou
-moin obsolète), ou instanciée normalement, le chargement de la classe utilisant
+moins obsolète), ou instanciée normalement, le chargement de la classe utilisant
 le mécanisme d'autoload de Jelix.
 
 

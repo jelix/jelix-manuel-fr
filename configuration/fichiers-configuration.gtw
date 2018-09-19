@@ -117,15 +117,6 @@ qui sont fusionnés par Jelix au fichier mainconfig.ini.php à l'execution.
 Ce fichier contient les paramètres de configuration communs à tous les points
 d'entrée ou environnements, et également les valeurs par défaut.
 
-==== @@<entrypoint>/config.ini.php@@  ====
-
-Il s'agit d'un fichier de configuration spécifique à un point d'entrée. Il ne
-contiendra donc que les valeurs spécifiques pour le point d'entrée,
-et peut bien sûr redéfinir des paramètres définis dans le fichier commun.
-
-Il peut y avoir un exemplaire dans @@F@app/config/@@ mais aussi dans
-@@F@var/config@@ si il y a des paramètres propres à l'environnement
-du serveur.
 
 Exemple d'un fichier @@F@mainconfig.ini.php@@ (extrait) :
 
@@ -147,6 +138,17 @@ jauth = 2
 ...
 
 </code>
+
+
+==== @@<entrypoint>/config.ini.php@@  ====
+
+Il s'agit d'un fichier de configuration spécifique à un point d'entrée. Il ne
+contiendra donc que les valeurs spécifiques pour le point d'entrée,
+et peut bien sûr redéfinir des paramètres définis dans le fichier commun.
+
+Il peut y avoir un exemplaire dans @@F@app/config/@@ mais aussi dans
+@@F@var/config@@ si il y a des paramètres propres à l'environnement
+du serveur.
 
 Pour les requêtes classiques, passant par @@F@index.php@@, on pourrait avoir le
 fichier @@F@app/config/index/config.ini.php@@. On le met ici dans un
@@ -174,7 +176,7 @@ de ce fichier "écrasent" ceux de @@F@mainconfig.ini.php@@.
 
 Bien entendu, en général, ce fichier n'est pas dans votre dépôt de code source.
 
-=== @@var/config/liveconfig.ini.php@@ ===
+==== @@var/config/liveconfig.ini.php@@ ====
 
 Depuis Jelix 1.6.18, un fichier @@F@liveconfig.ini.php@@ permet de stocker les
 paramètres qui sont modifiés durant la vie de l'application. Il ne doit donc pas
@@ -182,7 +184,7 @@ paramètres qui sont modifiés durant la vie de l'application. Il ne doit donc p
 "écrasent" ceux des autres fichiers @@F@mainconfig.ini.php@@,
 @@F@localconfig.ini.php@@ et celui du point d'entrée.
 
-=== Comment sont-ils lu ? ===
+==== Comment sont-ils lu ? ====
 
 Il faut savoir qu'il existe un fichier @@F@defaultconfig.ini.php@@,
 situé dans les sources de Jelix (dans @@F@lib/jelix/core/@@). Il contient une
@@ -193,8 +195,8 @@ dans l'ordre suivant et les fusionne :
 
   - @@F@lib/jelix/core/defaultconfig.ini.php@@,
   - @@F@app/config/mainconfig.ini.php@@
-  - @@F@var/config/localconfig.ini.php@@
   - @@F@app/config/<entrypoint>/config.ini.php@@
+  - @@F@var/config/localconfig.ini.php@@
   - @@F@var/config/<entrypoint>/config.ini.php@@
   - @@F@var/config/liveconfig.ini.php@@
 

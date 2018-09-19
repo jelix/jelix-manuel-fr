@@ -1,0 +1,6 @@
+~~LANG:EN@enman:configurator-installer/~~
+
+Jelix fournit un système de configuration et d'installation automatique qui
+permet d'exécuter des scripts de modules lorsque vous integrez un module dans
+une application, ou quand vous installez l'application sur un serveur.
+

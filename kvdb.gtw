@@ -5,7 +5,7 @@ moins complexes que les bases de données SQL.
 
 Vous avez @@C@jKVDb@@ dont vous pouvez récupérer un connecteur à une base de
 données clé-valeur. Tout comme jDb, il y a des profiles définis dans un fichier
-@@F@profiles.ini.php@@ (Voir [[configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]),
+@@F@profiles.ini.php@@ (Voir [[/configuration/fichiers-configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]]),
 où vous pouvez définir des paramètres pour vous connecter à ces bases de
 données.
 

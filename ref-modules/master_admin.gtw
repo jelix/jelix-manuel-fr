@@ -22,8 +22,8 @@ par quel point d'entrée il est accessible.
 
 Si l'administration a un point d'entrée spécifique, comme admin.php par défaut,
 et si votre module est déstiné à être utilisé dans cette interface d'administration,
-vous devez indiquer dans la configuration que ce module est accessible
-uniquement via ce point d'entrée.
+vous devez indiquer dans le fichier urls.xml, dans la section correspondante
+à ce point d'entrée, les urls permettant d'accéder au module.
 
 Par exemple, voici une configuration basique dans le fichier @@var/config/urls.xml@@,
 pour une interface d'administration dans laquelle vous voulez gérer les utilisateurs

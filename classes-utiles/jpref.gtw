@@ -10,12 +10,10 @@ préférences de configuration fixes qui, elles, se trouvent dans le
 
 ==== Configuration ====
 
-@@C@jPref@@ est fourni par le module "jpref". Activez-le dans votre
-configuration :
+@@C@jPref@@ est fourni par le module "jpref". Activez-le en lançant :
 
-<code ini>
-[modules]
-jpref.access = 1
+<code bash>
+php cmd.php module:configure jpref
 </code>
 
 Et lancez l'installateur de votre application.

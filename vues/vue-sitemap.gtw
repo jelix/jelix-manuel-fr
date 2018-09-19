@@ -14,11 +14,10 @@ de zip sur le site de téléchargement de Jelix, soit installable via Composer :
 composer require "jelix/sitemap-module"
 </code>
 
-Déclarez ensuite le module dans la configuration de l'application :
+Configurez et activez ensuite le module dans l'application :
 
-<code ini>
-[modules]
-jsitemap.access=1
+<code bash>
+php cmd.php module:configure jsitemap
 </code>
 
 Ensuite lancez l'installation :
