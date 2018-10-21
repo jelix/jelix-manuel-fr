@@ -40,6 +40,8 @@ Principales nouveautés apportées par la version 1.6 :
   * Mise à jour de TCPDF
   * Mise à jour de jQuery 1.10.2 et jQueryUI 1.9.1
 
+Notez aussi qu'il n'y a plus d'édition Gold du framework.
+
 Nouveautés sur la version 1.6.1 et 1.6.2 :
 
   * Support de 'busytimeout' et des extensions sqlite dans le plugin sqlite3 pour jDb
@@ -145,7 +147,18 @@ Nouveautés sur la version 1.6.18 :
   * prise en charge d'un nouveau fichier de configuration @@liveconfig.ini.php@@
     pour stocker les paramètres changeant de l'application.
 
+Nouveautés sur la version 1.6.19 :
 
-Notez aussi qu'il n'y a plus d'édition Gold du framework.
+  * prise en charge des scripts install_1_6.php dans les modules qui veulent
+    être compatible à la fois avec Jelix 1.7 (qui a une API d'installation différente)
+    et Jelix 1.6
+  * prise en charge d'un fichier upgrade.php dans les modules pour executer
+    des processus à chaque mise à jour.
+  * jForms : prise en charge des attributs @@capture@@ et @@accept@@ sur @@<upload>@@
+  * jForms : quelques améliorations sur HtmlBuilder et WidgetBase (nouvelles
+    propriétés etc) pour faciliter la création d'autres builder et widgets.
+  * Nouveau plugins de templates dumptolog, vardump, ifctrl_value, json_encode, jurlpattern
+
+
 
 Contributeurs à Jelix 1.6 : Olivier Demah, Philippe Villiers, Eric D., JulienI, Couac, Brice Tence, Khena, René-luc D'hont.

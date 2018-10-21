@@ -571,6 +571,8 @@ et @@A@required@@.
 Deux attributs supplémentaires sont à votre disposition, pour contrôler la
 nature et la taille des fichiers, qui sont respectivement @@A@mimetype@@ (devant
 contenir un ou plusieurs type mime) et @@A@maxsize@@ (taille en octets).
+Depuis Jelix 1.6.19, les attributs @@capture@@ et @@accept@@ (même finalité que
+les attributs html de même nom), sont également pris en charge.
 
 Attention : sous IE, le type-mime des images .jpg et .jpeg sont considéré comme
 du Progressive JPEG, soit image/pjpeg. Assurez vous de rajouter ce type-mime en

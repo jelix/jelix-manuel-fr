@@ -103,6 +103,17 @@ class newsModuleInstaller extends jInstallerModule {
 qui vous aideront à accéder à la base de données, aux fichiers de configuration
 etc..
 
+Note: dans Jelix 1.7, l'API pour l'installateur a été changée. Jelix 1.7
+prend en charge les install.php de Jelix 1.6. Mais si vous voulez
+faire un module dont l'installateur profite des améliorations de
+la version 1.7, mais continue à fonctionner dans jelix 1.6, il faut alors
+réaliser en fait 2 scripts : install.php qui utilisera l'API de Jelix 1.7, et
+install_1_6.php qui est développé comme indiqué dans cette documentation.
+Jelix 1.6.19 et plus savent prendre en charge install_1_6.php, c'est à dire que
+si install_1_6.php est présent, Jelix 1.6.19 l'executera plutôt que install.php.
+
+
+
 ==== Méthodes ou propriétés principales ====
 
 Voici quelques propriétés ou méthodes que vous pouvez utiliser :
@@ -220,7 +231,9 @@ Pour lire les paramètres depuis le script d'installation, vous avez la méthode
   }
 </code>
 
+
 ===== Scripts de mise à jour d'un module =====
+
 
 Ces scripts ont des noms de fichiers spécifiques. Ils doivent avoir pour nom
 @@F@upgrade_{label}.php@@ où @@{label}@@ doit être remplacé par un nom qui sera
@@ -303,3 +316,16 @@ censé déjà inclure la modification apportée par la 1.2.4. Et il le sait en
 comparant la date des versions que l'utilisateur a installé à l'origine, celle
 des versions qu'il utilise actuellement, et celle des versions qu'il va
 installer.
+
+===== Script global de mise à jour d'un module =====
+
+Depuis Jelix 1.6.19, une fonctionnalité de Jelix 1.7 a été ajouté: la possibilité
+d'avoir un script global de mise à jour, @@upgrade.php@@, c'est à dire un
+script executé à chaque lancement de l'installateur Jelix, quand le module
+change de version. Cela évite de devoir faire les mêmes scripts de mises à jour
+à chaque nouvelle version.
+
+Tout comme les autres scripts de mise à jour, @@upgrade.php@@ doit contenir
+une classe qui hérite de @@jInstallerModule@@. Cependant son nom ne contient
+pas de suffixe, simplement @@{module}ModuleUpgrader@@, où @@{module}@@ doit être
+le nom du module.
