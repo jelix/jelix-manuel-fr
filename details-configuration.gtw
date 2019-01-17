@@ -360,8 +360,14 @@ Détails des paramètres :
     application, indiquez /aaa/bbb/www si vous accédez à votre application par
     http://foo.com/aaa/bbb/www/index.php, ou indiquez juste / si l'accès se fait
     via http://foo.com/index.php
-  * **jelixWWWPath** : contient le chemin vers les CSS de Jelix, si vous le
-       modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
+  * **jelixWWWPath** : contient le chemin web vers les CSS et JS de Jelix (contenu
+    de @@lib/jelix-www/@@. Si vous le modifiez voyez également les chemins du **[[configuration#section-htmleditors|htmleditors]]**
+  * **jqueryPath** : contient le chemin web vers les fichiers jQuery de Jelix.
+    vous pouvez le modifier si vous fournissez d'autres fichiers jQuery/jQueryUI,
+    mais le nouveau répertoire doit avoir la même structure et les mêmes noms
+    de fichiers que le celui de jelix/jquery. Toutefois, ce paramètre est
+    obsolète depuis Jelix 1.6.20, car il y a depuis, un autre moyen de spécifier
+    vos propres fichiers jQuery. Voir la section jquery plus bas.
   * **defaultEntrypoint** : contient le nom du pont d'entrée de l'application
   * **simple_urlengine_https** : contient la liste des actions requérant le
     protocole HTTPS
@@ -383,19 +389,8 @@ et placer le sélecteur de votre action entre guillemet :
 
 <code ini>
 notfoundAct = "monModule~monControleur:monAction"	
-</code> 
+</code>
 
-===  urls.xml ===
-
-Nom du fichier contenant le mapping entre l'URL tappée dans le navigateur et
-Module/action/parametres, voir la documentation du le [[/urls/significant|moteur significant]] 
-
-<code ini>
-significantFile = "urls.xml" 
-</code> 
-
-  * **significantFile** : nom du fichier contenant les regles de réécritures de
-l'application
 
 ==== section logfiles ====
 
@@ -515,21 +510,77 @@ shared_session = off
 
 ==== section forms ====
 
-définition de la forme du datepicker
+Contient des paramètres de configuration pour les widgets html de jForms.
 
+Tout d'abord pour le widget du datepicker
 <code ini>                                                                                                    
 [forms]
 ; define input type for datetime widgets : "textboxes" or "menulists"
 controls.datetime.input = "menulists"
+
 ; define the way month labels are displayed widgets: "numbers", "names" or "shortnames"
 controls.datetime.months.labels = "names"
+
 ; define the default config for datepickers in jforms
 datepicker = default
+datetimepicker = default
 </code>
-definition du chemin du javascript vers le datepicker
+
+Ensuite pour le captcha, où on définit différent type de captcha (ici @@simple@@
+et @@recaptcha@@), avec pour chacun le nom de la classe qui valide le captcha,
+le nom du widget qui affiche le captcha. Et on indique le type de captcha
+utilisé par défaut.
+
+<code ini>
+; default captcha type
+captcha = simple
+
+captcha.simple.validator=\jelix\forms\Captcha\SimpleCaptchaValidator
+captcha.simple.widgettype=captcha
+
+captcha.recaptcha.validator=\jelix\forms\Captcha\ReCaptchaValidator
+captcha.recaptcha.widgettype=recaptcha
+</code>
+
+
+==== section jquery ====
+
+Disponible depuis Jelix 1.6.20. Il est possible d'indiquer le chemin web
+du fichier jquery et ceux des fichiers de jQueryUI, permettant ainsi d'utiliser
+des versions plus récentes de ces bibliothèques, si besoin.
+
+<code ini>
+[jquery]
+jquery = $jqueryPath/jquery.js
+jqueryui.js[] = $jqueryPath/ui/jquery-ui-core-widg-mous-posi.custom.min.js
+jqueryui.css[] = $jqueryPath/themes/base/jquery.ui.all.css
+</code>
+
+Pour jQueryUI, il s'agit d'indiquer un ou plusieurs fichiers si besoin, que
+ce soit pour JS ou pour CSS.
+
+Notez l'usage de la notation ressemblant à un nom de variable @@$jqueryPath@@.
+Cela sera remplacé par la valeur de @@jqueryPath@@ de la section urlengine.
+Vous pouvez aussi utiliser @@$jelix@@, qui sera remplacé par la valeur de
+@@jelixWWWPath@@ de la section urlengine. Vous pouvez tout aussi mettre
+directement un chemin relatif au basePath, ou un chemin absolu.
+
+==== section datepickers et datetimepickers ===
+
+Pour chaque type de datepicker, on indique le fichier d'initialisation de jforms,
+(le nom du paramètre est celui du type, @@<type>=...@@).
+et la liste des fichiers JS et CSS pour faire fonctionner le datepicker,
+dans des paramètres ayant comme nom @@<type>.js[]=...@@ et @@<type>.css[]=...@@.
+Ces deux paramètres sont supportés depuis Jelix 1.6.20.
+
 <code ini>
 [datepickers]
 default = jelix/js/jforms/datepickers/default/init.js
+default.js[]=$jqueryPath/ui/jquery-ui-core-widg-mous-posi.custom.min.js
+default.js[]=$jqueryPath/ui/jquery.ui.datepicker.min.js
+default.js[]=$jelix/js/jforms/datepickers/default/ui.$lang.js
+default.js[]=$jqueryPath/ui/i18n/jquery.ui.datepicker-$lang.js
+default.css[]=$jqueryPath/themes/base/jquery.ui.all.css
 </code>
 
 ==== section htmleditors ====
@@ -539,19 +590,12 @@ définition du chemin de l'editeur html
 <code ini>
 [htmleditors]
 default.engine.name = wymeditor
-default.engine.file[] = jelix/jquery/jquery.js
-default.engine.file[] = jelix/wymeditor/jquery.wymeditor.js
-default.config = jelix/wymeditor/config/default.js
-default.skin.default  = jelix/wymeditor/skins/default/screen.css
+default.engine.file[] = $jelix/jquery/jquery.js
+default.engine.file[] = $jelix/wymeditor/jquery.wymeditor.js
+default.config = $jelix/wymeditor/config/default.js
+default.skin.default  = $jelix/wymeditor/skins/default/screen.css
 </code>
 
-==== section classbindings ====
-
-Rôle : FIXME
-<code ini>
-[classbindings]
-; bindings for class and interfaces : selector_of_class/iface = selector_of_implementation
-</code>
 
 ==== section wikieditors ====
 
@@ -567,4 +611,6 @@ default.engine.file = jelix/markitup/jquery.markitup.js
 default.config.path = jelix/markitup/sets/wr3/
 ; define the path to the image of buttons of the toolbar
 default.image.path = jelix/markitup/sets/wr3/images/
-default.skin = jelix/markitup/skins/simple/style.css                                     </code>                                                                                                   
+default.skin = jelix/markitup/skins/simple/style.css
+</code>
+
