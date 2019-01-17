@@ -75,7 +75,7 @@ Vous obtiendrez :
 Note : vous pouvez indiquer un autre nom que "jelix" pour ce renommage. Vous
 devez alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
 configuration de l'application, @@F@myapp/var/config/localconfig.ini.php@@
-ou @@F@myapp/app/config/mainconfig.ini.php@@,
+ou @@F@myapp/app/system/mainconfig.ini.php@@,
 section @@urlengine@@.
 
 **Attention : il est fortement recommandé de ne pas mettre vos propres scripts

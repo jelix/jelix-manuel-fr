@@ -279,7 +279,7 @@ moment, il suffit de faire comme d'habitude :
 </code>
 
 
-Pour utiliser le plugin, ajouter cette section dans @@F@app/config/mainconfig.ini.php@@
+Pour utiliser le plugin, ajouter cette section dans @@F@app/system/mainconfig.ini.php@@
 ou le fichier de configuration de l'un des points d'entrée :
 
 <code ini>

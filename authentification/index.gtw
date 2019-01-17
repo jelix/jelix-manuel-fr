@@ -58,14 +58,14 @@ $ php cmd.php module:install jauth
 </code>
 
 Cela activera le module et le plugin, et creera un nouveau fichier
-@@F@app/config/index/auth.coord.ini.php@@, qui est la configuration du plugin et
+@@F@app/system/index/auth.coord.ini.php@@, qui est la configuration du plugin et
 du système d'authentification.
 
 
 ==== Installation à la main ====
 
 Copiez le fichier @@F@lib/jelix-modules/jauth/install/var/config/auth.coord.ini.php@@ dans le
-repertoire de configuration du point d'entrée, par exemple, @@F@app/config/index/auth.coord.ini.php@@.
+repertoire de configuration du point d'entrée, par exemple, @@F@app/system/index/auth.coord.ini.php@@.
 
 Dans le fichier de configuration du point d'entrée, vous indiquerez alors dans
 la section @@coordplugins@@ :
@@ -359,7 +359,7 @@ et/ou @@enable_after_logout_override@@ à @@L@on@@.
 
 Le module jauth fourni un fichier d'urls. Si vous le souhaitez, vous pouvez
 l'utiliser pour le mapping de vos urls, en le déclarant
-dans votre fichier @@F@app/config/urls.xml@@ la ligne
+dans votre fichier @@F@app/system/urls.xml@@ la ligne
 @@<url pathinfo="/auth" module="jauth" include="urls.xml"/>@@.
 
 

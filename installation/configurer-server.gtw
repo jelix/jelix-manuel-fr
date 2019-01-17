@@ -180,7 +180,7 @@ avoir dans @@V@$_SERVER['PATH_INFO']@@ la chaine "/foo/bar".
 Vous pouvez indiquer un autre nom que "jelix" pour l'alias. Vous devez
 alors l'indiquer dans l'option @@V@jelixWWWPath@@ dans le fichier de
 configuration de l'application @@F@var/config/localconfig.ini.php@@, ou
-@@F@app/config/mainconfig.ini.php@@, section @@urlengine@@.
+@@F@app/system/mainconfig.ini.php@@, section @@urlengine@@.
 
 ==== Spécifier le basePath ====
 

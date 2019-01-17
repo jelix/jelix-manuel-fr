@@ -415,7 +415,7 @@ En particulier :
   * Deplacement des sections @@[modules]@@ des configurations des points d'entrée
     vers @@mainconfig.ini.php@@
   * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
-  * **Déplacement des fichiers de configuration** suivants vers app/config :
+  * **Déplacement des fichiers de configuration** suivants vers app/system :
      * mainconfig.ini.php, urls.xml, preferences.ini.php
      * ceux des points d'entrées
      * fichiers de configuration des plugins du coordinateur

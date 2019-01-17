@@ -62,7 +62,7 @@ séparer l'application en deux.
 
 Les modules d'administration ne devraient être accessible que par le point
 d'entrée dédié à l'administration. Il faut donc déclarer ces modules dans le
-fichier @@F@app/config/urls.xml@@, au niveau du point d'entrée correspondant.
+fichier @@F@app/system/urls.xml@@, au niveau du point d'entrée correspondant.
 
 Par exemple :
 

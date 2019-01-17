@@ -21,7 +21,7 @@ serveur. Vous obtenez les répertoires suivants :
       install/      scripts d'installation
       modules/      modules de l'application
       plugins/      plugins de l'application
-      app/config/   fichiers de configuration statiques de l'application
+      app/system/   fichiers de configuration statiques de l'application
       app/responses/    les réponses personnalisées
       temp/
       var/          répertoire qui contient tout les fichiers créés ou susceptibles d'être modifiés par Jelix, pendant l'exécution

@@ -36,13 +36,13 @@ d'execution, (dans @@F@app/@@) de ceux qui en dépendent (dans @@F@var/@@).
 
 C'est le cas pour :
 
-    * La configuration générale, avec un nouveau répertoire @@F@app/config@@ contenant
+    * La configuration générale, avec un nouveau répertoire @@F@app/system@@ contenant
       @@F@mainconfig.ini.php@@, @@F@urls.xml@@, les fichiers de configuration
       des plugins, de SOAP etc.
       Les fichiers qui dépendent du serveur restent dans @@F@var/config@@
       (localconfig.ini.php, liveconfig.ini.php, profiles.ini.php...)
     * Les fichiers @@F@config.ini.php@@ des points d'entrées. Ils peuvent
-      être à la fois dans @@app/config/@@ et @@var/config/@@.
+      être à la fois dans @@app/system/@@ et @@var/config/@@.
     * Les répertoires @@F@overloads@@, @@F@themes@@ et @@F@locales@@. Ils sont
       maintenant dans @@F@app/@@, mais Les répertoires @@F@var/overloads@@,
       @@F@var/themes@@ et @@F@var/locales@@ sont dorénavant déstinés uniquement

@@ -25,7 +25,7 @@ un ou plusieurs loggeurs.
 
 Pour spécifier les loggeurs à utiliser pour chaque type de message, vous devez
 remplir la section @@[logger]@@ dans la configuration (pour rappel, dans le
-fichier @@F@app/config/mainconfig.ini.php@@ ou  @@F@var/config/localconfig.ini.php@@).
+fichier @@F@app/system/mainconfig.ini.php@@ ou  @@F@var/config/localconfig.ini.php@@).
 Par défaut :
 
 <code ini>

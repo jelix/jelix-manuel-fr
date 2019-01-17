@@ -19,7 +19,7 @@ module. Cependant, vous devez bien souvent les modifier pour apporter des
 renseignements supplémentaires ou changer des paramètres.
 
 Excepté @@F@project.xml@@ et les fichiers @@F@module.xml@@, les fichiers de
-configuration sont situés dans @@F@app/config/@@ pour les paramètres généraux
+configuration sont situés dans @@F@app/system/@@ pour les paramètres généraux
 (@@F@mainconfig.ini.php@@, @@F@config.ini.php@@, @@F@urls.xml@@...),
 ou @@F@var/config/@@ pour les paramètres qui dépendent de l'environnement
 serveur (@@F@localconfig.ini.php@@, @@F@profiles.ini.php@@...).
@@ -84,7 +84,7 @@ Voici un exemple:
 </module>
 </code>
 
-===== Le fichier app/config/urls.xml =====
+===== Le fichier app/system/urls.xml =====
 
 Il définit la correspondance entre des URLs et des contrôleurs.
 
@@ -106,13 +106,13 @@ Chacune de ces sections contenant une série de paramètres "nom=valeur". Il y a
 une section "générale", qui n'a pas de nom, et dont les paramètres sont en début
 du fichier.
 
-Le fichier de configuration du framework est le fichier @@F@app/config/mainconfig.ini.php@@.
+Le fichier de configuration du framework est le fichier @@F@app/system/mainconfig.ini.php@@.
 Cependant, on peut vouloir des paramètres différents pour chaque point
 d'entrée, et aussi selon l'environnement. D'où des fichiers ini additionnels
 qui sont fusionnés par Jelix au fichier mainconfig.ini.php à l'execution.
 
 
-==== @@app/config/mainconfig.ini.php@@ ====
+==== @@app/system/mainconfig.ini.php@@ ====
 
 Ce fichier contient les paramètres de configuration communs à tous les points
 d'entrée ou environnements, et également les valeurs par défaut.
@@ -146,15 +146,15 @@ Il s'agit d'un fichier de configuration spécifique à un point d'entrée. Il ne
 contiendra donc que les valeurs spécifiques pour le point d'entrée,
 et peut bien sûr redéfinir des paramètres définis dans le fichier commun.
 
-Il peut y avoir un exemplaire dans @@F@app/config/@@ mais aussi dans
+Il peut y avoir un exemplaire dans @@F@app/system/@@ mais aussi dans
 @@F@var/config@@ si il y a des paramètres propres à l'environnement
 du serveur.
 
 Pour les requêtes classiques, passant par @@F@index.php@@, on pourrait avoir le
-fichier @@F@app/config/index/config.ini.php@@. On le met ici dans un
+fichier @@F@app/system/index/config.ini.php@@. On le met ici dans un
 sous-répertoire index pour une meilleure organisation. Il peut en effet y avoir
 des fichiers de configuration de plugins propres à chaque point d'entrée, ça
-peut donc vite devenir peu lisible dans @@F@app/config/@@.
+peut donc vite devenir peu lisible dans @@F@app/system/@@.
 
 Dans ce fichier, on ne va redéfinir que certaines choses, comme par exemple :
 
@@ -194,8 +194,8 @@ Ainsi, pour connaître la valeur de tous les paramètres de configuration, Jelix
 dans l'ordre suivant et les fusionne :
 
   - @@F@lib/jelix/core/defaultconfig.ini.php@@,
-  - @@F@app/config/mainconfig.ini.php@@
-  - @@F@app/config/<entrypoint>/config.ini.php@@
+  - @@F@app/system/mainconfig.ini.php@@
+  - @@F@app/system/<entrypoint>/config.ini.php@@
   - @@F@var/config/localconfig.ini.php@@
   - @@F@var/config/<entrypoint>/config.ini.php@@
   - @@F@var/config/liveconfig.ini.php@@

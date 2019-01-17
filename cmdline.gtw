@@ -60,7 +60,7 @@ Notez les différences par rapport à un point d'entrée classique :
 
    * l'utilisation d'un objet @@C@jCmdlineCoordinator@@ au lieu de @@C@jCoordinator@@
    * l'utilisation d'un objet @@C@jCmdLineRequest@@ au lieu de @@C@jClassicRequest@@
-   * un fichier de configuration spécifique @@F@app/config/cmdline/config.ini.php@@
+   * un fichier de configuration spécifique @@F@app/system/cmdline/config.ini.php@@
 
 Il faut également déclarer le script dans le fichier @@F@project.xml@@, au
 niveau de la balise @@E@entrypoints@@ :
@@ -120,11 +120,11 @@ class defaultCtrl extends jControllerCmdLine {
 Si vous avez créé l'application avec l'option @@--withcmdline@@ le fichier de
 configuration aura été généré pour vous.
 
-Voici son emplacement : @@F@app/config/cmdline/config.ini.php@@
+Voici son emplacement : @@F@app/system/cmdline/config.ini.php@@
 
 Si le fichier n'existe pas, vous pouvez très simplement le créer à la main en
 prenant modèle sur le fichier de configuration classic
-(@@F@app/config/index/config.ini.php@@)
+(@@F@app/system/index/config.ini.php@@)
 
 
 ===== Développement d'actions =====

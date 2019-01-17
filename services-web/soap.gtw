@@ -343,7 +343,7 @@ Les classes que vous indiquez doivent être déjà chargée avec l'appel à @@jS
 
 Une alternative fournie depuis Jelix 1.5, est de déclarer ce mapping dans un fichier
 ini séparé, et d'indiquer ce fichier dans une propriété @@classmap_file@@. Ce fichier doit
-se trouver dans le répertoire @@votreappli/app/config/@@.
+se trouver dans le répertoire @@votreappli/app/system/@@.
 
 <code ini>
 [jsoapclient:default]

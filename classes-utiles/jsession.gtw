@@ -6,7 +6,7 @@ ceci, **utilisez @@$_SESSION@@ comme d'habitude**.
 
 Les paramètres du moteur de stockage de la session sont indiqués dans la section
 @@sessions@@ du fichier de configuration
-@@F@app/config/mainconfig.ini.php@@.
+@@F@app/system/mainconfig.ini.php@@.
 
 ===== Nom de la session =====
 
