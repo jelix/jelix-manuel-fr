@@ -1,0 +1,43 @@
+~~LANG:EN@enman:configurator-installer/installer-configuration~~
+
+Le système d'installation possède quelques paramètres modifiant son fonctionnement.
+
+Ces paramètres ne doivent être changé que pour des installations très particulières
+de l'application.
+
+==== Activer automatiquement tous les modules ====
+
+Si vous voulez activer tous les modules, vous pouvez mettre dans la
+section globale l'option @@enableAllModules=on@@. Les valeurs @@enabled@@ dans
+la section modules ne seront pas pris en compte et ne sont donc pas utiles.
+
+**Attention**, ne l'utilisez que si vous êtes sûr de ce que vous faîtes,
+vous pourriez activer des modules sans le savoir. À réserver donc que dans des
+cas particuliers où vous maîtrisez la gestion des modules et leur configuration.
+Faites attention par exemple aux paquets Composer qui fournissent plusieurs modules.
+
+
+==== Désactiver les scripts d'installation des modules ====
+
+Il est possible de désactiver partiellement ou complètement les installateurs
+des modules. Cela veut dire que les modules sont implicitement "installés", sans avoir à
+exécuter le script @@installer.php@@.
+
+Cependant, vous devrez installer vous même tout ce qu'il faut pour que le module
+fonctionne (base de données etc..). Cela rend plus difficile également les mises
+à jour. Il faudra donc bien savoir ce qu'il faut installer "à la main".
+
+Si vous ne voulez pas exécuter le script d'installation d'un module, indiquez-le
+avec l'option @@skipinstaller@@ et la valeur @@skip@@ pour le module en question.
+Dans la section @@modules@@ de la configuration, cela donne, pour le module "news"
+par exemple :
+
+<code>
+news.skipinstaller=skip
+</code>
+
+Pour désactiver les installateurs de tous les modules, dans la section globale
+de la configuration, mettez @@disableInstallers=on@@. Il ne sert à rien alors
+d'exécuter le script @@install/installer.php@@. Mettez à jour les sources du
+module, faites les mises à jour "à la main" (base de données etc), et c'est tout.
+

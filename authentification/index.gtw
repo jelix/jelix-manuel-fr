@@ -50,17 +50,18 @@ Pour l'activer, vous avez deux choix :
 
 ==== En installant le module jauth ====
 
-Utilisez la commande @@module:install@@ de jelix pour installer le module :
+Utilisez la commande @@module:configure@@ pour configurer le module :
 
 <code bash>
 $ cd myapp/
-$ php dev.php module:install jauth
+$ php dev.php module:configure jauth
 </code>
 
 Cela activera le module et le plugin, et creera un nouveau fichier
 @@F@app/system/index/auth.coord.ini.php@@, qui est la configuration du plugin et
 du système d'authentification.
 
+Puis lancer @@php install/installer.php@@.
 
 ==== Installation à la main ====
 

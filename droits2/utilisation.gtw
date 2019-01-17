@@ -21,7 +21,8 @@ driver pour jAcl2 peut utiliser jAuth pour l'authentification.
 Avant toute chose vous devez installer le module jacl2 :
 
 <code php>
-php dev.php module:install jacl2
+php dev.php module:configure jacl2
+php install/installer.php@@.
 </code>
 
 Ensuite vous devez indiquer quel driver vous utilisez pour jAcl2.

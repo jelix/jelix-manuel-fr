@@ -7,7 +7,7 @@ title_short= Guide du développeur
 edition = Jelix 1.7.0-rc.1
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
-copyright_years=2006-2018
+copyright_years=2006-2019
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
@@ -39,6 +39,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter: [[configurateur-installateur|Configurateur et installateur de Jelix]]
      - section: [[configurateur-installateur/principes-fonctionnement|Principes de fonctionnement]]
      - section: [[configurateur-installateur/installer-un-module|Installer un module]]
+     - section: [[configurateur-installateur/configuration-installateur|Configuration de l'installateur]]
    - chapter: [[modules|Développement d'un module]]
      - section: [[creer-un-module|Créer un module]]
      - section: [[controleurs|Développer un contrôleur]]

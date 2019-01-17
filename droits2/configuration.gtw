@@ -47,14 +47,17 @@ Pour cela, vous devez installer le module **jacl2db**. L'installateur de ce
 module créera pour vous les tables nécessaires en base de donnée.
 
 <code php>
-php dev.php module:install jacl2db
+# lancer de la configuration
+php dev.php module:configure jacl2db
 </code>
 
 Si vous voulez donner directement des droits à un utilisateur nommé "admin" :
 
 <code php>
-php dev.php module:install -p defaultuser jacl2db
+php dev.php module:configure -p defaultuser jacl2db
 </code>
+
+Puis lancer @@php install/installer.php@@.
 
 ===== Configuration des droits =====
 

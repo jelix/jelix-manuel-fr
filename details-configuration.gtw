@@ -195,14 +195,8 @@ Détails des paramètres :
 
 ==== section modules ====
 
-Elle indique, pour chaque module, leur niveau d'accés.
-
-   * 0: le module ne doit pas être installé, et n'est pas utilisé
-   * 1: le module est utilisé, mais ne doit pas être accessible directement par
-     le web, et ne peut donc être appelé que par des modules (il n'a donc en
-     général pas de contrôleur, juste des ressources daos, forms etc)
-   * 2: module utilisable normalement
-
+Elle indique la liste des modules activés, les paramètres pour leurs installateurs
+et éventuellement d'autres informations.
 
 ==== section coordplugins ====
 

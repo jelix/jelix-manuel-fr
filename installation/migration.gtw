@@ -415,6 +415,7 @@ En particulier :
   * Suppression des paramètres et section obsolètes liés au moteur d'url
   * Deplacement des sections @@[modules]@@ des configurations des points d'entrée
     vers @@mainconfig.ini.php@@
+  * Dans la section @@[modules]@@, renommage des propriétés @@*.access@@ en @@*.enabled@@
   * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
   * **Déplacement des fichiers de configuration** suivants vers app/system :
      * mainconfig.ini.php, urls.xml, preferences.ini.php
