@@ -318,7 +318,7 @@ Détails des paramètres :
     alors indiquez juste @@/@@. Ou encore laissez le vide
   * **jelixWWWPath** : contient le chemin web vers les ressources web de Jelix,
     contenus normalement dans lib/jelix-www. Si vous le modifiez voyez également
-    les chemins du **[[configuration#section-htmleditors|htmleditors]]**.
+    les chemins du **[[/configuration/fichiers-configuration#section-htmleditors|htmleditors]]**.
 
 === notfound ===
 

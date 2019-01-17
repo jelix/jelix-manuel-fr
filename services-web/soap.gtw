@@ -68,7 +68,7 @@ Comme vous le remarquez dans le point d'entrée, des classes du module jsoap
 sont utilisées. Vous devez donc l'activer.
 
 <code>
-  php.exe cmd.php module:install jsoap
+  php.exe dev.php module:install jsoap
 </code>
 
 (Pour plus d'information : [[/configurateur-installateur/installer-un-module|Installer un module]])

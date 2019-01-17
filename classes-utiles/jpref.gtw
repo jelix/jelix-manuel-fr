@@ -13,7 +13,7 @@ préférences de configuration fixes qui, elles, se trouvent dans le
 @@C@jPref@@ est fourni par le module "jpref". Activez-le en lançant :
 
 <code bash>
-php cmd.php module:configure jpref
+php dev.php module:configure jpref
 </code>
 
 Et lancez l'installateur de votre application.

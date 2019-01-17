@@ -132,7 +132,7 @@ Dans la configuration, vous pouvez indiquer des listes de scripts js et css,
 regroupés en groupe.
 
 Ainsi, plutôt que de déclarer "en dur" dans le code de vos contrôleurs, les scripts
-js et les feuilles css à utiliser, vous y indiquer un nom de groupe d'assets.
+js et les feuilles css à utiliser, vous y indiquez un nom de groupe d'assets.
 Cela permet de modifier facilement les assets à charger, et d'éviter à modifier
 les modules. Très utile pour modifier les assets d'un module tiers (en particulier
 les assets des composants Jelix !), ou pour mettre à jour des bibliothèques JS.
@@ -153,9 +153,10 @@ toutes ces commandes.
 
 ==== Jelix Scripts ====
 
-Les commandes d'aide au développeur, qui sont appellables via le script cmd.php
-de l'application, ont été totalement réécrite en utilisant Symfony Console.
-Les noms et paramètres des commandes ont donc changé.
+Les commandes d'aide au développeur, qui étaient appellables via le script
+cmd.php de l'application, ont été totalement réécrite en utilisant Symfony Console.
+Les noms et paramètres des commandes ont donc changé, et le script cmd.php
+renommé en dev.php.
 
 Les commandes conçernant la manipulation des droits jAcl2 ont été migré
 dans le module jacl2, et sont donc accessible via le nouveau script console.php.

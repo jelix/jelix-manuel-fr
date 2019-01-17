@@ -8,18 +8,18 @@ les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
 ===== Création automatique =====
 
 
-Le fichier d'un DAO peut être généré par le script @@cmd.php@@ en ligne de commande,
+Le fichier d'un DAO peut être généré par le script @@dev.php@@ en ligne de commande,
 à partir d'une table de base de données existante.
 
 <code bash>
- php cmd.php module:create-dao <nom_module> <nom_dao> [<nom_table> [<nom_sequence>]]
+ php dev.php module:create-dao <nom_module> <nom_dao> [<nom_table> [<nom_sequence>]]
 </code>
 
 Par exemple, si vous voulez créer dans le module "myshop", un DAO "product" qui
 sera basé sur la table "shop_product", vous taperez donc :
 
 <code bash>
- php cmd.php module:create-dao myshop product shop_product
+ php dev.php module:create-dao myshop product shop_product
 </code>
 
 Dans le répertoire @@F@daos@@ du module //myshop// vous allez donc avoir un

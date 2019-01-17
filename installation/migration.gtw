@@ -221,17 +221,18 @@ Exemple : @@/index.php?module=foo&action=ctrl:act@@ devient
 Si ces urls ne fonctionnent pas après la migration, vérifiez que votre serveur
 web est bien configuré pour prendre en charge le "pathinfo".
 
-==== Utilisation du script cmd.php ====
+==== Utilisation du script dev.php, anciennement cmd.php ====
 
 Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
-De ce fait, tous les paramètres et options ont changé.
+De ce fait, tous les paramètres et options ont changé. Et cmd.php a été renommé
+en dev.php.
 
 Si vous utilisez ces commandes dans des scripts, cron ou autre, il vous faut changer les
-paramètres, en particulier le nom de la commande. Faire un @@php cmd.php help@@
+paramètres, en particulier le nom de la commande. Faire un @@php dev.php help@@
 pour avoir l'aide.
 
 De plus le script createapp.php a été déplacé dans un répertoire bin,
-et disponible sous le nom create-jelix-app dans @@vendor/bin@@ de
+et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
 votre application si vous installez Jelix avec Composer.
 
 ==== Vos scripts utilisant jCmdLineRequest ====

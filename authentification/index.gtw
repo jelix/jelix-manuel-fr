@@ -54,7 +54,7 @@ Utilisez la commande @@module:install@@ de jelix pour installer le module :
 
 <code bash>
 $ cd myapp/
-$ php cmd.php module:install jauth
+$ php dev.php module:install jauth
 </code>
 
 Cela activera le module et le plugin, et creera un nouveau fichier

@@ -33,7 +33,7 @@ Si vous avez déjà créé votre application, vous pouvez utiliser la commande
 @@F@app:createentrypoint@@ :
 
 <code bash>
-php cmd.php app:createentrypoint --type cmdline myscript
+php dev.php app:createentrypoint --type cmdline myscript
 </code>
 
 Cela créera un point d'entrée pour un script en ligne de commande sous le nom
@@ -83,14 +83,14 @@ Vous pouvez créer votre contrôleur en utilisant les jelix-scripts :
 
 <code bash>
 # création du module foo avec un controller cmdline
-php cmd.php module:create --cmdline foo  
+php dev.php module:create --cmdline foo
 </code>
 
 ou
 
 <code bash>
 # création du controller bar dans le module foo
-php cmd.php module:create-ctrl --cmdline foo bar 
+php dev.php module:create-ctrl --cmdline foo bar
 </code>
 
 === Manuellement ===

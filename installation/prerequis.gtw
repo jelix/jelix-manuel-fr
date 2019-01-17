@@ -13,6 +13,6 @@ charge MySQL 5.5+, PostgreSQL 9.0+, SQLite 3, Oracle, SQL server et PDO.
 
 Jelix a besoin également de la version ligne de commande (CLI) de PHP (php.exe sous
 windows). Cela vous permettra de lancer le script @@F@create-jelix-app@@,
-mais aussi les scripts qu'il dépose dans votre application, @@F@cmd.php@@ et
+mais aussi les scripts qu'il dépose dans votre application, @@F@dev.php@@ et
 @@F@console.php@@.
 

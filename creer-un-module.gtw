@@ -18,7 +18,7 @@ Le plus simple pour créer un module est d'utiliser la commande @@c@module:creat
 Dans votre application :
 
 <code bash>
-php cmd.php module:create monmodule
+php dev.php module:create monmodule
 </code>
 
 Cela vous crée un module de nom "monmodule" dans le répertoire @@F@modules/@@ de
@@ -38,7 +38,7 @@ nom du module.
 Cet exemple crée le module supermodule dans le répertoire lib/shared-modules/ 
 
 <code bash>
-php cmd.php module:create supermodule ../lib/shared-modules/
+php dev.php module:create supermodule ../lib/shared-modules/
 </code>
 
 Voir l'aide de la commande @@c@module:create@@ (avec @@--help@@) pour connaître
@@ -55,7 +55,7 @@ Vous pouvez indiquer le numéro de version à la commande @@module:create@@, gr�
 à l'option @@--ver@@ :
 
 <code bash>
-php cmd.php module:create --ver 1.0 supermodule
+php dev.php module:create --ver 1.0 supermodule
 </code>
 
 Vous pouvez aussi le modifier directement dans le fichier @@F@module.xml@@ de

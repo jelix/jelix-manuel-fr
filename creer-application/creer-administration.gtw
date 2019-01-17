@@ -18,7 +18,7 @@ Pour créer une interface d'administration, [[/bd/configuration|vous devez d'abo
 Exécutez ensuite dans votre application :
 
 <code bash>
-   php cmd.php app:initadmin index
+   php dev.php app:initadmin index
 </code>
 
 @@index@@ est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à l'interface d'administration.

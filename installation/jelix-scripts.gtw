@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:installation/jelix-scripts~~
 
 Jelix est fourni avec plusieurs scripts, dont @@F@bin/create-jelix-app@@,
-qui permet de créer facilement une nouvelle application, et @@F@cmd.php@@
+qui permet de créer facilement une nouvelle application, et @@F@dev.php@@
 installé dans l'application créé, qui permet de modifier facilement des éléments
 du projet, ou de réaliser des actions sur le projet.
 
@@ -101,13 +101,13 @@ Deux particularités sont à prendre en compte :
    * chez certains hebergeurs, parfois certaines variables superglobales ne sont
      pas bien mise. Par exemple @@$_SERVER['SCRIPT_NAME']@@ peut être absent.
      Il faut alors créer la variable d'environnment qui correspond. Ex:
-     @@export SCRIPT_NAME=cmd.php@@.
+     @@export SCRIPT_NAME=dev.php@@.
 
 Consultez la documentation de votre hébergeur pour avoir un accés SSH et utiliser
 la bonne version de PHP. Exemple pour OVH : [[https://docs.ovh.com/fr/hosting/mutualise-le-ssh-sur-les-hebergements-mutualises/|Guide d'accés SSH]].
 
 
-===== Lancer cmd.php =====
+===== Lancer dev.php =====
 
 Ouvrez donc une console (cmd.exe sous windows), allez dans le répertoire de
 votre application, par exemple @@F@myapp/@@ :
@@ -129,35 +129,35 @@ Ensuite, vous pouvez exécuter une commande jelix selon cette syntaxe :
 Sous Linux/MacOS :
 
 <code bash>
-php cmd.php  <command_name> [options] [parameters]
+php dev.php  <command_name> [options] [parameters]
 </code>
 
 Sous windows :
 
 <code bash>
-php.exe cmd.php <command_name> [options] [parameters]
+php.exe dev.php <command_name> [options] [parameters]
 </code>
 
 Dans la suite du manuel, la syntaxe pour Linux sera utilisée dans les exemples.
 
 ==== Paramètre nom de commande ====
 
-Vous devez toujours appeler @@F@cmd.php@@ avec un nom de "commande jelix",
+Vous devez toujours appeler @@F@dev.php@@ avec un nom de "commande jelix",
 accompagné éventuellement de paramètres et options.
 
 Par exemple, pour avoir de l'aide sur toutes les commandes (et avoir la liste
 des commandes possibles), utilisez la commande @@help@@ :
 
 <code bash>
-   php cmd.php help
+   php dev.php help
 </code>
 
-La commande s'applique à l'application dans laquelle est situé le cmd.php.
+La commande s'applique à l'application dans laquelle est situé le dev.php.
 
 Utilisez la commande @@list@@ pour voir la liste de toutes les commandes disponibles :
 
 <code bash>
-   php cmd.php list
+   php dev.php list
 </code>
 
 ==== l'option -v ====
@@ -205,35 +205,35 @@ Voici une liste non exhaustive des commandes jelix-scripts
 
    * Utilisation Générale :
 <code>
-php cmd.php COMMANDE [-v] [OPTIONS] [PARAMETRES]
+php dev.php COMMANDE [-v] [OPTIONS] [PARAMETRES]
 </code>
    * Création d'un module
 <code>
-php cmd.php module:create <MonModule>
+php dev.php module:create <MonModule>
 </code>
    * Création d'un dao
 <code>
-php cmd.php module:create-dao <MonModule> <MonDao> <MaTable>
+php dev.php module:create-dao <MonModule> <MonDao> <MaTable>
 </code>
    * Création d'une classe basé sur un dao
 <code>
-php cmd.php module:create-class-dao <MonModule> <MaClasse> <MonDao>
+php dev.php module:create-class-dao <MonModule> <MaClasse> <MonDao>
 </code>
    * Création d'un form (vide ou depuis un dao avec ou sans les locales)
 <code>
-php cmd.php module:create-form <MonModule> <MonForm> <MonDao>
+php dev.php module:create-form <MonModule> <MonForm> <MonDao>
 </code>
    * Création d'une zone (avec ou sans son template)
 <code>
-php cmd.php module:create-zone [--notpl] <MonModule> <MaZone> [<MonTemplate>]
+php dev.php module:create-zone [--notpl] <MonModule> <MaZone> [<MonTemplate>]
 </code>
    * Création d'un CRUD, cette commande va créer un dao, un form et le contrôleur CRUD
 <code>
-php cmd.php module:create-dao-crud <le_module> <la_table> <le_nom_du_controleur>
+php dev.php module:create-dao-crud <le_module> <la_table> <le_nom_du_controleur>
 </code>
 
 
-Tapez @@php cmd.php help@@ pour avoir l'aide générale ou @@php cmd.php list@@
+Tapez @@php dev.php help@@ pour avoir l'aide générale ou @@php dev.php list@@
 pour afficher la liste complète des commandes et le détails de leurs paramètres.
 D'autres chapitres du manuel vous expliqueront l'utilisation de certaines commandes.
 
