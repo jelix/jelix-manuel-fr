@@ -7,7 +7,7 @@ Jelix 1.7 apporte beaucoup de nouveautés. Consultez les [[installation/migratio
 qui sont bien moins impressionnantes que la liste des nouveautés : les scripts
 de mises à jour s'occupent de pas mal de choses.
 
-Jelix 1.7 nécessite dorénavant PHP 5.6 minimum et est compatible avec PHP 7.2.
+Jelix 1.7 nécessite PHP 5.6 minimum et est compatible avec PHP 7.2.
 
 ==== Intégration avec Composer ====
 
@@ -81,7 +81,7 @@ L'outil de migration s'occupe d'effectuer la plupart de ces changements.
 
 ==== Amélioration de l'installateur ====
 
-Jusqu'à Jelix 1.6, le système d'installation appellait les scripts d'installation
+Jusqu'à Jelix 1.6, le système d'installation appelait les scripts d'installation
 de chaque module pour chaque point d'entrée. Ce n'est plus le cas. Ils ne sont
 appelés maintenant qu'une seule fois.
 
@@ -99,8 +99,8 @@ dans une instance de l'application.
 Un module peut fournir également une classe pour sa désinstallation. Il n'y
 a donc plus de méthode pour cela dans la classe d'installation. Cette classe
 est copiée à l'exterieur du module lors de la "déconfiguration", ce qui permet
-de supprimer les sources du module tout en permettant lors du deploiement de
-réaliser des tâches de desinstallation au niveau des instances.
+de supprimer les sources du module tout en permettant lors du déploiement de
+réaliser des tâches de désinstallation au niveau des instances.
 
 Enfin pour la mise à jour d'un module, vous pouvez maintenant fournir un fichier
 @@upgrade.php@@, sur le même modèle que @@install.php@@, qui sera executé
@@ -109,7 +109,7 @@ du module. Cela permet de faire des tâches systèmatiques de mise à jour,
 et d'éviter de les réécrire pour chaque version.
 
 Tout ceci implique un remaniement des API et de nouvelles classes à hériter
-pour les scripts de configuration, installation, desinstallation et de mise à
+pour les scripts de configuration, installation, désinstallation et de mise à
 jour. Cependant les anciennes classes reposant sur @@jInstallerModule@@ et
 @@jInstallerEntryPoint@@ sont encore utilisables bien que dépréciées.
 
@@ -147,7 +147,7 @@ d'entrée spécifique utilisant jCmdLineCoordinator etc.. Ce mécanisme est
 maintenant déprécié, bien qu'encore utilisable.
 
 Un nouveau mécanisme fait son apparition : le module peut fournir des commandes
-implémentées avec Symfony Console, et sont appellables depuis un nouveau fichier
+implémentées avec Symfony Console, et sont appelables depuis un nouveau fichier
 @@console.php@@ fourni dans l'application, qui va découvrir (presque) automatiquement
 toutes ces commandes.
 
@@ -158,7 +158,7 @@ cmd.php de l'application, ont été totalement réécrite en utilisant Symfony C
 Les noms et paramètres des commandes ont donc changé, et le script cmd.php
 renommé en dev.php.
 
-Les commandes conçernant la manipulation des droits jAcl2 ont été migré
+Les commandes concernant la manipulation des droits jAcl2 ont été migré
 dans le module jacl2, et sont donc accessible via le nouveau script console.php.
 
 La création d'une application se fait au moyen d'un nouveau script

@@ -18,7 +18,7 @@ Le système d'installation de Jelix, permet de distinguer trois étapes :
    Cette étape concerne l'initialisation des bases de données (création des tables...),
    des données, ainsi que la migration de toutes ces données.
 
-Dans Jelix 1.6, ces trois étapes étaient indistinctes, ce n'est donc plus le cas
+Dans Jelix 1.6, ces trois étapes étaient indistinctes. Ce n'est plus le cas
 depuis Jelix 1.7+.
 
 Nous avons ainsi d'un coté, pour la première et deuxième étape, l'utilisation
@@ -37,10 +37,10 @@ module (commande @@php dev.php module:configure@@).
 Au final, les fichiers du répertoire @@app/@@ et en particulier les fichiers
 de configuration dans @@app/system@@ seront modifiés, et probablement des fichiers
 seront installés à certains endroits de l'application, comme des fichiers
-CSS et JS dans www/ etc. Cela arrive uniquement si le module fourni une classe
-spécifique pour le configurateur. Si cette classe n'existe pas, peut-être devrez
-vous installer des fichiers et modifier la configuration vous-même. Reportez-vous
-à la documentation du module.
+CSS et JS dans www/ etc. Cela arrive uniquement si le module fourni un configurateur,
+une classe spécifique pour le configurateur Jelix. Si cette classe n'existe pas,
+peut-être devrez vous installer des fichiers et modifier la configuration vous-même.
+Reportez-vous à la documentation du module.
 
 Quoi qu'il en soit, le configurateur de Jelix modifiera au minimum le fichier
 principal de la configuration, afin d'activer le module.
@@ -58,9 +58,9 @@ Il peut être le développeur sur un serveur web local sur sa machine, ou un
 administrateur système ou devops sur une machine de recette ou de production.
 
 Après l'installation des sources de l'application, Cet utilisateur devra lancer
-le script @@install/configurator.php@@ de l'application,
-ce qui lancera la méthode @@localConfigure()@@ de tous les modules activés
-lors de la configuration système.
+le script @@install/configurator.php@@ de l'application, ce qui lancera la méthode
+@@localConfigure()@@ des configurateurs de tous les modules activés lors de la
+configuration système.
 
 Ces méthodes se chargeront alors de finaliser la configuration, comme
 demander des paramètres d'accés à une base de donnée pour remplir le fichier
@@ -74,9 +74,9 @@ ou de déploiement externe (Puppet, Ansible, scripts d'une image Docker etc).
 
 ==== L'installation ====
 
-Cette troisième étape, elle aussi réalisées par la personne qui installe
+Cette troisième étape, elle aussi réalisée par la personne qui installe
 l'application sur un serveur, consiste au lancement de l'installateur Jelix,
-le script @@install/installer.php@@.
+le script @@install/installer.php@@ de l'application.
 
 L'installateur va executer les scripts d'installation ou de mise à jour de
 chaque module. Ces scripts sont chargé de créer et migrer les tables en bases de données,
