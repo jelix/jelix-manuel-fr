@@ -70,12 +70,18 @@ Si aucune methode @@preConfigure()@@ échoue, alors toutes les méthodes
 configuration en fonction de ce que les autres modules ont modifié dans la
 configuration.
 
-Dans la méthode @@configure()@@ et @@postConfigure()@@, c'est le moment
+Une méthode particulière peut-être implémentée : @@localConfigure()@@.
+Elle est appelée lorsque l'utilisateur configure une instance de
+l'application (configuration locale donc). Elle est idéale par exemple pour demander
+à l'utilisateur des paramètres de connexions à une base de donnée ou autre.
+
+Dans les méthodes @@configure()@@, @@postConfigure()@@ et @@localConfigure()@@, c'est le moment
 de modifier les fichiers de configurations, mais aussi de copier des fichiers
 dans l'application.
 
 Pour cela un objet @@PreConfigurationHelpers@@ est passé à @@preConfigure()@@, et
-un object @@ConfigurationHelpers@@ est passé à @@configure()@@ et @@postConfigure()@@.
+un object @@ConfigurationHelpers@@ est passé à @@configure()@@, @@postConfigure()@@
+et @@localConfigure()@@.
 Il propose des objets et méthodes qui permettent d'accéder à la plupart des
 fichiers de configurations dans l'application, et de les modifier.
 

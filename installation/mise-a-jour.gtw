@@ -85,8 +85,13 @@ fichiers obsolètes.
 Maintenant que les fichiers sources sont OK, vous devez mettre à jour
 l'application elle-même (base de données, configuration...).
 
-La seule chose que vous avez à faire est de lancer l'installateur, comme vous
-l'avez fait lorsque vous avez installé votre application pour la première fois.
+IL faut d'abord lancer le configurateur, @@F@testapp/install/configurator.php@@.
+Il va probablement modifier la configuration de l'application : des modules
+modifieront des choses et vous demanderont peut-être des informations.
+
+Puis vous lancez l'installateur, comme vous l'avez fait lorsque vous avez
+installé votre application pour la première fois.
+
 L'installateur Jelix (utiliser par un assistant ou un script d'installation
 d'application), peut installer **et** mettre à jour les modules.
 

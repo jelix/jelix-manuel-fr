@@ -76,15 +76,20 @@ demander les informations nécessaires.
 
 ==== Avec le script d'installation de l'application ====
 
-Si il y a un script @@F@testapp/install/installer.php@@, il s'agit alors d'un
-script à lancer en ligne de commande, et qui va installer l'application. Il vous
-faut au préalable que les fichiers de configuration comme @@F@var/config/profiles.ini.php@@
-et @@F@var/config/localconfig.ini.php@@ soient bien renseignés. Lisez la documentation de
-l'application. Ensuite, en ligne de commande, vous taperez @@php installer.php@@
-en étant dans le répertoire @@F@testapp/install/@@.
+Lancez le script @@F@testapp/install/configurator.php@@ pour configurer
+l'application. Des modules modifieront des choses et vous demanderont peut-être
+des informations.
 
-Après l'une de ces manipulations, l'application devrait fonctionner
-correctement.
+Peut-être qu'il y a des choses à terminer de configurer à la main.
+Il fautque les fichiers de configuration comme @@F@var/config/profiles.ini.php@@
+et @@F@var/config/localconfig.ini.php@@ soient bien renseignés. Lisez la documentation de
+l'application.
+
+Ensuite lancez le script @@F@testapp/install/installer.php@@, qui va faire
+l'installation ou des mises à jour: création de tables en bases de données
+par exemple, mise à jour de données etc.
+
+Après ces manipulations, l'application devrait fonctionner correctement.
 
 
 ==== Si le system d'installation est désactivé dans la configuration ====
