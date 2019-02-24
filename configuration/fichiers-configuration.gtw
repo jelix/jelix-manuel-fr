@@ -13,6 +13,7 @@ Une application Jelix possède quelques fichiers de configuration :
   * un fichier @@F@profiles.ini.php@@ pour les profils de connexion.
   * un fichier @@F@urls.xml@@ définissant la correspondance entre des URLs
     et des contrôleurs.
+  * un fichier @@F@framework.ini.php@@ listant les points d'entrées
 
 Ils sont tous générés automatiquement lorsque vous créez une application ou un
 module. Cependant, vous devez bien souvent les modifier pour apporter des
@@ -31,9 +32,7 @@ pour en savoir plus sur le contenu.
 
 ===== Le fichier project.xml =====
 
-Le fichier @@F@project.xml@@ contient des informations sur l'application, dont
-certaines sont importantes puisqu'elles servent à l'installateur, entre autres :
-Il s'agit de la déclaration des points d'entrées dans @@E@<entrypoints>@@.
+Le fichier @@F@project.xml@@ contient des informations sur l'application.
 
 Voici un exemple :
 
@@ -49,10 +48,6 @@ Voici un exemple :
         <creator name="Laurent Jouanneau" email="laurent@jelix.org"/>
         <homepageURL>http://jelix.org</homepageURL>
     </info>
-    <entrypoints>
-        <entry file="index.php" config="index/config.ini.php" />
-        <entry file="soap.php" config="soap/config.ini.php" type="soap"/>
-    </entrypoints>
 </project>
 </code>
 
@@ -94,6 +89,12 @@ Voir [[urls|le chapitre qui lui est dédié]].
 Note : avant Jelix 1.7, ce fichier était facultatif, suivant le moteur d'urls
 que l'on utilisait. Depuis Jelix 1.7, il n'y a plus de plugins de moteur d'urls,
 et ce fichier devient donc obligatoire. Il doit déclarer au moins l'url "/".
+
+
+===== Le fichier framework.ini.php =====
+
+Ce fichier contient la liste des points d'entrées de l'application. Cette
+liste sert principalement à l'installateur.
 
 ===== Les fichiers de configuration ini =====
 

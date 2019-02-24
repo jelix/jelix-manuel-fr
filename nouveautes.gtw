@@ -48,6 +48,9 @@ C'est le cas pour :
       @@F@var/themes@@ et @@F@var/locales@@ sont dorénavant déstinés uniquement
       aux ressources qui sont créés dynamiquement par l'application.
     * le répertoire @@F@responses/@@ est déplacé dans @@F@app/@@
+    * la liste des points d'entrées n'est plus dans project.xml mais dans
+      un nouveau fichier @@app/system/framework.ini.php@@ et éventuellement
+      @@var/config/localframework.ini.php@@.
 
 ==== Refonte du moteur d'URL ====
 
