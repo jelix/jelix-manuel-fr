@@ -134,13 +134,13 @@ Le plugin stocke les prefixes des clés à supprimer dans une liste qui a pour c
 @@jcacheredisdelkeys@@ dans Redis. Un worker ou un cron doit alors dépiler
 régulièrement cette liste de préfix et supprimer les clés correspondantes.
 
-Vous avez un exemple de worker dans @@F@lib/jelix/core-modules/jelix/controller/redisworker.cmdline.php@@.
+Vous avez un exemple de worker dans @@F@lib/jelix/core-modules/jelix/Command/RedisCacheDeletionWorker.php@@.
 Vous pouvez le lancer au moyen de systemd/sysinit/supervisord par exemple. La commande
-sera alors @@php monappli/scripts/script.php jelix~redisworker:deljcache <profile>@@
-à laquelle donc il faut remplacer @@<profile>@@ par le nom du profile jcache
-concerné. Il scrute en permanence la liste @@jcacheredisdelkeys@@ dans Redis
-et efface les clés correspondantes aux prefixes de cette liste. Pour l'arrêter,
-un @@<CTRL+C>@@ (sur linux) suffira si vous le lançez vous même en ligne de commande.
+à lancer est @@php monappli/console.php jcache:redis:delete <profile>@@
+où @@<profile>@@ est le nom du profile jcache concerné. La commande scrute en permanence
+la liste @@jcacheredisdelkeys@@ dans Redis et efface les clés correspondantes
+aux prefixes de cette liste. Pour l'arrêter, un @@<CTRL+C>@@ (sur linux) suffira
+si vous le lancez vous même en ligne de commande.
 
 
 === Pilote file ===
