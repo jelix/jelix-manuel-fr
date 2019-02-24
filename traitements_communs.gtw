@@ -106,7 +106,7 @@ class defaultCtrl extends myBaseController {
 
 </code>
 
-Notez l'include et le //extends myBaseController//;
+Notez l'include et le @@extends myBaseController@@;
 
 Bien sûr, le contrôleur de base peut contenir des propriétés, d'autres méthodes,
 voire des méthodes d'actions. C'est à dire que vous pouvez ainsi avoir plusieurs

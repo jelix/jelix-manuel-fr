@@ -28,7 +28,7 @@ php yourapp/dev.php install
 
 ===== Utilisation dans un contrôleur =====
 
-Récupération de la réponse dans le controller :
+Récupération de la réponse dans le contrôleur :
 
 <code php>
 $rep = $this->getResponse('sitemap');

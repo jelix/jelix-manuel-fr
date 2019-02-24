@@ -8,8 +8,8 @@ Une application Jelix possède quelques fichiers de configuration :
   * un fichier @@F@mainconfig.ini.php@@ pour la configuration globale
   * un fichier @@F@localconfig.ini.php@@ pour les paramètres propres à l'environnement (dev, prod..)
   * un fichier @@F@config.ini.php@@ pour chaque point d'entrée.
-  * un fichier @@F@liveconfig.ini.php@@ pour les paramètres propres à l'environnement mais changés
-    à la volé par l'application (jelix 1.6.18+).
+  * un fichier @@F@liveconfig.ini.php@@ pour les paramètres propres à
+    l'environnement mais changés à la volé par l'application.
   * un fichier @@F@profiles.ini.php@@ pour les profils de connexion.
   * un fichier @@F@urls.xml@@ définissant la correspondance entre des URLs
     et des contrôleurs.
@@ -49,9 +49,6 @@ Voici un exemple :
         <creator name="Laurent Jouanneau" email="laurent@jelix.org"/>
         <homepageURL>http://jelix.org</homepageURL>
     </info>
-    <dependencies>
-       <jelix minversion="1.7" maxversion="1.7.*" />
-    </dependencies>
     <entrypoints>
         <entry file="index.php" config="index/config.ini.php" />
         <entry file="soap.php" config="soap/config.ini.php" type="soap"/>
@@ -202,7 +199,7 @@ dans l'ordre suivant et les fusionne :
 
 Les valeurs contenues dans un fichier "écrasent" celles du fichiers précédent.
 
-Pour chaque point d'entrée, le contenu résulant de cette fusion est mis en
+Pour chaque point d'entrée, le contenu résultant de cette fusion est mis en
 cache.
 
 ==== Utiliser des variables d'environnement ====
@@ -247,6 +244,10 @@ password= ${MYAPP_MYSQL_PASSWORD}
 Ce fichier contient tous les paramètres de connexions de certains composants de
 Jelix : base de données SQL, NOSQL, services web, cache etc.
 
+**Important** : ce fichier contient nécessairement des logins/mot de passe et autres
+informations sensibles. Il ne doit pas être stocké dans un gestionnaire de
+code source !
+
 C'est un fichier au format ini. Chaque section correspond à un profil, un profil
 étant les paramètres d'une connexion. Les noms des sections sont composés de
 deux noms séparés par ":":
@@ -276,6 +277,7 @@ des plugins, et le résultat est mis en cache pour améliorer les performances.
 
 Notez aussi que vous pouvez indiquer des variables d'environnement pour les valeurs.
 Voir la section précédente.
+
 
 === Alias de profil ===
 

@@ -6,7 +6,7 @@
 Le fichier @@F@project.xml@@ contient des informations sur l'application, dont
 certaines sont importantes puisqu'elles servent à l'installateur, entre autre.
 
-C'est un fichier XML avec une balise racine @@E@<project>@@, qui contient 4
+C'est un fichier XML avec une balise racine @@E@<project>@@, qui contient 2
 autres balises.
 
 <code xml>
@@ -14,17 +14,14 @@ autres balises.
     <info id="testapp@jelix.org" name="testapp" createdate="2017-01-01">
      ...
     </info>
-    <dependencies>
-     ...
-    </dependencies>
     <entrypoints>
      ...
     </entrypoints>
 </project>
 </code>
 
-Note : dans Jelix 1.6 et inférieur, il y avait une section @@<directories>@@
-qui n'existe plus.
+Note : dans Jelix 1.6 et inférieur, il y avait des sections @@<directories>@@
+et @@<dependencies>@@ qui n'existent plus.
 
 ==== info ====
 
@@ -57,19 +54,6 @@ L'attribut @@A@name@@ doit être un nom "informatique" (en général, le nom du
 répertoire de l'application, ou celui du module). L'élément @@E@label@@ contient
 un nom affichable. 
 
-==== dependencies ====
-
-Cet élément @@E@<directories>@@ doit contenir des informations sur les
-dépendances de l'application. Pour le moment, seules des informations sur la
-version de jelix requise sont nécessaires.
-
-<code xml>
-<dependencies>
-     <jelix minversion="1.6.0" maxversion="1.6.*" />
-</dependencies>
-</code>
-
-
 ==== entrypoints ====
 
 La balise @@E@entrypoints@@ liste tous les points d'entrée de l'application
@@ -81,7 +65,6 @@ et leur type.
         <entry file="index.php" config="index/config.ini.php" />
         <entry file="soap.php" config="soap/config.ini.php" type="soap"/>
         <entry file="jsonrpc.php" config="jsonrpc/config.ini.php" type="jsonrpc"/>
-        <entry file="cmdline.php" config="cmdline/config.ini.php" type="cmdline"/>
     </entrypoints>
 </code>
 
@@ -89,9 +72,9 @@ et leur type.
 ===== Le fichier module.xml =====
 
 Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il
-contient une balise racine @@E@module@@ qui doit contenir une balise
-@@E@<info>@@ et @@E@<dependencies>@@. Voir plus haut pour savoir comment écrire
-ces balises. voici un exemple:
+contient une balise racine @@E@module@@ qui doit contenir au moins une balise
+@@E@<info>@@ et eventuellement @@E@<dependencies>@@, @@E@<autoload>@@.
+voici un exemple:
 
 <code xml>
 <module xmlns="http://jelix.org/ns/module/1.0">
@@ -152,6 +135,9 @@ Il faut utiliser l'element @@E@<conflict>@@ qui contient une liste d'élement
 Ici, si on tente d'installer le module alors que le module supertest est
 installé, cela provoquera une erreur. Inversement, il sera impossible d'installer
 le module supertest quand on aura installer le module.
+
+Pour les fonctions d'autoloading de classes et la balise @@<autoload>@@, voyez
+[[/utilisation-classes|le chapitre sur les classes]].
 
 ===== Les fichiers ini de configuration =====
 
