@@ -1,254 +1,125 @@
 ~~LANG:EN@enman:cmdline~~
 
-Jelix vous permet de lancer des actions spécialement en ligne de commande. Ceci
-est très pratique pour effectuer des traitements sur un serveur et les
-planifier.
+Jelix fournit un mécanisme pour fournir vos scripts en ligne de commande
+réalisée avec le composant [[https://symfony.com/doc/3.2/components/console.html|Symfony Console]].
 
-===== Installation =====
+Jelix 1.7 supporte aussi son propre système de script pour console, basé sur le
+composant @@jControllerCmdLine@@ et des points d'entrée spécifique à la ligne
+de commande, mais ce système est obsolète même si il est encore utilisable. Pour
+savoir comment l'utiliser, lisez le manuel de Jelix 1.6.
 
-Pour lancer des actions en ligne de commande, il faut 3 éléments :
-  * un point d'entrée spécifique
-  * un contrôleur cmdline
-  * un fichier de configuration pour la ligne de commande
+Ce chapitre va vous apprendre à déclarer et à utiliser des scripts réalisés avec
+Symfony Console dans une application Jelix.
 
-Les jelix-scripts vont vous permettre de créer ces éléments facilement.
+===== Principes =====
+
+Les commandes fournies par vos modules, sont appelables par le script @@console.php@@
+de votre application. Ce script connaît toutes les commandes de votre application
+en exécutant le script @@commands.php@@ de chaque module, si il est présent.
+
+Ce script @@commands.php@@ est chargé de déclarer les commandes présentes
+dans le module, et chaque commande est implémentée par une classe héritant
+de @@\Jelix\Scripts\ModuleCommandAbstract@@ (qui elle même hérite de
+@@Symfony\Component\Console\Command\Command@@).
 
 
-==== Création du point d'entrée ====
+===== Création d'une commande =====
 
-=== À l'aide des jelix-scripts ===
-
-Le point d'entrée se crée lors de la création de l'application avec le script
-@@c@create-jelix-app@@ ou n'importe quand avec la commande @@c@app:createentrypoint@@.
-
-<code bash>
-php bin/create-jelix-app --withcmdline myapp
-</code>
-
-Avec ce script, vous allez créer la structure d'une nouvelle application qui
-contiendra en plus un répertoire @@F@scripts@@ contenant alors le point d'entrée
-cmdline : @@F@cmdline.php@@.
-
-Si vous avez déjà créé votre application, vous pouvez utiliser la commande
-@@F@app:createentrypoint@@ :
-
-<code bash>
-php dev.php app:createentrypoint --type cmdline myscript
-</code>
-
-Cela créera un point d'entrée pour un script en ligne de commande sous le nom
-@@F@myscript.php@@ dans le répertoire @@F@scripts/@@ de l'application.
-
-=== Manuellement ===
-
-Vous pouvez créer le point d'entrée à la main. Il faut créer un fichier
-@@F@scripts/cmdline.php@@ (ou un autre nom). Voici son contenu :
-
-<code php>
-<?php
-require_once ('../application.init.php');
-require_once (JELIX_LIB_CORE_PATH.'jCmdlineCoordinator.class.php');
-require_once (JELIX_LIB_CORE_PATH.'request/jCmdLineRequest.class.php');
-
-$config_file = 'cmdline/config.ini.php';
-
-$jelix = new jCmdlineCoordinator($config_file);
-$jelix->process(new jCmdLineRequest());
-</code>
-
-Notez les différences par rapport à un point d'entrée classique :
-
-   * l'utilisation d'un objet @@C@jCmdlineCoordinator@@ au lieu de @@C@jCoordinator@@
-   * l'utilisation d'un objet @@C@jCmdLineRequest@@ au lieu de @@C@jClassicRequest@@
-   * un fichier de configuration spécifique @@F@app/system/cmdline/config.ini.php@@
-
-Il faut également déclarer le script dans le fichier @@F@project.xml@@, au
-niveau de la balise @@E@entrypoints@@ :
+Créer une classe de commande dans votre module, par exemple dans un repertoire
+@@Commands@@. Si vous avez déclaré un namespace pour votre module, comme par
+exemple @@\SoftCie\MyModule\@@ dans module.xml :
 
 <code xml>
-    <entrypoints>
-        <entry file="index.php" config="index/config.ini.php" />
-        <entry file="cmdline.php" config="cmdline/config.ini.php" type="cmdline"/>
-    </entrypoints>
+   <psr4 name="\SoftCie\MyModule" dir="./"/>
 </code>
 
-==== Création d'un contrôleur cmdline ====
-
-Pour pouvoir travailler en mode cmdline, vous allez devoir créer un contrôleur
-spécifique à la ligne de commande.
-
-=== À l'aide des commandes jelix-scripts ===
-
-Vous pouvez créer votre contrôleur en utilisant les jelix-scripts :
-
-<code bash>
-# création du module foo avec un controller cmdline
-php dev.php module:create --cmdline foo
-</code>
-
-ou
-
-<code bash>
-# création du controller bar dans le module foo
-php dev.php module:create-ctrl --cmdline foo bar
-</code>
-
-=== Manuellement ===
-
-Pour créer le contrôleur manuellement, celui-ci ne devra pas hériter de
-@@C@jController@@ comme habituellement, mais il devra hériter de
-@@C@jControllerCmdline@@. Voici l'exemple du contrôleur
-@@F@default.cmdline.php@@ :
+Alors vous pourriez nommer votre classe @@\SoftCie\MyModule\Commands\Foo@@,
+qui hérite de @@\Jelix\Scripts\ModuleCommandAbstract@@, dans le fichier
+@@Commands/Foo.php@@ :
 
 <code php>
-<?php
+namespace \SoftCie\MyModule\Commands;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class defaultCtrl extends jControllerCmdLine {
+class Foo extends \Jelix\Scripts\ModuleCommandAbstract {
 
-    function index() {
-        $rep = $this->getResponse(); // cmdline response by default
-        $rep->addContent("Hello, it works !");
-        return $rep;
+    protected function configure()
+    {
+        $this
+            ->setName('mymodule:foo')
+            ->setDescription('this is a script')
+            ->setHelp('')
+            ->addArgument(...)
+            ->addOption(...)
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+
     }
 }
-
 </code>
 
 
-==== Création du fichier de configuration ====
+Dans la méthode @@configure()@@, vous déclarez le nom de la commande (celui qu'il
+faudra taper après @@console.php@@), ainsi que les arguments et options
+qu'accepte votre commande.
 
-Si vous avez créé l'application avec l'option @@--withcmdline@@ le fichier de
-configuration aura été généré pour vous.
+Dans la méthode @@execute()@@, le code de votre commande.
 
-Voici son emplacement : @@F@app/system/cmdline/config.ini.php@@
+Pour en savoir plus sur les méthodes et propriétés disponibles dans une
+classe de commande Symfony, lisez [[https://symfony.com/doc/3.2/components/console.html|le manuel de Symfony Console]].
 
-Si le fichier n'existe pas, vous pouvez très simplement le créer à la main en
-prenant modèle sur le fichier de configuration classic
-(@@F@app/system/index/config.ini.php@@)
+Sachez que lorsque les méthodes @@configure()@@ et @@execute()@@ sont lancés,
+vous êtes dans l'environnement Jelix du point d'entrée principal de votre
+application, c'est à dire que le application.init.php a été lancé, jApp contient
+tout ce qu'il faut comme dans un contrôleur, et que vous pouvez appeler
+n'importe quel composant Jelix.
 
+===== Déclarer la commande =====
 
-===== Développement d'actions =====
+Une fois la classe de la commande faite, il faut la faire connaître à
+@@console.php@@. Pour cela il faut avoir à la racine du module (donc au même
+niveau que module.xml, un script @@commands.php@@. Ce script a accès à un objet
+@@\Symfony\Component\Console\Application@@ dans une variable @@$application@@,
+ce qui vous permet de déclarer la commande comme ceci :
 
-Pour lancer vos actions, vous allez certainement vouloir lui passer des
-paramètres et des options.
-
-==== Options ====
-
-=== Déclaration ===
-
-Pour déclarer les options que l'on pourra passer à l'action en ligne de
-commande, il faut utiliser la variable de classe @@P@$allowed_options@@ qui est
-un tableau.
 
 <code php>
-protected $allowed_options = array(
-    'nom_action' => array('-nom_option' => true/false)
-    );
+use \SoftCie\MyModule\Commands;
+
+$application->add(new Commands\Foo());
+
 </code>
 
-Si le nom de l'option vaut @@true@@ cela signifie qu'une valeur est attendue après l'option.
+===== Lancer la commande =====
 
-=== Récupération ===
-
-Dans les actions de votre controller cmdline vous allez vouloir récupérer les
-options passées au script. Pour cela il faut utiliser la méthode
-@@M@option('-nom_option')@@
-
-Exemple :
-<code php>
-public function myscript() {
-    $myoption = $this->option('-nom_option');
-}
-</code>
-
-
-==== Paramètres ====
-
-=== Déclaration ===
-
-Le mécanisme est le même pour les paramètres :
-
-<code php>
-protected $allowed_parameters = array(
-    'nom_action' => array('nom_parametre' => true/false)
-    );
-</code>
-
-Ici si le nom du paramètre vaut @@true@@ c'est qu'il est obligatoire, @@false@@ sinon.
-
-=== Récupération ===
-
-Dans les actions de votre controller cmdline vous allez vouloir récupérer les
-paramètres passés au script. Pour cela il faut utiliser la méthode
-@@M@param('nom_parametre')@@.
-
-Exemple :
-<code php>
-public function myscript() {
-    $myparam = $this->param('nom_parametre');
-}
-</code>
-
-
-==== Message d'aide ====
-
-Vous pouvez aussi gérer le message d'aide sur les commandes. Celui-ci se déclare
-dans la variable de classe $help :
-
-<code php>
-public $help = array(
-    'nom_action' => 'message'
-);
-</code>
-
-Nous allons voir dans la partie suivante comment se servir de ce message d'aide.
-
-
-
-===== Utilisation =====
-
-Pour utiliser vos scripts, c'est à dire vos actions de vos contrôleurs cmdline,
-rendez vous en ligne de commande dans le répertoire @@F@scripts/@@.
-
-Il suffit alors de lancer le script @@F@cmdline.php@@ suivi de l'action à lancer
-(en utilisant le sélecteur d'action) et suivi du/des options et du/des
-paramètres voulu
-
-Exemple :
+Il faut utiliser le script console.php, lui indiquer le nom de la commande
+que vous voulez lancer et les éventuelles options et paramètres.
 
 <code bash>
-php cmdline.php module~controller:action -nom_option optionval nom_param
+php console.php mymodule:foo
 </code>
 
-Pour afficher l'aide, il suffit de faire :
+Pour avoir la liste des commandes disponibles, utilisez la commande @@list@@ ou
+ne donnez aucun argument :
 
 <code bash>
-php cmdline.php help module~controller:action
+php console.php list
+# ou
+php console.php
 </code>
 
-Si vous voulez qu'un script soit dédié à une action précise, vous devez alors
-indiquer le paramètre true au constructeur de @@C@jCmdlineRequest@@, ainsi que le
-module et l'action :
+Et pour obtenir l'aide de la commande, la commande @@help@@ suivit du nom de la
+commande ou alors utiliser l'option @@-h@@:
 
-
-<code php>
-<?php
-...
-$jelix->process(new jCmdLineRequest(true, "module", "controller:method"));
-...
-</code>
-
-Ainsi vous n'avez plus à indiquer l'action en paramètre du script. Mais bien
-sûr, vous ne pouvez plus exécuter d'autres actions avec ce script. L'exemple
-précédent devient :
 
 <code bash>
-php cmdline.php -nom_option optionval nom_param
-</code>
-
-Et pour obtenir l'aide, il y a juste à faire
-
-<code bash>
-php cmdline.php help
+php console.php help mymodule:foo
+# ou
+php console.php mymodule:foo -h
 </code>
 

@@ -66,7 +66,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[services-web/json-rpc|JSON-RPC]]
      - section: [[services-web/xml-rpc|XML-RPC]]
      - section: [[services-web/soap|SOAP]]
-   - chapter: [[cmdline|Effectuer des traitements en ligne de commande]]
+   - chapter: [[cmdline|Écrire des scripts pour la ligne de commande]]
    - chapter: [[traitements_communs|Définir des traitements communs à plusieurs actions]]
    - chapter: [[creer-application/creer-administration|Créer une interface d'administration]]
 

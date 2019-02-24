@@ -146,14 +146,14 @@ en créant un contrôleur héritant de @@jControllerCmdLine@@, en ayant un point
 d'entrée spécifique utilisant jCmdLineCoordinator etc.. Ce mécanisme est
 maintenant déprécié, bien qu'encore utilisable.
 
-Un nouveau mécanisme fait son apparition : le module peut fournir des commandes
-implémentées avec Symfony Console, et sont appelables depuis un nouveau fichier
-@@console.php@@ fourni dans l'application, qui va découvrir (presque) automatiquement
-toutes ces commandes.
+Un nouveau mécanisme fait son apparition : le module peut fournir des
+[[/cmdline|commandes implémentées avec Symfony Console]], et sont appelables
+depuis un nouveau fichier @@console.php@@ fourni dans l'application, qui va
+découvrir (presque) automatiquement toutes ces commandes.
 
 ==== Jelix Scripts ====
 
-Les commandes d'aide au développeur, qui étaient appellables via le script
+Les commandes d'aide au développeur, qui étaient appelables via le script
 cmd.php de l'application, ont été totalement réécrite en utilisant Symfony Console.
 Les noms et paramètres des commandes ont donc changé, et le script cmd.php
 renommé en dev.php.
@@ -339,6 +339,6 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
 
 ==== Contributeurs à Jelix 1.7 ====
 
-  * Brunto (sur le controller CRUD)
+  * Brunto (sur le contrôleur CRUD)
   * Julien Issler (sur jForms)
   * Laurent Jouanneau (la plupart des évolutions)
