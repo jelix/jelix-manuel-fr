@@ -41,7 +41,7 @@ Comme d'habitude, vous devez vider le contenu de votre répertoire
 application est par défaut dans le répertoire de l'application, et non
 plus en dehors. Mais vous pouvez le garder hors de l'application.
 
-==== Installation des fichiers de Jelix ====
+==== Installation des sources de Jelix ====
 
 Depuis la version 1.7, Jelix peut s'installer avec Composer. Composer est un
 gestionnaire de paquet, utilisable en ligne de commande, qui est maintenant
@@ -85,10 +85,12 @@ Voir le manuel de Composer.
 Supprimez le contenu du répertoire lib, sauf bien sûr les bibliothèques non
 fournies par Jelix, si vous en aviez ajouté dans ce répertoire.
 
-Executez ensuite en ligne de commande :
+Exécutez ensuite en ligne de commande :
 
 <code bash>
 composer install
+# ou si vous aviez déjà un fichier composer.json et des paquets installés :
+composer update
 </code>
 
 Vous verrez alors un nouveau répertoire @@F@vendor/@@ et un fichier composer.lock.
@@ -97,16 +99,18 @@ de version (git, subversion...). Donc indiquez-le dans un fichier @@F@.gitignore
 @@F@.hgignore@@ ou une propriété @@snv:ignore@@, selon l'outils de gestion de version
 que vous utilisez.
 
-Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer :
-
-<code php>
-require (__DIR__.'/../lib/jelix/init.php');
-</code>
-
-par
+Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer le
+fichier à inclure @@lib/jelix/init.php@@ par deux autres, @@autoload.php@@
+et @@jelix_app_path.php@@ situés dans le répertoire @@vendor/@@.
+@@F@application.init.php@@ doit ressembler à ceci :
 
 <code php>
 require (__DIR__.'/vendor/autoload.php');
+jApp::initPaths(
+    /* ici pas de changements, garder vos chemins existants */
+);
+jApp::setTempBasePath(/* ici pas de changements, garder le chemins existant */);
+
 require (__DIR__.'/vendor/jelix_app_path.php');
 </code>
 
@@ -121,21 +125,22 @@ Remplacez le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
 jelix, en n'oubliant pas de remettre dans le nouveau répertoire @@F@lib/@@ vos
 éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
 
-Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer :
-
-<code php>
-require (__DIR__.'/../lib/jelix/init.php');
-</code>
-
-par
+Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer le
+fichier à inclure @@lib/jelix/init.php@@ par deux autres, @@autoload.php@@
+et @@jelix_app_path.php@@ situés dans le répertoire @@../lib/vendor/@@.
+@@F@application.init.php@@ doit ressembler à ceci :
 
 <code php>
 require (__DIR__.'/../lib/vendor/autoload.php');
+jApp::initPaths(
+    /* ici pas de changements, garder vos chemins existants */
+);
+jApp::setTempBasePath(/* ici pas de changements, garder le chemins existant */);
+
 require (__DIR__.'/../lib/vendor/jelix_app_path.php');
 </code>
 
-
-==== Changement de la déclaration des modules et plugins ====
+==== Changement dans la déclaration des modules et plugins ====
 
 Dans les versions précédentes de Jelix, il fallait déclarer les répertoires
 contenant des modules ou de plugins, dans des paramètres @@modulesPath@@ ou
@@ -147,11 +152,12 @@ doivent maintenant être déclarés dans le fichier @@F@application.init.php@@ (
 dans le fichier @@composer.json@@ si vous utilisez Composer pour réaliser des paquets
 Composer de modules).
 
-Supprimez donc ces paramètres des fichiers de configuration.
+Supprimez donc ces paramètres @@modulesPath@@ et @@pluginsPath@@ des fichiers de
+configuration.
 
-Dans le fichier @@F@application.init.php@@, vous devez appeler
+À la fin du fichier @@F@application.init.php@@, vous devez appeler
 @@jApp::declareModulesDir@@ et/ou @@jApp::declarePluginsDir@@, avec la liste
-des repertoires.
+des repertoires contenant des plugins et modules
 
 <code php>
 jApp::declareModulesDir(array(
@@ -221,20 +227,6 @@ Exemple : @@/index.php?module=foo&action=ctrl:act@@ devient
 Si ces urls ne fonctionnent pas après la migration, vérifiez que votre serveur
 web est bien configuré pour prendre en charge le "pathinfo".
 
-==== Utilisation du script dev.php, anciennement cmd.php ====
-
-Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
-De ce fait, tous les paramètres et options ont changé. Et cmd.php a été renommé
-en dev.php.
-
-Si vous utilisez ces commandes dans des scripts, cron ou autre, il vous faut changer les
-paramètres, en particulier le nom de la commande. Faire un @@php dev.php help@@
-pour avoir l'aide.
-
-De plus le script createapp.php a été déplacé dans un répertoire bin,
-et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
-votre application si vous installez Jelix avec Composer.
-
 ==== Vos scripts utilisant jCmdLineRequest ====
 
 Si le script est dédié à une action particulière, il ne faut plus seulement
@@ -243,10 +235,10 @@ et l'action. Vous y mettrez donc les valeurs des paramètres de configuration
 @@startModule@@ et @@startAction@@ du script. Ces derniers ne sont en effet
 plus utilisés.
 
-Cependant, nous vous recommandons de migrer vos controlleurs de scripts en ligne
-de commande vers des commandes implementées avec Symfony Console. @@jCmdLineCoordinator@@
+Cependant, nous vous recommandons de migrer vos contrôleurs de scripts en ligne
+de commande vers des commandes implémentées avec Symfony Console. @@jCmdLineCoordinator@@
 et @@jCmdLineController@@ sont déclarés obsolètes. Voyez le chapitre pour
-développer avec Symfony Console.
+développer une [[/cmdline|commande avec Symfony Console]].
 
 ==== Plugins custom pour jDb et jDao ====
 
@@ -276,23 +268,14 @@ et @@\Jelix\Installer\Module\Configurator@@ ont fait leur apparition.
 Bien que cela ne soit pas obligatoire pour Jelix 1.7 (mais cela le deviendra
 pour les futures versions, @@jInstallerModule@@ disparaitra), vous devriez
 modifier vos scripts d'installation et de mise à jour en utilisant la classe
-@@jInstallerModule2@@.
+@@\Jelix\Installer\Module\Installer@@. Probablement aussi que vous devrez migrer
+des parties de votre classe d'installation vers une classe de configuration
+basée sur @@\Jelix\Installer\Module\Configurator@@.
 
-La principale différence réside sur la visibilité de certaines propriétés qui
-passent de @@public@@ à @@protected@@, sur la suppression des méthodes @@first*()@@,
-et sur l'accés aux fichiers de configurations.
+La principale différence avec les anciennes classes réside sur la visibilité de
+certaines propriétés qui passent de @@public@@ à @@protected@@,
+sur la suppression des méthodes @@first*()@@, et sur l'accés aux fichiers de configurations.
 
-==== Déplacement des fichiers overloads, themes... ====
-
-Il faut déplacer les contenus qui ne sont pas dynamiques (donc ceux d'origine, pas
-ceux créés par l'application) :
-
-   - @@var/overloads/*@@ vers @@app/overloads/@@
-   - @@var/themes/*@@ vers @@app/themes/@@
-   - @@var/locales/*@@ vers @@app/locales/@@
-
-Ce n'est pas fait automatiquement par le script de migration, car il ne serait
-pas possible pour lui de déterminer ce qui est "statique" ou "dynamique".
 
 ==== Disparition de json.js et json2.js ====
 
@@ -359,74 +342,117 @@ modifier dans votre code si vous les utilisez :
 
 
 Des fonctionnalités, API et modules ont été supprimés. Voir la liste
-complète dane [[/nouveautes|les nouveautés]]. Veillez donc à modifier votre
+complète dans [[/nouveautes|les nouveautés]]. Veillez donc à modifier votre
 code pour ne plus les utiliser et éventuellement les remplacer par des
 alternatives.
 
+==== mise à jour du script cmd.php ====
 
-==== Mise à jour de Jelix ====
-
-Vous devez modifier le fichier @@install/installer.php@@ de votre application,
-de manière à inclure les instructions pour faire la migration. Il doit ressembler à
-ceci :
+Remplacer le contenu du script @@cmd.php@@ qui se trouve au même niveau que
+@@application.init.php@@ par celui-ci :
 
 <code php>
-require_once (__DIR__.'/../application.init.php');
-jApp::setEnv('install');
-
-jAppManager::close();
-
-// launch the low-level migration
-$migrator = new \Jelix\Installer\Migration(new \Jelix\Installer\Reporter\SimpleConsole('notice', 'Low-level migration'));
-$migrator->migrate();
-
-// we can now launch the installer/updater
-$installer = new \Jelix\Installer\Installer(new \Jelix\Installer\Reporter\SimpleConsole());
-if (!$installer->installApplication()) {
-    exit (1);
-}
-try {
-    jAppManager::clearTemp();
-}
-catch(Exception $e) {
-    echo "WARNING: temporary files cannot be deleted because of this error: ".$e->getMessage().".\nWARNING: Delete temp files by hand immediately!\n";
-    exit (1);
-}
-jAppManager::open();
-exit (0);
-
+require (__DIR__.'/application.init.php');
+\Jelix\DevHelper\JelixCommands::launch();
 </code>
 
+==== Lancement de la migration ====
 
-Après toutes les modifications effectuées, vous devez lancer le script
-installer.php de votre application.
-
-<code bash>
-php install/installer.php
-</code>
-
-Le module jelix et le système de migration fera le reste des modifications.
+Vous devez maintenant lancer le script de migration de Jelix, qui va faire
+beaucoup de changements à votre place.
 
 En particulier :
 
-  * Migration de la configuration des moteurs d'url "simple" et "basic_significant"
-    vers le fichier urls.xml
-  * Migration des paramètres @@startModule@@ et @@startAction@@ vers @@urls.xml@@
-  * Suppression des paramètres et section obsolètes liés au moteur d'url
-  * Deplacement des sections @@[modules]@@ des configurations des points d'entrée
-    vers @@mainconfig.ini.php@@
-  * Dans la section @@[modules]@@, renommage des propriétés @@*.access@@ en @@*.enabled@@
-  * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
-  * **Déplacement des fichiers de configuration** suivants vers app/system :
+  * **Déplacement des fichiers de configuration** suivants vers un nouveau répertoire @@app/system@@ :
      * mainconfig.ini.php, urls.xml, preferences.ini.php
      * ceux des points d'entrées
      * fichiers de configuration des plugins du coordinateur
      * fichier de classmap pour soap
-  * migration de @@persistant_crypt_key@@ vers @@persistant_encryption_key@@
-  * migration de la declaration des assets des widgets wikieditor et htmleditor
-    vers le nouveau système d'assets
-  * migration des paramètres de connexions ldap dans le fichier profiles.ini.php,
-    si vous utilisez ldap pour l'authentification.
+  * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
+  * mise à jour de la configuration du moteur d'Url
+     * Migration de la configuration des moteurs d'url "simple" et "basic_significant"
+       vers le fichier urls.xml
+     * Migration des paramètres @@startModule@@ et @@startAction@@ vers @@urls.xml@@
+     * Suppression des paramètres et section obsolètes liés au moteur d'url
+  * mise à jour du contenu des fichiers de configuration ini :
+     * Deplacement des sections @@[modules]@@ des configurations des points d'entrée
+       vers @@mainconfig.ini.php@@
+     * Dans la section @@[modules]@@, renommage des propriétés @@*.access@@ en @@*.enabled@@
+     * migration de @@persistant_crypt_key@@ vers @@persistant_encryption_key@@ (liveconfig.ini.php)
+     * deplacement du contenu de la plupart des fichiers de configuration des
+       plugins de coordinateur vers mainconfig.ini.php
+     * migration de la declaration des assets des widgets wikieditor et htmleditor
+       vers le nouveau système d'assets
+  * Mise à jour du fichier profiles.ini.php
+     * migration des paramètres de connexions ldap dans le fichier profiles.ini.php,
+       si vous utilisez ldap pour l'authentification.
+     * remplacement du driver @@mysql@@ par @@mysqli@@
+  * mise à jour du fichier project.xml
+  * creation du script console.php, renommage de cmd.php en dev.php
+  * creation de @@install/configurator.php@@ et mise à jour de @@install/installer.php@@
+
+Lancez donc maintenant : @@php cmd.php app:migrate@@.
+
+
+==== Déplacement des fichiers overloads, themes... ====
+
+Il faut déplacer les contenus qui ne sont pas dynamiques (donc ceux d'origine, pas
+ceux créés par l'application) :
+
+   - @@var/overloads/*@@ vers @@app/overloads/@@
+   - @@var/themes/*@@ vers @@app/themes/@@
+   - @@var/locales/*@@ vers @@app/locales/@@
+
+Ce n'est pas fait automatiquement par le script de migration, car il ne serait
+pas possible pour lui de déterminer ce qui est "statique" ou "dynamique".
+
+==== Utilisation du script dev.php, anciennement cmd.php ====
+
+Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
+De ce fait, tous les paramètres et options ont changé. Et cmd.php a été renommé
+en dev.php.
+
+Si vous utilisez ces commandes dans des scripts, cron ou autre, il vous faut changer les
+paramètres, en particulier le nom de la commande. Faire un @@php dev.php help@@
+pour avoir l'aide.
+
+De plus le script createapp.php a été déplacé dans un répertoire bin,
+et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
+votre application si vous installez Jelix avec Composer.
+
+
+==== Mise à jour de Jelix ====
+
+Maintenant que les sources de Jelix et de votre application ont été mise à jour,
+vous pouvez sauvegarder tout cela dans votre gestionnaire de code source.
+
+Puis vous pouvez lancer la mise à jour des données et autres fichiers sur
+le ou les serveurs où est installée l'application (serveur local ou de dev,
+serveur de production etc..)
+
+Supprimez tout ce qu'il y a dans le répertoire temp/ de votre application.
+
+Puis lancez :
+
+<code bash>
+# terminer le paramètrage de l'application spécifique à votre installation
+php install/configurator.php
+
+# lancement de la mise à jour des données et autre..
+php install/installer.php
+</code>
+
+==== Mise à jour de votre serveur web ====
+
+Si vous aviez un alias vers lib/jelix-www/ et que vous utilisez Composer,
+il vous faut changer le chemin puisque jelix-www est maintenant dans
+@@vendor/jelix/jelix/lib/jelix-www/@@.
+
+
+
+==== Fin ====
+
+Après cela, votre application est de nouveau opérationnelle.
 
 
 

@@ -77,7 +77,7 @@ les modules nécessaires à l'exécution du nouveau module. Dans l'élément
 Les attributs @@A@minversion@@ et @@A@maxversion@@ sont facultatifs.
 
 
-Pour plus de détails sur le contenu de module.xml,
+Pour plus de détails sur le contenu de module.xml et sur les dépendances,
 [[/configuration/fichiers-configuration#module.xml|lisez le chapitre correspondant]].
 
 
