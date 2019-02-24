@@ -106,9 +106,9 @@ de supprimer les sources du module tout en permettant lors du déploiement de
 réaliser des tâches de désinstallation au niveau des instances.
 
 Enfin pour la mise à jour d'un module, vous pouvez maintenant fournir un fichier
-@@upgrade.php@@, sur le même modèle que @@install.php@@, qui sera executé
+@@upgrade.php@@, sur le même modèle que @@install.php@@, qui sera exécuté
 à chaque mise à jour, en plus des scripts de mise à jour dédié à une version précise
-du module. Cela permet de faire des tâches systèmatiques de mise à jour,
+du module. Cela permet de faire des tâches systématiques de mise à jour,
 et d'éviter de les réécrire pour chaque version.
 
 Tout ceci implique un remaniement des API et de nouvelles classes à hériter
@@ -141,6 +141,11 @@ les modules. Très utile pour modifier les assets d'un module tiers (en particul
 les assets des composants Jelix !), ou pour mettre à jour des bibliothèques JS.
 Ou encore pour spécifier des listes de fichiers JS/CSS en fonction de
 l'environnement (debug vs production).
+
+À noter que les bibliothèques jQuery, jQueryUI, Markitup ont été mis à jour
+à leur dernière version (respectivement 3.3.1, 1.12.1, 1.1.15). jQueryUI est
+maintenant fournit sous forme d'un unique fichier contenant tout. WymEditor a
+été remplacé par CKEditor5.
 
 ==== Scripts en ligne de commande ====
 
@@ -210,6 +215,9 @@ de l'application.
       utilisent le nouveau système d'assets de Jelix.
     * En js, vous pouvez forcer le rechargement d'une listbox dynamique
       avec la méthode @@updateDynamicList()@@ de l'objet JS jforms.
+    * le datepicker contient maintenant de quoi sélectionner l'heure quand
+      il s'agit de la saisie d'un datetime.
+    * nouveau contrôle @@<color>@@ pour sélectionner une couleur.
 
 ==== Changements d'API dans le coeur du framework ====
 
