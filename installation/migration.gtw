@@ -10,7 +10,10 @@ ces étapes à faire :
   * **supprimer** tous les fichiers dans le répertoire @@F@votre_appli/temp/@@
   * adapter votre code en suivant les instructions indiquées pour chaque
     ancienne version de Jelix. Voir ci-dessous.
-  * lancer l'installateur de Jelix.
+  * lancer l'outils de migration qui va faire les reorganisations des sources
+    et modifications necessaires
+  * sur chaque instance de l'application, lancer le configurateur et l'installateur
+    de Jelix.
 
 ===== Mettre à jour depuis Jelix 1.5 et inférieur =====
 
@@ -18,7 +21,6 @@ Suivez les indications de migration de chaque version intermédiaire pour migrer
 à la dernière version de Jelix 1.6, avant de mettre à jour pour jelix 1.7.
 
 Voir les instructions de migration des manuels de chacune de ces versions. 
-Vous devrez en particulier remplacer le répertoire @@lib/@@ de Jelix.
 
 ===== Mettre à jour depuis Jelix 1.6.x =====
 
@@ -27,7 +29,9 @@ Voici les instructions à suivre dans l'ordre.
 ==== Prérequis ====
 
 Jelix 1.7 nécessite PHP 5.6 minimum. Vérifiez que votre serveur a bien cette
-version ou une version supérieure. PHP 7 est fortement recommandé.
+version ou une version supérieure. PHP 7.1 et + est fortement recommandé, les
+versions précédentes n'étant plus maintenu par PHP à la date d'écriture
+de ce chapitre.
 
 ==== Sauvegarde ====
 
@@ -369,7 +373,7 @@ En particulier :
      * fichiers de configuration des plugins du coordinateur
      * fichier de classmap pour soap
   * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
-  * mise à jour de la configuration du moteur d'Url
+  * Mise à jour de la configuration du moteur d'Url
      * Migration de la configuration des moteurs d'url "simple" et "basic_significant"
        vers le fichier urls.xml
      * Migration des paramètres @@startModule@@ et @@startAction@@ vers @@urls.xml@@
@@ -391,7 +395,7 @@ En particulier :
   * creation du script console.php, renommage de cmd.php en dev.php
   * creation de @@install/configurator.php@@ et mise à jour de @@install/installer.php@@
 
-Lancez donc maintenant : @@php cmd.php app:migrate@@.
+Lancez donc maintenant : @@php cmd.php jelix:migrate -v@@.
 
 
 ==== Déplacement des fichiers overloads, themes... ====
@@ -399,11 +403,11 @@ Lancez donc maintenant : @@php cmd.php app:migrate@@.
 Il faut déplacer les contenus qui ne sont pas dynamiques (donc ceux d'origine, pas
 ceux créés par l'application) :
 
-   - @@var/overloads/*@@ vers @@app/overloads/@@
-   - @@var/themes/*@@ vers @@app/themes/@@
-   - @@var/locales/*@@ vers @@app/locales/@@
+   - de @@var/overloads/*@@ vers @@app/overloads/@@
+   - de @@var/themes/*@@ vers @@app/themes/@@
+   - de @@var/locales/*@@ vers @@app/locales/@@
 
-Ce n'est pas fait automatiquement par le script de migration, car il ne serait
+Ce n'est pas fait automatiquement par le script de migration, car il n'est
 pas possible pour lui de déterminer ce qui est "statique" ou "dynamique".
 
 ==== Utilisation du script dev.php, anciennement cmd.php ====
@@ -421,34 +425,37 @@ et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
 votre application si vous installez Jelix avec Composer.
 
 
-==== Mise à jour de Jelix ====
+==== Mise à jour des instances de l'application ====
 
 Maintenant que les sources de Jelix et de votre application ont été mise à jour,
-vous pouvez sauvegarder tout cela dans votre gestionnaire de code source.
+vous pouvez sauvegarder tout cela dans votre gestionnaire de code source,
+et déployer les sources sur vos serveurs de tests (en particulier votre
+serveur local si vous en avez un).
 
-Puis vous pouvez lancer la mise à jour des données et autres fichiers sur
-le ou les serveurs où est installée l'application (serveur local ou de dev,
-serveur de production etc..)
+Comme à chaque fois que déployez les sources d'une application Jelix sur
+un serveur, il faut lancer le configurateur local (nouvelle étape de Jelix 1.7)
+et l'installateur de Jelix.
 
-Supprimez tout ce qu'il y a dans le répertoire temp/ de votre application.
+Dans le cas présent, le configurateur local terminera le paramétrage et la
+migration des informations de configuration spécifiques au contexte du
+serveur. Et l'installateur lancera les scripts de mises à jour des données
+si il y en a.
 
-Puis lancez :
+Supprimez tout ce qu'il y a dans le répertoire temp/ de votre application,
+puis lancez :
 
 <code bash>
-# terminer le paramètrage de l'application spécifique à votre installation
-php install/configurator.php
+php install/configurator.php -v
 
-# lancement de la mise à jour des données et autre..
-php install/installer.php
+php install/installer.php -v
 </code>
+
 
 ==== Mise à jour de votre serveur web ====
 
-Si vous aviez un alias vers lib/jelix-www/ et que vous utilisez Composer,
-il vous faut changer le chemin puisque jelix-www est maintenant dans
-@@vendor/jelix/jelix/lib/jelix-www/@@.
-
-
+Si vous aviez un alias vers lib/jelix-www/ dans la configuration de votre
+serveur web, et que vous utilisez Composer, il faut changer le chemin puisque
+jelix-www est maintenant dans @@vendor/jelix/jelix/lib/jelix-www/@@.
 
 ==== Fin ====
 
