@@ -2,7 +2,7 @@
 
 Jelix est un framework pour PHP 5.6 et 7, qui permet de développer rapidement des
 applications web de toutes tailles. Il comporte nombre de composants, permettant
-d'architecturer une appli selon le pattern MVC, d'accéder aux bases de données à
+d'architecturer une application selon le pattern MVC, d'accéder aux bases de données à
 travers un ORM, de générer divers types de contenus avec le minimum d'efforts,
 de gérer des puissants formulaires, et bien d'autres choses encore.
 
@@ -13,9 +13,9 @@ permet de mieux s'y retrouver.
 
 Enfin cette architecture est conçue pour être modulaire. Les fichiers
 (contrôleurs, templates, classes métiers...) d'une application peuvent être
-regroupés par domaine fonctionnel, offrant une forte réutilisation du code. De
-base, vous avez ainsi un module pour l'authentification, un autre pour une
-interface d'administration. Il existe aussi des dizaines de modules réalisés
+regroupés par domaine fonctionnel au sein d'un "module", offrant une forte
+réutilisation du code. De base, vous avez ainsi un module pour l'authentification,
+un autre pour une interface d'administration. Il existe aussi des dizaines de modules réalisés
 pour d'autres projets, mais réutilisables, comme des modules pour un forum, un
 blog, une boutique électronique etc.
 

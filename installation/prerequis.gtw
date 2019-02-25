@@ -1,10 +1,12 @@
 ~~LANG:EN@enman:installation/requirements~~
 
 
-Jelix est compatible avec PHP 5.6 et fonctionne correctement avec PHP 7.0, 7.1 et 7.2.
+Jelix 1.7 est compatible avec PHP 5.6 et versions suivantes, mais il est
+recommandé d'utiliser les dernières versions maintenues de PHP (PHP 7.1 et suivantes
+à la date où cette section a été écrite).
 
-Les extensions **dom**, **simplexml**, **pcre**, **session**, **spl**, **json** et
-**tokenizer** sont requises (elles sont actives en général dans une installation
+Les extensions **xml**, **simplexml**, **pcre**, **session**, **spl**, **json**,
+**mbstring** et **tokenizer** sont requises (elles sont actives en général dans une installation
 standard de PHP). Si une de ces extensions n'était pas livrée avec le paquet
 PHP, veillez à installer le paquet correspondant.
 

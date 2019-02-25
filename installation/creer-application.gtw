@@ -29,11 +29,21 @@ Répondez non de préférence.
 Quelques fichiers ensuite à copier avant d'initialiser l'application :
 
 <code bash>
-ln -s ../vendor/jelix/jelix/lib/jelix-www www/jelix
 cp var/config/profiles.ini.php.dist var/config/profiles.ini.php
 cp var/config/localconfig.ini.php.dist var/config/localconfig.ini.php
+</code>
 
-php install/installer.php
+Puis lancez le configurateur du module jelix
+<code bash>
+php dev.php module:configure jelix -f
+</code>
+
+et enfin le configurateur local et l'installateur
+
+<code bash>
+php install/configurator.php -v
+
+php install/installer.php -v
 </code>
 
 
@@ -116,7 +126,7 @@ contenu est :
 <code>
   myapp/
      app/
-        config/    fichiers de configuration généraux
+        system/    fichiers de configuration système du framework et de l'application
         responses/ classes pour les objets réponses HTML
         themes/    les thèmes disponibles pour votre application
         overloads/ contiendra les différents fichiers qui redéfinissent des
@@ -126,7 +136,7 @@ contenu est :
      plugins/      plugins de l'application
      temp/         tous les fichiers temporaires et de cache créés à l'execution de l'application
      var/
-        config/    fichiers de configuration propres à l'installation
+        config/    fichiers de configuration spécifiques à l'installation
         log/       fichiers de log
         themes/    thèmes installés durant la vie de l'application
         overloads/ idem que app/overloads, mais pour les fichiers créés à la volé
