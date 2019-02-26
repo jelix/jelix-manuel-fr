@@ -305,22 +305,6 @@ modifications suivantes :
         <jelix minversion="1.6" maxversion="1.7.*"/>
 </code>
 
-Certaines classes, certains modules et plugins sont maintenant livrés séparément, soit
-installable avec Composer, soit via un zip. Si vous les utilisiez, il faudra donc les
-récupérer en plus de Jelix. Il s'agit de :
-
-  * Le module jSoap : [[https://packagist.org/packages/jelix/soap-server-module|jelix/soap-server-module]]
-  * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
-  * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
-  * Le plugin Redis reposant sur la classe PhpRedis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
-    (inutile si vous avez installé l'extension redis dans PHP, auquel cas vous
-    pouvez utiliser le plugin redis_ext fourni dans Jelix)
-  * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
-    l'objet réponse pour générer un sitemap.
-  * la classe jHttp : [[https://packagist.org/packages/jelix/jhttp|jelix/jhttp]]. Il est
-    préconisé d'utiliser d'autres composants plus modernes
-    comme [[https://packagist.org/packages/guzzlehttp/guzzle|GuzzleHttp]].
-
 ==== Changements d'API ====
 
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
@@ -410,20 +394,39 @@ ceux créés par l'application) :
 Ce n'est pas fait automatiquement par le script de migration, car il n'est
 pas possible pour lui de déterminer ce qui est "statique" ou "dynamique".
 
-==== Utilisation du script dev.php, anciennement cmd.php ====
+==== Installation et configuration des modules externalisés ====
 
-Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
-De ce fait, tous les paramètres et options ont changé. Et cmd.php a été renommé
-en dev.php.
+Si vous utilisez les objets réponses Atom ou Rss, ils ont été déplacé dans un
+module dédié @@jfeeds@@ qui est livré avec Jelix. Il faut l'activer pour que vos
+flux Atom et Rss fonctionnent :
 
-Si vous utilisez ces commandes dans des scripts, cron ou autre, il vous faut changer les
-paramètres, en particulier le nom de la commande. Faire un @@php dev.php help@@
-pour avoir l'aide.
+<code bash>
+php dev.php module:configure jfeeds -v
+</code>
 
-De plus le script createapp.php a été déplacé dans un répertoire bin,
-et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
-votre application si vous installez Jelix avec Composer.
+Certaines classes, certains modules et plugins sont maintenant livrés séparément, soit
+installable avec Composer, soit via un zip. Si vous les utilisiez, il faudra donc les
+récupérer en plus de Jelix. Il s'agit de :
 
+  * Le module jSoap : [[https://packagist.org/packages/jelix/soap-server-module|jelix/soap-server-module]]
+  * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
+  * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
+  * Le plugin Redis reposant sur la classe PhpRedis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
+    (inutile si vous avez installé l'extension redis dans PHP, auquel cas vous
+    pouvez utiliser le plugin redis_ext fourni dans Jelix)
+  * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
+    l'objet réponse pour générer un sitemap.
+  * la classe jHttp : [[https://packagist.org/packages/jelix/jhttp|jelix/jhttp]]. Il est
+    préconisé d'utiliser d'autres composants plus modernes
+    comme [[https://packagist.org/packages/guzzlehttp/guzzle|GuzzleHttp]].
+
+Pour chacun des modules nouvellement téléchargé, il faudra faire un :
+
+<code bash>
+php dev.php module:configure nom_du_module
+</code>
+
+Cela les configurera et les activera dans l'application.
 
 ==== Mise à jour des instances de l'application ====
 
@@ -449,6 +452,20 @@ php install/configurator.php -v
 
 php install/installer.php -v
 </code>
+
+==== Utilisation du script dev.php, anciennement cmd.php ====
+
+Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
+De ce fait, tous les paramètres et options ont changé. Et cmd.php a été renommé
+en dev.php.
+
+Si vous utilisez ces commandes dans des scripts, cron ou autre, il vous faut changer les
+paramètres, en particulier le nom de la commande. Faire un @@php dev.php help@@
+pour avoir l'aide.
+
+De plus le script createapp.php a été déplacé dans un répertoire bin,
+et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
+votre application si vous installez Jelix avec Composer.
 
 
 ==== Mise à jour de votre serveur web ====

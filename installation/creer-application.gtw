@@ -29,6 +29,7 @@ Répondez non de préférence.
 Quelques fichiers ensuite à copier avant d'initialiser l'application :
 
 <code bash>
+cd myapp
 cp var/config/profiles.ini.php.dist var/config/profiles.ini.php
 cp var/config/localconfig.ini.php.dist var/config/localconfig.ini.php
 </code>
