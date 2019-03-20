@@ -1,0 +1,343 @@
+~~LANG:EN@enman:rights2/configuration~~
+
+
+Avant de pouvoir utiliser l'API de jAcl2 dans vos modules et le driver db de
+jAcl2 (ou le driver "dbcache"), il faut d'abord initialiser la base de données,
+et mémoriser les différents éléments utilisés pour les droits.
+
+===== Installation =====
+
+Le driver jAcl2.db (ou jAcl2.dbcache) ne fonctionne qu'avec une base de données.
+Il vous faut donc configurer une connexion de base de données, et créer les
+tables nécessaires.
+
+=== Configuration de la connexion ===
+
+Pour cela, il vous faut vous reporter à la [[/composants/base-de-donnees|page sur jDb]].
+
+Cependant, si les tables jAcl2 ne sont pas dans la base indiquée par le profil
+par défaut, il vous faut alors créer un profil de connexion avec le nom
+@@jacl2_profile@@, ou un alias. Un exemple de fichier @@F@dbprofils.ini.php@@ :
+
+<code ini>
+
+[jdb:default]
+driver="mysqli"
+database="jelix"
+host= "localhost"
+user= "jelix"
+password= "jelix"
+persistent= on
+force_encoding=true
+
+[jdb:jacl2_profile]
+driver="mysqli"
+database="droits"
+host= "localhost"
+user= "jelix"
+password= "xilej"
+persistent= on
+force_encoding=true
+
+</code>
+
+=== Création des tables ===
+
+Pour cela, vous devez installer le module **jacl2db**. L'installateur de ce
+module créera pour vous les tables nécessaires en base de donnée.
+
+<code php>
+# lancer de la configuration
+php dev.php module:configure jacl2db
+</code>
+
+Si vous voulez donner directement des droits à un utilisateur nommé "admin" :
+
+<code php>
+php dev.php module:configure -p defaultuser jacl2db
+</code>
+
+Puis lancer @@php install/installer.php@@.
+
+===== Configuration des droits =====
+
+La configuration se fait au moyen de commandes du script jelix en ligne de
+commande. Il y a plusieurs commandes pour configurer jAcl2.db. Elles ont comme
+préfixe @@acl2:@@, @@acl2group:@@ et @@acl2user:@@.
+
+Dans la suite, on est dans l'hypothèse où votre application s'appelle myapp.
+Remplacez bien entendu ce nom par le nom adéquate.
+
+Notez que le module **jacl2db_admin** vous permet de configurer et gérer les droits
+en quelques clics, vous évitant d'utiliser la ligne de commande. Il vous faudra
+cependant quand même créer les sujets/rôles en ligne de commande.
+
+
+==== Création des sujets/roles ====
+
+Dans le système de droits, vous devez déterminer des sujets, symbolisant des rôles
+ou actions possibles sur des données.
+
+Imaginons que l'on veuille créer des droits sur les articles d'un CMS, les
+différents roles seraient : read, list, create, delete, update. Autrement dit,
+on pourrait définir les sujets suivants :
+
+  * "cms.articles.read",
+  * "cms.articles.list",
+  * "cms.articles.create",
+  * "cms.articles.delete",
+  * "cms.articles.update",
+
+Notez que le nom du sujet commence par un prefixe "cms.articles" précisant exactement
+de quoi il s'agit. Ne mettez pas "read" tout court par exemple, cela peut préter à
+confusion et n'est pas très explicite. Indiquez donc toujours dans le nom du sujet des mots
+permettant d'identifier "à propos de quoi". Votre code n'en sera que plus compréhensible.
+
+On peut lister les sujets existants :
+
+<code bash>
+$ php console.php acl2:subjects-list
+</code>
+
+Au départ, vous devriez obtenir une liste vide :
+
+<code>
++-------------------+-------+--------------------------------------+
+| Subject Group     | id    | label key                            |
++-------------------+-------+--------------------------------------+
+
+</code>
+
+Un sujet est représenté par une valeur de droit et une clé de locale qui
+indiquera son label (clé que vous devrez enregistrer dans un fichier de locale).
+
+Créons nos sujets :
+
+<code bash>
+php console.php acl2:subject-create "cms.articles.create" "cms~acl2.articles.create"
+php console.php acl2:subject-create "cms.articles.update" "cms~acl2.articles.update"
+php console.php acl2:subject-create "cms.articles.delete" "cms~acl2.articles.delete"
+php console.php acl2:subject-create "cms.articles.list" "cms~acl2.articles.list"
+php console.php acl2:subject-create "cms.articles.read" "cms~acl2.articles.read"
+</code>
+
+Si vous n'utilisez pas de module qui permette de gérer les droits, alors la clé
+de locale n'est pas indispensable. Mettez alors la chaîne que vous voulez.
+
+Si la commande échoue, vous avez un message d'erreur.
+
+On peut vérifier en listant à nouveau les sujets :
+
+<code bash>
+$ php console.php acl2:subjects-list
++---------------+---------------------+--------------------------+
+| Subject Group | id                  | label key                |
++---------------+---------------------+--------------------------+
+|               | cms.articles.create | cms~acl2.articles.create |
+|               | cms.articles.delete | cms~acl2.articles.delete |
+|               | cms.articles.list   | cms~acl2.articles.list   |
+|               | cms.articles.read   | cms~acl2.articles.read   |
+|               | cms.articles.update | cms~acl2.articles.update |
++---------------+---------------------+--------------------------+
+</code>
+
+Sachez que vous pouvez supprimer un sujet en faisant :
+
+<code bash>
+$ php console.php acl2:subject-delete  <nom du sujet>
+</code>
+
+
+==== Création des groupes d'utilisateurs ====
+
+La déclaration d'un droit nécessite un couple sujet/groupe d'utilisateur. Nous
+devons donc créer un groupe d'utilisateurs. La gestion des groupes
+d'utilisateurs se fait au moyen des commandes de type @@acl2group:@@.
+
+Créons par exemple un groupe de rédacteurs en indiquant un identifiant
+alphanumerique et un libellé (pour affichage dans l'interface de gestion). Le
+libellé est facultatif.
+
+<code bash>
+$ php console.php acl2group:create "redacteurs" "Rédacteurs"
+</code>
+
+Nous allons en créer un deuxième, en indiquant avec l'option @@--default@@
+que l'on veut que ce soit un groupe par défaut, c'est à dire dans lequel sera
+mis tout nouvel utilisateur.
+
+<code bash>
+$ php console.php acl2group:create --default "lecteurs" "Lecteurs"
+</code>
+
+On peut lister les groupes avec la commande @@acl2group:list@@ :
+
+<code bash>
+$ php console.php acl2group:list
++------------+------------+---------+
+| Id         | label      | default |
++------------+------------+---------+
+| lecteurs   | Lecteurs   | yes     |
+| redacteurs | Rédacteurs |         |
++------------+------------+---------+
+</code>
+
+On peut changer le statut "default" plus tard, avec la commande
+@@acl2group:default@@, en indiquant l'identifiant du groupe :
+
+<code bash>
+$ php console.php acl2group:default lecteurs
+ou
+$ php console.php acl2group:default --no-default lecteurs
+</code>
+
+Il est aussi possible de changer le nom du groupe :
+
+<code bash>
+$ php console.php acl2group:name redacteurs "Super Rédacteurs"
+</code>
+
+Ou encore d'effacer un groupe d'utilisateur (n'efface pas les utilisateurs qui y
+sont rattachés) :
+
+<code bash>
+$ php console.php acl2group:delete redacteurs
+</code>
+
+==== Gérer les utilisateurs dans les groupes ====
+
+Dans ces groupes, vous allez indiquer des utilisateurs. Pour ajouter un
+utilisateur, vous devez d'abord déclarer l'utilisateur dans le système jAcl2.
+
+<code bash>
+$ php console.php acl2user:register laurent
+</code>
+
+Cela déclare l'utilisateur Laurent, et un groupe privé lui est crée.
+
+Ensuite, vous pouvez l'ajouter à des groupes. Il faut utiliser la commande
+@@acl2user:addgroup@@ avec l'identifiant du groupe.
+
+<code bash>
+# php console.php acl2user:addgroup <user> <group>
+$ php console.php acl2user:addgroup laurent lecteurs
+</code>
+
+Pour retirer un utilisateur :
+
+<code bash>
+$ php console.php acl2user:removegroup laurent lecteurs
+</code>
+
+Enfin, pour avoir la liste des utilisateurs d'un groupe :
+
+<code bash>
+$ php console.php acl2user:list lecteurs
+</code>
+
+Ou tous les utilisateurs de tous les groupes :
+
+<code bash>
+$ php console.php acl2user:list
+</code>
+
+==== Création des droits ====
+
+Puisque nous avons maintenant tout ce qu'il faut pour définir des droits,
+définissons-en.
+
+Admettons que les lecteurs peuvent lire et lister les articles. On va donc
+assigner les sujets "cms.articles.list" et "cms.articles.read" au groupe des
+lecteurs :
+
+<code bash>
+php console.php acl2:add lecteurs "cms.articles.list"
+php console.php acl2:add lecteurs "cms.articles.read"
+</code>
+
+Vérifions la liste des droits définis au moyen de la commande @@acl2:list@@ :
+
+<code bash>
+$ php console.php acl2:list
++----------+------------+-------------------+----------+
+| Group id | Group name | Subject           | Resource |
++----------+------------+-------------------+----------+
+| lecteurs | Lecteurs   | cms.articles.list | -        |
+| lecteurs | Lecteurs   | cms.articles.read | -        |
++----------+------------+-------------------+----------+
+</code>
+
+La valeur "-" dans la colonne "Resource" specifie un droit sur aucune ressource
+en particulier.
+
+Passons maintenant au groupe des rédacteurs. On va leur donner tous les droits sur le
+sujet @@cms.articles@@.
+
+<code bash>
+php console.php acl2:add  redacteurs "cms.articles.list"
+php console.php acl2:add  redacteurs "cms.articles.read"
+php console.php acl2:add  redacteurs "cms.articles.create"
+php console.php acl2:add  redacteurs "cms.articles.delete"
+php console.php acl2:add  redacteurs "cms.articles.update"
+</code>
+
+On vérifie : 
+<code bash>
+$ php console.php acl2:list
++------------+------------+---------------------+----------+
+| Group id   | Group name | Subject             | Resource |
++------------+------------+---------------------+----------+
+| lecteurs   | Lecteurs   | cms.articles.list   | -        |
+| lecteurs   | Lecteurs   | cms.articles.read   | -        |
+| redacteurs | Rédacteurs | cms.articles.create | -        |
+| redacteurs | Rédacteurs | cms.articles.delete | -        |
+| redacteurs | Rédacteurs | cms.articles.list   | -        |
+| redacteurs | Rédacteurs | cms.articles.read   | -        |
+| redacteurs | Rédacteurs | cms.articles.update | -        |
++------------+------------+---------------------+----------+
+</code>
+
+
+Imaginons qu'on veuille donner toutefois aux lecteurs le droit de modifier
+l'article "opinions", on crée alors un droit sur la ressource "opinions", en
+indiquant l'identifiant de cette ressource en dernier paramètre :
+
+<code bash>
+$ php console.php acl2:add  lecteurs "cms.articles.update" "opinions"
+</code>
+
+On vérifie :
+
+<code bash>
+$ php console.php acl2:list
++------------+------------+---------------------+----------+
+| Group id   | Group name | Subject             | Resource |
++------------+------------+---------------------+----------+
+| lecteurs   | Lecteurs   | cms.articles.list   | -        |
+| lecteurs   | Lecteurs   | cms.articles.read   | -        |
+| lecteurs   | Lecteurs   | cms.articles.update | opinions |
+| redacteurs | Rédacteurs | cms.articles.create | -        |
+| redacteurs | Rédacteurs | cms.articles.delete | -        |
+| redacteurs | Rédacteurs | cms.articles.list   | -        |
+| redacteurs | Rédacteurs | cms.articles.read   | -        |
+| redacteurs | Rédacteurs | cms.articles.update | -        |
++------------+------------+---------------------+----------+
+</code>
+
+On peut aussi retirer un droit avec @@acl2:remove@@, en indiquant, comme
+pour la commande @@acl2:add@@, le groupe d'utilisateur et le sujet (plus
+éventuellement la ressource si on a une ressource).
+
+Exemple, on change d'avis à propos de l'article "opinions" :
+
+<code bash>
+$ php console.php acl2:remove  lecteurs "cms.articles.update" "opinions"
+</code>
+
+Une fois tous les droits établis, l'application peut fonctionner selon vos
+règles, et les modules peuvent faire appel à l'API de jAcl2 pour agir en
+fonction des droits que vous avez configuré.
+
+Pour changer les droits, vous pouvez aussi installer le module jacl2db_admin.
+Une interface vous permettra de gérer plus finement les droits.
+

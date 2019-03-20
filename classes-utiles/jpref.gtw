@@ -31,7 +31,7 @@ Dans votre  profiles.ini.php:
 
 
 Pour plus de détails sur la configuration de ce driver, voir la
-[[/kvdb#drivers|documentation de jKVDb]].
+[[/composants/kvdb#drivers|documentation de jKVDb]].
 
 ==== Utilisation ====
 
@@ -51,7 +51,7 @@ $val = jPref::get('nb.items.per.page');
 
 Un module jpref_admin est fournit afin gérer les préférences 
 depuis votre interface d'administration. Les pages de ce module sont directement
-accessible depuis le menu de [[/creer-application/creer-administration|master_amin]]
+accessible depuis le menu de [[/application/creer-administration|master_amin]]
 (menu "Système", lien "Préferences").
 
 Il faudra d'abord renseigner le fichier @@var/config/preferences.ini.php@@ afin

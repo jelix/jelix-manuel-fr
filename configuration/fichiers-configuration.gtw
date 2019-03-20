@@ -84,7 +84,7 @@ Il n'est pas obligatoire de déclarer les urls pour chaque contrôleurs/méthode
 mais cela peut être indispensable pour avoir des urls sympas, autre que
 @@index.php/mon_module/mon_controleur/ma_methode@@.
 
-Voir [[urls|le chapitre qui lui est dédié]].
+Voir [[/composants/urls|le chapitre qui lui est dédié]].
 
 Note : avant Jelix 1.7, ce fichier était facultatif, suivant le moteur d'urls
 que l'on utilisait. Depuis Jelix 1.7, il n'y a plus de plugins de moteur d'urls,

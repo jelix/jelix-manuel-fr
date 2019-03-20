@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:plugins/tpl~~
 
 Vous pouvez ajouter vos propres fonctionnalités de templates dans le
-[[/templates|moteur de template jTpl]]. Elles doivent être implémentées dans un
+[[/composants/templates|moteur de template jTpl]]. Elles doivent être implémentées dans un
 plugin de template. Il y a quatre types de plugin :
 
    * les fonctions

@@ -239,7 +239,7 @@ plus utilisés.
 Cependant, nous vous recommandons de migrer vos contrôleurs de scripts en ligne
 de commande vers des commandes implémentées avec Symfony Console. @@jCmdLineCoordinator@@
 et @@jCmdLineController@@ sont déclarés obsolètes. Voyez le chapitre pour
-développer une [[/cmdline|commande avec Symfony Console]].
+développer une [[/application/cmdline|commande avec Symfony Console]].
 
 ==== Plugins custom pour jDb et jDao ====
 

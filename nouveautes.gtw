@@ -155,7 +155,7 @@ d'entrée spécifique utilisant jCmdLineCoordinator etc.. Ce mécanisme est
 maintenant déprécié, bien qu'encore utilisable.
 
 Un nouveau mécanisme fait son apparition : le module peut fournir des
-[[/cmdline|commandes implémentées avec Symfony Console]], et sont appelables
+[[/application/cmdline|commandes implémentées avec Symfony Console]], et sont appelables
 depuis un nouveau fichier @@console.php@@ fourni dans l'application, qui va
 découvrir (presque) automatiquement toutes ces commandes.
 

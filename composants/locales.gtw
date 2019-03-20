@@ -1,0 +1,389 @@
+~~LANG:EN@enman:locales~~
+
+Jelix possède son propre mécanisme de localisation/internationalisation. Les
+fonctions @@M@setlocale@@ et @@M@gettext@@ de PHP ne sont pas utilisées car
+trop contraignantes à mettre en place, et leur configuration est aléatoire
+sur les serveurs.
+
+===== Principes =====
+
+Chaque texte ou chaîne que vous voulez traduire est associée à une clé, un
+code. Ces associations sont stockées dans des fichiers "properties". Chaque
+fichier properties étant attribué à une langue et un encodage de caractère. 
+
+L'exemple suivant permet de récupérer le code courant du language, dans une
+variable @@V@lang@@ :
+
+<code php>
+  $lang = jApp::config()->locale;
+</code>
+
+Mais vous n'aurez pas à utiliser ce paramètre, sauf utilisation particulière.
+En effet, pour récupérer une chaîne dans la langue courante, il suffit d'appeler
+@@jLocale::get('la.cle.de.la.chaine')@@, ou dans les templates d'utiliser la
+syntaxe dédiée aux chaînes localisées (voir [[templates|la page sur les templates]]).
+
+===== Configuration =====
+
+Dans le fichier de configuration de l'application (@@F@mainconfig.ini.php@@),
+vous avez plusieurs paramètres pour configurer le langage et l'encodage, utilisés
+dans votre application :
+
+   * @@locale@@: indique le code du language par défaut. Il peut être changé à la volée si
+     nécessaire. La valeur a une syntaxe particulière, semblable aux tags IETF :
+     un tag primaire + "_" + un sous-tag. Le tag primaire est le code langue, le
+     sous-tag est le code pays. Par défautl, la locale vaut @@en_US@@.
+   * @@charset@@: indique l'encodage utilisé. Par défaut il vaut @@UTF-8@@.
+   * @@availableLocales@@ : indique la liste des locales pris en charge par l'application.
+   * @@fallbackLocale@@ : indique la locale à utiliser si jLocale ne trouve pas
+     la clé dans la locale courante ou similaire.
+   * Il y a aussi une section @@[langToLocale]@@. Voyez la fin du chapitre.
+
+
+===== Fichiers properties =====
+
+Ce sont des fichiers contenant des traductions. Ils sont situés dans le répertoire
+@@F@locales/@@ des modules. Ce répertoire a une organisation spécifique. Il
+contient des sous répertoires pour chaque langue. Exemple : @@F@locales/fr_FR/@@
+pour le français, @@F@locales/en_US/@@ pour l'anglais américain etc. Et dans chacun
+de ces sous-répertoires, il y a les fichiers properties correspondant à la langue.
+Il peut y en avoir plusieurs, en particuliers, ils peuvent définir les mêmes
+chaînes mais pour des encodage différents.
+
+Les fichiers d'une même langue peuvent aussi être regroupé dans un même répertoire,
+en dehors des modules, afin de faciliter la traduction par des tiers. Le
+répertoire @@F@<yourapp>/app/locales/@@ doit contenir un répertoire par langue,
+et dans chacun de ces répertoires, un répertoire par module, c'est à dire
+@@F@<yourapp>/app/locales/<lang>/<modules>/locales/<fichier.properties>@@. Par exemple :
+@@F@myapp/app/locales/fr_FR/mon_module/locales/exemple.properties@@.
+On peut ainsi copier facilement un répertoire @@F@<yourapp>/app/locales/<lang>/@@
+d'une application à une autre, ou pour une autre langue.
+
+Il y a aussi la possibilité de redéfinir les fichiers properties en mettant une
+copie dans le répertoire @@F@<yourapp>/app/overloads/@@. Voir
+[/application/surcharge-de-fichiers|le chapitre correspondant].
+
+==== Noms des fichiers ====
+
+Le nom des fichiers properties est structuré comme suit : @@F@NAME.CHARSET.properties@@.
+@@NAME@@ est un nom que l'on utilisera dans les sélecteurs, et @@CHARSET@@ correspond à
+un encodage de caractères. Exemple : @@F@foo.ISO-8859-1.properties@@,
+@@F@foo.UTF-8.properties@@ etc.
+
+Avec la configuration par défaut, jLocale ira chercher les chaînes dans les fichiers
+@@F@locales/en_US/*.UTF-8.properties@@.
+
+==== Contenu des fichiers ====
+
+La structure des fichiers est simple : il s'agit d'une suite de lignes
+@@cle=chaine traduite@@, avec toutefois des éléments syntaxiques particuliers comme
+nous le verrons dans la suite. Tout d'abord, vous ne pouvez pas utiliser des
+simples ou doubles quotes pour délimiter les chaînes.
+
+Pour les clés, vous pouvez utiliser les caractères "a" à "z" (minuscule/majuscule),
+ainsi que les signes "_", "-", ".".
+
+Exemple, pour un fichier @@F@fr_FR/foo.UTF-8.properties@@ :
+
+<code ini>
+title.offlineElements = éléments à traiter
+title.onlineElements = éléments en ligne
+buttons.save = Enregistrer
+buttons.ok=Valider
+buttons.cancel=Annuler
+buttons.search=Rechercher
+</code>
+
+Et dans son équivalent anglais @@F@en_US/foo.UTF-8.properties@@ :
+
+<code ini>
+title.offlineElements = elements to check
+title.onlineElements = online elements
+buttons.save = Save
+buttons.ok=Ok
+buttons.cancel=Cancel
+buttons.search=Search
+</code>
+
+== Passage à la ligne ==
+
+Si un texte est long et que vous voulez l'écrire sur plusieurs lignes,
+vous devez mettre un anti-slash (\) à la fin de chaque retour à la ligne
+(sauf sur la dernière du texte) :
+
+<code ini>
+intro=ceci est un trés tres\
+long texte qui fait\
+plusieurs lignes
+foo=bar
+</code>
+
+Cependant, cela n'insère pas un saut de ligne (\n) dans la chaine. Pour
+insérer un vrai saut de ligne, il faut utiliser \n et/ou \r suivant la plateforme
+(\n est recommandé) :
+
+<code ini>
+intro=ceci est un très très\
+ long texte qui fait\nplusieurs lignes\nfoo=bar
+</code>
+
+
+== Commentaires ==
+
+Vous pouvez aussi mettre des commentaires. Ils doivent commencer par un #,
+le reste de la ligne étant alors ignoré. Vous pouvez mettre un commentaire en
+début de ligne ou à la suite d'une chaîne traduite. De ce fait, si vous voulez
+utiliser un # dans votre chaîne, il faut précéder ce caractère par un "\".
+
+
+== Espaces ==
+
+Il y a un "trim" qui est fait sur la chaîne traduite, c'est à dire que les espaces
+avant et après sont supprimés. Si vous voulez que la chaîne soit un espace, vous
+utiliserez alors \w
+
+<code ini>
+nospace= #this is using a regular space
+space= \w#this is using a \w space
+</code>
+
+La valeur de @@space@@ sera ' ', et la valeur de @@nospace@@, une chaîne vide.
+
+== Entités HTML ==
+
+Les chaînes localisées ne devraient pas contenir du code HTML. D'une part parce
+qu'une chaîne localisée n'est pas forcément destinée à être incluse dans du HTML,
+mais aussi parce que les réponses HTML échappent (htmlspecialchars) à plusieurs
+endroits le contenu que vous lui donnez.
+
+De ce fait, les entités et autres signes HTML seront échappés si vous donnez par
+exemple une chaîne pour en faire le titre d'une page. Les entités ne seront donc
+pas interprétées comme telles par le navigateur. Par exemple, @@&copy;@@ deviendra
+@@&amp;copy;@@.
+
+Si vous avez besoin d'utiliser des caractères spécifiques, choisissez l'encodage
+adéquat plutôt que de recourir aux entités HTML. C'est pour cette raison qu'il
+est fortement encouragé d'utiliser l'encodage UTF-8, qui contient pratiquement
+tous les caractères utilisés dans toutes les langues, en plus de caractères
+spéciaux, les emoji etc.
+
+Malgré tout si vous souhaitez absolument mettre du html dans une chaîne localisée
+qui doit être utilisée dans un template, la possibilité est de mettre ".html" au
+bout de la chaîne comme suit :
+
+<code ini>
+mon.beau.titre.de.paragraphe.html = <strong>Mon Titre de paragraphe</strong>
+</code>
+
+Dans le template, il faut récupérer cette chaine localisée uniquement avec
+@@{jlocale}@@, qui n'échappera donc pas le contenu si le nom de la locale se
+termine par ".html". 
+
+===== Récupération d'une chaîne localisée =====
+
+Pour récupérer une chaîne, il faut utiliser la méthode statique @@M@get@@ de
+jLocale. Cette méthode accepte en premier argument un sélecteur de locale, qui a
+cette structure : @@<module>~<name>.<key>@@. la partie "<module>~" est facultative s'il
+s'agit d'un fichier se trouvant dans le module courant.
+
+Pour récupérer par exemple la valeur de "buttons.save" dans @@F@foo.UTF-8.properties@@
+situé dans le module "bar" : 
+
+<code php>
+  $chaine = jLocale::get("bar~foo.buttons.save");
+</code>
+
+Dans un template cela donnerait par exemple :
+
+<code html>
+  <input type="button" value="{@bar~foo.buttons.save@}" />
+</code>
+
+Note : pour l'utilisation dans les templates, voir les possibilités dans
+[[templates|la page sur les templates]]
+
+
+===== Chaîne localisée avec paramètres =====
+
+Il peut être utile d'avoir des chaînes localisées dans lesquelles on veut insérer
+des valeurs dynamiquement. Par exemple, imaginons que voulez écrire :
+
+<code>
+   Vous allez sur le site http://foo.com et vous cliquez sur la rubrique voiture
+</code>
+
+Vous voulez pouvoir changer l'url du site et le nom de la rubrique. Vous pouvez
+alors passer les données en paramètres à jLocale :
+
+
+<code php>
+  $chaine = jLocale::get("bar~foo.phrase", array('http://foo.com', 'voiture'));
+</code>
+
+Dans le fichier properties, vous mettez un @@%s@@ partout où vous voulez insérer
+des valeurs dynamiques :
+
+<code ini>
+   phrase = Vous allez sur le site %s et vous cliquez sur la rubrique %s
+</code>
+
+Et il faut donner les paramètres dans l'ordre d'apparition des @@%s@@. En fait,
+la chaîne est traitée par la fonction @@sprintf@@ de php, donc vous avez toutes
+les possibilités syntaxiques de sprintf.
+
+En particulier, il se peut que l'ordre d'insertion des paramètres change d'une
+langue à une autre. Plutôt donc que de modifier l'ordre des paramètres quand vous
+appelez jLocale, vous indiquez quel paramètre va à quel endroit dans la chaîne
+localisée, au moyen de la syntaxe @@%x$s@@ où x est un nombre d'ordre.
+
+<code ini>
+   phrase = Vous allez sur le site %1$s et vous cliquez sur la rubrique %2$s
+</code>
+
+En anglais (même si ce n'est pas la véritable traduction, c'est juste pour
+l'exemple) ça pourrait donner ça :
+
+<code ini>
+   phrase = Clic on the %2$s section, when you go on the %1$s web site.
+</code>
+
+Ainsi le premier paramètre ira à l'emplacement de @@%1$s@@, le deuxième à la place
+de @@%2$s@@ etc...
+
+
+Par contre, dans un template, vous ne pouvez pas utiliser la notion @@{@foo@}@@
+quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
+
+<code html>
+   <p>{jlocale "bar~foo.phrase", array('http://foo.com', 'voiture')}</p>
+</code>
+
+
+===== Changer la langue dynamiquement =====
+
+Jelix fourni un plugin pour le coordinateur  qui permet de changer la langue
+dynamiquement. C'est le plugin //autolocale//, qui est situé dans @@F@lib/jelix/plugins/coord/@@
+(voir [[/plugins/coord|la section sur les plugins de coordinateur]]).
+
+Pour cela, le plugin regarde si un paramètre est présent dans l'url, indiquant
+la nouvelle langue à prendre en compte, et utilisera cette langue durant le
+reste de la visite. En fait le nouveau code langue est stocké dans une variable
+de session, et le plugin modifie l'option de configuration @@locale@@ une fois
+la configuration lue (le fichier de configuration n'est donc pas modifié).
+
+Aussi c'est totalement transparent pour vous. Pour connaître la langue à tout
+moment, il suffit de faire comme d'habitude :
+
+<code php>
+  $lang = jApp::config()->locale;
+</code>
+
+
+Pour utiliser le plugin, ajouter cette section dans @@F@app/system/mainconfig.ini.php@@
+ou le fichier de configuration de l'un des points d'entrée :
+
+<code ini>
+[coordplugin_autolocale]
+enableUrlDetection = on
+urlParamNameLanguage = lang
+</code>
+
+@@enableUrlDetection@@ permet d'activer la détection de la langue dans l'url.
+Le paramètre @@urlParamNameLanguage@@ contient le nom du paramètre de l'url qui
+contiendra le code du language à utiliser. Aussi, vous pouvez mettre des liens
+sur votre site qui permettent à l'utilisateur de changer la langue. Exemple :
+
+<code html>
+  <a href="index.php?lang=fr_FR">français</a>
+  <a href="index.php?lang=en_US">english</a>
+</code>
+
+Vous pouvez aussi utiliser les codes langues sans le code pays :
+
+<code html>
+  <a href="index.php?lang=fr">français</a>
+  <a href="index.php?lang=en">english</a>
+</code>
+
+Bien sûr, il est possible de définir des urls spécifiques pour
+chaque langue, et même d'indiquer les paramètres de langues, qui seront
+renseignés automatiquement ou détectés automatiquement, sans avoir à l'indiquer
+à @@jUrl::get()@@ entre autre (voir [[/composants/urls/mapping|la documentation
+correspondante]]). Vous n'avez alors probablement pas besoin du plugin
+autolocale.
+
+Notez aussi que si le code de language donné n'est pas listé dans le paramètre
+@@availableLocales@@ de la configuration principale, jLocale essaiera d'abord
+d'utiliser la locale la plus approchante (même langue mais d'un autre pays),
+et si il ne trouve pas, il utilisera la langue par défaut de l'application,
+celle indiquée dans @@locale@@, et en dernier recourd, celle indiquée dans @@fallbackLocale@@.
+
+Enfin, il faut activer le plugin. Pour cela, dans la configuration de jelix,
+mettez dans la section @@[coordplugins]@@ :
+
+<code ini>
+[coordplugins]
+autolocale = 1
+</code>
+
+
+===== Détection automatique de la langue =====
+
+Le plugin //autolocale//  permet aussi de détecter automatiquement la langue en
+fonction du navigateur, c'est à dire en analysant les en-tête HTTP envoyés par
+le navigateur. 
+
+Pour cela, il suffit de mettre le paramètre @@useDefaultLanguageBrowser@@ à
+@@on@@ dans la configuration du plugin. Et quand l'internaute arrive pour la
+première fois sur le site, le plugin détecte la langue utilisée dans son
+navigateur et donc active la bonne langue dans jelix (si bien sûr, ce code
+langue est l'un de ceux que vous aurez indiqué dans @@availableLocales@@).
+
+
+===== Template localisé =====
+
+Dans certains cas, pour éviter d'avoir trop de chaînes locales, il peut s'avérer
+intéressant de traduire un template complet.
+
+Pour cela il suffit de placer le template qui nécessite l'internationalisation
+dans un sous-répertoire du répertoire templates. Comme pour les
+[[/composants/locales#fichiers-properties|fichiers de locales]] un sous-répertoire est
+nécessaire pour chaque langue (Exemple : @@F@templates/en_US/@@, @@F@templates/fr_FR/@@).
+
+
+===== Prise en charge des codes de language inconnues ou alternatifs =====
+
+À partir d'un code de langue simple (comme "en", "fr"..), Jelix peut donner le
+code language associé défini par défaut : "en_US" pour "en", "fr_FR" pour "fr" etc.
+Cependant, ce n'est pas forcément le code que vous voulez obtenir. Vous voudriez
+par exemple "en_GB" pour "en" et "fr_CA" pour "fr". Ou peut-être encore vous
+voudriez prendre en charge une langue non reconnue (la liste par défaut se
+trouve dans le fichier @@F@lib/jelix/core/lang_to_locale.ini.php@@).
+
+Pour modifier ces associations, vous devez remplir la section @@[langToLocale]@@
+dans la configuration principale. La clé du paramètre est le code langue simple,
+et la valeur le code du language complet.
+
+<code ini>
+[langToLocale]
+en = en_GB
+; ou pour garder une compatibilité avec d'anciens modules :
+en = en_EN
+</code>
+
+===== En cas de clé inexistante =====
+
+Quand jLocale ne trouve pas la clé dans un fichier properties correspondant
+à la langue, il va essayer de la trouver dans une locale similaire, en se
+basant sur le fichier de correspondance entre le code langue, et la
+qui y est associé par défaut (voir paragraphe précédent).
+
+Si il échoue à nouveau, il va essayer de chercher avec la locale indiquée
+dans @@fallbackLocale@@.
+
+Si il échoue encore, @@jLocale::get()@@ génère une exception. C'est pour
+cela qu'il est préférable d'avoir au moins une langue dans laquelle toutes
+les clés existent, et d'indiquer cette langue dans @@fallbackLocale@@.
+
+
+

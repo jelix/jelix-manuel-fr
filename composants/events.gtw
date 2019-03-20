@@ -1,0 +1,153 @@
+~~LANG:EN@enman:components/events~~
+
+Jelix propose un système de communication inter-module, basé sur le principe
+d'événements/écouteurs.
+
+Il est possible d'émettre un événement de n'importe quel endroit dans votre
+code, et les modules qui "écoutent" cet événement pourront y répondre, et même
+renvoyer des données. C'est donc en quelque sorte un système de broadcast, avec
+des clients (les émetteurs) et des serveurs (les listeners).
+
+Il y a donc d'une part un objet @@C@jEvent@@, permettant d'émettre un événement
+et de récupérer les réponses, et d'autre part, des "listeners", qui sont des
+classes placées dans les modules, contenant les méthodes "répondant" aux
+événements.
+
+
+===== Émettre un évènement =====
+
+L'objet @@C@jEvent@@ sert à la fois d'émetteur d'événement, et en même temps de
+conteneur des réponses.
+
+Pour émettre un événement, il faut utiliser la méthode statique @@M@notify()@@.
+
+Elle accepte en paramètre un nom d'évènement (qui n'est constitué que de
+caractères alphanumériques), et un tableau facultatif de paramètres (à utiliser
+selon l'évènement).
+
+Vous recevez en retour l'objet @@C@jEvent@@ instancié pour l'occasion, et
+contenant les réponses (ne pas confondre avec les objets @@C@jResponse@@,
+utilisés dans les contrôleurs). Les réponses sont un ensemble de valeurs dont la
+structure et le nombre dépend de l'événement et du nombre de modules ayant
+répondu.
+
+<code php>
+   //exemple avec paramètre
+   $eventParams = array('user' => $userObject);
+   $theEvent = jEvent::notify('authCanLogin', $eventParams);
+ 
+   //exemple sans paramètres
+   $theEvent = jEvent::notify('authCanLogin2');
+</code>
+
+Pour accéder aux données des réponses retournés par les listeners des modules,
+il faut utiliser la méthode @@M@getResponse@@ de l'objet @@C@jEvent@@ qui a été
+retourné par @@M@notify@@:
+
+<code php>
+  $reponses = $theEvent->getResponse();
+</code>
+
+Le résultat est un tableau des données que chaque module à renvoyé.
+
+===== Répondre à un évènement =====
+
+Il n'y a pas de listener par défaut dans les modules. Aussi, pour qu'un module
+puisse répondre à un événement, il faut en créer un, et le déclarer dans le
+fichier @@F@events.xml@@ du module. Il n'y a pas de limite du nombre de
+listener.
+
+Il y a deux choses à faire pour un listener : le créer, puis le déclarer.
+
+
+==== créer le listener ====
+
+Il faut d'abord lui donner un nom. Nous allons utiliser "auth" par exemple.
+Ensuite il faut créer une classe pour le listener. Son nom est une concatenation
+du nom choisi avec "Listener". Stocker cette classe dans un fichier qui a pour
+nom "nomchoisi.listener.php", et donc @@F@auth.listener.php@@ pour notre
+exemple, ce fichier devant être dans le dossier @@C@classes@@ du module. La
+classe doit hériter de @@C@jEventListener@@.
+
+Cette classe contient une méthode pour chaque évènement auquel le listener
+répond. Ces noms de méthodes commencent par @@on@@ suivi du nom d'événement. Et
+ces méthodes prennent en paramètre l'objet @@C@jEvent@@ correspondant à
+l'événement. Exemple :
+
+<code php>
+class authListener extends jEventListener {
+
+   function onAuthCanLogin ($event) {
+
+        // recupération d'un paramètre de l'événment
+        $user = $event->getParam('user');
+
+        // traitement
+        $ok = true;
+        if (isset($user->actif)) {
+            $ok = ($user->actif == '1');
+        }
+
+        $ok = $ok && ($user->password != '');
+
+        // renvoi de donnée en réponse
+        $event->Add(array('canlogin'=>$ok));
+   }
+}
+</code>
+
+Ce listener répond à l'évènement "AuthCanLogin". La méthode récupère le
+paramètre 'user' de l'évènement. Et ajoute une donnée dans la réponse avec la
+méthode @@M@add@@. Ce paramètre et cette donnée de réponse dépendent uniquement
+de l'évènement AuthCanLogin. Pour d'autres évènements, il peut y avoir plusieurs
+paramètres ou aucun, d'autres types de données de réponses ou aucune réponse.
+
+Note : vous pouvez changer la façon dont votre listener traite les évènements
+(nom des méthodes correspondantes aux évènements etc), en redéfinissant la
+méthode @@M@performEvent()@@ du listener.
+
+==== Déclarer le listener ====
+
+il faut ensuite déclarer le listener. Cela se fait dans un fichier
+@@F@events.xml@@ placé à la racine du module. Voici un exemple :
+
+<code xml>
+<events xmlns="http://jelix.org/ns/events/1.0">
+   <listener name="auth">
+       <event name="AuthCanLogin" />
+   </listener>
+</events>
+</code>
+
+Vous pouvez déclarer autant de listener que vous voulez grâce à la balise
+@@E@<listener>@@. Et dans chacune d'elles vous indiquez tous les évènements que
+prend en charge le listener, grâce à des balises @@E@<event>@@.
+
+===== Désactiver des listeners =====
+
+Il peut arriver que vous vouliez désactiver un listener fourni par un module
+tiers, pour un tas de raison.
+
+Cela est possible en les indiquant dans la section @@[disabledListeners]@@
+de la configuration principale. Les clés sont les noms d'évènements, les
+valeurs sont les selecteurs des listeners.
+
+<code ini>
+[disabledListeners]
+authLogin="aModule~theListener"
+</code>
+
+Dans cet example, le listener @@theListener@@ du module "aModule" ne sera
+pas appelé quand l'évènement @@authLogin@@ sera émis.
+
+Si vous voulez désactiver plusieurs listener pour un même évènement,
+utilisez simplement la notation @@[]@@ pour indiquer un tableau :
+
+<code ini>
+[disabledListeners]
+authLogin[]="aModule~theListener"
+authLogin[]="otherModule~otherListener"
+</code>
+
+
+

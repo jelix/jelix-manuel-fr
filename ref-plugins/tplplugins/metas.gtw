@@ -19,7 +19,7 @@ Pour renseigner la balise @@E@<title>@@ de votre page, il vous suffit de procéd
 
 ===== assets =====
 
-Pour utiliser un [[vues/vue-html#utiliser-les-webassets|groupe d'assets]], et donc
+Pour utiliser un [[/modules/vues/vue-html#utiliser-les-webassets|groupe d'assets]], et donc
 intégrer toutes les CSS et JS qu'il contient, utiliser @@assets@@:
 
 <code html>

@@ -1,0 +1,24 @@
+~~LANG:EN@enman:components/daos~~
+
+jDao est l'ORM (Object Relational Mapping) de Jelix. Il permet de générer des
+objets PHP qui opèrent sur des tables précises de base de données. La génération
+de ces objets inclut la génération des requêtes SQL qui correspondent à ces
+opérations.
+
+Pour ce faire, jDao se base sur un fichier XML que vous devez fournir. Ce
+fichier permet de s'affranchir de l'écriture fastidieuse des requêtes SQL,
+permet de tenir compte des problématiques du genre SQL injection : les objets
+générés s'occupent de tout. Le fichier XML peut être généré par un outil de
+développement, comme par exemple l'une des commandes fournies avec le script
+Jelix.
+
+À partir d'un fichier XML de ce type, jDAO fournit donc deux objets, un objet
+"record" et un objet "factory", selon le pattern DAO (Data Access Object).
+
+Un objet record représente un enregistrement : ses propriétés correspondent avec
+les champs d'une ou plusieurs tables.
+
+Un objet factory fournit un certain nombre de méthodes permettant de créer un
+record, de le sauvegarder, de le détruire ou de récupérer des ensembles d'objets
+record. 
+

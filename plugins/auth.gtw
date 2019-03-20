@@ -1,8 +1,8 @@
 ~~LANG:EN@enman:plugins/auth~~
 
 
-Si les [[/authentification/drivers|drivers standards]] pour
-[[/authentification|jAuth]] ne vous conviennent pas, vous pouvez donc en créer
+Si les [[/composants/authentification/drivers|drivers standards]] pour
+[[/composants/authentification|jAuth]] ne vous conviennent pas, vous pouvez donc en créer
 un. Voici comment.
 
 ===== Création =====
@@ -22,7 +22,7 @@ dans un répertoire @@auth/exemple/@@ dans un
 ===== Activation =====
 
 Pour utiliser votre nouveau driver, vous devez indiquer @@exemple@@ au niveau de
-l'option @@driver@@ du [[/authentification|fichier de configuration du plugin auth]],
+l'option @@driver@@ du [[/composants/authentification|fichier de configuration du plugin auth]],
 et avoir une section @@exemple@@ suivit des éventuelles options
 spécifiques au driver.
 

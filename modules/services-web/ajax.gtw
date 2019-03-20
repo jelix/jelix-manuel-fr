@@ -1,0 +1,134 @@
+~~LANG:EN@enman:web-services/ajax~~
+
+Bien que le terme AJAX précise qu'une réponse doit être en XML (d'où le X dans
+AJAX), AJAX est souvent utilisé avec d'autres types de format.
+
+Selon ce que vous attendez côté client, soit dans la propriété responseText,
+soit dans la propriété responseXml de l'objet xmlHttpRequest, vous utiliserez un
+objet jResponse différent.
+
+  * Pour tout ce qui est contenu XML quelconque, vous utiliserez
+    [[/modules/vues/vue-xml|jResponseXml]]
+  * Pour des réponses en JSON, vous utiliserez [[json|jResponseJson]]
+  * Pour renvoyer des fragments de code HTML, il ne faut **pas** utiliser
+    @@C@jResponseHtml@@, mais @@C@jResponseHtmlFragment@@ (voir exemple
+    ci-dessous).
+  * Dans les autres cas, vous utiliserez certainement
+    [[/modules/vues/vue-texte|jResponseText]].
+
+Dans votre controleur, vous pouvez utiliser @@jApp::coord()->request->isAjax()@@
+pour vérifier que la requête est une vrai requête AJAX (envoyée donc avec
+XMLHttpRequest).
+
+===== Renvoyer des fragments de code HTML =====
+
+Il ne faut pas utiliser @@C@jResponseHtml@@, car cet objet génère tout ce qu'il
+faut pour une page HTML : le ''<head>'', le ''<body>'' etc... Bien souvent, dans
+une requête AJAX, on ne veut récupérer qu'un fragment de code HTML.
+
+@@C@jResponseHtmlFragment@@ est adaptée pour cela :
+
+
+<code php>
+   $rep = $this->getResponse('htmlfragment');
+
+   $mavariable = ...
+
+// html à renvoyer 
+   $rep->addContent( '<p>'.$mavariable.'</p>' );
+
+// ou aussi par un template
+   $rep->tplname='monapp~tpl_pour_ajax'; 
+   $rep->tpl->assign('variable', $mavariable);
+
+   return $rep;
+</code>
+
+
+==== À propos de l'utilisation de jforms dans les réponses Ajax ====
+
+Il y a un souci connu quand on utilise [[/composants/jforms|un formulaire jforms]] dans un
+template pour une réponse autre que html pour faire une réponse ajax.
+
+En effet, pour fonctionner correctement, un formulaire jforms a besoin de la
+présence du fichier @@F@jforms_jquery.js@@ dans la page qui appelle la requête ajax. Ce
+fichier est inclus automatiquement par le plugin form, en appelant entre autre
+la méthode @@M@addJsLink@@ de la réponse.
+
+Comme les fragments HTML renvoyés par les reponses ajax n'ont pas d'en-tête HTML
+@@E@<head>@@, le script n'est pas inclus dans la page html final, ce qui causera
+des erreurs javascript.
+
+La solution est donc, dans l'action qui génère la page html qui fera la requête
+ajax, d'inclure tout les scripts et feuilles de styles dont a besoin le formulaire.
+Pour cela, il faut récupérer le "builder" de formulaire, et appeler la méthode
+@@outputMetaContent()@@.
+
+Exemple d'action qui affiche la page qui fera la requete ajax : 
+
+<code php>
+  function pageshowingtheform(){
+      $rep= $this->getResponse("html");
+      $rep->title = 'show ajax form';
+
+      $form = jForms::create('sample');
+      $form->getBuilder('html')->outputMetaContent(null);
+
+      $tpl = new jTpl();
+      $rep->body->assign('MAIN', $tpl->fetch('mypage'));
+      return $rep;
+  }
+</code>
+
+Le template principal mypage.tpl :
+
+<code html>
+<script type="text/javascript">
+var urlAjaxForm = "{jurl 'testapp~sampleform:showajaxform'}"
+
+{literal}
+function loadForm() {
+    jQuery.ajax(urlAjaxForm, {
+        complete: function(jqXHR, textStatus) {
+            $("#theform").html(jqXHR.responseText);
+        },
+        // ....
+    });
+}
+{/literal}
+</script>
+
+<button onclick="loadForm()">Load the form</button>
+
+<div id="theform">
+    // will be filled after clicking on the button
+</div>
+</code>
+
+Et l'action showajaxform :
+
+<code php>
+function showajaxform() {
+    // retrieve form data
+    $form = jForms::get('sample');
+    if($form == null){
+        $form = jForms::create('sample');
+    }
+
+    $rep = $this->getResponse('htmlfragment');
+    $rep->tpl->assign('form', $form);
+    $rep->tplname = 'sampleajaxform';
+    return $rep;
+}
+</code>
+
+Et enfin le template du formulaire sampleajaxform :
+
+<code html>
+{form $form,'sampleform:save'}
+    {formcontrols}
+    <div>{ctrl_label '', '%s: '} {ctrl_control}</div>
+    {/formcontrols}
+<p>{formreset} {formsubmit}</p>
+{/form}
+</code>

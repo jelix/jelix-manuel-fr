@@ -58,7 +58,7 @@ dépendants et lancera leurs configurateurs.
 
 Bien sûr, si vous avez plusieurs points d'entrée, vous avez alors forcément des
 modules accessibles par certains points d'entrées et pas par d'autres. Il ne
-faudra alors pas oublier de [[/urls|configurer correctement le moteur d'url]],
+faudra alors pas oublier de [[/composants/urls|configurer correctement le moteur d'url]],
 afin que les urls générées par Jelix utilisent bien le point d'entrée associé à
 chacun des modules.
 

@@ -1,0 +1,44 @@
+~~LANG:EN@enman:components/jforms~~
+
+
+jForms est un système complet qui facilite le travail du développeur pour créer
+des formulaires. Vous décrivez votre formulaire dans un fichier xml, et par le
+biais d'une API relativement simple et de //plugins// de //template//, jForms
+s'occupe automatiquement :
+
+   * de générer le formulaire HTML, en affichant des indications sur les champs
+     qui sont en erreur, des indications sur les champs obligatoires, l'aide sur
+     chaque champ, sachant que l'affichage est hautement personnalisable ;
+   * de générer les labels en tenant compte de l'accessibilité ;
+   * de générer le code javascript qui validera les données coté client ;
+   * de valider les données saisies côté serveur ;
+   * d'afficher les erreurs au niveau du formulaire, soit après validation en
+     javascript, avant l'envoi du formulaire, soit lors de l'affichage du
+     formulaire (après la validation côté serveur) ;
+   * de gérer plusieurs instances d'un même formulaire en même temps (permettant
+     d'éditer plusieurs enregistrements en même temps) ;
+   * d'initialiser un formulaire à partir de données d'un ou plusieurs DAO (que
+     ce soit au niveau des valeurs des champs ou du remplissage de liste
+     déroulante, liste de boutons radio, etc) ;
+   * de sauver les données saisies dans des DAO ;
+   * de sauvegarder les fichiers téléchargés ;
+   * de générer d'autres types de formulaires (en AJAX, XForms, etc.) en ne
+     modifiant que très peu de choses ;
+   * de prendre en charge automatiquement des champs complexes comme les
+     captchas, les champs d'édition WYSIWYG, les groupes, etc.
+
+jForms est composé de trois parties distinctes, chacune étant utilisée dans les
+trois composants du pattern MVC :
+
+   * [[xml|des fichiers XML]] qui permettent de décrire vos formulaires ;
+   * des plugins de templates pour [[affichage|afficher une instance d'un formulaire]] ;
+   * l'API côté serveur qui permet de [[utilisation|créer une instance d'un formulaire et de gérer les données qu'il contient]].
+
+À partir d'un fichier jForms XML, jForms gère un objet (héritant de jFormsBase)
+créé à partir des informations contenues dans le fichier XML, et permettant
+d'initialiser le contenu du formulaire, de gérer son contenu, de le sauvegarder
+etc. Par conséquent il contient toutes les valeurs saisies, stockées dans des
+variables de cet objet (//variables de formulaire//).
+
+C'est aussi à partir d'un objet jForms que des //plugins// de //templates//
+permettent d'afficher les éléments HTML correspondant.

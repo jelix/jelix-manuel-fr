@@ -1,0 +1,245 @@
+~~LANG:EN@enman:components/jforms/xml/htmleditor~~
+
+Pour utiliser un éditeur HTML wysywg dans vos formulaire, il faut utiliser la
+balise @@E@<htmleditor>@@.
+
+<code xml>
+  <htmleditor ref="description">
+	<label>Description du produit</label>
+  </htmleditor>
+</code>
+
+Vous pouvez changer l'apparence de l'éditeur, la configuration de l'éditeur, et
+même le moteur de l'éditeur, via les attributs @@A@skin@@, et @@A@config@@ de la balise
+@@<htmleditor>@@
+
+Par défaut, jForms utilise le moteur Wymeditor.
+
+===== Configuration générale des éditeurs =====
+
+L'attribut @@A@config@@ indique le nom d'une configuration d'un éditeur. Sa
+valeur par défaut est @@L@default@@.
+
+Les configurations sont déclarées dans la section @@V@[htmleditors]@@ de la
+configuration générale de jelix. Voici ce qu'elle contient par défaut :
+
+<code ini>
+[htmleditors]
+default.engine.name=wymeditor
+wymbasic.engine.name=wymeditor
+ckdefault.engine.name=ckeditor
+ckfull.engine.name=ckeditor
+ckbasic.engine.name=ckeditor
+</code>
+
+Comme vous pouvez le voir, plusieurs configuration sont possibles, puisqu'il y en a 
+5 de définit. Ainsi, pour chaque configuration, il peut y avoir une ou plusieurs
+paramètres, commençant par le nom de la configuration : @@default@@, @@wymbasic@@ etc.
+Ici il n'y a qu'une propriété définit, @@engine.name@@, qui indique le nom de l'éditeur
+à utiliser, et qui est en fait un nom utilisé dans une fonction Javascript de chargement.
+Voir plus bas.
+
+Pour chaque configuration, il faut également spécifier les fichiers JS et CSS à utiliser.
+On utilise pour cela les [[/modules/vues/vue-html|les webassets]]. Le groupe de webassets pour une
+configuration doit prendre le nom de la configuration (ici @@default@@), préfixé
+par @@jforms_htmleditor_@@. Le groupe de webassets pour la configuration @@default@@
+est celui-ci :
+
+<code ini>
+[webassets_common]
+
+;...
+
+jforms_htmleditor_default.js[]="$jelix/wymeditor/jquery.wymeditor.js"
+jforms_htmleditor_default.js[]="$jelix/js/jforms/htmleditors/wymeditor_default.js"
+jforms_htmleditor_default.require=jquery
+
+</code>
+
+Vous remarquerez que l'on inclus, en plus du fichier JS de Wymeditor, @@jquery.wymeditor.js@@,
+un fichier @@wymeditor_default.js@@ fourni par Jelix. Ce code Javascript permet d'instancier
+correctement Wymeditor pour un textarea donné. Voir la section suivante.
+
+Il faut aussi définir un groupe de webassets pour chaque "skin" utilisé pour l'éditeur.
+Wymeditor possède en effet un système de theme. Pour cela le nom du groupe a la forme 
+@@jforms_htmleditor_<nom configuration>.skin.<nom skin>@@.
+
+Par exemple, pour déclare les assets de la skin @@default@@ de la configuration @@default@@, 
+on va déclarer le groupe suivant (qui ne comporte qu'une feuille CSS) :
+
+<code ini>
+jforms_htmleditor_default.skin.default.css="$jelix/wymeditor/skins/default/skin.css"
+</code>
+
+Pour pouvoir utiliser la "skin" @@silver@@ de Wymeditor, on aura :
+
+<code ini>
+jforms_htmleditor_default.skin.silver.css="$jelix/wymeditor/skins/silver/skin.css"
+</code>
+
+Pour la configuration @@ckfull@@, on aura les déclarations suivantes :
+
+<code ini>
+[webassets_common]
+
+jforms_htmleditor_ckfull.js[]="$jelix/ckeditor/ckeditor.js"
+jforms_htmleditor_ckfull.js[]="$jelix/js/jforms/htmleditors/ckeditor_full.js"
+
+</code>
+
+Pas de feuilles de styles ni de theme ici.
+
+Si vous voulez utiliser la config @@default@@ avec la skin @@silver@@, dans votre fichier
+jForms vous devez avoir :
+
+<code xml>
+  <htmleditor ref="description" config="default" skin="silver">
+	<label>Description du produit</label>
+  </htmleditor>
+</code>
+
+===== Créer un script d'instanciation d'un éditeur =====
+
+La plupart des éditeurs HTML wysiwyg permettent de les configurer au moyen de
+paramètres divers et variés. Cette configuration se fait en javascript. 
+
+jForms a donc besoin de savoir comment instancier et paramétrer l'éditeur.
+
+Pour cela un script doit être fourni. Il doit contenir une fonction javascript qui
+se chargera de paramétrer l'éditeur selon vos besoins. Cette fonction doit se trouver
+dans un fichier, dont vous indiquez le chemin dans un groupe de webassets (comme 
+@@wymeditor_default.js@@ plus haut).
+
+Par exemple, on veut créer une nouvelle configuration "wymfull" pour wymeditor. On
+crée par exemple un fichier dans @@F@www/js/wymeditor_wymfull.js@@ (l'endroit et le
+nom du fichier n'a aucune importance). Ensuite on le déclare dans la
+configuration :
+
+<code ini>
+[htmleditors]
+wymfull.engine.name=wymeditor
+
+[webassets_common]
+
+;...
+
+jforms_htmleditor_wymfull.js[]="$jelix/wymeditor/jquery.wymeditor.js"
+jforms_htmleditor_wymfull.js[]="js/wymeditor_wymfull.js"
+jforms_htmleditor_wymfull.require=jquery
+</code>
+
+La fonction dans ce fichier doit se nommer d'une manière précise :
+@@f@jelix_<engine name>_<nom configuration>()@@, où @@L@<engine name>@@ est l'identifiant de 
+l'éditeur, qui est inscrit dans le paramètre @@V@*.engine.name@@, et 
+@@L@<nom configuration>@@ l'identifiant de la configuration. Donc pour notre
+exemple, le nom doit être @@f@jelix_wymeditor_wymfull()@@. Cette fonction reçoit 
+en paramètre l'id du textarea qui contient le contenu HTML, l'id du formulaire jForms, 
+le nom de la skin et un objet de configuration.
+
+Cet objet de configuration contient les propriétés suivantes
+
+  * @@P@locale@@ : le code de langue (valeur de jApp::config()->locale)
+  * @@P@basePath@@ : le basePath de l'application 
+  * @@P@jqueryPath@@ : le chemin URL vers le répertoire de jquery
+  * @@P@jelixWWWPath@@ : le chemin URL vers le répertoire de jelix-www
+
+Exemple de cette fonction, qui ajoute ici une feuille de style spécifique pour
+le contenu à éditer (à ne pas confondre avec la skin) :
+
+<code xml>
+function jelix_wymeditor_wymfull(textarea_id, form_id, skin, config){
+   jQuery(function(){
+        jQuery("#"+textarea_id).wymeditor({
+            basePath: config.jelixWWWPath+'wymeditor/',
+            jQueryPath: config.jqueryPath != '' ? config.jqueryPath+'jquery.js' : '',
+            lang: config.locale.substr(0,2).toLowerCase(),
+            preInit : function(wym) {
+                jQuery('#'+form_id).bind('jFormsUpdateFields', function(event){
+                    wym.update();
+                });
+            },
+
+            stylesheet: '/css/stylesEditor.css'
+        });
+)}
+</code>
+
+Notez bien que pour les fonctions de configuration de wymeditor, dans le cadre
+de Jelix, il faut absolument redéfinir l'option @@V@preInit@@, comme indiqué ci-dessus.
+
+Pour plus de renseignements sur la configuration de wymeditor, voir [[https://wymeditor.readthedocs.io/en/v1.1.1/customizing_wymeditor/index.html|la documentation de WymEditor]].
+
+
+===== Utiliser un autre moteur que wymeditor =====
+
+Il faut déclarer les fichiers javascript et css à charger, dont l'un doit être 
+un script de chargement comme expliqué précédement.
+
+Voici des exemples pour des éditeurs connus. Attention aux noms de fichiers JS des
+éditeurs en question, ils peuvent être différents.
+
+==== CKEditor 3.x====
+
+Pour utiliser CKEditor, vous avez déjà à disposition des scripts pour un éditeur
+"full", "default" et "basic", et ils sont déjà déclarés dans la configuration de
+jelix. Téléchargez CKEditor, décompressez-le dans @@www/@@ de manière à avoir @@www/ckeditor/ckeditor.js@@,
+puis indiquez "ckfull", "ckdefault" ou "ckbasic" dans l'attribut @@A@config@@ de la balise
+@@E@<htmleditor>@@. Et c'est tout !
+
+Bien sûr, si vous voulez avoir un éditeur personnalisé, voici ce que vous devez
+faire.
+ 
+Dans le fichier @@F@mainconfig.ini.php@@ :
+
+<code ini>
+[htmleditors]
+ckmyconf.engine.name = ckeditor
+
+[webassets_common]
+;...
+jforms_htmleditor_ckmyconf.js[]="ckeditor/ckeditor.js"
+jforms_htmleditor_ckmyconf.js[]="js/ckeditor_myconf.js"
+</code>
+
+Dans @@F@js/ckeditor_myconf.js@@
+
+<code js>
+function jelix_ckeditor_ckmyconf(textarea_id, form_id, skin, config) {
+    var conf = {toolbar:[ /* ici votre configuration de toolbar */],
+       /*autrepropriete:valeur,*/
+     };
+    if (skin !='default')
+        conf['skin'] = skin;
+    conf["language"] = config.locale.substr(0,2).toLowerCase();
+
+    var editor = CKEDITOR.instances[textarea_id];
+    if (editor){
+        editor.destroy(true);
+    }
+
+    editor = CKEDITOR.replace(textarea_id, conf);
+    jQuery('#'+form_id).bind('jFormsUpdateFields', function(event){
+        editor.updateElement();
+    });
+}
+</code>
+
+
+==== TinyMCE ====
+
+<code ini>
+[htmleditors]
+tinymceconf.engine.name = tinymce
+
+[webassets_common]
+;...
+jforms_htmleditor_tinymceconf.js[]="tinymce/tinymce.js"
+jforms_htmleditor_tinymceconf.js[]="js/tinymce_default.js"
+jforms_htmleditor_tinymceconf.skin.default.css="tinymce/skins/default/full.css"
+</code>
+
+
+Dans @@F@js/tinymce_tinymceconf.js@@, créer une fonction
+@@f@jelix_tinymce_tinymceconf()@@ comme indiqué dans la section précédente. Tous les
+formulaires avec des éléments @@E@<htmleditor>@@ qui ont @@A@config="tinymceconf"@@
+utiliseront cet éditeur.

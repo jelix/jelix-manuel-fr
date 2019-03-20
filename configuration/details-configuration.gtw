@@ -1,0 +1,428 @@
+~~LANG:EN@enman:configuration-details~~
+
+
+===== Le fichier project.xml =====
+
+Le fichier @@F@project.xml@@ contient des informations sur l'application, dont
+certaines sont importantes puisqu'elles servent à l'installateur, entre autre.
+
+C'est un fichier XML avec une balise racine @@E@<project>@@, qui contient une
+seule balise @@<info>@@.
+
+<code xml>
+<project xmlns="http://jelix.org/ns/project/1.0">
+    <info id="testapp@jelix.org" name="testapp" createdate="2017-01-01">
+     ...
+    </info>
+</project>
+</code>
+
+Note : dans Jelix 1.6 et inférieur, il y avait des sections @@<directories>@@
+et @@<dependencies>@@ qui n'existent plus, ainsi qu'une section @@entrypoints@@
+dont le contenu a migré vers le fichier @@app/system/framework.ini.php@@.
+
+==== info ====
+
+Dans la balise @@E@info@@, il y a des informations purement indicatives sur
+l'application, comme le nom, une description, le copyright, le créateur etc.
+Notez que cet élément peut être aussi utilisé dans un fichier @@F@module.xml@@
+pour identifier un module. Voici un exemple:
+
+<code xml>
+<info id="testapp@jelix.org" name="testapp" createdate="2017-01-01">
+    <version>1.0</version>
+    <label lang="en-EN">Testapp</label>
+    <description lang="en-EN">Application to test Jelix</description>
+    <licence URL="http://www.gnu.org/licenses/gpl.html">GPL</licence>
+    <copyright>2017 Laurent Jouanneau</copyright>
+    <creator name="Laurent Jouanneau" email="laurent@jelix.org"/>
+    <contributor name="Superman" email="superman@superville.com"/>
+    <homepageURL>http://jelix.org</homepageURL>
+</info>
+</code>
+
+Seuls la balise @@E@<version>@@ et les attributs @@A@id@@ et @@A@name@@ sur
+@@E@<info>@@ sont obligatoires. Les autres éléments sont optionnels.
+
+L'attribut id doit être un identifiant unique. Il est donc recommandé d'avoir un
+identifiant qui ressemble à un email (ou alors un UUID mais c'est moins
+lisible).
+
+L'attribut @@A@name@@ doit être un nom "informatique" (en général, le nom du
+répertoire de l'application, ou celui du module). L'élément @@E@label@@ contient
+un nom affichable. 
+
+===== Le fichier module.xml =====
+
+Un fichier module.xml doit se trouver dans chacun des répertoires de module. Il
+contient une balise racine @@E@module@@ qui doit contenir au moins une balise
+@@E@<info>@@ et eventuellement @@E@<dependencies>@@, @@E@<autoload>@@.
+voici un exemple:
+
+<code xml>
+<module xmlns="http://jelix.org/ns/module/1.0">
+    <info id="jelix_tests@testapp.jelix.org" name="jelix_tests">
+        <version>1.0</version>
+        <label>Jelix tests</label>
+        <description>unit tests for jelix</description>
+    </info>
+    <dependencies>
+        <jelix minversion="1.6" maxversion="1.6.*" />
+        <module name="testurls" minversion="1.0.2" maxversion="1.1b1" />
+        <module name="jauthdb" />
+        <module name="jacl2db" />
+        <module name="jacldb" />
+    </dependencies>
+</module>
+</code>
+
+
+Dans un fichier module.xml, l'élement @@E@<dependencies>@@ peut
+contenir une ou plusieurs balises @@E@<module>@@, indiquant alors que ce
+ou ces modules doivent être installés pour que le module puisse fonctionner
+correctement.
+
+Dans l'exemple précédent, l'installation du module jelix_tests provoquera
+l'installation des modules jacl2db, jacldb, jauthdb et testsurls. Sachant que
+seules les versions entre 1.0.2 et 1.1b1 du module testurls sont compatibles.
+
+Parfois il peut y avoir des modules dépendants alternatifs et il suffit que l'un
+d'eux soit installé pour pouvoir installer le module. Par exemple, bien que
+différent, les modules jauthdb et jcommunity remplissent le même rôle et donc
+un module peut accepter que l'un des d'eux soit installés (mais pas les deux en
+même temps). On utilise alors l'element @@E@<choice>@@ contenant la liste
+des modules alternatifs :
+
+
+<code xml>
+  <dependencies>
+      <choice>
+         <module name="jauthdb" />
+         <module name="jcommunity" />
+      </choice>
+  </dependencies>
+</code>
+
+Il est possible aussi d'indiquer les modules qui sont en conflit avec le module.
+Il faut utiliser l'element @@E@<conflict>@@ qui contient une liste d'élement
+@@E@<module>@@.
+
+<code xml>
+  <dependencies>
+      <conflict>
+         <module name="supertest" />
+      </conflict>
+  </dependencies>
+</code>
+
+Ici, si on tente d'installer le module alors que le module supertest est
+installé, cela provoquera une erreur. Inversement, il sera impossible d'installer
+le module supertest quand on aura installer le module.
+
+Pour les fonctions d'autoloading de classes et la balise @@<autoload>@@, voyez
+[[/modules/utilisation-classes|le chapitre sur les classes]].
+
+===== Le fichier framework.ini.php =====
+
+Ce fichier liste tous les points d'entrée de l'application, leur fichier de configuration
+et leur type.
+
+Il y a une section par point d'entrée. Le nom de la section débute par @@entrypoint:@@
+suivi du nom du point d'entrée.
+
+Chaque section contient une propriété @@config@@ indiquant le nom du fichier
+de configuration du point d'entrée, et une propriété @@type@@ indiquant le type
+de point d'entrée (
+
+<code ini>
+
+[entrypoint:index.php]
+config="index/config.ini.php"
+type=classic
+
+[entrypoint:soap.php]
+config="soap/config.ini.php"
+type=soap
+
+[entrypoint:jsonrpc.php]
+config="jsonrpc/config.ini.php"
+type=jsonrpc
+
+</code>
+
+===== Les fichiers ini de configuration =====
+
+Il s'agit des fichiers @@F@mainconfig.ini.php@@, @@F@<entrypoint>/config.ini.php@@,
+@@F@localconfig.ini.php@@ et @@F@liveconfig.ini.php@@.
+
+On peut y mettre toutes les options qui sont présentes dans le fichier commenté
+@@F@lib/jelix/core/defaultconfig.ini.php@@, qui contient toutes les valeurs par
+défaut.
+
+Il peut aussi y avoir dans ces fichiers des options propres à certains modules,
+indiqués dans des sections spécifiques.
+
+Voici des explications sur quelques unes des options standards.
+
+==== section générale ====
+
+Ce sont les paramètres situés en début de fichier. Ils définissent des valeurs
+par défaut ou génériques à l'application.
+
+
+<code ini>
+locale = "fr_FR"
+charset = "UTF-8"
+timeZone = "Europe/Paris"
+
+theme = default
+use_error_handler = on
+
+</code>
+
+Détails des paramètres :
+  * **locale, charset** : langue et encodage par défaut des réponses
+  * **timeZone** : définit le décalage horaire pour toutes les fonctions de
+    dates et heures
+  * **theme** : nom du thème sélectionné par défaut. Voir la description du
+    système des [[/application/themes|thèmes]] de Jelix
+  * **use_error_handler** : cette option devrait rester à //on// pour que Jelix
+    retourne des informations pertinentes sur les erreurs et exceptions des
+    scripts.
+
+==== section modules ====
+
+Elle indique la liste des modules activés, les paramètres pour leurs installateurs
+et éventuellement d'autres informations.
+
+==== section coordplugins ====
+
+Doit contenir les noms des plugins à activer. Ils seront chargés à partir des
+chemins définis avec @@jApp::declarePluginsDir()@@ dans le fichier @@F@application.init.php@@.
+
+Par exemple, ci-dessous la configuration active le plugin de coordinateur gérant
+l'authentification et dont les paramètres se trouve dans le fichier
+auth.coord.ini.php. Pour plus de détails, voir la documentation sur
+[[/composants/authentification|l'authentification]]
+
+<code ini>
+[coordplugins]
+auth = "auth.coord.ini.php"
+</code>
+
+
+==== section responses ====
+
+Cette section permet de personnaliser les types réponses et leurs alias. Chaque
+ligne est un couple @@<alias de réponse>=<class de la réponse>@@.
+
+Par exemple, Il est assez courant de vouloir surcharger la réponse html par
+défaut (jResponseHtml) en introduisant une ligne @@html=myhtmlresponse@@. Voir
+plus en détails dans [[/application/traitements-communs#personnalisation-de-reponse-commune|personnalisation de réponse commune]]
+
+Ci-dessous les valeurs par défaut des différents type de réponses:
+<code ini>
+[responses]
+html = jResponseHtml
+redirect = jResponseRedirect
+redirectUrl = jResponseRedirectUrl
+binary = jResponseBinary
+text = jResponseText
+jsonrpc = jResponseJsonrpc
+json = jResponseJson
+xmlrpc = jResponseXmlrpc
+xml = jResponseXml
+zip = jResponseZip
+rss2.0 = jResponseRss20
+atom1.0 = jResponseAtom10
+css= jResponseCss
+</code>
+
+==== section compilation ====
+
+Définit le comportement de certains composants qui "compilent" des fichiers et
+stockent le résultat en cache dans le répertoire temp. C'est le cas notamment
+du moteur de template de Jelix (Voir la documentation sur les [[/composants/templates|templates]]
+pour plus de détails), mais aussi de jDao, de jForms...
+
+<code>
+[compilation]
+checkCacheFiletime  = on
+force  = off
+</code>
+
+  * **checkCacheFiletime ** : si //on// alors un fichier source (template, dao, form...)
+    est recompilé si sa date de modification est plus récente que le fichier PHP
+    résultant de la compilation.
+  * **force** : si //on//, le template est recompilé systématiquement.
+
+==== section zones ====
+
+Parfois, il peut arriver que l'on veuille désactiver le cache des zones, pour
+voir le résultat quand on modifie leur contenus. Pour cela, vous pouvez modifier
+un paramètre dans la configuration, au niveau de la section "zones"
+
+<code ini>
+[zones]
+disableCache = on  # off par défaut
+</code>
+
+
+==== section urlengine ====
+
+Configuration du moteur d'urls
+
+<code ini>
+[urlengine]
+
+multiview = off
+
+scriptNameServerVariable =
+pathInfoInQueryParameter =
+
+basePath = ""
+jelixWWWPath = "jelix/"
+
+</code>
+
+Détails des paramètres :
+
+  * **multiView** : si le paramètre multiview ou acceptpathinfo est activé dans
+    Apache, il est possible alors d'avoir des urls sans le suffixe ".php".
+    Activez alors ce paramètre pour que Jelix génère des urls sans ce suffixe.
+  * **scriptNameServerVariable** : contient le nom de la variable dans
+    @@$_SERVER@@ qui contient le nom du script. Exemple : si vous appelez
+    @@http://mysite.com/foo/index.php@@, c'est la variable qui contient
+    @@/foo/index.php@@. Ce nom peut être SCRIPT_NAME, ORIG_SCRIPT_NAME, PHP_SELF
+    ou REDIRECT_SCRIPT_URL, selon les serveurs. Il est automatiquement détecté
+    par jelix mais peut parfois échouer, donc vous pourriez le définir ici.
+  * **pathInQueryParameter** : si vous utilisez des règles de réécriture qui
+    déplacent le pathinfo dans un paramètre d'url, comme
+    @@RewriteRule ^(.*)$ index.php/?jpathinfo=$1 [L,QSA]@@, alors vous devriez
+    indiquer dans @@pathInfoInQueryParameter@@ le nom du
+    paramètre qui contient la valeur de pathinfo (exemple "jpathinfo"), laissez
+    vide si vous n'utilisez pas de telles règles de réécriture.
+  * **basePath** : ce paramètre correspond au chemin "de base" de votre
+    application, dans l'url, c'est à dire le chemin jusqu'à votre @@index.php@@.
+    Exemple: si vous accédez à votre application par @@http://foo.com/aaa/bbb/www/index.php@@
+    alors indiquez @@/aaa/bbb/www/@@. Ou si l'accès se fait via @@http://foo.com/index.php@@
+    alors indiquez juste @@/@@. Ou encore laissez le vide
+  * **jelixWWWPath** : contient le chemin web vers les ressources web de Jelix,
+    contenus normalement dans lib/jelix-www. Si vous le modifiez voyez également
+    les chemins du **[[/configuration/fichiers-configuration#section-htmleditors|htmleditors]]**.
+
+=== notfound ===
+
+Vous pouvez indiquer une action qui affichera une page spécifique pour les erreurs
+de type 404, c'est à dire quand Jelix ne trouve pas le contrôleur correspondant
+à l'url demandée. Par défaut il s'agit de l'action @@jelix~error:notfound@@.
+
+Utiliser la syntaxe des sélecteurs (Cf.[[/concepts/selecteurs|L'utilité des sélecteurs]])
+et placer le sélecteur de votre action entre guillemet :
+
+<code ini>
+notfoundAct = "mymodule~main:errornotfound"
+</code>
+
+==== section logfiles ====
+
+Cette section définit comment seront écrits les logs à l'aide de [[/outils-dev/deboggage|jLog]].
+
+Les fichiers logs sont stockés dans le dossier @@var/log/@@ de votre application.
+Vous pouvez définir un fichier de log par module en associant le nom du module à
+un nom de fichier log et faisant un appel à jLog en passant en dernier argument
+le nom du module.
+
+<code ini>
+; log par défaut
+  default = messages.log
+
+; log "news"
+  news = news.log
+</code>
+
+Autre exemple utilisant l'extension Firebug du navigateur Firefox (ce qui permet
+une vision très rapide des messages de débogage).
+
+<code ini>
+[logfiles]
+default="!firebug"
+file = "messages.log"
+</code>
+
+Et pour un dump de contenu de taille importante, il suffit d'indiquer le type
+'file' au dernier paramètres des méthodes de jLog pour l'obtenir à nouveau dans
+un fichier de log classique. 
+
+Pour plus de détails sur l'utilisation des fichiers log dans Jelix se reporter
+au manuel concernant [[/outils-dev/deboggage|jLog]].
+
+
+==== section mailer ====
+
+Définit les paramètres d'envoi de mail à travers l'application, comme par
+exemple pour une authentification ou encore au plus bas niveau pour les
+notifications.
+
+Voir le chapitre sur [[/classes-utiles/jmailer|jMailer]].
+
+
+==== section acl et acl2 ====
+
+Définit les paramètres de la gestion des droits d'accès dans l'application. Voir
+la documentation sur la [[/composants/droits|gestion des droits]]. Vous choisirez
+d'utiliser soit jAcl, soit jAcl2 mais il n'est pas recommandé d'utiliser les
+deux en même temps.
+
+<code ini>
+[acl]
+; exemple de driver: "db"
+driver = 
+
+[acl2]
+; exemple de driver: "db"
+driver = 
+
+</code>
+
+
+==== section sessions ====
+
+Définit le mode de gestion des sessions PHP (fichier ou bases de données). Pour
+plus de détails, voir la documentation sur les
+[[/classes-utiles/jsession|sessions]]
+
+<code ini>
+[sessions]
+shared_session = off
+; Use alternative storage engines for sessions
+;
+; usage :
+;
+; storage = "files"
+
+; files_path = "app:var/sessions/"
+;
+; or
+;
+; storage = "dao"
+; dao_selector = "jelix~jsession"
+; dao_db_profile = ""
+</code>
+
+
+==== section forms ====
+
+Configure le comportement de certains contrôle de jForms.
+
+<code ini>                                                                                                    
+[forms]
+; define input type for datetime widgets : "textboxes" or "menulists"
+controls.datetime.input = "menulists"
+; define the way month labels are displayed widgets: "numbers", "names" or "shortnames"
+controls.datetime.months.labels = "names"
+; define the default config for datepickers in jforms
+datepicker = default
+
+;...
+</code>

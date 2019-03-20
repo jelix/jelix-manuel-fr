@@ -1,0 +1,107 @@
+~~LANG:EN@enman:components/jforms/xml/datepicker~~
+
+
+Pour avoir une saisie simplifié de date dans vos formulaires, il faut utiliser
+la balise @@E@date@@ (ou @@E@datetime@@ pour saisie une date et une heure). Cela
+affiche alors un "datepicker".
+
+<code xml>
+  <date ref="naissance">
+     <label>Date de naissance</label>
+  </date>
+</code>
+
+Vous pouvez changer la configuration du datepicker, et même changer le
+datepicker pour un autre via l'attribute @@A@datepicker@@.
+
+
+===== Configuration générale des datepickers =====
+
+Dans la section @@forms@@ fichier de configuration de Jelix, vous pouvez
+paramétrer la façon dont est affiché le date picker :
+
+<code ini>
+[forms] 
+controls.datetime.input = "menulists" 
+controls.datetime.months.labels = "names" 
+</code>  
+
+@@controls.datetime.input@@ indique si la saisie se fait avec un champs de
+saisie classique (valeur "textboxes") ou avec une liste déroulante (valeur
+"menulists"). Dans les deux cas, un bouton vous permettra de choisir la date
+dans un calendrier.
+ 
+@@controls.datetime.months.labels@@ indique si la liste des mois affiche les
+chiffres ("numbers"), les noms ("names"), ou les noms courts ("shortnames") des
+mois.
+
+===== Utiliser un autre type de datepicker =====
+
+Par défaut, jForms utilise le datepicker de jQuery UI. Mais vous pouvez en utiliser
+d'autres si vous le souhaitez, ou le même mais configuré différement. 
+
+Chaque type de datepicker a ses propres fichiers javascript et CSS.
+
+On utilise pour cela les [[/modules/vues/vue-html|les webassets]]. Le groupe de webassets
+pour un datepicker doit prendre le nom du datepicker, préfixé
+par @@jforms_datepicker_@@. Le groupe de webassets pour le datepicker nommé @@default@@
+est celui-ci :
+
+<code ini>
+[webassets_common]
+
+;...
+
+jforms_datepicker_default.css=
+jforms_datepicker_default.js[]="$jelix/jquery/ui-datepicker/i18n/datepicker-$lang.js"
+jforms_datepicker_default.js[]="$jelix/js/jforms/datepickers/default/init.js"
+jforms_datepicker_default.require=jquery_ui
+
+</code>
+
+Le datepicker à utiliser par défaut doit être indiqué dans l'option @@datepicker@@
+dans la section @@forms@@. Voici la configuration par défaut :
+
+<code ini>
+[forms]
+;...
+datepicker = default 
+
+</code>
+
+Dans un formulaire, pour indiquer que vous voulez utiliser un type de datepicker
+particulier, indiquer son nom dans l'attribut @@A@datepicker@@ sur la balise
+@@E@<date>@@.
+
+===== Créer un datepicker =====
+
+Pour déclarer un nouveau datepicker, vous devez créer un fichier
+javascript qui contiendra une fonction qui sera chargée d'initialiser le
+datepicker.
+
+Cette fonction doit avoir pour nom @@f@jelix_datepicker_<nom datapicker>@@ où 
+@@<nom datapicker>@@ est le nom du datepicker que l'on utilise dans le nom du
+groupe de webassets, dan l'attribut @@A@datepicker@@ etc.. 
+
+Cette fonction doit accepter en paramètre :
+
+   * un objet javascript (@@C@jFormsJQControlDate@@ ou
+     @@C@jFormsJQControlDatetime@@ avec le builder jforms basé sur jQuery) qui
+     contient des propriétés comme le nom des champs de saisie (@@P@name@@), la
+     date maximum (@@P@maxDate@@) ou la date minimum (@@P@minDate@@).
+   * un objet contenant des options de configuration :
+     * @@P@locale@@ : le code de langue (valeur de jApp::config()->locale)
+     * @@P@basePath@@ : le basePath de l'application 
+     * @@P@jqueryPath@@ : le chemin URL vers le répertoire de jquery
+     * @@P@jelixWWWPath@@ : le chemin URL vers le répertoire de jelix-www
+
+Pour chaque datepicker du même type utilisé dans un formulaire, la fonction sera
+appelée, et devra initialiser le datepicker sur les champs de saisie de la date.
+jForms génère en effet au moins 3 champs, dont les noms ont pour base le nom du
+formulaire et le nom du control. Exemple, pour un formulaire "sample.form.xml"
+dans le module "testapp" de votre application, et qui contient un controle
+@@E@<date>@@ de nom "datenaissance", vous aurez alors des champs html de nom
+"jforms_testapp_sample_datenaissance_month",
+"jforms_testapp_sample_datenaissance_day", et
+"jforms_testapp_sample_datenaissance_year".
+

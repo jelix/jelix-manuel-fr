@@ -2,7 +2,7 @@
 
 ===== URL : identification d'une action =====
 
-Une fois que l'on a fait [[/controleurs|un contrôleur]] on veut bien sûr pouvoir
+Une fois que l'on a fait [[/modules/controleurs|un contrôleur]] on veut bien sûr pouvoir
 appeler l'une de ces méthodes, donc indiquer les informations nécessaires dans
 les URLs.
 
@@ -95,5 +95,5 @@ utilisés le module et l'action indiqués pour l'URL "/" dans la configuration
 de l'application. Ainsi par exemple le sélecteur
 "@classic" correspondra à l'URL "index.php".
 
-Pour en savoir plus : [[/urls|configuration et la manipulation des URLs dans Jelix]].
+Pour en savoir plus : [[/composants/urls|configuration et la manipulation des URLs dans Jelix]].
 

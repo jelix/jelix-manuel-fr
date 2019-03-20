@@ -1,0 +1,330 @@
+~~LANG:EN@enman:components/cache~~
+
+Mettre en cache des données ou des portions de page HTML générées permet d'améliorer
+les performances du site web, voir même d'éviter de transférer des données au
+niveau navigateur.
+
+Jelix propose plusieurs systèmes de cache. Vous avez probablement vu
+[[/composants/zones#utilisation-du-cache|la mise en cache des zones]]. Vous allez voir ici
+la mise en cache de données quelconques, et l'utilisation du cache HTTP.
+
+
+===== jCache =====
+
+jCache est une classe permettant de stocker des données dans un système de
+cache. Le système repose sur des pilotes pour les accès aux données. Il est donc
+possible d’utiliser memcache, redis, ou encore une base de données, voire même
+le système de fichier. Et vous pouvez développer votre propre pilote.
+
+==== Configuration ====
+
+Pour utiliser jCache, il faut d'abord spécifier les paramètres de configuration
+du système dans le fichier @@F@profiles.ini.php@@ situé dans @@F@var/config/@@.
+Voir [[/configuration/fichiers-configuration#le-fichier-profiles.ini.php|le chapitre sur l'utilisation de ce fichier profiles.ini.php]].
+
+Vous pouvez définir plusieurs configurations du système, que l'on nomme
+“profils”. Ainsi vous pouvez définir des configurations pour le site de
+production, le site de développement par exemple.
+
+Le type de connexion à indiquer dans les noms des sections de
+@@F@profiles.ini.php@@ est @@jcache@@.
+
+Chaque profil doit indiquer au moins ces trois paramètres :
+
+   * @@driver@@ : indique le pilote à utiliser. 
+   * @@enabled@@ : permet d'indiquer si le cache pour ce profil est actif (1) ou
+     non (0). Utile en développement ou débuggage.
+   * @@ttl@@ : indique le temps d’expiration des données (0 signifie n’expire
+     jamais). Vous pouvez indiquer une durée en secondes, un timestamp UNIX ou
+     encore une date textuelle au format US.
+   * @@automatic_cleaning_factor@@ : indice de nettoyage automatique du système
+     de cache. 
+
+Un profil peut contenir d'autres paramètres, en fonction du pilote utilisé.
+
+Voici un exemple dans le fichier @@F@profiles.ini.php@@ :
+
+<code ini>
+[jcache]
+default = foo
+
+[jcache:foo]
+enabled = 1
+driver = file
+; autres paramètres...
+</code>
+
+
+=== Pilote memcache ===
+
+Il utilise l'API memcache de PHP (et non pas l'API memcached).
+
+Paramètres possibles :
+   * @@driver=memcache@@
+   * @@servers@@ : liste de serveurs memcached.
+
+<code>
+[jcache:mymemcache]
+driver=memcache
+ttl=360
+enabled=1
+servers = memcache_host1:11211,memcache_host2:11211,memcache_host3:11211
+</code>
+
+
+=== Pilote Redis ===
+
+Les données sont stockées dans une base Redis.
+
+Deux plugins sont disponibles :
+
+   * "redis_ext", fourni avec Jelix, se base sur l'API de l'extension PHP redis (plugin introduit dans Jelix 1.6.14)
+   * "redis_php", disponible séparément via le paquet Composer "jelix/php-redis-plugin",
+     utilise une classe pure PHP (PhpRedis) pour communiquer avec la base Redis.
+     (plugin introduit dans Jelix 1.6.8 sous le nom "redis" et renommé en "redis_php"
+     dans la version 1.6.14)
+
+Paramètres possibles :
+
+   * @@host@@ : nom ou ip du serveur redis
+   * @@port@@ : le port réseau sur lequel se connecter
+   * @@db@@ : le numéro de base de donnée redis (0 par défaut)
+   * @@key_prefix@@ : un prefix qui sera ajouté sur chaque clé indiquée
+   * @@key_prefix_flush_method@@ : méthode de suppression des clés quand on indique un prefixe.
+
+Exemple :
+
+<code>
+[jcache:myredis]
+driver=redis_ext
+ttl=360
+enabled=1
+host=192.168.0.1
+port=6379
+db=0
+key_prefix=
+key_prefix_flush_method=
+</code>
+
+
+Si vous indiquez un prefix pour les clés, alors toutes les clés que vous indiquez
+seront préfixées par le prefix en question dans la base Redis.
+
+De même, le vidage du cache ne concernera que les clés commençant par ce
+prefix. Cependant, à cause de l'implementation d'une telle fonction dans Redis,
+cela peut être très gourmand en temps, et rendre votre application trop lente.
+
+Diverses méthodes sont implémentées dans le plugin pour supprimer les clés, et
+sont indiquées dans le paramètre @@key_prefix_flush_method@@ :
+
+   * @@direct@@ : les clés sont supprimées directement. Comportement par défaut.
+     Mais à n'utiliser que si vous savez que votre base Redis ne contient pas beaucoup de clés.
+   * @@jcacheredisworker@@ : la suppression des clés sera faite de manière asynchrone
+     par un worker ou un cron. 
+   * @@event@@ : si les deux autres méthodes ne vous conviennent pas, il est
+     alors de votre responsabilité d'implémenter le processus (asynchrone de préférence !)
+     qui vous convient. Un évènement @@jCacheRedisFlushKeyPrefix@@ est émis
+     par le plugin, avec le nom du profile et le prefixe des clés à supprimer.
+     à vous d'implémenter un listener sur cet évènement qui appellera votre
+     processus de suppression.
+
+Fonctionnement de la suppression asynchrone des clés à prefixes :
+
+Le plugin stocke les prefixes des clés à supprimer dans une liste qui a pour clé
+@@jcacheredisdelkeys@@ dans Redis. Un worker ou un cron doit alors dépiler
+régulièrement cette liste de préfix et supprimer les clés correspondantes.
+
+Vous avez un exemple de worker dans @@F@lib/jelix/core-modules/jelix/Command/RedisCacheDeletionWorker.php@@.
+Vous pouvez le lancer au moyen de systemd/sysinit/supervisord par exemple. La commande
+à lancer est @@php monappli/console.php jcache:redis:delete <profile>@@
+où @@<profile>@@ est le nom du profile jcache concerné. La commande scrute en permanence
+la liste @@jcacheredisdelkeys@@ dans Redis et efface les clés correspondantes
+aux prefixes de cette liste. Pour l'arrêter, un @@<CTRL+C>@@ (sur linux) suffira
+si vous le lancez vous même en ligne de commande.
+
+
+=== Pilote file ===
+
+Le cache est stocké dans des fichiers.
+
+Paramètres possibles :
+
+   * @@driver=file@@
+   * @@cache_dir@@ : le répertoire où les données sont stockées.
+   * @@file_locking@@ : indique s’il y a verrouillage des fichiers (1) ou non (0).
+   * @@directory_level@@ : niveau d’arborescence des répertoires du système de cache.
+   * @@directory_umask@@ : attributs utilisés pour les  répertoires.
+   * @@file_name_prefix@@ : préfixe des noms de fichiers du système de cache. Depuis Jelix 1.6.8, c'est le préfixe du répertoire du cache.
+   * @@cache_file_umask@@ : attributs utilisés pour les fichiers.
+
+=== Pilote db ===
+
+Ce pilote utilise une table SQL pour stocker les valeurs de cache.
+L'installateur de jelix crée la table nécessaire quand l'application l'utilise.
+Cependant, pendant le developpement, vous devez vous même créer la table.
+Utilisez l'un des scripts SQL dans
+@@F@lib/jelix/core-modules/jelix/install/sql/install_jcache.schema.*@@ pour
+créer la table.
+
+Paramètres possibles :
+
+   * @@driver=db@@ : la valeur est "db".
+   * @@dao@@ : un sélecteur vers le fichier dao que vous voulez utiliser. Par défaut, "jelix~jcache".
+   * @@dbprofile@@ : profil de connexion jDb à utiliser .
+
+
+==== Utilisation ====
+
+@@C@jCache@@ est la classe principale du système de cache. Toutes ses méthodes
+sont statiques. Elle effectue un bon nombre d’opérations comme stockage,
+suppression, récupération de données. Vous appellerez ces méthodes quand bon
+vous semble.
+
+   * @@M@jCache::get($key)@@: Pour récupérer une valeur. Retourne false si la clé n'existe pas
+   * @@M@jCache::set($key, $value, $ttl)@@: pour stocker ou modifier une valeur.
+     $ttl est optionnel
+   * @@M@jCache::delete($key)@@: pour effacer une valeur
+   * @@M@jCache::increment($key)@@: incremente une valeur (N.B. : la valeur est
+     réduite à sa partie entière - si elle a une partie décimale - puis
+     incrémentée)
+   * @@M@jCache::decrement($key)@@: decremente une valeur (N.B. : la valeur est
+     réduite à sa partie entière - si elle a une partie décimale - puis
+     décrémentée)
+   * @@M@jCache::add($key, $value)@@: pour stocker une nouvelle valeur. Retourne
+     false si la clé existe déjà
+   * @@M@jCache::replace($key,$value, $ttl)@@: pour changer une valeur d'une clé
+     existante. Retourne false si la clé n'existe pas. $ttl est optionnel.
+   * @@M@jCache::garbage()@@: efface toutes les valeurs expirées
+   * @@M@jCache::flush()@@: efface tout le cache.
+   * @@M@jCache::call($fn, $fnargs, $ttl)@@: utilise le nom et les arguments de
+     la fonction donnée comme clé de la valeur que retourne la fonction. Si la
+     clé existe déjà, renvoi la valeur du cache, sinon appelle la fonction et
+     stocke la valeur retournée dans le cache.
+
+Toutes ces méthodes statiques acceptent un nom de profile jcache en dernier argument.
+
+Les noms des clés sont restreints aux caractères suivants : lettres alphabets,
+chiffres, @@/@@, @@_@@, @@-@@, @@:@@, @@.@@.
+
+
+===== jResponse et le cache HTTP =====
+
+Le protocole HTTP possède des en-têtes pour informer le navigateur comment
+stocker la page qu'on lui envoi, c'est à dire si le navigateur peut la mettre en
+cache ou pas. Et le navigateur peut, lors d'une requête, indiquer au serveur
+qu'il a ou pas la page demandée dans son cache, et depuis quand. Coté serveur,
+on peut donc savoir si le contenu demandé est dans le cache du navigateur, et si
+il est périmé ou pas, ce qui permet de générer ou pas le contenu.
+
+La classe @@C@jResponse@@ possède des méthodes pour gérer facilement le cache HTTP
+d’une réponse en exploitant les entête prévus à cet effet dans le protocole HTTP.
+
+Ces méthodes sont disponibles dans toutes les réponses pour lesquelles
+l'utilisation du cache HTTP a du sens. N’oubliez pas que ce cache se situe côté
+client, dans le navigateur de l’utilisateur et non sur le serveur.
+
+Il y a deux façons de gérer le cache coté navigateur : le cache par expiration,
+et le cache par validation.
+
+
+Attention : en général, sauf à utiliser la méthode @@M@setLifeTime@@ avec un
+cache privé, la mise en cache ne doit pas concerner des pages "personnalisées"
+incluant par exemple des données relatifs à l'utilisateur. En effet, le contenu
+est succeptible d'être mis en cache par des proxys. Ceux-ci utilisent les
+en-têtes de cache envoyés par le serveur pour stocker en cache (ou pas), mais
+n'utilisent pas les cookies (notamment ceux de sessions) comme paramètres
+discriminants : ils ne mémorisent donc qu'une seule "version" d'une page et tout
+les utilisateurs obtiendront cette version de page. Si elle contient des données
+personnelles, cela peut avoir des conséquences dramatiques.
+
+
+==== Cache par expiration ====
+
+Le cache par expiration est un cache qui restera valide jusqu'à une certaine
+date. Avant cette date, le navigateur ne fera pas de demande au serveur, et
+affichera directement la page qu'il a en cache. Par contre, au delà de cette
+date, le navigateur redemandera la page au serveur. Vous pouvez spécifier cette
+date d'expiration soit en indiquant la date proprement dite (méthode
+@@M@setExpires@@), soit en indiquant une durée (méthode @@M@setLifeTime@@).
+
+=== setExpires ===
+
+La méthode @@M@setExpires@@ permet de spécifier une date jusqu'à laquelle la ressource
+sera considérée valide et gardée en cache. En interne, cette méthode ajoute un
+entête HTTP “Expires”. Dans le contrôleur :
+
+<code php>
+$rep->setExpires($date);
+
+//ou bien
+
+$rep->setExpires(“+1 days”);
+</code>
+
+Le paramètre attendu par @@M@setExpires@@ est une date de la forme
+@@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction
+[[phpapi:strtotime|@@f@strtotime@@]].
+
+=== setLifeTime ===
+
+La méthode @@M@setLifeTime@@ permet de spécifier un temps (en secondes) pendant lequel
+la ressource sera considérée valide et gardée en cache.
+
+Vous avez également la possibilité de spécifier si la ressource peut être mise
+en cache par n’importe quel cache ou si elle doit être privée et ne pas être
+mise en cache par des proxys (par défaut : privée).
+
+En interne, cette méthode ajoute un entête HTTP “Cache-Control”.
+
+Dans le contrôleur :
+
+<code php>
+$rep->setLifeTime(3600); //1 heure en cache privé
+
+//ou bien
+
+$rep->setLifeTime(600, true);// 10 minutes en cache partagé
+</code>
+
+==== Cache par validation ====
+
+Le cache par validation permet d'utiliser une politique de mise en cache plus
+complexe : le navigateur demande systèmatiquement la page au serveur, en lui
+indiquant une information de validité que lui avait donné le serveur. Mais le
+serveur, en fonction de cette date, peut décider de renvoyer une nouvelle page,
+ou de dire au navigateur d'utiliser celle qu'il a en cache.
+
+C'est donc à vous, dans votre contrôleur, de décider si il faut renvoyer ou non
+un nouveau contenu. Pour cela, vous indiquez explicitement à la méthode
+@@M@isValidCache@@, soit la dernière date à laquelle la ressource a été modifiée
+("Last-Modified"), soit un token correspondant à l'etat de la ressource
+("Etag"). À vous donc de récupérer cette date (par exemple, si c'est une page
+d'un article, la date de modification de cet article), ou de calculer le token
+(qui peut être un checksum md5 par exemple, ou une chaine identifiant de façon unique
+la version de la page..).
+
+La méthode @@M@isValidCache@@, retournera @@true@@ si la ressource du navigateur est encore bonne,
+ou @@false@@ si il faut regénérer la page.
+
+Dans le contrôleur :
+
+<code php>
+$dateLastModified = $foo->updated_at; //date de dernière modification de ma ressource
+
+if ($rep->isValidCache($dateLastModified)) {
+   // le cache est bon, on arrête là
+   return $rep;
+}
+
+//Ou bien en utilisant “Etag”;
+
+$etag = ... ; //je génère un etag correspondant à l’etat de ma ressource
+
+if ($rep->isValidCache(null, $etag)) {
+   return $rep;
+}
+</code>
+
+Le paramètre date attendu par @@M@isValidCache@@ est une date de la forme :
+@@C@jDateTime@@, @@C@DateTime@@ ou une chaine compatible avec la fonction
+[[phpapi:strtotime|@@f@strtotime@@]].
