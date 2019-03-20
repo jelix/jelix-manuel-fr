@@ -139,7 +139,7 @@ require (__DIR__.'/../lib/vendor/autoload.php');
 jApp::initPaths(
     /* ici pas de changements, garder vos chemins existants */
 );
-jApp::setTempBasePath(/* ici pas de changements, garder le chemins existant */);
+jApp::setTempBasePath(/* ici pas de changement, garder le chemin existant */);
 
 require (__DIR__.'/../lib/vendor/jelix_app_path.php');
 </code>
@@ -156,12 +156,9 @@ doivent maintenant être déclarés dans le fichier @@F@application.init.php@@ (
 dans le fichier @@composer.json@@ si vous utilisez Composer pour réaliser des paquets
 Composer de modules).
 
-Supprimez donc ces paramètres @@modulesPath@@ et @@pluginsPath@@ des fichiers de
-configuration.
-
 À la fin du fichier @@F@application.init.php@@, vous devez appeler
 @@jApp::declareModulesDir@@ et/ou @@jApp::declarePluginsDir@@, avec la liste
-des repertoires contenant des plugins et modules
+des repertoires contenant des plugins et modules :
 
 <code php>
 jApp::declareModulesDir(array(
@@ -249,18 +246,6 @@ développer une [[/cmdline|commande avec Symfony Console]].
 Les classes @@*daobuilder*@@ des plugins de jDb ne sont plus pris en charge. Si
 vous aviez fait votre propre plugin pour jDb, il faut migrer la classe de type
 daobuilder vers un plugin spécifique pour jDao. Voir la doc de jDao.
-
-==== Session et cookie ====
-
-Les données des instances des formulaires ne sont plus stockés en session, mais
-dans un cache géré par jCache. Il faut donc savoir que certains de vos
-utilisateurs qui utilisaient des formulaires au moment de la migration de votre
-application perdront donc les données de leurs formulaires (si elles n'ont pas
-été sauvées par ailleurs).
-
-Idem pour la persistance de l'authentification : la clé de chiffrement de cookie
-étant changée, les utilisateurs devront obligatoirement se ré-authentifier si
-ils avaient choisie d'être "reconnu" par votre application.
 
 ==== Changements dans les scripts d'installation de vos modules ====
 
@@ -371,6 +356,7 @@ En particulier :
        plugins de coordinateur vers mainconfig.ini.php
      * migration de la declaration des assets des widgets wikieditor et htmleditor
        vers le nouveau système d'assets
+     * Suppression des paramètres @@modulesPath@@ et @@pluginsPath@@
   * Mise à jour du fichier profiles.ini.php
      * migration des paramètres de connexions ldap dans le fichier profiles.ini.php,
        si vous utilisez ldap pour l'authentification.
@@ -467,12 +453,23 @@ De plus le script createapp.php a été déplacé dans un répertoire bin,
 et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
 votre application si vous installez Jelix avec Composer.
 
-
 ==== Mise à jour de votre serveur web ====
 
 Si vous aviez un alias vers lib/jelix-www/ dans la configuration de votre
 serveur web, et que vous utilisez Composer, il faut changer le chemin puisque
 jelix-www est maintenant dans @@vendor/jelix/jelix/lib/jelix-www/@@.
+
+==== À propos des sessions et cookies ====
+
+Les données des instances des formulaires ne sont plus stockés en session, mais
+dans un cache géré par jCache. Il faut donc savoir que certains de vos
+utilisateurs qui utilisaient des formulaires au moment de la migration de votre
+application perdront donc les données de leurs formulaires (si elles n'ont pas
+été sauvées par ailleurs).
+
+Idem pour la persistance de l'authentification : la clé de chiffrement de cookie
+étant changée, les utilisateurs devront obligatoirement se ré-authentifier si
+ils avaient choisie d'être "reconnu" par votre application.
 
 ==== Fin ====
 
