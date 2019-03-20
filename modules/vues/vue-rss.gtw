@@ -1,4 +1,4 @@
-~~LANG:EN@enman:views/view-rss~~
+~~LANG:EN@enman:modules/views/view-rss~~
 
 Jelix permet de générer un fil RSS assez facilement grâce à
 @@C@jResponseRss20@@. Cet objet prend en charge totalement la

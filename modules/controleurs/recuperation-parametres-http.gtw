@@ -1,4 +1,4 @@
-~~LANG:EN@enman:controllers/retrieving-http-parameters~~
+~~LANG:EN@enman:modules/controllers/retrieving-http-parameters~~
 
 
 ===== Oublier les variables $_GET, $_POST... =====

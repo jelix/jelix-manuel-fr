@@ -1,4 +1,4 @@
-~~LANG:EN@enman:rights2/jauth~~
+~~LANG:EN@enman:components/rights/jauth~~
 
 Il est très probable que vous utilisiez jAcl2 comme support à jAuth.
 Dans ce cas, vous devez probablement vous poser des questions quant à

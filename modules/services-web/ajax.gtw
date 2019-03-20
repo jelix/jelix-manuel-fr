@@ -1,4 +1,4 @@
-~~LANG:EN@enman:web-services/ajax~~
+~~LANG:EN@enman:modules/web-services/ajax~~
 
 Bien que le terme AJAX précise qu'une réponse doit être en XML (d'où le X dans
 AJAX), AJAX est souvent utilisé avec d'autres types de format.

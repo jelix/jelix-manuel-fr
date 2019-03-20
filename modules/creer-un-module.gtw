@@ -1,4 +1,4 @@
-~~LANG:EN@enman:creating-a-module~~
+~~LANG:EN@enman:modules/creating-a-module~~
 
 Un module est un répertoire dans lequel il y a un certain nombre de classes
 et de fichiers qui concernent en général un domain fonctionnel précis.

@@ -1,4 +1,4 @@
-~~LANG:EN@enman:views/view-xml~~
+~~LANG:EN@enman:modules/views/view-xml~~
 
 jResponseXML permet de renvoyer au navigateur du XML. Son alias est "xml".
 

@@ -1,4 +1,4 @@
-~~LANG:EN@enman:unit-tests~~
+~~LANG:EN@enman:dev-tools/unit-tests~~
 
 Le développement de tests unitaires est de plus en plus présent dans les
 projets, et jelix propose de quoi en réaliser facilement. La réalisation des

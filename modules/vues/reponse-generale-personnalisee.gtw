@@ -1,4 +1,4 @@
-~~LANG:EN@enman:views/personnalized-common-response~~
+~~LANG:EN@enman:modules/views/personnalized-common-response~~
 
 Il est fort probable que vous ayez dans la plupart de vos actions, à initialiser
 la même feuille de style, les mêmes zones de menus, et autres traitements de

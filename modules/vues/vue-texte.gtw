@@ -1,4 +1,4 @@
-~~LANG:EN@enman:views/view-text~~
+~~LANG:EN@enman:modules/views/view-text~~
 
 Il faut utiliser @@C@jResponseText@@ qui est récupérable via l'alias "text". Cet
 objet possède une propriété "content" dans laquelle vous mettez le texte voulu.

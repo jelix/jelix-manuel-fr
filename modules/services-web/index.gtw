@@ -1,4 +1,4 @@
-~~LANG:EN@enman:web-services/~~
+~~LANG:EN@enman:modules/web-services/~~
 
 Outre les contenus classiques que l'on peut fournir aux navigateurs (HTML, XML
 etc), Jelix permet également d'implémenter des services web, que ce soit pour de

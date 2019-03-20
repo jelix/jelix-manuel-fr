@@ -1,4 +1,4 @@
-~~LANG:EN@enman:rights2/configuration~~
+~~LANG:EN@enman:components/rights/configuration~~
 
 
 Avant de pouvoir utiliser l'API de jAcl2 dans vos modules et le driver db de

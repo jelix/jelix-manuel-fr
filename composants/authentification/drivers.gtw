@@ -1,4 +1,4 @@
-~~LANG:EN@enman:authentication/drivers~~
+~~LANG:EN@enman:components/authentication/drivers~~
 
 
 Il existe en standard plusieurs drivers pour l'authentification dans Jelix. 

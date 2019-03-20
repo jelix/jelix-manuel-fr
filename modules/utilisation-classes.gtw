@@ -1,4 +1,4 @@
-~~LANG:EN@enman:using-classes~~
+~~LANG:EN@enman:modules/using-classes~~
 
 Pour respecter le découpage MVC, il est recommandé de réaliser tous ses
 traitements métiers et services dans des classes dédiées, plutôt que de tout

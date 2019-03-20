@@ -1,4 +1,4 @@
-~~LANG:EN@enman:views/view-html~~
+~~LANG:EN@enman:modules/views/view-html~~
 
 Pour générer du xhtml/html, vous indiquez l'alias "html" ou "basichtml" à la
 méthode @@M@getResponse()@@. Vous récupérez alors respectivement une instance de

@@ -1,4 +1,4 @@
-~~LANG:EN@enman:views/view-atom~~
+~~LANG:EN@enman:modules/views/view-atom~~
 
 Jelix permet, [[vue-rss|en plus de RSS]], de pouvoir générer un fil Atom 1.0.
 Pour cela il faut utiliser l'objet @@C@jResponseAtom10@@, qui prend en charge

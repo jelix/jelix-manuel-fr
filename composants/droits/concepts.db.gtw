@@ -1,4 +1,4 @@
-~~LANG:EN@enman:rights2/concepts.db~~
+~~LANG:EN@enman:components/rights/concepts.db~~
 
 jAcl2.db est le driver "db" pour jAcl2 et se sert d'une base de données pour
 stocker les droits. Les explications suivantes sont valables pour le driver

@@ -1,4 +1,4 @@
-~~LANG:EN@enman:views/view-zip~~
+~~LANG:EN@enman:modules/views/view-zip~~
 
 Jelix propose @@C@jResponseZip@@ qui permet de générer un fichier zip à la
 volée, et le proposer en téléchargement à l'utilisateur. L'alias est "zip" :

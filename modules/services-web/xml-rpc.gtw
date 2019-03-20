@@ -1,4 +1,4 @@
-~~LANG:EN@enman:web-services/xml-rpc~~
+~~LANG:EN@enman:modules/web-services/xml-rpc~~
 
 Jelix propose la prise en charge de [[http://xmlrpc.scripting.com/|xml-rpc]].
 C'est un protocole d'échange de données en XML : un client envoie un contenu XML

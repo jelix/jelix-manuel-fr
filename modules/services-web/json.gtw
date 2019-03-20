@@ -1,4 +1,4 @@
-~~LANG:EN@enman:web-services/json~~
+~~LANG:EN@enman:modules/web-services/json~~
 
 [[https://fr.wikipedia.org/wiki/JSON|JSON]] est un format de données qui
 réutilise des éléments syntaxiques de Javascript. Cela facilite alors grandement
