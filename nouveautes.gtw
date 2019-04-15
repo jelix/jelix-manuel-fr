@@ -16,9 +16,6 @@ Jelix 1.7 nécessite PHP 5.6 minimum et est compatible avec PHP 7.3.
     * Des modules et plugins ont été externalisés et disponibles séparément via
       Composer. Certains restent toutefois inclus dans le paquet standard de
       Jelix.
-    * Un projet basé sur Jelix peut-être créé avec le paquet
-      [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]]
-      installable via Composer
     * Les paramètres de configuration @@modulesPath@@ et @@pluginsPath@@ ne sont
       plus pris en charge, et remplacés par une nouvelle API à appeler dans le
       fichier @@application.init.php@@ : @@jApp::declareModulesDir()@@,

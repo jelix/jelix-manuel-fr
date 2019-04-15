@@ -1,72 +1,22 @@
 ~~LANG:EN@enman:installation/create-application~~
 
-Il y a plusieurs moyens de créer une application avec Jelix.
-
-   - en installant le squelette d'application @@jelix-skeleton-app@@ avec Composer
-   - en utilisant la commande @@create-jelix-app@@ fournie avec Jelix, après avoir
-     installé les sources du framework
-
-Pour installer Composer, voir le site [[https://getcomposer.org]].
-
-
-===== Utilisation du paquet jelix-skeleton-app =====
-
-La manière la plus rapide de créer une nouvelle application basée sur Jelix est
-d'utiliser le paquet [[https://packagist.org/packages/jelix/jelix-skeleton-app|jelix/jelix-skeleton-app]].
-Ce paquet contient une arborescence et les fichiers nécessaires pour réaliser
-une application, et contient même une première page.
-
-Pour ce faire, si vous voulez créer une application "myapp", utilisant la
-version de développement de Jelix 1.7 :
-
-<code bash>
-composer create-project jelix/jelix-skeleton-app myapp dev-jelix-1.7
-</code>
-
-Composer vous demandera si vous voulez garder le repertoire @@F@.git@@.
-Répondez non de préférence.
-
-Quelques fichiers ensuite à copier avant d'initialiser l'application :
-
-<code bash>
-cd myapp
-cp var/config/profiles.ini.php.dist var/config/profiles.ini.php
-cp var/config/localconfig.ini.php.dist var/config/localconfig.ini.php
-</code>
-
-Puis lancez le configurateur du module jelix
-<code bash>
-php dev.php module:configure jelix -f
-</code>
-
-et enfin le configurateur local et l'installateur
-
-<code bash>
-php install/configurator.php -v
-
-php install/installer.php -v
-</code>
-
-
-===== Avec la commande create-jelix-app =====
-
-L'autre façon de créer une application Jelix, est l'utilisation de la commande
+La façon la plus simple de créer une application Jelix, est l'utilisation de la commande
 @@bin/create-jelix-app@@. Elle permet de créer un squelette d'application.
-C'est une alternative par rapport au paquet jelix-skeleton-app
-car elle permet de personnaliser la création du squelette.
 
 Il faut d'abord installer les sources, soit avec Composer, soit à partir
 du paquet zip de jelix.org.
 
 ==== Installer les sources avec Composer ====
 
+Pour installer Composer, voir le site [[https://getcomposer.org]].
+
 Si vous n'avez pas encore de projet avec un fichier @@F@composer.json@@, créer
-un répertoire pour votre application (prenons myapp comme nom) et y
+un répertoire pour votre projet (prenons myproject comme nom) et y
 mettre un fichier @@F@composer.json@@ dont voici un exemple de contenu :
 
 <code json>
 {
-    "name": "myorganisation/myapp",
+    "name": "myorganisation/myproject",
     "type": "application",
     "require": {
         "jelix/jelix": "dev-jelix-1.7.x"
@@ -75,16 +25,18 @@ mettre un fichier @@F@composer.json@@ dont voici un exemple de contenu :
 }
 </code>
 
+Vous pouvez aussi créer ce fichier en utilisant la commande @@composer init@@.
+
 Dans ce répertoire, on y exécute Composer pour installer les paquets indiqués
 dans le @@F@composer.json@@ :
 
 <code bash>
-cd myapp
+cd myproject
 composer install
 </code>
 
-Un répertoire @@F@vendor@@ est alors créé, dans lequel Jelix (et éventuellement d'autres
-paquets) sont installés. Vous trouverez celui de Jelix dans @@F@vendor/jelix/jelix/@@.
+Un répertoire @@F@vendor@@ est alors créé, dans lequel Jelix (et d'autres paquets)
+sont installés. Vous trouverez celui de Jelix dans @@F@vendor/jelix/jelix/@@.
 
 Dans la suite du manuel, quand il est signalé le répertoire @@F@lib/@@, il s'agit
 de @@F@vendor/jelix/jelix/lib/@@.
@@ -111,10 +63,10 @@ La commande create-jelix-app se trouve dans @@F@bin/@@.
 ==== Lancer create-jelix-app ====
 
 Allez dans le répertoire où est installé la commande create-jelix-app (voir
-précédement), et lancez la de la manière suivante :
+précédemment), et lancez-la de la manière suivante :
 
 <code bash>
-php create-jelix-app /chemin/vers/le/nouveau/répertoire/de/myapp
+php create-jelix-app /chemin/vers/le/nouveau/répertoire/de/myproject/myapp
 </code>
 
 @@myapp@@ est le nom de votre application (que vous pouvez bien sûr choisir
@@ -149,7 +101,7 @@ contenu est :
 ===== Premier lancement de votre application =====
 
 Une fois votre application créée, vous pouvez la tester en lançant le serveur web
-de PHP (à n'utiliser qu'en phase de développement, pas en production !).
+intégré dans PHP (serveur à n'utiliser qu'en phase de développement, pas en production !).
 
 Tapez donc en ligne de commande :
 
