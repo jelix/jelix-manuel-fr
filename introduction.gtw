@@ -9,7 +9,7 @@ de gérer des puissants formulaires, et bien d'autres choses encore.
 C'est un framework qui impose également une structure assez stricte dans
 l'organisation des fichiers d'une application, offrant donc une plus grande
 facilité dans la maintenance d'une application, puisque cette organisation
-permet de mieux s'y retrouver.
+permet de mieux s'y retrouver d'un projet à un autre.
 
 Enfin cette architecture est conçue pour être modulaire. Les fichiers
 (contrôleurs, templates, classes métiers...) d'une application peuvent être

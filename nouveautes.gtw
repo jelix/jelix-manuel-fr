@@ -47,7 +47,7 @@ C'est le cas pour :
     * le répertoire @@F@responses/@@ est déplacé dans @@F@app/@@
     * la liste des points d'entrées n'est plus dans project.xml mais dans
       un nouveau fichier @@app/system/framework.ini.php@@ et éventuellement
-      @@var/config/localframework.ini.php@@.
+      dans @@var/config/localframework.ini.php@@.
 
 ==== Refonte du moteur d'URL ====
 
@@ -308,11 +308,11 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
   * le plugin memcache22 pour jCache a été supprimé
   * La méthode @@jInstallerBase::declarePluginsPath()@@ a été supprimé.
   * les classes @@jIniFile@@, @@jIniFileModifier@@, @@jIniMultiFilesModifier@@ ont changés de nom en
-    respectivement Jelix\IniFile\Util, Jelix\IniFile\IniModifier, Jelix\IniFile\MultiIniModifier.
+    respectivement @@Jelix\IniFile\Util@@, @@Jelix\IniFile\IniModifier@@, @@Jelix\IniFile\MultiIniModifier@@.
     Mais il est encore possible d'utiliser les anciens noms (jusqu'à la prochaine version).
   * La méthode @@jApp::configPath()@@ est dépréciée au profit de @@jApp::varConfigPath()@@
   * La classe @@jJson@@ a été supprimée. Utilisez les fonctions json de PHP directement.
-  * La classe @@jCrypt@@ a été supprimée, l'API mcrypt étant dépréciée par PHP
+  * La classe @@jCrypt@@ a été supprimée, l'API mcrypt était dépréciée par PHP
     et n'était plus maintenue depuis longtemps. Utilisez d'autres bibliothèques
     de chiffrements (le paquet defuse/php-encryption par exemple).
   * La classe @@jVersionComparator@@ a été remplacée par la classe
