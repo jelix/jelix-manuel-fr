@@ -1,3 +1,6 @@
+~~LANG:EN@enman:ref-javascript-library~~
+
+
 Ce chapitre décrit les bibliothèques javascript utilisées au sein de Jelix.
 
 ====== jQuery ======
@@ -6,17 +9,17 @@ Jelix utilise [[https://jquery.com/|jQuery]] au sein du framework, notamment ave
 
 Les versions utilisées sont les suivantes
 
-  * [[https://jquery.com/|jQuery 2.2.4]]
+  * [[https://jquery.com/|jQuery 3.3.1]]
   * [[https://jqueryui.com/|jQueryUi 1.12.1]]
 
-====== Wymeditor ======
+====== CKEditor ======
 
-L'éditeur HTML fourni dans Jelix est [[https://wymeditor.github.io/|Wymeditor]] 1.0.0beta9.
+L'éditeur HTML fourni dans Jelix est [[https://ckeditor.com|CKEditor 5]] v11.2.0.
 
 ====== Markitup ======
 
 
 Jelix utilise [[https://markitup.jaysalvat.com/home/|MarkitUp]]
-au sein du framework, notamment pour [[/composants/jforms/xml/wikieditor|wikieditor]].
+au sein du framework, notamment pour [[/composants/jforms/xml/wikieditor|le widget wikieditor]].
 
 La version utilisée est 1.1.14.

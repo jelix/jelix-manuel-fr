@@ -42,8 +42,9 @@ C'est le cas pour :
       être à la fois dans @@app/system/@@ et @@var/config/@@.
     * Les répertoires @@F@overloads@@, @@F@themes@@ et @@F@locales@@. Ils sont
       maintenant dans @@F@app/@@, mais Les répertoires @@F@var/overloads@@,
-      @@F@var/themes@@ et @@F@var/locales@@ sont dorénavant déstinés uniquement
-      aux ressources qui sont créés dynamiquement par l'application.
+      @@F@var/themes@@ et @@F@var/locales@@ sont dorénavant destinés uniquement
+      aux ressources qui sont créés dynamiquement par l'application, ou installés
+      par des modules ajoutés au niveau de l'instance
     * le répertoire @@F@responses/@@ est déplacé dans @@F@app/@@
     * la liste des points d'entrées n'est plus dans project.xml mais dans
       un nouveau fichier @@app/system/framework.ini.php@@ et éventuellement
@@ -66,7 +67,8 @@ faciliter la configuration des urls. Il n'y a plus de système de plugins
     * Les sections de configurations suivantes n'existent plus :
       @@simple_urlengine_entrypoints@@, @@basic_significant_urlengine_entrypoints@@
     * Une API permet aux scripts d'installation de déclarer facilement les urls
-      (et donc de modifier urls.xml) : @@jInstallerGlobalSetup::getUrlModifier()@@, @@jInstallerGlobalSetup::declareNewEntryPoint()@@
+      (et donc de modifier urls.xml) : @@jInstallerGlobalSetup::getUrlModifier()@@,
+      @@jInstallerGlobalSetup::declareNewEntryPoint()@@
     * Dans le fichier urls.xml
        * Il est possible d'indiquer un pathinfo sur un @@<url module="..">@@
        * Il est obligatoire d'indiquer une action pour l'url "/", ce qui remplace
@@ -87,8 +89,8 @@ appelés maintenant qu'une seule fois.
 
 De ce fait, la declaration des modules (section @@[modules]@@), n'est plus
 possible dans les configurations des points d'entrées, uniquement dans
-@@mainconfig.ini.php@@, et les API pour les scripts d'installation ont été
-retravaillé.
+@@mainconfig.ini.php@@ ou @@localconfig.ini.php@@, et les API pour les scripts
+d'installation ont été retravaillé.
 
 Le nouveau système d'installation introduit une nouvelle étape dans l'installation
 d'un module : la configuration. Un module peut fournir une classe qui sera
@@ -133,6 +135,7 @@ regroupés en groupe.
 
 Ainsi, plutôt que de déclarer "en dur" dans le code de vos contrôleurs, les scripts
 js et les feuilles css à utiliser, vous y indiquez un nom de groupe d'assets.
+
 Cela permet de modifier facilement les assets à charger, et d'éviter à modifier
 les modules. Très utile pour modifier les assets d'un module tiers (en particulier
 les assets des composants Jelix !), ou pour mettre à jour des bibliothèques JS.
@@ -164,7 +167,7 @@ Les noms et paramètres des commandes ont donc changé, et le script cmd.php
 renommé en dev.php.
 
 Les commandes concernant la manipulation des droits jAcl2 ont été migré
-dans le module jacl2, et sont donc accessible via le nouveau script console.php.
+dans le module jacl2db, et sont donc accessible via le nouveau script console.php.
 
 La création d'une application se fait au moyen d'un nouveau script
 @@bin/create-jelix-app@@ (il remplace l'ancien script createapp.php), avec

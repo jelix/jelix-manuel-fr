@@ -4,19 +4,19 @@
 
 Le système d'installation de Jelix, permet de distinguer trois étapes :
 
-  # l'installation des sources des modules et la modification de la configuration
-    système du framework pour régler leurs comportements. C'est une étape
-    effectuée par le développeur. Elle n'est pas liée à l'environnement d'execution.
-  # La modification de la configuration au niveau local, une fois que l'application
-    est copiée avec sa configuration système sur un serveur. C'est lors de cette
-    étape que l'on va modifier les paramètres qui sont directement liés
-    à l'environnement d'execution, donc liés au serveur. Il s'agit ainsi de
-    régler les paramètres d'accés aux bases de données et autres services
-    (profiles.ini.php), de modifier certains paramètres comme des paramètres
-    de debuggage etc.
-  # La finalisation de l'installation ou mise à jour de l'application.
-    Cette étape concerne l'initialisation des bases de données (création des tables...),
-    des données, ainsi que la migration de toutes ces données.
+1. l'installation des sources des modules et la modification de la configuration
+   système du framework pour régler leurs comportements. C'est une étape
+   effectuée par le développeur. Elle n'est pas liée à l'environnement d'execution.
+2. La modification de la configuration au niveau local, une fois que l'application
+   est copiée avec sa configuration système sur un serveur. C'est lors de cette
+   étape que l'on va modifier les paramètres qui sont directement liés
+   à l'environnement d'execution, donc liés au serveur. Il s'agit ainsi de
+   régler les paramètres d'accés aux bases de données et autres services
+   (profiles.ini.php), de modifier certains paramètres comme des paramètres
+   de debuggage etc.
+3. La finalisation de l'installation ou mise à jour de l'application.
+   Cette étape concerne l'initialisation des bases de données (création des tables...),
+   des données, ainsi que la migration de toutes ces données.
 
 Dans Jelix 1.6, ces trois étapes étaient indistinctes. Ce n'est plus le cas
 depuis Jelix 1.7+.
