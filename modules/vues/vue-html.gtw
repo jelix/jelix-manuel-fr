@@ -339,14 +339,14 @@ mongroupe2.js[]= "js/baz.js"
 Les chemins que l'on indique pour un fichier js ou css, peuvent être de
 différentes formes :
 
-  # un chemin absolue (par rapport à la racine du site) ou une url complète.
-  # un chemin relatif (ne débutant pas par un "/"), relatif par rapport au chemin du "base path"
-  # un chemin commençant par @@$theme/@@, où @@$theme@@ sera remplacé par @@<basepath>/themes/<themecourant>/@@
-  # un chemin commençant par @@$jelix/@@, où @@$jelix@@ correspond au chemin vers le répertoire
+  - un chemin absolue (par rapport à la racine du site) ou une url complète.
+  - un chemin relatif (ne débutant pas par un "/"), relatif par rapport au chemin du "base path"
+  - un chemin commençant par @@$theme/@@, où @@$theme@@ sera remplacé par @@<basepath>/themes/<themecourant>/@@
+  - un chemin commençant par @@$jelix/@@, où @@$jelix@@ correspond au chemin vers le répertoire
     des assets de Jelix (valeur de @@jelixWWWPath@@)
-  # un selecteur d'une action d'un module : @@<module>~<controleur>:<methode>@@.
+  - un selecteur d'une action d'un module : @@<module>~<controleur>:<methode>@@.
     Cette action doit donc renvoyer le contenu d'un fichier js ou css.
-  # un chemin commençant par le nom d'un module suivit par @@:@@ : pour indiquer
+  - un chemin commençant par le nom d'un module suivit par @@:@@ : pour indiquer
     un fichier js/css contenu dans le repertoire www du module en question.
 
 les formes 1 à 4  peuvent contenir les "variables" suivantes, @@$locale@@ ou @@$lang@@
@@ -433,9 +433,9 @@ On peut aussi indiquer un groupe d'assets dans un template :
 Enfin, dans le script d'installation de votre module, vous pouvez définir
 un groupe d'assets dans la configuration, au moyen des méthodes :
 
-- @@$this->declareGlobalWebAssets()@@ si vous voulez installer dans la 
-  configuration globale
-- @@declareWebAssets()@@ de l'objet du point d'entrée, pour définir
+  - @@$this->declareGlobalWebAssets()@@ si vous voulez installer dans la
+    configuration globale
+  - @@declareWebAssets()@@ de l'objet du point d'entrée, pour définir
   le groupe d'assets au niveau de la configuration du point d'entrée.
 
 <code php>
