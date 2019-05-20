@@ -4,19 +4,19 @@
 
 Le système d'installation de Jelix, permet de distinguer trois étapes :
 
-1. l'installation des sources des modules et la modification de la configuration
-   système du framework pour régler leurs comportements. C'est une étape
-   effectuée par le développeur. Elle n'est pas liée à l'environnement d'execution.
-2. La modification de la configuration au niveau local, une fois que l'application
-   est copiée avec sa configuration système sur un serveur. C'est lors de cette
-   étape que l'on va modifier les paramètres qui sont directement liés
-   à l'environnement d'execution, donc liés au serveur. Il s'agit ainsi de
-   régler les paramètres d'accés aux bases de données et autres services
-   (profiles.ini.php), de modifier certains paramètres comme des paramètres
-   de debuggage etc.
-3. La finalisation de l'installation ou mise à jour de l'application.
-   Cette étape concerne l'initialisation des bases de données (création des tables...),
-   des données, ainsi que la migration de toutes ces données.
+# l'installation des sources des modules et la modification de la configuration
+  système du framework pour régler leurs comportements. C'est une étape
+  effectuée par le développeur. Elle n'est pas liée à l'environnement d'execution.
+# La modification de la configuration au niveau local, une fois que l'application
+  est copiée avec sa configuration système sur un serveur. C'est lors de cette
+  étape que l'on va modifier les paramètres qui sont directement liés
+  à l'environnement d'execution, donc liés au serveur. Il s'agit ainsi de
+  régler les paramètres d'accés aux bases de données et autres services
+  (profiles.ini.php), de modifier certains paramètres comme des paramètres
+  de debuggage etc.
+# La finalisation de l'installation ou mise à jour de l'application.
+  Cette étape concerne l'initialisation des bases de données (création des tables...),
+  des données, ainsi que la migration de toutes ces données.
 
 Dans Jelix 1.6, ces trois étapes étaient indistinctes. Ce n'est plus le cas
 depuis Jelix 1.7+.
@@ -25,11 +25,11 @@ Nous avons ainsi d'un coté, pour la première et deuxième étape, l'utilisatio
 du configurateur Jelix, et de l'autre l'utilisation de l'installateur Jelix à la
 troisième étape.
 
-==== La configuration système ====
+==== La configuration système du framework ====
 
 La première étape est réalisée par le développeur de l'application. Cette étape
 est indépendante de l'environnement d'execution. C'est le développeur qui
-intégre et paramètre les modules et le framework pour obtenir le comportement voulu.
+intègre et paramètre les modules et le framework pour obtenir le comportement voulu.
 
 Il va donc intégrer les sources d'un module et lancer le configurateur pour ce
 module (commande @@php dev.php module:configure@@).
@@ -57,7 +57,7 @@ l'application sur un serveur.
 Il peut être le développeur sur un serveur web local sur sa machine, ou un
 administrateur système ou devops sur une machine de recette ou de production.
 
-Après l'installation des sources de l'application, Cet utilisateur devra lancer
+Après l'installation des sources de l'application, cet utilisateur devra lancer
 le script @@install/configurator.php@@ de l'application, ce qui lancera la méthode
 @@localConfigure()@@ des configurateurs de tous les modules activés lors de la
 configuration système.

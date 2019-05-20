@@ -339,14 +339,14 @@ mongroupe2.js[]= "js/baz.js"
 Les chemins que l'on indique pour un fichier js ou css, peuvent être de
 différentes formes :
 
-- 1) un chemin absolue (par rapport à la racine du site) ou une url complète.
-- 2) un chemin relatif (ne débutant pas par un "/"), relatif par rapport au chemin du "base path"
-- 3) un chemin commençant par @@$theme/@@, où @@$theme@@ sera remplacé par @@<basepath>/themes/<themecourant>/@@
-- 4) un chemin commençant par @@$jelix/@@, où @@$jelix@@ correspond au chemin vers le répertoire
+  # un chemin absolue (par rapport à la racine du site) ou une url complète.
+  # un chemin relatif (ne débutant pas par un "/"), relatif par rapport au chemin du "base path"
+  # un chemin commençant par @@$theme/@@, où @@$theme@@ sera remplacé par @@<basepath>/themes/<themecourant>/@@
+  # un chemin commençant par @@$jelix/@@, où @@$jelix@@ correspond au chemin vers le répertoire
     des assets de Jelix (valeur de @@jelixWWWPath@@)
-- 5) un selecteur d'une action d'un module : @@<module>~<controleur>:<methode>@@.
+  # un selecteur d'une action d'un module : @@<module>~<controleur>:<methode>@@.
     Cette action doit donc renvoyer le contenu d'un fichier js ou css.
-- 6) un chemin commençant par le nom d'un module suivit par @@:@@ : pour indiquer
+  # un chemin commençant par le nom d'un module suivit par @@:@@ : pour indiquer
     un fichier js/css contenu dans le repertoire www du module en question.
 
 les formes 1 à 4  peuvent contenir les "variables" suivantes, @@$locale@@ ou @@$lang@@
@@ -362,6 +362,16 @@ example.js[]= "module:path/to/file.js, module~ctrl:meth"
 example.js[]= "$theme/path/to/file.js, path/$lang/machin.js, /$locale/truc.js"
 </code>
 
+Vous pouvez aussi indiquer des attributs qui seront ajoutés sur la balise
+@@script@@ ou @@link@@, comme les attributs @@defer@@ ou @@media@@
+
+<code ini>
+example.js[]= "myscript.js|defer"
+example.js[]= "https://popular.com/script.js.js|defer|integrity=sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K|crossorigin=anonymous"
+example.js[]= "mymodule.mjs|type=module"
+example.css[]= "mystyle.css|media=screen and (max-width: 600px)"
+example.css[]= "otherstyles.css|rel=alternate stylesheet|title=Fancy"
+</code>
 
 Il se peut que l'utilisation d'un groupe nécessite l'utilisation d'un autre
 groupe. Par exemple, l'utilisation du groupe d'assets "jforms_html" nécessite

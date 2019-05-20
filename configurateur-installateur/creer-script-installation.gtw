@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:configurator-installer/create-install-scripts~~
 
 Jelix fournit un système de configuration et d'installation automatique qui
-permet d'exécuter des scripts lorsque vous integrez un module dans une application,
+permet d'exécuter des scripts lorsque vous intégrez un module dans une application,
 ou que vous installiez l'application sur un serveur. Si ce n'est pas déjà fait,
 lisez le chapitre sur [[principes-fonctionnement|les principes de fonctionnements du système d'installation]],
 pour comprendre ce qui va suivre.
@@ -224,9 +224,11 @@ Les paramètres @@$helpers@@ contiennent un certain nombre de
 propriétés et de méthodes qui vous aideront à accéder à la base de données,
 aux fichiers de configuration etc..
 
-On y retrouve à peu près les mêmes méthodes pour accéder à la configuration
-(voir section suivante) mais aussi la méthode @@database()@@ renvoyant
-un objet @@DatabaseHelpers@@, et des méthodes pour installer des fichiers.
+Cependant ils ne sont pas tout à fait identiques. Pour @@install()@@, on y
+retrouve à peu près les mêmes méthodes pour accéder à la configuration
+(voir section suivante) que pour @@preInstall()@@, mais aussi la méthode
+@@database()@@ renvoyant un objet @@DatabaseHelpers@@, et des méthodes pour
+installer des fichiers.
 
 ==== Accéder à une base de donnée ====
 
@@ -277,7 +279,7 @@ Dans ces options, il est possible d'indiquer de simples noms (ce seront des
 booléens), ou des noms avec des valeurs.
 
 <code ini>
-news.installparam = "enablecategories,defaultcategory=In the world"
+news.installparam = "enablecategories;defaultcategory=In the world"
 </code>
 
 Ici, les paramètres seront un booléen nommé "enablecategories", et un paramètre

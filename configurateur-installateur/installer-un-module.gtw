@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:configurator-installer/installing-a-module~~
 
 Cette section ne concerne pas les modules fraîchement créés avec la commande
-@@c@dev.php module:create@@, puisque celle-ci les active automatiquement et les installe.
+@@dev.php module:create@@, puisque celle-ci les active automatiquement et les installe.
 
 Par contre, pour créer un module "à la main", utiliser un module existant
 fourni avec jelix ou installer un module tiers, il faut suivre les
@@ -19,7 +19,7 @@ jApp::declareModulesDir(__DIR__.'/vendor-modules/');
 
 Il est possible d'avoir un module en dehors d'un groupe de module (par exemple
 dans un paquet Composer). On peut alors indiquer directement son chemin dans le
-fichier application.init.php.
+fichier @@application.init.php@@.
 
 <code php>
 jApp::declareModule(__DIR__.'/somewhere/mymodule/');
@@ -75,11 +75,12 @@ Ces paramètres peuvent être indiqués dans une option spécifique de la sectio
 @@themodule.installparam=something@@. Un exemple pour un module "news":
 
 <code>
-   news.installparam = "enablecategories,defaultcategory=In the world"
+   news.installparam = "enablecategories;defaultcategory=In the world"
 </code>
 
-Les paramètres, séparés par une virgule, peuvent être de simples mot-clefs, ou
-des clés/valeurs.
+Les paramètres, séparés par un point virgule, peuvent être de simples mot-clefs, ou
+des clés/valeurs. La valeur pour un mot clef peut être une liste de valeurs :
+celles-ci sont alors séparées par des virgules.
 
 Il y a de forte chance pour que le configurateur du module (que vous lancez
 avec @@module:configure@@) vous demande les valeurs de ces paramètres, et donc
