@@ -106,7 +106,8 @@ class defaultCtrl extends myBaseController {
 
 </code>
 
-Notez l'include et le @@extends myBaseController@@;
+Notez l'include et le @@extends myBaseController@@. Si la classe @@myBaseController@@
+a été déclaré dans la configuration d'auto chargement, l'include est inutile.
 
 Bien sûr, le contrôleur de base peut contenir des propriétés, d'autres méthodes,
 voire des méthodes d'actions. C'est à dire que vous pouvez ainsi avoir plusieurs

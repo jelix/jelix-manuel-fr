@@ -46,13 +46,6 @@ Dans un template, vous avez une facilité en utilisant la balise meta :
 {meta_html csstheme 'design.css'}
 </code>
 
-D'autres sont disponibles pour les feuilles de styles spéciales pour IE
-
-<code>
-{meta_html cssthemeie 'design.css'} pour ie
-{meta_html cssthemeie7 'design.css'} pour ie7
-{meta_html cssthemeltie7 'design.css'} pour ie < 7
-</code>
 
 Mais vous avez aussi une variable déclarée automatiquement, @@$j_themepath@@,
 dans un template contenant le chemin des thèmes

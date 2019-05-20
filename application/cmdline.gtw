@@ -68,7 +68,7 @@ Dans la méthode @@configure()@@, vous déclarez le nom de la commande (celui qu
 faudra taper après @@console.php@@), ainsi que les arguments et options
 qu'accepte votre commande.
 
-Dans la méthode @@execute()@@, le code de votre commande.
+La méthode @@execute()@@ contient le code de votre commande.
 
 Pour en savoir plus sur les méthodes et propriétés disponibles dans une
 classe de commande Symfony, lisez [[https://symfony.com/doc/3.2/components/console.html|le manuel de Symfony Console]].
@@ -83,7 +83,7 @@ n'importe quel composant Jelix.
 
 Une fois la classe de la commande faite, il faut la faire connaître à
 @@console.php@@. Pour cela il faut avoir à la racine du module (donc au même
-niveau que module.xml, un script @@commands.php@@. Ce script a accès à un objet
+niveau que module.xml), un script @@commands.php@@. Ce script a accès à un objet
 @@\Symfony\Component\Console\Application@@ dans une variable @@$application@@,
 ce qui vous permet de déclarer la commande comme ceci :
 
@@ -114,7 +114,7 @@ php console.php
 </code>
 
 Et pour obtenir l'aide de la commande, la commande @@help@@ suivit du nom de la
-commande ou alors utiliser l'option @@-h@@:
+commande ou alors utiliser l'option @@-h@@ :
 
 
 <code bash>
