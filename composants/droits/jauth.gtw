@@ -14,9 +14,8 @@ les droits, comme par exemple l'appel à la méthode @@M@jAcl2::check()@@.
 ===== Interaction de jAuth avec jAcl2 =====
 
 
-Par exemple, lors de l'utilisation du module jCommunity (qui est un module
-que vous trouverez sur [[https://booster.jelix.org|booster.jelix.org]] et qui permet de gérer un espace
-membre) et de jAcl2, vous voudriez probablement que lorsqu'un nouveau membre est
+Par exemple, lors de l'utilisation du module jCommunity et de jAcl2, vous
+voudriez probablement que lorsqu'un nouveau membre est
 inscrit, celui-ci reçoive automatiquement les droits par défauts attribués, et
 que lorsque son compte est supprimé, ses droits personnels soient supprimés.
 

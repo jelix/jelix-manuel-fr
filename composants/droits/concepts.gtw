@@ -21,7 +21,7 @@ C'est un libellé représentant un droit. Par exemple, "**cms.articles.create**"
 pourrait être le droit de rédaction d'un article d'un CMS.
 
 Par convention, afin d'éviter les collisions entre différents modules, le nom du
-sujet devrait commencer par le nom du module puis le nom du controleur et enfin
+sujet devrait commencer par le nom du module puis le nom du contrôleur et enfin
 la valeur de droit. Mais ce n'est pas une obligation.
 
 Exemple :

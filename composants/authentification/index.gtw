@@ -15,8 +15,8 @@ Le système d'authentification repose sur plusieurs choses :
      en standard avec Jelix, vérifiant si l'authentification est effectuée pour
      les actions où elle est nécessaire.
    * Une classe @@C@jAuth@@, permettant d'effectuer les différentes opérations
-     sur l'authentification et la gestion des identifiants. Cette classe repose
-     sur un système de pilote.
+     sur l'authentification et la gestion des identifiants. Cette classe propose
+     un système de plugin.
    * Un module, **jauth**, proposant un contrôleur et des templates par défaut.
      Il n'est, en principe, pas indispensable : vous pouvez tout à fait utiliser
      votre propre contrôleur, la mise en oeuvre étant relativement simple.
@@ -525,7 +525,8 @@ user, ou de gérer les données dépendantes à l'utilisateur etc.
   * AuthChangePassword (depuis Jelix 1.6.17): le mot de passe d'un utilisateur
     a changé.
 
-Les tests sont sur les propriétés suivantes :
+Les réponses à certains évènements peuvent contenir les propriétés suivantes :
+
   * AuthCanRemoveUser : @@canremove@@ doit contenir true ou false
   * AuthCanLogin : @@canlogin@@ doit contenir true ou false
   * AuthBeforeLogin : @@processlogin@@ doit contenir true ou false (false pour annuler l'authentification)
