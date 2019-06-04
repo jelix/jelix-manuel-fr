@@ -62,8 +62,7 @@ Un plugin formwidget implémente l'interface @@C@jelix\forms\HtmlWidget\WidgetIn
 et peut hériter de la classe @@C@jelix\forms\HtmlWidget\WidgetBase@@.
 
 Voyez les plugins existants et cet interface pour comprendre la création de ce
-type de plugins.
-
+type de plugins, et [[/plugins/jforms|le chapitre expliquant la création de tels plugins]].
 
 ===== Personnalisation de l'affichage des messages =====
 

@@ -4,39 +4,13 @@ Comme il est indiqué [[/composants/jforms/affichage|dans le chapitre sur l'affi
 il est possible de choisir un plugin qui s'occupera de générer le code du
 formulaire (en HTML, javascript etc..) renvoyé au navigateur.
 
-Vous avez deux types de plugins : ceux qui permettent de générer un formulaire entier,
-et donc qui "pilotent" la génération d'un formulaire et les plugins des widgets
-pour le générateur HTML par défaut, pour générer le code d'un seul contrôle de
-formulaire.
+Vous avez deux types de plugins :
 
-
-==== Plugin widget ====
-
-Le générateur HTML fourni par Jelix est un plugin, lui même extensible, utilisant
-des plugins de type "formwidget" pour générer chaque contrôle. Vous n'avez ainsi
-pas à développer tout un plugin générateur pour simplement rédéfinir le code
-HTML et JS généré d'un contrôle.
-
-Un plugin "formwidget" doit implementer l'interface @@jelix\forms\HtmlWidget\WidgetInterface@@, et
-donc fournir ces methodes :
-
-   * @@M@getId()@@: renvoi l'id de l'élement HTML généré
-   * @@M@getName()@@: renvoi le nom de l'élement HTML généré
-   * @@M@getValue()@@: renvoi la valeur de l'élement HTML généré (valeur du controle en fait)
-   * @@M@outputMetaContent($resp)@@: génére des liens CSS et Javascript pour la partie @@<head>@@
-   * @@M@outputHelp()@@: génère le code HTML de l'aide pour le champs de saisie
-   * @@M@outputLabel()@@: génère le libellé HTML du champs
-   * @@M@outputControl()@@: génère le champs HTML
-   * @@M@setAttributes($attributes)@@: définie les attributs qui seront ajoutés sur l'élément HTML, ou des options pour le plugin.
-
-Le plugin peut hériter de la classe @@jelix\forms\HtmlWidget\WidgetBase@@, ainsi
-il y a moins de méthode à implémenter.
-
-Le plugin doit avoir un nom. Il doit être stocké dans un fichier
-@@F@plugins/formwidget/{nom}/{nom}.formwidget.php@@.
-
-Voyez le code des plugins existants dans @@F@lib/jelix/plugins/formwidget/@@ pour en savoir plus sur le
-fonctionnement des plugins "formwidget".
+   # ceux qui permettent de générer un formulaire entier, les builders ou générateurs, et donc qui
+     "pilotent" la génération d'un formulaire.
+   # les plugins des widgets, qui sont utilisés par les builders, en particulier
+     le générateur HTML par défaut. Un plugin de widget génére le code d'un
+     seul contrôle de formulaire.
 
 ==== Plugin générateur ====
 
@@ -56,7 +30,7 @@ différents plugins de templates de jforms.
 
 Après chaque modification de votre générateur de jforms,
 **pensez à vider le cache de votre application** (par exemple en utilisant la commande
-@@cleartemp@@), ceci afin de prendre en compte vos modifications.
+@@php console.php app:cleartemp@@), ceci afin de prendre en compte vos modifications.
 
 
 <code php>
@@ -174,6 +148,9 @@ le libellé d'un champ de saisie.
 Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
 informations du champ de saisie dont il faut afficher le label.
 
+Dans le générateur HTML, cette méthode fait appel à un plugin de widget pour
+afficher la valeur.
+
 === outputControl() ===
 
 Appelé par les plugins de template de jforms utilisés dans un plugin @@{form}@@,
@@ -184,10 +161,135 @@ Elle reçoit en argument un objet PHP @@C@jFormsControl@@ qui contient les
 informations du champ de saisie à afficher, et un tableau contenant
 la liste des attributs à rajouter à la balise créé ou d'autres informations.
 
+Dans le générateur HTML, cette méthode fait appel à un plugin de widget pour
+afficher un champs de saisie.
+
 === outputControlValue() ===
 
 Appelé par les plugins de template de jforms utilisés dans un plugin @@{formdata}@@,
 pour chaque valeur de champs de saisie. Cette méthode est donc chargée d'afficher
 uniquement une valeur, quand on veut afficher uniquement les valeurs d'un formulaire, et
 non ses champs de saisie.
+
+Dans le générateur HTML, cette méthode fait appel à un plugin de widget pour
+afficher la valeur.
+
+
+==== Utiliser un générateur ====
+
+Si vous voulez utiliser le même générateur dans l'ensemble de l'application,
+il vous suffit de modifier cette variable dans le fichier de configuration :
+
+<code ini>
+[tplplugins]
+defaultJformsBuilder = myformbuilder
+</code>
+
+
+
+Si vous voulez utiliser votre générateur uniquement sur des formulaires
+spécifiques, vous pouvez indiquer le générateur de votre choix en
+passant son nom aux plugins de template @@{form}@@ ou @@{formfull}@@ :
+
+<code html>
+  {formfull $formulaire, 'monmodule~default:sauver', array(), 'myformbuilder'}
+</code>
+
+==== Plugin widget ====
+
+Le générateur HTML fourni par Jelix est un plugin, lui même extensible, utilisant
+des plugins de type "formwidget" pour générer chaque contrôle. Vous n'avez ainsi
+pas à développer tout un plugin générateur pour simplement rédéfinir le code
+HTML et JS généré d'un contrôle.
+
+Un plugin "formwidget" doit implementer l'interface @@jelix\forms\HtmlWidget\WidgetInterface@@, et
+donc fournir ces methodes :
+
+   * @@M@getId()@@: renvoi l'id de l'élement HTML généré
+   * @@M@getName()@@: renvoi le nom de l'élement HTML généré
+   * @@M@getValue()@@: renvoi la valeur de l'élement HTML généré (valeur du controle en fait)
+   * @@M@outputMetaContent($resp)@@: génére des liens CSS et Javascript pour la partie @@<head>@@
+   * @@M@outputHelp()@@: génère le code HTML de l'aide pour le champs de saisie
+   * @@M@outputLabel()@@: génère le libellé HTML du champs
+   * @@M@outputControl()@@: génère le champs HTML
+   * @@M@setAttributes($attributes)@@: définie les attributs qui seront ajoutés sur l'élément HTML, ou des options pour le plugin.
+
+Le plugin peut hériter de la classe @@jelix\forms\HtmlWidget\WidgetBase@@, ainsi
+il y a moins de méthode à implémenter.
+
+Le plugin doit avoir un nom. Il doit être stocké dans un fichier
+@@F@plugins/formwidget/{nom}/{nom}.formwidget.php@@.
+
+Voyez le code des plugins existants dans @@F@lib/jelix/plugins/formwidget/@@ pour en savoir plus sur le
+fonctionnement des plugins "formwidget".
+
+Notez qu'il y a un widget spécifique, le widget "racine", qui peut générer
+du html dans le formulaire, en plus du html généré par le générateur ou les
+plugins widgets. Il a pour nom le même que celui du générateur. Par exemple
+pour celui du générateur html, il s'agit du plugin plugins/formwidget/html/html.formwidget.php.
+Ou pour celui de votre propre générateur monhtml par exemple, dérivant du
+générateur html, il s'agira de plugins/formwidget/monhtml/monhtml.formwidget.php.
+
+==== Déclarer un plugin de widget ====
+
+Après avoir fait un plugin de widget pour le générateur HTML (ou tout autre
+générateur dérivant du générateur HTML), vous devez le déclarer pour qu'il soit
+utilisé.
+
+Il y a plusieurs moyens de le déclarer, selon le contexte.
+
+Si vous voulez utiliser un plugin particulier dans un formulaire spécifique,
+indiquez-le dans les options du générateur, dans le template, au niveau de la liste des plugins.
+Exemple:
+
+<code>
+ {form $form, 'action', array(), 'html',
+    array('plugins' => array ('date' => 'mydateplugin')) }
+    ...
+ {/form}
+
+ {formfull $form, 'action', array(), 'html',
+    array('plugins' => array ('date' => 'mydateplugin')) }
+
+</code>
+
+Vous indiquez donc ici que pour tel type de control (champs de saisie), ici
+les champs de type "date", vous voulez utiliser tel plugin, ici "mydateplugin".
+Le nom du plugin est son nom sans 'formwidget'. Donc ici il s'agit du plugin
+@@F@plugins/formwidget/mydateplugin/mydateplugin.formwidget.php@@.
+
+Si vous voulez utiliser le plugin dans tous les formulaires utilisant le
+générateur html, vous pouvez l'indiquer dans la configuration :
+
+<code ini>
+[jforms_builder_html]
+;<control type> = <nom du plugin>
+date = mydateplugin
+
+</code>
+
+Si vous faites votre propre builder héritant du générateur html, le générateur
+tentera de récupérer automatiquement les widgets dont les noms se terminent
+par le nom du générateur, @@<controle_type>_<builder_type>@@.
+
+Ainsi si vous faites un builder "htmlbootstrap", pour le controle date, il
+utilisera le plugin de widget @@date_htmlbootstrap@@. Nul besoin de déclarer
+le widget quelque part.
+
+Et si les widgets ne suivent pas la nomenclateur du générateur, vous pouvez
+indiquer dans votre générateur la liste des plugins à utiliser, dans la
+propriété @@$pluginsConf@@ :
+
+<code>
+protected $pluginsConf = array(
+    'control type' => nom du plugin
+);
+</code>
+
+
+Pour le widget 'racine', le type à indiquer dans @@$pluginsConf@@,
+@@jforms_builder_html@@, ou @@{form}@@, est 'root',
+
+
+
 

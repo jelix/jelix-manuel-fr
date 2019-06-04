@@ -312,9 +312,9 @@ Chaque générateur a un nom. Le générateur par défaut pour HTML s'appelle to
 naturellement 'html'. Il est spécifié par l'option //defaultJformsBuilder//
 du fichier de configuration.
 
-Note : Depuis Jelix 1.5, l'architecture des générateurs a été modifié. Mais il est
-encore possible d'utiliser les anciens types de générateurs proposés par les versions
-précédentes, y compris vos propres générateurs reposant sur cette ancienne architecture.
+Note : il est possible d'utiliser les anciens types de générateurs proposés par
+les versions 1.4 et précédentes de jelix, y compris vos propres générateurs. En effet
+l'architecture décrit dans ce chapitre existe depuis la version 1.5.
 Pour les utiliser, préfixez leur nom par "legacy.". Par exemple, pour utiliser
 l'ancien builder 'htmllight', utilisez le nom "legacy.htmllight". Pour une documentation
 sur ces anciens générateurs, voyez le manuel des versions précédentes. Notez
