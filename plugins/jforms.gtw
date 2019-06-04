@@ -6,9 +6,9 @@ formulaire (en HTML, javascript etc..) renvoyé au navigateur.
 
 Vous avez deux types de plugins :
 
-   # ceux qui permettent de générer un formulaire entier, les builders ou générateurs, et donc qui
-     "pilotent" la génération d'un formulaire.
-   # les plugins des widgets, qui sont utilisés par les builders, en particulier
+  * ceux qui permettent de générer un formulaire entier, les builders ou générateurs, et donc qui
+    "pilotent" la génération d'un formulaire.
+  * les plugins des widgets, qui sont utilisés par les builders, en particulier
      le générateur HTML par défaut. Un plugin de widget génére le code d'un
      seul contrôle de formulaire.
 
