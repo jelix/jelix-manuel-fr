@@ -102,9 +102,28 @@ méthode @@M@add@@. Ce paramètre et cette donnée de réponse dépendent unique
 de l'évènement AuthCanLogin. Pour d'autres évènements, il peut y avoir plusieurs
 paramètres ou aucun, d'autres types de données de réponses ou aucune réponse.
 
+Pour les évènements dont le nom ne peut correspondre à un nom de méthode,
+comme un nom comportant des points (ex: @@foo.bar@@), vous pouvez indiquer
+quelle méthode il faut exécuter, dans une propriété @@eventMapping@@. Les clés
+sont les noms d'évènements, les valeurs les noms des méthodes.
+
+<code php>
+class authListener extends jEventListener {
+
+    protected $eventMapping = array(
+      'foo.bar' => 'execFooBar'
+    );
+
+    function execFooBar ($event) {
+        // here process the event.
+    }
+}
+</code>
+
 Note : vous pouvez changer la façon dont votre listener traite les évènements
 (nom des méthodes correspondantes aux évènements etc), en redéfinissant la
 méthode @@M@performEvent()@@ du listener.
+
 
 ==== Déclarer le listener ====
 

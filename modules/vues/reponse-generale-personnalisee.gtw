@@ -193,6 +193,13 @@ par exemple), il faut l'indiquer comme un sélecteur :
 html="main~myHtmlResponse"
 </code>
 
+Ou encore, si votre classe a un namespace qui est auto-chargeable :
+
+<code ini>
+[responses]
+html="\My\Html\Response\Class"
+</code>
+
 Toutes les actions qui feront alors appel à la réponse "html", fourniront un
 objet @@C@myHtmlResponse@@, et donc une page avec un formulaire de login généré
 par la zone 'auth~login', un contenu par défaut pour les variables de templates

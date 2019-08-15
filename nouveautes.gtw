@@ -190,6 +190,7 @@ de l'application.
   * jDb schema: toutes les améliorations déjà apportées par Jelix 1.6.16, à savoir
     la prise en charge totale de la lecture et modification de schema de base
     de données pour Mysql, Postgresql, Sqlite3, OCI, SqlServer
+  * Les classes de types jDbTools ont été migré en dehors des drivers de base de données.
 
   * jProfiles :
      * le contenu du fichier profiles.ini.php est optimisé et stocké en cache
@@ -327,6 +328,7 @@ leurs propres dépôts même si ils sont fournis avec Jelix en standard. Il s'ag
   * jDao : le support de l'attribut @@groupby@@ sur l'élement @@method@@ a été supprimé
   * jDao : la méthode obsolète @@jDaoConditions::addItemGroup()@@ a été supprimée.
   * le plugin @@LDS@@ pour jAuth a été supprimé.
+  * le driver @@mssql@@ pour jDb a été déprécié. Il faut utiliser le driver @@sqlsrv@@
 
   * Le module junittests et Simpletests ont été supprimé. Ils sont disponibles
     séparement pour ceux qui n'auraient pas encore migré leur tests vers PHPUnit.

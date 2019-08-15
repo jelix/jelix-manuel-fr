@@ -17,8 +17,6 @@ Un driver pour jDb est constitué de plusieurs classes :
    * une classe pour récupérer les résultats, héritant de @@C@jDbResultSet@@
    * des classes pour interroger et modifier le schéma d'une base de donnée.
      Elles héritent de @@C@jDbSchema@@ et @@C@jDbTable@@.
-   * une classe utilitaire héritant de @@C@jDbTools@@, permettant de faire les
-     conversions de type SQL en type unifié jDb, d'exécuter des scripts SQL..
 
 ==== Fichiers et nommages ====
 
@@ -32,7 +30,6 @@ Les noms des fichiers doivent suivre ce nommage :
    * @@F@exemple.dbconnection.php@@ pour la classe de connexion
    * @@F@exemple.dbresultset.php@@ pour la classe de resultset
    * @@F@exemple.dbschema.php@@ pour les classes de manipulation de schemas
-   * @@F@exemple.dbtools.php@@ pour la classe utilitaire
 
 Et dans chacun de ces fichiers, les classes doivent respectivement avoir le
 nommage suivant :
@@ -40,7 +37,6 @@ nommage suivant :
    * @@C@exempleDbConnection@@
    * @@C@exempleDbResultSet@@
    * @@C@exempleDbSchema@@ et @@C@exempleTableSchema@@
-   * @@C@exempleDbTools@@
 
 ==== Classe de connexion ====
 
@@ -107,21 +103,6 @@ Voir [[refclass:jDbResultSet|la référence de jDbResultSet]] pour plus de déta
 
 Une classe héritant de jDbSchema doit permettre de récupérer la liste des tables
 et leurs propriétés, champs... Voir l'API de jDbSchema.
-
-==== Classe utilitaire ====
-
-Elle doit hériter de @@C@jDbTools@@. Cette classe permet de récupérer des
-informations sur la base de donnée, sur une table etc. Utilisée notamment par
-les scripts jelix-scripts.
-
-Vous redéfinirez en particulier les méthodes et propriétés suivantes :
-
-   * @@P@$typesInfo@@, un tableau contenant la correspondance entre les types
-     sql et les types unifiés de jDb.
-   * @@M@execSQLScript()@@ si vous voulez redéfinir la manière dont est parsé et
-     exécuté un ensemble de requêtes SQL présentes dans un script.
-
-Voir [[refclass:jDbTools|la référence de jDbTools]] pour plus de détails.
 
 ==== Exemples ====
 

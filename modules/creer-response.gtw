@@ -99,6 +99,13 @@ Voici un exemple de réponse fournie par votre module :
 foo="mymodule~myFooResponse"
 </code>
 
+Ou encore, si la classe est auto-chargeable grâce à son namespace :
+
+<code ini>
+[responses]
+foo="\My\Foo\Response\Class"
+</code>
+
 Ensuite vous sera à même d'utiliser votre réponse dans les actions de votre contrôleur.
 
 Et dans un contrôleur, cela donne :

@@ -247,14 +247,18 @@ pour plus de détails), mais aussi de jDao, de jForms...
 
 <code>
 [compilation]
+sourceFileResolutionInCache = off
 checkCacheFiletime  = on
 force  = off
 </code>
 
-  * **checkCacheFiletime ** : si //on// alors un fichier source (template, dao, form...)
+  * @@sourceFileResolutionInCache@@ : si @@on@@, mémorise en cache le fichier cible à compiler.
+    cela est particulièrement utile en production, pour les templates ou fichiers
+    de locales par exemple, qui peuvent se trouver à plusieurs endroits.
+  * @@checkCacheFiletime@@ : si @@on@@ alors un fichier source (template, dao, form...)
     est recompilé si sa date de modification est plus récente que le fichier PHP
     résultant de la compilation.
-  * **force** : si //on//, le template est recompilé systématiquement.
+  * @@force@@ : si @@on@@, le fichier cible est recompilé systématiquement.
 
 ==== section zones ====
 

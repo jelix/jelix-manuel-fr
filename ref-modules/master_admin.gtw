@@ -191,7 +191,7 @@ Le module contient deux templates:
 
 Vous devez utiliser ce template dans votre objet réponse.
    
-La commande jelix @@c@initadmin@@ crée par défaut deux objets réponse,
+La commande jelix @@c@init-admin@@ crée par défaut deux objets réponse,
 @@C@adminHtmlResponse@@ et @@C@adminLoginHtmlResponse@@ dans votre répertoire
 @@F@app/responses/@@. Ces réponses utilisent le template master_admin, et vous
 pouvez évidemment modifier ces objets pour les personnaliser.

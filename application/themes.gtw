@@ -24,6 +24,9 @@ mais ce seront uniquement les templates créés à la volée durant la vie
 de l'application ou spécifiques à l'environnement dans lequel est installée
 l'application.
 
+Un module peut aussi fournir ses templates pour plusieurs themes. Les templates
+seront alors stockés dans son répertoire @@templates/themes/nom_du_theme/@@.
+
 ===== Les fichiers web d'un thème =====
 
 Par fichiers web, on entends les fichiers CSS, les images etc... Ces fichiers ne

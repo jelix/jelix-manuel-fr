@@ -45,10 +45,12 @@ que pour la debugbar).
 
 Dans la section @@V@[compilation]@@, vous pouvez désactiver l'option
 @@V@checkCacheFiletime@@, et encore plus recommandé, l'option @@V@force@@ si
-vous l'avez activé pour le développement.
+vous l'avez activé pour le développement. Vous devriez aussi activer l'option
+@@sourceFileResolutionInCache@@.
 
 <code ini>
 [compilation]
+sourceFileResolutionInCache = on
 checkCacheFiletime  = off
 force = off
 </code>
@@ -57,7 +59,14 @@ L'option @@V@checkCacheFiletime@@ évite à Jelix de vérifier tout le temps que
 cache (les fichiers générés par Jelix pour les fichiers de configurations, les
 DAO, templates etc) est bien à jour par rapport aux fichiers de l'application. À
 priori, cette vérification est inutile en production, puisque l'application est
-rarement modifiée. Bien sûr, si vous la désactivez, il faudra **impérativement**
+rarement modifiée.
+
+L'option @@sourceFileResolutionInCache@@ évite de rechercher à chaque requête
+ou se trouve le fichier source à compiler. En effet, pour certains types
+de fichiers, comme les templates, ils peuvent se trouver dans plusieurs
+répertoires différents, et la recherche dans tous ces répertoires peut être lente.
+
+Bien sûr, en configurant ces options comme indiqué, il faudra **impérativement**
 vider le répertoire de cache (@@F@temp/votre_appli/@@)
 **à chaque mise à jour de votre application** ,
 pour que vos modifications soient bien prises en compte ! Surtout quand il

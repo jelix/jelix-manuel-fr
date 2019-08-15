@@ -1,9 +1,8 @@
 ~~LANG:EN@enman:application/administration-app~~
 
-===== La commande app:initadmin =====
+===== La commande app:init-admin =====
 
-
-La commande @@app:initadmin@@ permet d'ajouter facilement une interface
+La commande @@app:init-admin@@ permet d'ajouter facilement une interface
 d'administration à votre application. Elle active le
 [[/ref-modules/master_admin|module master_admin]], et peut configurer
 automatiquement l'authentification ([[/composants/authentification|jAuth]]) et/ou le
@@ -18,7 +17,7 @@ Pour créer une interface d'administration, [[/composants/base-de-donnees/config
 Exécutez ensuite dans votre application :
 
 <code bash>
-   php dev.php app:initadmin index
+   php dev.php app:init-admin index
 </code>
 
 @@index@@ est le nom du point d'entrée (sans l'extension @@.php@@), dédiée à
@@ -37,8 +36,9 @@ l'interface générale.
 Notez qu'avant d'exécuter cette commande, vous devez avoir configuré
 correctement l'accès à la base de donnée dans le fichier @@F@profiles.ini.php@@,
 car les tables pour jAuth et jAcl2 seront créés. Si vous préférez configurer
-jAuth et/ou jAcl2 par vous même, indiquez les options @@--noauthdb@@ et
-@@--noacl2db@@ à la commande.
+jAuth et/ou jAcl2 par vous même (ou utiliser d'autres modules implémentant
+l'authentification ou la gestion de droits), indiquez les options @@--no-jauth@@,
+@@--no-jauthdb@@, @@--no-jauthdb-admin@@ et/ou @@--no-acl2db@@ à la commande.
 
 Après avoir créé l'interface (et configuré jAuth et jAcl2 si vous avez choisi de
 le faire vous-même), vous pouvez démarrer l'application en appelant le point
@@ -99,7 +99,7 @@ L'administration utilise le système d'authentification de jelix
 </code>
 
 Si vous n'avez pas désactivé l'authentification via jAuthDb et la gestion des
-droits via jAcl2Db, lors de l'appel à la commande initadmin, il faut aussi
+droits via jAcl2Db, lors de l'appel à la commande init-admin, il faut aussi
 définir les urls pour les modules respectifs, jauthdb_admin et jacl2db_admin. Il
 faut alors inclure leurs fichiers @@F@urls.xml@@.
 
