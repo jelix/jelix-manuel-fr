@@ -156,7 +156,6 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[classes-utiles/jimagemodifier|jImageModifier: Modifier une image]]
       - section: [[classes-utiles/jmailer|jMailer : envoi de mails]]
       - section: [[classes-utiles/jmessage|jMessage : informations entre actions]]
-      - section: [[classes-utiles/jpref|jPref : gérer vos préferences d'applications]]
       - section: [[classes-utiles/jsession|jSession : stockage de sessions]]
       - section: [[classes-utiles/jwiki|jWiki : transformation de texte wiki]]
 

@@ -110,7 +110,6 @@ faut alors inclure leurs fichiers @@F@urls.xml@@.
      <url pathinfo="/login/" module="jauth" include="urls.xml" />
      <url pathinfo="/acl/" module="jacl2db_admin"  include="urls.xml"/>
      <url pathinfo="/auth/" module="jauthdb_admin"  include="urls.xml"/>
-     <url pathinfo="/pref/" module="jpref_admin"  include="urls.xml"/>
 
  </entrypoint>
 </code>
