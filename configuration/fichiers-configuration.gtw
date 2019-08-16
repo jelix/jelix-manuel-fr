@@ -91,7 +91,7 @@ que l'on utilisait. Depuis Jelix 1.7, il n'y a plus de plugins de moteur d'urls,
 et ce fichier devient donc obligatoire. Il doit déclarer au moins l'url "/".
 
 
-===== Le fichier framework.ini.php =====
+===== Le fichier app/system/framework.ini.php =====
 
 Ce fichier contient la liste des points d'entrées de l'application. Cette
 liste sert principalement à l'installateur.
@@ -125,15 +125,15 @@ timeZone = "Europe/Paris"
 theme = default
 
 [modules]
-mymodule = 2
-jauth = 2
+mymodule.enabled = on
+jauth.enabled = on
 
 
 [coordplugins]
-;nom = nom_fichier_ini
+;...
 
 [responses]
-...
+;...
 
 </code>
 
@@ -186,7 +186,8 @@ paramètres qui sont modifiés durant la vie de l'application. Il ne doit donc p
 
 Il faut savoir qu'il existe un fichier @@F@defaultconfig.ini.php@@,
 situé dans les sources de Jelix (dans @@F@lib/jelix/core/@@). Il contient une
-liste exhaustive de tous les paramètres possibles et leurs valeurs par défaut.
+liste exhaustive de tous les paramètres possibles, leurs valeurs par défaut et des
+commentaires expliquant leur signification.
 
 Ainsi, pour connaître la valeur de tous les paramètres de configuration, Jelix lit les fichiers
 dans l'ordre suivant et les fusionne :
@@ -307,7 +308,7 @@ Un alias ne doit pas indiquer le nom d'un autre alias.
 
 === Paramètres communs ===
 
-Il est possible de définir des paramètres qui sont communs à tout les profils
+Il est possible de définir des paramètres qui sont communs à tous les profils
 d'un même type. Cela évite de les répéter dans chaque profil. Pour ce faire, il
 faut les déclarer dans un profil spécial, @@__common__@@.
 

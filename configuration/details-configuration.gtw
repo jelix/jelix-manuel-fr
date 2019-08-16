@@ -3,8 +3,7 @@
 
 ===== Le fichier project.xml =====
 
-Le fichier @@F@project.xml@@ contient des informations sur l'application, dont
-certaines sont importantes puisqu'elles servent à l'installateur, entre autre.
+Le fichier @@F@project.xml@@ contient des informations sur l'application.
 
 C'est un fichier XML avec une balise racine @@E@<project>@@, qui contient une
 seule balise @@<info>@@.
@@ -18,7 +17,7 @@ seule balise @@<info>@@.
 </code>
 
 Note : dans Jelix 1.6 et inférieur, il y avait des sections @@<directories>@@
-et @@<dependencies>@@ qui n'existent plus, ainsi qu'une section @@entrypoints@@
+et @@<dependencies>@@ qui n'existent plus, ainsi qu'une section @@<entrypoints>@@
 dont le contenu a migré vers le fichier @@app/system/framework.ini.php@@.
 
 ==== info ====
@@ -132,7 +131,9 @@ suivi du nom du point d'entrée.
 
 Chaque section contient une propriété @@config@@ indiquant le nom du fichier
 de configuration du point d'entrée, et une propriété @@type@@ indiquant le type
-de point d'entrée (
+de point d'entrée.
+
+Exemple :
 
 <code ini>
 
@@ -176,19 +177,29 @@ charset = "UTF-8"
 timeZone = "Europe/Paris"
 
 theme = default
-use_error_handler = on
 
+domainName=
+
+forceHTTPPort=
+forceHTTPSPort=
+
+chmodFile=0664
+chmodDir=0775
 </code>
 
 Détails des paramètres :
-  * **locale, charset** : langue et encodage par défaut des réponses
-  * **timeZone** : définit le décalage horaire pour toutes les fonctions de
+  * @@locale@@, @@charset@@ : langue et encodage par défaut des réponses
+  * @@timeZone@@ : définit le décalage horaire pour toutes les fonctions de
     dates et heures
-  * **theme** : nom du thème sélectionné par défaut. Voir la description du
+  * @@theme@@ : nom du thème sélectionné par défaut. Voir la description du
     système des [[/application/themes|thèmes]] de Jelix
-  * **use_error_handler** : cette option devrait rester à //on// pour que Jelix
-    retourne des informations pertinentes sur les erreurs et exceptions des
-    scripts.
+  * @@domainName@@ : nom de domaine de l'application. Vous pouvez laisser vide si
+    @@$_SERVER['SERVER_NAME']@@ est correctement renseigné, sinon indiquez le nom de domaine
+    pour que Jelix génère correctement les URLs de l'application.
+  * @@forceHTTPPort@@, @@forceHTTPSPort@@ : quand l'application est derrière un
+    reverse proxy, le port courant http ou https ne sont pas forcément le même
+    port que sur le front end. Mettez @@on@@ ou la valeur du port "publique".
+  * @@chmodFile@@, @@chmodDir@@ : valeurs chmod pour les fichiers créés par Jelix
 
 ==== section modules ====
 
@@ -291,8 +302,9 @@ jelixWWWPath = "jelix/"
 
 Détails des paramètres :
 
-  * **multiView** : si le paramètre multiview ou acceptpathinfo est activé dans
-    Apache, il est possible alors d'avoir des urls sans le suffixe ".php".
+  * @@multiView@@ : si le paramètre multiview ou acceptpathinfo est activé dans
+    Apache ou si Nginx est configuré d'une certaine manière, il est possible alors
+    d'avoir des urls sans le suffixe ".php".
     Activez alors ce paramètre pour que Jelix génère des urls sans ce suffixe.
   * **scriptNameServerVariable** : contient le nom de la variable dans
     @@$_SERVER@@ qui contient le nom du script. Exemple : si vous appelez
@@ -315,6 +327,9 @@ Détails des paramètres :
     contenus normalement dans lib/jelix-www. Si vous le modifiez voyez également
     les chemins du **[[/configuration/fichiers-configuration#section-htmleditors|htmleditors]]**.
 
+Il y a d'autres paramètres pour l'installation de l'application derrière un
+reverse proxy. Voyez le chapitre pour [[/installation/production|configurer sur un serveur de production]].
+
 === notfound ===
 
 Vous pouvez indiquer une action qui affichera une page spécifique pour les erreurs
@@ -328,35 +343,9 @@ et placer le sélecteur de votre action entre guillemet :
 notfoundAct = "mymodule~main:errornotfound"
 </code>
 
-==== section logfiles ====
+==== section logger, fileLogger.. ====
 
-Cette section définit comment seront écrits les logs à l'aide de [[/outils-dev/deboggage|jLog]].
-
-Les fichiers logs sont stockés dans le dossier @@var/log/@@ de votre application.
-Vous pouvez définir un fichier de log par module en associant le nom du module à
-un nom de fichier log et faisant un appel à jLog en passant en dernier argument
-le nom du module.
-
-<code ini>
-; log par défaut
-  default = messages.log
-
-; log "news"
-  news = news.log
-</code>
-
-Autre exemple utilisant l'extension Firebug du navigateur Firefox (ce qui permet
-une vision très rapide des messages de débogage).
-
-<code ini>
-[logfiles]
-default="!firebug"
-file = "messages.log"
-</code>
-
-Et pour un dump de contenu de taille importante, il suffit d'indiquer le type
-'file' au dernier paramètres des méthodes de jLog pour l'obtenir à nouveau dans
-un fichier de log classique. 
+Cette section définit comment seront écrits les logs.
 
 Pour plus de détails sur l'utilisation des fichiers log dans Jelix se reporter
 au manuel concernant [[/outils-dev/deboggage|jLog]].
@@ -371,18 +360,12 @@ notifications.
 Voir le chapitre sur [[/classes-utiles/jmailer|jMailer]].
 
 
-==== section acl et acl2 ====
+==== section acl2 ====
 
 Définit les paramètres de la gestion des droits d'accès dans l'application. Voir
-la documentation sur la [[/composants/droits|gestion des droits]]. Vous choisirez
-d'utiliser soit jAcl, soit jAcl2 mais il n'est pas recommandé d'utiliser les
-deux en même temps.
+la documentation sur la [[/composants/droits|gestion des droits]].
 
 <code ini>
-[acl]
-; exemple de driver: "db"
-driver = 
-
 [acl2]
 ; exemple de driver: "db"
 driver = 
@@ -412,21 +395,4 @@ shared_session = off
 ; storage = "dao"
 ; dao_selector = "jelix~jsession"
 ; dao_db_profile = ""
-</code>
-
-
-==== section forms ====
-
-Configure le comportement de certains contrôle de jForms.
-
-<code ini>                                                                                                    
-[forms]
-; define input type for datetime widgets : "textboxes" or "menulists"
-controls.datetime.input = "menulists"
-; define the way month labels are displayed widgets: "numbers", "names" or "shortnames"
-controls.datetime.months.labels = "names"
-; define the default config for datepickers in jforms
-datepicker = default
-
-;...
 </code>
