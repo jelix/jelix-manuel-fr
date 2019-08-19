@@ -77,11 +77,11 @@ demander les informations nécessaires.
 ==== Avec le script d'installation de l'application ====
 
 Lancez le script @@F@testapp/install/configurator.php@@ pour configurer
-l'application. Des modules modifieront des choses et vous demanderont peut-être
+l'application. Des configurateurs de modules modifieront des choses et vous demanderont peut-être
 des informations.
 
 Peut-être qu'il y a des choses à terminer de configurer à la main.
-Il fautque les fichiers de configuration comme @@F@var/config/profiles.ini.php@@
+Il faut que les fichiers de configuration comme @@F@var/config/profiles.ini.php@@
 et @@F@var/config/localconfig.ini.php@@ soient bien renseignés. Lisez la documentation de
 l'application.
 

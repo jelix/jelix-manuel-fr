@@ -52,7 +52,6 @@ jApp::initPaths(
     __DIR__.'/var/log/',
     __DIR__.'/var/config/'
 );
-jApp::setTempBasePath(realpath(__DIR__.'../temp/').'/');
 </code>
 
 

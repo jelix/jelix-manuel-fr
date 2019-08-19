@@ -2,16 +2,22 @@
 
 
 Jelix 1.7 est compatible avec PHP 5.6 et versions suivantes, mais il est
-recommandé d'utiliser les dernières versions maintenues de PHP (PHP 7.1 et suivantes
+recommandé d'utiliser les dernières versions maintenues de PHP (PHP 7.2 et suivantes
 à la date où cette section a été écrite).
 
-Les extensions **xml**, **simplexml**, **pcre**, **session**, **spl**, **json**,
-**mbstring** et **tokenizer** sont requises (elles sont actives en général dans une installation
-standard de PHP). Si une de ces extensions n'était pas livrée avec le paquet
-PHP, veillez à installer le paquet correspondant.
+Les extensions PHP suivantes sont requises : **fileinfo**, **iconv**, **intl**,
+**json**, **mbstring**, **session**, **tokenizer**, **spl**, **dom**, **xml**,
+**xmlreader**, **xmlwriter**, **simplexml**, **ctype**.
+La plupart sont activées par défaut dans des distributions Linux comme Debian
+ou Ubuntu, mais ce n'est pas le cas dans d'autres (Alpine par exemple). Il
+faut alors installer les paquets correspondants.
 
 Vous pouvez installer aussi un connecteur de base de données. Jelix prend en
 charge MySQL 5.5+, PostgreSQL 9.0+, SQLite 3, Oracle, SQL server et PDO.
+
+Vous pourriez avoir également besoin de certaines extensions en fonction
+des composants que vous utilisez : **soap**, **gd** (jImageModifier), **xmlrpc**,
+**ldap**...
 
 Jelix a besoin également de la version ligne de commande (CLI) de PHP (php.exe sous
 windows). Cela vous permettra de lancer le script @@F@create-jelix-app@@,

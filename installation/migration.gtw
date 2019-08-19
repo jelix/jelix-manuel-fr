@@ -247,6 +247,11 @@ Les classes @@*daobuilder*@@ des plugins de jDb ne sont plus pris en charge. Si
 vous aviez fait votre propre plugin pour jDb, il faut migrer la classe de type
 daobuilder vers un plugin spécifique pour jDao. Voir la doc de jDao.
 
+Idem pour les classes @@dbtools@@, qui ne sont plus dans les drivers,
+mais complètement intégrées à jDb. Si vous avez un plugin avec sa propre
+classe dbtools qui ne correspond pas à un langage SQL pris en charge par jDb,
+il vous faudra proposer un patch à Jelix.
+
 ==== Changements dans les scripts d'installation de vos modules ====
 
 Étant donné les changements dans l'organisation des fichiers de configuration,
@@ -260,10 +265,6 @@ modifier vos scripts d'installation et de mise à jour en utilisant la classe
 @@\Jelix\Installer\Module\Installer@@. Probablement aussi que vous devrez migrer
 des parties de votre classe d'installation vers une classe de configuration
 basée sur @@\Jelix\Installer\Module\Configurator@@.
-
-La principale différence avec les anciennes classes réside sur la visibilité de
-certaines propriétés qui passent de @@public@@ à @@protected@@,
-sur la suppression des méthodes @@first*()@@, et sur l'accés aux fichiers de configurations.
 
 
 ==== Disparition de json.js et json2.js ====
@@ -337,7 +338,7 @@ beaucoup de changements à votre place.
 En particulier :
 
   * **Déplacement des fichiers de configuration** suivants vers un nouveau répertoire @@app/system@@ :
-     * mainconfig.ini.php, urls.xml, preferences.ini.php
+     * @@mainconfig.ini.php@@, @@urls.xml@@, @@preferences.ini.php@@
      * ceux des points d'entrées
      * fichiers de configuration des plugins du coordinateur
      * fichier de classmap pour soap
@@ -455,7 +456,7 @@ votre application si vous installez Jelix avec Composer.
 
 ==== Mise à jour de votre serveur web ====
 
-Si vous aviez un alias vers lib/jelix-www/ dans la configuration de votre
+Si vous aviez un alias vers @@lib/jelix-www/@@ dans la configuration de votre
 serveur web, et que vous utilisez Composer, il faut changer le chemin puisque
 jelix-www est maintenant dans @@vendor/jelix/jelix/lib/jelix-www/@@.
 

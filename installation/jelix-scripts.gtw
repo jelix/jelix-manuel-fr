@@ -91,21 +91,20 @@ commande avec Jelix.
 ==== Notes pour les utilisateurs d'un hébergement mutualisé ====
 
 Pour utiliser jelix-scripts sur un hebergement mutualisé, il faut que votre
-hébergeur propose un accés SSH.
+hébergeur propose un accès SSH.
 
 Deux particularités sont à prendre en compte :
 
    * en ligne de commande, la version de PHP par défaut n'est pas forcément la plus
-     récente. Il faut donc veiller à ce que la version compatible
-     avec Jelix soit appelée
+     récente. Si possible, configurez votre hébergement pour avoir la version désirée,
+     via par exemple l'interface de gestion de votre hébergeur.
    * chez certains hebergeurs, parfois certaines variables superglobales ne sont
-     pas bien mise. Par exemple @@$_SERVER['SCRIPT_NAME']@@ peut être absent.
+     pas bien configurée. Par exemple @@$_SERVER['SCRIPT_NAME']@@ peut être absent.
      Il faut alors créer la variable d'environnment qui correspond. Ex:
      @@export SCRIPT_NAME=dev.php@@.
 
 Consultez la documentation de votre hébergeur pour avoir un accés SSH et utiliser
-la bonne version de PHP. Exemple pour OVH : [[https://docs.ovh.com/fr/hosting/mutualise-le-ssh-sur-les-hebergements-mutualises/|Guide d'accés SSH]].
-
+la bonne version de PHP.
 
 ===== Lancer dev.php =====
 
@@ -196,7 +195,7 @@ pour nom celui du répertoire de l'application
 
 <code ini>
 [myapp]
-infoCopyright = 2018 My Company
+infoCopyright = 2019 My Company
 </code>
 
 ===== Liste des commandes disponibles =====

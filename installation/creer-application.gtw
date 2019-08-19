@@ -89,7 +89,7 @@ contenu est :
      plugins/      plugins de l'application
      temp/         tous les fichiers temporaires et de cache créés à l'execution de l'application
      var/
-        config/    fichiers de configuration spécifiques à l'installation
+        config/    fichiers de configuration spécifiques à l'environnement
         log/       fichiers de log
         themes/    thèmes installés durant la vie de l'application
         overloads/ idem que app/overloads, mais pour les fichiers créés à la volé
