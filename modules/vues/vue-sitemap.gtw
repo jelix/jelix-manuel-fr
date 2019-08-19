@@ -5,7 +5,7 @@ par les moteurs de recherche, entre autres Google).
 
 ===== Téléchargement et installation =====
 
-Depuis Jelix 1.7, la classe jResponseSitemap et ses dépendances sont dans
+La classe jResponseSitemap et ses dépendances sont dans
 un module séparé, qu'il faut télécharger et installer, soit sous forme
 de zip sur le site de téléchargement de Jelix, soit installable via Composer :
 [[https://packagist.org/packages/jelix/sitemap-module|paquet jelix/sitemap-module]].
@@ -23,7 +23,7 @@ php dev.php module:configure jsitemap
 Ensuite lancez l'installation :
 
 <code bash>
-php yourapp/dev.php install
+php install/installer.php
 </code>
 
 ===== Utilisation dans un contrôleur =====
@@ -71,7 +71,7 @@ $rep->addUrl(jUrl::get('module~contact:index'), null, 'weekly', 1);
 ===== Génération automatique à partir de urls.xml =====
 
 L'automatisation (partielle) du sitemap est possible à partir des urls fournies
-dans le fichier @@var/config/urls.xml@@.
+dans le fichier @@app/system/urls.xml@@.
 
 Une fois la réponse instanciée, il suffit d'appeler une seule méthode :
 
@@ -121,8 +121,7 @@ leur fournir l'URL de votre sitemap. Ou vous pouvez utiliser la méthode
 @@M@ping()@@ :
 
 <code php>
-$sitemapurl = jUrl::get('mymodule~sitemap:index')
-$url = 'http'. (empty($_SERVER['HTTPS']) ? '' : 's') .'://'. $_SERVER['HTTP_HOST'] . urlencode($sitemapurl);
+$sitemapurl = jUrl::getFull('mymodule~sitemap:index')
 
 // google
 $rep->ping('http://www.google.com/webmasters/tools/ping?sitemap=' . $url);
@@ -130,9 +129,4 @@ $rep->ping('http://www.google.com/webmasters/tools/ping?sitemap=' . $url);
 // yahoo
 $rep->ping('http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid=YahooDemo&url=' . $url);
 
-// Live
-$rep->ping('http://webmaster.live.com/ping.aspx?siteMap='.$url);
-
-// Ask
-$rep->ping('http://submissions.ask.com/ping?sitemap=' . $url);
 </code>

@@ -12,7 +12,8 @@ Son alias est "atom1.0".
 La manipulation de jResponseAtom10 est identique à jResponseRss20. La différence
 se situe sur quelques propriétés dans les informations du fil ou des items.
 
-Note: les objets sont fournis par le module jfeeds fourni en standard.
+Cependant, pour utiliser cet objet réponse, vous devez installer le module jfeeds.
+Voyez la [[vue-rss|documentation pour RSS]]
 
 ===== Informations sur le fil atom =====
 
@@ -98,5 +99,4 @@ Voici un exemple avec une dao de news :
 
 Il est possible d'indiquer plus d'informations sur le fil atom ou sur chaque item.
 
-Consultez la documentation des API de [[refclass:jAtom10Info|jAtom10Info]] et 
-de [[refclass:jAtom10Item|jAtom10Item]].
+Consultez la documentation [[https://github.com/jelix/feeds-module|du module jfeeds]].

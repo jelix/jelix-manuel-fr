@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:modules/web-services/soap~~
 
-Jelix propose la prise en charge de SOAP, qui est un protocole de service web
+Jelix propose via le module jsoap la prise en charge de SOAP, qui est un protocole de service web
 normalisé par le W3C. Jelix utilise [[phpapi:soap|l'API SOAP incluse dans php]],
 donc vous devez vous assurer qu'elle est bien activée sur votre serveur
 (vérifiez par un phpinfo() par exemple).
@@ -13,59 +13,23 @@ avez juste à indiquer une valeur PHP à l'objet réponse SOAP de jelix.
 
 Jelix s'occupe aussi de générer le contenu WSDL automatiquement.
 
-Il va vous falloir tout de même créer un point d'entrée spécifique, et de suivre
+Il va vous falloir tout de même installer le module jsoap, et suivre
 une syntaxe assez précise (mais trés simple) dans les commentaires de chaque
 méthode de vos contrôleurs SOAP.
 
-
-===== Point d'entrée spécifique =====
-
-Une requête SOAP est spécifique, et pour y répondre, on ne peut pas utiliser
-[[/concepts/objets-request|l'objet request]] "classic". Il vous faut créer un
-point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@soap.php@@ par
-exemple, qui utilise @@C@jSOAPRequest@@ plutôt que @@C@jClassicRequest@@, et un
-objet coordinateur @@C@jSoapCoordinator@@. Le type de requête et du point
-d'entrée est donc "soap".
-
-Le point d'entrée devra contenir ceci :
-
-<code php>
-require_once ('../application.init.php');
-
-checkAppOpened();
-
-jApp::loadConfig('soap/config.ini.php');
-ini_set("soap.wsdl_cache_enabled", "0");
-
-jClasses::inc('jsoap~jSoapCoordinator');
-jClasses::inc('jsoap~jSoapRequest');
-
-$jelix = new jSoapCoordinator();
-jApp::setCoord($jelix);
-$jelix->request = new jSoapRequest();
-$jelix->request->initService();
-$jelix->processSoap();
-</code>
-
-Il ne faut pas oublier de déclarer ce point d'entrée dans la configuration
-des urls @@var/config/urls.xml@@. Vous devez ajouter la balise suivante :
-
-<code xml>
-<entrypoint type="soap" name="soap" default="true" />
-</code>
-
-Vous pouvez alors récupérer l'url d'une action pour soap comme ceci :
-
-<code php>
-  $url = jUrl::get("module~action@soap");
-</code>
-
-Enfin, créez un fichier de configuration dans @@F@var/config/soap/config.ini.php@@.
-
-===== Activation du module jsoap =====
+===== Installation et activation du module jsoap =====
 
 Comme vous le remarquez dans le point d'entrée, des classes du module jsoap
-sont utilisées. Vous devez donc l'activer.
+sont utilisées. Vous devez donc l'installer et l'activer.
+
+Pour l'installer, ajouter dans votre composer.json la dépendance au paquet
+@@jelix/soap-server-module@@ :
+
+<code bash>
+composer require "jelix/soap-server-module"
+</code>
+
+Ensuite configurez le module et lancez l'installateur :
 
 <code>
   php dev.php module:configure jsoap
@@ -75,6 +39,14 @@ sont utilisées. Vous devez donc l'activer.
 (Pour plus d'information : [[/configurateur-installateur/installer-un-module|Installer un module]])
 
 Ce module inclus également tout ce qu'il faut pour faire du WSDL (voir plus bas).
+
+Une requête SOAP est spécifique, et pour y répondre, on ne peut pas utiliser
+[[/concepts/objets-request|l'objet request]] "classic". C'est pourquoi le module
+installe un point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@soap.php@@,
+qui utilise @@C@jSOAPRequest@@ plutôt que @@C@jClassicRequest@@, et un
+objet coordinateur @@C@jSoapCoordinator@@. Le type de requête et du point
+d'entrée est donc "soap".
+
 
 ===== Contrôleur =====
 
@@ -227,7 +199,9 @@ class MyTestStructBis{
 
 Bien entendu, qui dit SOAP, dit un service WSDL qui va permettre aux clients
 SOAP d'être renseignés sur les services web SOAP disponibles dans votre
-application. Pour cela, le module jsoap inclus tout ce qu'il faut. Il contient
+application et comment valider les paramètres et valeurs de retour.
+
+Pour cela, le module jsoap inclus tout ce qu'il faut. Il contient
 un contrôleur nommé WSDL et possède une méthode @@M@wsdl()@@. Aussi, pour
 interroger le WSDL, il suffit d'indiquer à votre client SOAP une URL du genre 
 
@@ -293,11 +267,7 @@ exemple en PHP utilisant l'extension SOAP :
         }
 </code>
 
-
-
-
-
-===== Appeller un service SOAP avec Jelix =====
+===== Appeler un service SOAP avec Jelix =====
 
 Si votre application Jelix a besoin d'appeler un serveur soap, vous pouvez
 utiliser @@C@jSoapClient@@. C'est une classe qui renvoi un objet
@@ -342,7 +312,7 @@ classmap = '{"soaptype":"myclass", "soaptype2":"myclass2"}'
 
 Les classes que vous indiquez doivent être déjà chargée avec l'appel à @@jSoapClient::get()@@.
 
-Une alternative fournie depuis Jelix 1.5, est de déclarer ce mapping dans un fichier
+Vous pouvez aussi déclarer ce mapping dans un fichier
 ini séparé, et d'indiquer ce fichier dans une propriété @@classmap_file@@. Ce fichier doit
 se trouver dans le répertoire @@votreappli/app/system/@@.
 

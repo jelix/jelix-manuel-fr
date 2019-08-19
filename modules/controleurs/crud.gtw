@@ -80,7 +80,7 @@ Voici donc ce qui est possible de faire.
 ==== Indiquer le profil jDb ====
 
 Si il faut utiliser un profil de connexion spécifique, indiquez le dans la
-propriété @@$dbProfil@@ :
+propriété @@$dbProfile@@ :
 
 <code php>
   protected $dbProfile = 'admin';
@@ -155,7 +155,7 @@ Par défaut, ces méthodes sont :
 
 Si vous voulez modifier le formulaire durant des actions spécifiques,
 redéfinissez les méthodes @@_view@@, @@_create@@ et @@_editUpdate@@ décrites
-précédement.
+précédemment.
 
 ==== Définir les templates ====
 

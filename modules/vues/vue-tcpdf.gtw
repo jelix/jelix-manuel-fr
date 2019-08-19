@@ -5,13 +5,26 @@ Un objet @@C@jResponseTcpdf@@ permet de générer un PDF à partir de la
 
 ===== Téléchargement et installation =====
 
-Depuis Jelix 1.5, TCPDF et la classe @@C@jResponseTcpdf@@ sont livrés
-dans un module séparé (à cause de la grande taille des fichiers de fontes).
+TCPDF et la classe @@C@jResponseTcpdf@@ sont livrés dans un module séparé. Vous
+devez donc télécharger et installer le module jtcpdf.
 
-Vous devez donc télécharger et installer le module jtcpdf.
-
-Pour Jelix 1.7 et supérieur, il est meme disponible via Composer :
+Le module est disponible via Composer :
 [[https://packagist.org/packages/jelix/tcpdf-module|paquet jelix/tcpdf-module]].
+
+Ajoutez le paquet @@jelix/tcpdf-module@@ dans composer.json :
+
+<code bash>
+composer require "jelix/tcpdf-module"
+</code>
+
+Ensuite configurez le module et lancez l'installateur :
+
+<code>
+  php dev.php module:configure jtcpdf
+  php install/installer.php
+</code>
+
+
 
 ===== Utilisation dans un contrôleur =====
 

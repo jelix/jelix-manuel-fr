@@ -9,7 +9,7 @@ d'avoir plusieurs URLs spécifiques pour faire cela, il y a une seule URL, et on
 utilise le champ "method" de HTTP pour indiquer l'action à effectuer.
 
 Pour en savoir plus sur les principes de REST, il existe pas mal d'explications
-sur le web. N'hésitez pas à googler !
+sur le web. N'hésitez pas à utiliser votre moteur de recherche !
 
 Voyons maintenant comment faire du REST dans Jelix.
 

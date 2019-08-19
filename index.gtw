@@ -58,7 +58,6 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[modules/vues/vue-fichier-binaire|Renvoyer un fichier binaire]]
      - section: [[modules/vues/vue-zip|Générer un fichier zip]]
      - section: [[modules/vues/vue-sitemap|Générer un sitemap]]
-     - section: [[modules/vues/autres-vues|Autres types de vues]]
      - section: [[modules/vues/reponse-generale-personnalisee|Définir une réponse générale personnalisée]]
 
    - chapter: [[modules/services-web|Services web]]

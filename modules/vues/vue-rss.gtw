@@ -10,7 +10,21 @@ jResponseRss20 (alias "rss2.0").
   $rep = $this->getResponse('rss2.0');
 </code>
 
-Note: les objets sont fournis par le module jfeeds fourni en standard.
+Pour utiliser ce type de réponse, vous devez installer le module jfeeds,
+en ajoutant le paquet @@jelix/feeds-module@@ :
+
+<code bash>
+composer require "jelix/feeds-module"
+</code>
+
+Ensuite configurez le module et lancez l'installateur :
+
+<code>
+  php dev.php module:configure jfeeds
+  php install/installer.php
+</code>
+
+
 
 ===== Informations sur le fil rss =====
 
@@ -108,6 +122,5 @@ Voici un exemple avec une dao de news :
 
 Il est possible d'indiquer plus d'informations sur le fil rss ou sur chaque item.
 
-Consultez la documentation des API de [[refclass:jRSS20Info|jRSS20Info]]
-et de [[refclass:jRSSItem|jRSSItem]].
+Consultez la documentation [[https://github.com/jelix/feeds-module|du module jfeeds]].
 

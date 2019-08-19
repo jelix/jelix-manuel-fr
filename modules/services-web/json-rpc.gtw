@@ -13,26 +13,14 @@ point d'entrée spécifique dans le répertoire @@F@www/@@, @@F@jsonrpc.php@@ pa
 exemple, qui utilise @@C@jJsonRpcRequest@@ plutôt que @@C@jClassicRequest@@. Le
 type de requête et du point d'entrée est donc "jsonrpc".
 
-Le point d'entrée devra contenir ceci :
+Utilisez la commande @@app:create-entrypoint@@, en indiquant le type @@jsonrpc@@:
 
-<code php>
-require_once ('../../myapp/application.init.php');
-
-$config_file = 'jsonrpc/config.ini.php';
-
-require_once (JELIX_LIB_CORE_PATH.'request/jJsonRpcRequest.class.php');
-
-$jelix = new jCoordinator($config_file);
-$jelix->process(new jJsonRpcRequest());
-
+<code bash>
+php dev.php app:create-entrypoint --type=jsonrpc jsonrpc.php
 </code>
 
-Il ne faut oublier de déclarer ce point d'entrée dans le fichier @@var/config/urls.xml@@.
-Vous devez ajouter la balise suivante :
-
-<code xml>
-<entrypoint type="jsonrpc" name="jsonrpc" default="true" />
-</code>
+Cela créera un point d'entrée @@jsonrpc.php@@ dans @@www/@@, et le déclarera
+dans @@urls.xml@@ et @@framework.ini.php@@.
 
 Vous pouvez alors récupérer l'url d'une action pour jsonrpc comme ceci :
 

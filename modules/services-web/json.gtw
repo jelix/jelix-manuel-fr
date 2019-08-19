@@ -17,7 +17,7 @@ n'importe quelles données dans la propriété @@P@$data@@.
 L'appel du côté client, se fait de la même façon que la technique AJAX :
 
 <code javascript>
-   http = new XMLHttpRequest();
+   var http = new XMLHttpRequest();
 
    // url est une variable qui contient l'url correspondante à l'action ajax
    http.open("post", url, true);
@@ -26,13 +26,7 @@ L'appel du côté client, se fait de la même façon que la technique AJAX :
 	    if(http.readyState == 4){
 	    // récupération du contenu renvoyé par votre action
             var json = http.responseText;
-            var value;
- 
-            // solution la moins propre pour transformer le json en objet JS
-            //value = eval('(' + json + ')');
- 
-            // solution la plus propre, dans les navigateurs modernes comme Firefox 3.5
-            value = JSON.parse(json);
+            var value = JSON.parse(json);
  
             // ici traitement des données.
 	    }
@@ -67,6 +61,8 @@ Ce qui peut donner, avec jQuery :
 
 
 === Exemple d'utilisation avec une DAO ===
+
+Dans votre contrôleur :
 
 <code php>
 $countryDao = jDao::get('common~country');

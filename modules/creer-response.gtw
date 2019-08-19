@@ -11,7 +11,8 @@ Cela consiste à :
       existante), et qui doit implémenter les méthodes adéquates pour manipuler
       le format en question
     - stocker cette classe dans le répertoire @@F@app/responses/@@ de votre
-      application ou @@F@responses/@@ de vos modules.
+      application ou @@F@responses/@@ de vos modules, ou un autre répertoire
+      de votre module si la classe a un namespace et est autochargée.
     - déclarer ce type de réponse dans le fichier de configuration
 
 ===== Créer la classe =====
@@ -77,6 +78,10 @@ alors stockée dans le fichier @@F@myFooResponse.class.php@@.
 Le fichier doit être enregistré dans le répertoire @@F@app/responses/@@ de votre
 application ou @@F@responses/@@ d'un module.
 
+Il est aussi possible d'utiliser un nom de classe avec un namespace, stockée
+dans un fichier dont le nom permet de l'auto-charger (par une déclaration
+dans module.xml ou composer.json) à partir de n'importe quel répertoire
+de votre module.
 
 ===== Déclarer la réponse =====
 

@@ -79,7 +79,7 @@ indique le namespace et le répertoire dans une balise @@<psr0>@@
 
 Cette déclaration suit la spécification PSR0. Aussi le namespace de la classe
 doit correspondre à un chemin dans le répertoire indiqué. Par exemple, si Jelix
-doit charger la classe @@C@jelixTests\foo\bar\baz@@, il incluera le fichier
+doit charger la classe @@C@jelixTests\foo\bar\baz@@, il chargera le fichier
 @@F@autoloadtest/jelixTests/foo/bar/baz.php@@.
 
 Jelix possède un autre moyen de prendre en charge les namespaces, qui suit la
@@ -128,10 +128,8 @@ appeler une classe d'un autre module, puisqu'en théorie, vous n'avez pas à sav
 où se trouve ce module.
 
 Cependant, depuis l'existance des espaces de noms et de l'auto-loading,
-l'utilisation de jClasses est moins pertinente, bien qu'il puisse évoluer peut être
-à l'avenir en tant que composant d'inversion de contrôle avec de l'injection
-de dépendance. Pour le moment son intérêt est la gestion de singleton
-d'instances, ou de services.
+l'utilisation de jClasses est moins pertinente. Pour le moment son intérêt est
+la gestion de singleton d'instances, ou de services.
 
 ==== Classes de services ====
 
@@ -247,33 +245,10 @@ class StockUtil implements IStockUtil {
 
 Note: Cette possibilité d'inclusion d'interface est obsolète. Préférez l'auto-loading.
 
-==== Charger des classes jClasses avant le session_start ====
-
-Parfois, vous voulez stockez en session des objets basés sur vos classes
-métiers. Mais pour cela, il faut inclure ces classes avant que jelix fasse un
-@@f@session_start()@@, pour que PHP puisse désérialiser correctement l'objet en
-session.
-
-Avant que le système d'auto-chargement dans les modules existe dans Jelix, Jelix
-fournissait un moyen d'indiquer les classes à charger avant ce @@f@start_session()@@ :
-il suffisait d'indiquer la liste des sélecteurs de ces classes dans l'option
-@@V@loadClasses@@ de la section @@sessions@@ dans la configuration :
-
-<code ini>
-[sessions]
-
-loadClasses = "mymodule~bar,mymodule~subdir/foo, shop~shoesProduct"
-</code>
-
-Le nom du module est obligatoire.
-
-Note: ce paramètre @@loadClasses@@ est obsolète. Utilisez plutôt l'auto-loading
-
 ===== Installer et Utiliser des classes tierces =====
 
 Il se peut que vous vouliez réutiliser des classes développées en dehors du
 projet. Il est bien entendu tout à fait possible de le faire dans Jelix.
-
 
 ==== Avec Composer ====
 

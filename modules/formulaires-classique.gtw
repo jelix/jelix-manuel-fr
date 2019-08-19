@@ -7,8 +7,6 @@ différent par rapport à ce que l'on fait dans une application PHP classique.
 Quelques petites choses sont cependant à savoir pour profiter au mieux de ce
 qu'offre Jelix dans ce cas.
 
-
-
 ===== Les actions à mettre en oeuvre =====
 
 L'implémentation très simpliste d'un formulaire consistera au développement de

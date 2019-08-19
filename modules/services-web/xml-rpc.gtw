@@ -13,26 +13,14 @@ point d'entrée spécifique dans le répertoire @@www@@, @@xmlrpc.php@@ par exem
 utilise jXmlRpcRequest plutôt que jClassicRequest. Le type de requête et du
 point d'entrée est donc "xmlrpc".
 
-Le point d'entrée devra contenir ceci :
+Utilisez la commande @@app:create-entrypoint@@, en indiquant le type @@xmlrpc@@:
 
-<code php>
-require_once ('../../myapp/application.init.php');
-
-$config_file = 'xmlrpc/config.ini.php';
-
-require_once (JELIX_LIB_CORE_PATH.'request/jXmlRpcRequest.class.php');
-
-$jelix = new jCoordinator($config_file);
-$jelix->process(new jXmlRpcRequest());
-
+<code bash>
+php dev.php app:create-entrypoint --type=xmlrpc xmlrpc.php
 </code>
 
-Il ne faut oublier de déclarer ce point d'entrée au niveau du @@var/config/urls.xml@@.
-Vous devez ajouter la balise suivante :
-
-<code xml>
-<entrypoint type="xmlrpc" name="xmlrpc" default="true" />
-</code>
+Cela créera un point d'entrée @@xmlrpc.php@@ dans @@www/@@, et le déclarera
+dans @@urls.xml@@ et @@framework.ini.php@@.
 
 Vous pouvez alors récupérer l'url d'une action pour xmlrpc comme ceci :
 
