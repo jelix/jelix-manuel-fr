@@ -9,7 +9,7 @@ ou des suppressions particulières.
 La section @@E@<factory>@@ permet de définir des méthodes supplémentaires à
 générer, chacune des méthodes exécutant une requête SQL. L'avantage de déclarer
 de telles méthodes ici, par rapport à la création de requête SQL dans une classe
-normale, est que vous n'avez plus à vous préoccuper de problème de sqlinjection,
+normale, est que vous n'avez plus à vous préoccuper de problème de sql injection,
 de l'écriture fastidieuse des requêtes SQL, etc...
 
 
@@ -135,8 +135,9 @@ plus simple :
 $dao = jDao::get('module~list');   // Récupèration du DAO si ce n'est pas fait
 $records = $dao->getFewRecord(10, 5);  // Appel de la méthode XML avec ses arguments et récupération des données
 
-foreach ($records as $record)      // Parcours des données
+foreach ($records as $record) {     // Parcours des données
   jLog::log($record->name);        // Accès au champ "name" d'un enregistrement
+}
 </code>
 
 Ainsi, pour chaque méthode XML ajoutée dans le DAO, une méthode est générée et

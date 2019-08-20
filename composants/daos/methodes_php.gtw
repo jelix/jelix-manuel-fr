@@ -75,8 +75,6 @@ méthodes @@getProperties()@@ et @@getPrimaryKeyNames()@@.
 
 Pour les détails, voir [[refclass:jDaoFactoryBase|la documentation de référence de jDaoFactoryBase]]
 
-
-
 ==== Préparer les valeurs ====
 
 Toutes les valeurs qu'on vous passe en paramètre, vous devez les "filtrer", les

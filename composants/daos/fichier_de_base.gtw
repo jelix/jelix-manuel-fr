@@ -2,11 +2,9 @@
 
 Pour utiliser jDao, il faut d'abord décrire dans un fichier XML le mapping
 objet-relationnel, c'est à dire indiquer dans ce fichier la correspondance entre
-les propriétés de l'objet DAO et les champs d'une ou plusieurs tables
-
+les propriétés de l'objet DAO et les champs d'une ou plusieurs tables.
 
 ===== Création automatique =====
-
 
 Le fichier d'un DAO peut être généré par le script @@dev.php@@ en ligne de commande,
 à partir d'une table de base de données existante.
@@ -303,12 +301,27 @@ fichier @@F@daos/news.daorecord.php@@ du module @@news@@.
 class newsDaoRecord extends jDaoRecordBase {
 
    function methodeDeCalcul() {
-        $this->champs = $this->champs2 * 1.196;
+       $this->champs = $this->champs2 * 1.196;
+   }
+
+   function calculateTotal() {
+       return $this->amount + $this->vat;
    }
 }
 </code>
 
+Ainsi vous pourrez appeler cette méthode sur n'importe quel enregistrement:
 
+<code php>
+
+   $maFactory = jDao::get("mymodule~news");
+   $liste = $maFactory->findAll();
+
+   foreach ($liste as $row) {
+        $total = $row->calculateTotal();
+        //...
+   }
+ </code>
 
 ===== Importation de dao =====
 

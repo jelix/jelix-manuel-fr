@@ -9,19 +9,20 @@ droits.
 Il faut distinguer les différents éléments qui entrent en jeu dans le système de
 droits :
 
-  * un sujet, ou role si vous préférez
+  * un rôle
   * un utilisateur
   * une ressource (facultatif)
 
 Une combinaison de chacun de ces types d'éléments représente un droit.
 
-==== Sujet/Role ====
+==== Rôle ====
 
-C'est un libellé représentant un droit. Par exemple, "**cms.articles.create**"
-pourrait être le droit de rédaction d'un article d'un CMS.
+Un rôle est un libellé représentant une action que pourrait faire un utilisateur.
+Par exemple, @@cms.articles.create@@ pourrait être le droit de rédaction d'un
+article d'un CMS.
 
 Par convention, afin d'éviter les collisions entre différents modules, le nom du
-sujet devrait commencer par le nom du module puis le nom du contrôleur et enfin
+rôle devrait commencer par le nom du module puis le nom du contrôleur et enfin
 la valeur de droit. Mais ce n'est pas une obligation.
 
 Exemple :
@@ -31,6 +32,10 @@ cms.articles.create
 cms.articles.update
 cms.articles.delete
 </code>
+
+Jusqu'à Jelix 1.6, les roles étaient nommés des 'sujets'. C'est pourquoi
+vous pouvez voir dans certaines API, dans les tables SQL ou la documentation,
+l'utilisation du terme 'sujet'.
 
 ==== Utilisateur ====
 
@@ -44,7 +49,7 @@ l'utilisation de jAcl2.
 
 ==== Ressource ====
 
-Dans la plupart des cas, l'association //sujet + utilisateur// suffit. Mais
+Dans la plupart des cas, l'association //rôle + utilisateur// suffit. Mais
 parfois on veut pouvoir avoir une granularité plus fine.
 
 Par exemple, dans un système CMS, on veut pouvoir donner le droit de
@@ -63,9 +68,9 @@ Par exemple, on donnera les valeurs de droits suivants
 Le cœur de jAcl2 contient donc des relations entre deux ou trois types
 d'éléments.
 
-La mémorisation d'une relation entre un sujet, un utilisateur (plus
+La mémorisation d'une relation entre un rôle, un utilisateur (plus
 éventuellement une ressource), définit un droit. Quand une relation n'existe pas
-entre un sujet donné et un utilisateur donné, alors cela signifie qu'il n'y a
+entre un rôle donné et un utilisateur donné, alors cela signifie qu'il n'y a
 pas de droit défini sur ce couple.
 
 Par exemple, si on définit juste ces droits suivants dans le système :

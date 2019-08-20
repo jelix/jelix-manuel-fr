@@ -70,17 +70,17 @@ Remplacez bien entendu ce nom par le nom adéquate.
 
 Notez que le module **jacl2db_admin** vous permet de configurer et gérer les droits
 en quelques clics, vous évitant d'utiliser la ligne de commande. Il vous faudra
-cependant quand même créer les sujets/rôles en ligne de commande.
+cependant quand même créer les rôles en ligne de commande.
 
 
-==== Création des sujets/roles ====
+==== Création des rôles ====
 
-Dans le système de droits, vous devez déterminer des sujets, symbolisant des rôles
+Dans le système de droits, vous devez déterminer des rôles
 ou actions possibles sur des données.
 
 Imaginons que l'on veuille créer des droits sur les articles d'un CMS, les
-différents roles seraient : read, list, create, delete, update. Autrement dit,
-on pourrait définir les sujets suivants :
+différents rôles seraient : read, list, create, delete, update. Autrement dit,
+on pourrait définir les rôles suivants :
 
   * "cms.articles.read",
   * "cms.articles.list",
@@ -88,37 +88,38 @@ on pourrait définir les sujets suivants :
   * "cms.articles.delete",
   * "cms.articles.update",
 
-Notez que le nom du sujet commence par un prefixe "cms.articles" précisant exactement
+Notez que le nom du rôle commence par un préfixe "cms.articles" précisant exactement
 de quoi il s'agit. Ne mettez pas "read" tout court par exemple, cela peut préter à
-confusion et n'est pas très explicite. Indiquez donc toujours dans le nom du sujet des mots
-permettant d'identifier "à propos de quoi". Votre code n'en sera que plus compréhensible.
+confusion et n'est pas très explicite, et être en conflit avec des rôles d'autres modules.
+Indiquez donc toujours dans le nom du rôle des mots permettant d'identifier
+"à propos de quoi". Votre code n'en sera que plus compréhensible.
 
-On peut lister les sujets existants :
+On peut lister les rôles existants :
 
 <code bash>
-$ php console.php acl2:subjects-list
+$ php console.php acl2:roles-list
 </code>
 
 Au départ, vous devriez obtenir une liste vide :
 
 <code>
 +-------------------+-------+--------------------------------------+
-| Subject Group     | id    | label key                            |
+| Role Group        | id    | label key                            |
 +-------------------+-------+--------------------------------------+
 
 </code>
 
-Un sujet est représenté par une valeur de droit et une clé de locale qui
+Un rôle est représenté par une valeur de droit et une clé de locale qui
 indiquera son label (clé que vous devrez enregistrer dans un fichier de locale).
 
-Créons nos sujets :
+Créons nos rôles :
 
 <code bash>
-php console.php acl2:subject-create "cms.articles.create" "cms~acl2.articles.create"
-php console.php acl2:subject-create "cms.articles.update" "cms~acl2.articles.update"
-php console.php acl2:subject-create "cms.articles.delete" "cms~acl2.articles.delete"
-php console.php acl2:subject-create "cms.articles.list" "cms~acl2.articles.list"
-php console.php acl2:subject-create "cms.articles.read" "cms~acl2.articles.read"
+php console.php acl2:role-create "cms.articles.create" "cms~acl2.articles.create"
+php console.php acl2:role-create "cms.articles.update" "cms~acl2.articles.update"
+php console.php acl2:role-create "cms.articles.delete" "cms~acl2.articles.delete"
+php console.php acl2:role-create "cms.articles.list" "cms~acl2.articles.list"
+php console.php acl2:role-create "cms.articles.read" "cms~acl2.articles.read"
 </code>
 
 Si vous n'utilisez pas de module qui permette de gérer les droits, alors la clé
@@ -126,12 +127,12 @@ de locale n'est pas indispensable. Mettez alors la chaîne que vous voulez.
 
 Si la commande échoue, vous avez un message d'erreur.
 
-On peut vérifier en listant à nouveau les sujets :
+On peut vérifier en listant à nouveau les rôles :
 
 <code bash>
-$ php console.php acl2:subjects-list
+$ php console.php acl2:roles-list
 +---------------+---------------------+--------------------------+
-| Subject Group | id                  | label key                |
+| Role Group    | id                  | label key                |
 +---------------+---------------------+--------------------------+
 |               | cms.articles.create | cms~acl2.articles.create |
 |               | cms.articles.delete | cms~acl2.articles.delete |
@@ -141,16 +142,16 @@ $ php console.php acl2:subjects-list
 +---------------+---------------------+--------------------------+
 </code>
 
-Sachez que vous pouvez supprimer un sujet en faisant :
+Sachez que vous pouvez supprimer un rôle en faisant :
 
 <code bash>
-$ php console.php acl2:subject-delete  <nom du sujet>
+$ php console.php acl2:role-delete  <nom du role>
 </code>
 
 
 ==== Création des groupes d'utilisateurs ====
 
-La déclaration d'un droit nécessite un couple sujet/groupe d'utilisateur. Nous
+La déclaration d'un droit nécessite un couple role/groupe d'utilisateur. Nous
 devons donc créer un groupe d'utilisateurs. La gestion des groupes
 d'utilisateurs se fait au moyen des commandes de type @@acl2group:@@.
 
@@ -247,7 +248,7 @@ Puisque nous avons maintenant tout ce qu'il faut pour définir des droits,
 définissons-en.
 
 Admettons que les lecteurs peuvent lire et lister les articles. On va donc
-assigner les sujets "cms.articles.list" et "cms.articles.read" au groupe des
+assigner les rôles "cms.articles.list" et "cms.articles.read" au groupe des
 lecteurs :
 
 <code bash>
@@ -260,18 +261,18 @@ Vérifions la liste des droits définis au moyen de la commande @@acl2:list@@ :
 <code bash>
 $ php console.php acl2:list
 +----------+------------+-------------------+----------+
-| Group id | Group name | Subject           | Resource |
+| Group id | Group name | Role              | Resource |
 +----------+------------+-------------------+----------+
 | lecteurs | Lecteurs   | cms.articles.list | -        |
 | lecteurs | Lecteurs   | cms.articles.read | -        |
 +----------+------------+-------------------+----------+
 </code>
 
-La valeur "-" dans la colonne "Resource" specifie un droit sur aucune ressource
+La valeur "-" dans la colonne "Resource" spécifie un droit sur aucune ressource
 en particulier.
 
 Passons maintenant au groupe des rédacteurs. On va leur donner tous les droits sur le
-sujet @@cms.articles@@.
+rôle @@cms.articles@@.
 
 <code bash>
 php console.php acl2:add  redacteurs "cms.articles.list"
@@ -285,7 +286,7 @@ On vérifie :
 <code bash>
 $ php console.php acl2:list
 +------------+------------+---------------------+----------+
-| Group id   | Group name | Subject             | Resource |
+| Group id   | Group name | Role                | Resource |
 +------------+------------+---------------------+----------+
 | lecteurs   | Lecteurs   | cms.articles.list   | -        |
 | lecteurs   | Lecteurs   | cms.articles.read   | -        |
@@ -311,7 +312,7 @@ On vérifie :
 <code bash>
 $ php console.php acl2:list
 +------------+------------+---------------------+----------+
-| Group id   | Group name | Subject             | Resource |
+| Group id   | Group name | Role                | Resource |
 +------------+------------+---------------------+----------+
 | lecteurs   | Lecteurs   | cms.articles.list   | -        |
 | lecteurs   | Lecteurs   | cms.articles.read   | -        |
@@ -325,7 +326,7 @@ $ php console.php acl2:list
 </code>
 
 On peut aussi retirer un droit avec @@acl2:remove@@, en indiquant, comme
-pour la commande @@acl2:add@@, le groupe d'utilisateur et le sujet (plus
+pour la commande @@acl2:add@@, le groupe d'utilisateur et le rôle (plus
 éventuellement la ressource si on a une ressource).
 
 Exemple, on change d'avis à propos de l'article "opinions" :
