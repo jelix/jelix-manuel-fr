@@ -92,7 +92,7 @@ valeurs ont été modifiées.
 
 Pour cela, vous devez d'abord appeler la méthode @@initModifiedControlsList()@@
 après avoir initialisé votre formulaire, de manière à indiquer que vous voulez
-connaitre les différences.
+connaître les différences.
 
 Ensuite, après un submit par exemple, vous pouvez appeler la méthode
 @@getModifiedControls()@@, qui renvoie un tableau dont les clés sont les noms des

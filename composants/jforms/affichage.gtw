@@ -160,8 +160,9 @@ Par exemple, le code ci-dessous ajoute la classe //help-needed// pour les champs
    <fieldset><legend>Votre identité : </legend>
 
       {formcontrols}            
-         <p {ifctrl 'nom', 'prenom'}class="help-needed"{/ifctrl}> {ctrl_label} : {ctrl_control} </p>
-         <p {ifctrl 'adresse'}class="address"{/ifctrl}> {ctrl_label} : {ctrl_control} </p>
+         <p {ifctrl 'nom', 'prenom'}class="help-needed"{/ifctrl}
+            {ifctrl 'adresse'}class="address"{/ifctrl}>
+            {ctrl_label} : {ctrl_control} </p>
       {/formcontrols}
 
    </fieldset>
@@ -230,7 +231,7 @@ Pour les champs de saisie de mot de passe pour lesquels il y a un champ de
 confirmation (balise @@E@<confirm>@@), si vous indiquez explicitement leur
 affichage, il faut aussi indiquer spécifiquement l'affichage du champ de
 confirmation, sachant que celui-ci a le nom du champ de saisie principale avec
-un suffixe **_confirm**.
+un suffixe @@_confirm@@.
 
 Par exemple, vous indiquez explicitement d'afficher le champ "motdepasse" qui
 est un mot de passe :

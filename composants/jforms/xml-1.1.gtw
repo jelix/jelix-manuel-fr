@@ -169,7 +169,7 @@ saisie : la valeur minimale et maximale du nombre saisie. Ces
 deux attributs ne sont utilisables que pour @@A@type="integer"@@ et @@A@type="decimal"@@.
 
 @@A@pattern@@: Il doit contenir une expression rationnelle compatible avec PHP
-et JS. Il n'est utilisatble que pour @@A@type="string"@@.
+et JS. Il n'est utilisable que pour @@A@type="string"@@.
 
 @@A@type@@ permet d'indiquer le format de données que l'utilisateur doit
 respecter. Au moment de l'envoi du formulaire, il y aura une vérification en
@@ -259,12 +259,12 @@ balise @@E@<htmleditor>@@.
   </htmleditor>
 </code>
 
-Par défaut, l'éditeur utilisé est wymeditor (pour le générateur "html" et
+Par défaut, l'éditeur utilisé est CKEditor (pour le générateur "html" et
 "htmllight"). On peut spécifier une configuration spécifique pour l'éditeur
 ainsi que l'editeur, via l'attribut @@A@config@@, mais aussi une feuille de
 style pour la décoration de l'éditeur, via l'attribut @@A@skin@@.
 
-Vous pouvez changer d'éditeur (fckeditor, tinymce...), en l'indiquant dans la
+Vous pouvez changer d'éditeur (tinymce, wymeditor...), en l'indiquant dans la
 configuration de l'editeur.
 
 Pour savoir utiliser ces attributs et configurer un éditeur comme vous le
@@ -607,7 +607,7 @@ Exemple de groupe :
   </group>
 </code>
 
-Depuis Jelix 1.6.2, il est possible d'avoir une case à cocher qui sera affichée
+Il est possible d'avoir une case à cocher qui sera affichée
 au niveau du label, pour permettre à l'utilisateur d'activer ou désactiver tout
 les champs de saisie du groupe. Utilisez l'attribut @@withcheckbox@@.
 
@@ -983,9 +983,8 @@ liste.
 Dans la page web, la liste est mise à jour automatiquement quand l'utilisateur
 change la valeur du contrôle dont dépend la liste.
 
-Avant Jelix 1.6.6, cet attribut @@A@criteriafrom@@ n'était utilisable
-que sur une source de donnée de type dao. Depuis Jelix 1.6.6, on peut aussi
-l'utiliser sur une source de donnée de type "class". 
+L'attribut @@A@criteriafrom@@ est utilisable aussi bien sur une source de donnée
+de type dao que sur une source de donnée de type "class".
 
 Il faut alors que la classe implémente l'interface @@C@jIFormsDynamicDatasource@@
 qui hérite de l'interface @@C@jIFormsDatasource2@@. Elle ajoute deux méthodes
@@ -1011,7 +1010,7 @@ de l'objet du contrôle.
 
 ==== Données groupées ====
 
-Pour les éléments @@E@<menulist>@@ ou @@E@listbox@@, vous pouvez grouper les
+Pour les éléments @@E@<menulist>@@ ou @@E@<listbox>@@, vous pouvez grouper les
 valeurs. Cela générera des éléments @@E@optgroup@@ en HTML.
 
 Pour les sources de données statiques, utiliser l'élément @@E@<itemsgroup>@@

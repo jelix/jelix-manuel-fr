@@ -198,7 +198,7 @@ formulaire même. Pour ce faire, vous devez appeler la fonction
 var f = jFormsJQ.getForm("jforms_utilisateurs_identite");
 </code>
 
-À partir de là, vous avez accés à plusieurs fonctions
+À partir de là, vous avez accès à plusieurs fonctions
 
 <code javascript>
   f.setErrorDecorator(new MyErrorDecorator); // voir plus haut
@@ -261,7 +261,7 @@ jQuery sera téléchargé **2 fois** par vos utilisateurs.
 Exemple d'inclusion dans votre réponse commune : 
 
 <code>
-  $this->addJSLink(jApp::config()->urlengine['jelixWWWPath'].'jquery/jquery.js');
+  $this->addJSLink(jApp::urlJelixWWWPath().'jquery/jquery.js');
 </code>  
 
 

@@ -1,6 +1,5 @@
 ~~LANG:EN@enman:components/jforms~~
 
-
 jForms est un système complet qui facilite le travail du développeur pour créer
 des formulaires. Vous décrivez votre formulaire dans un fichier xml, et par le
 biais d'une API relativement simple et de //plugins// de //template//, jForms
@@ -22,8 +21,7 @@ s'occupe automatiquement :
      déroulante, liste de boutons radio, etc) ;
    * de sauver les données saisies dans des DAO ;
    * de sauvegarder les fichiers téléchargés ;
-   * de générer d'autres types de formulaires (en AJAX, XForms, etc.) en ne
-     modifiant que très peu de choses ;
+   * de générer le HTML que l'on souhaite en réalisant ou utilisant des plugins ;
    * de prendre en charge automatiquement des champs complexes comme les
      captchas, les champs d'édition WYSIWYG, les groupes, etc.
 

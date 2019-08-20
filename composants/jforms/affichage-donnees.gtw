@@ -82,4 +82,4 @@ plugin @@{formdata}@@.
 </code>
 
 @@{ctrl_value}@@ peut accepter un paramètre additionnel, qui doit être un chaîne permettant
-de formater la valeur. Le formattage est fait par la fonction @@sprintf@@.
+de formater la valeur. Le formatage est fait par la fonction @@sprintf@@.
