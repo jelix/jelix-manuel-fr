@@ -276,7 +276,7 @@ Les modificateurs existants et leur équivalent php :
 
     * upper  (strtoupper)
     * lower  (strtolower)
-    * escxml and eschtml (htmlspecialchars)
+    * escxml et eschtml (htmlspecialchars)
     * strip_tags (strip_tags)
     * escurl (rawurlencode)
     * capitalize (ucwords)
@@ -395,8 +395,6 @@ au moteur de template. Vous avez pour cela deux méthodes
 qui sera executée par le template. Cette fonction doit accepter les même
 arguments que pour une fonction de plugin de template.
 
-
-
 ==== Informations meta ====
 
 Il existe une balise assez spéciale : @@{meta}@@. Elle n'influence pas
@@ -430,7 +428,7 @@ méthode @@M@meta()@@ de l'objet @@C@jTpl@@ :
 
 
 Note : si vous utilisez une variable dans l'expression dans un tag @@meta@@,
-cette variable doit être créée via la méthode @@M@assign()@@ de l'objt jtpl, et
+cette variable doit être créée via la méthode @@M@assign()@@ de l'objet jtpl, et
 non pas avec un tag jtpl comme @@{assign ...}@@.
 
 ==== Informations meta avançées ====
@@ -515,7 +513,7 @@ chacun d'eux un exemplaire de votre template traduit.
 
 Il y a des cas où vous voudriez partager du contenu de template entre plusieurs
 templates. Pour ce faire, vous créerez un template contenant ce code commun, et
-utiliserez la balise @@{include}@@. Vous devez lui donner le selecteur du
+utiliserez la balise @@{include}@@. Vous devez lui donner le sélecteur du
 template à inclure en paramètre.
 
 <code>
@@ -528,9 +526,21 @@ template à inclure en paramètre.
 Toutes les variables déclarées dans l'objet @@C@jTpl@@ seront accessibles dans
 le template inclus.
 
-Avant d'utiliser la balise @@{include}@@, vérifiez que l'utilisation d'une
-[[zones|zone]] n'est pas mieux, car ça l'est dans beaucoup de cas.
+Si vous ne voulez pas que les variables soient propagées dans le template inclus,
+vous utiliserez la balise @@{fetchtpl}@@. Elle est particulièrement utile quand
+vous voulez inclure un template recursivement.
 
+<code>
+ <div>
+   ...
+   {fetchtpl 'mymodule~sharedcontent'}
+ </div>
+</code>
+
+
+Avant d'utiliser la balise @@{include}@@ ou @@{fetchtpl}@@, envisagez l'utilisation
+d'une [[zones|zone]], car cela peut être une meilleure solution, d'autant plus
+que son contenu peut être mis en cache.
 
 ===== Redéfinition de template =====
 

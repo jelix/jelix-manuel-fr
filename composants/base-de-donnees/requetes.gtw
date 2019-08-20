@@ -60,10 +60,10 @@ Voici un exemple rapide :
   $cnx = jDb::getConnection();
 
   $rs = $cnx->query('SELECT nom, prenom FROM users');
-  $result='';
-  while($record = $rs->fetch()){
-     $result.='nom = '.$record->nom.' prenom='.$record->prenom."\n";
-  } 
+  $result = '';
+  while ($record = $rs->fetch()) {
+     $result .= 'nom = '.$record->nom.' prenom = '.$record->prenom."\n";
+  }
 </code>
 
 
@@ -76,9 +76,9 @@ d'enregistrements. Vous utiliserez alors la méthode @@limitQuery@@ :
   $cnx = jDb::getConnection();
 
   $rs = $cnx->limitQuery('SELECT nom, prenom FROM users', 5, 10);
-  $result='';
-  while($record = $rs->fetch()){
-     $result.='nom = '.$record->nom.' prenom='.$record->prenom."\n";
+  $result = '';
+  while ($record = $rs->fetch()) {
+     $result .= 'nom = '.$record->nom.' prenom = '.$record->prenom."\n";
   }
 </code>
 
@@ -175,9 +175,9 @@ cet objet dans certaines boucles, comme les @@foreach@@ :
   $cnx = jDb::getConnection();
 
   $rs = $cnx->query('SELECT nom, prenom FROM users');
-  $result='';
-  foreach( $rs as $record){
-     $result.='nom = '.$record->nom.' prenom='.$record->prenom."\n";
+  $result = '';
+  foreach ($rs as $record) {
+     $result .= 'nom = '.$record->nom.' prenom = '.$record->prenom."\n";
   } 
 </code>
 
@@ -194,15 +194,17 @@ classe, vous devez l'indiquer via @@setFetchMode()@@ :
   $cnx = jDb::getConnection();
 
   $rs = $cnx->query('SELECT nom, prenom FROM users');
-  $rs->setFetchMode(jDbConnection::FETCH_CLASS , 'User');
-  $result='';
-  foreach( $rs as $record){
+
+  $rs->setFetchMode(jDbConnection::FETCH_CLASS, 'User');
+
+  $result = '';
+  foreach ($rs as $record) {
      // $record est ici un objet de type User
-     $result.='nom = '.$record->nom.' prenom='.$record->prenom."\n";
+     $result .= 'nom = '.$record->nom.' prenom = '.$record->prenom."\n";
   } 
 </code>
 
-Pour le reste des méthodes, voyez [[refapi:|la documentation de référence]].
+Pour le reste des méthodes, voyez [[refapi:jDbResultSet|la documentation de référence]].
 
 ==== Utilisation des résultats dans un template ====
 
@@ -226,8 +228,8 @@ Dans le template :
     <tr> <th>nom</th> <th>prenom</th></tr>
   {foreach $resultats as $user}
     <tr> 
-       <td>{$user->nom|escxml}</td>
-       <td>{$user->prenom|escxml}</td>
+       <td>{$user->nom|eschtml}</td>
+       <td>{$user->prenom|eschtml}</td>
     </tr>
   {/foreach}
    </table>

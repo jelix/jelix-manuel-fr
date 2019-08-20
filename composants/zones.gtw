@@ -95,6 +95,7 @@ où le paramètre <MonTemplate> est facultatif. Le nom du template est identique
 au nom de la zone dans ce cas.
 
 Pour ne pas créer de template précisez simplement l'option @@--notpl@@.
+
 <code>
 php dev.php module:create-zone --notpl <MonModule> <MaZone>
 </code>

@@ -3,7 +3,7 @@
 Le développement de tests unitaires est de plus en plus présent dans les
 projets, et jelix propose de quoi en réaliser facilement. La réalisation des
 tests unitaires fait d'ailleurs partie des méthodes de développement Agile.
-Le processus de développement veut, en théorie (et en gros), qu'à chaque fois que
+Le processus de développement veut en théorie qu'à chaque fois que
 l'on développe une fonctionnalité, une méthode, on développe aussi les tests qui vont
 permettre de vérifier le bon fonctionnement de la méthode. Et à chaque fois que l'on
 modifie ou ajoute un bout de code, on lance tous les tests unitaires pour vérifier
@@ -40,9 +40,3 @@ Pour créer des tests :
      exemple, les tests unitaires des tests fonctionnels.
 
 Vous pouvez aussi ajouter les options usuelles de PHPUnit.
-
-
-===== Créer des tests avec Simpletest =====
-
-Cette possibilité a été supprimé de la distribution standard de Jelix. Vous pouvez
-installer séparément [[https://packagist.org/packages/jelix/simpletest-module|le paquet simpletest-module via Composer]].

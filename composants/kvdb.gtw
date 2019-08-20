@@ -161,8 +161,8 @@ vous le lancez vous même en ligne de commande.
 Il permet d'utiliser une table SQL pour stocker les clé-valeurs. Pour le
 configurer, vous devez indiquer:
 
-  * @@table@@: le nom de la table à utiliser.
-  * @@dbprofile@@: le nom du profil jDb à utiliser pour accéder à la base SQL.
+  * @@table@@ : le nom de la table à utiliser.
+  * @@dbprofile@@ : le nom du profil jDb à utiliser pour accéder à la base SQL.
 
 La table doit contenir trois champs, avec des noms et des types de champs
 spécifiques. Voici un script SQL pour créer de telles tables:

@@ -50,6 +50,17 @@ retourné par @@M@notify@@:
 
 Le résultat est un tableau des données que chaque module à renvoyé.
 
+Vous avez d'autres méthodes pour manipuler les données retournées :
+
+   * @@inResponse($responseKey, $value)@@ : indique si il existe une clé avec
+     la valeur donnée dans les données retournées.
+   * @@getResponseByKey($responseKey)@@ : renvoi la liste des données qui correspondent
+     à la clé donnée (renvoi null si il n'y a aucune donnée avec cette clé)
+   * @@allResponsesByKeyAreTrue($responseKey)@@ : indique si toutes les données
+     avec la clé donnée ont la valeur true.
+   * @@allResponsesByKeyAreFalse($responseKey)@@ : indique si toutes les données
+     avec la clé donnée ont la valeur false.
+
 ===== Répondre à un évènement =====
 
 Il n'y a pas de listener par défaut dans les modules. Aussi, pour qu'un module
@@ -58,7 +69,6 @@ fichier @@F@events.xml@@ du module. Il n'y a pas de limite du nombre de
 listener.
 
 Il y a deux choses à faire pour un listener : le créer, puis le déclarer.
-
 
 ==== créer le listener ====
 
@@ -91,7 +101,7 @@ class authListener extends jEventListener {
         $ok = $ok && ($user->password != '');
 
         // renvoi de donnée en réponse
-        $event->Add(array('canlogin'=>$ok));
+        $event->add(array('canlogin'=>$ok));
    }
 }
 </code>
@@ -149,7 +159,7 @@ tiers, pour un tas de raison.
 
 Cela est possible en les indiquant dans la section @@[disabledListeners]@@
 de la configuration principale. Les clés sont les noms d'évènements, les
-valeurs sont les selecteurs des listeners.
+valeurs sont les sélecteurs des listeners.
 
 <code ini>
 [disabledListeners]

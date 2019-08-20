@@ -161,7 +161,7 @@ Paramètres possibles :
 
 Ce pilote utilise une table SQL pour stocker les valeurs de cache.
 L'installateur de jelix crée la table nécessaire quand l'application l'utilise.
-Cependant, pendant le developpement, vous devez vous même créer la table.
+Cependant, pendant le développement, vous devez vous même créer la table.
 Utilisez l'un des scripts SQL dans
 @@F@lib/jelix/core-modules/jelix/install/sql/install_jcache.schema.*@@ pour
 créer la table.
@@ -230,7 +230,7 @@ et le cache par validation.
 Attention : en général, sauf à utiliser la méthode @@M@setLifeTime@@ avec un
 cache privé, la mise en cache ne doit pas concerner des pages "personnalisées"
 incluant par exemple des données relatifs à l'utilisateur. En effet, le contenu
-est succeptible d'être mis en cache par des proxys. Ceux-ci utilisent les
+est susceptible d'être mis en cache par des proxys. Ceux-ci utilisent les
 en-têtes de cache envoyés par le serveur pour stocker en cache (ou pas), mais
 n'utilisent pas les cookies (notamment ceux de sessions) comme paramètres
 discriminants : ils ne mémorisent donc qu'une seule "version" d'une page et tout

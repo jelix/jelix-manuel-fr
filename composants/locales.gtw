@@ -118,7 +118,7 @@ plusieurs lignes
 foo=bar
 </code>
 
-Cependant, cela n'insère pas un saut de ligne (\n) dans la chaine. Pour
+Cependant, cela n'insère pas un saut de ligne (\n) dans la chaine, mais un espace. Pour
 insérer un vrai saut de ligne, il faut utiliser \n et/ou \r suivant la plateforme
 (\n est recommandé) :
 
@@ -259,7 +259,7 @@ quand il faut des paramètres. Vous devez alors utiliser le plugin jlocale :
 </code>
 
 
-===== Changer la langue dynamiquement =====
+===== Changer la langue à la volée =====
 
 Jelix fourni un plugin pour le coordinateur  qui permet de changer la langue
 dynamiquement. C'est le plugin //autolocale//, qui est situé dans @@F@lib/jelix/plugins/coord/@@
@@ -316,7 +316,7 @@ Notez aussi que si le code de language donné n'est pas listé dans le paramètr
 @@availableLocales@@ de la configuration principale, jLocale essaiera d'abord
 d'utiliser la locale la plus approchante (même langue mais d'un autre pays),
 et si il ne trouve pas, il utilisera la langue par défaut de l'application,
-celle indiquée dans @@locale@@, et en dernier recourd, celle indiquée dans @@fallbackLocale@@.
+celle indiquée dans @@locale@@, et en dernier recours, celle indiquée dans @@fallbackLocale@@.
 
 Enfin, il faut activer le plugin. Pour cela, dans la configuration de jelix,
 mettez dans la section @@[coordplugins]@@ :

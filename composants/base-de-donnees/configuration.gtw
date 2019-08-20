@@ -17,7 +17,7 @@ driver="mysqli"
 database="jelix"
 host= "localhost"
 user= "jelix"
-password= "jelix"
+password= "Sup3Rp@Ssw0rD!"
 persistent= on
 force_encoding=true
 </code>
@@ -32,7 +32,7 @@ sont utilisables pour tous les drivers :
     paramètres diffèrent en fonction du driver utilisé.
   * @@table_prefix@@ : permet d'indiquer un préfixe de table. Lors de
     l'utilisation d'un [[/composants/daos|DAO]] avec un profil spécifiant ce paramètre, les
-    tables indiquées dans le DAO sont préfixées **dynamiquement** par cette
+    tables indiquées dans le DAO sont préfixées **automatiquement** par cette
     valeur. Lors de l'écriture manuelle de requêtes pour jDb, vous pouvez
     préfixer vos tables en fonction du profil utilisé grâce à la méthode
     @@M@prefixTable()@@ de @@C@jDbConnection@@. Cette méthode prend en paramètre
@@ -106,8 +106,7 @@ Paramètres possibles :
 Pour le fichier de base de données, vous avez plusieurs syntaxes :
 
    * un simple nom de fichier (ex: mybase.sqlite). Le fichier se trouvera alors dans le
-     dossier @@F@var/db/sqlite/@@ (pour sqlite2) ou @@F@var/db/sqlite3/@@ (pour sqlite3)
-     de votre application
+     dossier @@F@var/db/sqlite3/@@ de votre application
    * Un nom de fichier (avec éventuellement un chemin de sous répertoire), avec en prefix
      un raccourcis "app:", "lib:", ou "var:" pour indiquer un chemin à
      partir de celui de l'application, de lib/ ou du répertoire var de
