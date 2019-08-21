@@ -135,7 +135,8 @@ identifiant de l'enregistrement à récupérer.
 
 Ici le formulaire sera pré-rempli avec les valeurs de l'enregistrement dont la
 clé est @@V@$product_id@@, et le dao "shop~products" sera utilisé pour cette
-lecture.
+lecture. Vous pouvez aussi indiquer un objet DAO record à @@initFromDao()@@
+plutôt qu'un sélecteur.
 
 Cependant, seuls les champs de saisie qui ont le même nom que des propriétés du
 dao indiqué seront pré-remplis. Les autres resteront vides.
@@ -143,6 +144,7 @@ dao indiqué seront pré-remplis. Les autres resteront vides.
 Notez que vous pouvez utiliser plusieurs daos pour pré-remplir les champs. En
 effet, on peut avoir besoin d'un formulaire qui contient des champs de saisie
 qui seront stockés dans plusieurs tables.
+
 
 
 

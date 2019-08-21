@@ -219,6 +219,8 @@ de l'application.
     * le datepicker contient maintenant de quoi sélectionner l'heure quand
       il s'agit de la saisie d'un datetime.
     * nouveau contrôle @@<color>@@ pour sélectionner une couleur.
+    * nouveau contrôle @@<upload2>@@ améliorant la manipulation des fichiers
+      déjà téléchargés.
 
 ==== Changements d'API dans le coeur du framework ====
 

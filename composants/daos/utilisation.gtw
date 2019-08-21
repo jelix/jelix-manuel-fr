@@ -52,6 +52,14 @@ En admettant qu'il y ait un fichier DAO @@F@foo.dao.xml@@ dans le module bar :
 @@V@$maDao@@ contient une factory de foo, et @@V@$monRecord@@ un enregistrement
 vide de type //foo//.
 
+Il est aussi possible d'appeler la méthode @@createRecord()@@ (qui n'a pas de
+paramètres), sur la factory :
+
+<code php>
+   $maDao = jDao::get("bar~foo");
+   $monRecord = $maDao->createRecord();
+</code>
+
 
 ===== Créer, modifier, effacer un enregistrement =====
 

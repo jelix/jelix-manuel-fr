@@ -222,6 +222,19 @@ boucle @@formcontrols@@. Vous devez alors leur indiquer un nom de champs.
 Ici on affiche les champs noms et prenoms à des endroits précis, et le reste
 sera affiché par le plugin formcontrols qui suit.
 
+Un autre plugin @@ifctrlexists@@ permet de vérifier qu'un contrôle existe. Cela est utile
+quand on sait que certains contrôles peuvent être désactivé :
+
+<code html>
+<table>
+{ifctrlexists 'lastname'}
+    <tr><td>{ctrl_label 'lastname'}</td><td>{ctrl_control 'lastname'}</td> </tr>
+{/ifctrlexists}
+    <tr><td>{ctrl_label 'firstname'}</td><td>{ctrl_control 'firstname'}</td></tr>
+</table>
+</code>
+
+
 Pour savoir plus d'options sur l'affichage des contrôles en HTML, voir
 [[affichage/generateur-html|la page dédiée]].
 

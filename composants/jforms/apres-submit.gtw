@@ -220,6 +220,12 @@ mais vous pouvez le changer en l'indiquant en paramètre.
     $form->saveAllFiles(jApp::wwwPath('images/photos/'));
 </code>
 
+Notez que si vous utilisez @@<upload2>@@ (ou @@jFormsControlUpload2@@),
+la suppression du fichier précédent, si il y en avait un, est automatique.
+Ce n'est pas le cas avec @@<upload>@@, où vous devez garder une référence à
+l'ancien fichier quelque part, afin de le supprimer vous même après l'upload du
+nouveau fichier.
+
 
 ===== Détruire une instance d'un formulaire =====
 

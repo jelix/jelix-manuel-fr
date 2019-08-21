@@ -139,7 +139,14 @@ moyen de l'attribut locale.
   </input>
 </code>
 
+==== Classe de contrôle ====
 
+À chaque element, correspond une classe @@jFormsControl*@@. Il peut arriver
+que cette classe, qui se charge d'initialiser et vérifier les données, ne fasse
+pas exactement ce que l'on veut.
+
+Il est possible alors d'écrire une classe héritant de @@jFormsControl@@, et
+d'indiquer son nom dans un attribut @@A@controlclass@@.
 
 ===== Champs de saisie =====
 
@@ -586,6 +593,19 @@ plus du image/jpeg si vous voulez autoriser le format JPEG.
 indiqués, et l'on peut ensuite lui indiquer où stocker le fichier téléchargé. La
 variable de formulaire contiendra le nom du fichier.
 
+==== Téléchargement amélioré de fichier ====
+
+Le téléchargement simple comme indiqué précédemment, nécessite de gérer soit
+même l'ancien fichier, quand le formulaire édite des données à modifier. Ainsi,
+il faut soit-même supprimer l'ancien fichier si un nouveau est téléchargé. De plus
+à l'affichage, il n'est pas possible de voir quel est l'ancien fichier, de
+le supprimer etc..
+
+Une amélioration de @@<upload>@@, fournissant une gestion amélioré du fichier,
+est disponible avec l'element @@<upload2>@@ depuis Jelix 1.7. Il a les mêmes attributs et
+élements fils que @@<upload>@@.
+
+
 ==== Groupement de champs de saisie ====
 
 Il peut être utile de regrouper plusieurs contrôles dans un groupe, que ce soit
@@ -694,6 +714,23 @@ La balise accepte les attributs communs et les balises d'aide.
 
 Pour en savoir plus sur cette fonctionnalité, et pouvoir choisir le type
 de captcha, voir [[xml/captcha|la section sur les captchas]].
+
+==== Sélecteur de couleur ====
+
+Pour que l'utilisateur puisse choisir une couleur sur une palette de couleur,
+vous utiliserez la balise @@E@<color>@@. Vous devez y mettre
+l'attribut @@A@ref@@, et vous pouvez utiliser les balises @@E@<label>@@,
+@@E@<hint>@@, @@E@<alert>@@, @@E@<help>@@ ainsi que les attributs @@A@readonly@@
+et @@A@required@@.
+
+<code xml>
+  <color ref="background">
+     <label>Couleur de fond</label>
+     <hint>Sélectionner la couleur du fond de texte</hint>
+  </color>
+</code>
+
+La valeur est un code html RVB comme @@#F5468D@@.
 
 ==== Boutons de validation ====
 
