@@ -70,7 +70,7 @@ Après chaque modification de votre générateur de jforms,
      * displays the label corresponding of the given control
      * @param jFormsControl $ctrl the control to display
      */
-    abstract public function outputControlLabel($ctrl);
+    abstract public function outputControlLabel($ctrl, $format = '', $editMode = true);
 
     /**
      * displays the value of the control (without the control)
@@ -96,7 +96,7 @@ finale. Exemple :
             return;
         }
         // si les fichiers sont dans le répertoire jelix
-        $www = jApp::config()->urlengine['jelixWWWPath'];
+        $www = jApp::urlJelixWWWPath();
         // ou si les fichiers sont dans un répertoire à vous dans www
         $www = jApp::urlBasePath();
 
@@ -136,7 +136,7 @@ fermante de @@E@<form>@@, ainsi que d'autres lignes javascript.
 === outputAllControls() ===
 
 Cette méthode est appelée uniquement par le plugin @@{formfull}@@. Elle doit
-afficher tout les contrôles (en dehors des éléments affichés par @@outputHeader()@@ et
+afficher tous les contrôles (en dehors des éléments affichés par @@outputHeader()@@ et
 @@outputFooter()@@).
 
 === outputControlLabel() ===
@@ -210,7 +210,7 @@ donc fournir ces methodes :
    * @@M@getValue()@@: renvoi la valeur de l'élement HTML généré (valeur du controle en fait)
    * @@M@outputMetaContent($resp)@@: génére des liens CSS et Javascript pour la partie @@<head>@@
    * @@M@outputHelp()@@: génère le code HTML de l'aide pour le champs de saisie
-   * @@M@outputLabel()@@: génère le libellé HTML du champs
+   * @@M@outputLabel($format = '', $editMode = true)@@: génère le libellé HTML du champs
    * @@M@outputControl()@@: génère le champs HTML
    * @@M@setAttributes($attributes)@@: définie les attributs qui seront ajoutés sur l'élément HTML, ou des options pour le plugin.
 
@@ -226,9 +226,9 @@ fonctionnement des plugins "formwidget".
 Notez qu'il y a un widget spécifique, le widget "racine", qui peut générer
 du html dans le formulaire, en plus du html généré par le générateur ou les
 plugins widgets. Il a pour nom le même que celui du générateur. Par exemple
-pour celui du générateur html, il s'agit du plugin plugins/formwidget/html/html.formwidget.php.
+pour celui du générateur html, il s'agit du plugin @@plugins/formwidget/html/html.formwidget.php@@.
 Ou pour celui de votre propre générateur monhtml par exemple, dérivant du
-générateur html, il s'agira de plugins/formwidget/monhtml/monhtml.formwidget.php.
+générateur html, il s'agira de @@plugins/formwidget/monhtml/monhtml.formwidget.php@@.
 
 ==== Déclarer un plugin de widget ====
 
@@ -244,17 +244,17 @@ Exemple:
 
 <code>
  {form $form, 'action', array(), 'html',
-    array('plugins' => array ('date' => 'mydateplugin')) }
+    array('plugins' => array ('birthdaydate' => 'mydateplugin')) }
     ...
  {/form}
 
  {formfull $form, 'action', array(), 'html',
-    array('plugins' => array ('date' => 'mydateplugin')) }
+    array('plugins' => array ('birthdaydate' => 'mydateplugin')) }
 
 </code>
 
-Vous indiquez donc ici que pour tel type de control (champs de saisie), ici
-les champs de type "date", vous voulez utiliser tel plugin, ici "mydateplugin".
+Vous indiquez donc ici que pour le champs de saisie qui a pour identifiant 'birthdaydate',
+vous voulez utiliser plugin "mydateplugin".
 Le nom du plugin est son nom sans 'formwidget'. Donc ici il s'agit du plugin
 @@F@plugins/formwidget/mydateplugin/mydateplugin.formwidget.php@@.
 
@@ -282,7 +282,7 @@ propriété @@$pluginsConf@@ :
 
 <code>
 protected $pluginsConf = array(
-    'control type' => nom du plugin
+    'control type' => 'nom du plugin'
 );
 </code>
 

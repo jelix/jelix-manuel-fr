@@ -71,7 +71,7 @@ peuvent être placé dans une section de la configuration principale, ou un fich
 spécifique, ou encore dans des propriétés du contrôleur.
 
 Ce fichier doit être alors un fichier de type //ini//, placé dans 
-@@F@@votreApplication/var/config/@@ et être déclaré dans la configuration comme 
+@@F@@votreApplication/app/system/@@ et être déclaré dans la configuration comme
 indiqué précédemment. Le contenu ini sera passé au constructeur du plugin sous 
 forme de tableau (résultat de la fonction php @@parse_ini_file@@).
 

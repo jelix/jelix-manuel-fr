@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:ref-modules/master_admin~~
 
-@@master_admin@@ est un module fournissant une interface web dediée à
+@@master_admin@@ est un module fournissant une interface web dédiée à
 l'administration (backend).
 
 Avant de commencer la personnalisation de l'interface d'administration,
@@ -21,7 +21,7 @@ la section @@modules@@ de la configuration, mais vous devez aussi indiquer
 par quel point d'entrée il est accessible.
 
 Si l'administration a un point d'entrée spécifique, comme admin.php par défaut,
-et si votre module est déstiné à être utilisé dans cette interface d'administration,
+et si votre module est destiné à être utilisé dans cette interface d'administration,
 vous devez indiquer dans le fichier urls.xml, dans la section correspondante
 à ce point d'entrée, les urls permettant d'accéder au module.
 

@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:plugins/profiles~~
 
-Les plugins pour jProfiles doivent être stockés dans un répertoire dedié aux
+Les plugins pour jProfiles doivent être stockés dans un répertoire dédié aux
 plugins, dans un fichier @@profiles/<type>/<type>.profiles.php@@. Et ce fichier
 doit déclarer une classe @@<type>ProfilesCompiler@@.
 

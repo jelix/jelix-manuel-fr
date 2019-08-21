@@ -57,7 +57,7 @@ Cela fonctionne aussi avec le fichier composer.json de l'application.
 Un dépôt de plugins contient un répertoire pour chaque type de plugins et dans
 chacun de ces répertoires, un répertoire pour chaque plugin.
 
-Voici les types de plugins et les répertoires correspondant :
+Voici quelques types de plugins et les répertoires correspondant :
 
     * plugins de coordinateur : @@F@coord/@@
     * plugins pour jLog : @@F@logger/@@
@@ -78,7 +78,7 @@ Voici les types de plugins et les répertoires correspondant :
 Les composants qui utilisent des plugins les instancient grâce à la méthode
 @@jApp::loadPlugin()@@. Vous pourriez aussi en avoir besoin pour par exemple
 récupérer des informations fournies par le plugin (configuration etc..), ou
-l'utiliser indépendement du composant qui utilise normalement le plugin.
+l'utiliser indépendamment du composant qui utilise normalement le plugin.
 
 Pour l'instancier, il faut indiquer en paramètre le nom du plugin,
 le type de plugin ('db', 'acl'...), le suffix du nom du fichier ('.dbconnection.php'..),
@@ -106,7 +106,7 @@ Jelix fournit en standard un certain nombre de plugins dans le dépôt
 créer pour ses propres besoins. D'ailleurs toute contribution de nouveaux
 plugins est vivement encouragée ;-)
 
-Les sections suivantes vous indiquent comment développer ces plugins.
+Les sections suivantes vous indiquent comment développer certains de ces plugins.
 
 
 

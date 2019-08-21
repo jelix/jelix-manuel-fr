@@ -109,7 +109,7 @@ function jtpl_cfunction_html_zone($compiler, $params=array())
 
 Un plugin modificateur est une fonction @@jtpl_modifier_monmodificateur@@
 (@@monmodificateur@@ est un nom de votre choix) prenant une chaîne en paramètre
-et eventuellement d'autres pour ceux qui ont besoin de paramètre de
+et éventuellement d'autres pour ceux qui ont besoin de paramètre de
 modificateur (voir plus haut). Elle renvoie une chaîne transformée. La fonction
 doit être stockée dans un fichier de nom @@modifier.monmodificateur.php@@.
 
