@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:components/urls~~
 
 Jelix comporte un mécanisme qui permet de ne pas avoir à mettre les URLs
-concernant les actions en dur dans les templates (ou ailleurs). Pour faire
+concernant les actions, en dur dans les templates (ou ailleurs). Pour faire
 simple, il suffit de fournir le module, l'action, le type de requête et
 éventuellement d'autres paramètres et jUrl se charge de générer l'URL
 correspondante. À l'inverse, lors d'une requête, jUrl analyse l'URL pour en
@@ -26,7 +26,7 @@ Une URL est composée de différentes parties :
 Le moteur d'URLs analyse le pathinfo et les paramètres pour déterminer les noms
 des module et action.
 
-Note : il peut y avoir certaines options à activer dans apache. Voir la section
+Note : il peut y avoir certaines options à activer dans apache ou nginx. Voir la section
 [[/installation/configurer-server#configuration-du-pathinfo-pour-les-urls|sur la configuration serveur]].
 
 
@@ -68,7 +68,7 @@ est affichée suite à une erreur ou non.
 ===== Configuration du moteur d'URLs =====
 
 Il faut indiquer au moteur d'URL, quelles URLs correspondent à quel contrôleur
-et méthode. En fait, il s'agit plus précisement de faire la correspondance
+et méthode. En fait, il s'agit plus précisément de faire la correspondance
 entre un pathinfo et un contrôleur.
 
 Il y a au moins une URL à spécifier : celle de la page d'accueil, donc avec
@@ -105,8 +105,19 @@ d'autres paramètres, renvoie l'URL correspondante pour l'application courante :
 Le premier paramètre de la fonction est donc un sélecteur d'action. Ici on
 demande l'URL qui correspond à l'action view du module news, pour le type de
 requête classic avec un paramètre id_news. Par défaut, si rien n'est
-définie pour ce selecteur d'action dans le fichier urls.xml, l'URL
+définie pour ce sélecteur d'action dans le fichier urls.xml, l'URL
 correspondante ressemblera à cela : @@index.php/news/default/view?id_news=54@@.
+
+==== jUrl::getFull() ====
+
+Cette méthode fonctionne à l'identique de @@jUrl::get()@@, à ceci près qu'elle
+renvoi une URL complète, avec le protocole et le nom de domaine.
+
+<code php>
+   $string_url = jUrl::getFull("news~view@classic", array("id_news"=>"54"));
+</code>
+
+Renvoi une url ressemblant à @@https://monsite.com/index.php/news/default/view?id_news=54@@.
 
 ==== Plugin de template jurl ====
 

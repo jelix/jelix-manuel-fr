@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:components/urls/mapping~~
 
 Le principe de configuration est d'indiquer dans un fichier
-@@F@var/config/urls.xml@@ la correspondance entre des urls et les actions
+@@F@app/system/urls.xml@@ la correspondance entre des urls et les actions
 jelix. Voici un exemple de fichier :
 
 <code xml>
@@ -131,7 +131,7 @@ les urls du module news seront de la forme @@index.php/supere/actu/<controleur>/
 Si il n'y a pas de ''balise url de module'' pour un module donné, seul les actions du module
 qui sont spécifiées par une balise @@<url>@@ d'action, seront accessible depuis le web.
 
-Ainsi, dans l'exemple précedant, il n'y a qu'une balise url d'action pour le
+Ainsi, dans l'exemple précédant, il n'y a qu'une balise url d'action pour le
 module main, donc uniquement l'action @@default:index@@ sera accessible (et
 qui se trouve ici être la page d'accueil). Pour que les autres actions du module
 main puissent être accessible, soit on déclare une balise url d'action pour 

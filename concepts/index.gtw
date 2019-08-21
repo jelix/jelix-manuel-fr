@@ -15,7 +15,7 @@ Le framework se base sur un principe : à chaque URL correspond une action.
        Par défaut il s'agit de @@F@index.php@@.
      * Ce script initialise l'environnement Jelix avec @@C@jApp@@
      * Il instancie ensuite un objet de type @@C@jRequest@@ et un coordinateur
-       de type @@C@jCoordinator@@.
+       de type @@C@jCoordinator@@. Voyez le coordinateur comme un routeur.
      * @@C@jRequest@@ détermine le nom de l'action à exécuter et
        le nom du module concerné, à partir de l'URL
      * L'objet @@C@jRequest@@ analyse alors le contenu de la requête HTTP pour
