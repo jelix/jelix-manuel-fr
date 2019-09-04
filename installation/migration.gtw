@@ -3,35 +3,34 @@
 Lors d'une migration d'une version Jelix à une autre, il y a toujours au moins
 ces étapes à faire :
 
-  * Récupérer les sources de la nouvelle version de Jelix et les installer.
-    Depuis Jelix 1.7, la procédure standard est de changer la version de Jelix
-    dans le fichier composer.json, ou de créer un fichier composer.json si vous
-    migrez vers Jelix 1.7.
+  * Si vous utilisez Composer, changer la version de Jelix dans le fichier
+    composer.json, et lancer Composer.
+  * Si vous n'utilisez pas Composer, récupérer les sources de la nouvelle version
+    de Jelix et les installer.
   * **supprimer** tous les fichiers dans le répertoire @@F@votre_appli/temp/@@
   * adapter votre code en suivant les instructions indiquées pour chaque
     ancienne version de Jelix. Voir ci-dessous.
   * lancer l'outils de migration qui va faire les reorganisations des sources
-    et modifications necessaires
+    et modifications nécessaires
   * sur chaque instance de l'application, lancer le configurateur et l'installateur
     de Jelix.
 
-===== Mettre à jour depuis Jelix 1.5 et inférieur =====
+===== Mettre à jour depuis Jelix 1.6 et inférieur =====
 
 Suivez les indications de migration de chaque version intermédiaire pour migrer
-à la dernière version de Jelix 1.6, avant de mettre à jour pour jelix 1.7.
+à la dernière version de Jelix 1.7, avant de mettre à jour pour jelix 1.8.
 
 Voir les instructions de migration des manuels de chacune de ces versions. 
 
-===== Mettre à jour depuis Jelix 1.6.x =====
+===== Mettre à jour depuis Jelix 1.7.x =====
 
 Voici les instructions à suivre dans l'ordre.
 
 ==== Prérequis ====
 
-Jelix 1.7 nécessite PHP 5.6 minimum. Vérifiez que votre serveur a bien cette
-version ou une version supérieure. PHP 7.1 et + est fortement recommandé, les
-versions précédentes n'étant plus maintenu par PHP à la date d'écriture
-de ce chapitre.
+Jelix 1.8 nécessite PHP 7.3 minimum. Vérifiez que votre serveur a bien cette
+version ou une version supérieure. Les versions précédentes n'étant plus maintenu
+par PHP à la date d'écriture de ce chapitre.
 
 ==== Sauvegarde ====
 
@@ -41,34 +40,17 @@ configuration etc.
 ==== Répertoires temporaires ====
 
 Comme d'habitude, vous devez vider le contenu de votre répertoire
-@@F@temp/votreapp/@@. Notez que depuis Jelix 1.7, le répertoire temporaire d'une
-application est par défaut dans le répertoire de l'application, et non
-plus en dehors. Mais vous pouvez le garder hors de l'application.
+@@F@temp/votreapp/@@.
 
 ==== Installation des sources de Jelix ====
 
-Depuis la version 1.7, Jelix peut s'installer avec Composer. Composer est un
-gestionnaire de paquet, utilisable en ligne de commande, qui est maintenant
-très utilisé dans de nombreux projets.
-
-De plus certains modules "standards" ne sont plus inclus directement dans
-les sources de Jelix, mais désormais installables via Composer.
-
-Cependant, il est encore possible de télécharger les sources de Jelix et
-de l'installer à la main. L'archive contient déjà toutes les dépendances
-aux paquets Composer utilsés par Jelix.
-
-Pour la migration, vous pouvez donc mettre à jour, soit via Composer, soit
+Pour la migration, vous pouvez mettre à jour, soit via Composer, soit
 en téléchargeant l'archive comme pour les versions précédentes.
 
-=== Si vous voulez utiliser Composer ===
+=== Si vous utilisez Composer ===
 
-Installez Composer en suivant [[https://getcomposer.org|les instructions de son manuel]].
-
-Dans le répertoire de votre application, créer un fichier @@F@composer.json@@.
-Celui-ci doit indiquer le paquet @@jelix/jelix@@ comme dépendance dans la
-section @@require@@, avec la version voulue. Il est recommandé d'indiquer
-@@^1.7.0@@.
+Dans le répertoire de votre application, modifieez le fichier @@F@composer.json@@
+en indiquant la version 1.8 pour le paquet @@jelix/jelix@@ ou @@jelix/jelix-standard@@
 
 Exemple :
 
@@ -77,45 +59,15 @@ Exemple :
     "name": "mycompany/myapp",
     "type": "application",
     "require": {
-        "jelix/jelix": "^1.7.0"
+        "jelix/jelix": "^1.8.0"
     }
 }
 </code>
 
-Vous devez remplacer @@"mycompany/myapp"@@ par un identifiant propre à votre
-projet. Un fichier @@F@composer.json@@ peut contenir bien d'autres informations.
-Voir le manuel de Composer.
-
-Supprimez le contenu du répertoire lib, sauf bien sûr les bibliothèques non
-fournies par Jelix, si vous en aviez ajouté dans ce répertoire.
-
 Exécutez ensuite en ligne de commande :
 
 <code bash>
-composer install
-# ou si vous aviez déjà un fichier composer.json et des paquets installés :
 composer update
-</code>
-
-Vous verrez alors un nouveau répertoire @@F@vendor/@@ et un fichier composer.lock.
-Il n'est pas recommandé d'inclure le répertoire @@F@vendor/@@ dans votre gestionnaire
-de version (git, subversion...). Donc indiquez-le dans un fichier @@F@.gitignore@@,
-@@F@.hgignore@@ ou une propriété @@snv:ignore@@, selon l'outils de gestion de version
-que vous utilisez.
-
-Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer le
-fichier à inclure @@lib/jelix/init.php@@ par deux autres, @@autoload.php@@
-et @@jelix_app_path.php@@ situés dans le répertoire @@vendor/@@.
-@@F@application.init.php@@ doit ressembler à ceci :
-
-<code php>
-require (__DIR__.'/vendor/autoload.php');
-jApp::initPaths(
-    /* ici pas de changements, garder vos chemins existants */
-);
-jApp::setTempBasePath(/* ici pas de changements, garder le chemins existant */);
-
-require (__DIR__.'/vendor/jelix_app_path.php');
 </code>
 
 Sautez l'étape qui suit.
@@ -129,166 +81,19 @@ Remplacez le répertoire @@F@lib/@@ de jelix par celui contenu dans le paquet
 jelix, en n'oubliant pas de remettre dans le nouveau répertoire @@F@lib/@@ vos
 éventuelles bibliothèques personnelles si vous en aviez mis dans l'ancien.
 
-Dans le fichier @@F@application.init.php@@, vous devez ensuite remplacer le
-fichier à inclure @@lib/jelix/init.php@@ par deux autres, @@autoload.php@@
-et @@jelix_app_path.php@@ situés dans le répertoire @@../lib/vendor/@@.
-@@F@application.init.php@@ doit ressembler à ceci :
-
-<code php>
-require (__DIR__.'/../lib/vendor/autoload.php');
-jApp::initPaths(
-    /* ici pas de changements, garder vos chemins existants */
-);
-jApp::setTempBasePath(/* ici pas de changement, garder le chemin existant */);
-
-require (__DIR__.'/../lib/vendor/jelix_app_path.php');
-</code>
-
-==== Changement dans la déclaration des modules et plugins ====
-
-Dans les versions précédentes de Jelix, il fallait déclarer les répertoires
-contenant des modules ou de plugins, dans des paramètres @@modulesPath@@ ou
-@@pluginsPath@@ de la configuration (indiqués dans @@mainconfig.ini.php@@
-ou le fichier de configuration du point d'entrée).
-
-Ces paramètres ne sont plus reconnus. Les répertoires de modules et de plugins
-doivent maintenant être déclarés dans le fichier @@F@application.init.php@@ (ou
-dans le fichier @@composer.json@@ si vous utilisez Composer pour réaliser des paquets
-Composer de modules).
-
-À la fin du fichier @@F@application.init.php@@, vous devez appeler
-@@jApp::declareModulesDir@@ et/ou @@jApp::declarePluginsDir@@, avec la liste
-des repertoires contenant des plugins et modules :
-
-<code php>
-jApp::declareModulesDir(array(
-                        __DIR__.'/modules/'
-                    ));
-jApp::declarePluginsDir(array(
-                        __DIR__.'/plugins'
-                    ));
-</code>
-
-Dans cet exemple, les répertoires @@modules/@@ et @@plugins/@@ de l'application sont
-déclarés. Notez que les répertoires @@lib/jelix-modules@@, @@lib/jelix-admin-modules@@ et
-@@lib/jelix-plugins@@ fournis avec Jelix sont déclarés automatiquement (via l'inclusion du
-fichier @@F@vendor/jelix_app_path.php@@).
-
-==== À propos de Simpletest ====
-
-Simpletest (et le module junittests) n'est plus fourni avec Jelix. Si vous
-n'avez pas encore migré vos tests vers PHPUnit, vous pouvez installer
-[[https://github.com/jelix/simpletest-module|le module junittests]] en le
-téléchargeant ou en le déclarant ("jelix/simpletest-module") dans votre fichier
-composer.json. 
-
-Cependant, Simpletest et le module junittests n'étant plus maintenue, il est fortement 
-recommandé d'utiliser d'autres outils de tests unitaires comme PHPUnit ou Atoum.
-
-==== Changements dans profiles.ini.php ====
-
-Les drivers jDb "sqlite" et "mysql" ne sont plus fournis (le premier utilisant
-une API PHP pour le vieux sqlite 2, et le deuxième utilisant l'API php
-mysql qui est dépréciée). Utilisez donc à la place respectivement "sqlite3" et
-"mysqli".
-
-Pour mysqli, c'est modifié automatiquement par le script de migration
-de Jelix.
-
-Mais pour sqlite3, il faut le faire à la main. Attention : pour passer de
-sqlite 2 à sqlite 3, il faut d'abord convertir votre base au format sqlite3
-(en ayant donc installé sqlite 2 et sqlite 3 sur votre système),
-par exemple en tapant dans votre console : @@sqlite OLD.db .dump | sqlite3 NEW.db@@.
-
-Une alternative est d'installer les drivers sqlite et mysql séparément,
-[[https://github.com/jelix/legacy-db-plugins|en les téléchargeant]] ou en
-déclarant le paquet "jelix/legacy-db-plugins" dans votre fichier
-@@composer.json@@. Et en installant l'extension PECL de sqlite 2 et la vieille
-extension de mysql dans PHP.
-
-==== À propos du plugin ldap pour jAuth ====
-
-Si vous utilisez le plugin ldap pour jAuth, les informations de connexion doivent
-être maintenant dans le fichier @@profiles.ini.php@@ au lieu du fichier 
-@@auth.coord.ini.php@@. Le script de migration fait ce changement pour vous.
-
-==== Changements dans la prise en charge des urls ====
-
-Il n'y a plus le choix dans le moteur d'URL. Il s'agit maintenant uniquement
-du moteur anciennement nommé "significant" et amélioré pour prendre en charge
-les urls de "basic_significant". Les paramètres "module" et
-"action" des urls ne sont plus pris en charge. Si vous avez des urls en dur
-dans votre code (contrôleurs, configurations ou templates par exemple) qui
-contiennent ces paramètres (parce que vous utilisiez le moteur "simple"),
-changez-les sous la forme @@/mon_module/mon_controleur/ma_methode@@.
-
-Exemple : @@/index.php?module=foo&action=ctrl:act@@ devient
-@@/index.php/foo/ctrl/act@@.
-
-Si ces urls ne fonctionnent pas après la migration, vérifiez que votre serveur
-web est bien configuré pour prendre en charge le "pathinfo".
-
-==== Vos scripts utilisant jCmdLineRequest ====
-
-Si le script est dédié à une action particulière, il ne faut plus seulement
-indiquer @@true@@ au constructeur de jCmdLineRequest, mais aussi le module
-et l'action. Vous y mettrez donc les valeurs des paramètres de configuration
-@@startModule@@ et @@startAction@@ du script. Ces derniers ne sont en effet
-plus utilisés.
-
-Cependant, nous vous recommandons de migrer vos contrôleurs de scripts en ligne
-de commande vers des commandes implémentées avec Symfony Console. @@jCmdLineCoordinator@@
-et @@jCmdLineController@@ sont déclarés obsolètes. Voyez le chapitre pour
-développer une [[/application/cmdline|commande avec Symfony Console]].
-
-==== Plugins custom pour jDb et jDao ====
-
-Les classes @@*daobuilder*@@ des plugins de jDb ne sont plus pris en charge. Si
-vous aviez fait votre propre plugin pour jDb, il faut migrer la classe de type
-daobuilder vers un plugin spécifique pour jDao. Voir la doc de jDao.
-
-Idem pour les classes @@dbtools@@, qui ne sont plus dans les drivers,
-mais complètement intégrées à jDb. Si vous avez un plugin avec sa propre
-classe dbtools qui ne correspond pas à un langage SQL pris en charge par jDb,
-il vous faudra proposer un patch à Jelix.
-
-==== Changements dans les scripts d'installation de vos modules ====
-
-Étant donné les changements dans l'organisation des fichiers de configuration,
-et le changement de fonctionnement général de l'installateur, des nouvelles
-classes @@\Jelix\Installer\Module\Installer@@, @@\Jelix\Installer\Module\Uninstaller@@,
-et @@\Jelix\Installer\Module\Configurator@@ ont fait leur apparition.
-
-Bien que cela ne soit pas obligatoire pour Jelix 1.7 (mais cela le deviendra
-pour les futures versions, @@jInstallerModule@@ disparaitra), vous devriez
-modifier vos scripts d'installation et de mise à jour en utilisant la classe
-@@\Jelix\Installer\Module\Installer@@. Probablement aussi que vous devrez migrer
-des parties de votre classe d'installation vers une classe de configuration
-basée sur @@\Jelix\Installer\Module\Configurator@@.
-
-
-==== Disparition de json.js et json2.js ====
-
-Si vos scripts javascript utilisaient la fonction @@toJSONString()@@ ou @@parseJSON()@@,
-il faut remplacer ces appels par l'utilisation de l'objet JSON standard en
-javascript.
-
-Il faut aussi retirer tout chargement des scripts jelix/js/json.js, jelix/js/json2.js
-et jelix/xul/jsonrpc.js.
-
 ==== Mise à jour des modules ====  
 
 Mettez à jour les sources des modules tiers que vous avez installés, et qui sont
-compatibles avec Jelix 1.7.
+compatibles avec Jelix 1.8.
 
 Et pour vos propres modules, vous devez adapter le code source en faisant les
 modifications suivantes :
 
   * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible
-    avec Jelix 1.7 (changer l'attribut @@A@maxversion@@). Exemple :
+    avec Jelix 1.8 (changer l'attribut @@A@maxversion@@). Exemple :
 
 <code xml>
-        <jelix minversion="1.6" maxversion="1.7.*"/>
+        <jelix minversion="1.6" maxversion="1.8.*"/>
 </code>
 
 ==== Changements d'API ====
@@ -299,36 +104,13 @@ classes et méthodes que vous pouvez utiliser.
 Il y a eu aussi des changements dans certaines API, que vous devriez donc
 modifier dans votre code si vous les utilisez :
 
-  * @@jQueryPath@@ dans la configuration est obsolète. Préférez l'utilisation des webassets.
-
-  * si vous traitez des requêtes avec du contenu JSON (type application/json)
-    le JSON est maintenant automatiquement désérialisé avec json_decode. Vous
-    devez donc changer vos contrôleurs pour ne plus faire vous même la
-    déserialisation.
-
-  * jDb : si vous utilisiez @@bindValue()@@ et @@bindParam()@@ (mais il y a peu de chance,
-    vu que cela ne fonctionnait pas très bien) il faut modifier ces appels, en
-    utilisant les bons arguments.
-
-  * jDao : l'attribut "driver" sur la balise de condition "binary_op" est déprécié et 
-    remplacé par un attribut "dbtype". Vous devez également supprimer l'attribut
-    @@groupby@@ sur les élements @@<method>@@. Il n'est plus pris en charge depuis Jelix 1.6.
+  * TODO pas de changement pour le moment
 
 
 Des fonctionnalités, API et modules ont été supprimés. Voir la liste
 complète dans [[/nouveautes|les nouveautés]]. Veillez donc à modifier votre
 code pour ne plus les utiliser et éventuellement les remplacer par des
 alternatives.
-
-==== mise à jour du script cmd.php ====
-
-Remplacer le contenu du script @@cmd.php@@ qui se trouve au même niveau que
-@@application.init.php@@ par celui-ci :
-
-<code php>
-require (__DIR__.'/application.init.php');
-\Jelix\DevHelper\JelixCommands::launch();
-</code>
 
 ==== Lancement de la migration ====
 
@@ -337,83 +119,9 @@ beaucoup de changements à votre place.
 
 En particulier :
 
-  * **Déplacement des fichiers de configuration** suivants vers un nouveau répertoire @@app/system@@ :
-     * @@mainconfig.ini.php@@, @@urls.xml@@, @@preferences.ini.php@@
-     * ceux des points d'entrées
-     * fichiers de configuration des plugins du coordinateur
-     * fichier de classmap pour soap
-  * **Déplacement du répertoire @@responses/@@** vers @@app/responses@@
-  * Mise à jour de la configuration du moteur d'Url
-     * Migration de la configuration des moteurs d'url "simple" et "basic_significant"
-       vers le fichier urls.xml
-     * Migration des paramètres @@startModule@@ et @@startAction@@ vers @@urls.xml@@
-     * Suppression des paramètres et section obsolètes liés au moteur d'url
-  * mise à jour du contenu des fichiers de configuration ini :
-     * Deplacement des sections @@[modules]@@ des configurations des points d'entrée
-       vers @@mainconfig.ini.php@@
-     * Dans la section @@[modules]@@, renommage des propriétés @@*.access@@ en @@*.enabled@@
-     * migration de @@persistant_crypt_key@@ vers @@persistant_encryption_key@@ (liveconfig.ini.php)
-     * deplacement du contenu de la plupart des fichiers de configuration des
-       plugins de coordinateur vers mainconfig.ini.php
-     * migration de la declaration des assets des widgets wikieditor et htmleditor
-       vers le nouveau système d'assets
-     * Suppression des paramètres @@modulesPath@@ et @@pluginsPath@@
-  * Mise à jour du fichier profiles.ini.php
-     * migration des paramètres de connexions ldap dans le fichier profiles.ini.php,
-       si vous utilisez ldap pour l'authentification.
-     * remplacement du driver @@mysql@@ par @@mysqli@@
-  * mise à jour du fichier project.xml
-  * creation du script console.php, renommage de cmd.php en dev.php
-  * creation de @@install/configurator.php@@ et mise à jour de @@install/installer.php@@
+  * TODO pas de changements pour le moment
 
-Lancez donc maintenant : @@php cmd.php jelix:migrate -v@@.
-
-
-==== Déplacement des fichiers overloads, themes... ====
-
-Il faut déplacer les contenus qui ne sont pas dynamiques (donc ceux d'origine, pas
-ceux créés par l'application) :
-
-   - de @@var/overloads/*@@ vers @@app/overloads/@@
-   - de @@var/themes/*@@ vers @@app/themes/@@
-   - de @@var/locales/*@@ vers @@app/locales/@@
-
-Ce n'est pas fait automatiquement par le script de migration, car il n'est
-pas possible pour lui de déterminer ce qui est "statique" ou "dynamique".
-
-==== Installation et configuration des modules externalisés ====
-
-Si vous utilisez les objets réponses Atom ou Rss, ils ont été déplacé dans un
-module dédié @@jfeeds@@ qui est livré avec Jelix. Il faut l'activer pour que vos
-flux Atom et Rss fonctionnent :
-
-<code bash>
-php dev.php module:configure jfeeds -v
-</code>
-
-Certaines classes, certains modules et plugins sont maintenant livrés séparément, soit
-installable avec Composer, soit via un zip. Si vous les utilisiez, il faudra donc les
-récupérer en plus de Jelix. Il s'agit de :
-
-  * Le module jSoap : [[https://packagist.org/packages/jelix/soap-server-module|jelix/soap-server-module]]
-  * Le module jtcpdf : [[https://packagist.org/packages/jelix/tcpdf-module|jelix/tcpdf-module]].
-  * Le plugin Minify pour les réponses HTML (maintenant dans un module) : [[https://packagist.org/packages/jelix/minify-module|jelix/minify-module]].
-  * Le plugin Redis reposant sur la classe PhpRedis pour jKVDb et jCache : [[https://packagist.org/packages/jelix/php-redis-plugin|jelix/php-redis-plugin]].
-    (inutile si vous avez installé l'extension redis dans PHP, auquel cas vous
-    pouvez utiliser le plugin redis_ext fourni dans Jelix)
-  * Le module jsitemap : [[https://packagist.org/packages/jelix/sitemap-module|jelix/sitemap-module]], contenant
-    l'objet réponse pour générer un sitemap.
-  * la classe jHttp : [[https://packagist.org/packages/jelix/jhttp|jelix/jhttp]]. Il est
-    préconisé d'utiliser d'autres composants plus modernes
-    comme [[https://packagist.org/packages/guzzlehttp/guzzle|GuzzleHttp]].
-
-Pour chacun des modules nouvellement téléchargé, il faudra faire un :
-
-<code bash>
-php dev.php module:configure nom_du_module
-</code>
-
-Cela les configurera et les activera dans l'application.
+Lancez donc maintenant : @@php dev.php jelix:migrate -v@@.
 
 ==== Mise à jour des instances de l'application ====
 
@@ -423,8 +131,7 @@ et déployer les sources sur vos serveurs de tests (en particulier votre
 serveur local si vous en avez un).
 
 Comme à chaque fois que déployez les sources d'une application Jelix sur
-un serveur, il faut lancer le configurateur local (nouvelle étape de Jelix 1.7)
-et l'installateur de Jelix.
+un serveur, il faut lancer le configurateur local et l'installateur de Jelix.
 
 Dans le cas présent, le configurateur local terminera le paramétrage et la
 migration des informations de configuration spécifiques au contexte du
@@ -440,37 +147,6 @@ php install/configurator.php -v
 php install/installer.php -v
 </code>
 
-==== Utilisation du script dev.php, anciennement cmd.php ====
-
-Les commandes de cmd.php ont été réimplémentée en utilisant le composant Symfony Console.
-De ce fait, tous les paramètres et options ont changé. Et cmd.php a été renommé
-en dev.php.
-
-Si vous utilisez ces commandes dans des scripts, cron ou autre, il vous faut changer les
-paramètres, en particulier le nom de la commande. Faire un @@php dev.php help@@
-pour avoir l'aide.
-
-De plus le script createapp.php a été déplacé dans un répertoire bin,
-et disponible sous le nom @@create-jelix-app@@ dans @@vendor/bin@@ de
-votre application si vous installez Jelix avec Composer.
-
-==== Mise à jour de votre serveur web ====
-
-Si vous aviez un alias vers @@lib/jelix-www/@@ dans la configuration de votre
-serveur web, et que vous utilisez Composer, il faut changer le chemin puisque
-jelix-www est maintenant dans @@vendor/jelix/jelix/lib/jelix-www/@@.
-
-==== À propos des sessions et cookies ====
-
-Les données des instances des formulaires ne sont plus stockés en session, mais
-dans un cache géré par jCache. Il faut donc savoir que certains de vos
-utilisateurs qui utilisaient des formulaires au moment de la migration de votre
-application perdront donc les données de leurs formulaires (si elles n'ont pas
-été sauvées par ailleurs).
-
-Idem pour la persistance de l'authentification : la clé de chiffrement de cookie
-étant changée, les utilisateurs devront obligatoirement se ré-authentifier si
-ils avaient choisie d'être "reconnu" par votre application.
 
 ==== Fin ====
 
