@@ -1,7 +1,7 @@
 ~~LANG:EN@enman:components/cache~~
 
 Mettre en cache des données ou des portions de page HTML générées permet d'améliorer
-les performances du site web, voir même d'éviter de transférer des données au
+les performances du site web, voire même d'éviter de transférer des données au
 niveau navigateur.
 
 Jelix propose plusieurs systèmes de cache. Vous avez probablement vu
@@ -14,7 +14,7 @@ la mise en cache de données quelconques, et l'utilisation du cache HTTP.
 jCache est une classe permettant de stocker des données dans un système de
 cache. Le système repose sur des pilotes pour les accès aux données. Il est donc
 possible d’utiliser memcache, redis, ou encore une base de données, voire même
-le système de fichier. Et vous pouvez développer votre propre pilote.
+le système de fichiers. Et vous pouvez développer votre propre pilote.
 
 ==== Configuration ====
 

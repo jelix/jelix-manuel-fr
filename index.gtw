@@ -133,7 +133,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
 - part: [[outils-dev|Aide au développement]]
    - chapter: [[outils-dev/error-manager|Configurer la gestion des erreurs]]
    - chapter: [[outils-dev/deboggage|Debuggage et utilisation de jLog]]
-   - chapter: [[outils-dev/tests_unitaires|Développer des tests unitaires]]
+   - chapter: [[outils-dev/tests-unitaires|Développer des tests unitaires]]
 
 - part: [[installation/deploiement|Déployer une application jelix]]
   - chapter: [[installation/production|Configurer un serveur de production]]

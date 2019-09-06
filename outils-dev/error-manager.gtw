@@ -43,7 +43,7 @@ des mots clés spéciaux : @@L@%date%@@, @@L@%ip%@@, @@L@%typeerror%@@,
 @@L@%http_error%@@, @@L@\t@@ et @@L@\n@@.
 
 @@L@%params%@@ indique d'afficher tous les paramètres de la requête HTTP.
-Cependant cela peut poser des problèmes de confidentialité, voir de sécurité,
+Cependant cela peut poser des problèmes de confidentialité, voire de sécurité,
 car certains paramètres peuvent être indésirables dans les logs, comme les
 mots de passes.
 
