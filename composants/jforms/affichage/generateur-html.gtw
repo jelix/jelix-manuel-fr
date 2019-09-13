@@ -38,7 +38,7 @@ Donnez @@L@""@@ comme premier paramètre quand @@ctrl_control@@
 est utilisé à l'intérieur d'une boucle @@formcontrols@@.
 
 <code html>
-<td>{ctrl_control 'nom', array('class'=>'myclass', 'placeholder'=>'votre nom'}</td>
+<td>{ctrl_control 'nom', array('class'=>'myclass', 'placeholder'=>'votre nom')}</td>
 </code>
 
 
