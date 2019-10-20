@@ -49,7 +49,7 @@ en téléchargeant l'archive comme pour les versions précédentes.
 
 === Si vous utilisez Composer ===
 
-Dans le répertoire de votre application, modifieez le fichier @@F@composer.json@@
+Dans le répertoire de votre application, modifiez le fichier @@F@composer.json@@
 en indiquant la version 1.8 pour le paquet @@jelix/jelix@@ ou @@jelix/jelix-standard@@
 
 Exemple :

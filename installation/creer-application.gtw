@@ -52,10 +52,10 @@ framework et les bibliothèques dépendantes.
 Décompressez l'archive avec des logiciels comme winzip, unzip ou tar.
 
 <code bash>
-  tar xvzf jelix-1.7.0.tar.gz
+  tar xvzf jelix-1.7.2.tar.gz
 </code>
 
-Un repertoire @@jelix-1.7.0@@ est créé contenant un répertoire @@lib/@@ et @@bin/@@.
+Un repertoire @@jelix-1.7.2@@ est créé contenant un répertoire @@lib/@@ et @@bin/@@.
 Vous devez mettre ces deux répertoires dans le dossier de votre projet.
 
 La commande create-jelix-app se trouve dans @@F@bin/@@.
