@@ -68,7 +68,7 @@ Installez Composer en suivant [[https://getcomposer.org|les instructions de son 
 Dans le répertoire de votre application, créer un fichier @@F@composer.json@@.
 Celui-ci doit indiquer le paquet @@jelix/jelix@@ comme dépendance dans la
 section @@require@@, avec la version voulue. Il est recommandé d'indiquer
-@@^1.7.0@@.
+@@^1.7.2@@.
 
 Exemple :
 
@@ -77,7 +77,7 @@ Exemple :
     "name": "mycompany/myapp",
     "type": "application",
     "require": {
-        "jelix/jelix": "^1.7.0"
+        "jelix/jelix": "^1.7.2"
     }
 }
 </code>
