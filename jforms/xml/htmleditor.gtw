@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:jforms/xml/htmleditor~~
 
-Pour utiliser un éditeur HTML wysywg dans vos formulaire, il faut utiliser la
+Pour utiliser un éditeur HTML wysiwyg dans vos formulaires, il faut utiliser la
 balise @@E@<htmleditor>@@.
 
 <code xml>
@@ -42,8 +42,8 @@ ccc.config =
 ccc.skin.sss =
 </code>
 
-  * @@V@ccc@@ represente le nom de la configuration
-  * @@V@nnn@@ represente le nom du moteur utilisé
+  * @@V@ccc@@ représente le nom de la configuration
+  * @@V@nnn@@ représente le nom du moteur utilisé
   * @@V@sss@@ représente l'identifiant d'une 'skin'
   * @@V@ccc.engine.file@@ contient  le lien du fichier du moteur 
   * @@V@ccc.config@@ contient le lien de fichier de configuration (voir plus bas)
