@@ -1,0 +1,76 @@
+~~LANG:EN@enman:modules/controllers/http-errors~~
+
+Quand une erreur PHP survient ou une exception qui n'est pas traitée par
+votre contrôleur, survient, le routeur Jelix (coordinateur), génère une page avec
+une erreur HTTP 500. Voir le chapitre sur [[/outils-dev/error-manager|le gestionnaire d'erreur]].
+
+Mais vous voudriez peut-être génerer une autre page d'erreur ou une autre erreur HTTP.
+
+===== Générer une erreur HTTP avec votre propre objet réponse =====
+
+C'est le moyen classique de générer des erreurs HTTP personnalisées dans Jelix.
+
+Vous créez un objet réponse, typiquement une page HTML, et vous y indiquez le code
+http et le message http au moyen de la méthode @@setHttpStatus()@@.
+
+Voici un exemple, qui affiche une page 404 si l'id donné ne correspond pas à
+un enregistrement.
+
+<code php>
+    public function myaction() {
+        $rep = $this->getResponse('html');
+
+        $id = $this->param('id');
+
+        $rec = jDao::get('mydao')->get($id);
+        if ($rec === null) {
+
+            // the record doesn't exist, let's return a 404 error
+
+            $rep->bodyTpl = 'my404';
+            $rep->setHttpStatus('404', 'Not Found');
+            return $rep;
+        }
+
+        // ...
+        return $rep;
+    }
+</code>
+
+
+===== Généré une erreur HTTP avec la réponse par défaut d'erreur HTTP =====
+
+Depuis Jelix 1.7.2, vous pouvez afficher une page d'erreur plus simplement,
+grâce à une exception.
+
+Créez simplement une exception @@jHttpErrorException@@ exception, et la page d'erreur
+par défaut sera affiché, avec le code HTTP indiqué. Vous pouvez aussi utiliser
+@@jHttp404NotFoundException@@, @@jHttp401UnauthorizedException@@, ou @@jHttp403ForbiddenException@@,
+qui sont juste des classes dérivant de @@jHttpErrorException@@.
+
+Notre exemple précédent devient :
+
+<code php>
+    public function myaction() {
+        $rep = $this->getResponse('html');
+
+        $id = $this->param('id');
+
+        $rec = jDao::get('mydao')->get($id);
+
+        if ($rec === null) {
+            // the record doesn't exist, let's return a 404 error
+            throw new jHttp404NotFoundException()
+        }
+
+        // ...
+        return $rep;
+    }
+</code>
+
+Pour afficher la page d'erreur et retourner le code HTTP, le router instancie
+la classe réponse qui est indiqué pour le type de réponse @@htmlerror@@. Par
+défaut, il s'agit de la classe @@jResponseHtmlError@@, qui utilise le template
+@@jelix~http_error.html@@. Pour personnaliser l'affichage, vous pouvez
+[[/modules/creer-response|indiquer une autre classe dans la configuration]],
+ou [[/application/themes|redéfinir le template dans un thème]].

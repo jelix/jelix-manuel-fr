@@ -283,6 +283,10 @@ de l'application.
     configuration.
   * Correction dans jDatetime sur le format RCF822 et les timezones
 
+  * nouvelles exceptions pour les contrôleurs, @@jHttpErrorException@@, @@jHttp404NotFoundException@@,
+   @@jHttp401UnauthorizedException@@ and @@jHttp403ForbiddenException@@ pour
+   [[/modules/controleurs/erreurs-http|générer facilement des pages d'erreur http]].(Jelix 1.7.2+)
+
 ==== Les modules et plugins externalisés ====
 
 À l'instar du module jtcpdf dans les versions précédentes, des modules et plugins ne sont
