@@ -44,7 +44,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
      - section: [[modules/creer-un-module|Créer un module]]
      - section: [[modules/controleurs|Développer un contrôleur]]
      - section: [[modules/controleurs/recuperation-parametres-http|Récupération des paramètres HTTP]]
-     - section: [[modules/controllers/erreurs-http|Générer des erreurs HTTP]]
+     - section: [[modules/controleurs/erreurs-http|Générer des erreurs HTTP]]
      - section: [[modules/controleurs/crud|Utiliser le contrôleur CRUD]]
      - section: [[modules/controleurs/rest-full|Un contrôleur pour REST]]
      - section: [[modules/controleurs/redirections|Faire une redirection]]
