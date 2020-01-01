@@ -133,8 +133,8 @@ captcha=recaptcha
 Vous pouvez utiliser d'autres types de captcha, mais il vous faut alors développer
 deux choses :
 
-  # un widget pour jForms, pour afficher le captcha
-  # une classe pour valider, coté serveur, ce qu'a saisi l'utilisateur
+  - un widget pour jForms, pour afficher le captcha
+  - une classe pour valider, coté serveur, ce qu'a saisi l'utilisateur
 
 La première chose à faire est de choisir un nom pour le type de validateur. Prenons
 par exemple "moncap".
