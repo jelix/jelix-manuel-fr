@@ -67,7 +67,7 @@ Voici un exemple:
         <description>unit tests for jelix</description>
     </info>
     <dependencies>
-        <jelix minversion="1.6" maxversion="1.7.*" />
+        <jelix minversion="1.7" maxversion="1.8.*" />
         <module name="testurls" minversion="1.0.2" maxversion="1.1b1" />
         <module name="jauthdb" />
         <module name="jacl2db" />

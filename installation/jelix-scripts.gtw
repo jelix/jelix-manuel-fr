@@ -13,16 +13,15 @@ profiter pleinement de Jelix.
 
 ==== Pour Ubuntu/Debian/autre linux ====
 
-Vous devez installer le paquet @@php5-cli@@ ou @@php7.0-cli@@ afin d'avoir la
+Vous devez installer le paquet @@php7.2-cli@@ afin d'avoir la
 version ligne de commande de PHP.
 
 Attention, dans bien des distributions linux, en particulier debian/ubuntu, le
 fichier de configuration @@F@php.ini@@ pour la version CLI de PHP, n'est pas le
 même que celui utiliser par le module PHP d'Apache ou que celui de PHP-FPM.
 Veillez donc à activer les extensions nécessaires à l’exécution de Jelix, à la
-fois dans le fichier @@F@/etc/php5/apache2/php.ini@@, ou @@F@/etc/php5/fpm/php.ini@@,
-et dans le fichier @@F@/etc/php5/cli/php.ini@@. Avec PHP 7, ils peuvent se
-trouver dans @@/etc/php/php7.0/@@.
+fois dans le fichier @@F@/etc/php/php7.2/apache2/php.ini@@, ou @@F@/etc/php/php7.2/fpm/php.ini@@,
+et dans le fichier @@F@/etc/php/php7.2/cli/php.ini@@.
 
 Notez que sous Debian et Ubuntu, la configuration de la plupart des extensions
 sont dans des fichiers ini séparés, et stockés dans un répertoire @@conf.d@@ commun

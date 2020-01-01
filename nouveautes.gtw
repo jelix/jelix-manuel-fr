@@ -7,8 +7,8 @@ Version en développement.
 Jelix 1.8 nécessite PHP 7.2 minimum.
 
 * Unit tests: @@jUnitTestCase@@ et @@jUnitTestCaseDb@@ sont depreciés. Utilisez
- @@\Jelix\UnitTests\UnitTestCase@@ et @@\Jelix\UnitTests\UnitTestCase@@ à la place.
- NOT DOCUMENTED YET.
+  @@\Jelix\UnitTests\UnitTestCase@@ et @@\Jelix\UnitTests\UnitTestCase@@ à la place.
+  NOT DOCUMENTED YET.
 
 
 ==== Contributeurs à Jelix 1.8 ====

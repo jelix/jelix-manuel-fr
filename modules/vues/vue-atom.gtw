@@ -24,7 +24,7 @@ est un objet permettant de spécifier les propriétés du fil Atom. Exemple :
    $rep->infos->title = 'Actualité de Jelix';
    $rep->infos->webSiteUrl= 'http://jelix.org/fr/';
    $rep->infos->copyright = 'Copyright 2017 jelix.org';
-   $rep->infos->description = 'Actualité sur le framework PHP5 Jelix';
+   $rep->infos->description = 'Actualité sur le framework PHP Jelix';
    $rep->infos->updated = '2017-06-08 12:00:00';
    $rep->infos->selfLink=jUrl::get();
 </code>
