@@ -1,11 +1,14 @@
 ~~LANG:EN@enman:new-features~~
 
+Version en développement.
 
 ===== Nouveautés apportées par la version 1.8 =====
 
-Jelix 1.8 nécessite PHP 7.1 minimum.
+Jelix 1.8 nécessite PHP 7.2 minimum.
 
-Version en développement. Pas de nouveautés pour le moment.
+* Unit tests: @@jUnitTestCase@@ et @@jUnitTestCaseDb@@ sont depreciés. Utilisez
+ @@\Jelix\UnitTests\UnitTestCase@@ et @@\Jelix\UnitTests\UnitTestCase@@ à la place.
+ NOT DOCUMENTED YET.
 
 
 ==== Contributeurs à Jelix 1.8 ====
