@@ -352,7 +352,7 @@ remplissage avec les données soumises.
 
 <code php>
   $form = jForms::get('myModule~myForm');
-  $ctrl= new jFormsControlinput('identifiant');
+  $ctrl= new jFormsControlInput('identifiant');
   $ctrl->required=true;
   $ctrl->datatype->addFacet('maxLength',255);
   $ctrl->label='Identifiant';
@@ -364,7 +364,7 @@ remplissage avec les données soumises.
 
 <code php>
   $form = jForms::get('myModule~myForm');
-  $ctrl= new jFormsControlinput('identifiant');
+  $ctrl= new jFormsControlInput('identifiant');
   $ctrl->required=true;
   $ctrl->datatype->addFacet('maxLength',255);
   $ctrl->label='Identifiant';
