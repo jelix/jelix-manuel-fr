@@ -52,8 +52,8 @@ require_once (JELIX_LIB_CORE_PATH.'request/jCmdLineRequest.class.php');
 
 $config_file = 'cmdline/config.ini.php';
 
-$jelix = new jCmdlineCoordinator($config_file);
-$jelix->process(new jCmdLineRequest());
+jApp::setCoord(new jCmdlineCoordinator($config_file));
+jApp::coord()->process(new jCmdLineRequest());
 </code>
 
 Notez les différences par rapport à un point d'entrée classique :
