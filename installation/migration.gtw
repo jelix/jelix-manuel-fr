@@ -415,6 +415,42 @@ php dev.php module:configure nom_du_module
 
 Cela les configurera et les activera dans l'application.
 
+==== Changements dans vos contrôleurs SOAP ====
+
+Il faut remplacer les commentaires de code "@param" par "@externalparam".
+
+Avant :
+<code php>
+    /**
+     * Test with a simple parameter
+     * @param string $name
+     * @return string
+     */
+    function hello() {
+        $rep = $this->getResponse('soap');
+        $rep->data = "Hello ".$this->param('name');
+        return $rep;
+    }
+}
+</code>
+
+Après :
+
+<code php>
+    /**
+     * Test with a simple parameter
+     * @externalparam string $name
+     * @return string
+     */
+    function hello() {
+        $rep = $this->getResponse('soap');
+        $rep->data = "Hello ".$this->param('name');
+        return $rep;
+    }
+}
+</code>
+
+
 ==== Mise à jour des instances de l'application ====
 
 Maintenant que les sources de Jelix et de votre application ont été mise à jour,
