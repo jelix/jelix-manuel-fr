@@ -7,7 +7,7 @@ Jelix 1.7 apporte beaucoup de nouveautés. Consultez les [[installation/migratio
 qui sont bien moins impressionnantes que la liste des nouveautés : les scripts
 de mises à jour s'occupent de pas mal de choses.
 
-Jelix 1.7 nécessite PHP 5.6 minimum et est compatible avec PHP 7.3.
+Jelix 1.7 nécessite PHP 5.6 minimum et est compatible avec PHP 7 et PHP 8.
 
 ==== Intégration avec Composer ====
 
