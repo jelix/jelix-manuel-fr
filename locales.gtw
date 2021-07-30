@@ -58,9 +58,15 @@ et dans chacun de ces répertoires, un répertoire par module, c'est à dire
 On peut ainsi copier facilement un répertoire @@F@<yourapp>/var/locales/<lang>/@@
 d'une application à une autre, ou pour une autre langue.
 
-Il y a aussi la possibilité de redéfinir les fichiers properties en mettant une
-copie dans le répertoire @@F@<yourapp>/var/overloads/@@. Voir
+Il y a aussi la possibilité de redéfinir les fichiers properties de modules tiers
+en mettant une copie dans le répertoire @@F@<yourapp>/var/overloads/@@. Voir
 [surcharge-de-fichiers|le chapitre correspondant].
+
+Depuis Jelix 1.6.28, il y a également la possibilité de stocker les fichiers
+de locales dans @@F@<yourapp>/app/locales/@@, de la même manière que @@F@<yourapp>/var/locales/@@.
+Cela permet de ne pas encombrer le répertoire @@var/@@, qui ne devrait
+contenir que des fichiers "variables".
+
 
 ==== Noms des fichiers ====
 
@@ -371,3 +377,17 @@ en = en_GB
 en = en_EN
 </code>
 
+===== Installer des paquets de traductions =====
+
+Jelix et certains modules ont été traduits dans diverses langues, via le site
+[[https://www.transifex.com/3liz-1/jelix/|Transifex]]. Certaines traductions
+ne sont pas complètes, et peut-être n'y-a-t-il pas de traduction dans votre langue
+préférée. Nous vous encourageons alors à contribuer sur Transifex.
+
+Les fichiers properties résultants de ces traductions sont disponibles en
+téléchargement sur https://download.jelix.org/jelix/langpacks/.
+
+Il suffit de dézipper les fichiers de langues que vous souhaitez dans le répertoire
+@@F@<yourapp>/app/locales/@@ (répertoire que vous devez créer). Videz le repertoire
+temp, configurer l'application pour pouvoir utiliser les nouvelles langues
+(voir plus haut), et vous pouvez profiter des traductions.
