@@ -205,7 +205,7 @@ comparaison ainsi que les prédicats suivants :
   * IN, NOT IN,
   * IS, IS NOT,
   * IS NULL, IS NOT NULL,
-  * MATCH, REGEXP, NOT REGEXP, RLIKE, SOUNDS LIKE, BETWEEN
+  * MATCH, REGEXP, NOT REGEXP, RLIKE, SOUNDS LIKE
   * @@~@@, @@!~@@, @@~*@@, @@!~*@@  (operateurs pour les expressions régulières de postgresql)
 
 == Cas spéciaux avec des valeurs NULL ==
