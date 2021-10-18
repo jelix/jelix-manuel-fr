@@ -131,7 +131,6 @@ Nouveautés sur la version 1.6.17 :
   * jResponseHtml : nouvelles propriétés pour le mode IE, viewport et metas
   * jResponseHtml : nouvelles méthodes addMeta() et outputMeta()
   * jRequest : nouvelle méthode isPostMethod()
-  * jDaoConditions: ajout de la prise en charge de l'opérateur BETWEEN
   * jForms: prise en charge de génération d'un placeholder (avec le label)
   * jForms: possiblité de redéfinir le code HTML de l'aide des contrôles, au niveau du builder de formulaire
   * jForms: possibilité de configurer un décorateur d'erreur JS pour tous les formulaires
