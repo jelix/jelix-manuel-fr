@@ -28,6 +28,17 @@ Tout d'abord, faites une sauvegarde de votre base de données, de vos fichiers d
 
 Comme d'habitude, vous devez vider le contenu de votre répertoire @@F@temp/votreapp/@@.
 
+
+==== Appliquer le patch pour jelix 1.5.8 ====
+
+Depuis la dernière version de la branche 1.5, il y a eu quelques correctifs dans les scripts de migrations, mais
+qui n'ont pas été publié dans une nouvelle version de Jelix 1.5, faute d'avoir un PHP assez vieux pour regénérer les paquets.
+
+Téléchargez donc https://download.jelix.org/jelix/releases/1.5.x/1.5.8/jelix_1.5.8_patch.zip, et dézippez-le
+à partir du répertoire parent de @@lib/@@. Cela remplacera quelques fichiers. Vous pouvez trouvez ceci également ici
+https://github.com/jelix/jelix/tree/jelix-1.5.x/build/patch .
+
+
 ==== Suppression de fichiers ====
 
 
