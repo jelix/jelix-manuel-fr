@@ -35,6 +35,14 @@ Comme d'habitude, vous devez vider le contenu de votre répertoire
 temporaires @@F@temp/votreapp-cli/@@ et @@F@temp/votreapp-scripts/@@, ils ne
 sont plus utilisés.
 
+==== Appliquer le patch pour jelix 1.3.9 ====
+
+Depuis la dernière version de la branche 1.3, il y a eu quelques correctifs dans les scripts de migrations, mais
+qui n'ont pas été publié dans une nouvelle version de Jelix 1.3, faute d'avoir un PHP assez vieux pour regénérer les paquets.
+
+Téléchargez donc https://download.jelix.org/jelix/releases/1.3.x/1.3.9/jelix_1.3.9_patch.zip, et dézippez-le
+à partir du répertoire parent de @@lib/@@.  
+
 ==== Changez le fichier application.init.php ====
 
 Ce script ne doit plus définir des constantes JELIX_APP_*, mais doit définir les
