@@ -5,3 +5,5 @@ deploy:
   stage: deploy
   script:
     - make deploy
+  tags:
+    - jelix
