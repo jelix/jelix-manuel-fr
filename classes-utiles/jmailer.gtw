@@ -59,7 +59,7 @@ dans la configuration DNS du domaine utilisé. Cet enregistrement doit contenir
 entre autre l'IP du serveur web. Il y a aussi la configuration DKIM que vous
 pouvez mettre en place. Mais ceci est hors contexte.
 
-==== Configuration SMTP
+==== Configuration SMTP ====
 
 Si vous choisissez d'envoyer les mails via un serveur SMTP spécifique, vous devez
 indiquer comment se connecter à ce serveur en créant un profil dans @@F@var/config/profiles.ini.php@@.
