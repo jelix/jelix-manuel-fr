@@ -386,4 +386,19 @@ cela qu'il est préférable d'avoir au moins une langue dans laquelle toutes
 les clés existent, et d'indiquer cette langue dans @@fallbackLocale@@.
 
 
+===== Installer des paquets de traductions =====
+
+
+Jelix et certains modules ont été traduits dans diverses langues, via le site
+[[https://www.transifex.com/3liz-1/jelix/|Transifex]]. Certaines traductions
+ne sont pas complètes, et peut-être n'y-a-t-il pas de traduction dans votre langue
+préférée. Nous vous encourageons alors à contribuer sur Transifex.
+
+Les fichiers properties résultants de ces traductions sont disponibles en
+téléchargement sur https://download.jelix.org/jelix/langpacks/.
+
+Il suffit de dézipper les fichiers de langues que vous souhaitez dans le répertoire
+@@F@<yourapp>/app/locales/@@ (répertoire que vous devez créer). Videz le repertoire
+temp, configurer l'application pour pouvoir utiliser les nouvelles langues
+(voir plus haut), et vous pouvez profiter des traductions.
 

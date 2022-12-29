@@ -3,14 +3,14 @@
 Quand vous voulez que votre module fonctionne selon des droits, il vous faut
 durant la réalisation de ce module :
 
-   * créer les roles que vous utiliserez
+   * créer les droits que vous utiliserez
    * éventuellement les enregistrer dans le système de droits utilisé par le
      driver que vous indiquez à jAcl2 : dans un annuaire LDAP si vous utilisez
      un driver LDAP (non fourni) ou une base de données si vous
      utilisez [[configuration|par exemple le driver jAcl2.db]].
 
 Ensuite vous pouvez utiliser les méthodes statiques de jAcl2 pour savoir si
-l'utilisateur courant a tel droit sur tel ou tel rôle.
+l'utilisateur courant a tel droit.
 
 Si le driver gère des groupes d'utilisateurs, vous n'avez pas à les indiquer
 lors de ces interrogations : le driver s'en occupe automatiquement. Notez qu'un
@@ -61,7 +61,7 @@ méthode statique de jAcl2 à connaître pour 99% des cas : @@M@jAcl2::check()@@
 
 C'est probablement la méthode que vous utiliserez le plus avec jAcl2. Elle
 permet de savoir si l'utilisateur a tel ou tel droit, et renvoie donc true ou
-false. C'est une méthode statique et ses paramètres sont le nom d'un rôle, et
+false. C'est une méthode statique et ses paramètres sont le nom d'un droit, et
 éventuellement l'identifiant d'une ressource. Exemple :
 
 <code php>
@@ -118,14 +118,14 @@ on_error_action="jelix~error:badright"
 
 Le plugin essaiera de récupérer les paramètres de plugins suivant dans les contrôleurs :
 @@jacl2.right@@, @@jacl2.rights.and@@, @@jacl2.rights.or@@. Ces paramètres doivent contenir
-des noms de rôles. Le plugin testera donc si l'utilisateur a les droits indiqués.
+des noms de droits. Le plugin testera donc si l'utilisateur a les droits indiqués.
 
 Pour vérifier un seul droit, utilisez @@jacl2.right@@ :
 
 <code php>
 
    public $pluginParams = array(
-        '*' => array( 'jacl2.right'=>'rôle', ...)
+        '*' => array( 'jacl2.right'=>'droit', ...)
         ...
    );
 </code>
@@ -135,7 +135,7 @@ Pour vérifier une série de droits que l'utilisateur doit posséder, utilisez @
 <code php>
 
    public $pluginParams = array(
-     '*' => array( 'jacl2.rights.and'=>array('role1', 'role2', ..)
+     '*' => array( 'jacl2.rights.and'=>array('droit1', 'droit2', ..)
             ),
         ...
    );
@@ -146,7 +146,7 @@ Ou encore, pour vérifier que l'utilisateur possède un des droits parmi une lis
 <code php>
 
    public $pluginParams = array(
-     '*' => array( 'jacl2.rights.or'=>array('role1', 'role2', ..)
+     '*' => array( 'jacl2.rights.or'=>array('droit1', 'droit2', ..)
             ),
         ...
    );

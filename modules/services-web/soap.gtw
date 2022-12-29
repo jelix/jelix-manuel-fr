@@ -68,7 +68,7 @@ class defaultCtrl extends jController {
 
     /** 
      * Test with a simple parameter
-     * @param string $name
+     * @externalparam string $name
      * @return string
      */
     function hello() {
@@ -97,7 +97,7 @@ puisse fonctionner. C'est la seule "originalité" par rapport aux autres types d
 contrôleurs.
 
 Pour indiquer les paramètres SOAP auxquels s'attend la méthode, il faut ajouter
-des tags "@param", avec lesquels on indique le type de paramètre, et le nom du
+des tags "@externalparam", avec lesquels on indique le type de paramètre, et le nom du
 paramètre. Pour indiquer le type de la valeur de retour, il faut utiliser le mot
 clé "@return" suivit du type.
 
@@ -106,13 +106,13 @@ int, boolean, float.
 
 Si on veut utiliser un tableau, on ajoutera @@[]@@ : 
 <code>
-    @param string[] $tableau_de_chaine
+    @externalparam string[] $tableau_de_chaine
 </code>
 
 S'l s'agit d'un tableau associatif, on utilisera @@[=>]@@:
 
 <code>
-    @param string[=>] $tableau_de_chaine_associatif
+    @externalparam string[=>] $tableau_de_chaine_associatif
 </code>
 
 On peut faire ça avec tous les types.
@@ -157,7 +157,7 @@ pour les paramètres et/ou la valeur de retour qui sont de ce type :
 <code php>
     /** 
      * on reçoit un objet et on retourne un objet
-     * @param MyTestStruct $input
+     * @externalparam MyTestStruct $input
      * @return MyTestStruct
      */
     function receiveObject() {

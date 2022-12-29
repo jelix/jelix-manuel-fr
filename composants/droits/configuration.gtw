@@ -70,17 +70,17 @@ Remplacez bien entendu ce nom par le nom adéquate.
 
 Notez que le module **jacl2db_admin** vous permet de configurer et gérer les droits
 en quelques clics, vous évitant d'utiliser la ligne de commande. Il vous faudra
-cependant quand même créer les rôles en ligne de commande.
+cependant quand même créer les droits en ligne de commande.
 
 
-==== Création des rôles ====
+==== Création des droits ====
 
-Dans le système de droits, vous devez déterminer des rôles
+Dans le système de droits, vous devez déterminer des droits
 ou actions possibles sur des données.
 
 Imaginons que l'on veuille créer des droits sur les articles d'un CMS, les
-différents rôles seraient : read, list, create, delete, update. Autrement dit,
-on pourrait définir les rôles suivants :
+différents droits seraient : read, list, create, delete, update. Autrement dit,
+on pourrait les nommer ainsi :
 
   * "cms.articles.read",
   * "cms.articles.list",
@@ -88,38 +88,38 @@ on pourrait définir les rôles suivants :
   * "cms.articles.delete",
   * "cms.articles.update",
 
-Notez que le nom du rôle commence par un préfixe "cms.articles" précisant exactement
+Notez que le nom du droit commence par un préfixe "cms.articles" précisant exactement
 de quoi il s'agit. Ne mettez pas "read" tout court par exemple, cela peut préter à
-confusion et n'est pas très explicite, et être en conflit avec des rôles d'autres modules.
-Indiquez donc toujours dans le nom du rôle des mots permettant d'identifier
+confusion et n'est pas très explicite, et être en conflit avec des droits d'autres modules.
+Indiquez donc toujours dans le nom du droit des mots permettant d'identifier
 "à propos de quoi". Votre code n'en sera que plus compréhensible.
 
-On peut lister les rôles existants :
+On peut lister les droits existants :
 
 <code bash>
-$ php console.php acl2:roles-list
+$ php console.php acl2:rights-list
 </code>
 
 Au départ, vous devriez obtenir une liste vide :
 
 <code>
-+-------------------+-------+--------------------------------------+
-| Role Group        | id    | label key                            |
-+-------------------+-------+--------------------------------------+
++-------------------+----------+--------------------------------------+
+| Rights Group      | Right id | label key                            |
++-------------------+----------+--------------------------------------+
 
 </code>
 
-Un rôle est représenté par une valeur de droit et une clé de locale qui
+Un droit est représenté par une valeur et une clé de locale qui
 indiquera son label (clé que vous devrez enregistrer dans un fichier de locale).
 
-Créons nos rôles :
+Créons nos droits :
 
 <code bash>
-php console.php acl2:role-create "cms.articles.create" "cms~acl2.articles.create"
-php console.php acl2:role-create "cms.articles.update" "cms~acl2.articles.update"
-php console.php acl2:role-create "cms.articles.delete" "cms~acl2.articles.delete"
-php console.php acl2:role-create "cms.articles.list" "cms~acl2.articles.list"
-php console.php acl2:role-create "cms.articles.read" "cms~acl2.articles.read"
+php console.php acl2:right-create "cms.articles.create" "cms~acl2.articles.create"
+php console.php acl2:right-create "cms.articles.update" "cms~acl2.articles.update"
+php console.php acl2:right-create "cms.articles.delete" "cms~acl2.articles.delete"
+php console.php acl2:right-create "cms.articles.list" "cms~acl2.articles.list"
+php console.php acl2:right-create "cms.articles.read" "cms~acl2.articles.read"
 </code>
 
 Si vous n'utilisez pas de module qui permette de gérer les droits, alors la clé
@@ -127,12 +127,12 @@ de locale n'est pas indispensable. Mettez alors la chaîne que vous voulez.
 
 Si la commande échoue, vous avez un message d'erreur.
 
-On peut vérifier en listant à nouveau les rôles :
+On peut vérifier en listant à nouveau les droits :
 
 <code bash>
-$ php console.php acl2:roles-list
+$ php console.php acl2:rights-list
 +---------------+---------------------+--------------------------+
-| Role Group    | id                  | label key                |
+| Rights Group  | Right id            | label key                |
 +---------------+---------------------+--------------------------+
 |               | cms.articles.create | cms~acl2.articles.create |
 |               | cms.articles.delete | cms~acl2.articles.delete |
@@ -142,16 +142,16 @@ $ php console.php acl2:roles-list
 +---------------+---------------------+--------------------------+
 </code>
 
-Sachez que vous pouvez supprimer un rôle en faisant :
+Sachez que vous pouvez supprimer un droit en faisant :
 
 <code bash>
-$ php console.php acl2:role-delete  <nom du role>
+$ php console.php acl2:right-delete  <nom du droit>
 </code>
 
 
 ==== Création des groupes d'utilisateurs ====
 
-La déclaration d'un droit nécessite un couple role/groupe d'utilisateur. Nous
+L'application d'un droit nécessite un couple droit/groupe d'utilisateur. Nous
 devons donc créer un groupe d'utilisateurs. La gestion des groupes
 d'utilisateurs se fait au moyen des commandes de type @@acl2group:@@.
 
@@ -242,13 +242,13 @@ Ou tous les utilisateurs de tous les groupes :
 $ php console.php acl2user:list
 </code>
 
-==== Création des droits ====
+==== Application des droits ====
 
-Puisque nous avons maintenant tout ce qu'il faut pour définir des droits,
+Puisque nous avons maintenant tout ce qu'il faut pour appliquer des droits,
 définissons-en.
 
 Admettons que les lecteurs peuvent lire et lister les articles. On va donc
-assigner les rôles "cms.articles.list" et "cms.articles.read" au groupe des
+assigner les droits "cms.articles.list" et "cms.articles.read" au groupe des
 lecteurs :
 
 <code bash>
@@ -261,7 +261,7 @@ Vérifions la liste des droits définis au moyen de la commande @@acl2:list@@ :
 <code bash>
 $ php console.php acl2:list
 +----------+------------+-------------------+----------+
-| Group id | Group name | Role              | Resource |
+| Group id | Group name | Right             | Resource |
 +----------+------------+-------------------+----------+
 | lecteurs | Lecteurs   | cms.articles.list | -        |
 | lecteurs | Lecteurs   | cms.articles.read | -        |
@@ -271,8 +271,8 @@ $ php console.php acl2:list
 La valeur "-" dans la colonne "Resource" spécifie un droit sur aucune ressource
 en particulier.
 
-Passons maintenant au groupe des rédacteurs. On va leur donner tous les droits sur le
-rôle @@cms.articles@@.
+Passons maintenant au groupe des rédacteurs. On va leur donner tous les droits
+@@cms.articles.*@@.
 
 <code bash>
 php console.php acl2:add  redacteurs "cms.articles.list"
@@ -286,7 +286,7 @@ On vérifie :
 <code bash>
 $ php console.php acl2:list
 +------------+------------+---------------------+----------+
-| Group id   | Group name | Role                | Resource |
+| Group id   | Group name | Right               | Resource |
 +------------+------------+---------------------+----------+
 | lecteurs   | Lecteurs   | cms.articles.list   | -        |
 | lecteurs   | Lecteurs   | cms.articles.read   | -        |
@@ -312,7 +312,7 @@ On vérifie :
 <code bash>
 $ php console.php acl2:list
 +------------+------------+---------------------+----------+
-| Group id   | Group name | Role                | Resource |
+| Group id   | Group name | Right               | Resource |
 +------------+------------+---------------------+----------+
 | lecteurs   | Lecteurs   | cms.articles.list   | -        |
 | lecteurs   | Lecteurs   | cms.articles.read   | -        |
@@ -326,7 +326,7 @@ $ php console.php acl2:list
 </code>
 
 On peut aussi retirer un droit avec @@acl2:remove@@, en indiquant, comme
-pour la commande @@acl2:add@@, le groupe d'utilisateur et le rôle (plus
+pour la commande @@acl2:add@@, le groupe d'utilisateur et le droit (plus
 éventuellement la ressource si on a une ressource).
 
 Exemple, on change d'avis à propos de l'article "opinions" :
@@ -340,5 +340,5 @@ règles, et les modules peuvent faire appel à l'API de jAcl2 pour agir en
 fonction des droits que vous avez configuré.
 
 Pour changer les droits, vous pouvez aussi installer le module jacl2db_admin.
-Une interface vous permettra de gérer plus finement les droits.
+Une interface vous permettra de gérer plus visuellement les droits.
 

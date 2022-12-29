@@ -11,7 +11,8 @@ Voyez alors le [[sans-configuration-serveur|chapitre sur le changement des répe
 
 ===== À propos de PHP =====
 
-La version minimale de PHP supportée par Jelix est la version 7.2.
+La version minimale de PHP supportée par Jelix est la version 7.4, mais il est
+recommander d'utiliser PHP 8.
 
 Il n'est pas indiqué ici comment installer et configurer PHP dans le serveur
 web. Voyez la documentation de PHP pour cela.

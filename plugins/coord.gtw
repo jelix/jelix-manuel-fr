@@ -79,6 +79,12 @@ Ou la configuration peut être, comme indiquée plus haut, dans une section
 @@[coordplugin_XXX]@@ de la configuration du point d'entrée. Le plugin
 reçoit alors le contenu de cette section sous forme de tableau associatif.
 
+Si il y a à la fois une section @@[coordplugin_XXX]@@ et un fichier de configuration
+spécifique, seul le contenu du fichier de configuration est utilisé,
+à moins d'indiquer, dans la section @@[coordplugins]@@, un paramètre @@XXX.mergeconfig@@
+avec une valeur @@1@@ ou @@on@@. Dans ce cas, le contenu de @@[coordplugin_XXX]@@ et du
+fichier de configuration sont fusionnés.
+
 
 ==== Paramètres de plugins ====
 

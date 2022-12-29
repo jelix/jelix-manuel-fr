@@ -1,6 +1,5 @@
 ~~LANG:EN@enman:installation/requirements~~
 
-
 Jelix 1.8 est compatible avec PHP 7.2 et versions suivantes.
 
 Les extensions PHP suivantes sont requises : **fileinfo**, **iconv**, **intl**,
@@ -11,7 +10,7 @@ ou Ubuntu, mais ce n'est pas le cas dans d'autres (Alpine par exemple). Il
 faut alors installer les paquets correspondants.
 
 Vous pouvez installer aussi un connecteur de base de données. Jelix prend en
-charge MySQL 5.5+, PostgreSQL 9.0+, SQLite 3, Oracle, SQL server et PDO.
+charge MySQL 5.5+, PostgreSQL 9.5+, SQLite 3, Oracle, SQL server et PDO.
 
 Vous pourriez avoir également besoin de certaines extensions en fonction
 des composants que vous utilisez : **soap**, **gd** (jImageModifier), **xmlrpc**,

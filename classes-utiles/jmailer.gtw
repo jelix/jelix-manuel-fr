@@ -30,7 +30,7 @@ Le paramétrage de base utilisé par jMailer s'effectue dans le fichier
 @@F@var/config/localconfig.ini.php@@ de votre application dans la section
 @@[mailer]@@.
 
-==== Les différentes options de configuration ====
+==== Les principales options de configuration ====
 
   * @@webmasterEmail@@ : l'email par defaut utilisé pour l'envoi des mails (expéditeur)
   * @@webmasterName@@ :  le nom par défaut utilisé pour l'envoi des mails (expéditeur)
@@ -42,42 +42,6 @@ Le paramétrage de base utilisé par jMailer s'effectue dans le fichier
     comme valeur par defaut pour @@HELO@@. Si vide, utilisera la valeur renvoyée par
     @@$_SERVER['SERVER_NAME']@@ ou "localhost.localdomai".
   * @@sendmailPath@@ : pour l'envoi par sendmail, le chemin de l'executable sendmail.
-
-Pour l'envoi par SMTP :
-  * @@smtpHost@@ : le nom du serveur smtp
-  * @@smtpPort@@ : le port SMTP
-  * @@smtpSecure@@ : connection sécurisée ou pas (valeurs possibles: "", "ssl", "tls")
-  * @@smtpHelo@@ : le message HELO de SMTP
-  * @@smtpAuth@@ : on/off. Active ou non l'authentification SMTP
-  * @@smtpUsername@@ : le login pour se connecter sur le serveur
-  * @@smtpPassword@@ : le mot de passe pour se connecter sur le serveur
-  * @@smtpTimeout@@ : la durée maximale de tentative de connection au serveur SMTP.
-
-Depuis Jelix 1.6.17, vous pouvez mettre ces paramètres d'accés dans un profil, ce
-qui est mieux que de mettre dans la configuration générale.
-
-Créez un profil dans profiles.ini.php, et indiquez sont nom dans @@smtpProfile@@.
-
-Le profil :
-
-<code ini>
-[smtp:mymailer]
-host = localhost
-auth_enabled = one
-secure_protocol = tls
-username = me@foo
-password = thepassword
-timeout = 20
-</code>
-
-Dans la configuration :
-
-<code ini>
-[mailer]
-webmasterEmail = webmaster@foo.com
-mailerType = smtp
-smtpProfile = mymailer
-</code>
 
 
 jMailer utilise aussi les paramètres généraux @@locale@@ et @@charset@@ pour
@@ -94,6 +58,62 @@ si votre serveur est publique, vous devez avoir [[https://fr.wikipedia.org/wiki/
 dans la configuration DNS du domaine utilisé. Cet enregistrement doit contenir
 entre autre l'IP du serveur web. Il y a aussi la configuration DKIM que vous
 pouvez mettre en place. Mais ceci est hors contexte.
+
+==== Configuration SMTP ====
+
+Si vous choisissez d'envoyer les mails via un serveur SMTP spécifique, vous devez
+indiquer comment se connecter à ce serveur en créant un profil dans @@F@var/config/profiles.ini.php@@.
+Le nom du profil doit commencer par @@smtp:@@ suivi d'un nom de votre choix.
+
+Exemple :
+
+<code ini>
+[smtp:mymailer]
+host = localhost
+; habituellement, 587, 465 ou 25 (non sécurisé)
+port = 587 ; ou 465, ou 25
+
+;connection sécurisée ou pas (valeurs possibles: "", "ssl", "tls")
+secure_protocol = tls
+timeout = 20
+
+; Active ou non l'authentification
+auth_enabled = on
+username = me@foo
+password = thepassword
+</code>
+
+Ensuite vous devez indiquer le nom du profil dans le paramètre @@smtpProfile@@ de la section @@[mailer]@@
+ du fichier @@localconfig.ini.php@@ :
+
+<code ini>
+[mailer]
+webmasterEmail = webmaster@foo.com
+mailerType = smtp
+smtpProfile = mymailer
+</code>
+
+Vous pouvez aussi paramétrer l'accès SMTP comme dans Jelix 1.6, bien que cette façon de faire soit obsolète.
+Il n'y a pas de profil, ni de paramètre @@smtpProfile@@. Vous devez indiquer les paramètres suivant dans
+la section @@[mailer]@@.
+
+<code ini>
+[mailer]
+webmasterEmail = webmaster@foo.com
+mailerType = smtp
+
+; paramètres obsolètes pour la configuration SMTP
+smtpHost = localhost
+smtpPort = 465
+smtpSecure = ssl
+smtpHelo=
+smtpTimeout = 20
+smtpAuth = on
+smtpUsername = "me@foo"
+smtpPassword = thepassword
+</code>
+
+
 
 ===== Envoi d'un email basique =====
 

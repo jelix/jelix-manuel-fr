@@ -10,7 +10,6 @@ Jelix 1.8 nécessite PHP 7.2 minimum.
 @@\Jelix\UnitTests\UnitTestCase@@ et @@\Jelix\UnitTests\UnitTestCase@@ à la place.
 NOT DOCUMENTED YET.
 
-
 jForms:
 
 * refactorisation des plugins de template pour jForm, en migrant le code pour

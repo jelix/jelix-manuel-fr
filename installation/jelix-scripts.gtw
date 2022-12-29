@@ -194,7 +194,7 @@ pour nom celui du répertoire de l'application
 
 <code ini>
 [myapp]
-infoCopyright = 2019 My Company
+infoCopyright = 2020 My Company
 </code>
 
 ===== Liste des commandes disponibles =====

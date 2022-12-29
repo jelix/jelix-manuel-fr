@@ -8,7 +8,7 @@ jAcl2.db implémente les concepts généraux de jAcl2, avec en plus
 une gestion de groupes d'utilisateurs. Aussi les éléments qui entrent en jeu
 dans le système de droits de jAcl2.db sont :
 
-  * un rôle
+  * un nom de droit
   * un groupe d'utilisateurs
   * une ressource (facultatif)
 
@@ -47,7 +47,7 @@ vous laissons lire [[refapi:|la documentation de reference]].
 {{jacl2db_mcd.png|}}
 
 Vous noterez que des noms de tables ou de champs utilisent le mot 'subject'.
-C'est parce que dans Jelix 1.6 et autres versions antérieures, les rôles
+C'est parce que dans Jelix 1.6 et autres versions antérieures, les nom des droits
 étaient appelés des "sujets". Pour garder la compatibilité avec les versions
 précédentes, les tables et champs n'ont pas été renommés dans Jelix 1.7. Sujets
-et rôles sont la même notion.
+et droits sont la même notion.

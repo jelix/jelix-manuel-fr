@@ -28,7 +28,7 @@ Voici les instructions à suivre dans l'ordre.
 
 ==== Prérequis ====
 
-Jelix 1.8 nécessite PHP 7.2 minimum. Vérifiez que votre serveur a bien cette
+Jelix 1.8 nécessite PHP 7.4 minimum. Vérifiez que votre serveur a bien cette
 version ou une version supérieure. Les versions précédentes n'étant plus maintenu
 par PHP à la date d'écriture de ce chapitre.
 
@@ -122,6 +122,42 @@ En particulier :
   * TODO pas de changements pour le moment
 
 Lancez donc maintenant : @@php dev.php jelix:migrate -v@@.
+
+==== Changements dans vos contrôleurs SOAP ====
+
+Il faut remplacer les commentaires de code "@param" par "@externalparam".
+
+Avant :
+<code php>
+    /**
+     * Test with a simple parameter
+     * @param string $name
+     * @return string
+     */
+    function hello() {
+        $rep = $this->getResponse('soap');
+        $rep->data = "Hello ".$this->param('name');
+        return $rep;
+    }
+}
+</code>
+
+Après :
+
+<code php>
+    /**
+     * Test with a simple parameter
+     * @externalparam string $name
+     * @return string
+     */
+    function hello() {
+        $rep = $this->getResponse('soap');
+        $rep->data = "Hello ".$this->param('name');
+        return $rep;
+    }
+}
+</code>
+
 
 ==== Mise à jour des instances de l'application ====
 
