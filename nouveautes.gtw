@@ -263,6 +263,8 @@ de l'application.
     et utilise une fonction de création de clé plus forte.
   * jAuth, plugin ldap : les informations de connexions (hote, login, password etc.)
     doivent être maintenant dans le fichier profiles.ini.php
+  * jAuth : nouvelle méthode @@canChangePassword()@@
+  * jAuth : nouvelle méthode @@getReasonToForbiddenPasswordChange@@ (1.7.11+)
   * jauthdb_admin : la liste des utilisateurs peut être filtrée et triée
   * jacl2db_admin : la liste des utilisateurs peut être filtrée
   * jAcl2 : la notion de 'sujet' a été remplacé par la notion de 'droit', plus

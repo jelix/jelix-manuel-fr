@@ -476,11 +476,22 @@ informations en sessions seront elles aussi modifiées.
 N'utilisez pas ce processus pour modifier le mot de passe ! Car vous n'êtes pas
 censé savoir comment le mot de passe est chiffré/stocké. Cela dépend de la
 configuration de jAuth et du driver. Pour changer le mot de passe d'un
-utilisateur, il faut utiliser la méthode @@changePassword()@@
+utilisateur, il faut utiliser les méthodes @@canChangePassword()@@ et @@changePassword()@@.
+La première permet de savoir si il est possible de changer le mot de passe. En
+effet, certains moyens d'authentification ne le permettent pas, comme SAML, oAuth
+etc, le mot de passe n'étant pas géré au sein de l'application.
 
 <code php>
-   jAuth::changePassword('son_login', 'nouveau_mot_de_passe_en_clair');
+if (jAuth::canChangePassword($login)) {
+   jAuth::changePassword($login, 'nouveau_mot_de_passe_en_clair');
+}
+else {
+    $reasonMessage =  jAuth::getReasonToForbiddenPasswordChange();
+}
 </code>
+
+La méthode @@getReasonToForbiddenPasswordChange@@ permet de récupérer la raison
+de l'impossibilité de changer le mot de passe, afin d'en informer l'utilisateur (méthode existante depuis Jelix 1.7.11).
 
 Vous pouvez utiliser @@M@jAuth::getRandomPassword()@@ pour générer un mot de
 passe aléatoire.

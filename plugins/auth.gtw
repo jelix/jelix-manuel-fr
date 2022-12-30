@@ -19,6 +19,11 @@ Soit @@exemple@@ le nom de votre driver : vous devez créer une classe
 dans un répertoire @@auth/exemple/@@ dans un
 [[/plugins#declaration-d-un-depot-de-plugins|dépôt de plugins]].
 
+Le driver peut aussi implémenter les interfaces [[refclass:jIAuthDriver2|jIAuthDriver2]]
+et [[refclass:jIAuthDriver3|jIAuthDriver3]], pour implémenter les méthodes
+@@canChangePassword()@@ et @@getReasonToForbiddenPasswordChange@@.
+
+
 ===== Activation =====
 
 Pour utiliser votre nouveau driver, vous devez indiquer @@exemple@@ au niveau de
