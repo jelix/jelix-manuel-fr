@@ -264,7 +264,6 @@ de l'application.
   * jAuth, plugin ldap : les informations de connexions (hote, login, password etc.)
     doivent être maintenant dans le fichier profiles.ini.php
   * jAuth : nouvelle méthode @@canChangePassword()@@
-  * jAuth : nouvelle méthode @@getReasonToForbiddenPasswordChange@@ (1.7.11+)
   * jauthdb_admin : la liste des utilisateurs peut être filtrée et triée
   * jacl2db_admin : la liste des utilisateurs peut être filtrée
   * jAcl2 : la notion de 'sujet' a été remplacé par la notion de 'droit', plus
@@ -288,6 +287,9 @@ de l'application.
   * nouvelles exceptions pour les contrôleurs, @@jHttpErrorException@@, @@jHttp404NotFoundException@@,
    @@jHttp401UnauthorizedException@@ and @@jHttp403ForbiddenException@@ pour
    [[/modules/controleurs/erreurs-http|générer facilement des pages d'erreur http]].(Jelix 1.7.2+)
+  * Nouveau contrôleur CRUD @@jControllerDaoCrudFilter@@ (Jelix 1.7.9)
+  * jAuth : nouvelle méthode @@getReasonToForbiddenPasswordChange@@ (1.7.11+)
+
 
 ==== Les modules et plugins externalisés ====
 

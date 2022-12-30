@@ -258,6 +258,18 @@ Si ce n'est pas suffisant, vous pouvez redéfinir la méthode
 vous pouvez compléter pour spécifier des critères de sélections des
 enregistrements à afficher, l'ordre d'affichage..
 
+=== Avoir un formulaire de filtrage ===
+
+Une classe @@jControllerDaoCrudFilter@@ (depuis Jelix 1.7.9), héritant de @@jControllerDaoCrud@@,
+permet d'afficher automatiquement un formulaire au dessus de la liste, dont les
+valeurs des champs servent de critères de filtrage de la liste.
+
+Pour profiter de ce formulaire, il faut donc que votre contrôleur hérite
+de @@jControllerDaoCrudFilter@@, et qu'il indique dans la propriété @@filterForm@@
+le sélecteur du formulaire jForms qui permet de changer les critères de filtrage.
+Les noms des contrôles du formulaire doivent être les même que ceux des propriétés
+DAO qu'il faut filtrer.
+
 === Configuration avancée de la liste ===
 
 La méthode @@index@@ appelle une méthode protégée @@_index@@ que vous pouvez
