@@ -41,7 +41,7 @@ sont installés. Vous trouverez celui de Jelix dans @@F@vendor/jelix/jelix/@@.
 Dans la suite du manuel, quand il est signalé le répertoire @@F@lib/@@, il s'agit
 de @@F@vendor/jelix/jelix/lib/@@.
 
-La commande @@create-jelix-app@@ se trouve dans @@F@vendor/bin/@@
+La commande @@create-jelix-app@@ se trouve dans @@F@vendor/bin/@@.
 
 ==== Installer les sources à partir du site jelix.org ====
 

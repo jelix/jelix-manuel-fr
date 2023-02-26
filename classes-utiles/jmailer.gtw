@@ -73,7 +73,7 @@ host = localhost
 ; habituellement, 587, 465 ou 25 (non sécurisé)
 port = 587 ; ou 465, ou 25
 
-;connection sécurisée ou pas (valeurs possibles: "", "ssl", "tls")
+;connection sécurisée ou pas (valeurs possibles: "", "ssl", "tls" ou "unencrypted")
 secure_protocol = tls
 timeout = 20
 
@@ -83,8 +83,12 @@ username = me@foo
 password = thepassword
 </code>
 
+Quand @@secure_protocol@@ est vide, PHPMailer essaye d'utiliser TLS pour se connecter. La valeur @@unencrypted@@
+force PHPMailer à ne pas utiliser TLS ou SSL, et se connecte en clair au serveur. Cette valeur ne doit être utilisé
+que sur des réseaux locaux.
+
 Ensuite vous devez indiquer le nom du profil dans le paramètre @@smtpProfile@@ de la section @@[mailer]@@
- du fichier @@localconfig.ini.php@@ :
+du fichier @@localconfig.ini.php@@ :
 
 <code ini>
 [mailer]
