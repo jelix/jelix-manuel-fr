@@ -153,4 +153,38 @@ Si le plugin s'appelle //exemple//, alors :
    * le fichier contenant la classe du plugin devra être @@F@plugins/coord/exemple/exemple.coord.php@@
    * le nom de la classe du plugin devra être @@C@exempleCoordPlugin@@, implémentant l'interface @@I@jICoordPlugin@@
 
+===== Remplacement d'un plugin par un autre =====
+
+Il peut être utile pour un plugin de se faire passer pour un autre.
+La première façon de faire est d'indiquer le nom du plugin qu'il remplace,
+dans un paramètre de configuration se terminant par @@.name@@.
+
+Exemple :
+
+<code ini>
+[coordplugins]
+cas=cas.coord.ini.php
+cas.name=auth
+</code>
+
+Ici on active le plugin @@©as@@, mais il sera connu sous le nom @@auth@@.
+
+Le plugin remplacé ne doit bien entendu pas être activé (donc pas présent
+dans @@[coordplugins]@@).
+
+Autre solution, disponible depuis Jelix 1.7.9 : il est possible d'indiquer une
+classe spécifique pour un plugin donné, dans un paramètre de configuration
+se terminant par @@.class@@.
+
+<code ini>
+[coordplugins]
+
+auth=auth.coord.ini.php
+auth.class=casCoordPlugin
+
+</code>
+
+La classe peut être celle d'un autre plugin, ou dans un namespace quelconque
+et dans ce cas, elle doit être pouvoir être chargée automatiquement.
+
 
