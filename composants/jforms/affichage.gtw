@@ -25,10 +25,12 @@ répétitif, et surtout font bien plus qu'afficher les valeurs :
 ===== Affichage sans personnalisation =====
 
 Pour les développeurs pressés, il existe un plugin de template qui affiche tout
-tout seul : @@formfull@@. Vous ne pouvez pas contrôler la façon dont sont
-affichés les champs de saisie, leur libellés et les boutons de validation. La
+tout seul : @@formfull@@. Vous ne pouvez pas contrôler la façon dont est affiché
+le formulaire, l'ordre des champs de saisies, leurs libellés et les boutons de validation. La
 seule chose que vous pouvez personnaliser c'est l'affichage des messages
-d'erreurs et d'aide (voir plus loin).
+d'erreurs et d'aide (voir plus loin), et la personnalisation des widgets via les options au générateur.
+
+Les widgets sont les objets qui génèrent le HTML et le Javascript des champs de saisies.
 
 Vous devez passer à ce plugin, les paramètres suivant, dans l'ordre :
 
@@ -96,11 +98,12 @@ l'ordre :
   array(
      'attributes' =>
          array('class' => 'classeCSSDeMonForm',
-               'autreAttributHTML' => 'attribut'),
+               'autreAttributHTML' => 'valeur attribut'),
      'errorDecorator' => 'monErrorDecorator',
      'plugins' => array(
          'champTexte' => 'pluginPourChampTexte',
-         'champDate' => 'pluginPourChampDate')
+         'champDate' => 'pluginPourChampDate'
+      )
   )}
 </code>
 
@@ -166,6 +169,13 @@ Par exemple, le code ci-dessous ajoute la classe //help-needed// pour les champs
       {/formcontrols}
 
    </fieldset>
+</code>
+
+Similairement, il y a aussi @@ifctrltype@@ qui permet de tester le type de control (qui correspond
+au nom de la balise XML). À utiliser aussi à l'intérieur du bloc @@formcontrols@@.
+
+<code html>
+    {ifctrltype 'upload', 'upload2', 'image'}<p>Pas de fichiers trop gros s'il vous plait.</p>{/ifctrltype}
 </code>
 
 Vous pouvez aussi indiquer une liste des noms des champs à afficher au plugin

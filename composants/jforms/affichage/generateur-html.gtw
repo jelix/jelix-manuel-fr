@@ -18,6 +18,10 @@ Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et
     de type formwidget.
   * @@L@attributes@@ : liste d'attributs html et leurs valeurs,  à ajouter sur
     la balise @@<form>@@. Ex : @@array('attributes'=>array('class'=>'myclass'))@@
+  * @@L@widgetsAttributes@@: liste d'attributs pour chaque widget. Cela peut être des attributs HTML, mais aussi
+    des paramètres d'affichage pour le widget, spécifique au widget. Les clés de la liste sont les identifiants des contrôles
+    et les valeurs sont un tableau associatif entre nom d'attributs et valeur d'attributs.
+
 
 ===== Personnaliser l'affichage des contrôles =====
 
@@ -41,9 +45,18 @@ est utilisé à l'intérieur d'une boucle @@formcontrols@@.
 <td>{ctrl_control 'nom', array('class'=>'myclass', 'placeholder'=>'votre nom')}</td>
 </code>
 
-
 Note : pour les générateurs autre que HTML, ce tableau d'attribut peut être
 d'autres options.
+
+Vous pouvez aussi indiquer ces attributs dans l'option @@widgetsAttributes@@ du generateur. Si le contrôle en question
+est dans une boucle @@{formcontrols}@@, cela évite d'avoir des @@{if_ctrl}@@ etc.
+
+<code html>
+{form $form, 'module~action', array(), 'html', array(
+      'widgetsAttributes'=> array(
+          'nom' => array('class'=>'myclass', 'placeholder'=>'votre nom'))
+       )}
+</code>
 
 === Créer et/ou utiliser un plugin de widget ===
 
