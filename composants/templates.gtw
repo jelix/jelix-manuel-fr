@@ -248,6 +248,9 @@ Pour apporter une certaine facilité, des variables de templates prédéfinies o
    * @@V@$j_locale@@ : code de la locale courante (valeur de @@jApp::config()->locale@@)
    * @@V@$j_lang@@ : code de la langue courante
    * @@V@$j_country@@ : code du pays courant
+   * @@V@j_assetsRevision@@ : la valeur du paramètre de configuration @@assetsRevision@@
+   * @@V@j_assetsRevisionParameter@@ : la valeur du paramètre de configuration @@assetsRevisionParameter@@
+   * @@V@j_assetsRevQueryUrl@@ : la partie à ajouter aux paramètres url (concatenation de @@assetsRevisionParameter@@, @@=@@ et @@assetsRevision@@)
 
 
 ==== Modificateurs ====
