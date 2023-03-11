@@ -591,8 +591,8 @@ variable de formulaire contiendra le nom du fichier.
 
 Autres attributs supportés :
 
-* @@accept@@ : valeur de l'attribut HTML @@accept@@ pour la balise @@input@@.
-* @@capture@@ : valeur de l'attribut HTML @@capture@@ pour la balise @@input@@.
+  * @@accept@@ : valeur de l'attribut HTML @@accept@@ pour la balise @@input@@.
+  * @@capture@@ : valeur de l'attribut HTML @@capture@@ pour la balise @@input@@.
 
 
 ==== Téléchargement amélioré de fichier ====
@@ -651,12 +651,12 @@ est affichée en mode "vue uniquement". Cependant, pour qu'une image présélect
 comment construire l'url, via des paramètres à donner au widget (via @@{ctrl_control}@@ ou via l'option @@widgetAttributes@@
 donnée à @@{form*}@@.
 
-* soit à partir d'un sélecteur d'action. On indique le sélecteur dans @@uriAction@@ et les paramètres dans @@uriActionParameters@@.
-  Si l'un des paramètres doit contenir le nom du fichier de l'image, il faut indiquer le nom du paramètre dans @@uriActionFileParameter@@.
-  La valeur existante du paramètre sera remplacée par le nom de l'image. Si elle contient @@%s@@, seul ce @@%s@@
-  sera remplacée par le nom de l'image.
-* soit à partir d'une URL de base, auquel sera ajoutée le nom du fichier de l'image. On indique cette URL de base
-  dans @@baseURI@@.
+  * soit à partir d'un sélecteur d'action. On indique le sélecteur dans @@uriAction@@ et les paramètres dans @@uriActionParameters@@.
+    Si l'un des paramètres doit contenir le nom du fichier de l'image, il faut indiquer le nom du paramètre dans @@uriActionFileParameter@@.
+    La valeur existante du paramètre sera remplacée par le nom de l'image. Si elle contient @@%s@@, seul ce @@%s@@
+    sera remplacée par le nom de l'image.
+  * soit à partir d'une URL de base, auquel sera ajoutée le nom du fichier de l'image. On indique cette URL de base
+    dans @@baseURI@@.
 
 Pour les images, on peut aussi indiquer les attributs de widget @@imgMaxHeight@@ et @@imgMaxWidth@@, qui indique
 la taille de l'image affichée. Cela ne modifie pas le fichier de l'image.
@@ -707,12 +707,12 @@ et @@A@required@@.
 
 D'autres attributs sont pris en charge :
 
-* @@maxWidth@@ et @@maxHeight@@ : taille maximale accepté. Le code javascript du widget retaillera l'image si elle
-  dépasse les dimensions indiquées.
-* @@mimetype@@ : pour indiquer le type-mime des images que vous acceptez
-* @@maxsize@@ : taille maximal du fichier
-* @@accept@@ : valeur de l'attribut HTML @@accept@@ pour la balise @@input@@.
-* @@capture@@ : valeur de l'attribut HTML @@capture@@ pour la balise @@input@@.
+  * @@maxWidth@@ et @@maxHeight@@ : taille maximale accepté. Le code javascript du widget retaillera l'image si elle
+    dépasse les dimensions indiquées.
+  * @@mimetype@@ : pour indiquer le type-mime des images que vous acceptez
+  * @@maxsize@@ : taille maximal du fichier
+  * @@accept@@ : valeur de l'attribut HTML @@accept@@ pour la balise @@input@@.
+  * @@capture@@ : valeur de l'attribut HTML @@capture@@ pour la balise @@input@@.
 
 Exemple :
 
@@ -727,12 +727,12 @@ Le widget associé accepte les même attributs que celui pour @@upload2@@ : @@ur
 
 Il accepte également les attributs suivants :
 
-* @@newImgMaxWidth@@ et @@newImgMaxHeight@@ : la taille maximale de l'image. Équivalent aux attributs @@maxWidth@@ et @@maxHeight@@
-  sur @@<image>@@. Tout dépend si vous voulez indiquer ces valeurs statiquement dans le fichier xml, ou dynamiquement lors
-  de l'affichage du formulaire.
-* @@dialogWidth@@ et @@dialogHeight@@ : la taille de la boite de dialogue HTML qui permet d'éditer l'image avant
-  la validation du formulaire. Taille en pixel, ou alors @@"auto"@@, la taille sera calculée en fonction de la fenêtre
-  du navigateur.
+  * @@newImgMaxWidth@@ et @@newImgMaxHeight@@ : la taille maximale de l'image. Équivalent aux attributs @@maxWidth@@ et @@maxHeight@@
+    sur @@<image>@@. Tout dépend si vous voulez indiquer ces valeurs statiquement dans le fichier xml, ou dynamiquement lors
+    de l'affichage du formulaire.
+  * @@dialogWidth@@ et @@dialogHeight@@ : la taille de la boite de dialogue HTML qui permet d'éditer l'image avant
+    la validation du formulaire. Taille en pixel, ou alors @@"auto"@@, la taille sera calculée en fonction de la fenêtre
+    du navigateur.
 
 
 ==== Groupement de champs de saisie ====

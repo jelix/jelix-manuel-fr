@@ -63,9 +63,9 @@ les valeurs Postgresql de type tableau en tableau PHP et vice-versa.
 Il faut indiquer le type des valeurs du tableau à @@encodeArrayValue@@, à l'aide
 de constantes :
 
-- @@jDbPgsqlTools::ARRAY_VALUE_TYPE_TEXT@@ si le tableau contient des chaines
-- @@jDbPgsqlTools::ARRAY_VALUE_TYPE_INT@@ si le tableau contient des nombres entiers
-- @@jDbPgsqlTools::ARRAY_VALUE_TYPE_FLOAT@@ si le tableau contient des nombres flottants
+  * @@jDbPgsqlTools::ARRAY_VALUE_TYPE_TEXT@@ si le tableau contient des chaines
+  * @@jDbPgsqlTools::ARRAY_VALUE_TYPE_INT@@ si le tableau contient des nombres entiers
+  * @@jDbPgsqlTools::ARRAY_VALUE_TYPE_FLOAT@@ si le tableau contient des nombres flottants
 
 Si les valeurs PHP ne sont pas du type indiqué, il y aura une conversion de type de la valeur.
 

@@ -245,9 +245,9 @@ Pour apporter une certaine facilité, des variables de templates prédéfinies o
    * @@V@$j_themepath@@ : contient le chemin url vers le répertoire du thème courant
    * @@V@$j_datenow@@ : date courante (aaaa-mm-jj)
    * @@V@$j_timenow@@ : heure courante (hh:mm:ss)
-   * @@V@$j_locale@@ : code de la langue courante (valeur de @@jApp::config()->locale@@)
-   * @@V@$j_lang@@ :
-   * @@V@$j_country@@ :
+   * @@V@$j_locale@@ : code de la locale courante (valeur de @@jApp::config()->locale@@)
+   * @@V@$j_lang@@ : code de la langue courante
+   * @@V@$j_country@@ : code du pays courant
 
 
 ==== Modificateurs ====
@@ -309,12 +309,12 @@ déclaration d'élements HTML.
 
 Donc vous pouvez échapper le contenu d'une variable :
 
-- en utilisant les modificateurs @@eschtml@@ ou @@escxml@@ : @@{$myvar|eschtml}@@
-- ou en activant l'auto-échappement, en ajoutant un tag @@{! autoescape !}@@ au début de votre template. Tout affichage
-  de variables (avec un tag @@{$..}@@) sera échappé.
-  - Si il y a déjà un modificateur @@eschtml@@, le contenu ne sera pas échappé deux fois.
-  - Si pour une variable particulière, vous ne voulez pas échapper son contenu
-    utilisez le modificateur @@raw@@: @@{$myHTMLcontent|raw}@@.
+  * en utilisant les modificateurs @@eschtml@@ ou @@escxml@@ : @@{$myvar|eschtml}@@
+  * ou en activant l'auto-échappement, en ajoutant un tag @@{! autoescape !}@@ au début de votre template. Tout affichage
+    de variables (avec un tag @@{$..}@@) sera échappé.
+    * Si il y a déjà un modificateur @@eschtml@@, le contenu ne sera pas échappé deux fois.
+    * Si pour une variable particulière, vous ne voulez pas échapper son contenu
+      utilisez le modificateur @@raw@@: @@{$myHTMLcontent|raw}@@.
 
 ==== Les structures de contrôle ====
 
