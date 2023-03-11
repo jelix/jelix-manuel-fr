@@ -2,12 +2,12 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.7.8
+subtitle= Jelix 1.7.14
 title_short= Guide du développeur
-edition = Jelix 1.7.8
+edition = Jelix 1.7.14
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
-copyright_years=2006-2021
+copyright_years=2006-2023
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
