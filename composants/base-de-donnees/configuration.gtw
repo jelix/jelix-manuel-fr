@@ -92,6 +92,7 @@ Paramètres possibles :
      chercher les tables, si le schéma par défaut pour la connexion ne
      correspond pas à celui dans lequel l'application va chercher.
    * @@session_role@@ : définir le role de session PostgreSQL
+   * @@force_new@@ : recréer une nouvelle connexion à requête http.
 
 ===== Profil pour SQLite =====
 

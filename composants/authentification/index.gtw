@@ -403,6 +403,10 @@ Pour connecter et déconnecter un utilisateur, il faut utiliser les méthodes
    jAuth::logout();
 </code>
 
+Vous pouvez aussi utiliser la méthode @@jAuth::setUserSession($login)@@ pour connecter
+le user sans passer de mot de passe. Cela peut être utile si vous implémentez une
+API web sans état, avec JWT par exemple.
+
 À partir du moment où @@M@login()@@ a été appelé et a renvoyé @@true@@, jAuth
 stocke des informations sur l'utilisateur en session, qui peuvent être utilisées
 par d'autres composants. Ces informations sont dans un objet, que vous récupérez

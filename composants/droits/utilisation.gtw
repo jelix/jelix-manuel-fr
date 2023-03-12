@@ -88,6 +88,21 @@ if( jAcl2::check("cms.articles.update", $article_id)){
 
 Une valeur vide ou "-" pour l'identifiant de la ressource indique "pour toute ressource".
 
+
+==== jAcl2::checkByUser ====
+
+Cette méthode fonctionne comme `jAcl2::check()`, mais pour un utilisateur spécifique,
+par pour l'utilisateur courant.
+
+<code php>
+if( jAcl2::checkByUser("john", "cms.articles.create")){
+   // l'utilisateur "john" a le droit de créer un article
+}else{
+   // l'utilisateur "john" n'a pas le droit de créer un article
+}
+</code>
+
+
 ==== Vérification automatique ====
 
 L'installateur du module jacl2 installe le plugin jacl2 pour le coordinateur.

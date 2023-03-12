@@ -62,6 +62,7 @@ aux noms des plugins). Vous indiquerez :
    * @@mail@@, pour envoyer les messages dans une boite mail
    * @@memory@@, pour stocker les message en mémoire temporairement. Utilisé par
      d'autres composants comme la debug barre.
+   * @@stdout@@ et @@stderr@@ pour envoyer les logs sur la sortie standard
    * et tout autre plugin que vous avez ajouté ou créé.
 
 ==== Eviter d'avoir des informations sensibles dans les logs ====
