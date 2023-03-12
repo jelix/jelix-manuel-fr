@@ -29,8 +29,9 @@ Voici les instructions à suivre dans l'ordre.
 ==== Prérequis ====
 
 Jelix 1.8 nécessite PHP 7.4 minimum. Vérifiez que votre serveur a bien cette
-version ou une version supérieure. Les versions précédentes n'étant plus maintenu
-par PHP à la date d'écriture de ce chapitre.
+version ou une version supérieure. Cependant, il est recommandé d'utiliser PHP 8.2,
+les versions 8.0 et précédentes n'étant plus maintenues par PHP à la date d'écriture
+de cette page.
 
 ==== Sauvegarde ====
 

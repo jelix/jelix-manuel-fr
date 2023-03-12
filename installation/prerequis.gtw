@@ -1,6 +1,6 @@
 ~~LANG:EN@enman:installation/requirements~~
 
-Jelix 1.8 est compatible avec PHP 7.2 et versions suivantes.
+Jelix 1.8 est compatible avec PHP 7.4 et versions suivantes.
 
 Les extensions PHP suivantes sont requises : **fileinfo**, **iconv**, **intl**,
 **json**, **mbstring**, **session**, **tokenizer**, **spl**, **dom**, **xml**,

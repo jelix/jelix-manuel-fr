@@ -153,7 +153,7 @@ server {
         try_files $fastcgi_script_name =404;
 
         fastcgi_index index.php;
-        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
         fastcgi_param PATH_INFO $path_info;
         fastcgi_param PATH_TRANSLATED $document_root$path_info;
         include fastcgi.conf;
