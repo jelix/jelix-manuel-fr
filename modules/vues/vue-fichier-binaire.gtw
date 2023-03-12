@@ -45,3 +45,69 @@ le dans @@P@content@@ :
  $rep->content = '...';
 </code>
 
+Cependant, cela prendra autant de mémoire que la taille du contenu, ce qui peut être problématique si
+le contenu est volumineux (plusieurs megaoctets). PHP pourrait interrompre brusquement le script si
+il n'y a plus assez de mémoire.
+
+Pour les contenus volumineux, il est préférable d'envoyer directement le contenu au fur et à mesure
+qu'on le génère ou qu'on le lit à partir d'une source de données.
+
+Pour cela, on peut donnée à @@jResponseBinary@@, soit une fonction de callback qui sera appelée
+au moment où Jelix demandera d'envoyer le contenu, soit un iterateur/générateur. Il faut utiliser
+respectivement les méthodes @@setContentCallback()@@ et @@setContentGenerator()@@.
+
+
+Exemple, en donnant en réponse le contenu de la réponse à une requête HTTP, effectuée avec la bibliothèque
+GuzzleHttp :
+
+```php
+
+// on prépare et envoie la requête à un service tiers
+$client = new GuzzleHttp\Client();
+$request = new GuzzleHttp\Psr7\Request('GET', 'https://foo.example/content', $headers);
+$response = $client->send($request, ['stream' => true]);
+
+// on récupère la réponse sous forme de flux, qui n'est pas encore consommé
+$stream = $response->getBody();
+
+$rep = $this->getResponse('binary');
+
+// on donne une fonction de callback, qui lira le flux et l'enverra sur la sortie de PHP (`php://output`),
+// grâce à cet utilitaire copyToStream
+$rep->setContentCallback(function () use ($response) {
+    $output = Psr7\Utils::streamFor(fopen('php://output', 'w+'));
+    Psr7\Utils::copyToStream( $response->getBody(), $output);
+});
+// ..
+return $rep;
+```
+
+Autre exemple avec un générateur
+
+
+```
+
+class Business {
+
+    // this function is a generator, because of the use of yield
+    public function getAllData()
+    {
+        $db = jDb::getConnection();
+        $resultSet = $db->query("SELECT field1, field2, field3 FROM hugeTable")
+        foreach($resultSet as $record) {
+            yield $record->field1.';'.$record->field2.';'.$record->field3."\n";
+        }
+    }
+}
+
+// Into the controller:
+
+$obj = new Business();
+
+$rep = $this->getResponse('binary');
+$rep->setContentGenerator($obj->getAllData());
+// ..
+return $rep;
+```
+
+
