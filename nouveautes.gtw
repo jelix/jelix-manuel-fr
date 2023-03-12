@@ -4,19 +4,88 @@ Version en développement.
 
 ===== Nouveautés apportées par la version 1.8 =====
 
-Jelix 1.8 nécessite PHP 7.2 minimum.
+Attention : la documentation n'est pas encore tout à fait à jour vis à vis de ces nouveautés.
 
-* Unit tests: @@jUnitTestCase@@ et @@jUnitTestCaseDb@@ sont depreciés. Utilisez
-@@\Jelix\UnitTests\UnitTestCase@@ et @@\Jelix\UnitTests\UnitTestCase@@ à la place.
-NOT DOCUMENTED YET.
+==== Nouvelles fonctionnalités ====
 
-jForms:
+* Jelix 1.8 est compatible avec PHP 7.4 jusqu'à PHP 8.2.
+* Coeur :
+  * nouvelle classe `Jelix\Core\Services` qui permettra d'accéder à de futur services sans 
+    utiliser de méthodes statiques sur ces services. L'instance de cet objet est accessible
+    depuis `\jApp::services()`. 
+  * Réponse "binary": support de fonctions de callback pour générer le contenu. Cela permet d'utiliser 
+    des flux, générateurs etc.
+  * `jIncluder::incAll()`: elle retourne maintenant la valeur retournée par le fichier inclus
+  * Nouvelle interface `jIActionSelector` sur `jSelectorActFast` et `jSelectorAct`, pour permettre
+    de fournir d'autres implémentations de sélecteurs, sans avoir à hériter de ces deux classes.
+* Contrôleurs :
+  * nouvelles méthodes `redirect()` et `redirectUrl()` qui sont des raccourcis pour la création
+   d'objet réponse de redirection.
+* jForms :
+  * nouvelle méthode `BuilderBase::outputAllControlsValues()`
+  * nouvelle méthode `BuilderBase::outputControlRawValue()`
+  * nouvelle méthode `WidgetInterface::outputControlRawValue()`
+  * widget "image" : possibilité d'afficher la nouvelle image sélectionnée temporairement.
+    Nouvelle option `showModeForNewImage` sur le widget, qui indique comment afficher la nouvelle image.
+* Interface d'administration de jAcl2Db :
+  * Elle a été complètement retravaillée pour être plus simple à utiliser.
+  * Possibilité de cacher des droits (`hiddenRights` dans la section de configuration `acl2`)
+  * Il n'est plus possible de donner certains droits sur le groupe anonyme.
+  * Certains droits sont maintenant dépendant du droit 'view' de la même branche.
+* jEvent :
+  * Possiblité de donner un objet héritant de `jEvent` à `jEvent::notify()`. Ainsi vous pouvez avoir
+    un objet contenant des méthodes permettant de manipuler des paramètres propre à l'évènement.
+  * Le diffuseur d'évènement a été retravaillé et suit maintenant la recommendation PSR-14.
+    `jEvent::notify()` sera déprécié dans de futures versions. Préférez l'usage de
+    `\jApp::services()->eventDispatcher()->dispatch($event)` pour la notification d'objet.
+* Configurateur :
+  * Le configurateur est maintenant capable de déclarer automatiquement les urls de modules, et de
+    supprimer les déclarations d'urls des modules désinstallés.
+  * Les configurateur de modules peuvent indiquer une liste d'url à déclarer
+  * `XmlMapModifier` a également des nouvelles méthodes pour supprimer des urls
+  * nouvelle méthode `findProfile()` sur les helpers
+* Installeur :
+  * La classe `PreInstallHelpers` a maintenant l'API database pour permettre de vérifier du contenu
+    dans la base de données avant d'autoriser l'installation.
+  * nouvelle méthode `findProfile()` sur les helpers
+  * nouvelle option à la commande `installer.php` : `--no-clean-temp`. Et maintenant la commande
+    vérifier que le contenu du répertoire temp peut être supprimé, plutôt que de générer une erreur.
+* Tests unitaires dans les modules : `jUnitTestCase` and `jUnitTestCaseDb` sont dépréciés. Utilisez
+  plutôt `\Jelix\UnitTests\UnitTestCase` et `\Jelix\UnitTests\UnitTestCase`. Et la prise en
+  charge de PHPUnit < 6.0 a été supprimé.
+* Le script `runtests.php` et le mécanisme de tests unitaires dans les modules est maintenant
+  déprécié. Il est préférable d'écrire les tests en dehors du répertoire des modules. Cela rend plus
+  simple le déploiement des modules sans inclure les tests, via Composer ou autre système de déploiement.
+  Cela permet aussi d'utiliser la version de PHPUnit que vous voulez, ou d'utiliser un autre
+  framework de tests unitaires.
+* Deux nouveaux plugins de template : `{ifacl2and}`, `{ifacl2or}`
 
-* refactorisation des plugins de template pour jForm, en migrant le code pour
-les gérer, dans de nouvelles classes.
 
+==== Suppressions ====
 
+* Les plugins de templates `swfjs`, `swfbiscuit` et le script `jquery.flash.js` sont supprimés, parce que Flash n'est plus utilisé.
+* `$GLOBALS['JELIX_EVENTS']` n'existe plus.
+
+==== Changement internes ====
+
+* Mise à jour de Symfony Console vers 5.4.14
+* Mise à jour de PHPUnit vers 8.5 pour les tests sur jelix
+* Mise à jour de PHPMailer vers 6.6.*
+* Mise à jour de Jquery vers 3.6.1
+* Mise à jour de Jquery UI vers 1.13.2
+* Mise à jour de CKEditor vers 35.3.0
+* Mise à jour de Datatables vers 1.12.1
+* Les tests avec CasperJs ont été supprimé
+* Des scripts JS comme `jforms_jquery.js` sont maintenant générés avec WebPack. Voir le dossier `assets` dans le dépôt git.
+* jForms : déplacement de code, des plugins de template pour jforms vers une nouvelle
+  classe `TemplateController`. Cela permet de générer le code HTML des formulaires sans avoir
+  à utiliser les templates, ou de créer plus facilement ses propres plugins de templates
+  pour les formulaires.
 
 ==== Contributeurs à Jelix 1.8 ====
 
-  * Laurent Jouanneau (la plupart des évolutions)
+  * Laurent Jouanneau
+  * Adrien De Croutte (jForms Time, et la première itération sur la nouvelle interface pour jacl2db)
+  * René-Luc D'Hont (callback dans jResponseBinary, option session_role pour pgsql)
+  * Raphael Martin (diverses petites améliorations)
+  * Joel Kociolek (correction de problèmes avec PHP 8, correction du logout avec les cookies de session)
