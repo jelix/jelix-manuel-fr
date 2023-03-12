@@ -245,7 +245,12 @@ Pour apporter une certaine facilité, des variables de templates prédéfinies o
    * @@V@$j_themepath@@ : contient le chemin url vers le répertoire du thème courant
    * @@V@$j_datenow@@ : date courante (aaaa-mm-jj)
    * @@V@$j_timenow@@ : heure courante (hh:mm:ss)
-   * @@V@$j_locale@@ : code de la langue courante (valeur de @@jApp::config()->locale@@)
+   * @@V@$j_locale@@ : code de la locale courante (valeur de @@jApp::config()->locale@@)
+   * @@V@$j_lang@@ : code de la langue courante
+   * @@V@$j_country@@ : code du pays courant
+   * @@V@j_assetsRevision@@ : la valeur du paramètre de configuration @@assetsRevision@@
+   * @@V@j_assetsRevisionParameter@@ : la valeur du paramètre de configuration @@assetsRevisionParameter@@
+   * @@V@j_assetsRevQueryUrl@@ : la partie à ajouter aux paramètres url (concatenation de @@assetsRevisionParameter@@, @@=@@ et @@assetsRevision@@)
 
 
 ==== Modificateurs ====
@@ -298,6 +303,21 @@ Exemple : ici le modificateur @@jdatetime@@, prenant deux paramètres de type ch
 </code>
 
 
+==== Échapper du contenu ====
+
+Par défaut, le contenu des variables est inséré tel quel, sans modification. Ce n'est pas forcément
+ce que vous voulez. En particulier, vous voudriez probablement échapper certains caractères
+réservé au HTML, comme @@<@@ et @@>@@, ainsi le navigateur ne les interpreterez pas comme étant des
+déclaration d'élements HTML.
+
+Donc vous pouvez échapper le contenu d'une variable :
+
+  * en utilisant les modificateurs @@eschtml@@ ou @@escxml@@ : @@{$myvar|eschtml}@@
+  * ou en activant l'auto-échappement, en ajoutant un tag @@{! autoescape !}@@ au début de votre template. Tout affichage
+    de variables (avec un tag @@{$..}@@) sera échappé.
+    * Si il y a déjà un modificateur @@eschtml@@, le contenu ne sera pas échappé deux fois.
+    * Si pour une variable particulière, vous ne voulez pas échapper son contenu
+      utilisez le modificateur @@raw@@: @@{$myHTMLcontent|raw}@@.
 
 ==== Les structures de contrôle ====
 
@@ -452,6 +472,112 @@ Exemple :
 
 Bien sûr vous pouvez réaliser le vôtre.
 
+==== Inclusion de templates dans un template ====
+
+Il y a des cas où vous voudriez partager du contenu de template entre plusieurs
+templates. Pour ce faire, vous créerez un template contenant ce code commun, et
+utiliserez la balise @@{include}@@. Vous devez lui donner le sélecteur du
+template à inclure en paramètre.
+
+<code>
+ <div>
+   ...
+   {include 'mymodule~sharedcontent'}
+ </div>
+</code>
+
+Toutes les variables déclarées dans l'objet @@C@jTpl@@ seront accessibles dans
+le template inclus.
+
+Si vous ne voulez pas que les variables soient propagées dans le template inclus,
+vous utiliserez la balise @@{fetchtpl}@@. Elle est particulièrement utile quand
+vous voulez inclure un template recursivement.
+
+<code>
+ <div>
+   ...
+   {fetchtpl 'mymodule~sharedcontent'}
+ </div>
+</code>
+
+
+Avant d'utiliser la balise @@{include}@@ ou @@{fetchtpl}@@, envisagez l'utilisation
+d'une [[zones|zone]], car cela peut être une meilleure solution, d'autant plus
+que son contenu peut être mis en cache.
+
+
+==== Macros ====
+
+Dans un template, vous avez peut-être besoin de répeter un morceau de HTML sans utiliser de boucle.
+Une solution est d'inclure plusieurs fois même un sous-template. Mais pour des petits bouts de HTML,
+il est plus performant et moins complexe d'utiliser une macro.
+
+Une macro est une partie d'un template déclaré avec le tag @@{macro}@@. Une macro a un nom, et
+fonctionne comme une fonction PHP.
+
+Exemple d'une declaration de macro :
+
+<code html>
+{macro 'myblock'}
+<p>Ceci est un block, affichant la valeur de $val : {$val}</p>
+{/macro}
+</code>
+
+Le nom est déclaré comme une chaîne PHP. Les variables ou autre syntax ne sont pas autorisés.
+
+Les variables utilisées à l'intérieur d'une macro peuvent être des variables déclarées dans le template.
+Le scope est globale au template. Vous pouvez utiliser n'importe quel plugin, expressions, structures
+de contrôle...
+
+Pour appeller une macro, utilisez @@{usemacro}@@ :
+
+<code html>
+Ceci est mon morceau de HTML :
+{usemacro 'myblock'}
+
+...
+Je peux afficher mon morceau de HTML encore une fois :
+{usemacro 'myblock'}
+</code>
+
+Si @@$val@@ équiveaut à @@'hello'@@, le résultat sera :
+
+<code html>
+Ceci est mon morceau de HTML :
+<p>Ceci est un block, affichant la valeur de $val : hello</p>
+
+...
+Je peux afficher mon morceau de HTML encore une fois :
+<p>Ceci est un block, affichant la valeur de $val : hello</p>
+</code>
+
+Vous pouvez déclarer des paramètres à la macro. Indiquez les comme pour une fonction PHP, et utilisez
+les à l'intérieur d'une macro comme toutes variables de template.
+
+<code html>
+{* declaration de la macro *}
+{macro 'myblock', $name, $result}
+<p>C'est une macro avec parametres.<p>
+<ul>
+    <li>name= {$name}</li>
+    <li>{if $result == true}c'est vert{else}c'est rouge{/if}</li>
+</ul>
+<p>Vous pouvez encore voir la valeur de $val : {$val}</p>
+{/macro}
+
+{* utilisation de la macro *}
+
+{usemacro 'myblock', 'SuperGuppy', true}
+
+</code>
+
+Les paramètres déclarés ne sont pas utilisables en dehors de la macro. Si il y a une variable
+de template avec le même nom, la valeur de la variable de template sera remplacé par celle du
+paramètre à l'intérieur de la macro, mais gardera sa valeur originelle en dehors de la macro.
+
+Les macros déclarées dans un sous-template peuvent être utilisées dans le template appelant.
+
+
 ===== Templates Virtuels =====
 
 Vous pouvez utiliser des templates qui ne sont pas dans des fichiers. Ce sont les templates virtuels.
@@ -508,39 +634,6 @@ Pour faire un template pour chaque langue, créer des sous-repertoires dans le
 repertoire de templates, et qui ont pour nom le code de la langue. Exemple, dans
 un module: @@F@templates/fr_FR@@, @@F@templates/en_US@@ etc.. Et placez y dans
 chacun d'eux un exemplaire de votre template traduit.
-
-===== Inclusion de templates dans un template =====
-
-Il y a des cas où vous voudriez partager du contenu de template entre plusieurs
-templates. Pour ce faire, vous créerez un template contenant ce code commun, et
-utiliserez la balise @@{include}@@. Vous devez lui donner le sélecteur du
-template à inclure en paramètre.
-
-<code>
- <div>
-   ...
-   {include 'mymodule~sharedcontent'}
- </div>
-</code>
-
-Toutes les variables déclarées dans l'objet @@C@jTpl@@ seront accessibles dans
-le template inclus.
-
-Si vous ne voulez pas que les variables soient propagées dans le template inclus,
-vous utiliserez la balise @@{fetchtpl}@@. Elle est particulièrement utile quand
-vous voulez inclure un template recursivement.
-
-<code>
- <div>
-   ...
-   {fetchtpl 'mymodule~sharedcontent'}
- </div>
-</code>
-
-
-Avant d'utiliser la balise @@{include}@@ ou @@{fetchtpl}@@, envisagez l'utilisation
-d'une [[zones|zone]], car cela peut être une meilleure solution, d'autant plus
-que son contenu peut être mis en cache.
 
 ===== Redéfinition de template =====
 

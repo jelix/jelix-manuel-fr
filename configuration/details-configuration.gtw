@@ -221,6 +221,8 @@ auth.coord.ini.php. Pour plus de détails, voir la documentation sur
 auth = "auth.coord.ini.php"
 </code>
 
+[[/plugins/coord|En savoir plus sur la configuration des plugins du coordinateur]].
+
 
 ==== section responses ====
 

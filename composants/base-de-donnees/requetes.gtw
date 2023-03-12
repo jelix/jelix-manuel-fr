@@ -33,6 +33,16 @@ et s'utilise de la même façon que @@quote()@@.
 
 Notez que la méthode @@quote()@@ encadre la valeur avec des quotes.
 
+Si vous avez besoin de construire votre requête en utilisant des noms de champs ou de tables
+qu'il faut encadrer avec le caractère adéquate selon le type de base de données,
+vous pouvez utiliser la méthode @@encloseName()@@ :
+
+<code php>
+  $table = 'users';
+  $sql = "INSERT INTO ".$cnx->encloseName($table)." (nom, prenom) VALUES";
+  $sql .=" (". $cnx->quote("de l'ombre") .",".$cnx->quote('robert').")";
+</code>
+
 Pour exécuter des requêtes, il y a principalement deux méthodes, @@exec()@@ et @@query()@@.
 
 
@@ -89,7 +99,7 @@ le nombre d'enregistrements à récupérer.
 ==== requêtes préparées ====
 
 Vous pouvez utiliser des requêtes préparées. C'est d'ailleurs plus sécurisé
-dans il faut injecter des paramètres dans la requete SQL. Tous les drivers
+quand il faut injecter des paramètres dans la requete SQL. Tous les drivers
 fournis avec Jelix supportent les requêtes préparées, excepté "mssql".
 
 L'API est similaire à PDO : une méthode @@M@prepare@@ permet d'indiquer
@@ -162,11 +172,14 @@ Notez que le driver oci ne prend pas en charge les paramètres donnés à @@exec
 @@jDbResultSet@@ est l'objet que vous récupérez après avoir fait un SELECT
 (via @@query()@@, @@limitQuery()@@ ou @@prepare()@@).
 
-Sa méthode @@fetch()@@ vous permet de récupérer un à un les enregistrements. À noter
-que jDbResultSet renvoie toujours un enregistrement sous forme d'objet. 
-
+Sa méthode @@fetch()@@ vous permet de récupérer un à un les enregistrements.
 Sa méthode @@fetchAll()@@ permet de récupérer tous les résultats en même temps
 dans un tableau PHP.
+
+À noter qu'avec ces deux méthodes, et dans son utilisation comme iterateur, jDbResultSet
+renvoie les enregistrements **sous forme d'objets**.
+Si vous préférez des tableaux associatifs, utilisez @@fetchAssociative()@@ et @@fetchAllAssociative()@@.
+
 
 jDbResultSet implémente l'interface @@Iterator@@. De ce fait, vous pouvez utiliser
 cet objet dans certaines boucles, comme les @@foreach@@ :
@@ -185,7 +198,6 @@ Les objets contenant les enregistrements sont des objets "anonymes" (ils n'ont
 pas de classe précise). Si vous voulez que ce soient des objets d'une certaine
 classe, vous devez l'indiquer via @@setFetchMode()@@ :
 
-
 <code php>
   class User {
     ...
@@ -203,6 +215,9 @@ classe, vous devez l'indiquer via @@setFetchMode()@@ :
      $result .= 'nom = '.$record->nom.' prenom = '.$record->prenom."\n";
   } 
 </code>
+
+Quand un objet @@jDbResultSet@@ est détruit, la ressource base de donnée associée est libérée
+automatiquement. Mais vous pouvez le faire explicitement avec la méthode @@free()@@.
 
 Pour le reste des méthodes, voyez [[refapi:jDbResultSet|la documentation de référence]].
 

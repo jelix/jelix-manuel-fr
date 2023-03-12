@@ -579,12 +579,8 @@ Deux attributs supplémentaires sont à votre disposition, pour contrôler la
 nature et la taille des fichiers, qui sont respectivement @@A@mimetype@@ (devant
 contenir un ou plusieurs type mime) et @@A@maxsize@@ (taille en octets).
 
-Attention : sous IE, le type-mime des images .jpg et .jpeg sont considéré comme
-du Progressive JPEG, soit image/pjpeg. Assurez vous de rajouter ce type-mime en
-plus du image/jpeg si vous voulez autoriser le format JPEG.
-
 <code xml>
-  <upload ref="photo" mimetype="image/jpeg;image/pjpeg;image/png" maxsize="20000">
+  <upload ref="photo" mimetype="image/jpeg;image/png" maxsize="20000">
     <label>Votre photo</label>
   </upload>
 </code>
@@ -593,17 +589,150 @@ plus du image/jpeg si vous voulez autoriser le format JPEG.
 indiqués, et l'on peut ensuite lui indiquer où stocker le fichier téléchargé. La
 variable de formulaire contiendra le nom du fichier.
 
+Autres attributs supportés :
+
+  * @@accept@@ : valeur de l'attribut HTML @@accept@@ pour la balise @@input@@.
+  * @@capture@@ : valeur de l'attribut HTML @@capture@@ pour la balise @@input@@.
+
+
 ==== Téléchargement amélioré de fichier ====
 
-Le téléchargement simple comme indiqué précédemment, nécessite de gérer soit
-même l'ancien fichier, quand le formulaire édite des données à modifier. Ainsi,
+Le téléchargement simple comme indiqué précédemment, manque de fonctionnalités sur les
+fichiers existants, quand le formulaire édite des données à modifier. Ainsi,
 il faut soit-même supprimer l'ancien fichier si un nouveau est téléchargé. De plus
 à l'affichage, il n'est pas possible de voir quel est l'ancien fichier, de
 le supprimer etc..
 
 Une amélioration de @@<upload>@@, fournissant une gestion amélioré du fichier,
 est disponible avec l'element @@<upload2>@@ depuis Jelix 1.7. Il a les mêmes attributs et
-élements fils que @@<upload>@@.
+elements fils que @@<upload>@@.
+
+Mais le widget associé améliore l'affichage, en permettant de voir le nom du fichier pré-selectionné ou choisi,
+de remplacer le fichier, ou de le supprimer quand la saisie n'est pas obligatoire.
+
+
+La classe du control en PHP offre une meilleur API pour manipuler les fichiers :
+<code php>
+
+    /** le nom du fichier indiqué lors de l'initialisation du formulaire */
+    public function getOriginalFile();
+
+    /** le nom du fichier uploadé lors de la validation du formulaire */
+    public function getNewFile();
+
+    /** change le nom du nouveau fichier. Si il y a un fichier qui vient d'être uploadé, il est supprimé */
+    public function setNewFile($fileName);
+
+    /**
+     * retourne un nom de fichier sous lequel le fichier peut être sauvegardé sans écraser de fichier existants
+     *
+     * le nom de base du fichier est le nom du fichier uploadé, ou alors le nom donnée dans le paramètre
+     * $alternateName
+     */
+    public function getUniqueFileName($directoryPath, $alternateName = '');
+
+    /**
+     * Sauvegarde le fichier uploadé dans le répertoire indiqué, sous le nom original du fichier, ou
+     * sous le nom indiqué dans $alternateName.
+     *
+     * Si il existe un fichier sous le nom indiqué, il sera écrasé. Si vous ne voulez pas d'écrasement,
+     * utilisez getUniqueFileName pour avoir un nom à donner dans $alternateName
+     */
+    public function saveFile($directoryPath, $alternateName = '');
+
+    /** efface le fichier */
+    public function deleteFile($directoryPath);
+
+</code>
+
+
+Pour les images, il permet d'afficher une vignette de l'image sélectionnée, y compris quand le formulaire
+est affichée en mode "vue uniquement". Cependant, pour qu'une image présélectionnée s'affiche, il faut indiquer
+comment construire l'url, via des paramètres à donner au widget (via @@{ctrl_control}@@ ou via l'option @@widgetAttributes@@
+donnée à @@{form*}@@.
+
+  * soit à partir d'un sélecteur d'action. On indique le sélecteur dans @@uriAction@@ et les paramètres dans @@uriActionParameters@@.
+    Si l'un des paramètres doit contenir le nom du fichier de l'image, il faut indiquer le nom du paramètre dans @@uriActionFileParameter@@.
+    La valeur existante du paramètre sera remplacée par le nom de l'image. Si elle contient @@%s@@, seul ce @@%s@@
+    sera remplacée par le nom de l'image.
+  * soit à partir d'une URL de base, auquel sera ajoutée le nom du fichier de l'image. On indique cette URL de base
+    dans @@baseURI@@.
+
+Pour les images, on peut aussi indiquer les attributs de widget @@imgMaxHeight@@ et @@imgMaxWidth@@, qui indique
+la taille de l'image affichée. Cela ne modifie pas le fichier de l'image.
+
+Exemple :
+
+<code xml>
+  <upload2 ref="photo" mimetype="image/jpeg;image/png" maxsize="20000">
+    <label>Votre photo</label>
+  </upload>
+</code>
+
+<code html>
+{form $form, 'module~action', array(), 'html', array(
+      'widgetsAttributes'=> array(
+          'photo' => array(
+                'uriAction' => 'photomanager~edit:show',
+                'uriActionParameters' => array('filename' => ''),
+                'uriActionFileParameter' => 'filename'
+                'imgMaxWidth' => 100,
+                'imgMaxHeight' => 100
+          ))
+       )}
+
+{form $form, 'module~action', array(), 'html', array(
+      'widgetsAttributes'=> array(
+          'photo' => array(
+                'baseURI' => $j_basepath.'photos/',
+                'imgMaxWidth' => 100,
+                'imgMaxHeight' => 100
+          ))
+       )}
+
+</code>
+
+
+==== Téléchargement d'images ====
+
+Depuis Jelix 1.7.11, il y a un nouveau type de control, @@<image>@@, qui est une évolution de  @@<upload2>@@.
+Le widget qui gère ce control permet non seulement d'afficher l'image sélectionnée, mais aussi
+de l'éditer pour changer sa taille, la découper, etc, avant la validation du formulaire.
+Il permet de limite automatiquement la taille de l'image. Cela évite le téléchargement d'images trop grosses,
+qui pourraient provoquer des problèmes de mémoire si il y a un traitement coté PHP.
+
+L'element @@<image>@@ accepte l'attribut @@A@ref@@, et vous pouvez utiliser les balises @@E@<label>@@,
+@@E@<hint>@@, @@E@<alert>@@, @@E@<help>@@ ainsi que les attributs @@A@readonly@@
+et @@A@required@@.
+
+D'autres attributs sont pris en charge :
+
+  * @@maxWidth@@ et @@maxHeight@@ : taille maximale accepté. Le code javascript du widget retaillera l'image si elle
+    dépasse les dimensions indiquées.
+  * @@mimetype@@ : pour indiquer le type-mime des images que vous acceptez
+  * @@maxsize@@ : taille maximal du fichier
+  * @@accept@@ : valeur de l'attribut HTML @@accept@@ pour la balise @@input@@.
+  * @@capture@@ : valeur de l'attribut HTML @@capture@@ pour la balise @@input@@.
+
+Exemple :
+
+<code xml>
+  <image ref="image" mimetype="image/jpg;image/png;" maxWidth="1024" maxHeight="860">
+     <label>A photo</label>
+  </image>
+</code>
+
+Le widget associé accepte les même attributs que celui pour @@upload2@@ : @@uriAction@@, @@uriActionParameters@@,
+@@uriActionFileParameter@@, @@imgMaxHeight@@ et @@imgMaxWidth@@.
+
+Il accepte également les attributs suivants :
+
+  * @@newImgMaxWidth@@ et @@newImgMaxHeight@@ : la taille maximale de l'image. Équivalent aux attributs @@maxWidth@@ et @@maxHeight@@
+    sur @@<image>@@. Tout dépend si vous voulez indiquer ces valeurs statiquement dans le fichier xml, ou dynamiquement lors
+    de l'affichage du formulaire.
+  * @@dialogWidth@@ et @@dialogHeight@@ : la taille de la boite de dialogue HTML qui permet d'éditer l'image avant
+    la validation du formulaire. Taille en pixel, ou alors @@"auto"@@, la taille sera calculée en fonction de la fenêtre
+    du navigateur.
 
 
 ==== Groupement de champs de saisie ====

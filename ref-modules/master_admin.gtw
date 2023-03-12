@@ -94,7 +94,14 @@ Voici les paramètres pour @@C@masterAdminMenuItem@@ pour ajouter un lien :
    * un libellé pour le lien
    * une url pour le lien
    * l'ordre dans le sous-menu
-   * l'id du sous-menu où ajouter des éléments. Par défaut il y a deux sous-menus : 'toplinks' et 'system'.
+   * l'id du sous-menu où ajouter des éléments.
+
+Il y a quatre sous-menus prédéfinis :
+
+   * 'toplinks' : les liens à afficher en premier dans le menu
+   * 'system' : le menu "Système"
+   * 'crud' : le menu "Gestion de données"
+   * 'refdata' : le menu "Données de références"
 
 Si au niveau de l'item de menu, vous voulez ajouter n'importe quel contenu HTML
 à la place d'un simple lien, indiquez plutôt ces paramètres :

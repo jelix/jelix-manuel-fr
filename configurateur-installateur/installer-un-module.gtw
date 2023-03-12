@@ -3,8 +3,7 @@
 Cette section ne concerne pas les modules fraîchement créés avec la commande
 @@dev.php module:create@@, puisque celle-ci les active automatiquement et les installe.
 
-Par contre, pour créer un module "à la main", utiliser un module existant
-fourni avec jelix ou installer un module tiers, il faut suivre les
+Par contre, pour utiliser un module existant fourni avec jelix ou installer un module tiers, il faut suivre les
 instructions de ce chapitre.
 
 ===== Déclarer le répertoire d'un module =====
@@ -25,6 +24,17 @@ fichier @@application.init.php@@.
 jApp::declareModule(__DIR__.'/somewhere/mymodule/');
 </code>
 
+Une autre possibilité est de déclarer le chemin du module dans la configuration
+de l'application. C'est fait dans la section @@modules@@, avec le paramètre @@*.path@@.
+Par exemple :
+
+<code ini>
+[modules]
+my_module.path = app:vendor/my_vendor_name/my_package/the_module
+</code>
+
+Cela facilite la migration depuis Jelix 1.6.x, et est utile pour déclarer un module tiers
+depuis un script de configuration.
 
 ===== Activation et configuration d'un module =====
 

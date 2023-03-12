@@ -189,7 +189,7 @@ errors_openon=error
 </code>
 
 @@defaultPosition@@ indique si vous voulez afficher la debugbar à droite
-(@@right@@) ou à gauche (@@left@@) sur la page web. Vous pouvez aussi changer la
+(@@right@@), à gauche (@@left@@) ou au centre (@@center@@) sur la page web. Vous pouvez aussi changer la
 position dynamiquement.
 
 @@errors_openon@@ indique pour quel niveau(x) d'erreur la liste des messages s'ouvre

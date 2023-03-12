@@ -169,3 +169,8 @@ jApp::loadConfig('index/config.ini.php');
 jApp::setCoord(new jCoordinator());
 </code>
 
+
+Dans le cas très particulier où @@application.init.php@@ n'est pas dans le répertoire
+principal de l'application (donc n'est pas dans celui contenant @@project.xml@@),
+vous devez appeler @@jApp::setApplicationInitFile(__FILE__)@@ dans le fichier
+@@application.init.php@@.

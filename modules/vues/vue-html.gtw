@@ -571,6 +571,63 @@ Et vous pouvez appliquer les mêmes principes dans un template :
 
 Voyez le [[/composants/templates|chapitre sur les templates]] pour en savoir plus.
 
+=== Forcer la mise à jour des assets dans les navigateurs ===
+
+Pour des raisons de performance, les navigateurs ont une politique de cache agressive
+envers les fichiers JS et CSS. Du coup, pour avoir la dernière version d'un fichier JS ou
+CSS dans une page, il faut souvent forcer le navigateur à les recharger (en appuyant sur shift +
+bouton rechargement par exemple). Mais cela n'est pas très pratique, parce qu'il faut
+que l'utilisateur le sache.
+
+Une solution moderne est d'utiliser un [[https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API|Service Worker]],
+qui permet d'implémenter une stratégie de cache pour les assets entre autre.
+
+Une autre solution, plus classique et ne faisant pas appel à Javascript, est d'avoir
+une url différente pour un fichier JS/CSS donné. Cela peut être fait en renommant à
+chaque version le fichier en question, ce qui peut être fait "facilement" si les
+fichiers en questions sont générés par des outils comme WebPack. Il faut alors veiller
+à ce que, lors du processus de build, le nom du fichier soit mis à jour dans la
+configuration des webassets.
+
+Le changement d'url peut être aussi fait en ajoutant un paramètre URL différent à chaque
+modification. C'est ce que propose de faire automatiquement Jelix depuis la version 1.7.11.
+
+Ainsi quand on ajoute par exemple l'url @@/js/foo.js@@ (via des webassets ou via @@addJsLink()@@ etc)
+au final on obtiendra @@<script src="/js/foo.js?_r=20230311144752"/>@@, la valeur de @@_r@@
+dépendant de la configuration.
+
+Le paramètre de configuration @@assetsRevision@@ dans la section @@[urlengine]@@ permet de
+contrôler l'ajout ou non du paramètre URL (qui est par défaut nommé @@_r@@), et sa valeur.
+
+  * @@assetsRevision=""@@ : la valeur est vide, donc pas de paramètre @@_r@@ ajouté. À
+    vous de gérer le cache du navigateur, si vous le souhaitez, avec des Services Workers,
+    des renomages ou autre.
+  * @@assetsRevision=autoconfig@@ : la valeur de @@_r@@ sera regénérée à chaque recompilation
+    de la configuration (donc après chaque vidage du repertoire temp) et sera la date et
+    heure du jour au moment de la recompilation.
+  * @@assetsRevision@@ possède tout autre valeur : le paramètre @@_r@ prendra celle-ci, que vous
+    aurez donc choisi (ou qu'éventuellement un script ou autre processus aura défini).
+    La modification de @@assetsRevision@@ est donc de votre ressort, et doit être faite
+    à chaque déploiement de l'application par exemple.
+
+Si vous voulez changer le nom du paramètre, indiquer son nom dans le paramètre de configuration
+@@assetsRevisionParameter@@.
+
+Exemple :
+
+<code ini>
+[urlengine]
+assetsRevision=autoconfig
+assetsRevisionParameter=v
+</code>
+
+Notez que le paramètre de version n'est pas ajouté sur les urls complètes de JS et CSS, donc
+celles qui commencent par @@http://@@ ou @@https://@@.
+
+Si il y a des urls pour lesquels vous ne voulez pas ajouter ce paramètre, le seul moyen
+est de déclarer leurs balises @@<link>@@ ou @@<script>@@ via la méthode @@addHeadContent()@@
+de @@jResponseHtml@@.
+
 ===== Autres paramètres pour les réponses html et basichtml =====
 
 Comme @@C@jResponseHtml@@ et @@C@jResponseBasicHtml@@ sont dérivés de

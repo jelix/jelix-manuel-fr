@@ -204,6 +204,22 @@ avec les propriétés d'affichage par défaut.
   }
 </code>
 
+Mais vous pouvez aussi utiliser vos propres classes, en les indiquant dans les
+propriétés 'start-class', 'prev-class', etc, comme dans cet exemple :
+
+<code php>
+  $properties = array(
+      'start-class' => 'pagelinks-start',
+      'prev-class' => 'pagelinks-prev',
+      'next-class' => 'pagelinks-next',
+      'end-class' => 'pagelinks-end',
+      'list-class' => 'pagelinks',
+      'current-page-class' => 'pagelinks-current',
+      'page-class' => '',
+      'disabled-class' => 'pagelinks-disabled'
+  );
+</code>
+
 ===== html : urljsstring =====
 
 Le plugin de template urljsstring permet de générer une chaîne pour du

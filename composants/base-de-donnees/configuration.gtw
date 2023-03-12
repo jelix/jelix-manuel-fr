@@ -91,6 +91,7 @@ Paramètres possibles :
    * @@search_path@@ : indiquer la liste des schémas dans lequel il faut
      chercher les tables, si le schéma par défaut pour la connexion ne
      correspond pas à celui dans lequel l'application va chercher.
+   * @@session_role@@ : définir le role de session PostgreSQL
 
 ===== Profil pour SQLite =====
 

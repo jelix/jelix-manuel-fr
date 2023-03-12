@@ -32,8 +32,12 @@ Pour effectivement fermer l'application, vous devez créer un fichier,
 @@F@var/config/CLOSED@@, vide ou avec un message à l'intérieur.
 
 Ensuite, Jelix affiche la page @@F@lib/jelix/installer/closed.html@@. Vous
-pouvez bien sûr proposer votre propre page html, en la plaçant dans votre
-application en tant que @@F@install/closed.html@@.
+pouvez proposer votre propre page @@closed.html@@, en la plaçant dans
+l'un des répertoires suivant de l'application, parcouru dans cet ordre :
+
+  * @@var/themes/<le theme courant>/closed.html@@ ou @@var/themes/default/closed.html@@
+  * @@var/themes/closed.html@@
+  * @@install/closed.html@@
 
 Pour ré-ouvrir l'application, supprimez simplement le fichier
 @@F@var/config/CLOSED@@.

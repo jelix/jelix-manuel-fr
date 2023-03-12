@@ -10,7 +10,7 @@ classes @@C@jDbtable@@ et @@C@jDbColumn@@.
 Vous pouvez récupérer un objet @@C@jDbSchema@@ en appelant la méthode
 @@M@schema()@@ d'un objet @@C@jDbConnection@@.
 
-Voir la documentation de réference.
+Voir la documentation de référence.
 
 
 ===== Exécuter un script SQL =====
@@ -34,6 +34,40 @@ un), avant l'exécution du script.
 UPDATE %%PREFIX%%product.....;
 INSERT .....;
 </code>
+
+===== Méthodes pour Postgresql =====
+
+La classe outils pour Postgresql contient des méthodes additionnels pour manipuler les champs
+de type tableau : @@decodeArrayValue()@@ et @@encodeArrayValue()@@. Ils permettent de transformer
+les valeurs Postgresql de type tableau en tableau PHP et vice-versa.
+
+<code>
+    // On devrait avoir ici une connexion sur une base Postgresql
+    $conn = jDb::getConnection();
+    $pgTools = $conn->tools();
+
+    // exemple de décodage
+    $record = $conn->query('SELECT myarrayfield FROM mytable')->fetch();
+
+    // Si la valeur de myarrayfield est '{{"meeting", "lunch"}, {"training", "presentation"}}'
+    // phpValue aura comme valeur 'array(array("meeting", "lunch"), array("training", "presentation"))'
+    $phpValue = $pgTools->decodeArrayValue($record->myarrayfield);
+
+    // exemple d'encodage
+    $phpValue = array("lunch", "presentation");
+    $stmt = $conn->prepare("INSERT INTO mytable (myarrayfield) VALUES(:arr)");
+    $stmt->execute(array( 'arr' => $pgTools->encodeArrayValue($phpValue, jDbPgsqlTools::ARRAY_VALUE_TYPE_TEXT)));
+    // la valeur dans  myarrayfield sera '{"lunch","presentation"}'
+</code>
+
+Il faut indiquer le type des valeurs du tableau à @@encodeArrayValue@@, à l'aide
+de constantes :
+
+  * @@jDbPgsqlTools::ARRAY_VALUE_TYPE_TEXT@@ si le tableau contient des chaines
+  * @@jDbPgsqlTools::ARRAY_VALUE_TYPE_INT@@ si le tableau contient des nombres entiers
+  * @@jDbPgsqlTools::ARRAY_VALUE_TYPE_FLOAT@@ si le tableau contient des nombres flottants
+
+Si les valeurs PHP ne sont pas du type indiqué, il y aura une conversion de type de la valeur.
 
 ===== jDbWidget =====
 
