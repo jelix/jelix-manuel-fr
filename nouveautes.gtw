@@ -59,7 +59,7 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
   Cela permet aussi d'utiliser la version de PHPUnit que vous voulez, ou d'utiliser un autre
   framework de tests unitaires.
 * Deux nouveaux plugins de template : `{ifacl2and}`, `{ifacl2or}`
-
+* Ajout de la bibliothèque Javascript Datatables dans les assets de Jelix
 
 ==== Suppressions ====
 

@@ -40,6 +40,15 @@ return $rep;
 </code>
 
 
+Il existe une méthode raccourci sur les contrôleurs : `redirect($action, $parameters, $anchor)`
+
+```php
+
+return $this->redirect("monmodule~moncontroleur:mamethode", array('foo' => 'bar'), 'yo');
+
+```
+
+
 ===== jResponseRedirectUrl =====
 
 Pour spécifier une redirection vers une URL quelconque, vous indiquez le type
@@ -56,9 +65,18 @@ général, il s'agira d'une url externe à l'application jelix, jResponseRedirec
 étant plus approprié pour les urls vers l'application jelix).
 
 <code php>
-$rep->url = "http://jelix.org";
+$rep->url = "https://jelix.org";
 return $rep;
 </code>
+
+Il existe une méthode raccourci sur les contrôleurs : `redirectUrl($url)`
+
+```php
+
+return $this->redirectUrl("https://jelix.org");
+
+```
+
 
 ===== Redirection temporaire ou permanente =====
 
@@ -70,3 +88,4 @@ voulez indiquer au navigateur une redirection permanente, mettez la propriété
 $rep->temporary = false;
 </code>
 
+Ou pour les méthodes `redirectUrl()` et `redirect()`, ajoutez en dernier paramètre `false`.
