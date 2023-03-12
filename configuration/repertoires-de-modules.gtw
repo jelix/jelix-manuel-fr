@@ -56,7 +56,7 @@ fournissant le module.
    jApp::declareModule(__DIR__.'/mon_module/');
 </code>
 
-ou encore dans un fichier composer :
+ou encore dans un fichier @@composer.json@@ :
 
 <code json>
 {

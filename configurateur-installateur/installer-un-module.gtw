@@ -3,8 +3,7 @@
 Cette section ne concerne pas les modules fraîchement créés avec la commande
 @@dev.php module:create@@, puisque celle-ci les active automatiquement et les installe.
 
-Par contre, pour créer un module "à la main", utiliser un module existant
-fourni avec jelix ou installer un module tiers, il faut suivre les
+Par contre, pour utiliser un module existant fourni avec jelix ou installer un module tiers, il faut suivre les
 instructions de ce chapitre.
 
 ===== Déclarer le répertoire d'un module =====
