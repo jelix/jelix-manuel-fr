@@ -22,6 +22,7 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
   * nouvelles méthodes `redirect()` et `redirectUrl()` qui sont des raccourcis pour la création
    d'objet réponse de redirection.
 * jForms :
+  * Meilleure prise en charge de l'envoi de formulaire par xmlHttpRequest
   * nouvelle méthode `BuilderBase::outputAllControlsValues()`
   * nouvelle méthode `BuilderBase::outputControlRawValue()`
   * nouvelle méthode `WidgetInterface::outputControlRawValue()`
@@ -50,9 +51,6 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
   * nouvelle méthode `findProfile()` sur les helpers
   * nouvelle option à la commande `installer.php` : `--no-clean-temp`. Et maintenant la commande
     vérifier que le contenu du répertoire temp peut être supprimé, plutôt que de générer une erreur.
-* Tests unitaires dans les modules : `jUnitTestCase` and `jUnitTestCaseDb` sont dépréciés. Utilisez
-  plutôt `\Jelix\UnitTests\UnitTestCase` et `\Jelix\UnitTests\UnitTestCase`. Et la prise en
-  charge de PHPUnit < 6.0 a été supprimé.
 * Le script `runtests.php` et le mécanisme de tests unitaires dans les modules est maintenant
   déprécié. Il est préférable d'écrire les tests en dehors du répertoire des modules. Cela rend plus
   simple le déploiement des modules sans inclure les tests, via Composer ou autre système de déploiement.
@@ -60,6 +58,13 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
   framework de tests unitaires.
 * Deux nouveaux plugins de template : `{ifacl2and}`, `{ifacl2or}`
 * Ajout de la bibliothèque Javascript Datatables dans les assets de Jelix
+
+==== API obsolètes ====
+
+* Tests unitaires dans les modules : `jUnitTestCase` and `jUnitTestCaseDb` sont dépréciés. Utilisez
+  plutôt `\Jelix\UnitTests\UnitTestCase` et `\Jelix\UnitTests\UnitTestCase`. Et la prise en
+  charge de PHPUnit < 6.0 a été supprimé.
+
 
 ==== Suppressions ====
 

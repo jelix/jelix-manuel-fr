@@ -102,63 +102,7 @@ modifications suivantes :
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
 classes et méthodes que vous pouvez utiliser.
 
-Il y a eu aussi des changements dans certaines API, que vous devriez donc
-modifier dans votre code si vous les utilisez :
-
-  * TODO pas de changement pour le moment
-
-
-Des fonctionnalités, API et modules ont été supprimés. Voir la liste
-complète dans [[/nouveautes|les nouveautés]]. Veillez donc à modifier votre
-code pour ne plus les utiliser et éventuellement les remplacer par des
-alternatives.
-
-==== Lancement de la migration ====
-
-Vous devez maintenant lancer le script de migration de Jelix, qui va faire
-beaucoup de changements à votre place.
-
-En particulier :
-
-  * TODO pas de changements pour le moment
-
-Lancez donc maintenant : @@php dev.php jelix:migrate -v@@.
-
-==== Changements dans vos contrôleurs SOAP ====
-
-Il faut remplacer les commentaires de code "@param" par "@externalparam".
-
-Avant :
-<code php>
-    /**
-     * Test with a simple parameter
-     * @param string $name
-     * @return string
-     */
-    function hello() {
-        $rep = $this->getResponse('soap');
-        $rep->data = "Hello ".$this->param('name');
-        return $rep;
-    }
-}
-</code>
-
-Après :
-
-<code php>
-    /**
-     * Test with a simple parameter
-     * @externalparam string $name
-     * @return string
-     */
-    function hello() {
-        $rep = $this->getResponse('soap');
-        $rep->data = "Hello ".$this->param('name');
-        return $rep;
-    }
-}
-</code>
-
+Il n'y a pas d'API et modules supprimés depuis Jelix 1.7.
 
 ==== Mise à jour des instances de l'application ====
 
@@ -179,9 +123,9 @@ Supprimez tout ce qu'il y a dans le répertoire temp/ de votre application,
 puis lancez :
 
 <code bash>
-php install/configurator.php -v
+php install/configurator.php
 
-php install/installer.php -v
+php install/installer.php
 </code>
 
 
