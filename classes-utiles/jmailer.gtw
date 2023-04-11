@@ -263,6 +263,16 @@ $mail->Send();
 jMailer utilise comme base PHPMailer, si vous voulez avoir d'avantage de
 documentation, consultez [[http://phpmailer.github.io/PHPMailer/|la documentation de PHPMailer]].
 
+===== Tester la configuration =====
+
+Si vous voulez savoir si jMailer enverra correctement les emails avec la configuration
+effectuée, vous pouvez lancer la commande `php console.php mailer:test`. Donnez une
+adresse email à cette commande, et un email sera envoyé à cette adresse.
+
+```
+php console.php mailer:test john.doe@example.com
+```
+
 ===== Mode Debug  =====
 
 Dans certains environnement de tests, comme votre machine de développement,
@@ -313,3 +323,12 @@ debugReceiversWhiteList[] = john@foo.local
 
 </code>
 
+Vous pouvez aussi débugger la communication SMTP. Utilisez le paramètre de
+configuration `debugSmtpLevel` pour indiquer ce que vous voulez voir dans les logs
+de l'application :
+
+* `0`: Pas de débuggage
+* `1`: Commandes SMTP
+* `2`: Données et commandes
+* `3`: Données, commandes et état de connection
+* `4`: données bas-niveau

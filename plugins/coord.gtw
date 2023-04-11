@@ -45,7 +45,7 @@ foo = 1
 
 La valeur @@"1"@@ indique aussi que la configuration du plugin peut être
 dans la configuration du point d'entrée. Cette configuration doit alors être
-placée dans une section @@[coordplugin_XXX]@@ (où XXX est le nom du plugin,
+placée dans une section @@[coordplugin_<pluginname>]@@ (où @@<pluginname>@@ est le nom du plugin,
 comme par exemple @@[coordplugin_foo]@@).
 
 **Important** : Si vous utilisez plusieurs plugins de coordinateur,
@@ -70,20 +70,20 @@ Un plugin coord peut avoir besoin de paramètres de configuration. Ces paramètr
 peuvent être placé dans une section de la configuration principale, ou un fichier 
 spécifique, ou encore dans des propriétés du contrôleur.
 
-Ce fichier doit être alors un fichier de type //ini//, placé dans 
-@@F@@votreApplication/app/system/@@ et être déclaré dans la configuration comme
-indiqué précédemment. Le contenu ini sera passé au constructeur du plugin sous 
-forme de tableau (résultat de la fonction php @@parse_ini_file@@).
+Si il est utilisé un fichier de configuration spécifique, celui-ci doit être alors
+un fichier de type //ini//, placé dans @@F@@votreApplication/app/system/@@ et être déclaré
+dans la configuration comme indiqué précédemment. Le contenu ini sera passé au constructeur
+du plugin sous forme de tableau (résultat de la fonction php @@parse_ini_file@@).
 
-Ou la configuration peut être, comme indiquée plus haut, dans une section
-@@[coordplugin_XXX]@@ de la configuration du point d'entrée. Le plugin
-reçoit alors le contenu de cette section sous forme de tableau associatif.
+La configuration peut être, comme indiquée plus haut, dans une section
+@@[coordplugin_XXX]@@ ou @@[XXX]@@ d'un des fichiers de configuration générale.
+Le plugin reçoit alors le contenu de cette section sous forme de tableau associatif.
 
-Si il y a à la fois une section @@[coordplugin_XXX]@@ et un fichier de configuration
-spécifique, seul le contenu du fichier de configuration est utilisé,
-à moins d'indiquer, dans la section @@[coordplugins]@@, un paramètre @@XXX.mergeconfig@@
-avec une valeur @@1@@ ou @@on@@. Dans ce cas, le contenu de @@[coordplugin_XXX]@@ et du
-fichier de configuration sont fusionnés.
+Si il y a à la fois une section @@[coordplugin_XXX]@@ (ou @@[XXX]@@) et un fichier de configuration
+spécifique, seul le contenu du fichier de configuration est utilisé.
+À moins d'indiquer, dans la section @@[coordplugins]@@, un paramètre @@XXX.mergeconfig@@
+avec une valeur @@1@@ ou @@on@@. Dans ce cas, le contenu de @@[coordplugin_XXX]@@  (ou @@[XXX]@@)
+et du fichier de configuration sont fusionnés (le contenu de @@[coordplugin_XXX]@@ ou @@[XXX]@@ étant prioritaire).
 
 
 ==== Paramètres de plugins ====

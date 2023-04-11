@@ -19,6 +19,9 @@ Vous pouvez fournir plusieurs scripts :
   * @@upgrade.php@@ pour la mise à jour d'un module au niveau d'une instance
   * plusieurs scripts @@upgrade_xxx.php@@ qui sont dédiés chacun à la mise à jour
     d'une version précise de votre module.
+  * @@install_1_6.php@@ et @@upgrade_1_6.php@@ pour rendre votre module compatible avec
+    l'ancienne API de Jelix 1.6. Voir la documentation de Jelix 1.6 pour savoir comment
+    les construire.
 
 L'installation est paramétrable. C'est à dire que @@install.php@@ et les scripts
 d'upgrade peuvent avoir des paramètres qui sont stockés dans la configuration
@@ -26,7 +29,7 @@ de l'application. Les valeurs des paramètres peuvent être indiquées à la mai
 par le développeur, ou demandées interactivement au développeur par le
 configurateur du module.
 
-Les classes de ces scripts de configuration/installations ont accés à une API
+Les classes de ces scripts de configuration/installations ont accès à une API
 qui va permettre de faire plusieurs choses, comme lire et modifier les
 fichiers de configuration, faire des opérations en base de données, installer
 des fichiers dans l'application (JS, CSS...) etc.

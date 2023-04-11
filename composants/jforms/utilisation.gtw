@@ -380,3 +380,17 @@ votre contrôleur du type @@M@getMyControl()@@ afin de ne pas dupliquer le code.
 cette méthode fait un @@M@get()@@ puis un @@M@initFromRequest()@@ et ne vous
 donne donc pas l'opportunité d'ajouter votre champ avant que les données
 soumises soient stockées dans le formulaire (par @@M@initFromRequest()@@).
+
+3 - Pendant le remplissage dynamique d'un contrôle
+
+Si le formulaire contient une liste qui dépend d'un autre contrôle, la liste
+est remplie via un appel http au contrôleur dédié à jForms.
+
+Lors de cette action, le contrôleur emet un évènement @@jformsPrepareToFillDynamicList@@,
+avant de récupérer et renvoyer le contenu de la liste, permettant de préparer
+l'objet formulaire avec tous les champs de saisie attendu.
+
+L'évènement contient les paramètres suivants :
+
+  * @@form@@ : l'objet formulaire.
+  * @@controlRef@@ : l'identifiant du contrôle dont la liste des valeurs sera générée.

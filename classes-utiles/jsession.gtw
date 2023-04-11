@@ -72,3 +72,21 @@ CREATE TABLE  IF NOT EXISTS `jsessions` (
   PRIMARY KEY  (`id`)
 ) DEFAULT CHARSET=utf8;
 </code>
+
+===== Paramètres du cookie de session =====
+
+Il est possible de paramètrer le cookie de session afin de le sécuriser.
+
+```ini
+[sessions]
+; ...
+cookieSecure=off
+cookieHttpOnly=on
+cookieExpires=0
+cookieSameSite=
+```
+
+Les paramètres de configuration correspondent aux paramètres de cookie
+respectivement `secure`, `httponly`, `expires` et `samesite`.
+Voir la documentation de [[https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie|l'entête Set-Cookie]].
+

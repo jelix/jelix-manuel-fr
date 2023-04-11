@@ -334,6 +334,22 @@ On peut aussi faire la même chose si l'on veut une date de début au minimum
   </date>
 </code>
 
+
+==== Saisie d'heure ====
+
+Pour permettre la saisie d'une heure, utiliser `<time>`.
+
+```
+<time ref="meetingtime">
+    <label>Meeting Time</label>
+</time>
+```
+
+L'attribute @@seconds="true"@@ permet de saisir les secondes.
+
+Vous pouvez utiliser @@mintime@@ et @@maxtime@@ pour ajouter des contraintes sur
+l'heure saisie.
+
 ==== Mot de passe ====
 
 Pour la saisie d'un mot de passe ou tout autre renseignement qui doit être caché
