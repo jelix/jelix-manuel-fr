@@ -2,9 +2,9 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.8.0
+subtitle= Jelix 1.9.0-dev
 title_short= Guide du développeur
-edition = Jelix 1.8.0
+edition = Jelix 1.9.0-dev
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
 copyright_years=2006-2023

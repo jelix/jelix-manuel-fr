@@ -15,20 +15,20 @@ ces étapes à faire :
   * sur chaque instance de l'application, lancer le configurateur et l'installateur
     de Jelix.
 
-===== Mettre à jour depuis Jelix 1.6 et inférieur =====
+===== Mettre à jour depuis Jelix 1.7 et inférieur =====
 
 Suivez les indications de migration de chaque version intermédiaire pour migrer
-à la dernière version de Jelix 1.7, avant de mettre à jour pour jelix 1.8.
+à la dernière version de Jelix 1.7, avant de mettre à jour pour jelix 1.8 puis 1.9.
 
 Voir les instructions de migration des manuels de chacune de ces versions. 
 
-===== Mettre à jour depuis Jelix 1.7.x =====
+===== Mettre à jour depuis Jelix 1.8.x =====
 
 Voici les instructions à suivre dans l'ordre.
 
 ==== Prérequis ====
 
-Jelix 1.8 nécessite PHP 7.4 minimum. Vérifiez que votre serveur a bien cette
+Jelix 1.9 nécessite PHP 7.4 minimum. Vérifiez que votre serveur a bien cette
 version ou une version supérieure. Cependant, il est recommandé d'utiliser PHP 8.2,
 les versions 8.0 et précédentes n'étant plus maintenues par PHP à la date d'écriture
 de cette page.
@@ -60,7 +60,7 @@ Exemple :
     "name": "mycompany/myapp",
     "type": "application",
     "require": {
-        "jelix/jelix": "^1.8.0"
+        "jelix/jelix": "dev-jelix-1.9.x"
     }
 }
 </code>
@@ -85,16 +85,16 @@ jelix, en n'oubliant pas de remettre dans le nouveau répertoire @@F@lib/@@ vos
 ==== Mise à jour des modules ====  
 
 Mettez à jour les sources des modules tiers que vous avez installés, et qui sont
-compatibles avec Jelix 1.8.
+compatibles avec Jelix 1.9.
 
 Et pour vos propres modules, vous devez adapter le code source en faisant les
 modifications suivantes :
 
   * Dans les fichiers @@F@module.xml@@, indiquez que le module est compatible
-    avec Jelix 1.8 (changer l'attribut @@A@maxversion@@). Exemple :
+    avec Jelix 1.9 (changer l'attribut @@A@maxversion@@). Exemple :
 
 <code xml>
-        <jelix minversion="1.6" maxversion="1.8.*"/>
+        <jelix minversion="1.7" maxversion="1.9.*"/>
 </code>
 
 ==== Changements d'API ====
@@ -102,7 +102,7 @@ modifications suivantes :
 Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
 classes et méthodes que vous pouvez utiliser.
 
-Il n'y a pas d'API et modules supprimés depuis Jelix 1.7.
+Il n'y a pas d'API et modules supprimés depuis Jelix 1.8.
 
 ==== Mise à jour des instances de l'application ====
 
