@@ -98,6 +98,19 @@ Vous devez indiquer le nom du driver utilisé au niveau de l'option @@driver@@.
 Vous devez ensuite avoir une section portant ce même nom, pour les options
 propres au driver.
 
+<code ini>
+driver=Db
+</code>
+
+Il est possible d'indiquer le driver dans la configuration générale, dans la section
+@@coordplugin_auth@@, dans le fichier @@mainconfig.ini.php@@, @@localconfig.ini.php@@ ou le
+fichier de configuration du point d'entrée.
+
+<code ini>
+[coordplugin_auth]
+driver=Db
+</code>
+
 Les options dépendants des drivers, consultez [[drivers|la documentation sur les pilotes jauth]]
 pour activer l'un deux.
 
