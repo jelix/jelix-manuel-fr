@@ -59,6 +59,11 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 * Deux nouveaux plugins de template : `{ifacl2and}`, `{ifacl2or}`
 * Ajout de la bibliothèque Javascript Datatables dans les assets de Jelix
 
+
+==== Nouvelles fonctionnalités dans 1.8.1 ====
+
+* jDao : les "records" peuvent maintenant hériter de n'importe quelle classe auto-chargeable
+
 ==== API obsolètes ====
 
 * Tests unitaires dans les modules : `jUnitTestCase` and `jUnitTestCaseDb` sont dépréciés. Utilisez

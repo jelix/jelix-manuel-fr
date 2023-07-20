@@ -276,13 +276,21 @@ vous-même une classe qui servira de classe de base pour l'objet généré.
 **Attention** : cette classe n'est pas destinée à faire des requêtes sql sur la table du DAO. Si vous voulez
 faire cela, voyez plutôt les "méthodes XML/PHP" de la factory. Les méthodes fournies
 par votre classe seront plutôt des méthodes qui calculent par exemple des valeurs de champs,
-qui vérifient des rêgles de gestion etc...
+qui vérifient des règles de gestion etc...
 
-Votre classe aura le nom que vous voudrez, avec le suffixe @@DaoRecord@@, et stockée dans le répertoire @@F@daos/@@ d'un module,
-sous le nom @@<nomclasse>.daorecord.php@@.
+La classe doit être stockée dans le répertoire @@F@daos/@@ et doit suivre un nommage spécifique.
 
-Vous indiquerez alors le sélecteur de cette classe @@<nommodule>~<nomclasse>@@ dans un attribut
-@@A@extends@@ de la balise @@E@<record>@@.
+Cependant, depuis Jelix 1.8.1, vous pouvez aussi utiliser n'importe quelle classe
+auto-chargeable.
+
+==== La classe est dans @@F@daos/@@ ====
+
+Votre classe aura le nom que vous voudrez, avec le suffixe @@DaoRecord@@, et
+stockée dans le répertoire @@F@daos/@@ d'un module, sous le
+nom @@<nomclasse>.daorecord.php@@.
+
+Vous indiquerez alors le sélecteur de cette classe @@<nommodule>~<nomclasse>@@
+dans un attribut @@A@extends@@ de la balise @@E@<record>@@.
 
 Notez que votre classe doit étendre la classe @@C@jDaoRecordBase@@.
 
@@ -322,6 +330,52 @@ Ainsi vous pourrez appeler cette méthode sur n'importe quel enregistrement:
         //...
    }
  </code>
+
+==== La classe est autochargeable ====
+
+Si votre classe a un namespace et est auto-chargeable, vous pouvez son
+nom complet dans l'attribut @@A@extends@@ de la balise @@E@<record>@@.
+
+Votre classe doit étendre la classe @@C@jDaoRecordBase@@.
+
+Exemple, dans le fichier dao :
+
+<code xml>
+   <record extends="\MyCompany\MyDomain\News">
+   ...
+   </record>
+</code>
+
+Les enregistrements seront donc de la classe @@C@\MyCompany\MyDomain\News@@
+située dans un fichier @@F@News.php@@ quelque part dans votre module ou ailleurs.
+Un exemple de son code source :
+
+<code php>
+class \MyCompany\MyDomain\News extends \jDaoRecordBase {
+
+   function methodeDeCalcul() {
+       $this->champs = $this->champs2 * 1.196;
+   }
+
+   function calculateTotal() {
+       return $this->amount + $this->vat;
+   }
+}
+</code>
+
+Ainsi vous pourrez appeler cette méthode sur n'importe quel enregistrement:
+
+<code php>
+
+   $maFactory = jDao::get("mymodule~news");
+   $liste = $maFactory->findAll();
+
+   foreach ($liste as $row) {
+        $total = $row->calculateTotal();
+        //...
+   }
+ </code>
+
 
 ===== Importation de dao =====
 
