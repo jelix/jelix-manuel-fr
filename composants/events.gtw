@@ -70,22 +70,31 @@ listener.
 
 Il y a deux choses à faire pour un listener : le créer, puis le déclarer.
 
-==== créer le listener ====
+==== Créer le listener ====
 
-Il faut d'abord lui donner un nom. Nous allons utiliser "auth" par exemple.
+Un listener est une classe stockée dans @@C@classes@@ avec un nom spécifique.
+
+Depuis Jelix 1.8.1, cela peut être une classe stockée n'importe où, avec n'importe quel nom,
+et qui doit être auto-chargeable. Ce qui est beaucoup moins contraignant.
+
+Pour créer un listener dans @@C@classes@@, il faut d'abord lui donner un nom logique.
+Nous allons utiliser "auth" par exemple.
 Ensuite il faut créer une classe pour le listener. Son nom est une concatenation
-du nom choisi avec "Listener". Stocker cette classe dans un fichier qui a pour
-nom "nomchoisi.listener.php", et donc @@F@auth.listener.php@@ pour notre
-exemple, ce fichier devant être dans le dossier @@C@classes@@ du module. La
-classe doit hériter de @@C@jEventListener@@.
+du nom logique avec "Listener". Stocker cette classe dans un fichier qui a pour
+nom @@nomlogique.listener.php@@, et donc @@F@auth.listener.php@@ pour notre
+exemple, ce fichier devant être dans le dossier @@C@classes@@ du module.
 
-Cette classe contient une méthode pour chaque évènement auquel le listener
+
+Une classe de listener doit hériter de @@C@jEventListener@@ et doit contenir une
+méthode pour chaque évènement auquel le listener
 répond. Ces noms de méthodes commencent par @@on@@ suivi du nom d'événement. Et
 ces méthodes prennent en paramètre l'objet @@C@jEvent@@ correspondant à
 l'événement. Exemple :
 
 <code php>
 class authListener extends jEventListener {
+// ou
+// class \MyModule\Listeners\Auth extends \jEventListener {
 
    function onAuthCanLogin ($event) {
 
@@ -145,8 +154,16 @@ il faut ensuite déclarer le listener. Cela se fait dans un fichier
    <listener name="auth">
        <event name="AuthCanLogin" />
    </listener>
+   <!-- or -->
+   <listener name="\MyModule\Listeners\Auth">
+       <event name="AuthCanLogin" />
+   </listener>
 </events>
 </code>
+
+L'attribute @@name@@ de la balise @@listener@@ doit contenir le nom logique
+du listener, si sa classe est stockée dans @@classes/@@, ou le nom
+entier de la classe si elle est auto-chargeable.
 
 Vous pouvez déclarer autant de listener que vous voulez grâce à la balise
 @@E@<listener>@@. Et dans chacune d'elles vous indiquez tous les évènements que
@@ -159,7 +176,8 @@ tiers, pour un tas de raison.
 
 Cela est possible en les indiquant dans la section @@[disabledListeners]@@
 de la configuration principale. Les clés sont les noms d'évènements, les
-valeurs sont les sélecteurs des listeners.
+valeurs sont les sélecteurs des listeners ou le nom complet de la classe
+du sélecteur si elle est autochargeable.
 
 <code ini>
 [disabledListeners]
@@ -175,7 +193,7 @@ utilisez simplement la notation @@[]@@ pour indiquer un tableau :
 <code ini>
 [disabledListeners]
 authLogin[]="aModule~theListener"
-authLogin[]="otherModule~otherListener"
+authLogin[]="\MyModule\Listeners\Auth"
 </code>
 
 

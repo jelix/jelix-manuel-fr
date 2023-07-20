@@ -63,6 +63,7 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 ==== Nouvelles fonctionnalités dans 1.8.1 ====
 
 * jDao : les "records" peuvent maintenant hériter de n'importe quelle classe auto-chargeable
+* jEvent : les listeners peuvent être des classes auto-chargeable.
 
 ==== API obsolètes ====
 
