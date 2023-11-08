@@ -115,8 +115,10 @@ jApp::initPaths(
 );
 jApp::setTempBasePath(/* ici pas de changements, garder le chemins existant */);
 
-require (__DIR__.'/vendor/jelix_app_path.php');
+//require (__DIR__.'/vendor/jelix_app_path.php');
 </code>
+
+Pour l'instant, @@require (__DIR__.'/vendor/jelix_app_path.php');@@ est en commentaire.
 
 Sautez l'étape qui suit.
 
@@ -141,8 +143,11 @@ jApp::initPaths(
 );
 jApp::setTempBasePath(/* ici pas de changement, garder le chemin existant */);
 
-require (__DIR__.'/../lib/vendor/jelix_app_path.php');
+// require (__DIR__.'/../lib/vendor/jelix_app_path.php');
 </code>
+
+Pour l'instant, @@require (__DIR__.'/../lib/vendor/jelix_app_path.php');@@ est en commentaire.
+
 
 ==== Changement dans la déclaration des modules et plugins ====
 
@@ -368,6 +373,8 @@ En particulier :
 
 Lancez donc maintenant : @@php cmd.php jelix:migrate -v@@.
 
+Puis dans @@application.init.php@@, décommentez la ligne qui inclus @@jelix_app_path.php@@,
+et lancer @@composer update@@.
 
 ==== Déplacement des fichiers overloads, themes... ====
 
