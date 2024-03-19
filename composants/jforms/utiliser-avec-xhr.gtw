@@ -1,0 +1,288 @@
+~~LANG:EN@enman:components/jforms/using-with-xhr~~
+
+===== Afficher un formulaire avec Xhr =====
+
+Il est possible d'afficher un formulaire avec @@xmlHttpRequest@@ : en javascript,
+on fait une requête vers une action, qui va utiliser une réponse de
+type @@htmlfragment@@, qui retournera un formulaire généré avec jForms, comme
+ceci :
+
+
+<code php>
+class sampleformCtrl extends jController {
+
+    function showajaxform()
+    {
+        // retrieve form data
+        $form = jForms::get('sample');
+        if ($form == null) {
+            $form = jForms::create('sample');
+        }
+
+        // manipulation du formulaire
+        //$form->...
+
+
+        // on retourne le contenu HTML du formulaire dans un fragment html
+        $rep = $this->getResponse('htmlfragment');
+        $rep->tpl->assign('form', $form);
+        $rep->tplname = 'sampleajaxform';
+        return $rep;
+    }
+}
+</code>
+
+Avec par exemple le template @@sampleajaxform@@ :
+
+<code html>
+{form $form,'sampleform:save'}
+    {formcontrols}
+    <div>{ctrl_label '', '%s: '} {ctrl_control}</div>
+    {/formcontrols}
+<p>{formreset} {formsubmit}</p>
+{/form}
+</code>
+
+Pour afficher cela, il faut une autre action, qui va afficher la page,
+et charger du code javascript qui effectuera la requete pour récupérer
+ce contenu html.
+
+Ce code javascript, stocké pour notre exemple dans un fichier "sampleajaxform.js"
+peut ressembler à ceci :
+
+<code javascript>
+function loadForm() {
+    // on récupère l'url de l'action qui aura été mis dans un attribut data-
+    // d'un élément ayant pour id "theform"
+    let urlAjaxForm = $('#theform').dataset.urlForm;
+
+    // on effectue une requete xhr avec jQuery
+    jQuery.ajax(urlAjaxForm, {
+        complete: function(jqXHR, textStatus) {
+            // on insère le contenu renvoyé par la réponse htmlfragment
+            // dans l'élement theform
+            $("#theform").html(jqXHR.responseText);
+        },
+        // ...
+    });
+}
+</code>
+
+Et l'action qui affiche la page ressemblera à ceci
+
+<code php>
+class sampleformCtrl extends jController {
+
+    function mainpage()
+    {
+        $rep = $this->getResponse("html");
+        $rep->title = 'show ajax form';
+        $rep->addJSLink(jApp::urlBasePath().'sampleajaxform.js');
+
+        // attention, il manque des choses ici ;-)
+
+        $tpl = new jTpl();
+        $rep->body->assign('MAIN', $tpl->fetch('mypage'));
+        return $rep;
+    }
+
+    function showajaxform()
+    {
+    //...
+    }
+</code>
+
+Avec son template mypage:
+
+<code html>
+<button onclick="loadForm()">Load the form</button>
+
+<div id="theform" data-url-form="{jurl 'sampleform:showajaxform'}">
+    // will be filled after clicking on the button
+</div>
+</code>
+
+Il y a cependant un souci dans tout cet exemple : la bibliothèque javascript
+de jForms n'est pas chargée. En effet la réponse de type htmlfragment ne génère
+pas les balises @@<script>@@ et @@<link>@@ que demande le générateur de formulaire.
+Et de toute façon, cela n'aurait pas de sens de charger plusieurs fois les mêmes scripts
+dans le cas où on a plusieurs formulaires dans la même page.
+
+Aussi il faut bien faire attention à les charger dans la page principale
+"mainpage". Pour cela, il faut utilise le générateur de formulaire et lui
+demander d'indiquer à la réponse html les liens CSS et JS à charger :
+
+@@$form->getBuilder('html')->outputMetaContent(null);@@
+
+Ainsi notre action mainpage devient :
+
+<code php>
+class sampleformCtrl extends jController {
+
+    function mainpage()
+    {
+        $rep = $this->getResponse("html");
+        $rep->title = 'show ajax form';
+        $rep->addJSLink(jApp::urlBasePath().'sampleajaxform.js');
+
+        // on ajoute tous les liens JS et CSS nécessaires au formulaire
+        $form = jForms::create('sample');
+        $form->getBuilder('html')->outputMetaContent(null);
+
+        $tpl = new jTpl();
+        $rep->body->assign('MAIN', $tpl->fetch('mypage'));
+        return $rep;
+    }
+
+    function showajaxform()
+    {
+    //...
+    }
+</code>
+
+
+===== Soumettre le contenu d'un formulaire en ajax =====
+
+Lors de la soumission d'un formulaire jForms, le navigateur poste le contenu
+vers l'action indiquée, et en retour votre action doit faire une redirection
+et/ou afficher une nouvelle page.
+
+Vous voudriez peut-être plutôt envoyer les données à un service web, à une action qui
+renvoi par exemple du json que votre code JS traitera.
+
+Pour cela, il faut indiquer à jForms, en javascript, que l'envoi des données
+doit se faire avec xmlHttpRequest, à l'action indiquée classiquement dans le
+template.
+
+Dans le code javascript chargée par votre page, après le chargement de la page,
+vous devriez appeler la méthode @@submitWithXHR()@@. Cette méthode prend en argument
+optionnel des fonctions de callback, mais nous verrons plus bas..
+
+<code javascript>
+
+// quand le formulaire jforms_testapp_sample sera affiché...
+jFormsJQ.onFormReady('jforms_testapp_sample',
+    function(form) {
+          // on active le submit avec xhr
+          form.submitWithXHR();
+    }
+);
+</code>
+
+À l'action du formulaire, il faut utiliser l'objet réponse @@jResponseFormJQJson@@
+qui renverra une structure JSON que reconnaitra le composant javascript de jForms.
+
+Ainsi votre action aura une structure similaire:
+
+<code php>
+
+function save() {
+
+    // récupération de l'objet réponse pour jForms
+    $rep= $this->getResponse("formjq");
+
+    // Vous utilisez l'api Jforms comme d'habitude
+    $form = jForms::fill('sample');
+    if ($form->check()) {
+        // formulaire ok
+    }
+    else {
+        // formulaire en erreur
+    }
+
+    // vous indiquez le formulaire à l'objet réponse
+    $rep->setForm($form);
+    // fin
+    return $rep;
+}
+</code>
+
+Dans la réponse, vous pouvez indiquer une erreur, en appelant la
+méthode @@setError()@@, qui prend en paramètre un message et/ou une url où
+faire une redirection. Elle remplace le traitement effectué par défaut en JS,
+quand il y a des champs invalides.
+
+<code php>
+$rep->setError('il y a une erreur');
+// ou une redirection
+$rep->setError('', jUrl::get('mymodule~autre:action'));
+</code>
+
+En cas de formulaire valide, vous pouvez indiquer une redirection à faire :
+
+<code php>
+$rep->changeLocation(jUrl::get('mymodule~autre:action'));
+</code>
+
+Enfin, quelque soit le statut du formulaire (valide ou en erreur), vous
+avez la possibilité de renvoyer n'importe quelles données. À vous de les traiter
+dans les fonctions de callback indiquées à @@submitWithXHR()@@.
+
+<code php>
+$rep->setCustomData(['my', 'data']);
+</code>
+
+En retour, dans la page web, jForms va par défaut, rediriger vers une nouvelle
+page si vous l'avez indiqué (avec @@changeLocation()@@ ou @@setError()@@),
+ou afficher les erreurs si il y en a, ou ne fera rien si le formulaire est valide.
+
+Vous pouvez changer ce comportement, surtout dans le cas où le formulaire
+est valide, car en général, vous voudriez que quelque chose se passe dans
+la page web une fois le formulaire validé. Pour cela, vous pouvez
+indiquer une ou deux fonctions de callback à @@submitWithXHR()@@. La première
+est celle appelée quand le formulaire est valide, la deuxième quand le formulaire
+est en erreur. Notez qu'indiquer une fonction de callback annule le comportement
+par défaut.
+
+Par exemple en cas de formulaire, vous voudriez peut-être afficher un
+message et faire d'autres choses en suite.
+
+<code javascript>
+jFormsJQ.onFormReady('jforms_testapp_sample',
+    function(form) {
+          form.submitWithXHR(
+             // callback quand le formulaire est valide
+             function(result) {
+                document.getElementById('message').textContent = 'Contenu enregistré avec succés';
+             }
+         );
+    }
+);
+</code>
+
+La fonction de callback pour un formulaire valide reçoit un objet avec
+ces propriétés:
+
+<code json>
+{
+    "success": true,
+    "customData": null, // ou la valeur donnée à setCustomData()
+    "locationUrl": "" // ou l'url donnée à changeLocation()
+}
+</code>
+
+En cas d'erreur, si vous avez utilisé @@setError()@@, l'objet reçu est :
+
+<code json>
+{
+    "success": false,
+    "customData": null, // ou la valeur donnée à setCustomData()
+    "locationUrl": "", // ou l'url donnée à setError()
+    "errorMessage": "", // ou le message donnée à setError()
+}
+</code>
+
+Sinon
+
+<code json>
+{
+    "success": false,
+    "customData": null, // ou la valeur donnée à setCustomData()
+    "errors": {  // erreurs détectées par jForms sur chaque champs
+       "champs1": "error 1",
+       "champs2": "error 2"
+    },
+}
+</code>
+
+À vous d'en faire ce que vous voulez dans vos fonctions de callback.

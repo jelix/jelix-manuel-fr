@@ -93,6 +93,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
       - section: [[composants/jforms/affichage|Affichage d'un formulaire]].
           -section: [[composants/jforms/affichage/generateur-html|Générateur "html"]]
       - section: [[composants/jforms/apres-submit|Gérer un formulaire après soumission]]
+      - section: [[composants/jforms/utiliser-avec-xhr|Gérer un formulaire avec Xhr]].
       - section: [[composants/jforms/affichage-donnees|Affichage simple des données]].
       - section: [[composants/jforms/security|Sécurité dans les formulaires]].
       - section: [[composants/jforms/cache|Configurer le cache des données]].

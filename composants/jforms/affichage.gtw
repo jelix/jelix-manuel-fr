@@ -373,7 +373,4 @@ Astuce : si vous souhaitez passer la même option dans tous vos formulaires,
 créez le générateur de votre choix en dérivant un générateur existant et
 affectez-lui directement ces options dans son code...
 
-===== Utilisation de jforms dans des réponses Ajax =====
-
-Voir [[/modules/services-web/ajax|la note sur la page des réponses ajax]].
 
