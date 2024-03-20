@@ -92,7 +92,7 @@ class sampleformCtrl extends jController {
     }
 </code>
 
-Avec son template mypage:
+Avec son template mypage :
 
 <code html>
 <button onclick="loadForm()">Load the form</button>
@@ -175,25 +175,27 @@ qui renverra une structure JSON que reconnaitra le composant javascript de jForm
 Ainsi votre action aura une structure similaire:
 
 <code php>
+class sampleformCtrl extends jController {
 
-function save() {
+    function save() {
 
-    // récupération de l'objet réponse pour jForms
-    $rep= $this->getResponse("formjq");
+        // récupération de l'objet réponse pour jForms
+        $rep = $this->getResponse("formjq");
 
-    // Vous utilisez l'api Jforms comme d'habitude
-    $form = jForms::fill('sample');
-    if ($form->check()) {
-        // formulaire ok
+        // Vous utilisez l'api Jforms comme d'habitude
+        $form = jForms::fill('sample');
+        if ($form->check()) {
+            // formulaire ok
+        }
+        else {
+            // formulaire en erreur
+        }
+
+        // vous indiquez le formulaire à l'objet réponse
+        $rep->setForm($form);
+        // fin
+        return $rep;
     }
-    else {
-        // formulaire en erreur
-    }
-
-    // vous indiquez le formulaire à l'objet réponse
-    $rep->setForm($form);
-    // fin
-    return $rep;
 }
 </code>
 
@@ -234,7 +236,7 @@ est celle appelée quand le formulaire est valide, la deuxième quand le formula
 est en erreur. Notez qu'indiquer une fonction de callback annule le comportement
 par défaut.
 
-Par exemple en cas de formulaire, vous voudriez peut-être afficher un
+Par exemple en cas de formulaire valide, vous voudriez peut-être afficher un
 message et faire d'autres choses en suite.
 
 <code javascript>
@@ -251,7 +253,7 @@ jFormsJQ.onFormReady('jforms_testapp_sample',
 </code>
 
 La fonction de callback pour un formulaire valide reçoit un objet avec
-ces propriétés:
+ces propriétés :
 
 <code json>
 {
@@ -268,7 +270,7 @@ En cas d'erreur, si vous avez utilisé @@setError()@@, l'objet reçu est :
     "success": false,
     "customData": null, // ou la valeur donnée à setCustomData()
     "locationUrl": "", // ou l'url donnée à setError()
-    "errorMessage": "", // ou le message donnée à setError()
+    "errorMessage": "" // ou le message donnée à setError()
 }
 </code>
 
@@ -281,7 +283,7 @@ Sinon
     "errors": {  // erreurs détectées par jForms sur chaque champs
        "champs1": "error 1",
        "champs2": "error 2"
-    },
+    }
 }
 </code>
 
