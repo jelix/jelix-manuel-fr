@@ -60,7 +60,7 @@ Exemple :
     "name": "mycompany/myapp",
     "type": "application",
     "require": {
-        "jelix/jelix": "^1.8.1"
+        "jelix/jelix": "^1.8.2"
     }
 }
 </code>
