@@ -183,6 +183,8 @@ $resp->metaViewport = 'width=device-width, initial-scale=1.0';
 // ajoute une balise meta
 $resp->addMeta(array('name'=>'apple-touch-fullscreen', 'content'=>'yes'));
 
+// ajoute des attributs sur la balise <html>
+$resp->setHtmlAttributes(array('myattr'=>'value'));
 </code>
 
 Si vous voulez injecter du contenu spécifique dans la balise @@E@<head>@@, vous

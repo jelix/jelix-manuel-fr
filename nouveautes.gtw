@@ -69,6 +69,12 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 
 * Nouvelles API dans les scripts d'installation pour gérer les points d'entrée.
 
+==== Nouvelles fonctionnalités dans 1.8.3 ====
+
+* Nouvelle méthode @@setHtmlAttributes()@@ sur @@jResponseHtml@@
+
+
+
 ==== API obsolètes ====
 
 * Tests unitaires dans les modules : `jUnitTestCase` and `jUnitTestCaseDb` sont dépréciés. Utilisez
