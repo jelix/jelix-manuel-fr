@@ -68,7 +68,7 @@ Installez Composer en suivant [[https://getcomposer.org|les instructions de son 
 Dans le répertoire de votre application, créer un fichier @@F@composer.json@@.
 Celui-ci doit indiquer le paquet @@jelix/jelix@@ comme dépendance dans la
 section @@require@@, avec la version voulue. Il est recommandé d'indiquer
-@@^1.7.2@@.
+@@~1.7.18@@.
 
 Exemple :
 
@@ -77,7 +77,12 @@ Exemple :
     "name": "mycompany/myapp",
     "type": "application",
     "require": {
-        "jelix/jelix": "^1.7.2"
+        "jelix/jelix": "~1.7.18"
+    },
+    "extra": {
+        "jelix": {
+             "target-jelix-version": "1.7"
+        }
     }
 }
 </code>
@@ -85,6 +90,9 @@ Exemple :
 Vous devez remplacer @@"mycompany/myapp"@@ par un identifiant propre à votre
 projet. Un fichier @@F@composer.json@@ peut contenir bien d'autres informations.
 Voir le manuel de Composer.
+
+Le paramètre @@target-jelix-version@@ permet au plugin jelix pour Composer, de générer des fichiers additionnels
+dans @@vendor/@@ qui soient compatibles avec Jelix 1.7 ou supérieur.
 
 Supprimez le contenu du répertoire lib, sauf bien sûr les bibliothèques non
 fournies par Jelix, si vous en aviez ajouté dans ce répertoire.
