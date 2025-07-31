@@ -1,4 +1,4 @@
-~~LANG:EN@enman:modules/views/view-binary~~
+~~LANG:EN@enman:modules/views/view-binary-file~~
 
 Pour renvoyer un fichier binaire (un exécutable, une image, une vidéo, une
 archive ou autre), il faut utiliser @@C@jResponseBinary@@ dont l'alias est
@@ -32,22 +32,83 @@ les navigateurs (les images par exemple), on mettra false :
 Ensuite pour le contenu, vous pouvez indiquer soit un fichier existant, soit du
 contenu que vous générez vous-même.
 
-Pour renvoyer un fichier existant :
+===== Renvoyer un fichier  =====
+
+Pour renvoyer un fichier existant, indiquer le chemin du fichier dans la propriété
+@@fileName@@ :
 
 <code php>
  $rep->fileName = jApp::varPath('fichier_a_renvoyer.gif');
 </code>
 
-Et sinon, si vous générez vous-même, mettez le contenu dans une chaîne et mettez
-le dans @@P@content@@ :
+Le contenu du fichier est envoyé directement au navigateur une fois le traitement
+du contrôleur terminé.
+
+Plutôt qu'instancier soit-même une réponse "binary" et de manipuler ses propriétés,
+il est possible d'utiliser la méthode @@getFileResponse()@@. Cette méthode accepte
+le chemin du fichier à renvoyer, et un boolean indiquant si il faut activer le
+cache HTTP ou non.
+
+
+Dans cette exemple, cela renvoi un pdf directement.
 
 <code php>
- $rep->content = '...';
+class myController extends jController
+{
+
+  public function getInvoice()
+  {
+      $invoiceFile = '/somewhere/invoices/invoice202505.pdf';
+
+      return $this->getFileResponse($invoiceFile);
+  }
+}
 </code>
 
-Cependant, cela prendra autant de mémoire que la taille du contenu, ce qui peut être problématique si
-le contenu est volumineux (plusieurs megaoctets). PHP pourrait interrompre brusquement le script si
-il n'y a plus assez de mémoire.
+À noter que :
+
+  * Le type mime est automatiquement déclaré, en fonction de l'extension du nom du
+fichier.
+  * Le nom du fichier présenté à l'utilisateur est celui du fichier original
+  * Pas de téléchargement forcé (@@doDownload@@ à @@false@@).
+  * Si le fichier n'est pas trouvé, une erreur 404 est renvoyée.
+  * Si le cache HTTP est activé, sa validité est conditionnée par la date de modification du fichier.
+
+Si vous voulez changer ces conditions, récupérez l'objet renvoyé par @@getFileResponse@@,
+et manipulez-le comme indiqué plus haut avant de le renvoyé.
+
+<code php>
+class myController extends jController
+{
+
+  public function getInvoice()
+  {
+      $invoiceFile = '/somewhere/invoices/invoice202505.pdf';
+
+      $response = $this->getFileResponse($invoiceFile);
+      $response->doDownload = true;
+      return $response;
+  }
+}
+</code>
+
+
+===== Renvoyer un contenu de petite taille  =====
+
+Si vous générez vous-même le contenu du fichier, mettez le contenu dans une chaîne et mettez
+le dans @@P@content@@. Exemple :
+
+<code php>
+ $rep->content = $myComponent->generateContent();
+</code>
+
+Cependant, il ne faut utiliser cette manière de faire que pour les petits contenus (en dessous de 1Mo par exemple).
+En effet, ici le contenu occupera de la mémoire, ce qui peut être problématique si
+le contenu est volumineux (plusieurs megaoctets). PHP pourrait interrompre
+brusquement le script si il n'y a plus assez de mémoire ou si la taille mémoire
+maximale configurée dans PHP est atteinte.
+
+===== Renvoyer un contenu volumineux =====
 
 Pour les contenus volumineux, il est préférable d'envoyer directement le contenu au fur et à mesure
 qu'on le génère ou qu'on le lit à partir d'une source de données.

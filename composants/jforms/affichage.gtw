@@ -91,6 +91,10 @@ l'ordre :
       * le nom du générateur à utiliser (entre autre 'html')
       * un tableau contenant des options pour le générateur
 
+Voici un exemple avec le générateur "html" et ses options @@attributes@@,
+@@errorDecorator@@ et @@plugins@@. Voir [[display/html-generator|son manuel]]
+pour en savoir plus sur ces options.
+
 <code php>
  {form $formulaire, 'monmodule~default:sauver', 
   array('parametre1' => 'foo', 'parametre2' => 'bar'},
@@ -250,6 +254,8 @@ Pour savoir plus d'options sur l'affichage des contrôles en HTML, voir
 
 ==== Contrôle de l'affichage des champs de type password ====
 
+=== Champs de confirmation ===
+
 Pour les champs de saisie de mot de passe pour lesquels il y a un champ de
 confirmation (balise @@E@<confirm>@@), si vous indiquez explicitement leur
 affichage, il faut aussi indiquer spécifiquement l'affichage du champ de
@@ -289,6 +295,72 @@ il faut ajouter le champ "motdepasse_confirm" :
 
 Par contre, il n'est pas besoin de préciser le champ de confirmation quand on
 afficher le champ de saisie de mot de passe dans une boucle @@formcontrols@@.
+
+=== Afficher un bouton "voir" sur un champs de mot de passe ===
+
+Depuis Jelix 1.8.3, il y a un widget @@password_html@@ qui affiche un champs
+de mot de passe avec un bouton, permettant à l'utilisateur d'afficher le
+mot de passe. Ainsi, dans un formulaire d'authentification, il peut vérifier
+si ce qu'il a tapé est correct.
+
+
+On peut indiquer le widget au niveau des options de plugins du formulaire. Exemple :
+
+<code html>
+  {form $formulaire, 'monmodule~login:form', array(), 'html', array(
+    'plugins' => array('motdepasse' => 'password_html')
+  )}
+   <fieldset><legend>Authentification : </legend>
+        <table>
+          <tr><td>{ctrl_label 'login'}</td><td>{ctrl_control 'login'}</td> </tr>
+          <tr><td>{ctrl_label 'motdepasse'}</td><td>{ctrl_control 'motdepasse'}</td></tr>
+        </table>
+   </fieldset>
+   ...
+  {/form}
+</code>
+
+
+=== Vérification de la robustesse d'un mot de passe ===
+
+Quand un utilisateur doit créer un mot de passe, il est utile de vérifier
+si ce mot de passe est suffisement robuste. Depuis Jelix 1.8.3, un widget @@passwordeditor_html@@
+permet d'afficher un champs de mot de passe évolué, avec vérification automatique
+de la robustesse du mot de passe en javascript.
+
+La robustesse est basée sur une entropy calculée en fonction de la longueur du mot de passe
+et du nombre de caractère spéciaux. Il est également vérifié si Le mot de passe
+n'est pas dans une liste des mots de passe
+les plus courament utilisés.
+
+On peut indiquer le widget au niveau des options de plugins du formulaire. Exemple :
+
+<code html>
+  {form $formulaire, 'monmodule~password:form', array(), 'html', array(
+    'plugins' => array(
+        'motdepasse' => 'passwordeditor_html'
+     )
+  )}
+   <fieldset><legend>Nouveau mot de passe : </legend>
+        <table>
+          <tr><td>{ctrl_label 'motdepasse'}</td><td>{ctrl_control 'motdepasse'}</td></tr>
+        </table>
+   </fieldset>
+   ...
+  {/form}
+</code>
+
+
+Une classe PHP @@jAuthPassword@@ permet aussi de vérifier la robustesse du mot
+de passe dans votre contrôleur.
+
+<code php>
+$password = $form->getData('motdepasse');
+if (! jAuthPassword::checkPasswordStrength($password)) {
+    $form->setErrorOn('motdepasse', 'Le mot de passe n\'est pas assez complexe');
+}
+
+</code>
 
 
 ==== Contrôle de l'affichage des boutons d'envoi ====

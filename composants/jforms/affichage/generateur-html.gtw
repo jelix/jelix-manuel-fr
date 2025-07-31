@@ -13,7 +13,7 @@ Vous pouvez indiquer des options en cinquième argument de @@E@{form}@@ et
 
   * @@L@errorDecorator@@ : le nom de la fonction javascript qui s'occupera de l'affichage des erreurs
   * @@L@method@@ : la méthode HTTP à employer ('get' ou 'post'). Par défault : 'post'.
-  * @@L@plugins@@ : la liste des plugins à utiliser pour afficher tel ou tel contrôle. C'est un tableau
+  * @@L@plugins@@ : la liste des plugins (widgets) à utiliser pour afficher tel ou tel contrôle. C'est un tableau
     associatif dont les clés sont les identifiants des contrôles, et les valeurs les noms de plugins
     de type formwidget.
   * @@L@attributes@@ : liste d'attributs html et leurs valeurs,  à ajouter sur

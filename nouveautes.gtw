@@ -8,7 +8,7 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 
 ==== Nouvelles fonctionnalités ====
 
-* Jelix 1.8 est compatible avec PHP 7.4 jusqu'à PHP 8.2.
+* Jelix 1.8 est compatible avec PHP 7.4 jusqu'à PHP 8.4.
 * Coeur :
   * nouvelle classe `Jelix\Core\Services` qui permettra d'accéder à de futur services sans 
     utiliser de méthodes statiques sur ces services. L'instance de cet objet est accessible
@@ -72,7 +72,20 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 ==== Nouvelles fonctionnalités dans 1.8.3 ====
 
 * Nouvelle méthode @@setHtmlAttributes()@@ sur @@jResponseHtml@@
-
+* Nouvelle méthode @@getFileResponse()@@ dans @@jController@@ pour renvoyer facilement un fichier
+* jauthdb_admin module:
+  * Nouvel évènement @@jauthdbAdminAfterUpdate@@ quand les propriétés d'un profile ont changé.
+  * Ajout d'une variable de template @@formOptions@@ dans les templates affichant les formulaires de jauthdb_admin,
+  * nouveau évènements @@jauthdbAdminPasswordForm@@ et @@jauthdbAdminCheckPasswordForm@@ pour les formulaire
+* jauthdb:
+  * possibilité de s'authentifier avec l'email ou le login, ou simplement le login, avec le paramètre de configuration @@authenticateWith=login-email@@.
+  * la section @@auth_<driver>@@ est maintenant fusionnée avec la section @@<driver>@@ de @@auth.coord.ini.php@@, ainsi on peut redéfinir des paramètres dans localconfig.ini.php.
+  * Nouvelle méthode @@getDao()@@ on the jAuth @@db@@ driver
+* nouvelle classe @@jAuthPassword@@ pour vérifier la robustesse d'un mot de passe ou pour générer un mot de passe aléatoire
+* nouveau widget jForms : @@password_html@@ pour les champs @@secret@@. Ajoute un bouton "voir".
+* nouveau widget jForms : @@passwordeditor_html@@ pour les champs @@secret@@. Il vérifie la robustesse du mot de passe saisie.
+* Nouvelle méthode @@jAcl2DbUserGroup::renameUser()@@
+* Nouveau paramètre de configuration pour définir la valeur par défaut de l'entête @@Return-Path@@ pour jMailer.
 
 
 ==== API obsolètes ====

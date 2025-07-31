@@ -2,12 +2,12 @@
 
 <bookinfo>
 title = Guide du développeur
-subtitle= Jelix 1.8.2
+subtitle= Jelix 1.8.3
 title_short= Guide du développeur
-edition = Jelix 1.8.2
+edition = Jelix 1.8.3
 author=Laurent|Jouanneau
 author=|Les contributeurs au wiki de jelix.org||
-copyright_years=2006-2024
+copyright_years=2006-2025
 copyright_holder=Laurent Jouanneau
 copyright_holder=Les contributeurs au wiki de jelix.org
 </bookinfo>
@@ -85,6 +85,7 @@ copyright_holder=Les contributeurs au wiki de jelix.org
    - chapter:[[composants/jforms|jForms : des formulaires automatiques]]
       - section: [[composants/jforms/xml|Introduction sur le format des fichiers jForms]]
       - section: [[composants/jforms/xml-1.1|Créer un fichier jforms 1.1]]
+        -section: [[composants/jforms/xml/autocomplete|Champs avec autocompletion]]
         -section: [[composants/jforms/xml/captcha|Captcha]]
         -section: [[composants/jforms/xml/htmleditor|Éditeur HTML]]
         -section: [[composants/jforms/xml/datepicker|Datepicker]]

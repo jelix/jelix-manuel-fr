@@ -90,7 +90,7 @@ Pour en savoir plus sur les plugins : [[/plugins]]
 ===== Configurer le système d'authentification =====
 
 Vous devez ensuite éditer le fichier @@F@auth.coord.ini.php@@, pour indiquer la
-configuration du système d'authentification. Voici les différents paramètres.
+configuration du système d'authentification.
 
 ==== Indiquer le driver ====
 
@@ -118,7 +118,7 @@ pour activer l'un deux.
 
 Depuis Jelix 1.4.1 (et 1.3.4, 1.2.10), il y a deux systèmes de hachage des mots
 de passe pour leur stockage. Jelix 1.4.1 et supérieur propose en effet une
-méthode plus sécurisée, utilisant l'API password de PHP 5.5.
+méthode plus sécurisée, utilisant l'API password de PHP.
 
 === Ancien système de hachage ===
 
@@ -553,6 +553,7 @@ user, ou de gérer les données dépendantes à l'utilisateur etc.
   * AuthChangePassword (depuis Jelix 1.6.17): le mot de passe d'un utilisateur
     a changé.
 
+
 Les réponses à certains évènements peuvent contenir les propriétés suivantes :
 
   * AuthCanRemoveUser : @@canremove@@ doit contenir true ou false
@@ -570,3 +571,10 @@ function onAuthCanRemoveUser  ($event)
    $event->Add(array('canremove'=>$ok));
 }
 </code>
+
+Le module jauthdb_admin génére également des évènements avant, pendant et après
+l'affichage de formulaires, afin de pouvoir les personnaliser :
+
+  * @@jauthdbAdminPrepareCreate@@, @@jauthdbAdminEditCreate@@, @@jauthdbAdminBeforeCheckCreateForm@@, @@jauthdbAdminCheckCreateForm@@, @@jauthdbAdminAfterCreate@@
+  * @@jauthdbAdminPrepareUpdate@@, @@jauthdbAdminEditUpdate@@, @@jauthdbAdminBeforeCheckUpdateForm@@, @@jauthdbAdminCheckUpdateForm@@, @@jauthdbAdminAfterUpdate@@
+  * @@jauthdbAdminPasswordForm@@ and @@jauthdbAdminCheckPasswordForm@@ pour le formulaire de creation ou changement de mot de passe
