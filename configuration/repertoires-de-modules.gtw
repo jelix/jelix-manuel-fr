@@ -3,10 +3,31 @@
 Les modules sont regroupés dans un ou plusieurs répertoires que l'on appelle groupe
 de modules, ou aussi dépôt de modules.
 
+Il faut que Jelix ait connaissance du chemin de ces répertoires pour qu'il
+puisse y accèder.
+
+Ces chemins peuvent être déclaré au moyen d'une API dans @@application.init.php@@,
+ou dans le fichier @@composer.json@@ des paquets comportant les modules en question.
+
+Attention, pour que la déclaration automatique fonctionne avec les fichiers @@composer.json@@,
+il faut avoir activé le plugin composer fourni avec Jelix, dans le fichier
+@@composer.json@@ **de votre projet** :
+
+<code json>
+{
+ "config": {
+    "allow-plugins": {
+       "jelix/composer-module-setup": true
+    }
+ }
+}
+</code>
+
+
 ===== Déclarer un dépôt de module =====
 
 Pour avoir accès aux modules, il faut déclarer ces dépôts de modules avec
-@@C@jApp@@ ou dans le fichier composer.json si vous avez installé
+@@C@jApp@@ ou dans le fichier @@composer.json@@ si vous avez installé
 Jelix avec Composer. (dans les versions 1.6 et inférieurs, c'était dans la
 configuration, avec la propriété @@V@modulesPath@@).
 
@@ -22,9 +43,9 @@ Tous les modules se trouvant dans ce répertoire pourront être activés
 dans l'application.
 
 Si vous avez installé Jelix avec Composer, vous avez une autre alternative :
-déclarer ces répertoires dans le fichier composer.json de l'application. Cette
+déclarer ces répertoires dans le fichier @@composer.json@@ de l'application. Cette
 solution est fortement recommandée pour les paquets Composer fournissant des modules
-pour Jelix: vous déclarez alors les modules dans le fichier composer.json des paquets
+pour Jelix: vous déclarez alors les modules dans le fichier @@composer.json@@ des paquets
 et seront automatiquement pris en compte.
 
 <code json>
@@ -43,13 +64,14 @@ et seront automatiquement pris en compte.
 Ici on déclare le répertoire @@F@modules/@@ qui est situé dans le même répertoire que
 le @@F@composer.json@@.
 
+
 Notez que les répertoires de modules fournis avec le paquet Jelix sont automatiquement
 déclarés.
 
 ===== Déclarer un module seul =====
 
 Tout comme les dépots de modules, vous pouvez déclarer directement le répertoire de module
-via @@C@jApp@@ ou dans le fichier composer.json de l'application ou celui du paquet composer
+via @@C@jApp@@ ou dans le fichier @@composer.json@@ de l'application ou celui du paquet composer
 fournissant le module.
 
 <code php>

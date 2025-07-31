@@ -1,18 +1,35 @@
 ~~LANG:EN@enman:components/rights/jauth~~
 
-Il est très probable que vous utilisiez jAcl2 comme support à jAuth.
-Dans ce cas, vous devez probablement vous poser des questions quant à
-l'intégration de ces deux composants de jelix. En réalité, c'est très simple.
+jAcl2 a besoin d'interagir avec l'authentification, pour savoir si un utilisateur
+est connecté et savoir qui est connecté.
+
+Quand un compte utilisateur est créé ou supprimé, il faut créé les droits par
+défaut pour cet utilisateur, ou supprimer ses droits.
+
+Il y a donc des mécanismes pour que les deux composants, gestion de droits
+et authentification, puissent fonctionner ensemble.
 
 
-===== Interaction de jAcl2 avec jAuth =====
+===== Interaction de jAcl2 avec l'authentification =====
 
-Il n'y a rien à faire. jAcl2 a besoin de jAuth pour fonctionner, donc vous devez
-configurer jAuth. jAcl2 ira rechercher l'utilisateur courant de jAuth pour gérer
-les droits, comme par exemple l'appel à la méthode @@M@jAcl2::check()@@.
+Pour que jAcl2 puisse connaître l'utilisateur connecté lors d'une vérification
+de droit, il a besoin d'un objet qui implémente l'interface @@jAcl2AuthAdapterInterface@@.
 
-===== Interaction de jAuth avec jAcl2 =====
+Elle propose deux méthodes @@isUserConnected()@@ et @@getCurrentUserLogin()@@.
 
+Cet objet peut aussi implémenter l'interface @@jAcl2AuthAdapterInterface2@@
+qui rajoute les méthodes @@getUserProfilUrl($login)@@ et @@getUserAdminProfilUrl($login)@@
+pour l'interface d'administration des droits.
+
+Il faut indiquer la classe dans le paramètre de configuration @@authAdapterClass@@
+dans la section @@acl2@@.
+
+Pour jAuth, une tel objet existe, @@jAcl2JAuthAdapter@@, et est activé
+par défaut, vous n'avez donc rien à faire pour jAuth. Si vous utilisez un autre
+système d'authentification, il faudra fournir une classe compatible.
+
+
+===== Interaction de l'authentification avec jAcl2 =====
 
 Par exemple, lors de l'utilisation du module jCommunity et de jAcl2, vous
 voudriez probablement que lorsqu'un nouveau membre est
@@ -23,16 +40,16 @@ Plus généralement, quand vous utilisez @@M@jAuth::saveNewUser()@@,
 @@M@jAuth::removeUser()@@ etc, vous voudriez que les droits concernant
 l'utilisateur en question soient mis à jour dans jAcl2.
 
-Ceci n'est pas effectué par défaut, puisque cela dépend du driver activé pour
-jAcl2.
+Et c'est la même problématique si vous utilisez un autre système d'authentification.
 
-Et cela n'est possible pour le moment que pour jAcl2.db. Si vous utilisez ce
-driver, ce qui est souvent le cas, cela est fait automatiquement. En fait, le
-module jacl2db contient un listener pour les évènements @@AuthNewUser@@ et
-@@AuthRemoveUser@@. Aussi jAcl2 attribuera automatiquement les droits par défaut
-à l'inscription d'un membre et supprimera les droits d'un membre lorsque son
-compte sera supprimé. 
+Quelque soit le système d'authentification, ce dernier doit mettre en oeuvre
+un mécanisme permettant d'être informé de la création ou de la suppression
+d'un compte. Cela peut être l'émission d'évènements avec jEvent, comme c'est
+le cas pour jAuth, qui emet les évènements @@AuthNewUser@@ et @@AuthRemoveUser@@.
 
-Si vous utilisez un autre driver, il vous faudra créer un listener de la même
-façon, et qui ira mettre à jour là où il faut (dans un annuaire ldap si c'est du
-ldap, etc).
+Ainsi il existe un listener dans jAcl2Db pour écouter ces évènements et tenir
+à jour sa propre liste d'utilisateurs et leurs droits respectifs.
+
+Pour tous les autres systèmes d'authentification, il faudra utiliser, voir
+développer de tels listeners ou autres composants, en fonction de ce que propose
+le système d'authentification.
