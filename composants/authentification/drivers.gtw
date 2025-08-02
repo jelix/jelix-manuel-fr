@@ -127,6 +127,9 @@ hostname=
 ; par défaut 389
 port=
 
+; active ou non la connexion ssl
+sslmode=  ; valeurs possible : "", starttls or ldaps  (ldaps activé si port 636)
+
 ; DOMAINE\utilisateur ou utilisateur@DOMAINE pour la connexion avec LDAP (utilisateur ayant au moins un accès en lecture)
 ldapUser=
 ; mot de passe de l'utilisateur

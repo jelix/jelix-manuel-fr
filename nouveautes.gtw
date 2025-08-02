@@ -87,6 +87,21 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 * Nouvelle méthode @@jAcl2DbUserGroup::renameUser()@@
 * Nouveau paramètre de configuration pour définir la valeur par défaut de l'entête @@Return-Path@@ pour jMailer.
 
+==== Nouvelles fonctionnalités dans 1.8.4 ====
+
+* Nouvelle méthode `jResponseFormJQJson::setError()` pour forcer à retourner une erreur ou une url de redirection
+* Support des favicons dans WebAssets (ex: `mygroup.icon=favicon-32x32.png|sizes=32x32`).
+* Nouvelle méthode `WebAssetsSelection::getIconLinks()`
+
+==== Nouvelles fonctionnalités dans 1.8.5 ====
+
+* La version de l'application est disponible dans `jApp::config()->appVersion`
+* Nouveau paramètre de configuration `sslmode` pour les profils Postgresql.
+
+==== Nouvelles fonctionnalités dans 1.8.6 ====
+
+* ldap driver pour jAuth: support du mode TLS mode avec le paramètre de configuration `tlsMode`
+
 
 ==== API obsolètes ====
 

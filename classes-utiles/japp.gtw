@@ -21,8 +21,9 @@ $coord = jApp::coord();
 </code>
 
 Il y a aussi @@jApp::version()@@ qui permet de connaître la version de
-l'application, si un fichier @@F@VERSION@@ est présent dans le répertoire de
-l'application.
+l'application. La version est lue depuis le fichier @@F@VERSION@@  s'il est présent dans le répertoire de
+l'application. Sinon elle est lue depuis @@project.xml@@ (et mise en cache dans
+@@jApp::config()->appVersion@@).
 
 Si vous voulez connaître la version de Jelix, vous utiliserez
 @@jFramework::version()@@.

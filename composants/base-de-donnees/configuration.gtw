@@ -76,6 +76,7 @@ Paramètres possibles :
      mettez pas ces paramètres si vous voulez utiliser le login/mot de passe par
      défaut (indiqués par exemple dans les variables d'environnement du
      système).
+   * @@sslmode@@ : indique comment la connexion ssl (tls) est établie. Valeurs possibles : `disable`, `allow`, `prefer`, `require`.
    * @@service@@ : nom du service Postgresql. Les paramètres @@database@@, @@host@@,
      @@port@@, @@user@@ et @@password@@ sont alors ignorés.
    * @@persistent@@ : indique si la connexion est persistante (@@on@@) ou pas
