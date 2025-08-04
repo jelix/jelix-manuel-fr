@@ -83,3 +83,7 @@ plugin @@{formdata}@@.
 
 @@{ctrl_value}@@ peut accepter un paramètre additionnel, qui doit être un chaîne permettant
 de formater la valeur. Le formatage est fait par la fonction @@sprintf@@.
+
+Vous pouvez utiliser la fonction de template @@{ctrl_value_assign}@@ pour mettre la valeur
+du contrôle dans une variable plutôt que de l'afficher : @@{ctrl_value 'var_name'}@@. En dehors
+d'un boucle, il faut indiquer le nom du contrôle : @@{ctrl_value 'var_name', 'ctrl name'}@@.

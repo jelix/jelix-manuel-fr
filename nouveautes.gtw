@@ -112,6 +112,10 @@ et ses objets JS soient prêt. Si vous voulez garder l'ancien comportement,
 vous devez indiquer l'option `'deprecatedDeclareFormBeforeControls'=>true` au générateur
 de formulaire.
 
+==== Nouvelles fonctionnalités dans 1.8.10 ====
+
+Nouveau plugin de template @@ctrl_value_assign@@ pour jForms.
+
 
 ==== API obsolètes ====
 
