@@ -102,6 +102,16 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 
 * ldap driver pour jAuth: support du mode TLS mode avec le paramètre de configuration `tlsMode`
 
+==== Nouvelles fonctionnalités dans 1.8.7 ====
+
+jForms : en javascript, le formulaire est maintenant déclaré après l'initialisation de tous
+les contrôles, pas seulement après l'initialisation de l'objet jforms.
+Un évènement  `jformsready` est envoyé sur la balise @@<form>@@ et les fonctions
+de callbacks déclarées avec `onFormReady` sont exécutées une fois que tous le formulaire
+et ses objets JS soient prêt. Si vous voulez garder l'ancien comportement,
+vous devez indiquer l'option `'deprecatedDeclareFormBeforeControls'=>true` au générateur
+de formulaire.
+
 
 ==== API obsolètes ====
 

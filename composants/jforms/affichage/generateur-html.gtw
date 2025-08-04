@@ -184,15 +184,15 @@ jForms par défaut), et en incluant ce code dans un fichier js que vous lierez
 à la page contenant le formulaire.
 
 Tout les champs générés par jForms ont un id. Les id sont des noms composés :
-"jforms_module_nomform_refcontrole". Par exemple, pour un contrôle qui a un
-ref="adresse", déclaré par le formulaire "identite" fournis dans le module
-"utilisateurs", l'id du champs sera : "jforms_utilisateurs_identite_adresse".
+@@"jforms_module_nomform_refcontrole"@@. Par exemple, pour un contrôle qui a un
+@@ref="adresse"@@, déclaré par le formulaire @@"identite"@@ fournis dans le module
+@@"utilisateurs"@@, l'id du champs sera : @@"jforms_utilisateurs_identite_adresse"@@.
 
 L'élément html @@<form>@@ est aussi généré avec un id, composé du nom du module et
-de celui du formulaire : "jforms_module_nomform". Dans notre exemple, il vaudra
-"jforms_utilisateurs_identite".
+de celui du formulaire : @@"jforms_module_nomform"@@. Dans notre exemple, il vaudra
+@@"jforms_utilisateurs_identite"@@.
 
-Sachant ces ids, vous pouvez récupérer tout les champs de formulaire ou
+Sachant ces ids, vous pouvez récupérer tous les champs de formulaire ou
 l'élément form, avec la fonction @@document.getElementById()@@. Vous pouvez
 aussi utiliser l'objet @@jFormsJQ@@ comme expliqué ci-dessous.
 
@@ -203,15 +203,27 @@ sur un objet @@jFormsJQ@@, à partir duquel vous pouvez récupérer les objets J
 correspondant à chaque contrôle, et qui permettent entre autre de faire les
 vérifications.
 
-Le premier objet que vous pouvez récupérer, c'est l'objet correspondant au
-formulaire même. Pour ce faire, vous devez appeler la fonction
-@@M@jFormsJQ.getForm()@@ avec l'id du formulaire.
+La première methode que vous devrez probablement utiliser est @@onFormReady@@.
+Elle permet de déclarer une fonction qui sera appelée quand le formulaire sera
+prêt et déclaré dans @@jFormsJQ@@. Typiquement vous appellerez cette
+méthode au chargement de la page, et vous pourrez accéder aux objets du formulaire
+dans la fonction indiquée.
 
 <code javascript>
-var f = jFormsJQ.getForm("jforms_utilisateurs_identite");
+
+jQuery(document).ready(function(){
+    jFormsJQ.onFormReady('jforms_utilisateurs_identite', function(/* jFormsJQForm */ form){
+       // do something with the form object of type jFormsJQForm
+    });
+});
+
 </code>
 
-À partir de là, vous avez accès à plusieurs fonctions
+Dans la fonction donnée, vous recevez un objet de type @@jFormsJQForm@@, sur lequel il y a
+un certain nombre de méthodes. Vous pouvez également récupérer cet objet via la méthode
+@@M@jFormsJQ.getForm('form id')@@.
+
+À partir de là, vous avez accès à plusieurs fonctions :
 
 <code javascript>
   f.setErrorDecorator(new MyErrorDecorator); // voir plus haut
@@ -219,6 +231,32 @@ var f = jFormsJQ.getForm("jforms_utilisateurs_identite");
   f.updateDynamicList("ref_d_un_control"); // pour rafraichir une listbox
                                            // générée dynamiquement par jForms
   var c = f.getControl("ref_d_un_control"); // récupérer l'objet js d'un control
+</code>
+
+Une autre manière d'être informé de la création du formulaire, c'est de mettre un listener
+pour l'évènement @@jformsready@@ sur l'élement HTML @@<form>@@ du formulaire. Dans le listener,
+il faut faire un @@M@jFormsJQ.getForm('form id')@@. pour récupérer l'objet formulaire de type @@jFormsJQForm@@.
+
+Note : avant Jelix 1.8.7, la fonction indiquée à @@jFormsJQ.onFormReady()@@ était
+appelée alors que les objets JS correspondant aux contrôles n'étaient pas encore définit.
+Ce n'est plus le cas depuis 1.8.7. Si vous voulez garder l'ancien comportement, il
+faut indiquer l'option @@deprecatedDeclareFormBeforeControls@@ au générateur de formulaire :
+
+<code php>
+ {form $formulaire, 'monmodule~default:sauver',
+  array(},
+  'html',
+  array(
+    'deprecatedDeclareFormBeforeControls' => true
+  )}
+</code>
+
+==== Accèder aux propriétés d'un contrôle ====
+
+Sur l'objet de type @@jFormsJQForm@@, utiliser la méthode @@getControl()@@.
+
+<code javascript>
+var c = f.getControl("ref_d_un_control");
 </code>
 
 L'objet JS d'un contrôle contient un certain nombre de propriété :
