@@ -182,6 +182,10 @@ au nom de la balise XML). À utiliser aussi à l'intérieur du bloc @@formcontro
     {ifctrltype 'upload', 'upload2', 'image'}<p>Pas de fichiers trop gros s'il vous plait.</p>{/ifctrltype}
 </code>
 
+Une autre expression @@if@@ existe :  @@ifctrlactivated@@. Vous pouvez ainsi
+vérifier si un contrôle est activé, et décider quoi afficher dans ce cas.
+
+
 Vous pouvez aussi indiquer une liste des noms des champs à afficher au plugin
 @@formcontrols@@. Par exemple si on souhaite encadrer par un @@E@<fieldset>@@
 différents groupes de champs. 

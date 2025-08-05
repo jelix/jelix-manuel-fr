@@ -399,11 +399,13 @@ PreInstallHelpers et InstallHelpers :
   * @@$helpers->getCoordPluginConfig()@@
   * @@$helpers->getLocalConfigIni()@@
   * @@$helpers->getProfilesIni()@@
+  * @@$helpers->declareDbProfile()@@
+  * @@$helpers->removeDbProfile()@@
+  * @@$helpers->findDbProfile()@@
+  * @@$helpers->database()@@ qui donne accès à l'objet @@DatabaseHelpers@@ pour interroger une base de données.
 
 InstallHelpers :
 
-  * @@$helpers->declareDbProfile()@@
-  * @@$helpers->removeDbProfile()@@
   * @@$helpers->getLiveConfigIni()@@
   * @@$helpers->declareGlobalWebAssets()@@
   * @@$helpers->removeGlobalWebAssets()@@

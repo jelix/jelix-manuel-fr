@@ -116,6 +116,24 @@ de formulaire.
 
 Nouveau plugin de template @@ctrl_value_assign@@ pour jForms.
 
+==== Nouvelles fonctionnalités dans 1.8.11 ====
+
+Nouvel attribute @@alias@@ sur la balise @@entrypoint@@ des fichiers @@urls.xml@@.
+
+==== Nouvelles fonctionnalités dans 1.8.12 ====
+
+Support de pages d'erreur pour chaque langue dans `app/responses/` : `error.fr_FR.php`, `error.de_DE.php`...
+
+==== Nouvelles fonctionnalités dans 1.8.14 ====
+
+* jForms : améliorations dans @@TemplateController@@ pour certains plugins de templates
+* Nouveau template de plugin @@ifctrlactivated@@ pour jForms
+* Améliore la compatibilité avec PHP 8.4
+
+==== Nouvelles fonctionnalités dans 1.8.16 ====
+
+* Nouvelle classe @@jFormsDynamicStaticDatasource@@ pour les sources de données dans jForms.
+* Ajout des variables de template `$httpCode` et `$httpMessage` dans le template d'erreur http.
 
 ==== API obsolètes ====
 

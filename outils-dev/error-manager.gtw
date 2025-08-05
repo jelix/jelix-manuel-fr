@@ -87,6 +87,8 @@ Par défaut, il affiche la page @@F@lib/jelix/core/response/error.en_US.php@@.
 Vous pouvez fournir votre propre page d'erreur en copiant ce fichier dans
 @@F@app/responses/@@, et en le modifiant en adaptant le design à votre goût.
 
+Vous pouvez aussi avoir un fichier pour chaque langue : @@F@app/responses/error.fr_FR.php@@, @@app/responses/error.de_DE.php@@ etc.
+
 Notez que @@error.en_US.php@@ est un simple script PHP. Vous pouvez donc écrire
 n'importe quel instruction PHP, "à l'ancienne". Cependant, ne faites pas appel
 aux objets Jelix, ils peuvent ne pas être présent, ou mal initialisé etc. Et ne

@@ -55,6 +55,14 @@ Il doit également y avoir un attribut @@A@type@@, qui indique le type de point
 d'entrée, et vaut donc @@classic@@, @@xmlrpc@@, @@jsonrpc@@ etc.. Si cet
 attribut n'est pas présent, la valeur par défaut est @@classic@@.
 
+Un autre attribut apparu dans Jelix 1.8.11 : @@alias@@. Il indique un nom alternatif
+du point d'entrée, qui peut être utilisé dans la méthode @@getEntryPointsToCreate()@@
+des scripts de configuration. En effet, un module pouvant être installé dans
+plusieurs applications, celles-ci n'ont pas forcément les mêmes noms de point d'entrées,
+et il peut être compliqué de savoir quel point d'entrée correspond par exemple
+à l'interface d'administration. Si on indique comme alias @@admin@@, alors
+le configurateur saura quel point d'entrée correspond le nom "admin".
+
 Pour des raisons de compatibilité avec les versions précédentes de jelix, les
 balises @@E@entrypoint@@ peuvent avoir d'autres noms. Leur nom exact précise le
 type de requête auquel ils sont affectés : 
