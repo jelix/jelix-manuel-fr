@@ -157,7 +157,7 @@ Pour afficher un simple champ de saisie, il faut utiliser la balise
 les balises @@E@<label>@@, @@E@<hint>@@, @@E@<alert>@@, @@E@<help>@@ ainsi que
 les attributs @@A@readonly@@ et @@A@required@@. Vous pouvez indiquer aussi ces
 attributs supplémentaires : @@A@type@@, @@A@defaultvalue@@, @@A@size@@,
-@@A@minlength@@, @@A@maxlength@@ et @@A@pattern@@.
+@@A@minlength@@, @@A@maxlength@@, @@filterhtml@@ et @@A@pattern@@.
 
 @@A@defaultvalue@@ permet d'indiquer une valeur par défaut qui sera affichée
 quand le formulaire est vide. Vous pouvez mettre la valeur @@L@"now"@@ pour les
@@ -174,6 +174,9 @@ deux attributs ne sont utilisables que pour le @@A@type="string"@@.
 @@A@minvalue@@ et @@A@maxvalue@@ permet d'ajouter une contrainte sur la valeur
 saisie : la valeur minimale et maximale du nombre saisie. Ces
 deux attributs ne sont utilisables que pour @@A@type="integer"@@ et @@A@type="decimal"@@.
+
+@@filterhtml@@ permet de filtrer la valeur saisie, en supprimant d'éventuelles
+balises HTML.
 
 @@A@pattern@@: Il doit contenir une expression rationnelle compatible avec PHP
 et JS. Il n'est utilisable que pour @@A@type="string"@@.
@@ -581,6 +584,14 @@ CTRL en même temps qu'il clique sur un item). Dans ce cas, dans la variable de
 formulaire "rubrique", au lieu d'avoir une simple valeur correspondant à l'item
 sélectionné, vous aurez un tableau PHP avec toutes les valeurs des items
 choisis.
+
+
+==== champs de saisie avec autocompletion ====
+
+Il n'y pas d'élement XML specifique pour créer un champs avec autocompletion.
+
+Voir [[xml/autocomplete|la page sur les champs de saisie avec autocompletion]]
+pour savoir comment en mettre un en place.
 
 ==== Téléchargement de fichier ====
 
@@ -1142,7 +1153,6 @@ Pour un champs qui a une source de donnée dynamique, on veut bien souvent faire
 en sorte que les valeurs de cette source de donnée soient selectionnées
 en fonction de la valeur d'un autre champs de saisie. Un exemple : une liste de
 ville qui dépend du choix dans une liste de département.
-
 
 Vous utiliserez l'attribut @@A@criteriafrom@@ (à la place de @@A@criteria@@ pour
 un DAO), où vous indiquerez l'identifiant (attribut @@A@ref@@) de ce champ de

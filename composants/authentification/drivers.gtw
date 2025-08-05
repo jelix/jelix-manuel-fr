@@ -61,6 +61,9 @@ champ du login, ou alors qu'il y ait une clé autoincrementée, et un champ
 
 Pour faire votre dao, vous pouvez aussi faire [[../daos/fichier_de_base#importation-de-dao|un import du dao]] fourni par jauthdb.
 
+Autre paramètre utile : @@authenticateWith=login-email@@. Il permet d'indiquer
+que l'authentification peut se faire en donnant son identifiant ou son email.
+Sinon seul le login est accepté.s
 
 ===== Class =====
 
@@ -85,6 +88,10 @@ driver= Class
 [Class]
 class = "monmodule~maclass"
 </code>
+
+Autre paramètre utile : @@authenticateWith=login-email@@. Il permet d'indiquer
+que l'authentification peut se faire en donnant son identifiant ou son email.
+Sinon seul le login est accepté.
 
 ===== ldap =====
 
@@ -119,6 +126,9 @@ doit contenir les informations de connexions au serveur ldap.
 hostname=
 ; par défaut 389
 port=
+
+; active ou non la connexion ssl
+sslmode=  ; valeurs possible : "", starttls or ldaps  (ldaps activé si port 636)
 
 ; DOMAINE\utilisateur ou utilisateur@DOMAINE pour la connexion avec LDAP (utilisateur ayant au moins un accès en lecture)
 ldapUser=

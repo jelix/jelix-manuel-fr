@@ -159,6 +159,34 @@ class jacl2dbModuleConfigurator extends \Jelix\Installer\Module\Configurator {
 }
 </code>
 
+Autres méthodes que vous pouvez implémenter :
+
+ * @@getFilesToCopy()@@: doit retourner les fichiers à copier et leur destination.
+   Pour copier par exemple des fichiers de configuration spécifiques ou des
+   assets JS/CSS dans le répertoire web.
+ * @@getEntryPointsToCreate()@@: pour créer un point d'entrée
+ * @@declareUrls()@@: Pour déclarer les urls du module.
+
+Vous pourriez faire cela dans la méthode @@configure()@@, mais il est préférable
+d'implémenter ces méthodes car elles sont aussi appelées lors de la désinstallation.
+Ainsi vous n'avez pas à implémenter la méthode @@unconfigure@@ pour supprimer
+ces déclarations.
+
+Principales méthodes que vous pouvez appeller sur le paramètre `ConfigurationHelpers` :
+
+  * @@cli()@@ pour accèder à l'API CLI
+  * @@getConfigIni()@@ pour récupérer la configuration principale, qui peut être
+    @@app/system/mainconfig.ini.php@@ ou @@var/config/localconfig.ini.php@@, cela dépend
+    si le module est embarqué dans l'application ou si il est installé localement.
+  * @@getCoordPluginConfig()@@ pour récupérer la configuration d'un plugin
+  * @@getProfilesIni()@@ pour lire et modifier le fichier profiles.ini
+  * @@configFilePath()@@ pour avoir le chemin du répertoire de configuration, qui
+    peut être @@app/system@@ ou @@var/config@@ selon le mode d'installation du module
+  * @@getMainEntryPoint()@@ pour accéder au fichier de configuration principal (voir la classe @@EntryPointConfigurator@@)
+  * @@getEntryPointsList()@@ pour avoir la liste des points d'entrée
+  * @@declareGlobalWebAssets()@@ pour déclarer des web assets dans le fichier mainconfig.
+  * @@removeGlobalWebAssets()@@ pour supprimer des web assets
+  * @@createEntryPoint()@@, @@updateOrCreateEntryPointFile()@@ et @@removeEntryPoint()@@ pour créer ou supprimer des points d'entrées
 
 Il est possible de "déconfigurer" un module, dans le but de le supprimer,
 avec la commande @@dev.php module:unconfigure@@.
@@ -371,15 +399,17 @@ PreInstallHelpers et InstallHelpers :
   * @@$helpers->getCoordPluginConfig()@@
   * @@$helpers->getLocalConfigIni()@@
   * @@$helpers->getProfilesIni()@@
+  * @@$helpers->declareDbProfile()@@
+  * @@$helpers->removeDbProfile()@@
+  * @@$helpers->findDbProfile()@@
+  * @@$helpers->database()@@ qui donne accès à l'objet @@DatabaseHelpers@@ pour interroger une base de données.
 
 InstallHelpers :
 
-  * @@$helpers->declareDbProfile()@@
-  * @@$helpers->removeDbProfile()@@
   * @@$helpers->getLiveConfigIni()@@
   * @@$helpers->declareGlobalWebAssets()@@
   * @@$helpers->removeGlobalWebAssets()@@
-
+  * @@$helpers->createEntryPoint()@@, @@$helpers->updateOrCreateEntryPointFile()@@ et @@$helpers->removeEntryPoint()@@
 
 Pour accéder au fichier de configuration d'un point d'entrée, vous devez
 récupérer l'objet représentant le point d'entrée, au moyen des méthodes

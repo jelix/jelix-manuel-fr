@@ -1,0 +1,128 @@
+~~LANG:FR@enman:components/jforms/xml/autocomplete~~
+
+Il n'y pas d'élement XML specifique pour créer un champs avec autocompletion.
+Il faut utiliser un @@menulist@@ avec le plugin widget @@autocomplete_html@@
+ou @@autocompleteajax_html@@.
+
+Ces widgets affiche un simple champs texte. Quand l'utilisateur commence à taper
+un mot, une recherche est lancée et une liste de résultats apparait. L'utilisateur
+peut sélectionner un de ces résultats, ainsi il n'a pas à taper tout le libellé.
+
+===== Autocompletion avec données dans la page web =====
+
+La recherche est faite avec la source de données indiquée dans @@menulist@@.
+
+La source de données ne doit pas contenir trop d'items, sinon cela alourdirait
+trop la page HTML. Si le poid peut devenir un problème, il est préférable
+d'utiliser des données distantes. Voir la section suivante.
+
+Dans le cas présent, il faut utiliser le widget @@autocomplete_html@@. Celui-ci
+effectue une recherche dans un @@<select>@@ caché, généré par le widget.
+
+Par exemple, dans le fichier jForms, indiquez un @@menulist@@ avec une source
+de données ou liste statique d'items :
+
+<code xml>
+  <menulist ref="mylist">
+    <label>test</label>
+    <datasource dao="mymodule~mydao"/>
+  </menulist>
+</code>
+
+Dans le template, indiquez le widget @@autocomplete_html@@ :
+
+<code html>
+{form $form, $submitAction, $submitParam, 'html', array(
+    'plugins'=>array(
+        'mylist'=>'autocomplete_html'
+))}
+
+{formcontrols}
+   {ctrl_label} ... {ctrl_control}
+{/formcontrols}
+{/form}
+</code>
+
+The widget acceptent un attribut spécifique,  @@attr-autocomplete@@, qui est
+une liste d'attributs HTML (class, style...) pour l'élement input qui est
+utilisé pour saisir le terme à rechercher.
+
+<code html>
+{formcontrols}
+   {ifctrl 'mylist'}
+      {ctrl_control '', array(
+           'attr-autocomplete'=>array('style'=>'width:40em;')}
+   {else}
+      {ctrl_control}
+   {/ifctrl}
+{/formcontrols}
+</code>
+
+===== Autocompletion avec données distantes =====
+
+Si la source de données contient plus que quelques dizaines d'items, il est préférable
+d'utiliser @@autocompleteajax_html@@, qui lancera une requête http vers l'application
+pour lancer la recherche et récupérer les résultats. Ainsi cela évite de
+charger la totalité des items dans la page web.
+
+Il faut donc lui indiquer l'url qui retournera les résultats, dans
+un attribut @@source@@ de @@attr-autocomplete@@.
+
+Dans le contrôleur qui affiche le formulaire :
+
+<code php>
+$tpl->assign('searchUrl', jUrl::get('mymodule~myctrl:searchTerm'));
+</code>
+
+Et dans le template :
+
+<code html>
+{form $form, $submitAction, $submitParam, 'html', array(
+    'plugins'=>array(
+        'mylist'=>'autocompleteajax_html'
+))}
+{formcontrols}
+   {ifctrl 'mylist'}
+      {ctrl_control '', array(
+           'attr-autocomplete'=>array(
+                'source'=> $searchUrl)}
+   {else}
+      {ctrl_control}
+   {/ifctrl}
+{/formcontrols}
+</code>
+
+Notez que l'url peut être celle d'un autre site, mais il faut faire attention
+aux restrictions CORS.
+
+Dans tous les cas il faut que le serveur traite un paramètre @@term@@ qui
+contient ce qu'a saisi l'utilisateur, et renvoi un tableau JSON contenant chaque résultat.
+Un résultat étant un objet avec des attributs @@label@@ et @@id@@.
+
+Dans le cas où vous utiliser un de vos contrôleurs, voici un exemple d'action
+utilisant un DAO :
+
+<code php>
+function searchTerm()
+{
+    $rep = $this->getResponse('json');
+    $term = $this->param('term');
+    if (strlen($term) < 2) {
+        $rep->data = array();
+        return $rep;
+    }
+
+    $dao = jDao::get('mymodule~mydao');
+    $conditions = new jDaoConditions();
+    $conditions->addCondition('name', 'like', '%'.$term.'%');
+    $conditions->addItemOrder('name', 'asc');
+    $list = $dao->findBy($conditions);
+    $towns = array();
+    foreach ($list as $prop) {
+        $towns[] = ['label' => $prop->name, 'id' => $prop->id];
+    }
+    $rep->data = $towns;
+    return $rep;
+}
+
+</code>

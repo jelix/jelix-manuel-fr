@@ -8,13 +8,21 @@ code, et les modules qui "écoutent" cet événement pourront y répondre, et m�
 renvoyer des données. C'est donc en quelque sorte un système de broadcast, avec
 des clients (les émetteurs) et des serveurs (les listeners).
 
-Il y a donc d'une part un objet @@C@jEvent@@, permettant d'émettre un événement
-et de récupérer les réponses, et d'autre part, des "listeners", qui sont des
-classes placées dans les modules, contenant les méthodes "répondant" aux
-événements.
+Il y a donc plusieurs sortes d'objets :
 
+* un objet "évènement", qui contient le message et ses paramètres à émettre
+* des objets "écouteurs" (listeners) qui recevront et traiteront le message
+* un "distributeur", qui passe l'objet "évènement" à tous les listeners
+* un émetteur, l'objet qui donne un évènement au distributeur et qui recevra et traitera les réponses.
 
-===== Émettre un évènement =====
+Depuis Jelix 1.8, il y a deux manières de créer un évènement :
+
+* soit en indiquant simplement son nom et d'éventuels paramètres
+* soit en instanciant un objet et le donner au distributeur
+
+===== Émettre un évènement avec son nom =====
+
+C'est la manière "historique" d'émettre un évènement.
 
 L'objet @@C@jEvent@@ sert à la fois d'émetteur d'événement, et en même temps de
 conteneur des réponses.
@@ -61,10 +69,69 @@ Vous avez d'autres méthodes pour manipuler les données retournées :
    * @@allResponsesByKeyAreFalse($responseKey)@@ : indique si toutes les données
      avec la clé donnée ont la valeur false.
 
+===== Emettre un évènement avec un objet =====
+
+Depuis Jelix 1.8, il est possible d'émettre des évènements sous forme d'objet
+que l'on instancie soit-même, et on le passe au distributeur.
+
+L'avantage par rapport à la méthode classique des évènements nommés, est
+que l'on peut utiliser n'importe quel objet, avec des méthodes ou propriétés
+que les listeners peuvent appeler pour indiquer leur réponse, de manière plus
+spécifique que les méthodes @@getParam()@@ ou @@add()@@ de @@jEvent@@.
+On peut aussi continuer à utiliser un objet @@jEvent@@ comme objet évènement.
+
+L'objet représentant l'évènement doit implémenter l'interface @@Jelix\Event\EventInterface@@ qui propose
+la méthode @@getName()@@. Cela permet d'indiquer un nom d'évènement particulier.
+
+L'objet peut aussi implémenter l'interface
+@@Psr\EventDispatcher\StoppableEventInterface@@ permettant à un listener
+de stopper la propagation de l'évènement aux listeners suivants.
+
+Une fois l'objet évènement instancié, on le passe au distributeur. Celui-ci est
+donnée par la méthode @@Jelix\Core\Services::eventDispatcher()@@. Il implémente
+l'interface @@Psr\EventDispatcher\EventDispatcherInterface@@ de la
+spécification PSR-14.
+
+Exemple :
+
+<code php>
+
+class \MyProject\MyEvent implements \Jelix\Event\EventInterface {
+    protected $isOk = false;
+
+    public function getName() {
+        return 'thisIsMyEvent';
+    }
+
+    public function itsOk()
+    {
+        $this->isOk = true;
+    }
+
+    public function isItOk()
+    {
+        return $this->isOk;
+    }
+}
+
+// creation de l'évènement
+$event = new \MyProject\MyEvent();
+
+// envoi de l'évènement aux listeners, qui peuvent par exemple appeler la
+// méthode itsOk()
+Jelix\Core\Services::eventDispatcher()->dispatch($event);
+
+// on regarde ce qu'on répondu les listeners
+if ($event->isItOk()) {
+    //...
+}
+</code>
+
+
 ===== Répondre à un évènement =====
 
 Il n'y a pas de listener par défaut dans les modules. Aussi, pour qu'un module
-puisse répondre à un événement, il faut en créer un, et le déclarer dans le
+puisse répondre à un événement, il faut créer un listener, et le déclarer dans le
 fichier @@F@events.xml@@ du module. Il n'y a pas de limite du nombre de
 listener.
 
@@ -84,9 +151,9 @@ du nom logique avec "Listener". Stocker cette classe dans un fichier qui a pour
 nom @@nomlogique.listener.php@@, et donc @@F@auth.listener.php@@ pour notre
 exemple, ce fichier devant être dans le dossier @@C@classes@@ du module.
 
-
-Une classe de listener doit hériter de @@C@jEventListener@@ et doit contenir une
-méthode pour chaque évènement auquel le listener
+Une classe de listener doit hériter de @@C@\Jelix\Event\EventListener@@
+(ou de @@C@jEventListener@@ mais cette classe est dépréciée)
+et doit contenir une méthode pour chaque évènement auquel le listener
 répond. Ces noms de méthodes commencent par @@on@@ suivi du nom d'événement. Et
 ces méthodes prennent en paramètre l'objet @@C@jEvent@@ correspondant à
 l'événement. Exemple :
@@ -133,7 +200,7 @@ class authListener extends jEventListener {
       'foo.bar' => 'execFooBar'
     );
 
-    function execFooBar ($event) {
+    function execFooBar (\jEvent $event) {
         // here process the event.
     }
 }
@@ -146,7 +213,7 @@ méthode @@M@performEvent()@@ du listener.
 
 ==== Déclarer le listener ====
 
-il faut ensuite déclarer le listener. Cela se fait dans un fichier
+Il faut ensuite déclarer le listener. Cela se fait dans un fichier
 @@F@events.xml@@ placé à la racine du module. Voici un exemple :
 
 <code xml>
@@ -157,6 +224,7 @@ il faut ensuite déclarer le listener. Cela se fait dans un fichier
    <!-- or -->
    <listener name="\MyModule\Listeners\Auth">
        <event name="AuthCanLogin" />
+       <event name="thisIsMyEvent" />
    </listener>
 </events>
 </code>

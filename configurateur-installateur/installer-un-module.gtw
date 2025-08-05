@@ -36,6 +36,11 @@ my_module.path = app:vendor/my_vendor_name/my_package/the_module
 Cela facilite la migration depuis Jelix 1.6.x, et est utile pour déclarer un module tiers
 depuis un script de configuration.
 
+Pour les modules fournis dans les paquets composer, il est possible de déclarer
+le chemin des modules dans le composer.json du paquet.
+
+Voir [[/configuration/repertoires-de-modules.gtw|le détails de la déclaration des modules]].
+
 ===== Activation et configuration d'un module =====
 
 Il ne suffit pas d'avoir un module dans un dépôt de module pour que celui-ci

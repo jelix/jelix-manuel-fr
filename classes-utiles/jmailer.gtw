@@ -42,7 +42,8 @@ Le paramétrage de base utilisé par jMailer s'effectue dans le fichier
     comme valeur par defaut pour @@HELO@@. Si vide, utilisera la valeur renvoyée par
     @@$_SERVER['SERVER_NAME']@@ ou "localhost.localdomai".
   * @@sendmailPath@@ : pour l'envoi par sendmail, le chemin de l'executable sendmail.
-
+  * @@replyTo@@ : valeur par défaut pour l'entête @@Reply-To@@
+  * @@returnPath@@ : valeur par défaut pour l'entête @@Return-Path@@
 
 jMailer utilise aussi les paramètres généraux @@locale@@ et @@charset@@ pour
 configurer la langue et l'encodage des mails.

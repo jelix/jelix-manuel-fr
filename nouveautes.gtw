@@ -8,7 +8,7 @@ Attention : la documentation n'est pas encore tout à fait à jour vis à vis de
 
 ==== Nouvelles fonctionnalités ====
 
-* Jelix 1.9 est compatible avec PHP 7.4 jusqu'à PHP 8.2.
+* Jelix 1.9 est compatible avec PHP 7.4 jusqu'à PHP 8.4.
 
 ==== API obsolètes ====
 
