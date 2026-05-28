@@ -1,14 +1,10 @@
 ~~LANG:EN@enman:new-features~~
 
-Version en développement.
-
 ===== Nouveautés apportées par la version 1.8 =====
-
-Attention : la documentation n'est pas encore tout à fait à jour vis à vis de ces nouveautés.
 
 ==== Nouvelles fonctionnalités ====
 
-* Jelix 1.8 est compatible avec PHP 7.4 jusqu'à PHP 8.4.
+* Jelix 1.8 est compatible avec PHP 7.4 jusqu'à PHP 8.5.
 * Coeur :
   * nouvelle classe `Jelix\Core\Services` qui permettra d'accéder à de futur services sans 
     utiliser de méthodes statiques sur ces services. L'instance de cet objet est accessible
@@ -135,12 +131,18 @@ Support de pages d'erreur pour chaque langue dans `app/responses/` : `error.fr_F
 * Nouvelle classe @@jFormsDynamicStaticDatasource@@ pour les sources de données dans jForms.
 * Ajout des variables de template `$httpCode` et `$httpMessage` dans le template d'erreur http.
 
+==== Nouvelles fonctionnalités dans 1.8.24 ====
+
+* prise en charge des colonnes de type `identity` pour Postgresql, dans jDb et jDao.
+
 ==== API obsolètes ====
 
 * Tests unitaires dans les modules : `jUnitTestCase` and `jUnitTestCaseDb` sont dépréciés. Utilisez
   plutôt `\Jelix\UnitTests\UnitTestCase` et `\Jelix\UnitTests\UnitTestCase`. Et la prise en
   charge de PHPUnit < 6.0 a été supprimé.
-
+* La méthode @@jAuth::isPersistant()@@ est remplacée par @@jAuth::canBePersistent()@@.
+* le paramètre `password` sur l'évènement `AuthChangePassword` est déprécié
+* le paramètre `persistence` sur l'évènement `AuthLogin` est déprécié
 
 ==== Suppressions ====
 
@@ -151,7 +153,7 @@ Support de pages d'erreur pour chaque langue dans `app/responses/` : `error.fr_F
 
 * Mise à jour de Symfony Console vers 5.4.14
 * Mise à jour de PHPUnit vers 8.5 pour les tests sur jelix
-* Mise à jour de PHPMailer vers 6.6.*
+* Mise à jour de PHPMailer vers 6.12.*
 * Mise à jour de Jquery vers 3.6.1
 * Mise à jour de Jquery UI vers 1.13.2
 * Mise à jour de CKEditor vers 35.3.0
