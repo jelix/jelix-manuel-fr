@@ -4,24 +4,236 @@ Version en développement.
 
 ===== Nouveautés apportées par la version 1.9 =====
 
-Attention : la documentation n'est pas encore tout à fait à jour vis à vis de ces nouveautés.
+Attention : la documentation n'est pas encore à jour vis à vis de ces nouveautés.
+
+Jelix 1.9 est compatible avec PHP 8.2 jusqu'à PHP 8.5.
 
 ==== Nouvelles fonctionnalités ====
 
-* Jelix 1.9 est compatible avec PHP 7.4 jusqu'à PHP 8.4.
+=== Précompilation ====
 
-==== API obsolètes ====
+Certains fichiers ne sont désormais plus compilés à la volée, mais uniquement pendant l’installation.
+Cela évite de lancer des compilateurs pendant une requête HTTP, afin d’améliorer les performances.
 
-* aucune pour le moment
+Fichiers compilés pendant l’installation :
+
+  * configuration
+  * fichiers de propriétés pour les locales
+  * liste des écouteurs d’événements
+  * correspondance des URL
+  * formulaires
+  * fichiers de templates ayant l’extension `ctpl` (syntaxe v2 de Castor)
+  * Daos
+
+Pendant le développement, vous pouvez configurer un "watcher" de fichiers (dans votre IDE par exemple)
+qui appellera `php dev.php compile $FULLPATH_OF_FILE`, afin de compiler un seul
+fichier sans appeler l’installeur avant chaque test dans votre navigateur.
+
+=== Noyau ===
+
+Autoload dans module.xml : autorise les répertoires de fallback PSR comme dans composer.json.
+Vous pouvez définir un répertoire sans espace de noms. Ce répertoire sera une racine
+pour les espaces de noms qui ne correspondent pas aux autres règles.
+
+=== Templates ===
+
+La syntaxe Castor v2 est désormais prise en charge dans les fichiers de templates ayant l’extension `ctpl`.
+Ces templates sont compilés pendant l’installation.
+
+Comme, par défaut, ils sont considérés comme fiables et comme des templates HTML, la compilation
+d’un template peut échouer si le format n’est pas du HTML.
+
+Aussi il est fortement recommandé d’utiliser les instructions pragma `{! output-type = ... !}`
+pour spécifier un type de contenu autre que HTML, et d’utiliser `{! trusted = false!}`,
+s’il ne s’agit pas d’un template fiable. Ainsi, la compilation pendant l’installation
+sera effectuée correctement.
+
+=== Locales ===
+
+* Les classes `jLocale` et `jBundle` sont obsolètes et remplacées par `Jelix\Locale\Locale`
+  et `Jelix\Locale\Bundle`.
+* Ces nouvelles classes ne prennent en charge que les jeux de caractères UTF-8. `Jelix\Locale\Locale` appelle `jLocale`
+  si le jeu de caractères par défaut n’est pas UTF-8.
+* Les fichiers de propriétés sont désormais compilés pendant l’installation afin d’améliorer les performances
+  à l’exécution, et sont utilisés par les nouvelles classes.
+  Les classes obsolètes continuent à compiler les fichiers à l’exécution.
+* Nouvelles méthodes `Locale::getBundle()` et `Bundle::getAllKeys()`.
+* Les locales peuvent se trouver dans un répertoire extérieur à une application, par exemple dans un paquet Composer.
+  Le répertoire doit être déclaré avec la nouvelle API `jApp::declareLocalesDir()`.
+
+=== Événements ===
+
+Les classes `jEvent` et `jEventListener` sont obsolètes et remplacées par `\Jelix\Event\Event`
+et `\Jelix\Event\EventListener`.
+
+La déclaration d’un écouteur d’événements peut désormais être faite dans la classe de l’écouteur avec des attributs PHP.
+Dans ce cas, la classe de l’écouteur peut être n’importe quelle classe, et pas seulement une classe héritant
+de `\Jelix\Event\EventListener`. Cependant, la classe de l’écouteur doit toujours être
+déclarée dans les fichiers event.xml.
+
+<code xml>
+<events xmlns="http://jelix.org/ns/events/1.0">
+   <listener name="\JelixTests\Tests\Listener\TestAttrEventsListener"/>
+</events>
+</code>
+
+<code php>
+use Jelix\Event\Attribute\ListenEvent;
+use Jelix\Event\Attribute\ListenEventClass;
+class TestAttrEventsListener
+{
+    #[ListenEvent('TestEvent')]
+    function onTestEvent ($event) { }
+    #[ListenEventClass]
+    function testEventObject(EventForTest $event) { }
+}
+</code>
+
+=== Formulaires ===
+
+* Prise en charge de `<placeholder>` dans `<input>`, `<textarea>`, `<htmleditor>`, `<wikieditor>`.
+* Les formulaires sont compilés pendant l’installation de l’application afin d’améliorer les performances
+  à l’exécution.
+
+=== Base de données ===
+
+jDb repose désormais sur [[https://github.com/jelix/JelixDatabase|JelixDatabase]].
+
+La classe `jDb` existe toujours, mais la plupart des classes internes de jDb
+ont disparu et sont remplacées par des classes de JelixDatabase, même si de nombreuses anciennes classes
+existent encore (mais peuvent être vides) afin de ne pas casser les paramètres typés dans vos
+classes.
+
+Cela apporte de nouvelles fonctionnalités :
+
+* Prise en charge des noms de schémas dans les noms de tables, pour certaines API.
+* Prise en charge des colonnes générées de PostgreSQL (contributeur : Riccardo Beltrami).
+* Prise en charge des colonnes Identity pour PostgreSQL.
+* Correction de lastInsertId pour SQLServer.
+* Prise en charge de l’API mssql supprimée. Seul le connecteur utilisant l’API sqlsrv est disponible.
+* Version minimale des bases de données prises en charge :
+  * Mysql : 8.*
+  * PostgreSQL : 13
+
+Les plugins pour jDb (alias « drivers ») implémentant des connecteurs, etc., ne sont plus pris en charge.
+Ils ont été remplacés par des classes fournies directement par le paquet JelixDatabase.
+
+=== Dao ===
+
+jDao repose désormais sur [[https://github.com/jelix/JelixDao|JelixDao]].
+
+La classe `jDao` reste la classe principale à utiliser pour charger et utiliser Dao.
+La plupart des classes internes de jDao ont disparu et sont remplacées par des classes de JelixDao,
+même si de nombreuses anciennes classes existent encore (mais peuvent être vides) afin de ne pas casser
+les paramètres typés dans vos classes.
+
+Cela apporte de nouvelles fonctionnalités :
+
+* prise en charge native des champs JSON : les propriétés dao ayant le datatype `json`
+  sont automatiquement encodées lors d’un insert/update, ou décodées lors d’un select.
+* Possibilité d’indiquer une classe dont la classe factory générée héritera.
+  Le nom de classe doit être indiqué dans l’attribut `extends` de `<factory>`.
+  La classe peut se trouver n’importe où et doit pouvoir être chargée automatiquement. La classe doit hériter
+  de `jDaoFactoryBase` et elle doit être abstraite.
+
+Autres changements :
+
+* Les plugins pour le compilateur jDao (type « daobuilder ») ne sont plus pris en charge.
+* Les fichiers Daos sont compilés pendant l’installation de l’application afin d’améliorer les performances à l’exécution.
+* Les classes générées à partir des fichiers daos ont de nouveaux noms et sont chargées automatiquement.
+* `jSelectorDao`, `jSelectorDaoDb` et `jSelectorDaoRecord` sont obsolètes et existent sous de nouveaux noms.
+
+=== Autres nouvelles fonctionnalités ===
+
+* Nouvelles méthodes `jFile::mergeIniFile()` et `jFile::mergeIniContent()`.
 
 ==== Suppressions ====
 
-* aucune pour le moment
+* Suppression de la prise en charge du cache de bytecode autre qu’opcache.
+* Suppression des modules `jacl` et `jacldb`. Ils sont encore disponibles dans le paquet `jelix/jacl-module`.
+  Mais vous devez les considérer comme une archive. Vous devez migrer vers jacl2 et jacl2db.
+* Suppression des modules `jpref` et `jpref_admin`. Ils sont encore disponibles dans le paquet `jelix/jpref-module`.
+  Mais vous devez les considérer comme une archive. Vous devez développer une alternative à ces modules.
+* Les plugins pour jDb et jDao n’existent plus.
+* Tous les messages d’erreur sont désormais uniquement en anglais. Plus de locales `jelix~db.*`, `jelix~daoxml.*` et `jelix~dao.*`.
+* Il n’y a plus de prise en charge des tests phpunit dans les modules. `tests/runtests.php` dans l’application
+  ne fonctionne plus.
 
-==== Changement internes ====
+==== API incompatible ====
 
-* aucun pour le moment
+* L’interception d’une exception concernant un profil invalide/inconnu (jProfile) doit désormais se faire
+  en interceptant `\Jelix\Profiles\Exception` au lieu de `jException`.
+* `jFormsCompiler`, `jFormsCompiler_jf_1_0`, `jFormsCompiler_jf_1_1` ont été
+  renommés en `Jelix\Forms\Compiler\FormCompiler`, `Jelix\Forms\Compiler\/XmlCompiler10`,
+  `Jelix\Forms\Compiler\/XmlCompiler11`, et n’existent donc plus.
 
-==== Contributeurs à Jelix 1.9 ====
+==== Fonctionnalités obsolètes ====
 
-  * Laurent Jouanneau
+* La propriété de configuration `charset` est obsolète. Vous devez conserver la valeur par défaut
+  à UTF-8. Sinon, convertissez vos locales et autres données en UTF-8, car la prise en charge
+  des autres jeux de caractères disparaîtra dans la prochaine version majeure.
+* `\Jelix\Core\Profiles` doit être utilisé à la place de `jProfiles`. Même API, mais elle repose désormais sur la bibliothèque JelixProfiles.
+  `jProfiles` est obsolète, de même que les méthodes `storeInPool`, `getFromPool`, `getOrStoreInPool`. Utilisez `storeConnectorInPool`,
+  `getConnectorFromPool`, `getConnectorFromCallback` à la place.
+* S’il existe des plugins pour jProfiles, ils doivent hériter de `\Jelix\Profiles\ReaderPlugin`
+  au lieu de `jProfilesCompilerPlugin`, ou ils doivent implémenter au moins la nouvelle
+  interface `\Jelix\Profiles\ProfilePluginInterface`. `jProfilesCompilerPlugin` est obsolète.
+* `jClassBinding`
+* `jelix_read_ini`
+* jDao : type de méthode `xml`. Une classe PHP doit être utilisée à la place, déclarée
+  dans l’attribut `extends` de `<factory>`.
+* L’objet de requête HTTP `css` est obsolète.
+* La constante `JELIX_SCRIPTS_PATH` est désormais obsolète, car elle devient inutile.
+* Les fonctions déclarées dans l’espace de noms `Jelix\Utilities` sont obsolètes. Utilisez-les depuis l’espace de noms `Jelix\Core\Utilities`.
+* L’interface `\jelix\Core\ConfigCompilerPluginInterface` est obsolète. Utilisez `\Jelix\Core\Config\CompilerPluginInterface` à la place.
+* Classes de sélecteurs : `jSelectorAppCfg`, `jSelectorCfg`, `jSelectorDebugAction`, `jSelectorLib`, `jSelectorTmp`, `jSelectorVar`
+* Remplacer `jSelectorModule` par `Jelix\Core\Selector\ModuleSelector`.
+* Remplacer `jISelector` par `Jelix\Core\Selector\SelectorInterface`.
+* Remplacer `jExceptionSelector` par `Jelix\Core\Selector\Exception`.
+* `jelix_scan_module_sel`
+* Les classes `jLocale` et `jBundle` sont obsolètes et remplacées par `Jelix\Locale\Locale`
+  et `Jelix\Locale\Bundle`.
+* La méthode `jConfigCompiler::findServerName()` a été déplacée vers `jServer`.
+* `jSelectorForm`
+
+À propos de jDb :
+
+* `jDbConnection` et `jDbPDOConnection` sont obsolètes et remplacés par des objets implémentant `Jelix\Database\ConnectionInterface` et `Jelix\Database\ConnectionConstInterface`.
+    * Les constantes `FETCH_*`, `ATTR_*` et `CURSOR_*` sont déplacées vers `ConnectionConstInterface`.
+* `jDbResultSet` et `jDbPDOResultSet` sont obsolètes et remplacés par des objets implémentant `Jelix\Database\ResultSetInterface`.
+* `jDbParameters` est obsolète et remplacé par `\Jelix\Database\AccessParameters`.
+    * Les méthodes publiques sont les mêmes, cependant `getParameters()` est obsolète, `getNormalizedParameters()` doit être utilisé à la place.
+* `jDbTools` est obsolète et remplacé par des objets implémentant `Jelix\Database\Schema\SqlToolsInterface`.
+    * Les méthodes `getFieldList()` et `getTableList()` sont obsolètes.
+    * Les constantes `IBD_*` sont déplacées vers `SqlToolsInterface`.
+* `jDbSchema` est obsolète et remplacé par des objets implémentant `Jelix\Database\Schema\SchemaInterface`.
+* `jDbIndex`, `jDbConstraint`, `jDbUniqueKey`, `jDbPrimaryKey`, `jDbReference`,
+  `jDbColumn`, `jDbTable` sont remplacés par certaines classes de l’espace de noms `Jelix\Database\Schema\`.
+* `jDbUtils` et `jDbUtils::getTools()` sont obsolètes et remplacés par `\Jelix\Database\Connection::getTools()`.
+* `jDbWidget` est obsolète et remplacé par `Jelix\Database\Helpers`.
+* `jDaoDbMapper::createTableFromDao()` retourne un objet `\Jelix\Database\Schema\TableInterface` au lieu de `jTable`.
+
+À propos de jDao :
+
+* `jDaoFactoryBase` est remplacé par des objets implémentant `Jelix\Dao\DaoFactoryInterface`.
+* `jDaoRecordBase` est remplacé par des objets implémentant `Jelix\Dao\DaoRecordInterface`.
+    * Les méthodes `getDbProfile` et `setDbProfile` n’existent pas sur `Jelix\Dao\DaoRecordInterface`.
+    * La méthode `getSelector()` est obsolète, `getDaoName()` doit être utilisé à la place.
+* `jDaoConditions` et `jDaoCondition` sont obsolètes et remplacés par
+  `\Jelix\Dao\DaoConditions` et `\Jelix\Dao\DaoCondition`.
+* `jDaoXmlException` est obsolète et n’est plus utilisé. Le parseur génère `Jelix\Dao\Parser\ParserException` à la place.
+* `jDaoGenerator` et `jDaoParser` sont supprimés.
+* `jDaoMethod` est remplacé par `Jelix\Dao\Parser\DaoMethod`.
+* `jDaoProperty` est remplacé par `Jelix\Dao\Parser\DaoProperty`.
+* `jDaoDbMapper` est remplacé par `Jelix\Dao\DbMapper`.
+* Les classes `jDaoSelector*` sont remplacées par les classes `Jelix\Dao\DaoSelector*`.
+
+==== Changements internes ====
+
+* Constante `JELIX_SCRIPTS_PATH` : sa valeur est désormais `<vendor path>/lib/JelixFramework/DevHelper/`.
+
+===== Contributeurs à Jelix 1.9 =====
+
+* Laurent Jouanneau
+* Raphael Martin
+* Riccardo Beltrami

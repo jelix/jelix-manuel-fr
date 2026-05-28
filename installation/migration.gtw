@@ -28,9 +28,9 @@ Voici les instructions à suivre dans l'ordre.
 
 ==== Prérequis ====
 
-Jelix 1.9 nécessite PHP 7.4 minimum. Vérifiez que votre serveur a bien cette
-version ou une version supérieure. Cependant, il est recommandé d'utiliser PHP 8.2,
-les versions 8.0 et précédentes n'étant plus maintenues par PHP à la date d'écriture
+Jelix 1.9 nécessite PHP 8.2 minimum. Vérifiez que votre serveur a bien cette
+version ou une version supérieure. Cependant, il est recommandé d'utiliser PHP 8.5,
+les versions 8.1 et précédentes n'étant plus maintenues par PHP à la date d'écriture
 de cette page.
 
 ==== Sauvegarde ====
@@ -99,10 +99,10 @@ modifications suivantes :
 
 ==== Changements d'API ====
 
-Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir la liste des nouvelles
-classes et méthodes que vous pouvez utiliser.
+Quelques API ont été changé voire supprimés. Et beaucoup ont été dépréciées.
 
-Il n'y a pas d'API et modules supprimés depuis Jelix 1.8.
+Lisez [[/nouveautes|la liste détaillée des changements]] pour savoir quoi améliorer.
+
 
 ==== Mise à jour des instances de l'application ====
 
@@ -132,7 +132,3 @@ php install/installer.php
 ==== Fin ====
 
 Après cela, votre application est de nouveau opérationnelle.
-
-
-
-
