@@ -8,6 +8,17 @@ Attention : la documentation n'est pas encore à jour vis à vis de ces nouveaut
 
 Jelix 1.9 est compatible avec PHP 8.2 jusqu'à PHP 8.5.
 
+==== Principales nouveautés ====
+
+* précompilation des templates, daos, forms, locales et de la configuration lors de l'installation, et non plus à la volée
+* Syntaxe V2 dans les templates (principalement, les tags `{{ ... }}` ou `{% ... %}` remplacent les tags `{ .. }`)
+* Locales pouvant être stockées dans des paquets composer séparés, et support déprécié des charsets autre que UTF-8
+* Déclaration des listeners d'évènements au moyen d'attributs PHP
+* jDb repose maintenant sur JelixDatabase : support des schemas, generated columns...
+* jDao repose maintenant sur JelixDao : support natif des champs JSON, class custom pour les factories.
+* Les modules jacl, jacldb, jpref et jpref_admin ne sont plus fournis avec Jelix, mais restent disponibles dans des paquets composer.
+
+
 ==== Nouvelles fonctionnalités ====
 
 === Précompilation ====
